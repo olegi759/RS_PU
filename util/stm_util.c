@@ -1130,3 +1130,10 @@ void UART_flush(UART_HandleTypeDef *huart) {
   }
 }
 */
+
+uint32_t HAL_DiffTick(uint32_t told)
+{
+	uint32_t tnew = HAL_GetTick();
+
+	return DIFF_TICKU32(told, tnew);
+}

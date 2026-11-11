@@ -1,0 +1,303 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"logfile_util.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../util/logfile_util.c"
+  20              		.section	.rodata.logfile_add_str_and_lf.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 0D0A00   		.ascii	"\015\012\000"
+  24              		.section	.text.logfile_add_str_and_lf,"ax",%progbits
+  25              		.align	1
+  26              		.global	logfile_add_str_and_lf
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	logfile_add_str_and_lf:
+  32              	.LVL0:
+  33              	.LFB132:
+   1:../../util/logfile_util.c **** /*
+   2:../../util/logfile_util.c ****  * logfile_util.c
+   3:../../util/logfile_util.c ****  *
+   4:../../util/logfile_util.c ****  *  Created on: 15 апр. 2024 г.
+   5:../../util/logfile_util.c ****  *      Author: Rafael Boltachev
+   6:../../util/logfile_util.c ****  */
+   7:../../util/logfile_util.c **** 
+   8:../../util/logfile_util.c **** 
+   9:../../util/logfile_util.c **** #include "logfile_util.h"
+  10:../../util/logfile_util.c **** 
+  11:../../util/logfile_util.c **** #include "logfile_cfg.h"
+  12:../../util/logfile_util.c **** #include "str_util.h"
+  13:../../util/logfile_util.c **** 
+  14:../../util/logfile_util.c **** 
+  15:../../util/logfile_util.c **** 
+  16:../../util/logfile_util.c **** 
+  17:../../util/logfile_util.c **** FRESULT logfile_add_str_and_lf(char * path, char * str)
+  18:../../util/logfile_util.c **** {
+  34              		.loc 1 18 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 1024
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38              		.loc 1 18 1 is_stmt 0 view .LVU1
+  39 0000 10B5     		push	{r4, lr}
+  40              	.LCFI0:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 2
+
+
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 4, -8
+  43              		.cfi_offset 14, -4
+  44 0002 ADF5806D 		sub	sp, sp, #1024
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 1032
+  47 0006 0446     		mov	r4, r0
+  48 0008 0A46     		mov	r2, r1
+  19:../../util/logfile_util.c **** 	char buf[MAX_STR_SIZE];
+  49              		.loc 1 19 2 is_stmt 1 view .LVU2
+  20:../../util/logfile_util.c **** 
+  21:../../util/logfile_util.c **** 	strcpy_s(buf, sizeof(buf), str);
+  50              		.loc 1 21 2 view .LVU3
+  51 000a 4FF48061 		mov	r1, #1024
+  52              	.LVL1:
+  53              		.loc 1 21 2 is_stmt 0 view .LVU4
+  54 000e 6846     		mov	r0, sp
+  55              	.LVL2:
+  56              		.loc 1 21 2 view .LVU5
+  57 0010 FFF7FEFF 		bl	strcpy_s
+  58              	.LVL3:
+  22:../../util/logfile_util.c **** 	strcat_s(buf, sizeof(buf), CRLF);
+  59              		.loc 1 22 2 is_stmt 1 view .LVU6
+  60 0014 084A     		ldr	r2, .L3
+  61 0016 4FF48061 		mov	r1, #1024
+  62 001a 6846     		mov	r0, sp
+  63 001c FFF7FEFF 		bl	strcat_s
+  64              	.LVL4:
+  23:../../util/logfile_util.c **** 	return f_append(path, buf, strlen(buf));
+  65              		.loc 1 23 2 view .LVU7
+  66              		.loc 1 23 9 is_stmt 0 view .LVU8
+  67 0020 6846     		mov	r0, sp
+  68 0022 FFF7FEFF 		bl	strlen
+  69              	.LVL5:
+  70 0026 0246     		mov	r2, r0
+  71              		.loc 1 23 9 discriminator 1 view .LVU9
+  72 0028 6946     		mov	r1, sp
+  73 002a 2046     		mov	r0, r4
+  74 002c FFF7FEFF 		bl	f_append
+  75              	.LVL6:
+  24:../../util/logfile_util.c **** }
+  76              		.loc 1 24 1 view .LVU10
+  77 0030 0DF5806D 		add	sp, sp, #1024
+  78              	.LCFI2:
+  79              		.cfi_def_cfa_offset 8
+  80              		@ sp needed
+  81 0034 10BD     		pop	{r4, pc}
+  82              	.LVL7:
+  83              	.L4:
+  84              		.loc 1 24 1 view .LVU11
+  85 0036 00BF     		.align	2
+  86              	.L3:
+  87 0038 00000000 		.word	.LC0
+  88              		.cfi_endproc
+  89              	.LFE132:
+  91              		.section	.rodata.logfile_add.str1.4,"aMS",%progbits,1
+  92              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 3
+
+
+  93              	.LC1:
+  94 0000 70752E6C 		.ascii	"pu.log\000"
+  94      6F6700
+  95 0007 00       		.align	2
+  96              	.LC2:
+  97 0008 70752E6F 		.ascii	"pu.old.log\000"
+  97      6C642E6C 
+  97      6F6700
+  98              		.section	.text.logfile_add,"ax",%progbits
+  99              		.align	1
+ 100              		.global	logfile_add
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 105              	logfile_add:
+ 106              	.LVL8:
+ 107              	.LFB133:
+  25:../../util/logfile_util.c **** 
+  26:../../util/logfile_util.c **** FRESULT logfile_add(char * str)
+  27:../../util/logfile_util.c **** {
+ 108              		.loc 1 27 1 is_stmt 1 view -0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		.loc 1 27 1 is_stmt 0 view .LVU13
+ 113 0000 38B5     		push	{r3, r4, r5, lr}
+ 114              	.LCFI3:
+ 115              		.cfi_def_cfa_offset 16
+ 116              		.cfi_offset 3, -16
+ 117              		.cfi_offset 4, -12
+ 118              		.cfi_offset 5, -8
+ 119              		.cfi_offset 14, -4
+  28:../../util/logfile_util.c **** 	FRESULT fr;
+ 120              		.loc 1 28 2 is_stmt 1 view .LVU14
+  29:../../util/logfile_util.c **** 
+  30:../../util/logfile_util.c **** 	if (LOG_FILE_MAX_SIZE == 0) return FR_INVALID_PARAMETER;
+ 121              		.loc 1 30 2 view .LVU15
+ 122              		.loc 1 30 6 is_stmt 0 view .LVU16
+ 123 0002 164B     		ldr	r3, .L13
+ 124 0004 D3F8A439 		ldr	r3, [r3, #2468]
+ 125              		.loc 1 30 5 view .LVU17
+ 126 0008 9B02     		lsls	r3, r3, #10
+ 127 000a 25D0     		beq	.L9
+ 128 000c 0446     		mov	r4, r0
+  31:../../util/logfile_util.c **** 
+  32:../../util/logfile_util.c **** 
+  33:../../util/logfile_util.c **** 	if (f_file_size(LOG_FILE_NAME) > LOG_FILE_MAX_SIZE) { //если размер log файла бо�
+ 129              		.loc 1 33 2 is_stmt 1 view .LVU18
+ 130              		.loc 1 33 6 is_stmt 0 view .LVU19
+ 131 000e 1448     		ldr	r0, .L13+4
+ 132              	.LVL9:
+ 133              		.loc 1 33 6 view .LVU20
+ 134 0010 FFF7FEFF 		bl	f_file_size
+ 135              	.LVL10:
+ 136              		.loc 1 33 35 discriminator 1 view .LVU21
+ 137 0014 114B     		ldr	r3, .L13
+ 138 0016 D3F8A439 		ldr	r3, [r3, #2468]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 4
+
+
+ 139              		.loc 1 33 5 discriminator 1 view .LVU22
+ 140 001a B0EB832F 		cmp	r0, r3, lsl #10
+ 141 001e 0CD8     		bhi	.L11
+ 142              	.L7:
+  34:../../util/logfile_util.c **** 		f_unlink(LOG_FILE_OLD_NAME);
+  35:../../util/logfile_util.c **** 		f_rename(LOG_FILE_NAME, LOG_FILE_OLD_NAME);
+  36:../../util/logfile_util.c **** 	}
+  37:../../util/logfile_util.c **** 
+  38:../../util/logfile_util.c **** 
+  39:../../util/logfile_util.c **** 	if (str[strlen(str) - 1] == '\n') {
+ 143              		.loc 1 39 2 is_stmt 1 view .LVU23
+ 144              		.loc 1 39 10 is_stmt 0 view .LVU24
+ 145 0020 2046     		mov	r0, r4
+ 146 0022 FFF7FEFF 		bl	strlen
+ 147              	.LVL11:
+ 148              		.loc 1 39 9 discriminator 1 view .LVU25
+ 149 0026 2318     		adds	r3, r4, r0
+ 150 0028 13F8013C 		ldrb	r3, [r3, #-1]	@ zero_extendqisi2
+ 151              		.loc 1 39 5 discriminator 1 view .LVU26
+ 152 002c 0A2B     		cmp	r3, #10
+ 153 002e 0DD0     		beq	.L12
+  40:../../util/logfile_util.c **** 		fr = f_append(LOG_FILE_NAME, str, strlen(str));
+  41:../../util/logfile_util.c **** 	} else {
+  42:../../util/logfile_util.c **** 		fr = logfile_add_str_and_lf(LOG_FILE_NAME, str);
+ 154              		.loc 1 42 3 is_stmt 1 view .LVU27
+ 155              		.loc 1 42 8 is_stmt 0 view .LVU28
+ 156 0030 2146     		mov	r1, r4
+ 157 0032 0B48     		ldr	r0, .L13+4
+ 158 0034 FFF7FEFF 		bl	logfile_add_str_and_lf
+ 159              	.LVL12:
+ 160              	.L6:
+  43:../../util/logfile_util.c **** 	}
+  44:../../util/logfile_util.c **** 
+  45:../../util/logfile_util.c **** 
+  46:../../util/logfile_util.c **** 	return fr;
+  47:../../util/logfile_util.c **** }
+ 161              		.loc 1 47 1 view .LVU29
+ 162 0038 38BD     		pop	{r3, r4, r5, pc}
+ 163              	.LVL13:
+ 164              	.L11:
+  34:../../util/logfile_util.c **** 		f_rename(LOG_FILE_NAME, LOG_FILE_OLD_NAME);
+ 165              		.loc 1 34 3 is_stmt 1 view .LVU30
+ 166 003a 0A4D     		ldr	r5, .L13+8
+ 167 003c 2846     		mov	r0, r5
+ 168 003e FFF7FEFF 		bl	f_unlink
+ 169              	.LVL14:
+  35:../../util/logfile_util.c **** 	}
+ 170              		.loc 1 35 3 view .LVU31
+ 171 0042 2946     		mov	r1, r5
+ 172 0044 0648     		ldr	r0, .L13+4
+ 173 0046 FFF7FEFF 		bl	f_rename
+ 174              	.LVL15:
+ 175 004a E9E7     		b	.L7
+ 176              	.L12:
+  40:../../util/logfile_util.c **** 	} else {
+ 177              		.loc 1 40 3 view .LVU32
+  40:../../util/logfile_util.c **** 	} else {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 5
+
+
+ 178              		.loc 1 40 8 is_stmt 0 discriminator 1 view .LVU33
+ 179 004c 0246     		mov	r2, r0
+ 180 004e 2146     		mov	r1, r4
+ 181 0050 0348     		ldr	r0, .L13+4
+ 182 0052 FFF7FEFF 		bl	f_append
+ 183              	.LVL16:
+  40:../../util/logfile_util.c **** 	} else {
+ 184              		.loc 1 40 8 discriminator 1 view .LVU34
+ 185 0056 EFE7     		b	.L6
+ 186              	.LVL17:
+ 187              	.L9:
+  30:../../util/logfile_util.c **** 
+ 188              		.loc 1 30 37 discriminator 1 view .LVU35
+ 189 0058 1320     		movs	r0, #19
+ 190              	.LVL18:
+  30:../../util/logfile_util.c **** 
+ 191              		.loc 1 30 37 discriminator 1 view .LVU36
+ 192 005a EDE7     		b	.L6
+ 193              	.L14:
+ 194              		.align	2
+ 195              	.L13:
+ 196 005c 00000000 		.word	setting
+ 197 0060 00000000 		.word	.LC1
+ 198 0064 08000000 		.word	.LC2
+ 199              		.cfi_endproc
+ 200              	.LFE133:
+ 202              		.text
+ 203              	.Letext0:
+ 204              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 205              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 206              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 207              		.file 5 "../../fatfs/ff.h"
+ 208              		.file 6 "../../common/setting_data.h"
+ 209              		.file 7 "../../util/fatfs_util.h"
+ 210              		.file 8 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 211              		.file 9 "../../util/str_util.h"
+ 212              		.file 10 "../../common/common.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 logfile_util.c
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:21     .rodata.logfile_add_str_and_lf.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:25     .text.logfile_add_str_and_lf:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:31     .text.logfile_add_str_and_lf:00000000 logfile_add_str_and_lf
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:87     .text.logfile_add_str_and_lf:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:92     .rodata.logfile_add.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:99     .text.logfile_add:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:105    .text.logfile_add:00000000 logfile_add
+C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:196    .text.logfile_add:0000005c $d
+
+UNDEFINED SYMBOLS
+strcpy_s
+strcat_s
+strlen
+f_append
+f_file_size
+f_unlink
+f_rename
+setting

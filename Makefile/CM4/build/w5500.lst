@@ -1,0 +1,1507 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"w5500.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c"
+  20              		.section	.text.WIZCHIP_READ,"ax",%progbits
+  21              		.align	1
+  22              		.global	WIZCHIP_READ
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	WIZCHIP_READ:
+  28              	.LVL0:
+  29              	.LFB132:
+   1:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //*****************************************************************************
+   2:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //
+   3:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \file w5500.c
+   4:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \brief W5500 HAL Interface.
+   5:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \version 1.0.2
+   6:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \date 2013/10/21
+   7:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \par  Revision history
+   8:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!       <2015/02/05> Notice
+   9:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!        The version history is not updated after this point.
+  10:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!        Download the latest version directly from GitHub. Please visit the our GitHub repository
+  11:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!        >> https://github.com/Wiznet/ioLibrary_Driver
+  12:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!       <2014/05/01> V1.0.2
+  13:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!         1. Implicit type casting -> Explicit type casting. Refer to M20140501
+  14:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!            Fixed the problem on porting into under 32bit MCU
+  15:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!            Issued by Mathias ClauBen, wizwiki forum ID Think01 and bobh
+  16:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!            Thank for your interesting and serious advices.
+  17:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!       <2013/12/20> V1.0.1
+  18:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!         1. Remove warning
+  19:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!         2. WIZCHIP_READ_BUF WIZCHIP_WRITE_BUF in case _WIZCHIP_IO_MODE_SPI_FDM_
+  20:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!            for loop optimized(removed). refer to M20131220
+  21:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!       <2013/10/21> 1st Release
+  22:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \author MidnightCow
+  23:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! \copyright
+  24:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!
+  25:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! Copyright (c)  2013, WIZnet Co., LTD.
+  26:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! All rights reserved.
+  27:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! 
+  28:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! Redistribution and use in source and binary forms, with or without 
+  29:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! modification, are permitted provided that the following conditions 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 2
+
+
+  30:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! are met: 
+  31:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! 
+  32:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!     * Redistributions of source code must retain the above copyright 
+  33:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! notice, this list of conditions and the following disclaimer. 
+  34:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!     * Redistributions in binary form must reproduce the above copyright
+  35:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! notice, this list of conditions and the following disclaimer in the
+  36:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! documentation and/or other materials provided with the distribution. 
+  37:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //!     * Neither the name of the <ORGANIZATION> nor the names of its 
+  38:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! contributors may be used to endorse or promote products derived 
+  39:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! from this software without specific prior written permission. 
+  40:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! 
+  41:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  42:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  43:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  44:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+  45:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+  46:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  47:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  48:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  49:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  50:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+  51:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //! THE POSSIBILITY OF SUCH DAMAGE.
+  52:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //
+  53:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //*****************************************************************************
+  54:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** //#include <stdio.h>
+  55:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #include "w5500.h"
+  56:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #include "stm_util.h"
+  57:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  58:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #define _W5500_SPI_VDM_OP_          0x00
+  59:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #define _W5500_SPI_FDM_OP_LEN1_     0x01
+  60:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #define _W5500_SPI_FDM_OP_LEN2_     0x02
+  61:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #define _W5500_SPI_FDM_OP_LEN4_     0x03
+  62:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  63:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** #if   (_WIZCHIP_ == 5500)
+  64:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** ////////////////////////////////////////////////////
+  65:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  66:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** uint8_t  WIZCHIP_READ(uint32_t AddrSel)
+  67:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+  30              		.loc 1 67 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 8
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 67 1 is_stmt 0 view .LVU1
+  35 0000 30B5     		push	{r4, r5, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 12
+  38              		.cfi_offset 4, -12
+  39              		.cfi_offset 5, -8
+  40              		.cfi_offset 14, -4
+  41 0002 83B0     		sub	sp, sp, #12
+  42              	.LCFI1:
+  43              		.cfi_def_cfa_offset 24
+  44 0004 0446     		mov	r4, r0
+  68:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint8_t ret;
+  45              		.loc 1 68 4 is_stmt 1 view .LVU2
+  69:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint8_t spi_data[3];
+  46              		.loc 1 69 4 view .LVU3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 3
+
+
+  70:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  71:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_ENTER();
+  47              		.loc 1 71 4 view .LVU4
+  48 0006 164D     		ldr	r5, .L6
+  49 0008 EB68     		ldr	r3, [r5, #12]
+  50 000a 9847     		blx	r3
+  51              	.LVL1:
+  72:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._select();
+  52              		.loc 1 72 4 view .LVU5
+  53              		.loc 1 72 14 is_stmt 0 view .LVU6
+  54 000c 6B69     		ldr	r3, [r5, #20]
+  55              		.loc 1 72 4 view .LVU7
+  56 000e 9847     		blx	r3
+  57              	.LVL2:
+  73:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  74:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    AddrSel |= (_W5500_SPI_READ_ | _W5500_SPI_VDM_OP_);
+  58              		.loc 1 74 4 is_stmt 1 view .LVU8
+  75:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  76:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    if(!WIZCHIP.IF.SPI._read_burst || !WIZCHIP.IF.SPI._write_burst) 	// byte operation
+  59              		.loc 1 76 4 view .LVU9
+  60              		.loc 1 76 22 is_stmt 0 view .LVU10
+  61 0010 6B6A     		ldr	r3, [r5, #36]
+  62              		.loc 1 76 6 view .LVU11
+  63 0012 6BB1     		cbz	r3, .L2
+  64              		.loc 1 76 53 discriminator 1 view .LVU12
+  65 0014 AB6A     		ldr	r3, [r5, #40]
+  66              		.loc 1 76 35 discriminator 1 view .LVU13
+  67 0016 5BB1     		cbz	r3, .L2
+  77:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+  78:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 	   WIZCHIP.IF.SPI._write_byte((AddrSel & 0x00FF0000) >> 16);
+  79:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+  80:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+  81:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+  82:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    else																// burst operation
+  83:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+  84:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[0] = (AddrSel & 0x00FF0000) >> 16;
+  68              		.loc 1 84 3 is_stmt 1 view .LVU14
+  69              		.loc 1 84 40 is_stmt 0 view .LVU15
+  70 0018 220C     		lsrs	r2, r4, #16
+  71              		.loc 1 84 15 view .LVU16
+  72 001a 8DF80420 		strb	r2, [sp, #4]
+  85:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[1] = (AddrSel & 0x0000FF00) >> 8;
+  73              		.loc 1 85 3 is_stmt 1 view .LVU17
+  74              		.loc 1 85 40 is_stmt 0 view .LVU18
+  75 001e 220A     		lsrs	r2, r4, #8
+  76              		.loc 1 85 15 view .LVU19
+  77 0020 8DF80520 		strb	r2, [sp, #5]
+  86:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[2] = (AddrSel & 0x000000FF) >> 0;
+  78              		.loc 1 86 3 is_stmt 1 view .LVU20
+  79              		.loc 1 86 15 is_stmt 0 view .LVU21
+  80 0024 8DF80640 		strb	r4, [sp, #6]
+  87:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_burst(spi_data, 3);
+  81              		.loc 1 87 3 is_stmt 1 view .LVU22
+  82 0028 0321     		movs	r1, #3
+  83 002a 01A8     		add	r0, sp, #4
+  84 002c 9847     		blx	r3
+  85              	.LVL3:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 4
+
+
+  86 002e 0BE0     		b	.L4
+  87              	.L2:
+  78:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+  88              		.loc 1 78 5 view .LVU23
+  78:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+  89              		.loc 1 78 19 is_stmt 0 view .LVU24
+  90 0030 0B4D     		ldr	r5, .L6
+  91 0032 2B6A     		ldr	r3, [r5, #32]
+  78:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+  92              		.loc 1 78 5 view .LVU25
+  93 0034 C4F30740 		ubfx	r0, r4, #16, #8
+  94 0038 9847     		blx	r3
+  95              	.LVL4:
+  79:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+  96              		.loc 1 79 3 is_stmt 1 view .LVU26
+  79:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+  97              		.loc 1 79 17 is_stmt 0 view .LVU27
+  98 003a 2B6A     		ldr	r3, [r5, #32]
+  79:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+  99              		.loc 1 79 3 view .LVU28
+ 100 003c C4F30720 		ubfx	r0, r4, #8, #8
+ 101 0040 9847     		blx	r3
+ 102              	.LVL5:
+  80:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 103              		.loc 1 80 3 is_stmt 1 view .LVU29
+  80:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 104              		.loc 1 80 17 is_stmt 0 view .LVU30
+ 105 0042 2B6A     		ldr	r3, [r5, #32]
+  80:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 106              		.loc 1 80 3 view .LVU31
+ 107 0044 E0B2     		uxtb	r0, r4
+ 108 0046 9847     		blx	r3
+ 109              	.LVL6:
+ 110              	.L4:
+  88:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+  89:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ret = WIZCHIP.IF.SPI._read_byte();
+ 111              		.loc 1 89 4 is_stmt 1 view .LVU32
+ 112              		.loc 1 89 24 is_stmt 0 view .LVU33
+ 113 0048 054D     		ldr	r5, .L6
+ 114 004a EB69     		ldr	r3, [r5, #28]
+ 115              		.loc 1 89 10 view .LVU34
+ 116 004c 9847     		blx	r3
+ 117              	.LVL7:
+ 118 004e 0446     		mov	r4, r0
+ 119              	.LVL8:
+  90:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  91:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._deselect();
+ 120              		.loc 1 91 4 is_stmt 1 view .LVU35
+ 121              		.loc 1 91 14 is_stmt 0 view .LVU36
+ 122 0050 AB69     		ldr	r3, [r5, #24]
+ 123              		.loc 1 91 4 view .LVU37
+ 124 0052 9847     		blx	r3
+ 125              	.LVL9:
+  92:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_EXIT();
+ 126              		.loc 1 92 4 is_stmt 1 view .LVU38
+ 127 0054 2B69     		ldr	r3, [r5, #16]
+ 128 0056 9847     		blx	r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 5
+
+
+ 129              	.LVL10:
+  93:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    return ret;
+ 130              		.loc 1 93 4 view .LVU39
+  94:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 131              		.loc 1 94 1 is_stmt 0 view .LVU40
+ 132 0058 2046     		mov	r0, r4
+ 133 005a 03B0     		add	sp, sp, #12
+ 134              	.LCFI2:
+ 135              		.cfi_def_cfa_offset 12
+ 136              		@ sp needed
+ 137 005c 30BD     		pop	{r4, r5, pc}
+ 138              	.LVL11:
+ 139              	.L7:
+ 140              		.loc 1 94 1 view .LVU41
+ 141 005e 00BF     		.align	2
+ 142              	.L6:
+ 143 0060 00000000 		.word	WIZCHIP
+ 144              		.cfi_endproc
+ 145              	.LFE132:
+ 147              		.section	.text.WIZCHIP_WRITE,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	WIZCHIP_WRITE
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 154              	WIZCHIP_WRITE:
+ 155              	.LVL12:
+ 156              	.LFB133:
+  95:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+  96:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** void     WIZCHIP_WRITE(uint32_t AddrSel, uint8_t wb )
+  97:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 157              		.loc 1 97 1 is_stmt 1 view -0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 8
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              		.loc 1 97 1 is_stmt 0 view .LVU43
+ 162 0000 70B5     		push	{r4, r5, r6, lr}
+ 163              	.LCFI3:
+ 164              		.cfi_def_cfa_offset 16
+ 165              		.cfi_offset 4, -16
+ 166              		.cfi_offset 5, -12
+ 167              		.cfi_offset 6, -8
+ 168              		.cfi_offset 14, -4
+ 169 0002 82B0     		sub	sp, sp, #8
+ 170              	.LCFI4:
+ 171              		.cfi_def_cfa_offset 24
+ 172 0004 0446     		mov	r4, r0
+ 173 0006 0E46     		mov	r6, r1
+  98:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint8_t spi_data[4];
+ 174              		.loc 1 98 4 is_stmt 1 view .LVU44
+  99:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 100:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_ENTER();
+ 175              		.loc 1 100 4 view .LVU45
+ 176 0008 164D     		ldr	r5, .L13
+ 177 000a EB68     		ldr	r3, [r5, #12]
+ 178 000c 9847     		blx	r3
+ 179              	.LVL13:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 6
+
+
+ 101:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._select();
+ 180              		.loc 1 101 4 view .LVU46
+ 181              		.loc 1 101 14 is_stmt 0 view .LVU47
+ 182 000e 6B69     		ldr	r3, [r5, #20]
+ 183              		.loc 1 101 4 view .LVU48
+ 184 0010 9847     		blx	r3
+ 185              	.LVL14:
+ 102:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 103:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    AddrSel |= (_W5500_SPI_WRITE_ | _W5500_SPI_VDM_OP_);
+ 186              		.loc 1 103 4 is_stmt 1 view .LVU49
+ 187              		.loc 1 103 12 is_stmt 0 view .LVU50
+ 188 0012 44F00404 		orr	r4, r4, #4
+ 189              	.LVL15:
+ 104:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 105:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //if(!WIZCHIP.IF.SPI._read_burst || !WIZCHIP.IF.SPI._write_burst) 	// byte operation
+ 106:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    if(!WIZCHIP.IF.SPI._write_burst) 	// byte operation
+ 190              		.loc 1 106 4 is_stmt 1 view .LVU51
+ 191              		.loc 1 106 22 is_stmt 0 view .LVU52
+ 192 0016 AB6A     		ldr	r3, [r5, #40]
+ 193              		.loc 1 106 6 view .LVU53
+ 194 0018 A3B1     		cbz	r3, .L12
+ 107:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 108:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x00FF0000) >> 16);
+ 109:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 110:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 111:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte(wb);
+ 112:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 113:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    else									// burst operation
+ 114:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 115:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[0] = (AddrSel & 0x00FF0000) >> 16;
+ 195              		.loc 1 115 3 is_stmt 1 view .LVU54
+ 196              		.loc 1 115 40 is_stmt 0 view .LVU55
+ 197 001a 220C     		lsrs	r2, r4, #16
+ 198              		.loc 1 115 15 view .LVU56
+ 199 001c 8DF80420 		strb	r2, [sp, #4]
+ 116:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[1] = (AddrSel & 0x0000FF00) >> 8;
+ 200              		.loc 1 116 3 is_stmt 1 view .LVU57
+ 201              		.loc 1 116 40 is_stmt 0 view .LVU58
+ 202 0020 220A     		lsrs	r2, r4, #8
+ 203              		.loc 1 116 15 view .LVU59
+ 204 0022 8DF80520 		strb	r2, [sp, #5]
+ 117:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[2] = (AddrSel & 0x000000FF) >> 0;
+ 205              		.loc 1 117 3 is_stmt 1 view .LVU60
+ 206              		.loc 1 117 15 is_stmt 0 view .LVU61
+ 207 0026 8DF80640 		strb	r4, [sp, #6]
+ 118:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[3] = wb;
+ 208              		.loc 1 118 3 is_stmt 1 view .LVU62
+ 209              		.loc 1 118 15 is_stmt 0 view .LVU63
+ 210 002a 8DF80760 		strb	r6, [sp, #7]
+ 119:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_burst(spi_data, 4);
+ 211              		.loc 1 119 3 is_stmt 1 view .LVU64
+ 212 002e 0421     		movs	r1, #4
+ 213 0030 0DEB0100 		add	r0, sp, r1
+ 214 0034 9847     		blx	r3
+ 215              	.LVL16:
+ 216              	.L10:
+ 120:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 7
+
+
+ 121:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 122:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._deselect();
+ 217              		.loc 1 122 4 view .LVU65
+ 218              		.loc 1 122 14 is_stmt 0 view .LVU66
+ 219 0036 0B4C     		ldr	r4, .L13
+ 220              	.LVL17:
+ 221              		.loc 1 122 14 view .LVU67
+ 222 0038 A369     		ldr	r3, [r4, #24]
+ 223              		.loc 1 122 4 view .LVU68
+ 224 003a 9847     		blx	r3
+ 225              	.LVL18:
+ 123:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_EXIT();
+ 226              		.loc 1 123 4 is_stmt 1 view .LVU69
+ 227 003c 2369     		ldr	r3, [r4, #16]
+ 228 003e 9847     		blx	r3
+ 229              	.LVL19:
+ 124:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 230              		.loc 1 124 1 is_stmt 0 view .LVU70
+ 231 0040 02B0     		add	sp, sp, #8
+ 232              	.LCFI5:
+ 233              		.cfi_remember_state
+ 234              		.cfi_def_cfa_offset 16
+ 235              		@ sp needed
+ 236 0042 70BD     		pop	{r4, r5, r6, pc}
+ 237              	.LVL20:
+ 238              	.L12:
+ 239              	.LCFI6:
+ 240              		.cfi_restore_state
+ 108:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 241              		.loc 1 108 3 is_stmt 1 view .LVU71
+ 108:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 242              		.loc 1 108 17 is_stmt 0 view .LVU72
+ 243 0044 2B6A     		ldr	r3, [r5, #32]
+ 108:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 244              		.loc 1 108 3 view .LVU73
+ 245 0046 C4F30740 		ubfx	r0, r4, #16, #8
+ 246 004a 9847     		blx	r3
+ 247              	.LVL21:
+ 109:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 248              		.loc 1 109 3 is_stmt 1 view .LVU74
+ 109:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 249              		.loc 1 109 17 is_stmt 0 view .LVU75
+ 250 004c 2B6A     		ldr	r3, [r5, #32]
+ 109:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 251              		.loc 1 109 3 view .LVU76
+ 252 004e C4F30720 		ubfx	r0, r4, #8, #8
+ 253 0052 9847     		blx	r3
+ 254              	.LVL22:
+ 110:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte(wb);
+ 255              		.loc 1 110 3 is_stmt 1 view .LVU77
+ 110:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte(wb);
+ 256              		.loc 1 110 17 is_stmt 0 view .LVU78
+ 257 0054 2B6A     		ldr	r3, [r5, #32]
+ 110:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte(wb);
+ 258              		.loc 1 110 3 view .LVU79
+ 259 0056 E0B2     		uxtb	r0, r4
+ 260 0058 9847     		blx	r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 8
+
+
+ 261              	.LVL23:
+ 111:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 262              		.loc 1 111 3 is_stmt 1 view .LVU80
+ 111:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 263              		.loc 1 111 17 is_stmt 0 view .LVU81
+ 264 005a 2B6A     		ldr	r3, [r5, #32]
+ 111:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 265              		.loc 1 111 3 view .LVU82
+ 266 005c 3046     		mov	r0, r6
+ 267 005e 9847     		blx	r3
+ 268              	.LVL24:
+ 269 0060 E9E7     		b	.L10
+ 270              	.L14:
+ 271 0062 00BF     		.align	2
+ 272              	.L13:
+ 273 0064 00000000 		.word	WIZCHIP
+ 274              		.cfi_endproc
+ 275              	.LFE133:
+ 277              		.section	.text.WIZCHIP_READ_BUF,"ax",%progbits
+ 278              		.align	1
+ 279              		.global	WIZCHIP_READ_BUF
+ 280              		.syntax unified
+ 281              		.thumb
+ 282              		.thumb_func
+ 284              	WIZCHIP_READ_BUF:
+ 285              	.LVL25:
+ 286              	.LFB134:
+ 125:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****          
+ 126:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** void     WIZCHIP_READ_BUF (uint32_t AddrSel, uint8_t* pBuf, uint16_t len)
+ 127:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 287              		.loc 1 127 1 is_stmt 1 view -0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 8
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291              		.loc 1 127 1 is_stmt 0 view .LVU84
+ 292 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 293              	.LCFI7:
+ 294              		.cfi_def_cfa_offset 20
+ 295              		.cfi_offset 4, -20
+ 296              		.cfi_offset 5, -16
+ 297              		.cfi_offset 6, -12
+ 298              		.cfi_offset 7, -8
+ 299              		.cfi_offset 14, -4
+ 300 0002 83B0     		sub	sp, sp, #12
+ 301              	.LCFI8:
+ 302              		.cfi_def_cfa_offset 32
+ 303 0004 0446     		mov	r4, r0
+ 304 0006 0E46     		mov	r6, r1
+ 305 0008 1546     		mov	r5, r2
+ 128:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint8_t spi_data[3];
+ 306              		.loc 1 128 4 is_stmt 1 view .LVU85
+ 129:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t i;
+ 307              		.loc 1 129 4 view .LVU86
+ 130:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 131:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_ENTER();
+ 308              		.loc 1 131 4 view .LVU87
+ 309 000a 1B4F     		ldr	r7, .L22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 9
+
+
+ 310 000c FB68     		ldr	r3, [r7, #12]
+ 311 000e 9847     		blx	r3
+ 312              	.LVL26:
+ 132:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._select();
+ 313              		.loc 1 132 4 view .LVU88
+ 314              		.loc 1 132 14 is_stmt 0 view .LVU89
+ 315 0010 7B69     		ldr	r3, [r7, #20]
+ 316              		.loc 1 132 4 view .LVU90
+ 317 0012 9847     		blx	r3
+ 318              	.LVL27:
+ 133:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 134:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    AddrSel |= (_W5500_SPI_READ_ | _W5500_SPI_VDM_OP_);
+ 319              		.loc 1 134 4 is_stmt 1 view .LVU91
+ 135:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 136:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    if(!WIZCHIP.IF.SPI._read_burst || !WIZCHIP.IF.SPI._write_burst) 	// byte operation
+ 320              		.loc 1 136 4 view .LVU92
+ 321              		.loc 1 136 22 is_stmt 0 view .LVU93
+ 322 0014 7B6A     		ldr	r3, [r7, #36]
+ 323              		.loc 1 136 6 view .LVU94
+ 324 0016 93B1     		cbz	r3, .L16
+ 325              		.loc 1 136 53 discriminator 1 view .LVU95
+ 326 0018 BB6A     		ldr	r3, [r7, #40]
+ 327              		.loc 1 136 35 discriminator 1 view .LVU96
+ 328 001a 83B1     		cbz	r3, .L16
+ 137:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 138:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x00FF0000) >> 16);
+ 139:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 140:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 142:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 143:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 144:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    else																// burst operation
+ 145:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 146:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[0] = (AddrSel & 0x00FF0000) >> 16;
+ 329              		.loc 1 146 3 is_stmt 1 view .LVU97
+ 330              		.loc 1 146 40 is_stmt 0 view .LVU98
+ 331 001c 220C     		lsrs	r2, r4, #16
+ 332              		.loc 1 146 15 view .LVU99
+ 333 001e 8DF80420 		strb	r2, [sp, #4]
+ 147:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[1] = (AddrSel & 0x0000FF00) >> 8;
+ 334              		.loc 1 147 3 is_stmt 1 view .LVU100
+ 335              		.loc 1 147 40 is_stmt 0 view .LVU101
+ 336 0022 220A     		lsrs	r2, r4, #8
+ 337              		.loc 1 147 15 view .LVU102
+ 338 0024 8DF80520 		strb	r2, [sp, #5]
+ 148:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[2] = (AddrSel & 0x000000FF) >> 0;
+ 339              		.loc 1 148 3 is_stmt 1 view .LVU103
+ 340              		.loc 1 148 15 is_stmt 0 view .LVU104
+ 341 0028 8DF80640 		strb	r4, [sp, #6]
+ 149:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_burst(spi_data, 3);
+ 342              		.loc 1 149 3 is_stmt 1 view .LVU105
+ 343 002c 0321     		movs	r1, #3
+ 344 002e 01A8     		add	r0, sp, #4
+ 345 0030 9847     		blx	r3
+ 346              	.LVL28:
+ 150:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._read_burst(pBuf, len);
+ 347              		.loc 1 150 3 view .LVU106
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 10
+
+
+ 348              		.loc 1 150 17 is_stmt 0 view .LVU107
+ 349 0032 114B     		ldr	r3, .L22
+ 350 0034 5B6A     		ldr	r3, [r3, #36]
+ 351              		.loc 1 150 3 view .LVU108
+ 352 0036 2946     		mov	r1, r5
+ 353 0038 3046     		mov	r0, r6
+ 354 003a 9847     		blx	r3
+ 355              	.LVL29:
+ 356 003c 15E0     		b	.L20
+ 357              	.L16:
+ 138:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 358              		.loc 1 138 3 is_stmt 1 view .LVU109
+ 138:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 359              		.loc 1 138 17 is_stmt 0 view .LVU110
+ 360 003e 0E4F     		ldr	r7, .L22
+ 361 0040 3B6A     		ldr	r3, [r7, #32]
+ 138:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 362              		.loc 1 138 3 view .LVU111
+ 363 0042 C4F30740 		ubfx	r0, r4, #16, #8
+ 364 0046 9847     		blx	r3
+ 365              	.LVL30:
+ 139:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 366              		.loc 1 139 3 is_stmt 1 view .LVU112
+ 139:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 367              		.loc 1 139 17 is_stmt 0 view .LVU113
+ 368 0048 3B6A     		ldr	r3, [r7, #32]
+ 139:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 369              		.loc 1 139 3 view .LVU114
+ 370 004a C4F30720 		ubfx	r0, r4, #8, #8
+ 371 004e 9847     		blx	r3
+ 372              	.LVL31:
+ 140:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 373              		.loc 1 140 3 is_stmt 1 view .LVU115
+ 140:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 374              		.loc 1 140 17 is_stmt 0 view .LVU116
+ 375 0050 3B6A     		ldr	r3, [r7, #32]
+ 140:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 376              		.loc 1 140 3 view .LVU117
+ 377 0052 E0B2     		uxtb	r0, r4
+ 378 0054 9847     		blx	r3
+ 379              	.LVL32:
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 380              		.loc 1 141 3 is_stmt 1 view .LVU118
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 381              		.loc 1 141 9 is_stmt 0 view .LVU119
+ 382 0056 0024     		movs	r4, #0
+ 383              	.LVL33:
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 384              		.loc 1 141 3 view .LVU120
+ 385 0058 05E0     		b	.L18
+ 386              	.LVL34:
+ 387              	.L19:
+ 142:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 388              		.loc 1 142 6 is_stmt 1 view .LVU121
+ 142:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 389              		.loc 1 142 30 is_stmt 0 view .LVU122
+ 390 005a 074B     		ldr	r3, .L22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 11
+
+
+ 391 005c DB69     		ldr	r3, [r3, #28]
+ 142:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 392              		.loc 1 142 16 view .LVU123
+ 393 005e 9847     		blx	r3
+ 394              	.LVL35:
+ 142:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 395              		.loc 1 142 14 discriminator 1 view .LVU124
+ 396 0060 3055     		strb	r0, [r6, r4]
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 397              		.loc 1 141 24 is_stmt 1 discriminator 3 view .LVU125
+ 398 0062 0134     		adds	r4, r4, #1
+ 399              	.LVL36:
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 400              		.loc 1 141 24 is_stmt 0 discriminator 3 view .LVU126
+ 401 0064 A4B2     		uxth	r4, r4
+ 402              	.LVL37:
+ 403              	.L18:
+ 141:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		   pBuf[i] = WIZCHIP.IF.SPI._read_byte();
+ 404              		.loc 1 141 16 is_stmt 1 discriminator 1 view .LVU127
+ 405 0066 AC42     		cmp	r4, r5
+ 406 0068 F7D3     		bcc	.L19
+ 407              	.LVL38:
+ 408              	.L20:
+ 151:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 152:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 153:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._deselect();
+ 409              		.loc 1 153 4 view .LVU128
+ 410              		.loc 1 153 14 is_stmt 0 view .LVU129
+ 411 006a 034C     		ldr	r4, .L22
+ 412 006c A369     		ldr	r3, [r4, #24]
+ 413              		.loc 1 153 4 view .LVU130
+ 414 006e 9847     		blx	r3
+ 415              	.LVL39:
+ 154:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_EXIT();
+ 416              		.loc 1 154 4 is_stmt 1 view .LVU131
+ 417 0070 2369     		ldr	r3, [r4, #16]
+ 418 0072 9847     		blx	r3
+ 419              	.LVL40:
+ 155:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 420              		.loc 1 155 1 is_stmt 0 view .LVU132
+ 421 0074 03B0     		add	sp, sp, #12
+ 422              	.LCFI9:
+ 423              		.cfi_def_cfa_offset 20
+ 424              		@ sp needed
+ 425 0076 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 426              	.LVL41:
+ 427              	.L23:
+ 428              		.loc 1 155 1 view .LVU133
+ 429              		.align	2
+ 430              	.L22:
+ 431 0078 00000000 		.word	WIZCHIP
+ 432              		.cfi_endproc
+ 433              	.LFE134:
+ 435              		.section	.text.WIZCHIP_WRITE_BUF,"ax",%progbits
+ 436              		.align	1
+ 437              		.global	WIZCHIP_WRITE_BUF
+ 438              		.syntax unified
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 12
+
+
+ 439              		.thumb
+ 440              		.thumb_func
+ 442              	WIZCHIP_WRITE_BUF:
+ 443              	.LVL42:
+ 444              	.LFB135:
+ 156:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 157:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** void     WIZCHIP_WRITE_BUF(uint32_t AddrSel, uint8_t* pBuf, uint16_t len)
+ 158:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 445              		.loc 1 158 1 is_stmt 1 view -0
+ 446              		.cfi_startproc
+ 447              		@ args = 0, pretend = 0, frame = 8
+ 448              		@ frame_needed = 0, uses_anonymous_args = 0
+ 449              		.loc 1 158 1 is_stmt 0 view .LVU135
+ 450 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 451              	.LCFI10:
+ 452              		.cfi_def_cfa_offset 20
+ 453              		.cfi_offset 4, -20
+ 454              		.cfi_offset 5, -16
+ 455              		.cfi_offset 6, -12
+ 456              		.cfi_offset 7, -8
+ 457              		.cfi_offset 14, -4
+ 458 0002 83B0     		sub	sp, sp, #12
+ 459              	.LCFI11:
+ 460              		.cfi_def_cfa_offset 32
+ 461 0004 0446     		mov	r4, r0
+ 462 0006 0E46     		mov	r6, r1
+ 463 0008 1546     		mov	r5, r2
+ 159:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint8_t spi_data[3];
+ 464              		.loc 1 159 4 is_stmt 1 view .LVU136
+ 160:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t i;
+ 465              		.loc 1 160 4 view .LVU137
+ 161:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 162:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //ulog("1000"CRLF);
+ 163:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 164:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_ENTER();
+ 466              		.loc 1 164 4 view .LVU138
+ 467 000a 1B4F     		ldr	r7, .L31
+ 468 000c FB68     		ldr	r3, [r7, #12]
+ 469 000e 9847     		blx	r3
+ 470              	.LVL43:
+ 165:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._select();
+ 471              		.loc 1 165 4 view .LVU139
+ 472              		.loc 1 165 14 is_stmt 0 view .LVU140
+ 473 0010 7B69     		ldr	r3, [r7, #20]
+ 474              		.loc 1 165 4 view .LVU141
+ 475 0012 9847     		blx	r3
+ 476              	.LVL44:
+ 166:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 167:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    AddrSel |= (_W5500_SPI_WRITE_ | _W5500_SPI_VDM_OP_);
+ 477              		.loc 1 167 4 is_stmt 1 view .LVU142
+ 478              		.loc 1 167 12 is_stmt 0 view .LVU143
+ 479 0014 44F00404 		orr	r4, r4, #4
+ 480              	.LVL45:
+ 168:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 169:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //ulog("2000"CRLF);
+ 170:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 171:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    if(!WIZCHIP.IF.SPI._write_burst) 	// byte operation
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 13
+
+
+ 481              		.loc 1 171 4 is_stmt 1 view .LVU144
+ 482              		.loc 1 171 22 is_stmt 0 view .LVU145
+ 483 0018 BB6A     		ldr	r3, [r7, #40]
+ 484              		.loc 1 171 6 view .LVU146
+ 485 001a B3B1     		cbz	r3, .L30
+ 172:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 173:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x00FF0000) >> 16);
+ 174:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 175:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 177:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ 178:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 179:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    else									// burst operation
+ 180:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 181:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[0] = (AddrSel & 0x00FF0000) >> 16;
+ 486              		.loc 1 181 3 is_stmt 1 view .LVU147
+ 487              		.loc 1 181 40 is_stmt 0 view .LVU148
+ 488 001c 220C     		lsrs	r2, r4, #16
+ 489              		.loc 1 181 15 view .LVU149
+ 490 001e 8DF80420 		strb	r2, [sp, #4]
+ 182:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[1] = (AddrSel & 0x0000FF00) >> 8;
+ 491              		.loc 1 182 3 is_stmt 1 view .LVU150
+ 492              		.loc 1 182 40 is_stmt 0 view .LVU151
+ 493 0022 220A     		lsrs	r2, r4, #8
+ 494              		.loc 1 182 15 view .LVU152
+ 495 0024 8DF80520 		strb	r2, [sp, #5]
+ 183:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		spi_data[2] = (AddrSel & 0x000000FF) >> 0;
+ 496              		.loc 1 183 3 is_stmt 1 view .LVU153
+ 497              		.loc 1 183 15 is_stmt 0 view .LVU154
+ 498 0028 8DF80640 		strb	r4, [sp, #6]
+ 184:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_burst(spi_data, 3);
+ 499              		.loc 1 184 3 is_stmt 1 view .LVU155
+ 500 002c 0321     		movs	r1, #3
+ 501 002e 01A8     		add	r0, sp, #4
+ 502 0030 9847     		blx	r3
+ 503              	.LVL46:
+ 185:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_burst(pBuf, len);
+ 504              		.loc 1 185 3 view .LVU156
+ 505              		.loc 1 185 17 is_stmt 0 view .LVU157
+ 506 0032 114B     		ldr	r3, .L31
+ 507 0034 9B6A     		ldr	r3, [r3, #40]
+ 508              		.loc 1 185 3 view .LVU158
+ 509 0036 2946     		mov	r1, r5
+ 510 0038 3046     		mov	r0, r6
+ 511 003a 9847     		blx	r3
+ 512              	.LVL47:
+ 513              	.L28:
+ 186:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 187:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //ulog("3000"CRLF);
+ 188:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 189:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP.CS._deselect();
+ 514              		.loc 1 189 4 is_stmt 1 view .LVU159
+ 515              		.loc 1 189 14 is_stmt 0 view .LVU160
+ 516 003c 0E4C     		ldr	r4, .L31
+ 517 003e A369     		ldr	r3, [r4, #24]
+ 518              		.loc 1 189 4 view .LVU161
+ 519 0040 9847     		blx	r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 14
+
+
+ 520              	.LVL48:
+ 190:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_CRITICAL_EXIT();
+ 521              		.loc 1 190 4 is_stmt 1 view .LVU162
+ 522 0042 2369     		ldr	r3, [r4, #16]
+ 523 0044 9847     		blx	r3
+ 524              	.LVL49:
+ 191:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 192:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //ulog("4000"CRLF);
+ 193:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 525              		.loc 1 193 1 is_stmt 0 view .LVU163
+ 526 0046 03B0     		add	sp, sp, #12
+ 527              	.LCFI12:
+ 528              		.cfi_remember_state
+ 529              		.cfi_def_cfa_offset 20
+ 530              		@ sp needed
+ 531 0048 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 532              	.LVL50:
+ 533              	.L30:
+ 534              	.LCFI13:
+ 535              		.cfi_restore_state
+ 173:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 536              		.loc 1 173 3 is_stmt 1 view .LVU164
+ 173:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 537              		.loc 1 173 17 is_stmt 0 view .LVU165
+ 538 004a 3B6A     		ldr	r3, [r7, #32]
+ 173:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x0000FF00) >>  8);
+ 539              		.loc 1 173 3 view .LVU166
+ 540 004c C4F30740 		ubfx	r0, r4, #16, #8
+ 541 0050 9847     		blx	r3
+ 542              	.LVL51:
+ 174:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 543              		.loc 1 174 3 is_stmt 1 view .LVU167
+ 174:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 544              		.loc 1 174 17 is_stmt 0 view .LVU168
+ 545 0052 3B6A     		ldr	r3, [r7, #32]
+ 174:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		WIZCHIP.IF.SPI._write_byte((AddrSel & 0x000000FF) >>  0);
+ 546              		.loc 1 174 3 view .LVU169
+ 547 0054 C4F30720 		ubfx	r0, r4, #8, #8
+ 548 0058 9847     		blx	r3
+ 549              	.LVL52:
+ 175:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 550              		.loc 1 175 3 is_stmt 1 view .LVU170
+ 175:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 551              		.loc 1 175 17 is_stmt 0 view .LVU171
+ 552 005a 3B6A     		ldr	r3, [r7, #32]
+ 175:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 		for(i = 0; i < len; i++)
+ 553              		.loc 1 175 3 view .LVU172
+ 554 005c E0B2     		uxtb	r0, r4
+ 555 005e 9847     		blx	r3
+ 556              	.LVL53:
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ 557              		.loc 1 176 3 is_stmt 1 view .LVU173
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ 558              		.loc 1 176 9 is_stmt 0 view .LVU174
+ 559 0060 0024     		movs	r4, #0
+ 560              	.LVL54:
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 15
+
+
+ 561              		.loc 1 176 3 view .LVU175
+ 562 0062 05E0     		b	.L26
+ 563              	.LVL55:
+ 564              	.L27:
+ 177:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 565              		.loc 1 177 4 is_stmt 1 view .LVU176
+ 177:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 566              		.loc 1 177 18 is_stmt 0 view .LVU177
+ 567 0064 044B     		ldr	r3, .L31
+ 568 0066 1B6A     		ldr	r3, [r3, #32]
+ 177:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }
+ 569              		.loc 1 177 4 view .LVU178
+ 570 0068 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+ 571 006a 9847     		blx	r3
+ 572              	.LVL56:
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ 573              		.loc 1 176 24 is_stmt 1 discriminator 3 view .LVU179
+ 574 006c 0134     		adds	r4, r4, #1
+ 575              	.LVL57:
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ 576              		.loc 1 176 24 is_stmt 0 discriminator 3 view .LVU180
+ 577 006e A4B2     		uxth	r4, r4
+ 578              	.LVL58:
+ 579              	.L26:
+ 176:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 			WIZCHIP.IF.SPI._write_byte(pBuf[i]);
+ 580              		.loc 1 176 16 is_stmt 1 discriminator 1 view .LVU181
+ 581 0070 AC42     		cmp	r4, r5
+ 582 0072 F7D3     		bcc	.L27
+ 583 0074 E2E7     		b	.L28
+ 584              	.L32:
+ 585 0076 00BF     		.align	2
+ 586              	.L31:
+ 587 0078 00000000 		.word	WIZCHIP
+ 588              		.cfi_endproc
+ 589              	.LFE135:
+ 591              		.section	.text.getSn_TX_FSR,"ax",%progbits
+ 592              		.align	1
+ 593              		.global	getSn_TX_FSR
+ 594              		.syntax unified
+ 595              		.thumb
+ 596              		.thumb_func
+ 598              	getSn_TX_FSR:
+ 599              	.LVL59:
+ 600              	.LFB136:
+ 194:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 195:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 196:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** uint16_t getSn_TX_FSR(uint8_t sn)
+ 197:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 601              		.loc 1 197 1 view -0
+ 602              		.cfi_startproc
+ 603              		@ args = 0, pretend = 0, frame = 0
+ 604              		@ frame_needed = 0, uses_anonymous_args = 0
+ 605              		.loc 1 197 1 is_stmt 0 view .LVU183
+ 606 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 607              	.LCFI14:
+ 608              		.cfi_def_cfa_offset 24
+ 609              		.cfi_offset 4, -24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 16
+
+
+ 610              		.cfi_offset 5, -20
+ 611              		.cfi_offset 6, -16
+ 612              		.cfi_offset 7, -12
+ 613              		.cfi_offset 8, -8
+ 614              		.cfi_offset 14, -4
+ 615 0004 0746     		mov	r7, r0
+ 198:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t val=0,val1=0;
+ 616              		.loc 1 198 4 is_stmt 1 view .LVU184
+ 617              	.LVL60:
+ 618              		.loc 1 198 13 is_stmt 0 view .LVU185
+ 619 0006 0025     		movs	r5, #0
+ 620 0008 01E0     		b	.L35
+ 621              	.LVL61:
+ 622              	.L34:
+ 199:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 200:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    do
+ 201:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 202:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = WIZCHIP_READ(Sn_TX_FSR(sn));
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 204:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 205:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       {
+ 206:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = WIZCHIP_READ(Sn_TX_FSR(sn));
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = (val << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 208:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 209:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }while (val != val1);
+ 623              		.loc 1 209 16 is_stmt 1 view .LVU186
+ 624 000a A542     		cmp	r5, r4
+ 625 000c 20D0     		beq	.L37
+ 626              	.LVL62:
+ 627              	.L35:
+ 200:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 628              		.loc 1 200 4 view .LVU187
+ 202:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 629              		.loc 1 202 7 view .LVU188
+ 202:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 630              		.loc 1 202 27 is_stmt 0 view .LVU189
+ 631 000e 4FEA8708 		lsl	r8, r7, #2
+ 632 0012 08F10108 		add	r8, r8, #1
+ 633 0016 4FEAC808 		lsl	r8, r8, #3
+ 634 001a 08F50056 		add	r6, r8, #8192
+ 202:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 635              		.loc 1 202 14 view .LVU190
+ 636 001e 3046     		mov	r0, r6
+ 637 0020 FFF7FEFF 		bl	WIZCHIP_READ
+ 638              	.LVL63:
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 639              		.loc 1 203 7 is_stmt 1 view .LVU191
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 640              		.loc 1 203 20 is_stmt 0 view .LVU192
+ 641 0024 0402     		lsls	r4, r0, #8
+ 642 0026 A4B2     		uxth	r4, r4
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 643              		.loc 1 203 41 view .LVU193
+ 644 0028 08F50458 		add	r8, r8, #8448
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 645              		.loc 1 203 28 view .LVU194
+ 646 002c 4046     		mov	r0, r8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 17
+
+
+ 647              	.LVL64:
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 648              		.loc 1 203 28 view .LVU195
+ 649 002e FFF7FEFF 		bl	WIZCHIP_READ
+ 650              	.LVL65:
+ 203:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 651              		.loc 1 203 12 discriminator 1 view .LVU196
+ 652 0032 0444     		add	r4, r4, r0
+ 653 0034 A4B2     		uxth	r4, r4
+ 654              	.LVL66:
+ 204:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       {
+ 655              		.loc 1 204 7 is_stmt 1 view .LVU197
+ 204:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       {
+ 656              		.loc 1 204 10 is_stmt 0 view .LVU198
+ 657 0036 002C     		cmp	r4, #0
+ 658 0038 E7D0     		beq	.L34
+ 206:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = (val << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 659              		.loc 1 206 9 is_stmt 1 view .LVU199
+ 206:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = (val << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_TX_FSR(sn),1));
+ 660              		.loc 1 206 15 is_stmt 0 view .LVU200
+ 661 003a 3046     		mov	r0, r6
+ 662 003c FFF7FEFF 		bl	WIZCHIP_READ
+ 663              	.LVL67:
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 664              		.loc 1 207 9 is_stmt 1 view .LVU201
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 665              		.loc 1 207 20 is_stmt 0 view .LVU202
+ 666 0040 0502     		lsls	r5, r0, #8
+ 667 0042 ADB2     		uxth	r5, r5
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 668              		.loc 1 207 28 view .LVU203
+ 669 0044 4046     		mov	r0, r8
+ 670              	.LVL68:
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 671              		.loc 1 207 28 view .LVU204
+ 672 0046 FFF7FEFF 		bl	WIZCHIP_READ
+ 673              	.LVL69:
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 674              		.loc 1 207 13 discriminator 1 view .LVU205
+ 675 004a 0544     		add	r5, r5, r0
+ 676 004c ADB2     		uxth	r5, r5
+ 677              	.LVL70:
+ 207:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 678              		.loc 1 207 13 discriminator 1 view .LVU206
+ 679 004e DCE7     		b	.L34
+ 680              	.L37:
+ 210:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    return val;
+ 681              		.loc 1 210 4 is_stmt 1 view .LVU207
+ 211:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 682              		.loc 1 211 1 is_stmt 0 view .LVU208
+ 683 0050 2846     		mov	r0, r5
+ 684 0052 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 685              		.loc 1 211 1 view .LVU209
+ 686              		.cfi_endproc
+ 687              	.LFE136:
+ 689              		.section	.text.getSn_RX_RSR,"ax",%progbits
+ 690              		.align	1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 18
+
+
+ 691              		.global	getSn_RX_RSR
+ 692              		.syntax unified
+ 693              		.thumb
+ 694              		.thumb_func
+ 696              	getSn_RX_RSR:
+ 697              	.LVL71:
+ 698              	.LFB137:
+ 212:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 213:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 214:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** uint16_t getSn_RX_RSR(uint8_t sn)
+ 215:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 699              		.loc 1 215 1 is_stmt 1 view -0
+ 700              		.cfi_startproc
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 0, uses_anonymous_args = 0
+ 703              		.loc 1 215 1 is_stmt 0 view .LVU211
+ 704 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 705              	.LCFI15:
+ 706              		.cfi_def_cfa_offset 24
+ 707              		.cfi_offset 4, -24
+ 708              		.cfi_offset 5, -20
+ 709              		.cfi_offset 6, -16
+ 710              		.cfi_offset 7, -12
+ 711              		.cfi_offset 8, -8
+ 712              		.cfi_offset 14, -4
+ 713 0004 0746     		mov	r7, r0
+ 216:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t val=0,val1=0;
+ 714              		.loc 1 216 4 is_stmt 1 view .LVU212
+ 715              	.LVL72:
+ 716              		.loc 1 216 13 is_stmt 0 view .LVU213
+ 717 0006 0025     		movs	r5, #0
+ 718 0008 01E0     		b	.L40
+ 719              	.LVL73:
+ 720              	.L39:
+ 217:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 218:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    do
+ 219:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 220:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = WIZCHIP_READ(Sn_RX_RSR(sn));
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 222:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 223:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       {
+ 224:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = WIZCHIP_READ(Sn_RX_RSR(sn));
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = (val << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 226:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 227:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    }while (val != val1);
+ 721              		.loc 1 227 16 is_stmt 1 view .LVU214
+ 722 000a A542     		cmp	r5, r4
+ 723 000c 20D0     		beq	.L42
+ 724              	.LVL74:
+ 725              	.L40:
+ 218:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    {
+ 726              		.loc 1 218 4 view .LVU215
+ 220:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 727              		.loc 1 220 7 view .LVU216
+ 220:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 728              		.loc 1 220 27 is_stmt 0 view .LVU217
+ 729 000e 4FEA8708 		lsl	r8, r7, #2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 19
+
+
+ 730 0012 08F10108 		add	r8, r8, #1
+ 731 0016 4FEAC808 		lsl	r8, r8, #3
+ 732 001a 08F51856 		add	r6, r8, #9728
+ 220:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       val1 = (val1 << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 733              		.loc 1 220 14 view .LVU218
+ 734 001e 3046     		mov	r0, r6
+ 735 0020 FFF7FEFF 		bl	WIZCHIP_READ
+ 736              	.LVL75:
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 737              		.loc 1 221 7 is_stmt 1 view .LVU219
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 738              		.loc 1 221 20 is_stmt 0 view .LVU220
+ 739 0024 0402     		lsls	r4, r0, #8
+ 740 0026 A4B2     		uxth	r4, r4
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 741              		.loc 1 221 41 view .LVU221
+ 742 0028 08F51C58 		add	r8, r8, #9984
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 743              		.loc 1 221 28 view .LVU222
+ 744 002c 4046     		mov	r0, r8
+ 745              	.LVL76:
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 746              		.loc 1 221 28 view .LVU223
+ 747 002e FFF7FEFF 		bl	WIZCHIP_READ
+ 748              	.LVL77:
+ 221:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       if (val1 != 0)
+ 749              		.loc 1 221 12 discriminator 1 view .LVU224
+ 750 0032 0444     		add	r4, r4, r0
+ 751 0034 A4B2     		uxth	r4, r4
+ 752              	.LVL78:
+ 222:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       {
+ 753              		.loc 1 222 7 is_stmt 1 view .LVU225
+ 222:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       {
+ 754              		.loc 1 222 10 is_stmt 0 view .LVU226
+ 755 0036 002C     		cmp	r4, #0
+ 756 0038 E7D0     		beq	.L39
+ 224:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = (val << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 757              		.loc 1 224 9 is_stmt 1 view .LVU227
+ 224:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****         val = (val << 8) + WIZCHIP_READ(WIZCHIP_OFFSET_INC(Sn_RX_RSR(sn),1));
+ 758              		.loc 1 224 15 is_stmt 0 view .LVU228
+ 759 003a 3046     		mov	r0, r6
+ 760 003c FFF7FEFF 		bl	WIZCHIP_READ
+ 761              	.LVL79:
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 762              		.loc 1 225 9 is_stmt 1 view .LVU229
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 763              		.loc 1 225 20 is_stmt 0 view .LVU230
+ 764 0040 0502     		lsls	r5, r0, #8
+ 765 0042 ADB2     		uxth	r5, r5
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 766              		.loc 1 225 28 view .LVU231
+ 767 0044 4046     		mov	r0, r8
+ 768              	.LVL80:
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 769              		.loc 1 225 28 view .LVU232
+ 770 0046 FFF7FEFF 		bl	WIZCHIP_READ
+ 771              	.LVL81:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 20
+
+
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 772              		.loc 1 225 13 discriminator 1 view .LVU233
+ 773 004a 0544     		add	r5, r5, r0
+ 774 004c ADB2     		uxth	r5, r5
+ 775              	.LVL82:
+ 225:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****       }
+ 776              		.loc 1 225 13 discriminator 1 view .LVU234
+ 777 004e DCE7     		b	.L39
+ 778              	.L42:
+ 228:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    return val;
+ 779              		.loc 1 228 4 is_stmt 1 view .LVU235
+ 229:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 780              		.loc 1 229 1 is_stmt 0 view .LVU236
+ 781 0050 2846     		mov	r0, r5
+ 782 0052 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 783              		.loc 1 229 1 view .LVU237
+ 784              		.cfi_endproc
+ 785              	.LFE137:
+ 787              		.section	.text.wiz_send_data,"ax",%progbits
+ 788              		.align	1
+ 789              		.global	wiz_send_data
+ 790              		.syntax unified
+ 791              		.thumb
+ 792              		.thumb_func
+ 794              	wiz_send_data:
+ 795              	.LVL83:
+ 796              	.LFB138:
+ 230:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 231:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** void wiz_send_data(uint8_t sn, uint8_t *wizdata, uint16_t len)
+ 232:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 797              		.loc 1 232 1 is_stmt 1 view -0
+ 798              		.cfi_startproc
+ 799              		@ args = 0, pretend = 0, frame = 0
+ 800              		@ frame_needed = 0, uses_anonymous_args = 0
+ 233:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t ptr = 0;
+ 801              		.loc 1 233 4 view .LVU239
+ 234:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint32_t addrsel = 0;
+ 802              		.loc 1 234 4 view .LVU240
+ 235:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 236:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    if(len == 0)  return;
+ 803              		.loc 1 236 4 view .LVU241
+ 804              		.loc 1 236 6 is_stmt 0 view .LVU242
+ 805 0000 02B9     		cbnz	r2, .L49
+ 806 0002 7047     		bx	lr
+ 807              	.L49:
+ 232:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t ptr = 0;
+ 808              		.loc 1 232 1 view .LVU243
+ 809 0004 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 810              	.LCFI16:
+ 811              		.cfi_def_cfa_offset 32
+ 812              		.cfi_offset 3, -32
+ 813              		.cfi_offset 4, -28
+ 814              		.cfi_offset 5, -24
+ 815              		.cfi_offset 6, -20
+ 816              		.cfi_offset 7, -16
+ 817              		.cfi_offset 8, -12
+ 818              		.cfi_offset 9, -8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 21
+
+
+ 819              		.cfi_offset 14, -4
+ 820 0008 0E46     		mov	r6, r1
+ 821 000a 1746     		mov	r7, r2
+ 237:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ptr = getSn_TX_WR(sn);
+ 822              		.loc 1 237 4 is_stmt 1 view .LVU244
+ 823              		.loc 1 237 10 is_stmt 0 view .LVU245
+ 824 000c 8400     		lsls	r4, r0, #2
+ 825 000e 04F10109 		add	r9, r4, #1
+ 826 0012 4FEAC909 		lsl	r9, r9, #3
+ 827 0016 09F51058 		add	r8, r9, #9216
+ 828 001a 4046     		mov	r0, r8
+ 829              	.LVL84:
+ 830              		.loc 1 237 10 view .LVU246
+ 831 001c FFF7FEFF 		bl	WIZCHIP_READ
+ 832              	.LVL85:
+ 833              		.loc 1 237 10 discriminator 1 view .LVU247
+ 834 0020 0502     		lsls	r5, r0, #8
+ 835 0022 ADB2     		uxth	r5, r5
+ 836 0024 09F51459 		add	r9, r9, #9472
+ 837 0028 4846     		mov	r0, r9
+ 838 002a FFF7FEFF 		bl	WIZCHIP_READ
+ 839              	.LVL86:
+ 840              		.loc 1 237 8 discriminator 2 view .LVU248
+ 841 002e 0544     		add	r5, r5, r0
+ 842 0030 ADB2     		uxth	r5, r5
+ 843              	.LVL87:
+ 238:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //M20140501 : implict type casting -> explict type casting
+ 239:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //addrsel = (ptr << 8) + (WIZCHIP_TXBUF_BLOCK(sn) << 3);
+ 240:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    addrsel = ((uint32_t)ptr << 8) + (WIZCHIP_TXBUF_BLOCK(sn) << 3);
+ 844              		.loc 1 240 4 is_stmt 1 view .LVU249
+ 845              		.loc 1 240 38 is_stmt 0 view .LVU250
+ 846 0032 A01C     		adds	r0, r4, #2
+ 847              		.loc 1 240 62 view .LVU251
+ 848 0034 C000     		lsls	r0, r0, #3
+ 849              	.LVL88:
+ 241:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //
+ 242:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_WRITE_BUF(addrsel,wizdata, len);
+ 850              		.loc 1 242 4 is_stmt 1 view .LVU252
+ 851 0036 3A46     		mov	r2, r7
+ 852 0038 3146     		mov	r1, r6
+ 853 003a 00EB0520 		add	r0, r0, r5, lsl #8
+ 854              	.LVL89:
+ 855              		.loc 1 242 4 is_stmt 0 view .LVU253
+ 856 003e FFF7FEFF 		bl	WIZCHIP_WRITE_BUF
+ 857              	.LVL90:
+ 243:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    
+ 244:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ptr += len;
+ 858              		.loc 1 244 4 is_stmt 1 view .LVU254
+ 859              		.loc 1 244 8 is_stmt 0 view .LVU255
+ 860 0042 7919     		adds	r1, r7, r5
+ 861 0044 8CB2     		uxth	r4, r1
+ 862              	.LVL91:
+ 245:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    setSn_TX_WR(sn,ptr);
+ 863              		.loc 1 245 4 is_stmt 1 view .LVU256
+ 864 0046 C1F30721 		ubfx	r1, r1, #8, #8
+ 865 004a 4046     		mov	r0, r8
+ 866 004c FFF7FEFF 		bl	WIZCHIP_WRITE
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 22
+
+
+ 867              	.LVL92:
+ 868              		.loc 1 245 4 discriminator 1 view .LVU257
+ 869 0050 E1B2     		uxtb	r1, r4
+ 870 0052 4846     		mov	r0, r9
+ 871 0054 FFF7FEFF 		bl	WIZCHIP_WRITE
+ 872              	.LVL93:
+ 873              		.loc 1 245 23 discriminator 1 view .LVU258
+ 246:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 874              		.loc 1 246 1 is_stmt 0 view .LVU259
+ 875 0058 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 876              		.loc 1 246 1 view .LVU260
+ 877              		.cfi_endproc
+ 878              	.LFE138:
+ 880              		.section	.text.wiz_recv_data,"ax",%progbits
+ 881              		.align	1
+ 882              		.global	wiz_recv_data
+ 883              		.syntax unified
+ 884              		.thumb
+ 885              		.thumb_func
+ 887              	wiz_recv_data:
+ 888              	.LVL94:
+ 889              	.LFB139:
+ 247:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 248:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** void wiz_recv_data(uint8_t sn, uint8_t *wizdata, uint16_t len)
+ 249:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 890              		.loc 1 249 1 is_stmt 1 view -0
+ 891              		.cfi_startproc
+ 892              		@ args = 0, pretend = 0, frame = 0
+ 893              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t ptr = 0;
+ 894              		.loc 1 250 4 view .LVU262
+ 251:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint32_t addrsel = 0;
+ 895              		.loc 1 251 4 view .LVU263
+ 252:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    
+ 253:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    if(len == 0) return;
+ 896              		.loc 1 253 4 view .LVU264
+ 897              		.loc 1 253 6 is_stmt 0 view .LVU265
+ 898 0000 02B9     		cbnz	r2, .L56
+ 899 0002 7047     		bx	lr
+ 900              	.L56:
+ 249:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t ptr = 0;
+ 901              		.loc 1 249 1 view .LVU266
+ 902 0004 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 903              	.LCFI17:
+ 904              		.cfi_def_cfa_offset 32
+ 905              		.cfi_offset 3, -32
+ 906              		.cfi_offset 4, -28
+ 907              		.cfi_offset 5, -24
+ 908              		.cfi_offset 6, -20
+ 909              		.cfi_offset 7, -16
+ 910              		.cfi_offset 8, -12
+ 911              		.cfi_offset 9, -8
+ 912              		.cfi_offset 14, -4
+ 913 0008 0E46     		mov	r6, r1
+ 914 000a 1746     		mov	r7, r2
+ 254:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ptr = getSn_RX_RD(sn);
+ 915              		.loc 1 254 4 is_stmt 1 view .LVU267
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 23
+
+
+ 916              		.loc 1 254 10 is_stmt 0 view .LVU268
+ 917 000c 8400     		lsls	r4, r0, #2
+ 918 000e 04F10109 		add	r9, r4, #1
+ 919 0012 4FEAC909 		lsl	r9, r9, #3
+ 920 0016 09F52058 		add	r8, r9, #10240
+ 921 001a 4046     		mov	r0, r8
+ 922              	.LVL95:
+ 923              		.loc 1 254 10 view .LVU269
+ 924 001c FFF7FEFF 		bl	WIZCHIP_READ
+ 925              	.LVL96:
+ 926              		.loc 1 254 10 discriminator 1 view .LVU270
+ 927 0020 0502     		lsls	r5, r0, #8
+ 928 0022 ADB2     		uxth	r5, r5
+ 929 0024 09F52459 		add	r9, r9, #10496
+ 930 0028 4846     		mov	r0, r9
+ 931 002a FFF7FEFF 		bl	WIZCHIP_READ
+ 932              	.LVL97:
+ 933              		.loc 1 254 8 discriminator 2 view .LVU271
+ 934 002e 0544     		add	r5, r5, r0
+ 935 0030 ADB2     		uxth	r5, r5
+ 936              	.LVL98:
+ 255:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //M20140501 : implict type casting -> explict type casting
+ 256:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //addrsel = ((ptr << 8) + (WIZCHIP_RXBUF_BLOCK(sn) << 3);
+ 257:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    addrsel = ((uint32_t)ptr << 8) + (WIZCHIP_RXBUF_BLOCK(sn) << 3);
+ 937              		.loc 1 257 4 is_stmt 1 view .LVU272
+ 938              		.loc 1 257 38 is_stmt 0 view .LVU273
+ 939 0032 E01C     		adds	r0, r4, #3
+ 940              		.loc 1 257 62 view .LVU274
+ 941 0034 C000     		lsls	r0, r0, #3
+ 942              	.LVL99:
+ 258:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    //
+ 259:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    WIZCHIP_READ_BUF(addrsel, wizdata, len);
+ 943              		.loc 1 259 4 is_stmt 1 view .LVU275
+ 944 0036 3A46     		mov	r2, r7
+ 945 0038 3146     		mov	r1, r6
+ 946 003a 00EB0520 		add	r0, r0, r5, lsl #8
+ 947              	.LVL100:
+ 948              		.loc 1 259 4 is_stmt 0 view .LVU276
+ 949 003e FFF7FEFF 		bl	WIZCHIP_READ_BUF
+ 950              	.LVL101:
+ 260:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ptr += len;
+ 951              		.loc 1 260 4 is_stmt 1 view .LVU277
+ 952              		.loc 1 260 8 is_stmt 0 view .LVU278
+ 953 0042 7919     		adds	r1, r7, r5
+ 954 0044 8CB2     		uxth	r4, r1
+ 955              	.LVL102:
+ 261:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    
+ 262:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    setSn_RX_RD(sn,ptr);
+ 956              		.loc 1 262 4 is_stmt 1 view .LVU279
+ 957 0046 C1F30721 		ubfx	r1, r1, #8, #8
+ 958 004a 4046     		mov	r0, r8
+ 959 004c FFF7FEFF 		bl	WIZCHIP_WRITE
+ 960              	.LVL103:
+ 961              		.loc 1 262 4 discriminator 1 view .LVU280
+ 962 0050 E1B2     		uxtb	r1, r4
+ 963 0052 4846     		mov	r0, r9
+ 964 0054 FFF7FEFF 		bl	WIZCHIP_WRITE
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 24
+
+
+ 965              	.LVL104:
+ 966              		.loc 1 262 23 discriminator 1 view .LVU281
+ 263:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 967              		.loc 1 263 1 is_stmt 0 view .LVU282
+ 968 0058 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 969              		.loc 1 263 1 view .LVU283
+ 970              		.cfi_endproc
+ 971              	.LFE139:
+ 973              		.section	.text.wiz_recv_ignore,"ax",%progbits
+ 974              		.align	1
+ 975              		.global	wiz_recv_ignore
+ 976              		.syntax unified
+ 977              		.thumb
+ 978              		.thumb_func
+ 980              	wiz_recv_ignore:
+ 981              	.LVL105:
+ 982              	.LFB140:
+ 264:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 265:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 266:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** void wiz_recv_ignore(uint8_t sn, uint16_t len)
+ 267:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** {
+ 983              		.loc 1 267 1 is_stmt 1 view -0
+ 984              		.cfi_startproc
+ 985              		@ args = 0, pretend = 0, frame = 0
+ 986              		@ frame_needed = 0, uses_anonymous_args = 0
+ 987              		.loc 1 267 1 is_stmt 0 view .LVU285
+ 988 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 989              	.LCFI18:
+ 990              		.cfi_def_cfa_offset 24
+ 991              		.cfi_offset 3, -24
+ 992              		.cfi_offset 4, -20
+ 993              		.cfi_offset 5, -16
+ 994              		.cfi_offset 6, -12
+ 995              		.cfi_offset 7, -8
+ 996              		.cfi_offset 14, -4
+ 997 0002 0E46     		mov	r6, r1
+ 268:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    uint16_t ptr = 0;
+ 998              		.loc 1 268 4 is_stmt 1 view .LVU286
+ 999              	.LVL106:
+ 269:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** 
+ 270:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ptr = getSn_RX_RD(sn);
+ 1000              		.loc 1 270 4 view .LVU287
+ 1001              		.loc 1 270 10 is_stmt 0 view .LVU288
+ 1002 0004 8400     		lsls	r4, r0, #2
+ 1003 0006 0134     		adds	r4, r4, #1
+ 1004 0008 E400     		lsls	r4, r4, #3
+ 1005 000a 04F52057 		add	r7, r4, #10240
+ 1006 000e 3846     		mov	r0, r7
+ 1007              	.LVL107:
+ 1008              		.loc 1 270 10 view .LVU289
+ 1009 0010 FFF7FEFF 		bl	WIZCHIP_READ
+ 1010              	.LVL108:
+ 1011              		.loc 1 270 10 discriminator 1 view .LVU290
+ 1012 0014 0502     		lsls	r5, r0, #8
+ 1013 0016 ADB2     		uxth	r5, r5
+ 1014 0018 04F52454 		add	r4, r4, #10496
+ 1015 001c 2046     		mov	r0, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 25
+
+
+ 1016 001e FFF7FEFF 		bl	WIZCHIP_READ
+ 1017              	.LVL109:
+ 1018              		.loc 1 270 8 discriminator 2 view .LVU291
+ 1019 0022 0544     		add	r5, r5, r0
+ 1020              	.LVL110:
+ 271:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    ptr += len;
+ 1021              		.loc 1 271 4 is_stmt 1 view .LVU292
+ 1022              		.loc 1 271 8 is_stmt 0 view .LVU293
+ 1023 0024 16FA85F1 		uxtah	r1, r6, r5
+ 1024 0028 8DB2     		uxth	r5, r1
+ 1025              	.LVL111:
+ 272:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c ****    setSn_RX_RD(sn,ptr);
+ 1026              		.loc 1 272 4 is_stmt 1 view .LVU294
+ 1027 002a C1F30721 		ubfx	r1, r1, #8, #8
+ 1028 002e 3846     		mov	r0, r7
+ 1029 0030 FFF7FEFF 		bl	WIZCHIP_WRITE
+ 1030              	.LVL112:
+ 1031              		.loc 1 272 4 discriminator 1 view .LVU295
+ 1032 0034 E9B2     		uxtb	r1, r5
+ 1033 0036 2046     		mov	r0, r4
+ 1034 0038 FFF7FEFF 		bl	WIZCHIP_WRITE
+ 1035              	.LVL113:
+ 1036              		.loc 1 272 23 discriminator 2 view .LVU296
+ 273:../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.c **** }
+ 1037              		.loc 1 273 1 is_stmt 0 view .LVU297
+ 1038 003c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1039              		.loc 1 273 1 view .LVU298
+ 1040              		.cfi_endproc
+ 1041              	.LFE140:
+ 1043              		.text
+ 1044              	.Letext0:
+ 1045              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1046              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1047              		.file 4 "../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 w5500.c
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:21     .text.WIZCHIP_READ:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:27     .text.WIZCHIP_READ:00000000 WIZCHIP_READ
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:143    .text.WIZCHIP_READ:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:148    .text.WIZCHIP_WRITE:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:154    .text.WIZCHIP_WRITE:00000000 WIZCHIP_WRITE
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:273    .text.WIZCHIP_WRITE:00000064 $d
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:278    .text.WIZCHIP_READ_BUF:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:284    .text.WIZCHIP_READ_BUF:00000000 WIZCHIP_READ_BUF
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:431    .text.WIZCHIP_READ_BUF:00000078 $d
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:436    .text.WIZCHIP_WRITE_BUF:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:442    .text.WIZCHIP_WRITE_BUF:00000000 WIZCHIP_WRITE_BUF
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:587    .text.WIZCHIP_WRITE_BUF:00000078 $d
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:592    .text.getSn_TX_FSR:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:598    .text.getSn_TX_FSR:00000000 getSn_TX_FSR
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:690    .text.getSn_RX_RSR:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:696    .text.getSn_RX_RSR:00000000 getSn_RX_RSR
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:788    .text.wiz_send_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:794    .text.wiz_send_data:00000000 wiz_send_data
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:881    .text.wiz_recv_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:887    .text.wiz_recv_data:00000000 wiz_recv_data
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:974    .text.wiz_recv_ignore:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGoivOG.s:980    .text.wiz_recv_ignore:00000000 wiz_recv_ignore
+
+UNDEFINED SYMBOLS
+WIZCHIP

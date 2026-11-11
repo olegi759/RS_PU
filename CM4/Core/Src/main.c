@@ -55,6 +55,8 @@
 #include "fault_data.h"
 #include "common.h"
 #include "pu.h"
+#include "ws_server.h"
+#include "ws_rubetec.h"
 
 /* USER CODE END Includes */
 
@@ -139,6 +141,49 @@ char mki_version[32] = {'\0'};
 char mkk1_version[32] = {'\0'};
 char mkk2_version[32] = {'\0'};
 
+void rubetec_on_start_alert_rec(uint8_t pu_id, uint8_t input_line){
+  rubetec_send_acept();
+     //rubetec_send_error("errEpta", "rubetec_on_start_alert_rec");
+}
+
+void rubetec_on_reset_rec(uint32_t pu_id_mask){
+   //rubetec_send_acept();
+   rubetec_send_error("errEpta", "rubetec_on_reset_rec");
+}
+
+void rubetec_on_emergency_start(uint32_t pu_id_mask){
+  rubetec_send_acept();
+     //rubetec_send_error("errEpta", "rubetec_on_emergency_start");
+}
+
+
+void rubetec_on_get_status(uint32_t pu_id_mask){
+    rubetec_pu_fault_t f1 = {0};
+    f1.type       = "f1";
+    f1.param = 2;
+    f1.message    = "error message1";
+
+    rubetec_pu_fault_t f2 = {0};
+    f2.type       = "f2";
+    f2.param = 1;
+    f2.message    = "error message2";
+
+    rubetec_pu_state_t pu = {0};   // < ÃËÀÂÍÎÅ: îáíóëåíèå
+    pu.active_inputs_mask       = 0xFF;
+    pu.active_zones_mask        = 0xAA;
+    pu.automation_disabled_mask = 0x44;
+    pu.outputs_disabled_mask    = 0x0;
+    pu.mode   = "mode pu fire";
+    pu.pu_id  = 1;
+    pu.faults[0] = f1;
+    pu.faults[1] = f2;
+    // faults[2..4] îñòàþòñÿ íóëåâûìè > ïðîïóñêàþòñÿ â öèêëå
+
+    rubetec_pu_state_t pus[2] = {0};  // < òîæå îáíóëèòü
+    pus[0] = pu;
+
+    rubetec_send_pu_states("2026-05-19T10:45:12", pus, 1);
+}
 
 void UART_flush(UART_HandleTypeDef *huart) {
   // Flush UART RX buffer if RXNE is set
@@ -361,7 +406,7 @@ void timers_on_1min(void)
 
 	//ulog_fmt(CONM"HAL_GetTick:%lu"CRLF, HAL_GetTick());
 
-	 pu_um_snd_sinus();
+	 //pu_um_snd_sinus();
 }
 
 //void timers_on_10sec(void)
@@ -832,12 +877,14 @@ int main(void)
 		  //ulog(CONM"net_int_state"CRLF);
 		  net_int_state = FALSE;
 		  net_task();
+      ws_server_poll();
 	  }
 
 	  //E_INT_SPI все время в 1 , при прерывании падает в ноль
 	  //ulog_fmt("E_INT_SPI %d"CRLF, PIN_GET(E_INT_SPI));
 	  if (PIN_GET(E_INT_SPI) == 0) {
 		  net_task();
+      ws_server_poll();
 	  }
 
 

@@ -1,0 +1,1342 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"loopback.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../w5500/ioLibrary_driver/Application/loopback/loopback.c"
+  20              		.section	.rodata.loopback_tcps.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 25643A43 		.ascii	"%d:Connected - %d.%d.%d.%d : %d\015\012\000"
+  23      6F6E6E65 
+  23      63746564 
+  23      202D2025 
+  23      642E2564 
+  24 0022 0000     		.align	2
+  25              	.LC1:
+  26 0024 25643A53 		.ascii	"%d:Socket Closed\015\012\000"
+  26      6F636B65 
+  26      7420436C 
+  26      6F736564 
+  26      0D0A00
+  27 0037 00       		.align	2
+  28              	.LC2:
+  29 0038 25643A4C 		.ascii	"%d:Listen, TCP server loopback, port [%d]\015\012\000"
+  29      69737465 
+  29      6E2C2054 
+  29      43502073 
+  29      65727665 
+  30              		.section	.text.loopback_tcps,"ax",%progbits
+  31              		.align	1
+  32              		.global	loopback_tcps
+  33              		.syntax unified
+  34              		.thumb
+  35              		.thumb_func
+  37              	loopback_tcps:
+  38              	.LVL0:
+  39              	.LFB135:
+   1:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #include <stdio.h>
+   2:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #include "loopback.h"
+   3:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #include "socket.h"
+   4:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #include "wizchip_conf.h"
+   5:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+   6:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #if LOOPBACK_MODE == LOOPBACK_MAIN_NOBLCOK
+   7:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 2
+
+
+   8:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** int32_t loopback_tcps(uint8_t sn, uint8_t* buf, uint16_t port)
+   9:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** {
+  40              		.loc 1 9 1 view -0
+  41              		.cfi_startproc
+  42              		@ args = 0, pretend = 0, frame = 8
+  43              		@ frame_needed = 0, uses_anonymous_args = 0
+  44              		.loc 1 9 1 is_stmt 0 view .LVU1
+  45 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  46              	.LCFI0:
+  47              		.cfi_def_cfa_offset 24
+  48              		.cfi_offset 4, -24
+  49              		.cfi_offset 5, -20
+  50              		.cfi_offset 6, -16
+  51              		.cfi_offset 7, -12
+  52              		.cfi_offset 8, -8
+  53              		.cfi_offset 14, -4
+  54 0004 86B0     		sub	sp, sp, #24
+  55              	.LCFI1:
+  56              		.cfi_def_cfa_offset 48
+  57 0006 0546     		mov	r5, r0
+  58 0008 0F46     		mov	r7, r1
+  59 000a 1646     		mov	r6, r2
+  10:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    int32_t ret;
+  60              		.loc 1 10 4 is_stmt 1 view .LVU2
+  11:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint16_t size = 0, sentsize=0;
+  61              		.loc 1 11 4 view .LVU3
+  62              	.LVL1:
+  12:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  13:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  14:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint8_t destip[4];
+  63              		.loc 1 14 4 view .LVU4
+  15:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint16_t destport;
+  64              		.loc 1 15 4 view .LVU5
+  16:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  17:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  18:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    switch(getSn_SR(sn))
+  65              		.loc 1 18 4 view .LVU6
+  66              		.loc 1 18 11 is_stmt 0 view .LVU7
+  67 000c 8400     		lsls	r4, r0, #2
+  68 000e 0134     		adds	r4, r4, #1
+  69 0010 E400     		lsls	r4, r4, #3
+  70 0012 04F54070 		add	r0, r4, #768
+  71              	.LVL2:
+  72              		.loc 1 18 11 view .LVU8
+  73 0016 FFF7FEFF 		bl	WIZCHIP_READ
+  74              	.LVL3:
+  75              		.loc 1 18 4 discriminator 1 view .LVU9
+  76 001a 1C28     		cmp	r0, #28
+  77 001c 00F28780 		bhi	.L13
+  78 0020 DFE800F0 		tbb	[pc, r0]
+  79              	.L4:
+  80 0024 7A       		.byte	(.L7-.L4)/2
+  81 0025 85       		.byte	(.L13-.L4)/2
+  82 0026 85       		.byte	(.L13-.L4)/2
+  83 0027 85       		.byte	(.L13-.L4)/2
+  84 0028 85       		.byte	(.L13-.L4)/2
+  85 0029 85       		.byte	(.L13-.L4)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 3
+
+
+  86 002a 85       		.byte	(.L13-.L4)/2
+  87 002b 85       		.byte	(.L13-.L4)/2
+  88 002c 85       		.byte	(.L13-.L4)/2
+  89 002d 85       		.byte	(.L13-.L4)/2
+  90 002e 85       		.byte	(.L13-.L4)/2
+  91 002f 85       		.byte	(.L13-.L4)/2
+  92 0030 85       		.byte	(.L13-.L4)/2
+  93 0031 85       		.byte	(.L13-.L4)/2
+  94 0032 85       		.byte	(.L13-.L4)/2
+  95 0033 85       		.byte	(.L13-.L4)/2
+  96 0034 85       		.byte	(.L13-.L4)/2
+  97 0035 85       		.byte	(.L13-.L4)/2
+  98 0036 85       		.byte	(.L13-.L4)/2
+  99 0037 70       		.byte	(.L6-.L4)/2
+ 100 0038 85       		.byte	(.L13-.L4)/2
+ 101 0039 85       		.byte	(.L13-.L4)/2
+ 102 003a 85       		.byte	(.L13-.L4)/2
+ 103 003b 0F       		.byte	(.L5-.L4)/2
+ 104 003c 85       		.byte	(.L13-.L4)/2
+ 105 003d 85       		.byte	(.L13-.L4)/2
+ 106 003e 85       		.byte	(.L13-.L4)/2
+ 107 003f 85       		.byte	(.L13-.L4)/2
+ 108 0040 65       		.byte	(.L3-.L4)/2
+ 109 0041 00       		.p2align 1
+ 110              	.L5:
+  19:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    {
+  20:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_ESTABLISHED :
+  21:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(getSn_IR(sn) & Sn_IR_CON)
+ 111              		.loc 1 21 10 is_stmt 1 view .LVU10
+ 112              		.loc 1 21 13 is_stmt 0 view .LVU11
+ 113 0042 04F50078 		add	r8, r4, #512
+ 114 0046 4046     		mov	r0, r8
+ 115 0048 FFF7FEFF 		bl	WIZCHIP_READ
+ 116              	.LVL4:
+ 117              		.loc 1 21 12 discriminator 1 view .LVU12
+ 118 004c 10F0010F 		tst	r0, #1
+ 119 0050 21D1     		bne	.L17
+ 120              	.LVL5:
+ 121              	.L8:
+  22:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          {
+  23:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  24:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			getSn_DIPR(sn, destip);
+  25:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			destport = getSn_DPORT(sn);
+  26:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  27:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			ulog_fmt("%d:Connected - %d.%d.%d.%d : %d\r\n",sn, destip[0], destip[1], destip[2], destip[3], d
+  28:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  29:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			setSn_IR(sn,Sn_IR_CON);
+  30:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+  31:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 		 if((size = getSn_RX_RSR(sn)) > 0) // Don't need to check SOCKERR_BUSY because it doesn't not occ
+ 122              		.loc 1 31 4 is_stmt 1 view .LVU13
+ 123              		.loc 1 31 15 is_stmt 0 view .LVU14
+ 124 0052 2846     		mov	r0, r5
+ 125 0054 FFF7FEFF 		bl	getSn_RX_RSR
+ 126              	.LVL6:
+ 127              		.loc 1 31 6 discriminator 1 view .LVU15
+ 128 0058 0246     		mov	r2, r0
+ 129 005a 0028     		cmp	r0, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 4
+
+
+ 130 005c 6CD0     		beq	.L14
+  32:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          {
+  33:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			if(size > DATA_BUF_SIZE) size = DATA_BUF_SIZE;
+ 131              		.loc 1 33 4 is_stmt 1 view .LVU16
+ 132              		.loc 1 33 6 is_stmt 0 view .LVU17
+ 133 005e B0F5805F 		cmp	r0, #4096
+ 134 0062 01D9     		bls	.L9
+ 135              		.loc 1 33 34 discriminator 1 view .LVU18
+ 136 0064 4FF48052 		mov	r2, #4096
+ 137              	.L9:
+ 138              	.LVL7:
+  34:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			ret = recv(sn, buf, size);
+ 139              		.loc 1 34 4 is_stmt 1 view .LVU19
+ 140              		.loc 1 34 10 is_stmt 0 view .LVU20
+ 141 0068 3946     		mov	r1, r7
+ 142 006a 2846     		mov	r0, r5
+ 143 006c FFF7FEFF 		bl	recv
+ 144              	.LVL8:
+  35:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  36:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			if(ret <= 0) return ret;      // check SOCKERR_BUSY & SOCKERR_XXX. For showing the occurrence of
+ 145              		.loc 1 36 4 is_stmt 1 view .LVU21
+ 146              		.loc 1 36 6 is_stmt 0 view .LVU22
+ 147 0070 041E     		subs	r4, r0, #0
+ 148 0072 5DDD     		ble	.L1
+  37:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			size = (uint16_t) ret;
+ 149              		.loc 1 37 4 is_stmt 1 view .LVU23
+ 150              		.loc 1 37 9 is_stmt 0 view .LVU24
+ 151 0074 1FFA84F8 		uxth	r8, r4
+ 152              	.LVL9:
+  38:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			sentsize = 0;
+ 153              		.loc 1 38 4 is_stmt 1 view .LVU25
+  39:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  40:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			while(size != sentsize)
+ 154              		.loc 1 40 4 view .LVU26
+  38:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			sentsize = 0;
+ 155              		.loc 1 38 13 is_stmt 0 view .LVU27
+ 156 0078 0026     		movs	r6, #0
+ 157              	.LVL10:
+ 158              	.L10:
+ 159              		.loc 1 40 15 is_stmt 1 view .LVU28
+ 160 007a 4645     		cmp	r6, r8
+ 161 007c 35D0     		beq	.L18
+  41:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			{
+  42:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				ret = send(sn, buf+sentsize, size-sentsize);
+ 162              		.loc 1 42 5 view .LVU29
+ 163              		.loc 1 42 11 is_stmt 0 view .LVU30
+ 164 007e A8EB0602 		sub	r2, r8, r6
+ 165 0082 92B2     		uxth	r2, r2
+ 166 0084 B919     		adds	r1, r7, r6
+ 167 0086 2846     		mov	r0, r5
+ 168              	.LVL11:
+ 169              		.loc 1 42 11 view .LVU31
+ 170 0088 FFF7FEFF 		bl	send
+ 171              	.LVL12:
+  43:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				if(ret < 0)
+ 172              		.loc 1 43 5 is_stmt 1 view .LVU32
+ 173              		.loc 1 43 7 is_stmt 0 view .LVU33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 5
+
+
+ 174 008c 041E     		subs	r4, r0, #0
+ 175 008e 28DB     		blt	.L19
+  44:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				{
+  45:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					close(sn);
+  46:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					return ret;
+  47:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				}
+  48:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				sentsize += ret; // Don't care SOCKERR_BUSY, because it is zero.
+ 176              		.loc 1 48 5 is_stmt 1 view .LVU34
+ 177              		.loc 1 48 14 is_stmt 0 view .LVU35
+ 178 0090 2644     		add	r6, r6, r4
+ 179              	.LVL13:
+ 180              		.loc 1 48 14 view .LVU36
+ 181 0092 B6B2     		uxth	r6, r6
+ 182              	.LVL14:
+ 183              		.loc 1 48 14 view .LVU37
+ 184 0094 F1E7     		b	.L10
+ 185              	.LVL15:
+ 186              	.L17:
+  24:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			destport = getSn_DPORT(sn);
+ 187              		.loc 1 24 4 is_stmt 1 view .LVU38
+ 188 0096 0422     		movs	r2, #4
+ 189 0098 05A9     		add	r1, sp, #20
+ 190 009a 04F54060 		add	r0, r4, #3072
+ 191 009e FFF7FEFF 		bl	WIZCHIP_READ_BUF
+ 192              	.LVL16:
+  25:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 193              		.loc 1 25 4 view .LVU39
+  25:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 194              		.loc 1 25 15 is_stmt 0 view .LVU40
+ 195 00a2 04F58050 		add	r0, r4, #4096
+ 196 00a6 FFF7FEFF 		bl	WIZCHIP_READ
+ 197              	.LVL17:
+  25:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 198              		.loc 1 25 15 discriminator 1 view .LVU41
+ 199 00aa 0602     		lsls	r6, r0, #8
+ 200 00ac B6B2     		uxth	r6, r6
+ 201 00ae 04F58850 		add	r0, r4, #4352
+ 202 00b2 FFF7FEFF 		bl	WIZCHIP_READ
+ 203              	.LVL18:
+  25:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 204              		.loc 1 25 13 discriminator 2 view .LVU42
+ 205 00b6 0644     		add	r6, r6, r0
+ 206 00b8 B6B2     		uxth	r6, r6
+ 207              	.LVL19:
+  27:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 208              		.loc 1 27 4 is_stmt 1 view .LVU43
+  27:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 209              		.loc 1 27 83 is_stmt 0 view .LVU44
+ 210 00ba 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+  27:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 211              		.loc 1 27 94 view .LVU45
+ 212 00be 9DF81720 		ldrb	r2, [sp, #23]	@ zero_extendqisi2
+  27:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 213              		.loc 1 27 4 view .LVU46
+ 214 00c2 0296     		str	r6, [sp, #8]
+ 215 00c4 0192     		str	r2, [sp, #4]
+ 216 00c6 0093     		str	r3, [sp]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 6
+
+
+ 217 00c8 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
+ 218 00cc 9DF81420 		ldrb	r2, [sp, #20]	@ zero_extendqisi2
+ 219 00d0 2946     		mov	r1, r5
+ 220 00d2 1A48     		ldr	r0, .L20
+ 221 00d4 FFF7FEFF 		bl	ulog_fmt
+ 222              	.LVL20:
+  29:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+ 223              		.loc 1 29 4 is_stmt 1 view .LVU47
+ 224 00d8 0121     		movs	r1, #1
+ 225 00da 4046     		mov	r0, r8
+ 226 00dc FFF7FEFF 		bl	WIZCHIP_WRITE
+ 227              	.LVL21:
+ 228 00e0 B7E7     		b	.L8
+ 229              	.LVL22:
+ 230              	.L19:
+  45:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					return ret;
+ 231              		.loc 1 45 6 view .LVU48
+ 232 00e2 2846     		mov	r0, r5
+ 233              	.LVL23:
+  45:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					return ret;
+ 234              		.loc 1 45 6 is_stmt 0 view .LVU49
+ 235 00e4 FFF7FEFF 		bl	close
+ 236              	.LVL24:
+  46:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				}
+ 237              		.loc 1 46 6 is_stmt 1 view .LVU50
+  46:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				}
+ 238              		.loc 1 46 13 is_stmt 0 view .LVU51
+ 239 00e8 22E0     		b	.L1
+ 240              	.LVL25:
+ 241              	.L18:
+  49:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			}
+  50:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+  51:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+  52:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_CLOSE_WAIT :
+  53:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  54:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //printf("%d:CloseWait\r\n",sn);
+  55:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  56:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if((ret = disconnect(sn)) != SOCK_OK) return ret;
+  57:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  58:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          ulog_fmt("%d:Socket Closed\r\n", sn);
+  59:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  60:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+  61:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_INIT :
+  62:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  63:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	  ulog_fmt("%d:Listen, TCP server loopback, port [%d]\r\n", sn, port);
+  64:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  65:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if( (ret = listen(sn)) != SOCK_OK) return ret;
+  66:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+  67:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_CLOSED:
+  68:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  69:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //printf("%d:TCP server loopback start\r\n",sn);
+  70:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  71:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if((ret = socket(sn, Sn_MR_TCP, port, 0x00)) != sn) return ret;
+  72:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+  73:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //printf("%d:Socket opened\r\n",sn);
+  74:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+  75:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 7
+
+
+  76:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       default:
+  77:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+  78:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    }
+  79:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    return 1;
+ 242              		.loc 1 79 11 view .LVU52
+ 243 00ea 0124     		movs	r4, #1
+ 244 00ec 20E0     		b	.L1
+ 245              	.LVL26:
+ 246              	.L3:
+  56:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 247              		.loc 1 56 10 is_stmt 1 view .LVU53
+  56:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 248              		.loc 1 56 20 is_stmt 0 view .LVU54
+ 249 00ee 2846     		mov	r0, r5
+ 250 00f0 FFF7FEFF 		bl	disconnect
+ 251              	.LVL27:
+  56:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 252              		.loc 1 56 18 discriminator 1 view .LVU55
+ 253 00f4 0446     		mov	r4, r0
+ 254              	.LVL28:
+  56:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 255              		.loc 1 56 12 discriminator 1 view .LVU56
+ 256 00f6 0128     		cmp	r0, #1
+ 257 00f8 1AD1     		bne	.L1
+  58:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 258              		.loc 1 58 10 is_stmt 1 view .LVU57
+ 259 00fa 2946     		mov	r1, r5
+ 260 00fc 1048     		ldr	r0, .L20+4
+ 261              	.LVL29:
+  58:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 262              		.loc 1 58 10 is_stmt 0 view .LVU58
+ 263 00fe FFF7FEFF 		bl	ulog_fmt
+ 264              	.LVL30:
+  60:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_INIT :
+ 265              		.loc 1 60 10 is_stmt 1 view .LVU59
+ 266 0102 15E0     		b	.L1
+ 267              	.LVL31:
+ 268              	.L6:
+  63:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 269              		.loc 1 63 8 view .LVU60
+ 270 0104 3246     		mov	r2, r6
+ 271 0106 2946     		mov	r1, r5
+ 272 0108 0E48     		ldr	r0, .L20+8
+ 273 010a FFF7FEFF 		bl	ulog_fmt
+ 274              	.LVL32:
+  65:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 275              		.loc 1 65 10 view .LVU61
+  65:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 276              		.loc 1 65 21 is_stmt 0 view .LVU62
+ 277 010e 2846     		mov	r0, r5
+ 278 0110 FFF7FEFF 		bl	listen
+ 279              	.LVL33:
+  65:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 280              		.loc 1 65 19 discriminator 1 view .LVU63
+ 281 0114 0446     		mov	r4, r0
+ 282              	.LVL34:
+  65:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 8
+
+
+ 283              		.loc 1 65 19 discriminator 1 view .LVU64
+ 284 0116 0BE0     		b	.L1
+ 285              	.LVL35:
+ 286              	.L7:
+  71:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 287              		.loc 1 71 10 is_stmt 1 view .LVU65
+  71:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 288              		.loc 1 71 20 is_stmt 0 view .LVU66
+ 289 0118 0023     		movs	r3, #0
+ 290 011a 3246     		mov	r2, r6
+ 291 011c 0121     		movs	r1, #1
+ 292 011e 2846     		mov	r0, r5
+ 293 0120 FFF7FEFF 		bl	socket
+ 294              	.LVL36:
+  71:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 295              		.loc 1 71 18 discriminator 1 view .LVU67
+ 296 0124 0446     		mov	r4, r0
+ 297              	.LVL37:
+  71:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 298              		.loc 1 71 12 discriminator 1 view .LVU68
+ 299 0126 8542     		cmp	r5, r0
+ 300 0128 02D1     		bne	.L1
+ 301              		.loc 1 79 11 view .LVU69
+ 302 012a 0124     		movs	r4, #1
+ 303 012c 00E0     		b	.L1
+ 304              	.LVL38:
+ 305              	.L13:
+  18:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    {
+ 306              		.loc 1 18 4 discriminator 1 view .LVU70
+ 307 012e 0124     		movs	r4, #1
+ 308              	.LVL39:
+ 309              	.L1:
+  80:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 310              		.loc 1 80 1 view .LVU71
+ 311 0130 2046     		mov	r0, r4
+ 312 0132 06B0     		add	sp, sp, #24
+ 313              	.LCFI2:
+ 314              		.cfi_remember_state
+ 315              		.cfi_def_cfa_offset 24
+ 316              		@ sp needed
+ 317 0134 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 318              	.LVL40:
+ 319              	.L14:
+ 320              	.LCFI3:
+ 321              		.cfi_restore_state
+  79:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 322              		.loc 1 79 11 view .LVU72
+ 323 0138 0124     		movs	r4, #1
+ 324 013a F9E7     		b	.L1
+ 325              	.L21:
+ 326              		.align	2
+ 327              	.L20:
+ 328 013c 00000000 		.word	.LC0
+ 329 0140 24000000 		.word	.LC1
+ 330 0144 38000000 		.word	.LC2
+ 331              		.cfi_endproc
+ 332              	.LFE135:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 9
+
+
+ 334              		.section	.rodata.loopback_tcpc.str1.4,"aMS",%progbits,1
+ 335              		.align	2
+ 336              	.LC3:
+ 337 0000 25643A43 		.ascii	"%d:Connected to - %d.%d.%d.%d : %d\015\012\000"
+ 337      6F6E6E65 
+ 337      63746564 
+ 337      20746F20 
+ 337      2D202564 
+ 338 0025 000000   		.align	2
+ 339              	.LC4:
+ 340 0028 25643A54 		.ascii	"%d:Try to connect to the %d.%d.%d.%d : %d\015\012\000"
+ 340      72792074 
+ 340      6F20636F 
+ 340      6E6E6563 
+ 340      7420746F 
+ 341              		.section	.text.loopback_tcpc,"ax",%progbits
+ 342              		.align	1
+ 343              		.global	loopback_tcpc
+ 344              		.syntax unified
+ 345              		.thumb
+ 346              		.thumb_func
+ 348              	loopback_tcpc:
+ 349              	.LVL41:
+ 350              	.LFB136:
+  81:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  82:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  83:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** int32_t loopback_tcpc(uint8_t sn, uint8_t* buf, uint8_t* destip, uint16_t destport)
+  84:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** {
+ 351              		.loc 1 84 1 is_stmt 1 view -0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 0
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355              		.loc 1 84 1 is_stmt 0 view .LVU74
+ 356 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 357              	.LCFI4:
+ 358              		.cfi_def_cfa_offset 24
+ 359              		.cfi_offset 4, -24
+ 360              		.cfi_offset 5, -20
+ 361              		.cfi_offset 6, -16
+ 362              		.cfi_offset 7, -12
+ 363              		.cfi_offset 8, -8
+ 364              		.cfi_offset 14, -4
+ 365 0004 84B0     		sub	sp, sp, #16
+ 366              	.LCFI5:
+ 367              		.cfi_def_cfa_offset 40
+ 368 0006 0546     		mov	r5, r0
+ 369 0008 0F46     		mov	r7, r1
+ 370 000a 1646     		mov	r6, r2
+ 371 000c 9846     		mov	r8, r3
+  85:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    int32_t ret; // return value for SOCK_ERRORs
+ 372              		.loc 1 85 4 is_stmt 1 view .LVU75
+  86:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint16_t size = 0, sentsize=0;
+ 373              		.loc 1 86 4 view .LVU76
+ 374              	.LVL42:
+  87:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  88:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    // Destination (TCP Server) IP info (will be connected)
+  89:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    // >> loopback_tcpc() function parameter
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 10
+
+
+  90:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    // >> Ex)
+  91:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    //	uint8_t destip[4] = 	{192, 168, 0, 214};
+  92:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    //	uint16_t destport = 	5000;
+  93:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  94:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    // Port number for TCP client (will be increased)
+  95:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    static uint16_t any_port = 	50000;
+ 375              		.loc 1 95 4 view .LVU77
+  96:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+  97:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    // Socket Status Transitions
+  98:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    // Check the W5500 Socket n status register (Sn_SR, The 'Sn_SR' controlled by Sn_CR command or P
+  99:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    switch(getSn_SR(sn))
+ 376              		.loc 1 99 4 view .LVU78
+ 377              		.loc 1 99 11 is_stmt 0 view .LVU79
+ 378 000e 8400     		lsls	r4, r0, #2
+ 379 0010 0134     		adds	r4, r4, #1
+ 380 0012 E400     		lsls	r4, r4, #3
+ 381 0014 04F54070 		add	r0, r4, #768
+ 382              	.LVL43:
+ 383              		.loc 1 99 11 view .LVU80
+ 384 0018 FFF7FEFF 		bl	WIZCHIP_READ
+ 385              	.LVL44:
+ 386              		.loc 1 99 4 discriminator 1 view .LVU81
+ 387 001c 1C28     		cmp	r0, #28
+ 388 001e 00F28A80 		bhi	.L35
+ 389 0022 DFE800F0 		tbb	[pc, r0]
+ 390              	.L25:
+ 391 0026 6E       		.byte	(.L28-.L25)/2
+ 392 0027 88       		.byte	(.L35-.L25)/2
+ 393 0028 88       		.byte	(.L35-.L25)/2
+ 394 0029 88       		.byte	(.L35-.L25)/2
+ 395 002a 88       		.byte	(.L35-.L25)/2
+ 396 002b 88       		.byte	(.L35-.L25)/2
+ 397 002c 88       		.byte	(.L35-.L25)/2
+ 398 002d 88       		.byte	(.L35-.L25)/2
+ 399 002e 88       		.byte	(.L35-.L25)/2
+ 400 002f 88       		.byte	(.L35-.L25)/2
+ 401 0030 88       		.byte	(.L35-.L25)/2
+ 402 0031 88       		.byte	(.L35-.L25)/2
+ 403 0032 88       		.byte	(.L35-.L25)/2
+ 404 0033 88       		.byte	(.L35-.L25)/2
+ 405 0034 88       		.byte	(.L35-.L25)/2
+ 406 0035 88       		.byte	(.L35-.L25)/2
+ 407 0036 88       		.byte	(.L35-.L25)/2
+ 408 0037 88       		.byte	(.L35-.L25)/2
+ 409 0038 88       		.byte	(.L35-.L25)/2
+ 410 0039 5B       		.byte	(.L27-.L25)/2
+ 411 003a 88       		.byte	(.L35-.L25)/2
+ 412 003b 88       		.byte	(.L35-.L25)/2
+ 413 003c 88       		.byte	(.L35-.L25)/2
+ 414 003d 0F       		.byte	(.L26-.L25)/2
+ 415 003e 88       		.byte	(.L35-.L25)/2
+ 416 003f 88       		.byte	(.L35-.L25)/2
+ 417 0040 88       		.byte	(.L35-.L25)/2
+ 418 0041 88       		.byte	(.L35-.L25)/2
+ 419 0042 50       		.byte	(.L24-.L25)/2
+ 420 0043 00       		.p2align 1
+ 421              	.L26:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 11
+
+
+ 100:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    {
+ 101:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_ESTABLISHED :
+ 102:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(getSn_IR(sn) & Sn_IR_CON)	// Socket n interrupt register mask; TCP CON interrupt = conn
+ 422              		.loc 1 102 10 is_stmt 1 view .LVU82
+ 423              		.loc 1 102 13 is_stmt 0 view .LVU83
+ 424 0044 04F50074 		add	r4, r4, #512
+ 425 0048 2046     		mov	r0, r4
+ 426 004a FFF7FEFF 		bl	WIZCHIP_READ
+ 427              	.LVL45:
+ 428              		.loc 1 102 12 discriminator 1 view .LVU84
+ 429 004e 10F0010F 		tst	r0, #1
+ 430 0052 21D1     		bne	.L40
+ 431              	.L29:
+ 103:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          {
+ 104:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 105:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			printf("%d:Connected to - %d.%d.%d.%d : %d\r\n",sn, destip[0], destip[1], destip[2], destip[3], 
+ 106:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 107:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			setSn_IR(sn, Sn_IR_CON);  // this interrupt should be write the bit cleared to '1'
+ 108:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+ 109:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 110:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //////////////////////////////////////////////////////////////////////////////////////////
+ 111:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          // Data Transaction Parts; Handle the [data receive and send] process
+ 112:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //////////////////////////////////////////////////////////////////////////////////////////
+ 113:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 		 if((size = getSn_RX_RSR(sn)) > 0) // Sn_RX_RSR: Socket n Received Size Register, Receiving data 
+ 432              		.loc 1 113 4 is_stmt 1 view .LVU85
+ 433              		.loc 1 113 15 is_stmt 0 view .LVU86
+ 434 0054 2846     		mov	r0, r5
+ 435 0056 FFF7FEFF 		bl	getSn_RX_RSR
+ 436              	.LVL46:
+ 437              		.loc 1 113 6 discriminator 1 view .LVU87
+ 438 005a 0246     		mov	r2, r0
+ 439 005c 0028     		cmp	r0, #0
+ 440 005e 6FD0     		beq	.L36
+ 114:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          {
+ 115:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			if(size > DATA_BUF_SIZE) size = DATA_BUF_SIZE; // DATA_BUF_SIZE means user defined buffer size (
+ 441              		.loc 1 115 4 is_stmt 1 view .LVU88
+ 442              		.loc 1 115 6 is_stmt 0 view .LVU89
+ 443 0060 B0F5805F 		cmp	r0, #4096
+ 444 0064 01D9     		bls	.L30
+ 445              		.loc 1 115 34 discriminator 1 view .LVU90
+ 446 0066 4FF48052 		mov	r2, #4096
+ 447              	.L30:
+ 448              	.LVL47:
+ 116:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			ret = recv(sn, buf, size); // Data Receive process (H/W Rx socket buffer -> User's buffer)
+ 449              		.loc 1 116 4 is_stmt 1 view .LVU91
+ 450              		.loc 1 116 10 is_stmt 0 view .LVU92
+ 451 006a 3946     		mov	r1, r7
+ 452 006c 2846     		mov	r0, r5
+ 453 006e FFF7FEFF 		bl	recv
+ 454              	.LVL48:
+ 117:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 118:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			if(ret <= 0) return ret; // If the received data length <= 0, receive failed and process end
+ 455              		.loc 1 118 4 is_stmt 1 view .LVU93
+ 456              		.loc 1 118 6 is_stmt 0 view .LVU94
+ 457 0072 041E     		subs	r4, r0, #0
+ 458 0074 60DD     		ble	.L22
+ 119:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			size = (uint16_t) ret;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 12
+
+
+ 459              		.loc 1 119 4 is_stmt 1 view .LVU95
+ 460              		.loc 1 119 9 is_stmt 0 view .LVU96
+ 461 0076 1FFA84F8 		uxth	r8, r4
+ 462              	.LVL49:
+ 120:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			sentsize = 0;
+ 463              		.loc 1 120 4 is_stmt 1 view .LVU97
+ 121:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 122:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			// Data sentsize control
+ 123:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			while(size != sentsize)
+ 464              		.loc 1 123 4 view .LVU98
+ 120:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			sentsize = 0;
+ 465              		.loc 1 120 13 is_stmt 0 view .LVU99
+ 466 007a 0026     		movs	r6, #0
+ 467              	.LVL50:
+ 468              	.L31:
+ 469              		.loc 1 123 15 is_stmt 1 view .LVU100
+ 470 007c 4645     		cmp	r6, r8
+ 471 007e 20D0     		beq	.L41
+ 124:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			{
+ 125:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				ret = send(sn, buf+sentsize, size-sentsize); // Data send process (User's buffer -> Destination
+ 472              		.loc 1 125 5 view .LVU101
+ 473              		.loc 1 125 11 is_stmt 0 view .LVU102
+ 474 0080 A8EB0602 		sub	r2, r8, r6
+ 475 0084 92B2     		uxth	r2, r2
+ 476 0086 B919     		adds	r1, r7, r6
+ 477 0088 2846     		mov	r0, r5
+ 478              	.LVL51:
+ 479              		.loc 1 125 11 view .LVU103
+ 480 008a FFF7FEFF 		bl	send
+ 481              	.LVL52:
+ 126:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				if(ret < 0) // Send Error occurred (sent data length < 0)
+ 482              		.loc 1 126 5 is_stmt 1 view .LVU104
+ 483              		.loc 1 126 7 is_stmt 0 view .LVU105
+ 484 008e 041E     		subs	r4, r0, #0
+ 485 0090 13DB     		blt	.L42
+ 127:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				{
+ 128:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					close(sn); // socket close
+ 129:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					return ret;
+ 130:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				}
+ 131:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				sentsize += ret; // Don't care SOCKERR_BUSY, because it is zero.
+ 486              		.loc 1 131 5 is_stmt 1 view .LVU106
+ 487              		.loc 1 131 14 is_stmt 0 view .LVU107
+ 488 0092 2644     		add	r6, r6, r4
+ 489              	.LVL53:
+ 490              		.loc 1 131 14 view .LVU108
+ 491 0094 B6B2     		uxth	r6, r6
+ 492              	.LVL54:
+ 493              		.loc 1 131 14 view .LVU109
+ 494 0096 F1E7     		b	.L31
+ 495              	.LVL55:
+ 496              	.L40:
+ 105:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 497              		.loc 1 105 4 is_stmt 1 view .LVU110
+ 105:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 498              		.loc 1 105 84 is_stmt 0 view .LVU111
+ 499 0098 B378     		ldrb	r3, [r6, #2]	@ zero_extendqisi2
+ 105:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 13
+
+
+ 500              		.loc 1 105 95 view .LVU112
+ 501 009a F278     		ldrb	r2, [r6, #3]	@ zero_extendqisi2
+ 105:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 502              		.loc 1 105 4 view .LVU113
+ 503 009c CDF80880 		str	r8, [sp, #8]
+ 504 00a0 0192     		str	r2, [sp, #4]
+ 505 00a2 0093     		str	r3, [sp]
+ 506 00a4 7378     		ldrb	r3, [r6, #1]	@ zero_extendqisi2
+ 507 00a6 3278     		ldrb	r2, [r6]	@ zero_extendqisi2
+ 508 00a8 2946     		mov	r1, r5
+ 509 00aa 2748     		ldr	r0, .L43
+ 510 00ac FFF7FEFF 		bl	printf
+ 511              	.LVL56:
+ 107:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+ 512              		.loc 1 107 4 is_stmt 1 view .LVU114
+ 513 00b0 0121     		movs	r1, #1
+ 514 00b2 2046     		mov	r0, r4
+ 515 00b4 FFF7FEFF 		bl	WIZCHIP_WRITE
+ 516              	.LVL57:
+ 517 00b8 CCE7     		b	.L29
+ 518              	.LVL58:
+ 519              	.L42:
+ 128:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					return ret;
+ 520              		.loc 1 128 6 view .LVU115
+ 521 00ba 2846     		mov	r0, r5
+ 522              	.LVL59:
+ 128:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 					return ret;
+ 523              		.loc 1 128 6 is_stmt 0 view .LVU116
+ 524 00bc FFF7FEFF 		bl	close
+ 525              	.LVL60:
+ 129:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				}
+ 526              		.loc 1 129 6 is_stmt 1 view .LVU117
+ 129:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 				}
+ 527              		.loc 1 129 13 is_stmt 0 view .LVU118
+ 528 00c0 3AE0     		b	.L22
+ 529              	.LVL61:
+ 530              	.L41:
+ 132:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 			}
+ 133:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+ 134:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 		 //////////////////////////////////////////////////////////////////////////////////////////////
+ 135:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 136:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 137:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_CLOSE_WAIT :
+ 138:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 139:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //printf("%d:CloseWait\r\n",sn);
+ 140:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 141:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if((ret=disconnect(sn)) != SOCK_OK) return ret;
+ 142:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 143:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          printf("%d:Socket Closed\r\n", sn);
+ 144:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 145:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 146:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 147:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_INIT :
+ 148:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 149:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	 printf("%d:Try to connect to the %d.%d.%d.%d : %d\r\n", sn, destip[0], destip[1], destip[2], 
+ 150:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 151:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	 if( (ret = connect(sn, destip, destport)) != SOCK_OK) return ret;	//	Try to TCP connect to th
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 14
+
+
+ 152:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 153:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 154:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_CLOSED:
+ 155:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	  close(sn);
+ 156:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	  if((ret=socket(sn, Sn_MR_TCP, any_port++, 0x00)) != sn){
+ 157:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(any_port == 0xffff) any_port = 50000;
+ 158:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          return ret; // TCP socket open with 'any_port' port number
+ 159:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****         } 
+ 160:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 161:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	 //printf("%d:TCP client loopback start\r\n",sn);
+ 162:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //printf("%d:Socket opened\r\n",sn);
+ 163:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 164:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 165:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       default:
+ 166:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 167:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    }
+ 168:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    return 1;
+ 531              		.loc 1 168 11 view .LVU119
+ 532 00c2 0124     		movs	r4, #1
+ 533 00c4 38E0     		b	.L22
+ 534              	.LVL62:
+ 535              	.L24:
+ 141:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 536              		.loc 1 141 10 is_stmt 1 view .LVU120
+ 141:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 537              		.loc 1 141 18 is_stmt 0 view .LVU121
+ 538 00c6 2846     		mov	r0, r5
+ 539 00c8 FFF7FEFF 		bl	disconnect
+ 540              	.LVL63:
+ 141:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 541              		.loc 1 141 17 discriminator 1 view .LVU122
+ 542 00cc 0446     		mov	r4, r0
+ 543              	.LVL64:
+ 141:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 544              		.loc 1 141 12 discriminator 1 view .LVU123
+ 545 00ce 0128     		cmp	r0, #1
+ 546 00d0 32D1     		bne	.L22
+ 143:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 547              		.loc 1 143 10 is_stmt 1 view .LVU124
+ 548 00d2 2946     		mov	r1, r5
+ 549 00d4 1D48     		ldr	r0, .L43+4
+ 550              	.LVL65:
+ 143:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 551              		.loc 1 143 10 is_stmt 0 view .LVU125
+ 552 00d6 FFF7FEFF 		bl	printf
+ 553              	.LVL66:
+ 145:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 554              		.loc 1 145 10 is_stmt 1 view .LVU126
+ 555 00da 2DE0     		b	.L22
+ 556              	.LVL67:
+ 557              	.L27:
+ 149:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 558              		.loc 1 149 7 view .LVU127
+ 149:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 559              		.loc 1 149 95 is_stmt 0 view .LVU128
+ 560 00dc B378     		ldrb	r3, [r6, #2]	@ zero_extendqisi2
+ 149:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 15
+
+
+ 561              		.loc 1 149 106 view .LVU129
+ 562 00de F278     		ldrb	r2, [r6, #3]	@ zero_extendqisi2
+ 149:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 563              		.loc 1 149 7 view .LVU130
+ 564 00e0 CDF80880 		str	r8, [sp, #8]
+ 565 00e4 0192     		str	r2, [sp, #4]
+ 566 00e6 0093     		str	r3, [sp]
+ 567 00e8 7378     		ldrb	r3, [r6, #1]	@ zero_extendqisi2
+ 568 00ea 3278     		ldrb	r2, [r6]	@ zero_extendqisi2
+ 569 00ec 2946     		mov	r1, r5
+ 570 00ee 1848     		ldr	r0, .L43+8
+ 571 00f0 FFF7FEFF 		bl	printf
+ 572              	.LVL68:
+ 151:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 573              		.loc 1 151 7 is_stmt 1 view .LVU131
+ 151:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 574              		.loc 1 151 18 is_stmt 0 view .LVU132
+ 575 00f4 4246     		mov	r2, r8
+ 576 00f6 3146     		mov	r1, r6
+ 577 00f8 2846     		mov	r0, r5
+ 578 00fa FFF7FEFF 		bl	connect
+ 579              	.LVL69:
+ 151:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 580              		.loc 1 151 16 discriminator 1 view .LVU133
+ 581 00fe 0446     		mov	r4, r0
+ 582              	.LVL70:
+ 151:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 583              		.loc 1 151 16 discriminator 1 view .LVU134
+ 584 0100 1AE0     		b	.L22
+ 585              	.LVL71:
+ 586              	.L28:
+ 155:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****     	  if((ret=socket(sn, Sn_MR_TCP, any_port++, 0x00)) != sn){
+ 587              		.loc 1 155 8 is_stmt 1 view .LVU135
+ 588 0102 2846     		mov	r0, r5
+ 589 0104 FFF7FEFF 		bl	close
+ 590              	.LVL72:
+ 156:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(any_port == 0xffff) any_port = 50000;
+ 591              		.loc 1 156 8 view .LVU136
+ 156:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(any_port == 0xffff) any_port = 50000;
+ 592              		.loc 1 156 16 is_stmt 0 view .LVU137
+ 593 0108 124B     		ldr	r3, .L43+12
+ 594 010a 1A88     		ldrh	r2, [r3]
+ 595 010c 511C     		adds	r1, r2, #1
+ 596 010e 1980     		strh	r1, [r3]	@ movhi
+ 597 0110 0023     		movs	r3, #0
+ 598 0112 0121     		movs	r1, #1
+ 599 0114 2846     		mov	r0, r5
+ 600 0116 FFF7FEFF 		bl	socket
+ 601              	.LVL73:
+ 156:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(any_port == 0xffff) any_port = 50000;
+ 602              		.loc 1 156 15 discriminator 1 view .LVU138
+ 603 011a 0446     		mov	r4, r0
+ 604              	.LVL74:
+ 156:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if(any_port == 0xffff) any_port = 50000;
+ 605              		.loc 1 156 10 discriminator 1 view .LVU139
+ 606 011c 8542     		cmp	r5, r0
+ 607 011e 11D0     		beq	.L38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 16
+
+
+ 157:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          return ret; // TCP socket open with 'any_port' port number
+ 608              		.loc 1 157 10 is_stmt 1 view .LVU140
+ 157:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          return ret; // TCP socket open with 'any_port' port number
+ 609              		.loc 1 157 22 is_stmt 0 view .LVU141
+ 610 0120 0C4B     		ldr	r3, .L43+12
+ 611 0122 1A88     		ldrh	r2, [r3]
+ 157:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          return ret; // TCP socket open with 'any_port' port number
+ 612              		.loc 1 157 12 view .LVU142
+ 613 0124 4FF6FF73 		movw	r3, #65535
+ 614 0128 9A42     		cmp	r2, r3
+ 615 012a 05D1     		bne	.L22
+ 157:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          return ret; // TCP socket open with 'any_port' port number
+ 616              		.loc 1 157 33 is_stmt 1 discriminator 1 view .LVU143
+ 157:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          return ret; // TCP socket open with 'any_port' port number
+ 617              		.loc 1 157 42 is_stmt 0 discriminator 1 view .LVU144
+ 618 012c 094B     		ldr	r3, .L43+12
+ 619 012e 4CF25032 		movw	r2, #50000
+ 620 0132 1A80     		strh	r2, [r3]	@ movhi
+ 158:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****         } 
+ 621              		.loc 1 158 10 is_stmt 1 view .LVU145
+ 158:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****         } 
+ 622              		.loc 1 158 17 is_stmt 0 view .LVU146
+ 623 0134 00E0     		b	.L22
+ 624              	.LVL75:
+ 625              	.L35:
+  99:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    {
+ 626              		.loc 1 99 4 discriminator 1 view .LVU147
+ 627 0136 0124     		movs	r4, #1
+ 628              	.LVL76:
+ 629              	.L22:
+ 169:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 630              		.loc 1 169 1 view .LVU148
+ 631 0138 2046     		mov	r0, r4
+ 632 013a 04B0     		add	sp, sp, #16
+ 633              	.LCFI6:
+ 634              		.cfi_remember_state
+ 635              		.cfi_def_cfa_offset 24
+ 636              		@ sp needed
+ 637 013c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 638              	.LVL77:
+ 639              	.L36:
+ 640              	.LCFI7:
+ 641              		.cfi_restore_state
+ 168:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 642              		.loc 1 168 11 view .LVU149
+ 643 0140 0124     		movs	r4, #1
+ 644 0142 F9E7     		b	.L22
+ 645              	.LVL78:
+ 646              	.L38:
+ 168:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 647              		.loc 1 168 11 view .LVU150
+ 648 0144 0124     		movs	r4, #1
+ 649 0146 F7E7     		b	.L22
+ 650              	.L44:
+ 651              		.align	2
+ 652              	.L43:
+ 653 0148 00000000 		.word	.LC3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 17
+
+
+ 654 014c 24000000 		.word	.LC1
+ 655 0150 28000000 		.word	.LC4
+ 656 0154 00000000 		.word	any_port.0
+ 657              		.cfi_endproc
+ 658              	.LFE136:
+ 660              		.section	.rodata.loopback_udps.str1.4,"aMS",%progbits,1
+ 661              		.align	2
+ 662              	.LC5:
+ 663 0000 25643A20 		.ascii	"%d: recvfrom error. %ld\015\012\000"
+ 663      72656376 
+ 663      66726F6D 
+ 663      20657272 
+ 663      6F722E20 
+ 664 001a 0000     		.align	2
+ 665              	.LC6:
+ 666 001c 25643A20 		.ascii	"%d: sendto error. %ld\015\012\000"
+ 666      73656E64 
+ 666      746F2065 
+ 666      72726F72 
+ 666      2E20256C 
+ 667              		.align	2
+ 668              	.LC7:
+ 669 0034 25643A4F 		.ascii	"%d:Opened, UDP loopback, port [%d]\015\012\000"
+ 669      70656E65 
+ 669      642C2055 
+ 669      4450206C 
+ 669      6F6F7062 
+ 670              		.section	.text.loopback_udps,"ax",%progbits
+ 671              		.align	1
+ 672              		.global	loopback_udps
+ 673              		.syntax unified
+ 674              		.thumb
+ 675              		.thumb_func
+ 677              	loopback_udps:
+ 678              	.LVL79:
+ 679              	.LFB137:
+ 170:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 171:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 172:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** int32_t loopback_udps(uint8_t sn, uint8_t* buf, uint16_t port)
+ 173:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** {
+ 680              		.loc 1 173 1 is_stmt 1 view -0
+ 681              		.cfi_startproc
+ 682              		@ args = 0, pretend = 0, frame = 8
+ 683              		@ frame_needed = 0, uses_anonymous_args = 0
+ 684              		.loc 1 173 1 is_stmt 0 view .LVU152
+ 685 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 686              	.LCFI8:
+ 687              		.cfi_def_cfa_offset 24
+ 688              		.cfi_offset 4, -24
+ 689              		.cfi_offset 5, -20
+ 690              		.cfi_offset 6, -16
+ 691              		.cfi_offset 7, -12
+ 692              		.cfi_offset 8, -8
+ 693              		.cfi_offset 14, -4
+ 694 0004 84B0     		sub	sp, sp, #16
+ 695              	.LCFI9:
+ 696              		.cfi_def_cfa_offset 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 18
+
+
+ 697 0006 0546     		mov	r5, r0
+ 698 0008 0F46     		mov	r7, r1
+ 699 000a 1646     		mov	r6, r2
+ 174:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    int32_t  ret;
+ 700              		.loc 1 174 4 is_stmt 1 view .LVU153
+ 175:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint16_t size, sentsize;
+ 701              		.loc 1 175 4 view .LVU154
+ 176:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint8_t  destip[4];
+ 702              		.loc 1 176 4 view .LVU155
+ 177:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    uint16_t destport;
+ 703              		.loc 1 177 4 view .LVU156
+ 178:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** 
+ 179:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    switch(getSn_SR(sn))
+ 704              		.loc 1 179 4 view .LVU157
+ 705              		.loc 1 179 11 is_stmt 0 view .LVU158
+ 706 000c 8000     		lsls	r0, r0, #2
+ 707              	.LVL80:
+ 708              		.loc 1 179 11 view .LVU159
+ 709 000e 0130     		adds	r0, r0, #1
+ 710 0010 C000     		lsls	r0, r0, #3
+ 711 0012 00F54070 		add	r0, r0, #768
+ 712 0016 FFF7FEFF 		bl	WIZCHIP_READ
+ 713              	.LVL81:
+ 714              		.loc 1 179 4 discriminator 1 view .LVU160
+ 715 001a 0028     		cmp	r0, #0
+ 716 001c 39D0     		beq	.L46
+ 717 001e 2228     		cmp	r0, #34
+ 718 0020 47D1     		bne	.L53
+ 180:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    {
+ 181:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_UDP :
+ 182:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if((size = getSn_RX_RSR(sn)) > 0)
+ 719              		.loc 1 182 10 is_stmt 1 view .LVU161
+ 720              		.loc 1 182 21 is_stmt 0 view .LVU162
+ 721 0022 2846     		mov	r0, r5
+ 722 0024 FFF7FEFF 		bl	getSn_RX_RSR
+ 723              	.LVL82:
+ 724              		.loc 1 182 12 discriminator 1 view .LVU163
+ 725 0028 0246     		mov	r2, r0
+ 726 002a 0028     		cmp	r0, #0
+ 727 002c 46D0     		beq	.L54
+ 183:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          {
+ 184:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             if(size > DATA_BUF_SIZE) size = DATA_BUF_SIZE;
+ 728              		.loc 1 184 13 is_stmt 1 view .LVU164
+ 729              		.loc 1 184 15 is_stmt 0 view .LVU165
+ 730 002e B0F5805F 		cmp	r0, #4096
+ 731 0032 01D9     		bls	.L48
+ 732              		.loc 1 184 43 discriminator 1 view .LVU166
+ 733 0034 4FF48052 		mov	r2, #4096
+ 734              	.L48:
+ 735              	.LVL83:
+ 185:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             ret = recvfrom(sn, buf, size, destip, (uint16_t*)&destport);
+ 736              		.loc 1 185 13 is_stmt 1 view .LVU167
+ 737              		.loc 1 185 19 is_stmt 0 view .LVU168
+ 738 0038 0DF10A03 		add	r3, sp, #10
+ 739 003c 0093     		str	r3, [sp]
+ 740 003e 03AB     		add	r3, sp, #12
+ 741 0040 3946     		mov	r1, r7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 19
+
+
+ 742 0042 2846     		mov	r0, r5
+ 743 0044 FFF7FEFF 		bl	recvfrom
+ 744              	.LVL84:
+ 186:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             if(ret <= 0)
+ 745              		.loc 1 186 13 is_stmt 1 view .LVU169
+ 746              		.loc 1 186 15 is_stmt 0 view .LVU170
+ 747 0048 041E     		subs	r4, r0, #0
+ 748 004a 03DD     		ble	.L57
+ 187:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             {
+ 188:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 189:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                printf("%d: recvfrom error. %ld\r\n",sn,ret);
+ 190:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 191:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                return ret;
+ 192:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             }
+ 193:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             size = (uint16_t) ret;
+ 749              		.loc 1 193 13 is_stmt 1 view .LVU171
+ 750              		.loc 1 193 18 is_stmt 0 view .LVU172
+ 751 004c 1FFA84F8 		uxth	r8, r4
+ 752              	.LVL85:
+ 194:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             sentsize = 0;
+ 753              		.loc 1 194 13 is_stmt 1 view .LVU173
+ 195:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             while(sentsize != size)
+ 754              		.loc 1 195 13 view .LVU174
+ 194:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             sentsize = 0;
+ 755              		.loc 1 194 22 is_stmt 0 view .LVU175
+ 756 0050 0026     		movs	r6, #0
+ 757              	.LVL86:
+ 758              		.loc 1 195 18 view .LVU176
+ 759 0052 07E0     		b	.L50
+ 760              	.LVL87:
+ 761              	.L57:
+ 189:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 762              		.loc 1 189 16 is_stmt 1 view .LVU177
+ 763 0054 2246     		mov	r2, r4
+ 764 0056 2946     		mov	r1, r5
+ 765 0058 1948     		ldr	r0, .L59
+ 766              	.LVL88:
+ 189:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 767              		.loc 1 189 16 is_stmt 0 view .LVU178
+ 768 005a FFF7FEFF 		bl	printf
+ 769              	.LVL89:
+ 191:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             }
+ 770              		.loc 1 191 16 is_stmt 1 view .LVU179
+ 191:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             }
+ 771              		.loc 1 191 23 is_stmt 0 view .LVU180
+ 772 005e 29E0     		b	.L45
+ 773              	.LVL90:
+ 774              	.L51:
+ 196:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             {
+ 197:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                ret = sendto(sn, buf+sentsize, size-sentsize, destip, destport);
+ 198:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                if(ret < 0)
+ 199:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                {
+ 200:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 201:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                   printf("%d: sendto error. %ld\r\n",sn,ret);
+ 202:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 203:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                   return ret;
+ 204:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 20
+
+
+ 205:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                sentsize += ret; // Don't care SOCKERR_BUSY, because it is zero.
+ 775              		.loc 1 205 16 is_stmt 1 view .LVU181
+ 776              		.loc 1 205 25 is_stmt 0 view .LVU182
+ 777 0060 3444     		add	r4, r4, r6
+ 778 0062 A6B2     		uxth	r6, r4
+ 779              	.LVL91:
+ 780              	.L50:
+ 195:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             {
+ 781              		.loc 1 195 28 is_stmt 1 view .LVU183
+ 782 0064 4645     		cmp	r6, r8
+ 783 0066 12D0     		beq	.L58
+ 197:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                if(ret < 0)
+ 784              		.loc 1 197 16 view .LVU184
+ 197:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                if(ret < 0)
+ 785              		.loc 1 197 22 is_stmt 0 view .LVU185
+ 786 0068 A8EB0602 		sub	r2, r8, r6
+ 787 006c BDF80A30 		ldrh	r3, [sp, #10]
+ 788 0070 0093     		str	r3, [sp]
+ 789 0072 03AB     		add	r3, sp, #12
+ 790 0074 92B2     		uxth	r2, r2
+ 791 0076 B919     		adds	r1, r7, r6
+ 792 0078 2846     		mov	r0, r5
+ 793              	.LVL92:
+ 197:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                if(ret < 0)
+ 794              		.loc 1 197 22 view .LVU186
+ 795 007a FFF7FEFF 		bl	sendto
+ 796              	.LVL93:
+ 198:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                {
+ 797              		.loc 1 198 16 is_stmt 1 view .LVU187
+ 198:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                {
+ 798              		.loc 1 198 18 is_stmt 0 view .LVU188
+ 799 007e 041E     		subs	r4, r0, #0
+ 800 0080 EEDA     		bge	.L51
+ 201:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 801              		.loc 1 201 19 is_stmt 1 view .LVU189
+ 802 0082 2246     		mov	r2, r4
+ 803 0084 2946     		mov	r1, r5
+ 804 0086 0F48     		ldr	r0, .L59+4
+ 805              	.LVL94:
+ 201:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 806              		.loc 1 201 19 is_stmt 0 view .LVU190
+ 807 0088 FFF7FEFF 		bl	printf
+ 808              	.LVL95:
+ 203:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                }
+ 809              		.loc 1 203 19 is_stmt 1 view .LVU191
+ 203:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****                }
+ 810              		.loc 1 203 26 is_stmt 0 view .LVU192
+ 811 008c 12E0     		b	.L45
+ 812              	.LVL96:
+ 813              	.L58:
+ 206:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             }
+ 207:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          }
+ 208:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 209:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       case SOCK_CLOSED:
+ 210:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 211:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          //printf("%d:UDP loopback start\r\n",sn);
+ 212:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 21
+
+
+ 213:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          if((ret = socket(sn, Sn_MR_UDP, port, 0x00)) != sn)
+ 214:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             return ret;
+ 215:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #ifdef _LOOPBACK_DEBUG_
+ 216:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          printf("%d:Opened, UDP loopback, port [%d]\r\n", sn, port);
+ 217:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 218:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 219:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       default :
+ 220:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****          break;
+ 221:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    }
+ 222:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    return 1;
+ 814              		.loc 1 222 11 view .LVU193
+ 815 008e 0124     		movs	r4, #1
+ 816 0090 10E0     		b	.L45
+ 817              	.LVL97:
+ 818              	.L46:
+ 213:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             return ret;
+ 819              		.loc 1 213 10 is_stmt 1 view .LVU194
+ 213:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             return ret;
+ 820              		.loc 1 213 20 is_stmt 0 view .LVU195
+ 821 0092 0023     		movs	r3, #0
+ 822 0094 3246     		mov	r2, r6
+ 823 0096 0221     		movs	r1, #2
+ 824 0098 2846     		mov	r0, r5
+ 825 009a FFF7FEFF 		bl	socket
+ 826              	.LVL98:
+ 213:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             return ret;
+ 827              		.loc 1 213 18 discriminator 1 view .LVU196
+ 828 009e 0446     		mov	r4, r0
+ 829              	.LVL99:
+ 213:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****             return ret;
+ 830              		.loc 1 213 12 discriminator 1 view .LVU197
+ 831 00a0 8542     		cmp	r5, r0
+ 832 00a2 07D1     		bne	.L45
+ 216:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 833              		.loc 1 216 10 is_stmt 1 view .LVU198
+ 834 00a4 3246     		mov	r2, r6
+ 835 00a6 2946     		mov	r1, r5
+ 836 00a8 0748     		ldr	r0, .L59+8
+ 837              	.LVL100:
+ 216:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** #endif
+ 838              		.loc 1 216 10 is_stmt 0 view .LVU199
+ 839 00aa FFF7FEFF 		bl	printf
+ 840              	.LVL101:
+ 218:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       default :
+ 841              		.loc 1 218 10 is_stmt 1 view .LVU200
+ 842              		.loc 1 222 11 is_stmt 0 view .LVU201
+ 843 00ae 0124     		movs	r4, #1
+ 844              	.LVL102:
+ 218:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****       default :
+ 845              		.loc 1 218 10 view .LVU202
+ 846 00b0 00E0     		b	.L45
+ 847              	.LVL103:
+ 848              	.L53:
+ 179:../../w5500/ioLibrary_driver/Application/loopback/loopback.c ****    {
+ 849              		.loc 1 179 4 discriminator 1 view .LVU203
+ 850 00b2 0124     		movs	r4, #1
+ 851              	.L45:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 22
+
+
+ 223:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 852              		.loc 1 223 1 view .LVU204
+ 853 00b4 2046     		mov	r0, r4
+ 854 00b6 04B0     		add	sp, sp, #16
+ 855              	.LCFI10:
+ 856              		.cfi_remember_state
+ 857              		.cfi_def_cfa_offset 24
+ 858              		@ sp needed
+ 859 00b8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 860              	.LVL104:
+ 861              	.L54:
+ 862              	.LCFI11:
+ 863              		.cfi_restore_state
+ 222:../../w5500/ioLibrary_driver/Application/loopback/loopback.c **** }
+ 864              		.loc 1 222 11 view .LVU205
+ 865 00bc 0124     		movs	r4, #1
+ 866 00be F9E7     		b	.L45
+ 867              	.L60:
+ 868              		.align	2
+ 869              	.L59:
+ 870 00c0 00000000 		.word	.LC5
+ 871 00c4 1C000000 		.word	.LC6
+ 872 00c8 34000000 		.word	.LC7
+ 873              		.cfi_endproc
+ 874              	.LFE137:
+ 876              		.section	.data.any_port.0,"aw"
+ 877              		.align	1
+ 880              	any_port.0:
+ 881 0000 50C3     		.short	-15536
+ 882              		.text
+ 883              	.Letext0:
+ 884              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 885              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 886              		.file 4 "../../w5500/ioLibrary_driver/Ethernet/socket.h"
+ 887              		.file 5 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
+ 888              		.file 6 "../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.h"
+ 889              		.file 7 "../../util/stm_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 loopback.c
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:21     .rodata.loopback_tcps.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:31     .text.loopback_tcps:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:37     .text.loopback_tcps:00000000 loopback_tcps
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:80     .text.loopback_tcps:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:328    .text.loopback_tcps:0000013c $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:335    .rodata.loopback_tcpc.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:342    .text.loopback_tcpc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:348    .text.loopback_tcpc:00000000 loopback_tcpc
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:391    .text.loopback_tcpc:00000026 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:653    .text.loopback_tcpc:00000148 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:880    .data.any_port.0:00000000 any_port.0
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:661    .rodata.loopback_udps.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:671    .text.loopback_udps:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:677    .text.loopback_udps:00000000 loopback_udps
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:870    .text.loopback_udps:000000c0 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:877    .data.any_port.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:109    .text.loopback_tcps:00000041 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:109    .text.loopback_tcps:00000042 $t
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:420    .text.loopback_tcpc:00000043 $d
+C:\Users\oleg\AppData\Local\Temp\ccV8ukIl.s:420    .text.loopback_tcpc:00000044 $t
+
+UNDEFINED SYMBOLS
+WIZCHIP_READ
+getSn_RX_RSR
+recv
+send
+WIZCHIP_READ_BUF
+ulog_fmt
+WIZCHIP_WRITE
+close
+disconnect
+listen
+socket
+printf
+connect
+recvfrom
+sendto

@@ -118,7 +118,10 @@ C_SOURCES =  \
 ../../w5500/ioLibrary_driver/Internet/httpServer/httpServer.c \
 ../../w5500/ioLibrary_driver/Internet/httpServer/httpParser.c \
 ../../w5500/ioLibrary_driver/Internet/httpServer/httpUtil.c \
-../../w5500/ioLibrary_driver/Application/loopback/loopback.c
+../../w5500/ioLibrary_driver/Application/loopback/loopback.c \
+../../ws_rubetec/ws_crypto.c \
+../../ws_rubetec/ws_rubetec.c \
+../../ws_server.c
 
 
 # ASM sources
@@ -210,7 +213,8 @@ C_INCLUDES =  \
 -I../../ch378 \
 -I../../bq32000 \
 -I../../CM7/Core/Inc/ \
--I../../CM7/Core/Inc/Screens
+-I../../CM7/Core/Inc/Screens \
+-I../../ws_rubetec \
 
 
 MAJOR = 1

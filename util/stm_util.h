@@ -91,12 +91,7 @@ void HAL_DelayUs(uint64_t Delay, TIM_HandleTypeDef * htim);
 #endif
 
 //разница между текущим временем и старым временем в млс
-inline uint32_t HAL_DiffTick(uint32_t told)
-{
-	uint32_t tnew = HAL_GetTick();
-
-	return DIFF_TICKU32(told, tnew);
-}
+uint32_t HAL_DiffTick(uint32_t told);
 
 
 //возращает время в млс не нулевое

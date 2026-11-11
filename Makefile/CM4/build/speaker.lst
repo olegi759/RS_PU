@@ -1,0 +1,269 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"speaker.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../CM4/Core/Src/speaker.c"
+  20              		.section	.text.internal_speaker_set_mux,"ax",%progbits
+  21              		.align	1
+  22              		.global	internal_speaker_set_mux
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	internal_speaker_set_mux:
+  28              	.LVL0:
+  29              	.LFB132:
+   1:../../CM4/Core/Src/speaker.c **** /*
+   2:../../CM4/Core/Src/speaker.c ****  * speaker.c
+   3:../../CM4/Core/Src/speaker.c ****  *
+   4:../../CM4/Core/Src/speaker.c ****  *  Created on: 10 июн. 2026 г.
+   5:../../CM4/Core/Src/speaker.c ****  *      Author: Rafael Boltachev
+   6:../../CM4/Core/Src/speaker.c ****  */
+   7:../../CM4/Core/Src/speaker.c **** 
+   8:../../CM4/Core/Src/speaker.c **** #include "speaker.h"
+   9:../../CM4/Core/Src/speaker.c **** #include "stm_util.h"
+  10:../../CM4/Core/Src/speaker.c **** 
+  11:../../CM4/Core/Src/speaker.c **** //Внутренний динамик ПУ
+  12:../../CM4/Core/Src/speaker.c **** //EN_SPK - Активное высокое логическое разрешение. Когда э
+  13:../../CM4/Core/Src/speaker.c **** //Когда этот вывод находится в высоком состоянии, логи�
+  14:../../CM4/Core/Src/speaker.c **** //A[1:0] определяют, какой переключатель включен.
+  15:../../CM4/Core/Src/speaker.c **** void internal_speaker_set_mux(internal_speaker_mux_t internal_speaker_mux)
+  16:../../CM4/Core/Src/speaker.c **** {
+  30              		.loc 1 16 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 16 1 is_stmt 0 view .LVU1
+  35 0000 10B5     		push	{r4, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 4, -8
+  39              		.cfi_offset 14, -4
+  17:../../CM4/Core/Src/speaker.c **** 	switch (internal_speaker_mux) {
+  40              		.loc 1 17 2 is_stmt 1 view .LVU2
+  41 0002 0428     		cmp	r0, #4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 2
+
+
+  42 0004 09D8     		bhi	.L1
+  43 0006 DFE800F0 		tbb	[pc, r0]
+  44              	.L4:
+  45 000a 03       		.byte	(.L8-.L4)/2
+  46 000b 09       		.byte	(.L7-.L4)/2
+  47 000c 1A       		.byte	(.L6-.L4)/2
+  48 000d 2B       		.byte	(.L5-.L4)/2
+  49 000e 3C       		.byte	(.L3-.L4)/2
+  50 000f 00       		.p2align 1
+  51              	.L8:
+  18:../../CM4/Core/Src/speaker.c **** 		case IS_OFF:
+  19:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(EN_SPK, 0);
+  52              		.loc 1 19 4 view .LVU3
+  53 0010 0022     		movs	r2, #0
+  54 0012 2021     		movs	r1, #32
+  55 0014 2348     		ldr	r0, .L11
+  56              	.LVL1:
+  57              		.loc 1 19 4 is_stmt 0 view .LVU4
+  58 0016 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  59              	.LVL2:
+  20:../../CM4/Core/Src/speaker.c **** 		break;
+  60              		.loc 1 20 3 is_stmt 1 view .LVU5
+  61              	.L1:
+  21:../../CM4/Core/Src/speaker.c **** 		case IS_UM1:
+  22:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(EN_SPK, 1);
+  23:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
+  24:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 0);
+  25:../../CM4/Core/Src/speaker.c **** 		break;
+  26:../../CM4/Core/Src/speaker.c **** 		case IS_UM2:
+  27:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(EN_SPK, 1);
+  28:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 1);
+  29:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 0);
+  30:../../CM4/Core/Src/speaker.c **** 		break;
+  31:../../CM4/Core/Src/speaker.c **** 		case IS_UM1_UM2:
+  32:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(EN_SPK, 1);
+  33:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
+  34:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 1);
+  35:../../CM4/Core/Src/speaker.c **** 		break;
+  36:../../CM4/Core/Src/speaker.c **** 		case IS_LINE_INPUT:
+  37:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(EN_SPK, 1);
+  38:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 1);
+  39:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 1);
+  40:../../CM4/Core/Src/speaker.c **** 		break;
+  41:../../CM4/Core/Src/speaker.c **** 	}
+  42:../../CM4/Core/Src/speaker.c **** 
+  43:../../CM4/Core/Src/speaker.c **** }
+  62              		.loc 1 43 1 is_stmt 0 view .LVU6
+  63 001a 10BD     		pop	{r4, pc}
+  64              	.LVL3:
+  65              	.L7:
+  22:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
+  66              		.loc 1 22 4 is_stmt 1 view .LVU7
+  67 001c 0122     		movs	r2, #1
+  68 001e 2021     		movs	r1, #32
+  69 0020 2048     		ldr	r0, .L11
+  70              	.LVL4:
+  22:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 3
+
+
+  71              		.loc 1 22 4 is_stmt 0 view .LVU8
+  72 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  73              	.LVL5:
+  23:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 0);
+  74              		.loc 1 23 4 is_stmt 1 view .LVU9
+  75 0026 204C     		ldr	r4, .L11+4
+  76 0028 0022     		movs	r2, #0
+  77 002a 0121     		movs	r1, #1
+  78 002c 2046     		mov	r0, r4
+  79 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
+  80              	.LVL6:
+  24:../../CM4/Core/Src/speaker.c **** 		break;
+  81              		.loc 1 24 4 view .LVU10
+  82 0032 0022     		movs	r2, #0
+  83 0034 0221     		movs	r1, #2
+  84 0036 2046     		mov	r0, r4
+  85 0038 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  86              	.LVL7:
+  25:../../CM4/Core/Src/speaker.c **** 		case IS_UM2:
+  87              		.loc 1 25 3 view .LVU11
+  88 003c EDE7     		b	.L1
+  89              	.LVL8:
+  90              	.L6:
+  27:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 1);
+  91              		.loc 1 27 4 view .LVU12
+  92 003e 0122     		movs	r2, #1
+  93 0040 2021     		movs	r1, #32
+  94 0042 1848     		ldr	r0, .L11
+  95              	.LVL9:
+  27:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 1);
+  96              		.loc 1 27 4 is_stmt 0 view .LVU13
+  97 0044 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  98              	.LVL10:
+  28:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 0);
+  99              		.loc 1 28 4 is_stmt 1 view .LVU14
+ 100 0048 174C     		ldr	r4, .L11+4
+ 101 004a 0122     		movs	r2, #1
+ 102 004c 1146     		mov	r1, r2
+ 103 004e 2046     		mov	r0, r4
+ 104 0050 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 105              	.LVL11:
+  29:../../CM4/Core/Src/speaker.c **** 		break;
+ 106              		.loc 1 29 4 view .LVU15
+ 107 0054 0022     		movs	r2, #0
+ 108 0056 0221     		movs	r1, #2
+ 109 0058 2046     		mov	r0, r4
+ 110 005a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 111              	.LVL12:
+  30:../../CM4/Core/Src/speaker.c **** 		case IS_UM1_UM2:
+ 112              		.loc 1 30 3 view .LVU16
+ 113 005e DCE7     		b	.L1
+ 114              	.LVL13:
+ 115              	.L5:
+  32:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
+ 116              		.loc 1 32 4 view .LVU17
+ 117 0060 0122     		movs	r2, #1
+ 118 0062 2021     		movs	r1, #32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 4
+
+
+ 119 0064 0F48     		ldr	r0, .L11
+ 120              	.LVL14:
+  32:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
+ 121              		.loc 1 32 4 is_stmt 0 view .LVU18
+ 122 0066 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 123              	.LVL15:
+  33:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 1);
+ 124              		.loc 1 33 4 is_stmt 1 view .LVU19
+ 125 006a 0F4C     		ldr	r4, .L11+4
+ 126 006c 0022     		movs	r2, #0
+ 127 006e 0121     		movs	r1, #1
+ 128 0070 2046     		mov	r0, r4
+ 129 0072 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 130              	.LVL16:
+  34:../../CM4/Core/Src/speaker.c **** 		break;
+ 131              		.loc 1 34 4 view .LVU20
+ 132 0076 0122     		movs	r2, #1
+ 133 0078 0221     		movs	r1, #2
+ 134 007a 2046     		mov	r0, r4
+ 135 007c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 136              	.LVL17:
+  35:../../CM4/Core/Src/speaker.c **** 		case IS_LINE_INPUT:
+ 137              		.loc 1 35 3 view .LVU21
+ 138 0080 CBE7     		b	.L1
+ 139              	.LVL18:
+ 140              	.L3:
+  37:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 1);
+ 141              		.loc 1 37 4 view .LVU22
+ 142 0082 0122     		movs	r2, #1
+ 143 0084 2021     		movs	r1, #32
+ 144 0086 0748     		ldr	r0, .L11
+ 145              	.LVL19:
+  37:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 1);
+ 146              		.loc 1 37 4 is_stmt 0 view .LVU23
+ 147 0088 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 148              	.LVL20:
+  38:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A1_SPK, 1);
+ 149              		.loc 1 38 4 is_stmt 1 view .LVU24
+ 150 008c 064C     		ldr	r4, .L11+4
+ 151 008e 0122     		movs	r2, #1
+ 152 0090 1146     		mov	r1, r2
+ 153 0092 2046     		mov	r0, r4
+ 154 0094 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 155              	.LVL21:
+  39:../../CM4/Core/Src/speaker.c **** 		break;
+ 156              		.loc 1 39 4 view .LVU25
+ 157 0098 0122     		movs	r2, #1
+ 158 009a 0221     		movs	r1, #2
+ 159 009c 2046     		mov	r0, r4
+ 160 009e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 161              	.LVL22:
+  40:../../CM4/Core/Src/speaker.c **** 	}
+ 162              		.loc 1 40 3 view .LVU26
+ 163              		.loc 1 43 1 is_stmt 0 view .LVU27
+ 164 00a2 BAE7     		b	.L1
+ 165              	.L12:
+ 166              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 5
+
+
+ 167              	.L11:
+ 168 00a4 00080258 		.word	1476528128
+ 169 00a8 00040258 		.word	1476527104
+ 170              		.cfi_endproc
+ 171              	.LFE132:
+ 173              		.text
+ 174              	.Letext0:
+ 175              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 176              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 177              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 178              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 179              		.file 6 "../../CM4/Core/Inc/speaker.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 speaker.c
+C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:21     .text.internal_speaker_set_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:27     .text.internal_speaker_set_mux:00000000 internal_speaker_set_mux
+C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:45     .text.internal_speaker_set_mux:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:168    .text.internal_speaker_set_mux:000000a4 $d
+C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:50     .text.internal_speaker_set_mux:0000000f $d
+C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:50     .text.internal_speaker_set_mux:00000010 $t
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin

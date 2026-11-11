@@ -1,0 +1,1143 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"uart2.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../CM4/Core/Src/uart2.c"
+  20              		.section	.text.uart2_set_mux,"ax",%progbits
+  21              		.align	1
+  22              		.global	uart2_set_mux
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	uart2_set_mux:
+  28              	.LVL0:
+  29              	.LFB135:
+   1:../../CM4/Core/Src/uart2.c **** /*
+   2:../../CM4/Core/Src/uart2.c ****  * uart2.c
+   3:../../CM4/Core/Src/uart2.c ****  *
+   4:../../CM4/Core/Src/uart2.c ****  *  Created on: 11 мар. 2025 г.
+   5:../../CM4/Core/Src/uart2.c ****  *      Author: Rafael Boltachev
+   6:../../CM4/Core/Src/uart2.c ****  */
+   7:../../CM4/Core/Src/uart2.c **** 
+   8:../../CM4/Core/Src/uart2.c **** #include "uart2.h"
+   9:../../CM4/Core/Src/uart2.c **** #include "stm32h7xx_hal_uart.h"
+  10:../../CM4/Core/Src/uart2.c **** #include <string.h>
+  11:../../CM4/Core/Src/uart2.c **** #include <stdio.h>
+  12:../../CM4/Core/Src/uart2.c **** #include "mki.h"
+  13:../../CM4/Core/Src/uart2.c **** #include "math_util.h"
+  14:../../CM4/Core/Src/uart2.c **** #include "stm_util.h"
+  15:../../CM4/Core/Src/uart2.c **** #include "dynbuf_util.h"
+  16:../../CM4/Core/Src/uart2.c **** #include "str_util.h"
+  17:../../CM4/Core/Src/uart2.c **** #include "console.h"
+  18:../../CM4/Core/Src/uart2.c **** #include "common.h"
+  19:../../CM4/Core/Src/uart2.c **** #include "mup.h"
+  20:../../CM4/Core/Src/uart2.c **** #include "mkk.h"
+  21:../../CM4/Core/Src/uart2.c **** #include "setting.h"
+  22:../../CM4/Core/Src/uart2.c **** #include "str_util.h"
+  23:../../CM4/Core/Src/uart2.c **** #include "mkk_data.h"
+  24:../../CM4/Core/Src/uart2.c **** 
+  25:../../CM4/Core/Src/uart2.c **** 
+  26:../../CM4/Core/Src/uart2.c **** 
+  27:../../CM4/Core/Src/uart2.c **** //#define DEBUG_UART2	1
+  28:../../CM4/Core/Src/uart2.c **** //#define DEBUG_UART2_CMD_ONLY		  MKI_CMD_SMALL_LEDS
+  29:../../CM4/Core/Src/uart2.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 2
+
+
+  30:../../CM4/Core/Src/uart2.c **** static dynamic_buf_t uart2_dyn_buf = DYNAMIC_BUF_STATIC_INIT(20 * 1024) ;
+  31:../../CM4/Core/Src/uart2.c **** 
+  32:../../CM4/Core/Src/uart2.c **** static uint16_t uart2_rx_buf[MAX_UART2_PACKET_SIZE];
+  33:../../CM4/Core/Src/uart2.c **** static uint16_t uart2_tx_buf[MAX_UART2_PACKET_SIZE];
+  34:../../CM4/Core/Src/uart2.c **** //static uint8_t uart2_tx_buf_index = 0;
+  35:../../CM4/Core/Src/uart2.c **** 
+  36:../../CM4/Core/Src/uart2.c **** static uint32_t uart2_tick = 10;
+  37:../../CM4/Core/Src/uart2.c **** 
+  38:../../CM4/Core/Src/uart2.c **** static uint32_t uart2_send_tick = 0;
+  39:../../CM4/Core/Src/uart2.c **** 
+  40:../../CM4/Core/Src/uart2.c **** 
+  41:../../CM4/Core/Src/uart2.c **** /*
+  42:../../CM4/Core/Src/uart2.c **** uint16_t * uart2_get_tx_buf(void)
+  43:../../CM4/Core/Src/uart2.c **** {
+  44:../../CM4/Core/Src/uart2.c **** 	uart2_tx_buf_index = !uart2_tx_buf_index;
+  45:../../CM4/Core/Src/uart2.c **** 	return uart2_tx_buf[uart2_tx_buf_index];
+  46:../../CM4/Core/Src/uart2.c **** }
+  47:../../CM4/Core/Src/uart2.c **** */
+  48:../../CM4/Core/Src/uart2.c **** 
+  49:../../CM4/Core/Src/uart2.c **** void uart2_set_mux(uart2_mux_t mux)
+  50:../../CM4/Core/Src/uart2.c **** {
+  30              		.loc 1 50 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 50 1 is_stmt 0 view .LVU1
+  35 0000 38B5     		push	{r3, r4, r5, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 3, -16
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0446     		mov	r4, r0
+  51:../../CM4/Core/Src/uart2.c **** 	PIN_CLR(UART_S_A0);
+  43              		.loc 1 51 2 is_stmt 1 view .LVU2
+  44 0004 0022     		movs	r2, #0
+  45 0006 8021     		movs	r1, #128
+  46 0008 1548     		ldr	r0, .L6
+  47              	.LVL1:
+  48              		.loc 1 51 2 is_stmt 0 view .LVU3
+  49 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+  50              	.LVL2:
+  52:../../CM4/Core/Src/uart2.c **** 	PIN_CLR(UART_S_A1);
+  51              		.loc 1 52 2 is_stmt 1 view .LVU4
+  52 000e 154D     		ldr	r5, .L6+4
+  53 0010 0022     		movs	r2, #0
+  54 0012 1021     		movs	r1, #16
+  55 0014 2846     		mov	r0, r5
+  56 0016 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  57              	.LVL3:
+  53:../../CM4/Core/Src/uart2.c **** 	PIN_CLR(UART_S_A2);
+  58              		.loc 1 53 2 view .LVU5
+  59 001a 0022     		movs	r2, #0
+  60 001c 0821     		movs	r1, #8
+  61 001e 2846     		mov	r0, r5
+  62 0020 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 3
+
+
+  63              	.LVL4:
+  54:../../CM4/Core/Src/uart2.c **** 	switch (mux) {
+  64              		.loc 1 54 2 view .LVU6
+  65 0024 022C     		cmp	r4, #2
+  66 0026 09D0     		beq	.L2
+  67 0028 032C     		cmp	r4, #3
+  68 002a 0DD0     		beq	.L3
+  69 002c 012C     		cmp	r4, #1
+  70 002e 04D1     		bne	.L1
+  55:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_EXT1:
+  56:../../CM4/Core/Src/uart2.c **** 			break;
+  57:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_EXT2:
+  58:../../CM4/Core/Src/uart2.c **** 			PIN_SET(UART_S_A0);
+  71              		.loc 1 58 4 view .LVU7
+  72 0030 0122     		movs	r2, #1
+  73 0032 8021     		movs	r1, #128
+  74 0034 0A48     		ldr	r0, .L6
+  75 0036 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  76              	.LVL5:
+  59:../../CM4/Core/Src/uart2.c **** 			break;
+  77              		.loc 1 59 4 view .LVU8
+  78              	.L1:
+  60:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_EXT3:
+  61:../../CM4/Core/Src/uart2.c **** 			PIN_SET(UART_S_A1);
+  62:../../CM4/Core/Src/uart2.c **** 			break;
+  63:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_EXT4:
+  64:../../CM4/Core/Src/uart2.c **** 			PIN_SET(UART_S_A0);
+  65:../../CM4/Core/Src/uart2.c **** 			PIN_SET(UART_S_A1);
+  66:../../CM4/Core/Src/uart2.c **** 			break;
+  67:../../CM4/Core/Src/uart2.c **** 	}
+  68:../../CM4/Core/Src/uart2.c **** }
+  79              		.loc 1 68 1 is_stmt 0 view .LVU9
+  80 003a 38BD     		pop	{r3, r4, r5, pc}
+  81              	.LVL6:
+  82              	.L2:
+  61:../../CM4/Core/Src/uart2.c **** 			break;
+  83              		.loc 1 61 4 is_stmt 1 view .LVU10
+  84 003c 0122     		movs	r2, #1
+  85 003e 1021     		movs	r1, #16
+  86 0040 0848     		ldr	r0, .L6+4
+  87 0042 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  88              	.LVL7:
+  62:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_EXT4:
+  89              		.loc 1 62 4 view .LVU11
+  90 0046 F8E7     		b	.L1
+  91              	.L3:
+  64:../../CM4/Core/Src/uart2.c **** 			PIN_SET(UART_S_A1);
+  92              		.loc 1 64 4 view .LVU12
+  93 0048 0122     		movs	r2, #1
+  94 004a 8021     		movs	r1, #128
+  95 004c 0448     		ldr	r0, .L6
+  96 004e FFF7FEFF 		bl	HAL_GPIO_WritePin
+  97              	.LVL8:
+  65:../../CM4/Core/Src/uart2.c **** 			break;
+  98              		.loc 1 65 4 view .LVU13
+  99 0052 0122     		movs	r2, #1
+ 100 0054 1021     		movs	r1, #16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 4
+
+
+ 101 0056 0348     		ldr	r0, .L6+4
+ 102 0058 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 103              	.LVL9:
+  66:../../CM4/Core/Src/uart2.c **** 	}
+ 104              		.loc 1 66 4 view .LVU14
+ 105              		.loc 1 68 1 is_stmt 0 view .LVU15
+ 106 005c EDE7     		b	.L1
+ 107              	.L7:
+ 108 005e 00BF     		.align	2
+ 109              	.L6:
+ 110 0060 000C0258 		.word	1476529152
+ 111 0064 00040258 		.word	1476527104
+ 112              		.cfi_endproc
+ 113              	.LFE135:
+ 115              		.section	.text.uart2_get_mux,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	uart2_get_mux
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 122              	uart2_get_mux:
+ 123              	.LFB136:
+  69:../../CM4/Core/Src/uart2.c **** 
+  70:../../CM4/Core/Src/uart2.c **** uart2_mux_t uart2_get_mux(void)
+  71:../../CM4/Core/Src/uart2.c **** {
+ 124              		.loc 1 71 1 is_stmt 1 view -0
+ 125              		.cfi_startproc
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128 0000 10B5     		push	{r4, lr}
+ 129              	.LCFI1:
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 4, -8
+ 132              		.cfi_offset 14, -4
+  72:../../CM4/Core/Src/uart2.c **** 	uint8_t a0, a1;
+ 133              		.loc 1 72 2 view .LVU17
+  73:../../CM4/Core/Src/uart2.c **** 
+  74:../../CM4/Core/Src/uart2.c **** 	a0 = PIN_ISSET(UART_S_A0);
+ 134              		.loc 1 74 2 view .LVU18
+ 135              		.loc 1 74 7 is_stmt 0 view .LVU19
+ 136 0002 8021     		movs	r1, #128
+ 137 0004 0A48     		ldr	r0, .L13
+ 138 0006 FFF7FEFF 		bl	OutPinIsSetted
+ 139              	.LVL10:
+ 140 000a 0446     		mov	r4, r0
+ 141              	.LVL11:
+  75:../../CM4/Core/Src/uart2.c **** 	a1 = PIN_ISSET(UART_S_A1);
+ 142              		.loc 1 75 2 is_stmt 1 view .LVU20
+ 143              		.loc 1 75 7 is_stmt 0 view .LVU21
+ 144 000c 1021     		movs	r1, #16
+ 145 000e 0948     		ldr	r0, .L13+4
+ 146 0010 FFF7FEFF 		bl	OutPinIsSetted
+ 147              	.LVL12:
+  76:../../CM4/Core/Src/uart2.c **** 	if (a0 & a1) return UART2_MUX_EXT4;
+ 148              		.loc 1 76 2 is_stmt 1 view .LVU22
+ 149              		.loc 1 76 6 is_stmt 0 view .LVU23
+ 150 0014 04EA0003 		and	r3, r4, r0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 5
+
+
+ 151              		.loc 1 76 5 view .LVU24
+ 152 0018 13F0FF0F 		tst	r3, #255
+ 153 001c 04D1     		bne	.L10
+  77:../../CM4/Core/Src/uart2.c **** 	else if (a1) return UART2_MUX_EXT3;
+ 154              		.loc 1 77 7 is_stmt 1 view .LVU25
+ 155              		.loc 1 77 10 is_stmt 0 view .LVU26
+ 156 001e 28B9     		cbnz	r0, .L11
+  78:../../CM4/Core/Src/uart2.c **** 	else if (a0) return UART2_MUX_EXT2;
+ 157              		.loc 1 78 7 is_stmt 1 view .LVU27
+ 158              		.loc 1 78 10 is_stmt 0 view .LVU28
+ 159 0020 04B1     		cbz	r4, .L9
+ 160              		.loc 1 78 22 discriminator 1 view .LVU29
+ 161 0022 0124     		movs	r4, #1
+ 162              	.LVL13:
+ 163              	.L9:
+  79:../../CM4/Core/Src/uart2.c **** 	else return UART2_MUX_EXT1;
+  80:../../CM4/Core/Src/uart2.c **** }
+ 164              		.loc 1 80 1 view .LVU30
+ 165 0024 2046     		mov	r0, r4
+ 166              	.LVL14:
+ 167              		.loc 1 80 1 view .LVU31
+ 168 0026 10BD     		pop	{r4, pc}
+ 169              	.LVL15:
+ 170              	.L10:
+  76:../../CM4/Core/Src/uart2.c **** 	else if (a1) return UART2_MUX_EXT3;
+ 171              		.loc 1 76 22 discriminator 1 view .LVU32
+ 172 0028 0324     		movs	r4, #3
+ 173              	.LVL16:
+  76:../../CM4/Core/Src/uart2.c **** 	else if (a1) return UART2_MUX_EXT3;
+ 174              		.loc 1 76 22 discriminator 1 view .LVU33
+ 175 002a FBE7     		b	.L9
+ 176              	.LVL17:
+ 177              	.L11:
+  77:../../CM4/Core/Src/uart2.c **** 	else if (a0) return UART2_MUX_EXT2;
+ 178              		.loc 1 77 22 discriminator 1 view .LVU34
+ 179 002c 0224     		movs	r4, #2
+ 180              	.LVL18:
+  77:../../CM4/Core/Src/uart2.c **** 	else if (a0) return UART2_MUX_EXT2;
+ 181              		.loc 1 77 22 discriminator 1 view .LVU35
+ 182 002e F9E7     		b	.L9
+ 183              	.L14:
+ 184              		.align	2
+ 185              	.L13:
+ 186 0030 000C0258 		.word	1476529152
+ 187 0034 00040258 		.word	1476527104
+ 188              		.cfi_endproc
+ 189              	.LFE136:
+ 191              		.section	.text.HAL_UART2_RxEventCallback,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	HAL_UART2_RxEventCallback
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 198              	HAL_UART2_RxEventCallback:
+ 199              	.LVL19:
+ 200              	.LFB137:
+  81:../../CM4/Core/Src/uart2.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 6
+
+
+  82:../../CM4/Core/Src/uart2.c **** 
+  83:../../CM4/Core/Src/uart2.c **** void HAL_UART2_RxEventCallback(uint16_t Size)
+  84:../../CM4/Core/Src/uart2.c **** {
+ 201              		.loc 1 84 1 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		.loc 1 84 1 is_stmt 0 view .LVU37
+ 206 0000 38B5     		push	{r3, r4, r5, lr}
+ 207              	.LCFI2:
+ 208              		.cfi_def_cfa_offset 16
+ 209              		.cfi_offset 3, -16
+ 210              		.cfi_offset 4, -12
+ 211              		.cfi_offset 5, -8
+ 212              		.cfi_offset 14, -4
+ 213 0002 0446     		mov	r4, r0
+  85:../../CM4/Core/Src/uart2.c **** 
+  86:../../CM4/Core/Src/uart2.c **** 	uart2_rx_buf[Size] = uart2_get_mux();
+ 214              		.loc 1 86 2 is_stmt 1 view .LVU38
+ 215              		.loc 1 86 23 is_stmt 0 view .LVU39
+ 216 0004 FFF7FEFF 		bl	uart2_get_mux
+ 217              	.LVL20:
+ 218              		.loc 1 86 21 discriminator 1 view .LVU40
+ 219 0008 0649     		ldr	r1, .L17
+ 220 000a 21F81400 		strh	r0, [r1, r4, lsl #1]	@ movhi
+  87:../../CM4/Core/Src/uart2.c **** 
+  88:../../CM4/Core/Src/uart2.c **** 	uart2_dyn_buf.busy = TRUE;
+ 221              		.loc 1 88 2 is_stmt 1 view .LVU41
+ 222              		.loc 1 88 21 is_stmt 0 view .LVU42
+ 223 000e 064D     		ldr	r5, .L17+4
+ 224 0010 0123     		movs	r3, #1
+ 225 0012 2B71     		strb	r3, [r5, #4]
+  89:../../CM4/Core/Src/uart2.c **** 	dynamic_buf_push(&uart2_dyn_buf, uart2_rx_buf, Size * 2 + 2);
+ 226              		.loc 1 89 2 is_stmt 1 view .LVU43
+ 227              		.loc 1 89 58 is_stmt 0 view .LVU44
+ 228 0014 E218     		adds	r2, r4, r3
+ 229              		.loc 1 89 2 view .LVU45
+ 230 0016 9A40     		lsls	r2, r2, r3
+ 231 0018 2846     		mov	r0, r5
+ 232 001a FFF7FEFF 		bl	dynamic_buf_push
+ 233              	.LVL21:
+  90:../../CM4/Core/Src/uart2.c **** 	uart2_dyn_buf.busy = FALSE;
+ 234              		.loc 1 90 2 is_stmt 1 view .LVU46
+ 235              		.loc 1 90 21 is_stmt 0 view .LVU47
+ 236 001e 0023     		movs	r3, #0
+ 237 0020 2B71     		strb	r3, [r5, #4]
+  91:../../CM4/Core/Src/uart2.c **** 
+  92:../../CM4/Core/Src/uart2.c **** }
+ 238              		.loc 1 92 1 view .LVU48
+ 239 0022 38BD     		pop	{r3, r4, r5, pc}
+ 240              	.LVL22:
+ 241              	.L18:
+ 242              		.loc 1 92 1 view .LVU49
+ 243              		.align	2
+ 244              	.L17:
+ 245 0024 00000000 		.word	uart2_rx_buf
+ 246 0028 00000000 		.word	uart2_dyn_buf
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 7
+
+
+ 247              		.cfi_endproc
+ 248              	.LFE137:
+ 250              		.section	.text.uart2_transmit,"ax",%progbits
+ 251              		.align	1
+ 252              		.global	uart2_transmit
+ 253              		.syntax unified
+ 254              		.thumb
+ 255              		.thumb_func
+ 257              	uart2_transmit:
+ 258              	.LVL23:
+ 259              	.LFB138:
+  93:../../CM4/Core/Src/uart2.c **** 
+  94:../../CM4/Core/Src/uart2.c **** 
+  95:../../CM4/Core/Src/uart2.c **** 
+  96:../../CM4/Core/Src/uart2.c **** 
+  97:../../CM4/Core/Src/uart2.c **** 
+  98:../../CM4/Core/Src/uart2.c **** void uart2_transmit(uart2_mux_t mux, uint16_t * packet, uint16_t packet_len)
+  99:../../CM4/Core/Src/uart2.c **** {
+ 260              		.loc 1 99 1 is_stmt 1 view -0
+ 261              		.cfi_startproc
+ 262              		@ args = 0, pretend = 0, frame = 0
+ 263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100:../../CM4/Core/Src/uart2.c **** 	uint32_t diff;
+ 264              		.loc 1 100 2 view .LVU51
+ 101:../../CM4/Core/Src/uart2.c **** 
+ 102:../../CM4/Core/Src/uart2.c **** 
+ 103:../../CM4/Core/Src/uart2.c **** 	if (!packet || !packet_len) return;
+ 265              		.loc 1 103 2 view .LVU52
+ 266              		.loc 1 103 5 is_stmt 0 view .LVU53
+ 267 0000 002A     		cmp	r2, #0
+ 268 0002 18BF     		it	ne
+ 269 0004 0029     		cmpne	r1, #0
+ 270 0006 00D1     		bne	.L26
+ 271 0008 7047     		bx	lr
+ 272              	.L26:
+  99:../../CM4/Core/Src/uart2.c **** 	uint32_t diff;
+ 273              		.loc 1 99 1 view .LVU54
+ 274 000a F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 275              	.LCFI3:
+ 276              		.cfi_def_cfa_offset 24
+ 277              		.cfi_offset 3, -24
+ 278              		.cfi_offset 4, -20
+ 279              		.cfi_offset 5, -16
+ 280              		.cfi_offset 6, -12
+ 281              		.cfi_offset 7, -8
+ 282              		.cfi_offset 14, -4
+ 283 000c 0546     		mov	r5, r0
+ 284 000e 0F46     		mov	r7, r1
+ 285 0010 1646     		mov	r6, r2
+ 104:../../CM4/Core/Src/uart2.c **** 
+ 105:../../CM4/Core/Src/uart2.c **** 	diff = HAL_DiffTick(uart2_send_tick);
+ 286              		.loc 1 105 2 is_stmt 1 view .LVU55
+ 287              		.loc 1 105 9 is_stmt 0 view .LVU56
+ 288 0012 154B     		ldr	r3, .L28
+ 289 0014 1868     		ldr	r0, [r3]
+ 290              	.LVL24:
+ 291              		.loc 1 105 9 view .LVU57
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 8
+
+
+ 292 0016 FFF7FEFF 		bl	HAL_DiffTick
+ 293              	.LVL25:
+ 106:../../CM4/Core/Src/uart2.c **** 	if (diff < 50) {
+ 294              		.loc 1 106 2 is_stmt 1 view .LVU58
+ 295              		.loc 1 106 5 is_stmt 0 view .LVU59
+ 296 001a 3128     		cmp	r0, #49
+ 297 001c 1ED9     		bls	.L27
+ 298              	.LVL26:
+ 299              	.L21:
+ 107:../../CM4/Core/Src/uart2.c **** 		HAL_Delay(50 - diff);
+ 108:../../CM4/Core/Src/uart2.c **** 	}
+ 109:../../CM4/Core/Src/uart2.c **** 	HAL_UART_AbortReceive_IT(&huart2);
+ 300              		.loc 1 109 2 is_stmt 1 view .LVU60
+ 301 001e 134C     		ldr	r4, .L28+4
+ 302 0020 2046     		mov	r0, r4
+ 303 0022 FFF7FEFF 		bl	HAL_UART_AbortReceive_IT
+ 304              	.LVL27:
+ 110:../../CM4/Core/Src/uart2.c **** 	HAL_UART_AbortTransmit_IT(&huart2);
+ 305              		.loc 1 110 2 view .LVU61
+ 306 0026 2046     		mov	r0, r4
+ 307 0028 FFF7FEFF 		bl	HAL_UART_AbortTransmit_IT
+ 308              	.LVL28:
+ 111:../../CM4/Core/Src/uart2.c **** 
+ 112:../../CM4/Core/Src/uart2.c **** 	uart2_set_mux(mux);
+ 309              		.loc 1 112 2 view .LVU62
+ 310 002c 2846     		mov	r0, r5
+ 311 002e FFF7FEFF 		bl	uart2_set_mux
+ 312              	.LVL29:
+ 113:../../CM4/Core/Src/uart2.c **** 
+ 114:../../CM4/Core/Src/uart2.c **** 
+ 115:../../CM4/Core/Src/uart2.c **** 	memcpy(uart2_tx_buf, packet, packet_len * 2);
+ 313              		.loc 1 115 2 view .LVU63
+ 314 0032 0F4D     		ldr	r5, .L28+8
+ 315 0034 7200     		lsls	r2, r6, #1
+ 316 0036 3946     		mov	r1, r7
+ 317 0038 2846     		mov	r0, r5
+ 318 003a FFF7FEFF 		bl	memcpy
+ 319              	.LVL30:
+ 116:../../CM4/Core/Src/uart2.c **** 	//HAL_UART_Transmit(&huart2, (uint8_t *)uart2_tx_buf, packet_len, HAL_MAX_DELAY);
+ 117:../../CM4/Core/Src/uart2.c **** 	HAL_UART_Transmit_IT(&huart2, (uint8_t *)uart2_tx_buf, packet_len);
+ 320              		.loc 1 117 2 view .LVU64
+ 321 003e 3246     		mov	r2, r6
+ 322 0040 2946     		mov	r1, r5
+ 323 0042 2046     		mov	r0, r4
+ 324 0044 FFF7FEFF 		bl	HAL_UART_Transmit_IT
+ 325              	.LVL31:
+ 118:../../CM4/Core/Src/uart2.c **** 
+ 119:../../CM4/Core/Src/uart2.c **** 	uart2_send_tick = HAL_GetTick();
+ 326              		.loc 1 119 2 view .LVU65
+ 327              		.loc 1 119 20 is_stmt 0 view .LVU66
+ 328 0048 FFF7FEFF 		bl	HAL_GetTick
+ 329              	.LVL32:
+ 330              		.loc 1 119 18 discriminator 1 view .LVU67
+ 331 004c 064B     		ldr	r3, .L28
+ 332 004e 1860     		str	r0, [r3]
+ 120:../../CM4/Core/Src/uart2.c **** 
+ 121:../../CM4/Core/Src/uart2.c **** 	HAL_UARTEx_ReceiveToIdle_IT(&huart2, (uint8_t *)uart2_rx_buf, MAX_UART2_PACKET_SIZE);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 9
+
+
+ 333              		.loc 1 121 2 is_stmt 1 view .LVU68
+ 334 0050 6422     		movs	r2, #100
+ 335 0052 0849     		ldr	r1, .L28+12
+ 336 0054 2046     		mov	r0, r4
+ 337 0056 FFF7FEFF 		bl	HAL_UARTEx_ReceiveToIdle_IT
+ 338              	.LVL33:
+ 122:../../CM4/Core/Src/uart2.c **** 
+ 123:../../CM4/Core/Src/uart2.c **** 
+ 124:../../CM4/Core/Src/uart2.c **** #ifdef DEBUG_UART2
+ 125:../../CM4/Core/Src/uart2.c **** 
+ 126:../../CM4/Core/Src/uart2.c **** 
+ 127:../../CM4/Core/Src/uart2.c **** #ifdef DEBUG_UART2_CMD_ONLY
+ 128:../../CM4/Core/Src/uart2.c **** 	if (packet[0] == (0x100 | DEBUG_UART2_CMD_ONLY)) {
+ 129:../../CM4/Core/Src/uart2.c **** #endif
+ 130:../../CM4/Core/Src/uart2.c **** 		ulog_fmt(CONM"t2(%d %d) ", mux, packet_len);
+ 131:../../CM4/Core/Src/uart2.c **** 		ulogmem(packet, packet_len, TRUE);
+ 132:../../CM4/Core/Src/uart2.c **** 		ulog(CRLF);
+ 133:../../CM4/Core/Src/uart2.c **** 
+ 134:../../CM4/Core/Src/uart2.c **** 
+ 135:../../CM4/Core/Src/uart2.c **** #ifdef DEBUG_UART2_CMD_ONLY
+ 136:../../CM4/Core/Src/uart2.c **** 	}
+ 137:../../CM4/Core/Src/uart2.c **** #endif
+ 138:../../CM4/Core/Src/uart2.c **** 
+ 139:../../CM4/Core/Src/uart2.c **** #endif
+ 140:../../CM4/Core/Src/uart2.c **** }
+ 339              		.loc 1 140 1 is_stmt 0 view .LVU69
+ 340 005a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 341              	.LVL34:
+ 342              	.L27:
+ 107:../../CM4/Core/Src/uart2.c **** 	}
+ 343              		.loc 1 107 3 is_stmt 1 view .LVU70
+ 344 005c C0F13200 		rsb	r0, r0, #50
+ 345              	.LVL35:
+ 107:../../CM4/Core/Src/uart2.c **** 	}
+ 346              		.loc 1 107 3 is_stmt 0 view .LVU71
+ 347 0060 FFF7FEFF 		bl	HAL_Delay
+ 348              	.LVL36:
+ 349 0064 DBE7     		b	.L21
+ 350              	.L29:
+ 351 0066 00BF     		.align	2
+ 352              	.L28:
+ 353 0068 00000000 		.word	uart2_send_tick
+ 354 006c 00000000 		.word	huart2
+ 355 0070 00000000 		.word	uart2_tx_buf
+ 356 0074 00000000 		.word	uart2_rx_buf
+ 357              		.cfi_endproc
+ 358              	.LFE138:
+ 360              		.section	.text.uart2_rcv,"ax",%progbits
+ 361              		.align	1
+ 362              		.global	uart2_rcv
+ 363              		.syntax unified
+ 364              		.thumb
+ 365              		.thumb_func
+ 367              	uart2_rcv:
+ 368              	.LVL37:
+ 369              	.LFB139:
+ 141:../../CM4/Core/Src/uart2.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 10
+
+
+ 142:../../CM4/Core/Src/uart2.c **** 
+ 143:../../CM4/Core/Src/uart2.c **** 
+ 144:../../CM4/Core/Src/uart2.c **** 
+ 145:../../CM4/Core/Src/uart2.c **** void uart2_rcv(uint16_t mux, uint16_t * packet, uint16_t packet_len)
+ 146:../../CM4/Core/Src/uart2.c **** {
+ 370              		.loc 1 146 1 is_stmt 1 view -0
+ 371              		.cfi_startproc
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374              		.loc 1 146 1 is_stmt 0 view .LVU73
+ 375 0000 08B5     		push	{r3, lr}
+ 376              	.LCFI4:
+ 377              		.cfi_def_cfa_offset 8
+ 378              		.cfi_offset 3, -8
+ 379              		.cfi_offset 14, -4
+ 380 0002 0B46     		mov	r3, r1
+ 147:../../CM4/Core/Src/uart2.c **** #ifdef DEBUG_UART2
+ 148:../../CM4/Core/Src/uart2.c **** 
+ 149:../../CM4/Core/Src/uart2.c **** #ifdef DEBUG_UART2_CMD_ONLY
+ 150:../../CM4/Core/Src/uart2.c **** 	if (packet[0] == (0x100 | DEBUG_UART2_CMD_ONLY)) {
+ 151:../../CM4/Core/Src/uart2.c **** #endif
+ 152:../../CM4/Core/Src/uart2.c **** 
+ 153:../../CM4/Core/Src/uart2.c **** 		ulog_fmt(CONM"r2(%d %d) ", mux, packet_len);
+ 154:../../CM4/Core/Src/uart2.c **** 		ulogmem(packet, packet_len, TRUE);
+ 155:../../CM4/Core/Src/uart2.c **** 		ulog(CRLF);
+ 156:../../CM4/Core/Src/uart2.c **** 
+ 157:../../CM4/Core/Src/uart2.c **** #ifdef DEBUG_UART2_CMD_ONLY
+ 158:../../CM4/Core/Src/uart2.c **** 	}
+ 159:../../CM4/Core/Src/uart2.c **** #endif
+ 160:../../CM4/Core/Src/uart2.c **** 
+ 161:../../CM4/Core/Src/uart2.c **** #endif
+ 162:../../CM4/Core/Src/uart2.c **** 
+ 163:../../CM4/Core/Src/uart2.c **** 	switch (mux) {
+ 381              		.loc 1 163 2 is_stmt 1 view .LVU74
+ 382 0004 0328     		cmp	r0, #3
+ 383 0006 07D8     		bhi	.L30
+ 384 0008 DFE800F0 		tbb	[pc, r0]
+ 385              	.LVL38:
+ 386              	.L33:
+ 387 000c 02       		.byte	(.L36-.L33)/2
+ 388 000d 07       		.byte	(.L35-.L33)/2
+ 389 000e 0C       		.byte	(.L34-.L33)/2
+ 390 000f 11       		.byte	(.L32-.L33)/2
+ 391              		.p2align 1
+ 392              	.L36:
+ 164:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MKI:
+ 165:../../CM4/Core/Src/uart2.c **** 			mki_rcv(packet, packet_len);
+ 393              		.loc 1 165 4 view .LVU75
+ 394 0010 1146     		mov	r1, r2
+ 395 0012 1846     		mov	r0, r3
+ 396              	.LVL39:
+ 397              		.loc 1 165 4 is_stmt 0 view .LVU76
+ 398 0014 FFF7FEFF 		bl	mki_rcv
+ 399              	.LVL40:
+ 166:../../CM4/Core/Src/uart2.c **** 		break;
+ 400              		.loc 1 166 3 is_stmt 1 view .LVU77
+ 401              	.L30:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 11
+
+
+ 167:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MKKL_1:
+ 168:../../CM4/Core/Src/uart2.c **** 			mkk_rcv(UART2_MUX_MKKL_1, packet, packet_len);
+ 169:../../CM4/Core/Src/uart2.c **** 		break;
+ 170:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MKKL_2:
+ 171:../../CM4/Core/Src/uart2.c **** 			mkk_rcv(UART2_MUX_MKKL_2, packet, packet_len);
+ 172:../../CM4/Core/Src/uart2.c **** 		break;
+ 173:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MUP:
+ 174:../../CM4/Core/Src/uart2.c **** 			 mup_rcv(packet, packet_len);
+ 175:../../CM4/Core/Src/uart2.c **** 		break;
+ 176:../../CM4/Core/Src/uart2.c **** 		default: break;
+ 177:../../CM4/Core/Src/uart2.c **** 	}
+ 178:../../CM4/Core/Src/uart2.c **** }
+ 402              		.loc 1 178 1 is_stmt 0 view .LVU78
+ 403 0018 08BD     		pop	{r3, pc}
+ 404              	.LVL41:
+ 405              	.L35:
+ 168:../../CM4/Core/Src/uart2.c **** 		break;
+ 406              		.loc 1 168 4 is_stmt 1 view .LVU79
+ 407 001a 1946     		mov	r1, r3
+ 408 001c 0120     		movs	r0, #1
+ 409              	.LVL42:
+ 168:../../CM4/Core/Src/uart2.c **** 		break;
+ 410              		.loc 1 168 4 is_stmt 0 view .LVU80
+ 411 001e FFF7FEFF 		bl	mkk_rcv
+ 412              	.LVL43:
+ 169:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MKKL_2:
+ 413              		.loc 1 169 3 is_stmt 1 view .LVU81
+ 414 0022 F9E7     		b	.L30
+ 415              	.LVL44:
+ 416              	.L34:
+ 171:../../CM4/Core/Src/uart2.c **** 		break;
+ 417              		.loc 1 171 4 view .LVU82
+ 418 0024 1946     		mov	r1, r3
+ 419 0026 0220     		movs	r0, #2
+ 420              	.LVL45:
+ 171:../../CM4/Core/Src/uart2.c **** 		break;
+ 421              		.loc 1 171 4 is_stmt 0 view .LVU83
+ 422 0028 FFF7FEFF 		bl	mkk_rcv
+ 423              	.LVL46:
+ 172:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MUP:
+ 424              		.loc 1 172 3 is_stmt 1 view .LVU84
+ 425 002c F4E7     		b	.L30
+ 426              	.LVL47:
+ 427              	.L32:
+ 174:../../CM4/Core/Src/uart2.c **** 		break;
+ 428              		.loc 1 174 5 view .LVU85
+ 429 002e 1146     		mov	r1, r2
+ 430 0030 1846     		mov	r0, r3
+ 431              	.LVL48:
+ 174:../../CM4/Core/Src/uart2.c **** 		break;
+ 432              		.loc 1 174 5 is_stmt 0 view .LVU86
+ 433 0032 FFF7FEFF 		bl	mup_rcv
+ 434              	.LVL49:
+ 175:../../CM4/Core/Src/uart2.c **** 		default: break;
+ 435              		.loc 1 175 3 is_stmt 1 view .LVU87
+ 436              		.loc 1 178 1 is_stmt 0 view .LVU88
+ 437 0036 EFE7     		b	.L30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 12
+
+
+ 438              		.cfi_endproc
+ 439              	.LFE139:
+ 441              		.section	.text.uart2_task_data,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	uart2_task_data
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 448              	uart2_task_data:
+ 449              	.LFB140:
+ 179:../../CM4/Core/Src/uart2.c **** 
+ 180:../../CM4/Core/Src/uart2.c **** void uart2_task_data(void)
+ 181:../../CM4/Core/Src/uart2.c **** {
+ 450              		.loc 1 181 1 is_stmt 1 view -0
+ 451              		.cfi_startproc
+ 452              		@ args = 0, pretend = 0, frame = 208
+ 453              		@ frame_needed = 0, uses_anonymous_args = 0
+ 454 0000 00B5     		push	{lr}
+ 455              	.LCFI5:
+ 456              		.cfi_def_cfa_offset 4
+ 457              		.cfi_offset 14, -4
+ 458 0002 B5B0     		sub	sp, sp, #212
+ 459              	.LCFI6:
+ 460              		.cfi_def_cfa_offset 216
+ 182:../../CM4/Core/Src/uart2.c **** 	uint16_t buf[MAX_UART2_PACKET_SIZE];
+ 461              		.loc 1 182 2 view .LVU90
+ 183:../../CM4/Core/Src/uart2.c **** 	size_t byte_len, len;
+ 462              		.loc 1 183 2 view .LVU91
+ 184:../../CM4/Core/Src/uart2.c **** 
+ 185:../../CM4/Core/Src/uart2.c **** 	if (dynamic_buf_pop(&uart2_dyn_buf, buf, sizeof(buf), &byte_len)) {
+ 463              		.loc 1 185 2 view .LVU92
+ 464              		.loc 1 185 6 is_stmt 0 view .LVU93
+ 465 0004 01AB     		add	r3, sp, #4
+ 466 0006 C822     		movs	r2, #200
+ 467 0008 02A9     		add	r1, sp, #8
+ 468 000a 0A48     		ldr	r0, .L43
+ 469 000c FFF7FEFF 		bl	dynamic_buf_pop
+ 470              	.LVL50:
+ 471              		.loc 1 185 5 discriminator 1 view .LVU94
+ 472 0010 10B9     		cbnz	r0, .L42
+ 473              	.L39:
+ 186:../../CM4/Core/Src/uart2.c **** 		len  = byte_len / 2;
+ 187:../../CM4/Core/Src/uart2.c **** 		uart2_rcv(buf[len - 1], buf, len - 1);
+ 188:../../CM4/Core/Src/uart2.c **** 	}
+ 189:../../CM4/Core/Src/uart2.c **** }
+ 474              		.loc 1 189 1 view .LVU95
+ 475 0012 35B0     		add	sp, sp, #212
+ 476              	.LCFI7:
+ 477              		.cfi_remember_state
+ 478              		.cfi_def_cfa_offset 4
+ 479              		@ sp needed
+ 480 0014 5DF804FB 		ldr	pc, [sp], #4
+ 481              	.L42:
+ 482              	.LCFI8:
+ 483              		.cfi_restore_state
+ 186:../../CM4/Core/Src/uart2.c **** 		len  = byte_len / 2;
+ 484              		.loc 1 186 3 is_stmt 1 view .LVU96
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 13
+
+
+ 186:../../CM4/Core/Src/uart2.c **** 		len  = byte_len / 2;
+ 485              		.loc 1 186 19 is_stmt 0 view .LVU97
+ 486 0018 019A     		ldr	r2, [sp, #4]
+ 186:../../CM4/Core/Src/uart2.c **** 		len  = byte_len / 2;
+ 487              		.loc 1 186 8 view .LVU98
+ 488 001a 5208     		lsrs	r2, r2, #1
+ 489              	.LVL51:
+ 187:../../CM4/Core/Src/uart2.c **** 	}
+ 490              		.loc 1 187 3 is_stmt 1 view .LVU99
+ 187:../../CM4/Core/Src/uart2.c **** 	}
+ 491              		.loc 1 187 21 is_stmt 0 view .LVU100
+ 492 001c 531E     		subs	r3, r2, #1
+ 187:../../CM4/Core/Src/uart2.c **** 	}
+ 493              		.loc 1 187 3 view .LVU101
+ 494 001e 1A46     		mov	r2, r3
+ 495              	.LVL52:
+ 187:../../CM4/Core/Src/uart2.c **** 	}
+ 496              		.loc 1 187 3 view .LVU102
+ 497 0020 34A9     		add	r1, sp, #208
+ 498 0022 01EB4303 		add	r3, r1, r3, lsl #1
+ 499 0026 92B2     		uxth	r2, r2
+ 500              	.LVL53:
+ 187:../../CM4/Core/Src/uart2.c **** 	}
+ 501              		.loc 1 187 3 view .LVU103
+ 502 0028 02A9     		add	r1, sp, #8
+ 503 002a 33F8C80C 		ldrh	r0, [r3, #-200]
+ 504 002e FFF7FEFF 		bl	uart2_rcv
+ 505              	.LVL54:
+ 506              		.loc 1 189 1 view .LVU104
+ 507 0032 EEE7     		b	.L39
+ 508              	.L44:
+ 509              		.align	2
+ 510              	.L43:
+ 511 0034 00000000 		.word	uart2_dyn_buf
+ 512              		.cfi_endproc
+ 513              	.LFE140:
+ 515              		.section	.text.uart2_task_rx,"ax",%progbits
+ 516              		.align	1
+ 517              		.global	uart2_task_rx
+ 518              		.syntax unified
+ 519              		.thumb
+ 520              		.thumb_func
+ 522              	uart2_task_rx:
+ 523              	.LFB141:
+ 190:../../CM4/Core/Src/uart2.c **** 
+ 191:../../CM4/Core/Src/uart2.c **** 
+ 192:../../CM4/Core/Src/uart2.c **** void uart2_task_rx(void)
+ 193:../../CM4/Core/Src/uart2.c **** {
+ 524              		.loc 1 193 1 is_stmt 1 view -0
+ 525              		.cfi_startproc
+ 526              		@ args = 0, pretend = 0, frame = 0
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528 0000 08B5     		push	{r3, lr}
+ 529              	.LCFI9:
+ 530              		.cfi_def_cfa_offset 8
+ 531              		.cfi_offset 3, -8
+ 532              		.cfi_offset 14, -4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 14
+
+
+ 194:../../CM4/Core/Src/uart2.c **** 	if (DYNAMIC_BUF_IS_EMPTY(uart2_dyn_buf)) return;
+ 533              		.loc 1 194 2 view .LVU106
+ 534              		.loc 1 194 6 is_stmt 0 view .LVU107
+ 535 0002 054B     		ldr	r3, .L49
+ 536 0004 1B68     		ldr	r3, [r3]
+ 537              		.loc 1 194 5 view .LVU108
+ 538 0006 13B1     		cbz	r3, .L45
+ 195:../../CM4/Core/Src/uart2.c **** 	if (DYNAMIC_BUF_GET_BUSY(uart2_dyn_buf)) return;
+ 539              		.loc 1 195 2 is_stmt 1 view .LVU109
+ 540              		.loc 1 195 6 is_stmt 0 view .LVU110
+ 541 0008 034B     		ldr	r3, .L49
+ 542 000a 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 543              		.loc 1 195 5 view .LVU111
+ 544 000c 03B1     		cbz	r3, .L48
+ 545              	.L45:
+ 196:../../CM4/Core/Src/uart2.c **** 	uart2_task_data();
+ 197:../../CM4/Core/Src/uart2.c **** }
+ 546              		.loc 1 197 1 view .LVU112
+ 547 000e 08BD     		pop	{r3, pc}
+ 548              	.L48:
+ 196:../../CM4/Core/Src/uart2.c **** 	uart2_task_data();
+ 549              		.loc 1 196 2 is_stmt 1 view .LVU113
+ 550 0010 FFF7FEFF 		bl	uart2_task_data
+ 551              	.LVL55:
+ 552 0014 FBE7     		b	.L45
+ 553              	.L50:
+ 554 0016 00BF     		.align	2
+ 555              	.L49:
+ 556 0018 00000000 		.word	uart2_dyn_buf
+ 557              		.cfi_endproc
+ 558              	.LFE141:
+ 560              		.section	.text.uart2_task_tx,"ax",%progbits
+ 561              		.align	1
+ 562              		.global	uart2_task_tx
+ 563              		.syntax unified
+ 564              		.thumb
+ 565              		.thumb_func
+ 567              	uart2_task_tx:
+ 568              	.LFB142:
+ 198:../../CM4/Core/Src/uart2.c **** 
+ 199:../../CM4/Core/Src/uart2.c **** /*
+ 200:../../CM4/Core/Src/uart2.c **** static uint32_t uart2_mup_tick = 30;
+ 201:../../CM4/Core/Src/uart2.c **** static uint32_t uart2_mkk_tick = 60;
+ 202:../../CM4/Core/Src/uart2.c **** static BOOL uart2_mkk_send2 = FALSE;
+ 203:../../CM4/Core/Src/uart2.c **** 
+ 204:../../CM4/Core/Src/uart2.c **** //раз в 50 мс
+ 205:../../CM4/Core/Src/uart2.c **** void uart2_task_tx(void)
+ 206:../../CM4/Core/Src/uart2.c **** {
+ 207:../../CM4/Core/Src/uart2.c **** 
+ 208:../../CM4/Core/Src/uart2.c **** 	if (uart2_tick < 20) {
+ 209:../../CM4/Core/Src/uart2.c **** 		uart2_tick++;
+ 210:../../CM4/Core/Src/uart2.c **** 		if (mki_int_p) {
+ 211:../../CM4/Core/Src/uart2.c **** 			mki_send_key();
+ 212:../../CM4/Core/Src/uart2.c **** 		}
+ 213:../../CM4/Core/Src/uart2.c **** 		return;
+ 214:../../CM4/Core/Src/uart2.c **** 	}
+ 215:../../CM4/Core/Src/uart2.c **** 	uart2_tick = 0;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 15
+
+
+ 216:../../CM4/Core/Src/uart2.c **** 
+ 217:../../CM4/Core/Src/uart2.c **** 	//1 сек
+ 218:../../CM4/Core/Src/uart2.c **** 
+ 219:../../CM4/Core/Src/uart2.c **** 	if (uart2_mup_tick < 60) { //60 сек
+ 220:../../CM4/Core/Src/uart2.c **** 		uart2_mup_tick++;
+ 221:../../CM4/Core/Src/uart2.c **** 	} else {
+ 222:../../CM4/Core/Src/uart2.c **** 		uart2_mup_tick = 0;
+ 223:../../CM4/Core/Src/uart2.c **** 		mup_send_query();
+ 224:../../CM4/Core/Src/uart2.c **** 		return;
+ 225:../../CM4/Core/Src/uart2.c **** 	}
+ 226:../../CM4/Core/Src/uart2.c **** 
+ 227:../../CM4/Core/Src/uart2.c **** 
+ 228:../../CM4/Core/Src/uart2.c **** 	if ( uart2_mkk_tick < setting.control_time_sec) {
+ 229:../../CM4/Core/Src/uart2.c **** 		 uart2_mkk_tick++;
+ 230:../../CM4/Core/Src/uart2.c **** 	} else {
+ 231:../../CM4/Core/Src/uart2.c **** 		uart2_mkk_tick = 0;
+ 232:../../CM4/Core/Src/uart2.c **** 		if (uart2_mkk_send2) {
+ 233:../../CM4/Core/Src/uart2.c **** 			if (setting.lines_count > 12) mkk_send_insig_lin(UART2_MUX_MKKL_2);
+ 234:../../CM4/Core/Src/uart2.c **** 			else mkk_send_insig_lin(UART2_MUX_MKKL_1);
+ 235:../../CM4/Core/Src/uart2.c **** 		} else {
+ 236:../../CM4/Core/Src/uart2.c **** 			mkk_send_insig_lin(UART2_MUX_MKKL_1);
+ 237:../../CM4/Core/Src/uart2.c **** 		}
+ 238:../../CM4/Core/Src/uart2.c **** 		uart2_mkk_send2 = !uart2_mkk_send2;
+ 239:../../CM4/Core/Src/uart2.c **** 		return;
+ 240:../../CM4/Core/Src/uart2.c **** 	}
+ 241:../../CM4/Core/Src/uart2.c **** }
+ 242:../../CM4/Core/Src/uart2.c **** 
+ 243:../../CM4/Core/Src/uart2.c **** */
+ 244:../../CM4/Core/Src/uart2.c **** 
+ 245:../../CM4/Core/Src/uart2.c **** 
+ 246:../../CM4/Core/Src/uart2.c **** //раз в 50 мс
+ 247:../../CM4/Core/Src/uart2.c **** void uart2_task_tx(void)
+ 248:../../CM4/Core/Src/uart2.c **** {
+ 569              		.loc 1 248 1 view -0
+ 570              		.cfi_startproc
+ 571              		@ args = 0, pretend = 0, frame = 0
+ 572              		@ frame_needed = 0, uses_anonymous_args = 0
+ 573 0000 08B5     		push	{r3, lr}
+ 574              	.LCFI10:
+ 575              		.cfi_def_cfa_offset 8
+ 576              		.cfi_offset 3, -8
+ 577              		.cfi_offset 14, -4
+ 249:../../CM4/Core/Src/uart2.c **** 
+ 250:../../CM4/Core/Src/uart2.c **** 
+ 251:../../CM4/Core/Src/uart2.c **** 	if (uart2_tick < 198) uart2_tick++;
+ 578              		.loc 1 251 2 view .LVU115
+ 579              		.loc 1 251 17 is_stmt 0 view .LVU116
+ 580 0002 164B     		ldr	r3, .L61
+ 581 0004 1B68     		ldr	r3, [r3]
+ 582              		.loc 1 251 5 view .LVU117
+ 583 0006 C52B     		cmp	r3, #197
+ 584 0008 17D8     		bhi	.L52
+ 585              		.loc 1 251 24 is_stmt 1 discriminator 1 view .LVU118
+ 586              		.loc 1 251 34 is_stmt 0 discriminator 1 view .LVU119
+ 587 000a 0133     		adds	r3, r3, #1
+ 588 000c 134A     		ldr	r2, .L61
+ 589 000e 1360     		str	r3, [r2]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 16
+
+
+ 252:../../CM4/Core/Src/uart2.c **** 	else {
+ 253:../../CM4/Core/Src/uart2.c **** 		uart2_tick = 0;
+ 254:../../CM4/Core/Src/uart2.c **** 		return;
+ 255:../../CM4/Core/Src/uart2.c **** 	}
+ 256:../../CM4/Core/Src/uart2.c **** 
+ 257:../../CM4/Core/Src/uart2.c **** 	if (mki_int_p) {
+ 590              		.loc 1 257 2 is_stmt 1 view .LVU120
+ 591              		.loc 1 257 6 is_stmt 0 view .LVU121
+ 592 0010 134A     		ldr	r2, .L61+4
+ 593 0012 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 594              		.loc 1 257 5 view .LVU122
+ 595 0014 AAB9     		cbnz	r2, .L53
+ 596              	.L54:
+ 258:../../CM4/Core/Src/uart2.c **** 
+ 259:../../CM4/Core/Src/uart2.c **** 		if (uart2_tick & 0x01) {
+ 260:../../CM4/Core/Src/uart2.c **** 			mki_send_key(); //раз в 100 мс
+ 261:../../CM4/Core/Src/uart2.c **** 			return;
+ 262:../../CM4/Core/Src/uart2.c **** 		}
+ 263:../../CM4/Core/Src/uart2.c **** 	}
+ 264:../../CM4/Core/Src/uart2.c **** 
+ 265:../../CM4/Core/Src/uart2.c **** 
+ 266:../../CM4/Core/Src/uart2.c **** 
+ 267:../../CM4/Core/Src/uart2.c **** 	if (uart2_tick == 198) { //10 сек МУП
+ 597              		.loc 1 267 2 is_stmt 1 view .LVU123
+ 598              		.loc 1 267 5 is_stmt 0 view .LVU124
+ 599 0016 C62B     		cmp	r3, #198
+ 600 0018 19D0     		beq	.L59
+ 268:../../CM4/Core/Src/uart2.c **** 		//ulog("Send MUP"CRLF);
+ 269:../../CM4/Core/Src/uart2.c **** 		mup_send_query();
+ 270:../../CM4/Core/Src/uart2.c **** 	}
+ 271:../../CM4/Core/Src/uart2.c **** 	else if ((uart2_tick == 40) ||  (uart2_tick == 120)) { //МКК 1
+ 601              		.loc 1 271 7 is_stmt 1 view .LVU125
+ 602              		.loc 1 271 10 is_stmt 0 view .LVU126
+ 603 001a 782B     		cmp	r3, #120
+ 604 001c 18BF     		it	ne
+ 605 001e 282B     		cmpne	r3, #40
+ 606 0020 18D0     		beq	.L60
+ 272:../../CM4/Core/Src/uart2.c **** 	//else if (uart2_tick == 60) { //МКК 1
+ 273:../../CM4/Core/Src/uart2.c **** 		mkk_send_insig_lin(UART2_MUX_MKKL_1);
+ 274:../../CM4/Core/Src/uart2.c **** 	}
+ 275:../../CM4/Core/Src/uart2.c **** 	else if ((uart2_tick == 80) || (uart2_tick  == 160)) { //МКК 2
+ 607              		.loc 1 275 7 is_stmt 1 view .LVU127
+ 608              		.loc 1 275 10 is_stmt 0 view .LVU128
+ 609 0022 A02B     		cmp	r3, #160
+ 610 0024 18BF     		it	ne
+ 611 0026 502B     		cmpne	r3, #80
+ 612 0028 0AD1     		bne	.L51
+ 276:../../CM4/Core/Src/uart2.c **** 	//else if (uart2_tick == 130) { //МКК 2
+ 277:../../CM4/Core/Src/uart2.c **** 		if (setting.lines_count > 12) mkk_send_insig_lin(UART2_MUX_MKKL_2);
+ 613              		.loc 1 277 3 is_stmt 1 view .LVU129
+ 614              		.loc 1 277 14 is_stmt 0 view .LVU130
+ 615 002a 0E4B     		ldr	r3, .L61+8
+ 616 002c 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 617              		.loc 1 277 6 view .LVU131
+ 618 002e 0C2B     		cmp	r3, #12
+ 619 0030 06D9     		bls	.L51
+ 620              		.loc 1 277 33 is_stmt 1 discriminator 1 view .LVU132
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 17
+
+
+ 621 0032 0220     		movs	r0, #2
+ 622 0034 FFF7FEFF 		bl	mkk_send_insig_lin
+ 623              	.LVL56:
+ 624 0038 02E0     		b	.L51
+ 625              	.L52:
+ 253:../../CM4/Core/Src/uart2.c **** 		return;
+ 626              		.loc 1 253 3 view .LVU133
+ 253:../../CM4/Core/Src/uart2.c **** 		return;
+ 627              		.loc 1 253 14 is_stmt 0 view .LVU134
+ 628 003a 084B     		ldr	r3, .L61
+ 629 003c 0022     		movs	r2, #0
+ 630 003e 1A60     		str	r2, [r3]
+ 254:../../CM4/Core/Src/uart2.c **** 	}
+ 631              		.loc 1 254 3 is_stmt 1 view .LVU135
+ 632              	.L51:
+ 278:../../CM4/Core/Src/uart2.c **** 	}
+ 279:../../CM4/Core/Src/uart2.c **** 
+ 280:../../CM4/Core/Src/uart2.c **** }
+ 633              		.loc 1 280 1 is_stmt 0 view .LVU136
+ 634 0040 08BD     		pop	{r3, pc}
+ 635              	.L53:
+ 259:../../CM4/Core/Src/uart2.c **** 			mki_send_key(); //раз в 100 мс
+ 636              		.loc 1 259 3 is_stmt 1 view .LVU137
+ 259:../../CM4/Core/Src/uart2.c **** 			mki_send_key(); //раз в 100 мс
+ 637              		.loc 1 259 6 is_stmt 0 view .LVU138
+ 638 0042 13F0010F 		tst	r3, #1
+ 639 0046 E6D0     		beq	.L54
+ 260:../../CM4/Core/Src/uart2.c **** 			return;
+ 640              		.loc 1 260 4 is_stmt 1 view .LVU139
+ 641 0048 FFF7FEFF 		bl	mki_send_key
+ 642              	.LVL57:
+ 261:../../CM4/Core/Src/uart2.c **** 		}
+ 643              		.loc 1 261 4 view .LVU140
+ 644 004c F8E7     		b	.L51
+ 645              	.L59:
+ 269:../../CM4/Core/Src/uart2.c **** 	}
+ 646              		.loc 1 269 3 view .LVU141
+ 647 004e FFF7FEFF 		bl	mup_send_query
+ 648              	.LVL58:
+ 649 0052 F5E7     		b	.L51
+ 650              	.L60:
+ 273:../../CM4/Core/Src/uart2.c **** 	}
+ 651              		.loc 1 273 3 view .LVU142
+ 652 0054 0120     		movs	r0, #1
+ 653 0056 FFF7FEFF 		bl	mkk_send_insig_lin
+ 654              	.LVL59:
+ 655 005a F1E7     		b	.L51
+ 656              	.L62:
+ 657              		.align	2
+ 658              	.L61:
+ 659 005c 00000000 		.word	uart2_tick
+ 660 0060 00000000 		.word	mki_int_p
+ 661 0064 00000000 		.word	setting
+ 662              		.cfi_endproc
+ 663              	.LFE142:
+ 665              		.section	.bss.uart2_send_tick,"aw",%nobits
+ 666              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 18
+
+
+ 669              	uart2_send_tick:
+ 670 0000 00000000 		.space	4
+ 671              		.section	.data.uart2_tick,"aw"
+ 672              		.align	2
+ 675              	uart2_tick:
+ 676 0000 0A000000 		.word	10
+ 677              		.section	.bss.uart2_tx_buf,"aw",%nobits
+ 678              		.align	2
+ 681              	uart2_tx_buf:
+ 682 0000 00000000 		.space	200
+ 682      00000000 
+ 682      00000000 
+ 682      00000000 
+ 682      00000000 
+ 683              		.section	.bss.uart2_rx_buf,"aw",%nobits
+ 684              		.align	2
+ 687              	uart2_rx_buf:
+ 688 0000 00000000 		.space	200
+ 688      00000000 
+ 688      00000000 
+ 688      00000000 
+ 688      00000000 
+ 689              		.section	.data.uart2_dyn_buf,"aw"
+ 690              		.align	2
+ 693              	uart2_dyn_buf:
+ 694 0000 00000000 		.word	0
+ 695 0004 00       		.byte	0
+ 696 0005 00500000 		.4byte	20480
+ 697 0009 00000000 		.4byte	0
+ 698 000d 00000000 		.4byte	0
+ 699 0011 00000000 		.4byte	0
+ 700              		.text
+ 701              	.Letext0:
+ 702              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 703              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 704              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 705              		.file 5 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 706              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 707              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 708              		.file 8 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 709              		.file 9 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
+ 710              		.file 10 "../../CM4/Core/Inc/uart2.h"
+ 711              		.file 11 "../../CM4/Core/Inc/main.h"
+ 712              		.file 12 "../../CM4/Core/Inc/mki.h"
+ 713              		.file 13 "../../util/dynbuf_util.h"
+ 714              		.file 14 "../../common/setting_data.h"
+ 715              		.file 15 "../../common/common.h"
+ 716              		.file 16 "../../CM4/Core/Inc/mup.h"
+ 717              		.file 17 "../../CM4/Core/Inc/mkk.h"
+ 718              		.file 18 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h"
+ 719              		.file 19 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 720              		.file 20 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ 721              		.file 21 "../../util/stm_util.h"
+ 722              		.file 22 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uart2.c
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:21     .text.uart2_set_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:27     .text.uart2_set_mux:00000000 uart2_set_mux
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:110    .text.uart2_set_mux:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:116    .text.uart2_get_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:122    .text.uart2_get_mux:00000000 uart2_get_mux
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:186    .text.uart2_get_mux:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:192    .text.HAL_UART2_RxEventCallback:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:198    .text.HAL_UART2_RxEventCallback:00000000 HAL_UART2_RxEventCallback
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:245    .text.HAL_UART2_RxEventCallback:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:687    .bss.uart2_rx_buf:00000000 uart2_rx_buf
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:693    .data.uart2_dyn_buf:00000000 uart2_dyn_buf
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:251    .text.uart2_transmit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:257    .text.uart2_transmit:00000000 uart2_transmit
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:353    .text.uart2_transmit:00000068 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:669    .bss.uart2_send_tick:00000000 uart2_send_tick
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:681    .bss.uart2_tx_buf:00000000 uart2_tx_buf
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:361    .text.uart2_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:367    .text.uart2_rcv:00000000 uart2_rcv
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:387    .text.uart2_rcv:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:391    .text.uart2_rcv:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:442    .text.uart2_task_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:448    .text.uart2_task_data:00000000 uart2_task_data
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:511    .text.uart2_task_data:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:516    .text.uart2_task_rx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:522    .text.uart2_task_rx:00000000 uart2_task_rx
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:556    .text.uart2_task_rx:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:561    .text.uart2_task_tx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:567    .text.uart2_task_tx:00000000 uart2_task_tx
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:659    .text.uart2_task_tx:0000005c $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:675    .data.uart2_tick:00000000 uart2_tick
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:666    .bss.uart2_send_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:672    .data.uart2_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:678    .bss.uart2_tx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:684    .bss.uart2_rx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s:690    .data.uart2_dyn_buf:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+OutPinIsSetted
+dynamic_buf_push
+HAL_DiffTick
+HAL_UART_AbortReceive_IT
+HAL_UART_AbortTransmit_IT
+memcpy
+HAL_UART_Transmit_IT
+HAL_GetTick
+HAL_UARTEx_ReceiveToIdle_IT
+HAL_Delay
+huart2
+mki_rcv
+mkk_rcv
+mup_rcv
+dynamic_buf_pop
+mkk_send_insig_lin
+mki_send_key
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjE4tPg.s 			page 20
+
+
+mup_send_query
+mki_int_p
+setting

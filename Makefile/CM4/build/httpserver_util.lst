@@ -1,0 +1,2384 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"httpserver_util.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../util/httpserver_util.c"
+  20              		.section	.text.httpserver_init_socket_data,"ax",%progbits
+  21              		.align	1
+  22              		.global	httpserver_init_socket_data
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	httpserver_init_socket_data:
+  28              	.LVL0:
+  29              	.LFB135:
+   1:../../util/httpserver_util.c **** /*
+   2:../../util/httpserver_util.c ****  * httpserver_util.c
+   3:../../util/httpserver_util.c ****  *
+   4:../../util/httpserver_util.c ****  *  Created on: 12 февр. 2026 г.
+   5:../../util/httpserver_util.c ****  *      Author: Rafael Boltachev
+   6:../../util/httpserver_util.c ****  */
+   7:../../util/httpserver_util.c **** 
+   8:../../util/httpserver_util.c **** #include "httpserver_util.h"
+   9:../../util/httpserver_util.c **** #include "str_util.h"
+  10:../../util/httpserver_util.c **** #include <stdio.h>
+  11:../../util/httpserver_util.c **** 
+  12:../../util/httpserver_util.c **** 
+  13:../../util/httpserver_util.c **** static httpserver_socket_data_t hs_sock_data[HTTPSERVER_MAX_SOCKET] = {0};
+  14:../../util/httpserver_util.c **** 
+  15:../../util/httpserver_util.c **** 
+  16:../../util/httpserver_util.c **** 
+  17:../../util/httpserver_util.c **** void httpserver_init_socket_data(int index)
+  18:../../util/httpserver_util.c **** {
+  30              		.loc 1 18 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 18 1 is_stmt 0 view .LVU1
+  35 0000 10B5     		push	{r4, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 4, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0446     		mov	r4, r0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 2
+
+
+  19:../../util/httpserver_util.c **** 	//ulog("d1"CRLF);
+  20:../../util/httpserver_util.c **** 	if (hs_sock_data[index].buf) {
+  41              		.loc 1 20 2 is_stmt 1 view .LVU2
+  42              		.loc 1 20 25 is_stmt 0 view .LVU3
+  43 0004 00EBC002 		add	r2, r0, r0, lsl #3
+  44 0008 2B4B     		ldr	r3, .L8
+  45 000a 03EB8203 		add	r3, r3, r2, lsl #2
+  46 000e 186A     		ldr	r0, [r3, #32]
+  47              	.LVL1:
+  48              		.loc 1 20 5 view .LVU4
+  49 0010 40B1     		cbz	r0, .L2
+  21:../../util/httpserver_util.c **** 		free(hs_sock_data[index].buf);
+  50              		.loc 1 21 3 is_stmt 1 view .LVU5
+  51 0012 FFF7FEFF 		bl	free
+  52              	.LVL2:
+  22:../../util/httpserver_util.c **** 		hs_sock_data[index].buf = NULL;
+  53              		.loc 1 22 3 view .LVU6
+  54              		.loc 1 22 27 is_stmt 0 view .LVU7
+  55 0016 04EBC402 		add	r2, r4, r4, lsl #3
+  56 001a 274B     		ldr	r3, .L8
+  57 001c 03EB8203 		add	r3, r3, r2, lsl #2
+  58 0020 0022     		movs	r2, #0
+  59 0022 1A62     		str	r2, [r3, #32]
+  60              	.L2:
+  23:../../util/httpserver_util.c **** 	}
+  24:../../util/httpserver_util.c **** 	//ulog("d2"CRLF);
+  25:../../util/httpserver_util.c **** 	if (hs_sock_data[index].file_name) {
+  61              		.loc 1 25 2 is_stmt 1 view .LVU8
+  62              		.loc 1 25 25 is_stmt 0 view .LVU9
+  63 0024 04EBC402 		add	r2, r4, r4, lsl #3
+  64 0028 234B     		ldr	r3, .L8
+  65 002a 03EB8203 		add	r3, r3, r2, lsl #2
+  66 002e 1869     		ldr	r0, [r3, #16]
+  67              		.loc 1 25 5 view .LVU10
+  68 0030 40B1     		cbz	r0, .L3
+  26:../../util/httpserver_util.c **** 		free(hs_sock_data[index].file_name);
+  69              		.loc 1 26 3 is_stmt 1 view .LVU11
+  70 0032 FFF7FEFF 		bl	free
+  71              	.LVL3:
+  27:../../util/httpserver_util.c **** 		hs_sock_data[index].file_name = NULL;
+  72              		.loc 1 27 3 view .LVU12
+  73              		.loc 1 27 33 is_stmt 0 view .LVU13
+  74 0036 04EBC402 		add	r2, r4, r4, lsl #3
+  75 003a 1F4B     		ldr	r3, .L8
+  76 003c 03EB8203 		add	r3, r3, r2, lsl #2
+  77 0040 0022     		movs	r2, #0
+  78 0042 1A61     		str	r2, [r3, #16]
+  79              	.L3:
+  28:../../util/httpserver_util.c **** 	}
+  29:../../util/httpserver_util.c **** 	//ulog("d3"CRLF);
+  30:../../util/httpserver_util.c **** 	if (hs_sock_data[index].file_params) {
+  80              		.loc 1 30 2 is_stmt 1 view .LVU14
+  81              		.loc 1 30 25 is_stmt 0 view .LVU15
+  82 0044 04EBC402 		add	r2, r4, r4, lsl #3
+  83 0048 1B4B     		ldr	r3, .L8
+  84 004a 03EB8203 		add	r3, r3, r2, lsl #2
+  85 004e 5869     		ldr	r0, [r3, #20]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 3
+
+
+  86              		.loc 1 30 5 view .LVU16
+  87 0050 40B1     		cbz	r0, .L4
+  31:../../util/httpserver_util.c **** 		free(hs_sock_data[index].file_params);
+  88              		.loc 1 31 3 is_stmt 1 view .LVU17
+  89 0052 FFF7FEFF 		bl	free
+  90              	.LVL4:
+  32:../../util/httpserver_util.c **** 		hs_sock_data[index].file_params = NULL;
+  91              		.loc 1 32 3 view .LVU18
+  92              		.loc 1 32 35 is_stmt 0 view .LVU19
+  93 0056 04EBC402 		add	r2, r4, r4, lsl #3
+  94 005a 174B     		ldr	r3, .L8
+  95 005c 03EB8203 		add	r3, r3, r2, lsl #2
+  96 0060 0022     		movs	r2, #0
+  97 0062 5A61     		str	r2, [r3, #20]
+  98              	.L4:
+  33:../../util/httpserver_util.c **** 	}
+  34:../../util/httpserver_util.c **** 	//ulog("d4"CRLF);
+  35:../../util/httpserver_util.c **** 	if (hs_sock_data[index].boundary) {
+  99              		.loc 1 35 2 is_stmt 1 view .LVU20
+ 100              		.loc 1 35 25 is_stmt 0 view .LVU21
+ 101 0064 04EBC402 		add	r2, r4, r4, lsl #3
+ 102 0068 134B     		ldr	r3, .L8
+ 103 006a 03EB8203 		add	r3, r3, r2, lsl #2
+ 104 006e 9869     		ldr	r0, [r3, #24]
+ 105              		.loc 1 35 5 view .LVU22
+ 106 0070 40B1     		cbz	r0, .L5
+  36:../../util/httpserver_util.c **** 		free(hs_sock_data[index].boundary);
+ 107              		.loc 1 36 3 is_stmt 1 view .LVU23
+ 108 0072 FFF7FEFF 		bl	free
+ 109              	.LVL5:
+  37:../../util/httpserver_util.c **** 		hs_sock_data[index].boundary = NULL;
+ 110              		.loc 1 37 3 view .LVU24
+ 111              		.loc 1 37 32 is_stmt 0 view .LVU25
+ 112 0076 04EBC402 		add	r2, r4, r4, lsl #3
+ 113 007a 0F4B     		ldr	r3, .L8
+ 114 007c 03EB8203 		add	r3, r3, r2, lsl #2
+ 115 0080 0022     		movs	r2, #0
+ 116 0082 9A61     		str	r2, [r3, #24]
+ 117              	.L5:
+  38:../../util/httpserver_util.c **** 	}
+  39:../../util/httpserver_util.c **** 	//ulog("d5"CRLF);
+  40:../../util/httpserver_util.c **** 	if (hs_sock_data[index].upload_file_name) {
+ 118              		.loc 1 40 2 is_stmt 1 view .LVU26
+ 119              		.loc 1 40 25 is_stmt 0 view .LVU27
+ 120 0084 04EBC402 		add	r2, r4, r4, lsl #3
+ 121 0088 0B4B     		ldr	r3, .L8
+ 122 008a 03EB8203 		add	r3, r3, r2, lsl #2
+ 123 008e D869     		ldr	r0, [r3, #28]
+ 124              		.loc 1 40 5 view .LVU28
+ 125 0090 40B1     		cbz	r0, .L6
+  41:../../util/httpserver_util.c **** 		free(hs_sock_data[index].upload_file_name);
+ 126              		.loc 1 41 3 is_stmt 1 view .LVU29
+ 127 0092 FFF7FEFF 		bl	free
+ 128              	.LVL6:
+  42:../../util/httpserver_util.c **** 		hs_sock_data[index].upload_file_name = NULL;
+ 129              		.loc 1 42 3 view .LVU30
+ 130              		.loc 1 42 40 is_stmt 0 view .LVU31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 4
+
+
+ 131 0096 04EBC402 		add	r2, r4, r4, lsl #3
+ 132 009a 074B     		ldr	r3, .L8
+ 133 009c 03EB8203 		add	r3, r3, r2, lsl #2
+ 134 00a0 0022     		movs	r2, #0
+ 135 00a2 DA61     		str	r2, [r3, #28]
+ 136              	.L6:
+  43:../../util/httpserver_util.c **** 	}
+  44:../../util/httpserver_util.c **** 	//ulog("d6"CRLF);
+  45:../../util/httpserver_util.c **** 	memset(&hs_sock_data[index], 0, sizeof(hs_sock_data[index]));
+ 137              		.loc 1 45 2 is_stmt 1 view .LVU32
+ 138              		.loc 1 45 9 is_stmt 0 view .LVU33
+ 139 00a4 04EBC404 		add	r4, r4, r4, lsl #3
+ 140              	.LVL7:
+ 141              		.loc 1 45 2 view .LVU34
+ 142 00a8 2422     		movs	r2, #36
+ 143 00aa 0021     		movs	r1, #0
+ 144 00ac 0248     		ldr	r0, .L8
+ 145 00ae 00EB8400 		add	r0, r0, r4, lsl #2
+ 146 00b2 FFF7FEFF 		bl	memset
+ 147              	.LVL8:
+  46:../../util/httpserver_util.c **** }
+ 148              		.loc 1 46 1 view .LVU35
+ 149 00b6 10BD     		pop	{r4, pc}
+ 150              	.L9:
+ 151              		.align	2
+ 152              	.L8:
+ 153 00b8 00000000 		.word	hs_sock_data
+ 154              		.cfi_endproc
+ 155              	.LFE135:
+ 157              		.section	.text.httpserver_on_accept,"ax",%progbits
+ 158              		.align	1
+ 159              		.global	httpserver_on_accept
+ 160              		.syntax unified
+ 161              		.thumb
+ 162              		.thumb_func
+ 164              	httpserver_on_accept:
+ 165              	.LVL9:
+ 166              	.LFB136:
+  47:../../util/httpserver_util.c **** 
+  48:../../util/httpserver_util.c **** 
+  49:../../util/httpserver_util.c **** void httpserver_on_accept(int index)
+  50:../../util/httpserver_util.c **** {
+ 167              		.loc 1 50 1 is_stmt 1 view -0
+ 168              		.cfi_startproc
+ 169              		@ args = 0, pretend = 0, frame = 0
+ 170              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171              		.loc 1 50 1 is_stmt 0 view .LVU37
+ 172 0000 08B5     		push	{r3, lr}
+ 173              	.LCFI1:
+ 174              		.cfi_def_cfa_offset 8
+ 175              		.cfi_offset 3, -8
+ 176              		.cfi_offset 14, -4
+  51:../../util/httpserver_util.c **** 	httpserver_init_socket_data(index);
+ 177              		.loc 1 51 2 is_stmt 1 view .LVU38
+ 178 0002 FFF7FEFF 		bl	httpserver_init_socket_data
+ 179              	.LVL10:
+  52:../../util/httpserver_util.c **** }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 5
+
+
+ 180              		.loc 1 52 1 is_stmt 0 view .LVU39
+ 181 0006 08BD     		pop	{r3, pc}
+ 182              		.cfi_endproc
+ 183              	.LFE136:
+ 185              		.section	.text.httpserver_close_and_init,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	httpserver_close_and_init
+ 188              		.syntax unified
+ 189              		.thumb
+ 190              		.thumb_func
+ 192              	httpserver_close_and_init:
+ 193              	.LVL11:
+ 194              	.LFB137:
+  53:../../util/httpserver_util.c **** 
+  54:../../util/httpserver_util.c **** 
+  55:../../util/httpserver_util.c **** void httpserver_close_and_init(int index)
+  56:../../util/httpserver_util.c **** {
+ 195              		.loc 1 56 1 is_stmt 1 view -0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		.loc 1 56 1 is_stmt 0 view .LVU41
+ 200 0000 10B5     		push	{r4, lr}
+ 201              	.LCFI2:
+ 202              		.cfi_def_cfa_offset 8
+ 203              		.cfi_offset 4, -8
+ 204              		.cfi_offset 14, -4
+ 205 0002 0446     		mov	r4, r0
+  57:../../util/httpserver_util.c **** 	httpserver_close(index);
+ 206              		.loc 1 57 2 is_stmt 1 view .LVU42
+ 207 0004 FFF7FEFF 		bl	httpserver_close
+ 208              	.LVL12:
+  58:../../util/httpserver_util.c **** 	httpserver_init_socket_data(index);
+ 209              		.loc 1 58 2 view .LVU43
+ 210 0008 2046     		mov	r0, r4
+ 211 000a FFF7FEFF 		bl	httpserver_init_socket_data
+ 212              	.LVL13:
+  59:../../util/httpserver_util.c **** }
+ 213              		.loc 1 59 1 is_stmt 0 view .LVU44
+ 214 000e 10BD     		pop	{r4, pc}
+ 215              		.loc 1 59 1 view .LVU45
+ 216              		.cfi_endproc
+ 217              	.LFE137:
+ 219              		.section	.rodata.httpserver_send_404.str1.4,"aMS",%progbits,1
+ 220              		.align	2
+ 221              	.LC0:
+ 222 0000 68747470 		.ascii	"httpserv\000"
+ 222      73657276 
+ 222      00
+ 223              		.section	.text.httpserver_send_404,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	httpserver_send_404
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 230              	httpserver_send_404:
+ 231              	.LVL14:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 6
+
+
+ 232              	.LFB138:
+  60:../../util/httpserver_util.c **** 
+  61:../../util/httpserver_util.c **** 
+  62:../../util/httpserver_util.c **** void httpserver_send_404(httpserver_socket_data_t * sock_data, int index, const char * uri_type)
+  63:../../util/httpserver_util.c **** {
+ 233              		.loc 1 63 1 is_stmt 1 view -0
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237              		.loc 1 63 1 is_stmt 0 view .LVU47
+ 238 0000 30B5     		push	{r4, r5, lr}
+ 239              	.LCFI3:
+ 240              		.cfi_def_cfa_offset 12
+ 241              		.cfi_offset 4, -12
+ 242              		.cfi_offset 5, -8
+ 243              		.cfi_offset 14, -4
+ 244 0002 85B0     		sub	sp, sp, #20
+ 245              	.LCFI4:
+ 246              		.cfi_def_cfa_offset 32
+ 247 0004 0446     		mov	r4, r0
+ 248 0006 0D46     		mov	r5, r1
+  64:../../util/httpserver_util.c **** 	http_create_answer(sock_data->buf, HTTPSERVER_MAX_BUF_SIZE, http_code_404,  HTTPSERVER_NAME, http_
+ 249              		.loc 1 64 2 is_stmt 1 view .LVU48
+ 250 0008 0292     		str	r2, [sp, #8]
+ 251 000a 0023     		movs	r3, #0
+ 252 000c 0193     		str	r3, [sp, #4]
+ 253 000e 0A4B     		ldr	r3, .L16
+ 254 0010 0093     		str	r3, [sp]
+ 255 0012 0A4B     		ldr	r3, .L16+4
+ 256 0014 0A4A     		ldr	r2, .L16+8
+ 257              	.LVL15:
+ 258              		.loc 1 64 2 is_stmt 0 view .LVU49
+ 259 0016 4FF48051 		mov	r1, #4096
+ 260              	.LVL16:
+ 261              		.loc 1 64 2 view .LVU50
+ 262 001a 006A     		ldr	r0, [r0, #32]
+ 263              	.LVL17:
+ 264              		.loc 1 64 2 view .LVU51
+ 265 001c FFF7FEFF 		bl	http_create_answer
+ 266              	.LVL18:
+  65:../../util/httpserver_util.c **** 	httpserver_send(index, sock_data->buf, strlen(sock_data->buf));
+ 267              		.loc 1 65 2 is_stmt 1 view .LVU52
+ 268 0020 246A     		ldr	r4, [r4, #32]
+ 269              	.LVL19:
+ 270              		.loc 1 65 41 is_stmt 0 view .LVU53
+ 271 0022 2046     		mov	r0, r4
+ 272 0024 FFF7FEFF 		bl	strlen
+ 273              	.LVL20:
+ 274 0028 0246     		mov	r2, r0
+ 275              		.loc 1 65 2 discriminator 1 view .LVU54
+ 276 002a 2146     		mov	r1, r4
+ 277 002c 2846     		mov	r0, r5
+ 278 002e FFF7FEFF 		bl	httpserver_send
+ 279              	.LVL21:
+  66:../../util/httpserver_util.c **** }
+ 280              		.loc 1 66 1 view .LVU55
+ 281 0032 05B0     		add	sp, sp, #20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 7
+
+
+ 282              	.LCFI5:
+ 283              		.cfi_def_cfa_offset 12
+ 284              		@ sp needed
+ 285 0034 30BD     		pop	{r4, r5, pc}
+ 286              	.LVL22:
+ 287              	.L17:
+ 288              		.loc 1 66 1 view .LVU56
+ 289 0036 00BF     		.align	2
+ 290              	.L16:
+ 291 0038 00000000 		.word	http_delimetr_rn
+ 292 003c 00000000 		.word	.LC0
+ 293 0040 00000000 		.word	http_code_404
+ 294              		.cfi_endproc
+ 295              	.LFE138:
+ 297              		.section	.text.httpserver_send_200,"ax",%progbits
+ 298              		.align	1
+ 299              		.global	httpserver_send_200
+ 300              		.syntax unified
+ 301              		.thumb
+ 302              		.thumb_func
+ 304              	httpserver_send_200:
+ 305              	.LVL23:
+ 306              	.LFB139:
+  67:../../util/httpserver_util.c **** 
+  68:../../util/httpserver_util.c **** void httpserver_send_200(int index, int content_length, const char * uri_type)
+  69:../../util/httpserver_util.c **** {
+ 307              		.loc 1 69 1 is_stmt 1 view -0
+ 308              		.cfi_startproc
+ 309              		@ args = 0, pretend = 0, frame = 200
+ 310              		@ frame_needed = 0, uses_anonymous_args = 0
+ 311              		.loc 1 69 1 is_stmt 0 view .LVU58
+ 312 0000 10B5     		push	{r4, lr}
+ 313              	.LCFI6:
+ 314              		.cfi_def_cfa_offset 8
+ 315              		.cfi_offset 4, -8
+ 316              		.cfi_offset 14, -4
+ 317 0002 B6B0     		sub	sp, sp, #216
+ 318              	.LCFI7:
+ 319              		.cfi_def_cfa_offset 224
+ 320 0004 0446     		mov	r4, r0
+  70:../../util/httpserver_util.c **** 	char buf[200];
+ 321              		.loc 1 70 2 is_stmt 1 view .LVU59
+  71:../../util/httpserver_util.c **** 
+  72:../../util/httpserver_util.c **** 	http_create_answer(buf, sizeof(buf), http_code_200,  HTTPSERVER_NAME, http_delimetr_rn, content_le
+ 322              		.loc 1 72 2 view .LVU60
+ 323 0006 0292     		str	r2, [sp, #8]
+ 324 0008 0191     		str	r1, [sp, #4]
+ 325 000a 094B     		ldr	r3, .L20
+ 326 000c 0093     		str	r3, [sp]
+ 327 000e 094B     		ldr	r3, .L20+4
+ 328 0010 094A     		ldr	r2, .L20+8
+ 329              	.LVL24:
+ 330              		.loc 1 72 2 is_stmt 0 view .LVU61
+ 331 0012 C821     		movs	r1, #200
+ 332              	.LVL25:
+ 333              		.loc 1 72 2 view .LVU62
+ 334 0014 04A8     		add	r0, sp, #16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 8
+
+
+ 335              	.LVL26:
+ 336              		.loc 1 72 2 view .LVU63
+ 337 0016 FFF7FEFF 		bl	http_create_answer
+ 338              	.LVL27:
+  73:../../util/httpserver_util.c **** 	httpserver_send(index, buf, strlen(buf));
+ 339              		.loc 1 73 2 is_stmt 1 view .LVU64
+ 340              		.loc 1 73 30 is_stmt 0 view .LVU65
+ 341 001a 04A8     		add	r0, sp, #16
+ 342 001c FFF7FEFF 		bl	strlen
+ 343              	.LVL28:
+ 344 0020 0246     		mov	r2, r0
+ 345              		.loc 1 73 2 discriminator 1 view .LVU66
+ 346 0022 04A9     		add	r1, sp, #16
+ 347 0024 2046     		mov	r0, r4
+ 348 0026 FFF7FEFF 		bl	httpserver_send
+ 349              	.LVL29:
+  74:../../util/httpserver_util.c **** }
+ 350              		.loc 1 74 1 view .LVU67
+ 351 002a 36B0     		add	sp, sp, #216
+ 352              	.LCFI8:
+ 353              		.cfi_def_cfa_offset 8
+ 354              		@ sp needed
+ 355 002c 10BD     		pop	{r4, pc}
+ 356              	.LVL30:
+ 357              	.L21:
+ 358              		.loc 1 74 1 view .LVU68
+ 359 002e 00BF     		.align	2
+ 360              	.L20:
+ 361 0030 00000000 		.word	http_delimetr_rn
+ 362 0034 00000000 		.word	.LC0
+ 363 0038 00000000 		.word	http_code_200
+ 364              		.cfi_endproc
+ 365              	.LFE139:
+ 367              		.section	.rodata.httpserver_send_200_file.str1.4,"aMS",%progbits,1
+ 368              		.align	2
+ 369              	.LC1:
+ 370 0000 48545450 		.ascii	"HTTP/1.1 200 OK\015\012Server: httpserv\015\012Cont"
+ 370      2F312E31 
+ 370      20323030 
+ 370      204F4B0D 
+ 370      0A536572 
+ 371 0027 656E742D 		.ascii	"ent-Encoding: identity\015\012Content-Type: applica"
+ 371      456E636F 
+ 371      64696E67 
+ 371      3A206964 
+ 371      656E7469 
+ 372 0054 74696F6E 		.ascii	"tion/force-download; charset=utf-8\015\012Content-D"
+ 372      2F666F72 
+ 372      63652D64 
+ 372      6F776E6C 
+ 372      6F61643B 
+ 373 0081 6973706F 		.ascii	"isposition: attachment; filename=\"%s\"\015\012Cont"
+ 373      73697469 
+ 373      6F6E3A20 
+ 373      61747461 
+ 373      63686D65 
+ 374 00ac 656E742D 		.ascii	"ent-Length: %d\015\012Connection: Closed\015\012\015"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 9
+
+
+ 374      4C656E67 
+ 374      74683A20 
+ 374      25640D0A 
+ 374      436F6E6E 
+ 375 00d1 0A00     		.ascii	"\012\000"
+ 376              		.section	.text.httpserver_send_200_file,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	httpserver_send_200_file
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 383              	httpserver_send_200_file:
+ 384              	.LVL31:
+ 385              	.LFB140:
+  75:../../util/httpserver_util.c **** 
+  76:../../util/httpserver_util.c **** #define RES_HTTP_200_FILE_DOWNLOAD ""\
+  77:../../util/httpserver_util.c **** "HTTP/1.1 200 OK\r\n"\
+  78:../../util/httpserver_util.c **** "Server: "HTTPSERVER_NAME"\r\n"\
+  79:../../util/httpserver_util.c **** "Content-Encoding: identity\r\n"\
+  80:../../util/httpserver_util.c **** "Content-Type: application/force-download; charset=utf-8\r\n"\
+  81:../../util/httpserver_util.c **** "Content-Disposition: attachment; filename=\"%s\"\r\n"\
+  82:../../util/httpserver_util.c **** "Content-Length: %d\r\n"\
+  83:../../util/httpserver_util.c **** "Connection: Closed\r\n"\
+  84:../../util/httpserver_util.c **** "\r\n"
+  85:../../util/httpserver_util.c **** 
+  86:../../util/httpserver_util.c **** void httpserver_send_200_file(int index, int content_length,  const char * file_name)
+  87:../../util/httpserver_util.c **** {
+ 386              		.loc 1 87 1 is_stmt 1 view -0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 304
+ 389              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390              		.loc 1 87 1 is_stmt 0 view .LVU70
+ 391 0000 10B5     		push	{r4, lr}
+ 392              	.LCFI9:
+ 393              		.cfi_def_cfa_offset 8
+ 394              		.cfi_offset 4, -8
+ 395              		.cfi_offset 14, -4
+ 396 0002 CEB0     		sub	sp, sp, #312
+ 397              	.LCFI10:
+ 398              		.cfi_def_cfa_offset 320
+ 399 0004 0446     		mov	r4, r0
+ 400 0006 1346     		mov	r3, r2
+  88:../../util/httpserver_util.c **** 	char buf[300];
+ 401              		.loc 1 88 2 is_stmt 1 view .LVU71
+  89:../../util/httpserver_util.c **** 
+  90:../../util/httpserver_util.c **** 	snprintf(buf, sizeof(buf), RES_HTTP_200_FILE_DOWNLOAD, file_name, content_length);
+ 402              		.loc 1 90 2 view .LVU72
+ 403 0008 0091     		str	r1, [sp]
+ 404 000a 084A     		ldr	r2, .L24
+ 405              	.LVL32:
+ 406              		.loc 1 90 2 is_stmt 0 view .LVU73
+ 407 000c 4FF49671 		mov	r1, #300
+ 408              	.LVL33:
+ 409              		.loc 1 90 2 view .LVU74
+ 410 0010 03A8     		add	r0, sp, #12
+ 411              	.LVL34:
+ 412              		.loc 1 90 2 view .LVU75
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 10
+
+
+ 413 0012 FFF7FEFF 		bl	snprintf
+ 414              	.LVL35:
+  91:../../util/httpserver_util.c **** 	httpserver_send(index, buf, strlen(buf));
+ 415              		.loc 1 91 2 is_stmt 1 view .LVU76
+ 416              		.loc 1 91 30 is_stmt 0 view .LVU77
+ 417 0016 03A8     		add	r0, sp, #12
+ 418 0018 FFF7FEFF 		bl	strlen
+ 419              	.LVL36:
+ 420 001c 0246     		mov	r2, r0
+ 421              		.loc 1 91 2 discriminator 1 view .LVU78
+ 422 001e 03A9     		add	r1, sp, #12
+ 423 0020 2046     		mov	r0, r4
+ 424 0022 FFF7FEFF 		bl	httpserver_send
+ 425              	.LVL37:
+  92:../../util/httpserver_util.c **** }
+ 426              		.loc 1 92 1 view .LVU79
+ 427 0026 4EB0     		add	sp, sp, #312
+ 428              	.LCFI11:
+ 429              		.cfi_def_cfa_offset 8
+ 430              		@ sp needed
+ 431 0028 10BD     		pop	{r4, pc}
+ 432              	.LVL38:
+ 433              	.L25:
+ 434              		.loc 1 92 1 view .LVU80
+ 435 002a 00BF     		.align	2
+ 436              	.L24:
+ 437 002c 00000000 		.word	.LC1
+ 438              		.cfi_endproc
+ 439              	.LFE140:
+ 441              		.section	.text.httpserver_send_answer,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	httpserver_send_answer
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 448              	httpserver_send_answer:
+ 449              	.LVL39:
+ 450              	.LFB141:
+  93:../../util/httpserver_util.c **** 
+  94:../../util/httpserver_util.c **** 
+  95:../../util/httpserver_util.c **** void httpserver_send_answer(httpserver_socket_data_t * sock_data, int index)
+  96:../../util/httpserver_util.c **** {
+ 451              		.loc 1 96 1 is_stmt 1 view -0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455              		.loc 1 96 1 is_stmt 0 view .LVU82
+ 456 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 457              	.LCFI12:
+ 458              		.cfi_def_cfa_offset 24
+ 459              		.cfi_offset 4, -24
+ 460              		.cfi_offset 5, -20
+ 461              		.cfi_offset 6, -16
+ 462              		.cfi_offset 7, -12
+ 463              		.cfi_offset 8, -8
+ 464              		.cfi_offset 14, -4
+ 465 0004 84B0     		sub	sp, sp, #16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 11
+
+
+ 466              	.LCFI13:
+ 467              		.cfi_def_cfa_offset 40
+ 468 0006 0446     		mov	r4, r0
+ 469 0008 0F46     		mov	r7, r1
+  97:../../util/httpserver_util.c **** 	int rs;
+ 470              		.loc 1 97 2 is_stmt 1 view .LVU83
+  98:../../util/httpserver_util.c **** 	const char * uri_type;
+ 471              		.loc 1 98 2 view .LVU84
+  99:../../util/httpserver_util.c **** 	int file_pos, file_size;
+ 472              		.loc 1 99 2 view .LVU85
+ 100:../../util/httpserver_util.c **** 
+ 101:../../util/httpserver_util.c **** 	file_pos = 0;
+ 473              		.loc 1 101 2 view .LVU86
+ 474              	.LVL40:
+ 102:../../util/httpserver_util.c **** 	uri_type = http_type_to_uri_type(sock_data->type);
+ 475              		.loc 1 102 2 view .LVU87
+ 476              		.loc 1 102 13 is_stmt 0 view .LVU88
+ 477 000a 8078     		ldrb	r0, [r0, #2]	@ zero_extendqisi2
+ 478              	.LVL41:
+ 479              		.loc 1 102 13 view .LVU89
+ 480 000c FFF7FEFF 		bl	http_type_to_uri_type
+ 481              	.LVL42:
+ 482              		.loc 1 102 13 view .LVU90
+ 483 0010 0546     		mov	r5, r0
+ 484              	.LVL43:
+ 103:../../util/httpserver_util.c **** 
+ 104:../../util/httpserver_util.c **** 	if (sock_data->type == HTTP_TYPE_CGI)  {
+ 485              		.loc 1 104 2 is_stmt 1 view .LVU91
+ 486              		.loc 1 104 15 is_stmt 0 view .LVU92
+ 487 0012 A378     		ldrb	r3, [r4, #2]	@ zero_extendqisi2
+ 488              		.loc 1 104 5 view .LVU93
+ 489 0014 062B     		cmp	r3, #6
+ 490 0016 2BD0     		beq	.L36
+ 105:../../util/httpserver_util.c **** 		rs = httpserver_read_cgi(sock_data->file_name, sock_data->file_params, sock_data->request, sock_d
+ 106:../../util/httpserver_util.c **** 		if (rs) {
+ 107:../../util/httpserver_util.c **** 			httpserver_send_200(index, rs, uri_type);
+ 108:../../util/httpserver_util.c **** 			httpserver_send(index, sock_data->buf, rs);
+ 109:../../util/httpserver_util.c **** 		} else {
+ 110:../../util/httpserver_util.c **** 			httpserver_send_404(sock_data, index, uri_type);
+ 111:../../util/httpserver_util.c **** 		}
+ 112:../../util/httpserver_util.c **** 	} else {
+ 113:../../util/httpserver_util.c **** 		if (httpserver_file_exist(sock_data->file_name)) {
+ 491              		.loc 1 113 3 is_stmt 1 view .LVU94
+ 492              		.loc 1 113 7 is_stmt 0 view .LVU95
+ 493 0018 2069     		ldr	r0, [r4, #16]
+ 494              	.LVL44:
+ 495              		.loc 1 113 7 view .LVU96
+ 496 001a FFF7FEFF 		bl	httpserver_file_exist
+ 497              	.LVL45:
+ 498              		.loc 1 113 6 discriminator 1 view .LVU97
+ 499 001e 0028     		cmp	r0, #0
+ 500 0020 48D0     		beq	.L30
+ 114:../../util/httpserver_util.c **** 			file_size = httpserver_get_file_size(sock_data->file_name);
+ 501              		.loc 1 114 4 is_stmt 1 view .LVU98
+ 502              		.loc 1 114 16 is_stmt 0 view .LVU99
+ 503 0022 2069     		ldr	r0, [r4, #16]
+ 504 0024 FFF7FEFF 		bl	httpserver_get_file_size
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 12
+
+
+ 505              	.LVL46:
+ 506 0028 8046     		mov	r8, r0
+ 507              	.LVL47:
+ 115:../../util/httpserver_util.c **** 
+ 116:../../util/httpserver_util.c **** 			if (httpserver_file_type_is_web(sock_data->file_name)) {
+ 508              		.loc 1 116 4 is_stmt 1 view .LVU100
+ 509              		.loc 1 116 8 is_stmt 0 view .LVU101
+ 510 002a 2069     		ldr	r0, [r4, #16]
+ 511              	.LVL48:
+ 512              		.loc 1 116 8 view .LVU102
+ 513 002c FFF7FEFF 		bl	httpserver_file_type_is_web
+ 514              	.LVL49:
+ 515              		.loc 1 116 7 discriminator 1 view .LVU103
+ 516 0030 0028     		cmp	r0, #0
+ 517 0032 39D0     		beq	.L31
+ 117:../../util/httpserver_util.c **** 
+ 118:../../util/httpserver_util.c **** 				httpserver_send_200(index, file_size, uri_type);
+ 518              		.loc 1 118 5 is_stmt 1 view .LVU104
+ 519 0034 2A46     		mov	r2, r5
+ 520 0036 4146     		mov	r1, r8
+ 521 0038 3846     		mov	r0, r7
+ 522 003a FFF7FEFF 		bl	httpserver_send_200
+ 523              	.LVL50:
+ 524              	.L32:
+  96:../../util/httpserver_util.c **** 	int rs;
+ 525              		.loc 1 96 1 is_stmt 0 view .LVU105
+ 526 003e 0026     		movs	r6, #0
+ 527              	.LVL51:
+ 528              	.L33:
+ 119:../../util/httpserver_util.c **** 			} else {
+ 120:../../util/httpserver_util.c **** 				httpserver_send_200_file(index, file_size, sock_data->file_name);
+ 121:../../util/httpserver_util.c **** 			}
+ 122:../../util/httpserver_util.c **** 
+ 123:../../util/httpserver_util.c **** 
+ 124:../../util/httpserver_util.c **** 			while (file_pos < file_size) {
+ 529              		.loc 1 124 20 is_stmt 1 view .LVU106
+ 530 0040 4645     		cmp	r6, r8
+ 531 0042 3CDA     		bge	.L29
+ 125:../../util/httpserver_util.c **** 				rs = httpserver_read_file(sock_data->file_name, file_size, file_pos, sock_data->buf, HTTPSERVER
+ 532              		.loc 1 125 5 view .LVU107
+ 533              		.loc 1 125 148 is_stmt 0 view .LVU108
+ 534 0044 A378     		ldrb	r3, [r4, #2]	@ zero_extendqisi2
+ 535              		.loc 1 125 10 view .LVU109
+ 536 0046 0293     		str	r3, [sp, #8]
+ 537 0048 6369     		ldr	r3, [r4, #20]
+ 538 004a 0193     		str	r3, [sp, #4]
+ 539 004c 4FF48053 		mov	r3, #4096
+ 540 0050 0093     		str	r3, [sp]
+ 541 0052 236A     		ldr	r3, [r4, #32]
+ 542 0054 3246     		mov	r2, r6
+ 543 0056 4146     		mov	r1, r8
+ 544 0058 2069     		ldr	r0, [r4, #16]
+ 545 005a FFF7FEFF 		bl	httpserver_read_file
+ 546              	.LVL52:
+ 126:../../util/httpserver_util.c **** 				if (rs < 1) break;
+ 547              		.loc 1 126 5 is_stmt 1 view .LVU110
+ 548              		.loc 1 126 8 is_stmt 0 view .LVU111
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 13
+
+
+ 549 005e 051E     		subs	r5, r0, #0
+ 550 0060 2DDD     		ble	.L29
+ 127:../../util/httpserver_util.c **** 				httpserver_send(index, sock_data->buf, rs);
+ 551              		.loc 1 127 5 is_stmt 1 view .LVU112
+ 552 0062 2A46     		mov	r2, r5
+ 553 0064 216A     		ldr	r1, [r4, #32]
+ 554 0066 3846     		mov	r0, r7
+ 555              	.LVL53:
+ 556              		.loc 1 127 5 is_stmt 0 view .LVU113
+ 557 0068 FFF7FEFF 		bl	httpserver_send
+ 558              	.LVL54:
+ 128:../../util/httpserver_util.c **** 				file_pos += rs;
+ 559              		.loc 1 128 5 is_stmt 1 view .LVU114
+ 560              		.loc 1 128 14 is_stmt 0 view .LVU115
+ 561 006c 2E44     		add	r6, r6, r5
+ 562              	.LVL55:
+ 563              		.loc 1 128 14 view .LVU116
+ 564 006e E7E7     		b	.L33
+ 565              	.LVL56:
+ 566              	.L36:
+ 105:../../util/httpserver_util.c **** 		if (rs) {
+ 567              		.loc 1 105 3 is_stmt 1 view .LVU117
+ 105:../../util/httpserver_util.c **** 		if (rs) {
+ 568              		.loc 1 105 8 is_stmt 0 view .LVU118
+ 569 0070 4FF48053 		mov	r3, #4096
+ 570 0074 0093     		str	r3, [sp]
+ 571 0076 236A     		ldr	r3, [r4, #32]
+ 572 0078 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 573 007a 6169     		ldr	r1, [r4, #20]
+ 574 007c 2069     		ldr	r0, [r4, #16]
+ 575              	.LVL57:
+ 105:../../util/httpserver_util.c **** 		if (rs) {
+ 576              		.loc 1 105 8 view .LVU119
+ 577 007e FFF7FEFF 		bl	httpserver_read_cgi
+ 578              	.LVL58:
+ 106:../../util/httpserver_util.c **** 			httpserver_send_200(index, rs, uri_type);
+ 579              		.loc 1 106 3 is_stmt 1 view .LVU120
+ 106:../../util/httpserver_util.c **** 			httpserver_send_200(index, rs, uri_type);
+ 580              		.loc 1 106 6 is_stmt 0 view .LVU121
+ 581 0082 0646     		mov	r6, r0
+ 582 0084 50B1     		cbz	r0, .L28
+ 107:../../util/httpserver_util.c **** 			httpserver_send(index, sock_data->buf, rs);
+ 583              		.loc 1 107 4 is_stmt 1 view .LVU122
+ 584 0086 2A46     		mov	r2, r5
+ 585 0088 0146     		mov	r1, r0
+ 586 008a 3846     		mov	r0, r7
+ 587              	.LVL59:
+ 107:../../util/httpserver_util.c **** 			httpserver_send(index, sock_data->buf, rs);
+ 588              		.loc 1 107 4 is_stmt 0 view .LVU123
+ 589 008c FFF7FEFF 		bl	httpserver_send_200
+ 590              	.LVL60:
+ 108:../../util/httpserver_util.c **** 		} else {
+ 591              		.loc 1 108 4 is_stmt 1 view .LVU124
+ 592 0090 3246     		mov	r2, r6
+ 593 0092 216A     		ldr	r1, [r4, #32]
+ 594 0094 3846     		mov	r0, r7
+ 595 0096 FFF7FEFF 		bl	httpserver_send
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 14
+
+
+ 596              	.LVL61:
+ 597 009a 10E0     		b	.L29
+ 598              	.LVL62:
+ 599              	.L28:
+ 110:../../util/httpserver_util.c **** 		}
+ 600              		.loc 1 110 4 view .LVU125
+ 601 009c 2A46     		mov	r2, r5
+ 602 009e 3946     		mov	r1, r7
+ 603 00a0 2046     		mov	r0, r4
+ 604              	.LVL63:
+ 110:../../util/httpserver_util.c **** 		}
+ 605              		.loc 1 110 4 is_stmt 0 view .LVU126
+ 606 00a2 FFF7FEFF 		bl	httpserver_send_404
+ 607              	.LVL64:
+ 608 00a6 0AE0     		b	.L29
+ 609              	.LVL65:
+ 610              	.L31:
+ 120:../../util/httpserver_util.c **** 			}
+ 611              		.loc 1 120 5 is_stmt 1 view .LVU127
+ 612 00a8 2269     		ldr	r2, [r4, #16]
+ 613 00aa 4146     		mov	r1, r8
+ 614 00ac 3846     		mov	r0, r7
+ 615 00ae FFF7FEFF 		bl	httpserver_send_200_file
+ 616              	.LVL66:
+ 617 00b2 C4E7     		b	.L32
+ 618              	.LVL67:
+ 619              	.L30:
+ 129:../../util/httpserver_util.c **** 			}
+ 130:../../util/httpserver_util.c **** 
+ 131:../../util/httpserver_util.c **** 		} else {
+ 132:../../util/httpserver_util.c **** 			httpserver_send_404(sock_data, index, uri_type);
+ 620              		.loc 1 132 4 view .LVU128
+ 621 00b4 2A46     		mov	r2, r5
+ 622 00b6 3946     		mov	r1, r7
+ 623 00b8 2046     		mov	r0, r4
+ 624 00ba FFF7FEFF 		bl	httpserver_send_404
+ 625              	.LVL68:
+ 626              	.L29:
+ 133:../../util/httpserver_util.c **** 		}
+ 134:../../util/httpserver_util.c **** 	}
+ 135:../../util/httpserver_util.c **** 
+ 136:../../util/httpserver_util.c **** 	httpserver_close_and_init(index);
+ 627              		.loc 1 136 2 view .LVU129
+ 628 00be 3846     		mov	r0, r7
+ 629 00c0 FFF7FEFF 		bl	httpserver_close_and_init
+ 630              	.LVL69:
+ 137:../../util/httpserver_util.c **** }
+ 631              		.loc 1 137 1 is_stmt 0 view .LVU130
+ 632 00c4 04B0     		add	sp, sp, #16
+ 633              	.LCFI14:
+ 634              		.cfi_def_cfa_offset 24
+ 635              		@ sp needed
+ 636 00c6 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 637              		.loc 1 137 1 view .LVU131
+ 638              		.cfi_endproc
+ 639              	.LFE141:
+ 641              		.section	.rodata.httpserver_fill_sock_data.str1.4,"aMS",%progbits,1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 15
+
+
+ 642              		.align	2
+ 643              	.LC2:
+ 644 0000 696E6465 		.ascii	"index.html\000"
+ 644      782E6874 
+ 644      6D6C00
+ 645 000b 00       		.align	2
+ 646              	.LC3:
+ 647 000c 3F00     		.ascii	"?\000"
+ 648              		.section	.text.httpserver_fill_sock_data,"ax",%progbits
+ 649              		.align	1
+ 650              		.global	httpserver_fill_sock_data
+ 651              		.syntax unified
+ 652              		.thumb
+ 653              		.thumb_func
+ 655              	httpserver_fill_sock_data:
+ 656              	.LVL70:
+ 657              	.LFB142:
+ 138:../../util/httpserver_util.c **** 
+ 139:../../util/httpserver_util.c **** void httpserver_fill_sock_data(httpserver_socket_data_t * sock_data, http_request_data_t * request_
+ 140:../../util/httpserver_util.c **** {
+ 658              		.loc 1 140 1 is_stmt 1 view -0
+ 659              		.cfi_startproc
+ 660              		@ args = 0, pretend = 0, frame = 0
+ 661              		@ frame_needed = 0, uses_anonymous_args = 0
+ 662              		.loc 1 140 1 is_stmt 0 view .LVU133
+ 663 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 664              	.LCFI15:
+ 665              		.cfi_def_cfa_offset 24
+ 666              		.cfi_offset 4, -24
+ 667              		.cfi_offset 5, -20
+ 668              		.cfi_offset 6, -16
+ 669              		.cfi_offset 7, -12
+ 670              		.cfi_offset 8, -8
+ 671              		.cfi_offset 14, -4
+ 672 0004 0446     		mov	r4, r0
+ 673 0006 0D46     		mov	r5, r1
+ 141:../../util/httpserver_util.c **** 	char * ptr;
+ 674              		.loc 1 141 2 is_stmt 1 view .LVU134
+ 142:../../util/httpserver_util.c **** 	int len;
+ 675              		.loc 1 142 2 view .LVU135
+ 143:../../util/httpserver_util.c **** 
+ 144:../../util/httpserver_util.c **** 
+ 145:../../util/httpserver_util.c **** 	sock_data->request = request_data->request;
+ 676              		.loc 1 145 2 view .LVU136
+ 677              		.loc 1 145 35 is_stmt 0 view .LVU137
+ 678 0008 0B68     		ldr	r3, [r1]
+ 679              		.loc 1 145 21 view .LVU138
+ 680 000a 4370     		strb	r3, [r0, #1]
+ 146:../../util/httpserver_util.c **** 	sock_data->content_len = request_data->content_length;
+ 681              		.loc 1 146 2 is_stmt 1 view .LVU139
+ 682              		.loc 1 146 39 is_stmt 0 view .LVU140
+ 683 000c 0B6A     		ldr	r3, [r1, #32]
+ 684              		.loc 1 146 25 view .LVU141
+ 685 000e 8360     		str	r3, [r0, #8]
+ 147:../../util/httpserver_util.c **** 
+ 148:../../util/httpserver_util.c **** 	if (request_data->boundary) {
+ 686              		.loc 1 148 2 is_stmt 1 view .LVU142
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 16
+
+
+ 687              		.loc 1 148 18 is_stmt 0 view .LVU143
+ 688 0010 4B6A     		ldr	r3, [r1, #36]
+ 689              		.loc 1 148 5 view .LVU144
+ 690 0012 6BB1     		cbz	r3, .L38
+ 149:../../util/httpserver_util.c **** 		len = MIN(HTTPSERVER_BOUNDARY_SIZE, request_data->boundary_len);
+ 691              		.loc 1 149 3 is_stmt 1 view .LVU145
+ 692              		.loc 1 149 9 is_stmt 0 view .LVU146
+ 693 0014 8E6A     		ldr	r6, [r1, #40]
+ 694 0016 B6F5807F 		cmp	r6, #256
+ 695 001a 28BF     		it	cs
+ 696 001c 4FF48076 		movcs	r6, #256
+ 697              	.LVL71:
+ 150:../../util/httpserver_util.c **** 		if (!sock_data->boundary) sock_data->boundary = malloc(len + 1);
+ 698              		.loc 1 150 3 is_stmt 1 view .LVU147
+ 699              		.loc 1 150 17 is_stmt 0 view .LVU148
+ 700 0020 8369     		ldr	r3, [r0, #24]
+ 701              		.loc 1 150 6 view .LVU149
+ 702 0022 ABB1     		cbz	r3, .L48
+ 703              	.LVL72:
+ 704              	.L39:
+ 151:../../util/httpserver_util.c **** 		strncpy_s(sock_data->boundary, len + 1, request_data->boundary, len);
+ 705              		.loc 1 151 3 is_stmt 1 view .LVU150
+ 706 0024 3346     		mov	r3, r6
+ 707 0026 6A6A     		ldr	r2, [r5, #36]
+ 708 0028 711C     		adds	r1, r6, #1
+ 709 002a A069     		ldr	r0, [r4, #24]
+ 710 002c FFF7FEFF 		bl	strncpy_s
+ 711              	.LVL73:
+ 712              	.L38:
+ 152:../../util/httpserver_util.c **** 	}
+ 153:../../util/httpserver_util.c **** 
+ 154:../../util/httpserver_util.c **** 
+ 155:../../util/httpserver_util.c **** 	if (request_data->path_len <= 1) {
+ 713              		.loc 1 155 2 view .LVU151
+ 714              		.loc 1 155 18 is_stmt 0 view .LVU152
+ 715 0030 E968     		ldr	r1, [r5, #12]
+ 716              		.loc 1 155 5 view .LVU153
+ 717 0032 0129     		cmp	r1, #1
+ 718 0034 16D8     		bhi	.L40
+ 156:../../util/httpserver_util.c **** 		len = strlen(HTTPSERVER_BASE_FILE) + 1;
+ 719              		.loc 1 156 3 is_stmt 1 view .LVU154
+ 720              	.LVL74:
+ 157:../../util/httpserver_util.c **** 		if (!sock_data->file_name) sock_data->file_name = malloc(len);
+ 721              		.loc 1 157 3 view .LVU155
+ 722              		.loc 1 157 17 is_stmt 0 view .LVU156
+ 723 0036 2369     		ldr	r3, [r4, #16]
+ 724              		.loc 1 157 6 view .LVU157
+ 725 0038 7BB1     		cbz	r3, .L49
+ 726              	.L41:
+ 158:../../util/httpserver_util.c **** 		strcpy_s(sock_data->file_name, len, HTTPSERVER_BASE_FILE);
+ 727              		.loc 1 158 3 is_stmt 1 view .LVU158
+ 728 003a 2E4A     		ldr	r2, .L53
+ 729 003c 0B21     		movs	r1, #11
+ 730 003e 2069     		ldr	r0, [r4, #16]
+ 731 0040 FFF7FEFF 		bl	strcpy_s
+ 732              	.LVL75:
+ 733              	.L42:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 17
+
+
+ 159:../../util/httpserver_util.c **** 	} else {
+ 160:../../util/httpserver_util.c **** 
+ 161:../../util/httpserver_util.c **** 	   ptr = strstr_s(request_data->path, request_data->path_len, "?");
+ 162:../../util/httpserver_util.c **** 	   if (ptr) {
+ 163:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_NAME_SIZE, ptr - request_data->path - 1);
+ 164:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 165:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 166:../../util/httpserver_util.c **** 		   ptr++;
+ 167:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_PARAMS_SIZE, request_data->path_len - (ptr - request_data->path));
+ 168:../../util/httpserver_util.c **** 		   if (!sock_data->file_params) sock_data->file_params = malloc(len + 1);
+ 169:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 170:../../util/httpserver_util.c **** 	   } else {
+ 171:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_NAME_SIZE, request_data->path_len - 1);
+ 172:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 173:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 174:../../util/httpserver_util.c **** 	   }
+ 175:../../util/httpserver_util.c **** 	}
+ 176:../../util/httpserver_util.c **** 
+ 177:../../util/httpserver_util.c **** 	sock_data->type = http_type_from_file_name(sock_data->file_name);
+ 734              		.loc 1 177 2 view .LVU159
+ 735              		.loc 1 177 20 is_stmt 0 view .LVU160
+ 736 0044 2069     		ldr	r0, [r4, #16]
+ 737 0046 FFF7FEFF 		bl	http_type_from_file_name
+ 738              	.LVL76:
+ 739              		.loc 1 177 18 discriminator 1 view .LVU161
+ 740 004a A070     		strb	r0, [r4, #2]
+ 178:../../util/httpserver_util.c **** 
+ 179:../../util/httpserver_util.c **** 	//ulog_fmt("%s %s %s"CRLF, (sock_data->request == HTTP_POST ? "POST" : "GET"), sock_data->file_nam
+ 180:../../util/httpserver_util.c **** }
+ 741              		.loc 1 180 1 view .LVU162
+ 742 004c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 743              	.LVL77:
+ 744              	.L48:
+ 150:../../util/httpserver_util.c **** 		strncpy_s(sock_data->boundary, len + 1, request_data->boundary, len);
+ 745              		.loc 1 150 29 is_stmt 1 discriminator 1 view .LVU163
+ 150:../../util/httpserver_util.c **** 		strncpy_s(sock_data->boundary, len + 1, request_data->boundary, len);
+ 746              		.loc 1 150 51 is_stmt 0 discriminator 1 view .LVU164
+ 747 0050 701C     		adds	r0, r6, #1
+ 748              	.LVL78:
+ 150:../../util/httpserver_util.c **** 		strncpy_s(sock_data->boundary, len + 1, request_data->boundary, len);
+ 749              		.loc 1 150 51 discriminator 1 view .LVU165
+ 750 0052 FFF7FEFF 		bl	malloc
+ 751              	.LVL79:
+ 150:../../util/httpserver_util.c **** 		strncpy_s(sock_data->boundary, len + 1, request_data->boundary, len);
+ 752              		.loc 1 150 49 discriminator 1 view .LVU166
+ 753 0056 A061     		str	r0, [r4, #24]
+ 754 0058 E4E7     		b	.L39
+ 755              	.LVL80:
+ 756              	.L49:
+ 157:../../util/httpserver_util.c **** 		strcpy_s(sock_data->file_name, len, HTTPSERVER_BASE_FILE);
+ 757              		.loc 1 157 30 is_stmt 1 discriminator 1 view .LVU167
+ 157:../../util/httpserver_util.c **** 		strcpy_s(sock_data->file_name, len, HTTPSERVER_BASE_FILE);
+ 758              		.loc 1 157 53 is_stmt 0 discriminator 1 view .LVU168
+ 759 005a 0B20     		movs	r0, #11
+ 760 005c FFF7FEFF 		bl	malloc
+ 761              	.LVL81:
+ 157:../../util/httpserver_util.c **** 		strcpy_s(sock_data->file_name, len, HTTPSERVER_BASE_FILE);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 18
+
+
+ 762              		.loc 1 157 51 discriminator 1 view .LVU169
+ 763 0060 2061     		str	r0, [r4, #16]
+ 764 0062 EAE7     		b	.L41
+ 765              	.LVL82:
+ 766              	.L40:
+ 161:../../util/httpserver_util.c **** 	   if (ptr) {
+ 767              		.loc 1 161 5 is_stmt 1 view .LVU170
+ 161:../../util/httpserver_util.c **** 	   if (ptr) {
+ 768              		.loc 1 161 11 is_stmt 0 view .LVU171
+ 769 0064 244A     		ldr	r2, .L53+4
+ 770 0066 A868     		ldr	r0, [r5, #8]
+ 771 0068 FFF7FEFF 		bl	strstr_s
+ 772              	.LVL83:
+ 162:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_NAME_SIZE, ptr - request_data->path - 1);
+ 773              		.loc 1 162 5 is_stmt 1 view .LVU172
+ 162:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_NAME_SIZE, ptr - request_data->path - 1);
+ 774              		.loc 1 162 8 is_stmt 0 view .LVU173
+ 775 006c 0746     		mov	r7, r0
+ 776 006e 60B3     		cbz	r0, .L43
+ 163:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 777              		.loc 1 163 6 is_stmt 1 view .LVU174
+ 163:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 778              		.loc 1 163 12 is_stmt 0 view .LVU175
+ 779 0070 AE68     		ldr	r6, [r5, #8]
+ 780 0072 861B     		subs	r6, r0, r6
+ 781 0074 812E     		cmp	r6, #129
+ 782 0076 A8BF     		it	ge
+ 783 0078 8126     		movge	r6, #129
+ 163:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 784              		.loc 1 163 10 view .LVU176
+ 785 007a 06F1FF38 		add	r8, r6, #-1
+ 786              	.LVL84:
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 787              		.loc 1 164 6 is_stmt 1 view .LVU177
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 788              		.loc 1 164 20 is_stmt 0 view .LVU178
+ 789 007e 2369     		ldr	r3, [r4, #16]
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 790              		.loc 1 164 9 view .LVU179
+ 791 0080 CBB1     		cbz	r3, .L50
+ 792              	.LVL85:
+ 793              	.L44:
+ 165:../../util/httpserver_util.c **** 		   ptr++;
+ 794              		.loc 1 165 6 is_stmt 1 view .LVU180
+ 165:../../util/httpserver_util.c **** 		   ptr++;
+ 795              		.loc 1 165 60 is_stmt 0 view .LVU181
+ 796 0082 AA68     		ldr	r2, [r5, #8]
+ 165:../../util/httpserver_util.c **** 		   ptr++;
+ 797              		.loc 1 165 6 view .LVU182
+ 798 0084 4346     		mov	r3, r8
+ 799 0086 0132     		adds	r2, r2, #1
+ 800 0088 3146     		mov	r1, r6
+ 801 008a 2069     		ldr	r0, [r4, #16]
+ 802 008c FFF7FEFF 		bl	strncpy_s
+ 803              	.LVL86:
+ 166:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_PARAMS_SIZE, request_data->path_len - (ptr - request_data->path));
+ 804              		.loc 1 166 6 is_stmt 1 view .LVU183
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 19
+
+
+ 166:../../util/httpserver_util.c **** 		   len = MIN(HTTPSERVER_FILE_PARAMS_SIZE, request_data->path_len - (ptr - request_data->path));
+ 805              		.loc 1 166 9 is_stmt 0 view .LVU184
+ 806 0090 0137     		adds	r7, r7, #1
+ 807              	.LVL87:
+ 167:../../util/httpserver_util.c **** 		   if (!sock_data->file_params) sock_data->file_params = malloc(len + 1);
+ 808              		.loc 1 167 6 is_stmt 1 view .LVU185
+ 167:../../util/httpserver_util.c **** 		   if (!sock_data->file_params) sock_data->file_params = malloc(len + 1);
+ 809              		.loc 1 167 12 is_stmt 0 view .LVU186
+ 810 0092 EB68     		ldr	r3, [r5, #12]
+ 811 0094 A968     		ldr	r1, [r5, #8]
+ 812 0096 791A     		subs	r1, r7, r1
+ 813 0098 5D1A     		subs	r5, r3, r1
+ 814              	.LVL88:
+ 167:../../util/httpserver_util.c **** 		   if (!sock_data->file_params) sock_data->file_params = malloc(len + 1);
+ 815              		.loc 1 167 12 view .LVU187
+ 816 009a B5F5806F 		cmp	r5, #1024
+ 817 009e 28BF     		it	cs
+ 818 00a0 4FF48065 		movcs	r5, #1024
+ 819              	.LVL89:
+ 168:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 820              		.loc 1 168 6 is_stmt 1 view .LVU188
+ 168:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 821              		.loc 1 168 20 is_stmt 0 view .LVU189
+ 822 00a4 6369     		ldr	r3, [r4, #20]
+ 168:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 823              		.loc 1 168 9 view .LVU190
+ 824 00a6 5BB1     		cbz	r3, .L51
+ 825              	.L45:
+ 169:../../util/httpserver_util.c **** 	   } else {
+ 826              		.loc 1 169 6 is_stmt 1 view .LVU191
+ 827 00a8 2B46     		mov	r3, r5
+ 828 00aa 3A46     		mov	r2, r7
+ 829 00ac 691C     		adds	r1, r5, #1
+ 830 00ae 6069     		ldr	r0, [r4, #20]
+ 831 00b0 FFF7FEFF 		bl	strncpy_s
+ 832              	.LVL90:
+ 833 00b4 C6E7     		b	.L42
+ 834              	.LVL91:
+ 835              	.L50:
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 836              		.loc 1 164 33 discriminator 1 view .LVU192
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 837              		.loc 1 164 56 is_stmt 0 discriminator 1 view .LVU193
+ 838 00b6 3046     		mov	r0, r6
+ 839              	.LVL92:
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 840              		.loc 1 164 56 discriminator 1 view .LVU194
+ 841 00b8 FFF7FEFF 		bl	malloc
+ 842              	.LVL93:
+ 164:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 843              		.loc 1 164 54 discriminator 1 view .LVU195
+ 844 00bc 2061     		str	r0, [r4, #16]
+ 845 00be E0E7     		b	.L44
+ 846              	.LVL94:
+ 847              	.L51:
+ 168:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 848              		.loc 1 168 35 is_stmt 1 discriminator 1 view .LVU196
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 20
+
+
+ 168:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 849              		.loc 1 168 60 is_stmt 0 discriminator 1 view .LVU197
+ 850 00c0 681C     		adds	r0, r5, #1
+ 851 00c2 FFF7FEFF 		bl	malloc
+ 852              	.LVL95:
+ 168:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_params, len + 1, ptr, len);
+ 853              		.loc 1 168 58 discriminator 1 view .LVU198
+ 854 00c6 6061     		str	r0, [r4, #20]
+ 855 00c8 EEE7     		b	.L45
+ 856              	.LVL96:
+ 857              	.L43:
+ 171:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 858              		.loc 1 171 6 is_stmt 1 view .LVU199
+ 171:../../util/httpserver_util.c **** 		   if (!sock_data->file_name) sock_data->file_name = malloc(len + 1);
+ 859              		.loc 1 171 12 is_stmt 0 view .LVU200
+ 860 00ca EE68     		ldr	r6, [r5, #12]
+ 861 00cc 013E     		subs	r6, r6, #1
+ 862 00ce 802E     		cmp	r6, #128
+ 863 00d0 28BF     		it	cs
+ 864 00d2 8026     		movcs	r6, #128
+ 865              	.LVL97:
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 866              		.loc 1 172 6 is_stmt 1 view .LVU201
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 867              		.loc 1 172 20 is_stmt 0 view .LVU202
+ 868 00d4 2369     		ldr	r3, [r4, #16]
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 869              		.loc 1 172 9 view .LVU203
+ 870 00d6 3BB1     		cbz	r3, .L52
+ 871              	.LVL98:
+ 872              	.L46:
+ 173:../../util/httpserver_util.c **** 	   }
+ 873              		.loc 1 173 6 is_stmt 1 view .LVU204
+ 173:../../util/httpserver_util.c **** 	   }
+ 874              		.loc 1 173 60 is_stmt 0 view .LVU205
+ 875 00d8 AA68     		ldr	r2, [r5, #8]
+ 173:../../util/httpserver_util.c **** 	   }
+ 876              		.loc 1 173 6 view .LVU206
+ 877 00da 3346     		mov	r3, r6
+ 878 00dc 0132     		adds	r2, r2, #1
+ 879 00de 711C     		adds	r1, r6, #1
+ 880 00e0 2069     		ldr	r0, [r4, #16]
+ 881 00e2 FFF7FEFF 		bl	strncpy_s
+ 882              	.LVL99:
+ 883 00e6 ADE7     		b	.L42
+ 884              	.LVL100:
+ 885              	.L52:
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 886              		.loc 1 172 33 is_stmt 1 discriminator 1 view .LVU207
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 887              		.loc 1 172 56 is_stmt 0 discriminator 1 view .LVU208
+ 888 00e8 701C     		adds	r0, r6, #1
+ 889              	.LVL101:
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 890              		.loc 1 172 56 discriminator 1 view .LVU209
+ 891 00ea FFF7FEFF 		bl	malloc
+ 892              	.LVL102:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 21
+
+
+ 172:../../util/httpserver_util.c **** 		   strncpy_s(sock_data->file_name, len + 1, &request_data->path[1], len);
+ 893              		.loc 1 172 54 discriminator 1 view .LVU210
+ 894 00ee 2061     		str	r0, [r4, #16]
+ 895 00f0 F2E7     		b	.L46
+ 896              	.L54:
+ 897 00f2 00BF     		.align	2
+ 898              	.L53:
+ 899 00f4 00000000 		.word	.LC2
+ 900 00f8 0C000000 		.word	.LC3
+ 901              		.cfi_endproc
+ 902              	.LFE142:
+ 904              		.section	.rodata.httpserver_find_upload_file.str1.4,"aMS",%progbits,1
+ 905              		.align	2
+ 906              	.LC4:
+ 907 0000 66696C65 		.ascii	"filename=\"\000"
+ 907      6E616D65 
+ 907      3D2200
+ 908 000b 00       		.align	2
+ 909              	.LC5:
+ 910 000c 2200     		.ascii	"\"\000"
+ 911              		.section	.text.httpserver_find_upload_file,"ax",%progbits
+ 912              		.align	1
+ 913              		.global	httpserver_find_upload_file
+ 914              		.syntax unified
+ 915              		.thumb
+ 916              		.thumb_func
+ 918              	httpserver_find_upload_file:
+ 919              	.LVL103:
+ 920              	.LFB143:
+ 181:../../util/httpserver_util.c **** 
+ 182:../../util/httpserver_util.c **** BOOL httpserver_find_upload_file(httpserver_socket_data_t * sock_data, char * str, int str_len)
+ 183:../../util/httpserver_util.c **** {
+ 921              		.loc 1 183 1 is_stmt 1 view -0
+ 922              		.cfi_startproc
+ 923              		@ args = 0, pretend = 0, frame = 0
+ 924              		@ frame_needed = 0, uses_anonymous_args = 0
+ 925              		.loc 1 183 1 is_stmt 0 view .LVU212
+ 926 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 927              	.LCFI16:
+ 928              		.cfi_def_cfa_offset 24
+ 929              		.cfi_offset 3, -24
+ 930              		.cfi_offset 4, -20
+ 931              		.cfi_offset 5, -16
+ 932              		.cfi_offset 6, -12
+ 933              		.cfi_offset 7, -8
+ 934              		.cfi_offset 14, -4
+ 935 0002 0646     		mov	r6, r0
+ 936 0004 0C46     		mov	r4, r1
+ 937 0006 1546     		mov	r5, r2
+ 184:../../util/httpserver_util.c ****     char * ptr, * ptr2;
+ 938              		.loc 1 184 5 is_stmt 1 view .LVU213
+ 185:../../util/httpserver_util.c ****     int len;
+ 939              		.loc 1 185 5 view .LVU214
+ 186:../../util/httpserver_util.c **** 
+ 187:../../util/httpserver_util.c **** 
+ 188:../../util/httpserver_util.c ****     ptr = strstr_s(str, str_len, sock_data->boundary);
+ 940              		.loc 1 188 5 view .LVU215
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 22
+
+
+ 941              		.loc 1 188 11 is_stmt 0 view .LVU216
+ 942 0008 8269     		ldr	r2, [r0, #24]
+ 943              	.LVL104:
+ 944              		.loc 1 188 11 view .LVU217
+ 945 000a 2946     		mov	r1, r5
+ 946              	.LVL105:
+ 947              		.loc 1 188 11 view .LVU218
+ 948 000c 2046     		mov	r0, r4
+ 949              	.LVL106:
+ 950              		.loc 1 188 11 view .LVU219
+ 951 000e FFF7FEFF 		bl	strstr_s
+ 952              	.LVL107:
+ 189:../../util/httpserver_util.c ****     if (!ptr) return FALSE;
+ 953              		.loc 1 189 5 is_stmt 1 view .LVU220
+ 954              		.loc 1 189 8 is_stmt 0 view .LVU221
+ 955 0012 C8B1     		cbz	r0, .L57
+ 190:../../util/httpserver_util.c **** 
+ 191:../../util/httpserver_util.c ****     ptr = strright(str, str_len, HTTPSERVER_UPLOAD_FILE_KEY"=\"");
+ 956              		.loc 1 191 5 is_stmt 1 view .LVU222
+ 957              		.loc 1 191 11 is_stmt 0 view .LVU223
+ 958 0014 0F4A     		ldr	r2, .L61
+ 959 0016 2946     		mov	r1, r5
+ 960 0018 2046     		mov	r0, r4
+ 961              	.LVL108:
+ 962              		.loc 1 191 11 view .LVU224
+ 963 001a FFF7FEFF 		bl	strright
+ 964              	.LVL109:
+ 192:../../util/httpserver_util.c ****     if (!ptr) return FALSE;
+ 965              		.loc 1 192 5 is_stmt 1 view .LVU225
+ 966              		.loc 1 192 8 is_stmt 0 view .LVU226
+ 967 001e 0746     		mov	r7, r0
+ 968 0020 A0B1     		cbz	r0, .L58
+ 193:../../util/httpserver_util.c **** 
+ 194:../../util/httpserver_util.c ****     ptr2 = strstr_s(ptr, str_len - (ptr - str), "\"");
+ 969              		.loc 1 194 5 is_stmt 1 view .LVU227
+ 970              		.loc 1 194 41 is_stmt 0 view .LVU228
+ 971 0022 041B     		subs	r4, r0, r4
+ 972              	.LVL110:
+ 973              		.loc 1 194 12 view .LVU229
+ 974 0024 0C4A     		ldr	r2, .L61+4
+ 975 0026 291B     		subs	r1, r5, r4
+ 976 0028 FFF7FEFF 		bl	strstr_s
+ 977              	.LVL111:
+ 195:../../util/httpserver_util.c ****     if (!ptr2) return FALSE;
+ 978              		.loc 1 195 5 is_stmt 1 view .LVU230
+ 979              		.loc 1 195 8 is_stmt 0 view .LVU231
+ 980 002c 80B1     		cbz	r0, .L59
+ 196:../../util/httpserver_util.c **** 
+ 197:../../util/httpserver_util.c ****     len = ptr2 - ptr;
+ 981              		.loc 1 197 5 is_stmt 1 view .LVU232
+ 982              		.loc 1 197 9 is_stmt 0 view .LVU233
+ 983 002e C41B     		subs	r4, r0, r7
+ 984              	.LVL112:
+ 198:../../util/httpserver_util.c ****     sock_data->upload_file_name = malloc(len + 1);
+ 985              		.loc 1 198 5 is_stmt 1 view .LVU234
+ 986              		.loc 1 198 46 is_stmt 0 view .LVU235
+ 987 0030 651C     		adds	r5, r4, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 23
+
+
+ 988              	.LVL113:
+ 989              		.loc 1 198 35 view .LVU236
+ 990 0032 2846     		mov	r0, r5
+ 991              	.LVL114:
+ 992              		.loc 1 198 35 view .LVU237
+ 993 0034 FFF7FEFF 		bl	malloc
+ 994              	.LVL115:
+ 995              		.loc 1 198 33 discriminator 1 view .LVU238
+ 996 0038 F061     		str	r0, [r6, #28]
+ 199:../../util/httpserver_util.c ****     strncpy_s(sock_data->upload_file_name, len + 1, ptr, len);
+ 997              		.loc 1 199 5 is_stmt 1 view .LVU239
+ 998 003a 2346     		mov	r3, r4
+ 999 003c 3A46     		mov	r2, r7
+ 1000 003e 2946     		mov	r1, r5
+ 1001 0040 FFF7FEFF 		bl	strncpy_s
+ 1002              	.LVL116:
+ 200:../../util/httpserver_util.c **** 
+ 201:../../util/httpserver_util.c ****     return TRUE;
+ 1003              		.loc 1 201 5 view .LVU240
+ 1004              		.loc 1 201 12 is_stmt 0 view .LVU241
+ 1005 0044 0120     		movs	r0, #1
+ 1006              	.LVL117:
+ 1007              	.L56:
+ 202:../../util/httpserver_util.c **** }
+ 1008              		.loc 1 202 1 view .LVU242
+ 1009 0046 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1010              	.LVL118:
+ 1011              	.L57:
+ 189:../../util/httpserver_util.c **** 
+ 1012              		.loc 1 189 22 discriminator 1 view .LVU243
+ 1013 0048 0020     		movs	r0, #0
+ 1014              	.LVL119:
+ 189:../../util/httpserver_util.c **** 
+ 1015              		.loc 1 189 22 discriminator 1 view .LVU244
+ 1016 004a FCE7     		b	.L56
+ 1017              	.LVL120:
+ 1018              	.L58:
+ 192:../../util/httpserver_util.c **** 
+ 1019              		.loc 1 192 22 discriminator 1 view .LVU245
+ 1020 004c 0020     		movs	r0, #0
+ 1021              	.LVL121:
+ 192:../../util/httpserver_util.c **** 
+ 1022              		.loc 1 192 22 discriminator 1 view .LVU246
+ 1023 004e FAE7     		b	.L56
+ 1024              	.LVL122:
+ 1025              	.L59:
+ 195:../../util/httpserver_util.c **** 
+ 1026              		.loc 1 195 23 discriminator 1 view .LVU247
+ 1027 0050 0020     		movs	r0, #0
+ 1028              	.LVL123:
+ 195:../../util/httpserver_util.c **** 
+ 1029              		.loc 1 195 23 discriminator 1 view .LVU248
+ 1030 0052 F8E7     		b	.L56
+ 1031              	.L62:
+ 1032              		.align	2
+ 1033              	.L61:
+ 1034 0054 00000000 		.word	.LC4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 24
+
+
+ 1035 0058 0C000000 		.word	.LC5
+ 1036              		.cfi_endproc
+ 1037              	.LFE143:
+ 1039              		.section	.text.httpserver_upload_file_finish,"ax",%progbits
+ 1040              		.align	1
+ 1041              		.global	httpserver_upload_file_finish
+ 1042              		.syntax unified
+ 1043              		.thumb
+ 1044              		.thumb_func
+ 1046              	httpserver_upload_file_finish:
+ 1047              	.LVL124:
+ 1048              	.LFB144:
+ 203:../../util/httpserver_util.c **** 
+ 204:../../util/httpserver_util.c **** void httpserver_upload_file_finish(httpserver_socket_data_t * sock_data, int index, char * body, in
+ 205:../../util/httpserver_util.c **** {
+ 1049              		.loc 1 205 1 is_stmt 1 view -0
+ 1050              		.cfi_startproc
+ 1051              		@ args = 0, pretend = 0, frame = 0
+ 1052              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1053              		.loc 1 205 1 is_stmt 0 view .LVU250
+ 1054 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1055              	.LCFI17:
+ 1056              		.cfi_def_cfa_offset 24
+ 1057              		.cfi_offset 3, -24
+ 1058              		.cfi_offset 4, -20
+ 1059              		.cfi_offset 5, -16
+ 1060              		.cfi_offset 6, -12
+ 1061              		.cfi_offset 7, -8
+ 1062              		.cfi_offset 14, -4
+ 1063 0002 0546     		mov	r5, r0
+ 1064 0004 1446     		mov	r4, r2
+ 1065 0006 1E46     		mov	r6, r3
+ 206:../../util/httpserver_util.c ****    char * ptr;
+ 1066              		.loc 1 206 4 is_stmt 1 view .LVU251
+ 207:../../util/httpserver_util.c ****    int len;
+ 1067              		.loc 1 207 4 view .LVU252
+ 208:../../util/httpserver_util.c **** 
+ 209:../../util/httpserver_util.c ****    ptr = memrfind(body, body_len, sock_data->boundary, strlen(sock_data->boundary));
+ 1068              		.loc 1 209 4 view .LVU253
+ 1069              		.loc 1 209 44 is_stmt 0 view .LVU254
+ 1070 0008 8769     		ldr	r7, [r0, #24]
+ 1071              		.loc 1 209 10 view .LVU255
+ 1072 000a 3846     		mov	r0, r7
+ 1073              	.LVL125:
+ 1074              		.loc 1 209 10 view .LVU256
+ 1075 000c FFF7FEFF 		bl	strlen
+ 1076              	.LVL126:
+ 1077              		.loc 1 209 10 view .LVU257
+ 1078 0010 0346     		mov	r3, r0
+ 1079              		.loc 1 209 10 discriminator 1 view .LVU258
+ 1080 0012 3A46     		mov	r2, r7
+ 1081 0014 3146     		mov	r1, r6
+ 1082 0016 2046     		mov	r0, r4
+ 1083 0018 FFF7FEFF 		bl	memrfind
+ 1084              	.LVL127:
+ 210:../../util/httpserver_util.c ****    if (ptr) {
+ 1085              		.loc 1 210 4 is_stmt 1 view .LVU259
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 25
+
+
+ 1086              		.loc 1 210 7 is_stmt 0 view .LVU260
+ 1087 001c 30B1     		cbz	r0, .L64
+ 211:../../util/httpserver_util.c ****       len = (ptr - body) - 4;
+ 1088              		.loc 1 211 7 is_stmt 1 view .LVU261
+ 1089              		.loc 1 211 18 is_stmt 0 view .LVU262
+ 1090 001e 021B     		subs	r2, r0, r4
+ 1091              	.LVL128:
+ 212:../../util/httpserver_util.c ****       httpserver_write_upload_file(sock_data->upload_file_name, body, len);
+ 1092              		.loc 1 212 7 is_stmt 1 view .LVU263
+ 1093 0020 043A     		subs	r2, r2, #4
+ 1094              	.LVL129:
+ 1095              		.loc 1 212 7 is_stmt 0 view .LVU264
+ 1096 0022 2146     		mov	r1, r4
+ 1097 0024 E869     		ldr	r0, [r5, #28]
+ 1098              	.LVL130:
+ 1099              		.loc 1 212 7 view .LVU265
+ 1100 0026 FFF7FEFF 		bl	httpserver_write_upload_file
+ 1101              	.LVL131:
+ 1102              	.L63:
+ 213:../../util/httpserver_util.c ****    } else {
+ 214:../../util/httpserver_util.c ****        httpserver_write_upload_file(sock_data->upload_file_name, body, body_len);
+ 215:../../util/httpserver_util.c ****    }
+ 216:../../util/httpserver_util.c ****  }
+ 1103              		.loc 1 216 2 view .LVU266
+ 1104 002a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1105              	.LVL132:
+ 1106              	.L64:
+ 214:../../util/httpserver_util.c ****    }
+ 1107              		.loc 1 214 8 is_stmt 1 view .LVU267
+ 1108 002c 3246     		mov	r2, r6
+ 1109 002e 2146     		mov	r1, r4
+ 1110 0030 E869     		ldr	r0, [r5, #28]
+ 1111              	.LVL133:
+ 214:../../util/httpserver_util.c ****    }
+ 1112              		.loc 1 214 8 is_stmt 0 view .LVU268
+ 1113 0032 FFF7FEFF 		bl	httpserver_write_upload_file
+ 1114              	.LVL134:
+ 1115              		.loc 1 216 2 view .LVU269
+ 1116 0036 F8E7     		b	.L63
+ 1117              		.cfi_endproc
+ 1118              	.LFE144:
+ 1120              		.section	.text.httpserver_on_recv_body,"ax",%progbits
+ 1121              		.align	1
+ 1122              		.global	httpserver_on_recv_body
+ 1123              		.syntax unified
+ 1124              		.thumb
+ 1125              		.thumb_func
+ 1127              	httpserver_on_recv_body:
+ 1128              	.LVL135:
+ 1129              	.LFB145:
+ 217:../../util/httpserver_util.c **** 
+ 218:../../util/httpserver_util.c **** void httpserver_on_recv_body(httpserver_socket_data_t * sock_data, int index, char * body, int body
+ 219:../../util/httpserver_util.c **** {
+ 1130              		.loc 1 219 1 is_stmt 1 view -0
+ 1131              		.cfi_startproc
+ 1132              		@ args = 0, pretend = 0, frame = 0
+ 1133              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 26
+
+
+ 1134              		.loc 1 219 1 is_stmt 0 view .LVU271
+ 1135 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1136              	.LCFI18:
+ 1137              		.cfi_def_cfa_offset 40
+ 1138              		.cfi_offset 3, -40
+ 1139              		.cfi_offset 4, -36
+ 1140              		.cfi_offset 5, -32
+ 1141              		.cfi_offset 6, -28
+ 1142              		.cfi_offset 7, -24
+ 1143              		.cfi_offset 8, -20
+ 1144              		.cfi_offset 9, -16
+ 1145              		.cfi_offset 10, -12
+ 1146              		.cfi_offset 11, -8
+ 1147              		.cfi_offset 14, -4
+ 1148 0004 0446     		mov	r4, r0
+ 1149 0006 8846     		mov	r8, r1
+ 220:../../util/httpserver_util.c **** 	char * ptr;
+ 1150              		.loc 1 220 2 is_stmt 1 view .LVU272
+ 221:../../util/httpserver_util.c **** 	BOOL finish;
+ 1151              		.loc 1 221 2 view .LVU273
+ 222:../../util/httpserver_util.c **** 	int len;
+ 1152              		.loc 1 222 2 view .LVU274
+ 223:../../util/httpserver_util.c **** 
+ 224:../../util/httpserver_util.c **** 
+ 225:../../util/httpserver_util.c **** 	sock_data->body_len += body_len;
+ 1153              		.loc 1 225 2 view .LVU275
+ 1154              		.loc 1 225 11 is_stmt 0 view .LVU276
+ 1155 0008 C668     		ldr	r6, [r0, #12]
+ 1156              		.loc 1 225 22 view .LVU277
+ 1157 000a 1E44     		add	r6, r6, r3
+ 1158 000c C660     		str	r6, [r0, #12]
+ 226:../../util/httpserver_util.c **** 	finish = sock_data->body_len >= sock_data->content_len;
+ 1159              		.loc 1 226 2 is_stmt 1 view .LVU278
+ 1160              		.loc 1 226 43 is_stmt 0 view .LVU279
+ 1161 000e 8768     		ldr	r7, [r0, #8]
+ 1162              	.LVL136:
+ 227:../../util/httpserver_util.c **** 
+ 228:../../util/httpserver_util.c **** 
+ 229:../../util/httpserver_util.c **** 	if (body_len) {
+ 1163              		.loc 1 229 2 is_stmt 1 view .LVU280
+ 1164              		.loc 1 229 5 is_stmt 0 view .LVU281
+ 1165 0010 23B1     		cbz	r3, .L68
+ 1166 0012 9146     		mov	r9, r2
+ 1167 0014 1D46     		mov	r5, r3
+ 230:../../util/httpserver_util.c **** 
+ 231:../../util/httpserver_util.c **** 		if  (sock_data->request == HTTP_POST) {
+ 1168              		.loc 1 231 3 is_stmt 1 view .LVU282
+ 1169              		.loc 1 231 17 is_stmt 0 view .LVU283
+ 1170 0016 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 1171              	.LVL137:
+ 1172              		.loc 1 231 7 view .LVU284
+ 1173 0018 022B     		cmp	r3, #2
+ 1174 001a 03D0     		beq	.L77
+ 1175              	.LVL138:
+ 1176              	.L68:
+ 232:../../util/httpserver_util.c **** 
+ 233:../../util/httpserver_util.c **** 			if (sock_data->boundary) {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 27
+
+
+ 234:../../util/httpserver_util.c **** 
+ 235:../../util/httpserver_util.c **** 				if (sock_data->upload_file_name) {
+ 236:../../util/httpserver_util.c **** 					if (finish) {
+ 237:../../util/httpserver_util.c **** 						httpserver_upload_file_finish(sock_data, index, body, body_len);
+ 238:../../util/httpserver_util.c **** 					} else {
+ 239:../../util/httpserver_util.c **** 						httpserver_write_upload_file(sock_data->upload_file_name, body, body_len);
+ 240:../../util/httpserver_util.c **** 					}
+ 241:../../util/httpserver_util.c **** 				} else {
+ 242:../../util/httpserver_util.c **** 					ptr = strright(body, body_len, http_delimetr_rnrn);
+ 243:../../util/httpserver_util.c **** 					if (!ptr) {
+ 244:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 245:../../util/httpserver_util.c **** 						httpserver_send_answer(sock_data, index);
+ 246:../../util/httpserver_util.c **** 						return;
+ 247:../../util/httpserver_util.c **** 					}
+ 248:../../util/httpserver_util.c **** 					if (!httpserver_find_upload_file(sock_data, body, ptr - body)) {
+ 249:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 250:../../util/httpserver_util.c **** 						httpserver_send_answer(sock_data, index);
+ 251:../../util/httpserver_util.c **** 						return;
+ 252:../../util/httpserver_util.c **** 					}
+ 253:../../util/httpserver_util.c **** 
+ 254:../../util/httpserver_util.c **** 					httpserver_create_upload_file(sock_data->upload_file_name);
+ 255:../../util/httpserver_util.c **** 
+ 256:../../util/httpserver_util.c **** 					len = body_len - (ptr - body);
+ 257:../../util/httpserver_util.c **** 					if (len) {
+ 258:../../util/httpserver_util.c **** 						if (finish) {
+ 259:../../util/httpserver_util.c **** 							httpserver_upload_file_finish(sock_data, index, ptr, len);
+ 260:../../util/httpserver_util.c **** 						} else {
+ 261:../../util/httpserver_util.c **** 							httpserver_write_upload_file(sock_data->upload_file_name, ptr, len);
+ 262:../../util/httpserver_util.c **** 						}
+ 263:../../util/httpserver_util.c **** 					}
+ 264:../../util/httpserver_util.c **** 				}
+ 265:../../util/httpserver_util.c **** 			}
+ 266:../../util/httpserver_util.c **** 			//if  (sock_data->type == HTTP_TYPE_CGI) {
+ 267:../../util/httpserver_util.c **** 				if (!sock_data->file_params) {
+ 268:../../util/httpserver_util.c **** 					len = MIN(body_len, HTTPSERVER_FILE_PARAMS_SIZE);
+ 269:../../util/httpserver_util.c **** 					sock_data->file_params = malloc(len + 1);
+ 270:../../util/httpserver_util.c **** 					strncpy_s(sock_data->file_params, len + 1, body, len);
+ 271:../../util/httpserver_util.c **** 				}
+ 272:../../util/httpserver_util.c **** 			//}
+ 273:../../util/httpserver_util.c **** 
+ 274:../../util/httpserver_util.c **** 		} //if  (sock_data->request == HTTP_POST) {
+ 275:../../util/httpserver_util.c **** 	} //if (body_len)
+ 276:../../util/httpserver_util.c **** 
+ 277:../../util/httpserver_util.c **** 
+ 278:../../util/httpserver_util.c **** 
+ 279:../../util/httpserver_util.c **** 	if (finish) {
+ 1177              		.loc 1 279 2 is_stmt 1 view .LVU285
+ 1178              		.loc 1 279 5 is_stmt 0 view .LVU286
+ 1179 001c BE42     		cmp	r6, r7
+ 1180 001e 51DA     		bge	.L78
+ 1181              	.L67:
+ 280:../../util/httpserver_util.c **** 		httpserver_send_answer(sock_data, index);
+ 281:../../util/httpserver_util.c **** 	}
+ 282:../../util/httpserver_util.c **** }
+ 1182              		.loc 1 282 1 view .LVU287
+ 1183 0020 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1184              	.LVL139:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 28
+
+
+ 1185              	.L77:
+ 233:../../util/httpserver_util.c **** 
+ 1186              		.loc 1 233 4 is_stmt 1 view .LVU288
+ 233:../../util/httpserver_util.c **** 
+ 1187              		.loc 1 233 17 is_stmt 0 view .LVU289
+ 1188 0024 8369     		ldr	r3, [r0, #24]
+ 233:../../util/httpserver_util.c **** 
+ 1189              		.loc 1 233 7 view .LVU290
+ 1190 0026 3BB1     		cbz	r3, .L69
+ 235:../../util/httpserver_util.c **** 					if (finish) {
+ 1191              		.loc 1 235 5 is_stmt 1 view .LVU291
+ 235:../../util/httpserver_util.c **** 					if (finish) {
+ 1192              		.loc 1 235 18 is_stmt 0 view .LVU292
+ 1193 0028 C069     		ldr	r0, [r0, #28]
+ 1194              	.LVL140:
+ 235:../../util/httpserver_util.c **** 					if (finish) {
+ 1195              		.loc 1 235 8 view .LVU293
+ 1196 002a F0B1     		cbz	r0, .L70
+ 236:../../util/httpserver_util.c **** 						httpserver_upload_file_finish(sock_data, index, body, body_len);
+ 1197              		.loc 1 236 6 is_stmt 1 view .LVU294
+ 236:../../util/httpserver_util.c **** 						httpserver_upload_file_finish(sock_data, index, body, body_len);
+ 1198              		.loc 1 236 9 is_stmt 0 view .LVU295
+ 1199 002c BE42     		cmp	r6, r7
+ 1200 002e 17DB     		blt	.L71
+ 237:../../util/httpserver_util.c **** 					} else {
+ 1201              		.loc 1 237 7 is_stmt 1 view .LVU296
+ 1202 0030 2B46     		mov	r3, r5
+ 1203 0032 2046     		mov	r0, r4
+ 1204 0034 FFF7FEFF 		bl	httpserver_upload_file_finish
+ 1205              	.LVL141:
+ 1206              	.L69:
+ 267:../../util/httpserver_util.c **** 					len = MIN(body_len, HTTPSERVER_FILE_PARAMS_SIZE);
+ 1207              		.loc 1 267 5 view .LVU297
+ 267:../../util/httpserver_util.c **** 					len = MIN(body_len, HTTPSERVER_FILE_PARAMS_SIZE);
+ 1208              		.loc 1 267 19 is_stmt 0 view .LVU298
+ 1209 0038 6369     		ldr	r3, [r4, #20]
+ 267:../../util/httpserver_util.c **** 					len = MIN(body_len, HTTPSERVER_FILE_PARAMS_SIZE);
+ 1210              		.loc 1 267 8 view .LVU299
+ 1211 003a 002B     		cmp	r3, #0
+ 1212 003c EED1     		bne	.L68
+ 268:../../util/httpserver_util.c **** 					sock_data->file_params = malloc(len + 1);
+ 1213              		.loc 1 268 6 is_stmt 1 view .LVU300
+ 268:../../util/httpserver_util.c **** 					sock_data->file_params = malloc(len + 1);
+ 1214              		.loc 1 268 10 is_stmt 0 view .LVU301
+ 1215 003e B5F5806F 		cmp	r5, #1024
+ 1216 0042 A8BF     		it	ge
+ 1217 0044 4FF48065 		movge	r5, #1024
+ 1218              	.LVL142:
+ 269:../../util/httpserver_util.c **** 					strncpy_s(sock_data->file_params, len + 1, body, len);
+ 1219              		.loc 1 269 6 is_stmt 1 view .LVU302
+ 269:../../util/httpserver_util.c **** 					strncpy_s(sock_data->file_params, len + 1, body, len);
+ 1220              		.loc 1 269 42 is_stmt 0 view .LVU303
+ 1221 0048 05F1010A 		add	r10, r5, #1
+ 269:../../util/httpserver_util.c **** 					strncpy_s(sock_data->file_params, len + 1, body, len);
+ 1222              		.loc 1 269 31 view .LVU304
+ 1223 004c 5046     		mov	r0, r10
+ 1224 004e FFF7FEFF 		bl	malloc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 29
+
+
+ 1225              	.LVL143:
+ 269:../../util/httpserver_util.c **** 					strncpy_s(sock_data->file_params, len + 1, body, len);
+ 1226              		.loc 1 269 29 discriminator 1 view .LVU305
+ 1227 0052 6061     		str	r0, [r4, #20]
+ 270:../../util/httpserver_util.c **** 				}
+ 1228              		.loc 1 270 6 is_stmt 1 view .LVU306
+ 1229 0054 2B46     		mov	r3, r5
+ 1230 0056 4A46     		mov	r2, r9
+ 1231 0058 5146     		mov	r1, r10
+ 1232 005a FFF7FEFF 		bl	strncpy_s
+ 1233              	.LVL144:
+ 1234 005e DDE7     		b	.L68
+ 1235              	.LVL145:
+ 1236              	.L71:
+ 239:../../util/httpserver_util.c **** 					}
+ 1237              		.loc 1 239 7 view .LVU307
+ 1238 0060 2A46     		mov	r2, r5
+ 1239              	.LVL146:
+ 239:../../util/httpserver_util.c **** 					}
+ 1240              		.loc 1 239 7 is_stmt 0 view .LVU308
+ 1241 0062 4946     		mov	r1, r9
+ 1242              	.LVL147:
+ 239:../../util/httpserver_util.c **** 					}
+ 1243              		.loc 1 239 7 view .LVU309
+ 1244 0064 FFF7FEFF 		bl	httpserver_write_upload_file
+ 1245              	.LVL148:
+ 1246 0068 E6E7     		b	.L69
+ 1247              	.LVL149:
+ 1248              	.L70:
+ 242:../../util/httpserver_util.c **** 					if (!ptr) {
+ 1249              		.loc 1 242 6 is_stmt 1 view .LVU310
+ 242:../../util/httpserver_util.c **** 					if (!ptr) {
+ 1250              		.loc 1 242 12 is_stmt 0 view .LVU311
+ 1251 006a 194A     		ldr	r2, .L81
+ 1252              	.LVL150:
+ 242:../../util/httpserver_util.c **** 					if (!ptr) {
+ 1253              		.loc 1 242 12 view .LVU312
+ 1254 006c 2946     		mov	r1, r5
+ 1255              	.LVL151:
+ 242:../../util/httpserver_util.c **** 					if (!ptr) {
+ 1256              		.loc 1 242 12 view .LVU313
+ 1257 006e 4846     		mov	r0, r9
+ 1258 0070 FFF7FEFF 		bl	strright
+ 1259              	.LVL152:
+ 243:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 1260              		.loc 1 243 6 is_stmt 1 view .LVU314
+ 243:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 1261              		.loc 1 243 9 is_stmt 0 view .LVU315
+ 1262 0074 8346     		mov	fp, r0
+ 1263 0076 A8B1     		cbz	r0, .L79
+ 248:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 1264              		.loc 1 248 6 is_stmt 1 view .LVU316
+ 248:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 1265              		.loc 1 248 11 is_stmt 0 view .LVU317
+ 1266 0078 A0EB090A 		sub	r10, r0, r9
+ 1267 007c 5246     		mov	r2, r10
+ 1268 007e 4946     		mov	r1, r9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 30
+
+
+ 1269 0080 2046     		mov	r0, r4
+ 1270              	.LVL153:
+ 248:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 1271              		.loc 1 248 11 view .LVU318
+ 1272 0082 FFF7FEFF 		bl	httpserver_find_upload_file
+ 1273              	.LVL154:
+ 248:../../util/httpserver_util.c **** 						//httpserver_close_and_init(index);
+ 1274              		.loc 1 248 9 discriminator 1 view .LVU319
+ 1275 0086 90B1     		cbz	r0, .L80
+ 254:../../util/httpserver_util.c **** 
+ 1276              		.loc 1 254 6 is_stmt 1 view .LVU320
+ 1277 0088 E069     		ldr	r0, [r4, #28]
+ 1278 008a FFF7FEFF 		bl	httpserver_create_upload_file
+ 1279              	.LVL155:
+ 256:../../util/httpserver_util.c **** 					if (len) {
+ 1280              		.loc 1 256 6 view .LVU321
+ 257:../../util/httpserver_util.c **** 						if (finish) {
+ 1281              		.loc 1 257 6 view .LVU322
+ 257:../../util/httpserver_util.c **** 						if (finish) {
+ 1282              		.loc 1 257 9 is_stmt 0 view .LVU323
+ 1283 008e B5EB0A03 		subs	r3, r5, r10
+ 1284              	.LVL156:
+ 257:../../util/httpserver_util.c **** 						if (finish) {
+ 1285              		.loc 1 257 9 view .LVU324
+ 1286 0092 D1D0     		beq	.L69
+ 258:../../util/httpserver_util.c **** 							httpserver_upload_file_finish(sock_data, index, ptr, len);
+ 1287              		.loc 1 258 7 is_stmt 1 view .LVU325
+ 258:../../util/httpserver_util.c **** 							httpserver_upload_file_finish(sock_data, index, ptr, len);
+ 1288              		.loc 1 258 10 is_stmt 0 view .LVU326
+ 1289 0094 BE42     		cmp	r6, r7
+ 1290 0096 0FDB     		blt	.L75
+ 259:../../util/httpserver_util.c **** 						} else {
+ 1291              		.loc 1 259 8 is_stmt 1 view .LVU327
+ 1292 0098 5A46     		mov	r2, fp
+ 1293 009a 4146     		mov	r1, r8
+ 1294 009c 2046     		mov	r0, r4
+ 1295 009e FFF7FEFF 		bl	httpserver_upload_file_finish
+ 1296              	.LVL157:
+ 259:../../util/httpserver_util.c **** 						} else {
+ 1297              		.loc 1 259 8 is_stmt 0 view .LVU328
+ 1298 00a2 C9E7     		b	.L69
+ 1299              	.LVL158:
+ 1300              	.L79:
+ 245:../../util/httpserver_util.c **** 						return;
+ 1301              		.loc 1 245 7 is_stmt 1 view .LVU329
+ 1302 00a4 4146     		mov	r1, r8
+ 1303 00a6 2046     		mov	r0, r4
+ 1304              	.LVL159:
+ 245:../../util/httpserver_util.c **** 						return;
+ 1305              		.loc 1 245 7 is_stmt 0 view .LVU330
+ 1306 00a8 FFF7FEFF 		bl	httpserver_send_answer
+ 1307              	.LVL160:
+ 246:../../util/httpserver_util.c **** 					}
+ 1308              		.loc 1 246 7 is_stmt 1 view .LVU331
+ 1309 00ac B8E7     		b	.L67
+ 1310              	.L80:
+ 250:../../util/httpserver_util.c **** 						return;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 31
+
+
+ 1311              		.loc 1 250 7 view .LVU332
+ 1312 00ae 4146     		mov	r1, r8
+ 1313 00b0 2046     		mov	r0, r4
+ 1314 00b2 FFF7FEFF 		bl	httpserver_send_answer
+ 1315              	.LVL161:
+ 251:../../util/httpserver_util.c **** 					}
+ 1316              		.loc 1 251 7 view .LVU333
+ 1317 00b6 B3E7     		b	.L67
+ 1318              	.LVL162:
+ 1319              	.L75:
+ 261:../../util/httpserver_util.c **** 						}
+ 1320              		.loc 1 261 8 view .LVU334
+ 1321 00b8 1A46     		mov	r2, r3
+ 1322 00ba 5946     		mov	r1, fp
+ 1323 00bc E069     		ldr	r0, [r4, #28]
+ 1324 00be FFF7FEFF 		bl	httpserver_write_upload_file
+ 1325              	.LVL163:
+ 261:../../util/httpserver_util.c **** 						}
+ 1326              		.loc 1 261 8 is_stmt 0 view .LVU335
+ 1327 00c2 B9E7     		b	.L69
+ 1328              	.LVL164:
+ 1329              	.L78:
+ 280:../../util/httpserver_util.c **** 	}
+ 1330              		.loc 1 280 3 is_stmt 1 view .LVU336
+ 1331 00c4 4146     		mov	r1, r8
+ 1332 00c6 2046     		mov	r0, r4
+ 1333 00c8 FFF7FEFF 		bl	httpserver_send_answer
+ 1334              	.LVL165:
+ 1335 00cc A8E7     		b	.L67
+ 1336              	.L82:
+ 1337 00ce 00BF     		.align	2
+ 1338              	.L81:
+ 1339 00d0 00000000 		.word	http_delimetr_rnrn
+ 1340              		.cfi_endproc
+ 1341              	.LFE145:
+ 1343              		.section	.text.httpserver_on_recv,"ax",%progbits
+ 1344              		.align	1
+ 1345              		.global	httpserver_on_recv
+ 1346              		.syntax unified
+ 1347              		.thumb
+ 1348              		.thumb_func
+ 1350              	httpserver_on_recv:
+ 1351              	.LVL166:
+ 1352              	.LFB146:
+ 283:../../util/httpserver_util.c **** 
+ 284:../../util/httpserver_util.c **** void httpserver_on_recv(int index)
+ 285:../../util/httpserver_util.c **** {
+ 1353              		.loc 1 285 1 view -0
+ 1354              		.cfi_startproc
+ 1355              		@ args = 0, pretend = 0, frame = 48
+ 1356              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1357              		.loc 1 285 1 is_stmt 0 view .LVU338
+ 1358 0000 30B5     		push	{r4, r5, lr}
+ 1359              	.LCFI19:
+ 1360              		.cfi_def_cfa_offset 12
+ 1361              		.cfi_offset 4, -12
+ 1362              		.cfi_offset 5, -8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 32
+
+
+ 1363              		.cfi_offset 14, -4
+ 1364 0002 8DB0     		sub	sp, sp, #52
+ 1365              	.LCFI20:
+ 1366              		.cfi_def_cfa_offset 64
+ 1367 0004 0446     		mov	r4, r0
+ 286:../../util/httpserver_util.c ****   http_request_data_t request_data;
+ 1368              		.loc 1 286 3 is_stmt 1 view .LVU339
+ 287:../../util/httpserver_util.c ****   int rc;
+ 1369              		.loc 1 287 3 view .LVU340
+ 288:../../util/httpserver_util.c ****   BOOL res;
+ 1370              		.loc 1 288 3 view .LVU341
+ 289:../../util/httpserver_util.c ****   httpserver_socket_data_t * sock_data;
+ 1371              		.loc 1 289 3 view .LVU342
+ 290:../../util/httpserver_util.c **** 
+ 291:../../util/httpserver_util.c ****   sock_data = &hs_sock_data[index];
+ 1372              		.loc 1 291 3 view .LVU343
+ 1373              		.loc 1 291 13 is_stmt 0 view .LVU344
+ 1374 0006 00EBC003 		add	r3, r0, r0, lsl #3
+ 1375 000a 534D     		ldr	r5, .L103
+ 1376 000c 05EB8305 		add	r5, r5, r3, lsl #2
+ 1377              	.LVL167:
+ 292:../../util/httpserver_util.c **** 
+ 293:../../util/httpserver_util.c **** 
+ 294:../../util/httpserver_util.c ****   if (!sock_data->buf) sock_data->buf = malloc(HTTPSERVER_MAX_BUF_SIZE);
+ 1378              		.loc 1 294 3 is_stmt 1 view .LVU345
+ 1379              		.loc 1 294 17 is_stmt 0 view .LVU346
+ 1380 0010 2B6A     		ldr	r3, [r5, #32]
+ 1381              		.loc 1 294 6 view .LVU347
+ 1382 0012 002B     		cmp	r3, #0
+ 1383 0014 36D0     		beq	.L97
+ 1384              	.LVL168:
+ 1385              	.L84:
+ 295:../../util/httpserver_util.c **** 
+ 296:../../util/httpserver_util.c ****   switch (sock_data->state) {
+ 1386              		.loc 1 296 3 is_stmt 1 view .LVU348
+ 1387              		.loc 1 296 20 is_stmt 0 view .LVU349
+ 1388 0016 04EBC403 		add	r3, r4, r4, lsl #3
+ 1389 001a 4F4A     		ldr	r2, .L103
+ 1390 001c 12F82330 		ldrb	r3, [r2, r3, lsl #2]	@ zero_extendqisi2
+ 1391              		.loc 1 296 3 view .LVU350
+ 1392 0020 012B     		cmp	r3, #1
+ 1393 0022 44D0     		beq	.L85
+ 1394 0024 022B     		cmp	r3, #2
+ 1395 0026 79D0     		beq	.L86
+ 1396 0028 002B     		cmp	r3, #0
+ 1397 002a 40F08E80 		bne	.L83
+ 297:../../util/httpserver_util.c ****         case HS_STATE_IDLE:
+ 298:../../util/httpserver_util.c ****            rc = httpserver_recv(index, sock_data->buf, HTTPSERVER_MAX_BUF_SIZE);
+ 1398              		.loc 1 298 12 is_stmt 1 view .LVU351
+ 1399              		.loc 1 298 17 is_stmt 0 view .LVU352
+ 1400 002e 04EBC402 		add	r2, r4, r4, lsl #3
+ 1401 0032 494B     		ldr	r3, .L103
+ 1402 0034 03EB8203 		add	r3, r3, r2, lsl #2
+ 1403 0038 4FF48052 		mov	r2, #4096
+ 1404 003c 196A     		ldr	r1, [r3, #32]
+ 1405 003e 2046     		mov	r0, r4
+ 1406 0040 FFF7FEFF 		bl	httpserver_recv
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 33
+
+
+ 1407              	.LVL169:
+ 299:../../util/httpserver_util.c ****            if (rc < 1) {
+ 1408              		.loc 1 299 12 is_stmt 1 view .LVU353
+ 1409              		.loc 1 299 15 is_stmt 0 view .LVU354
+ 1410 0044 011E     		subs	r1, r0, #0
+ 1411 0046 23DD     		ble	.L98
+ 300:../../util/httpserver_util.c ****                httpserver_close_and_init(index);
+ 301:../../util/httpserver_util.c ****                return;
+ 302:../../util/httpserver_util.c ****             }
+ 303:../../util/httpserver_util.c ****             sock_data->request_offset = rc;
+ 1412              		.loc 1 303 13 is_stmt 1 view .LVU355
+ 1413              		.loc 1 303 39 is_stmt 0 view .LVU356
+ 1414 0048 04EBC402 		add	r2, r4, r4, lsl #3
+ 1415 004c 424B     		ldr	r3, .L103
+ 1416 004e 03EB8203 		add	r3, r3, r2, lsl #2
+ 1417 0052 5960     		str	r1, [r3, #4]
+ 304:../../util/httpserver_util.c ****             res = http_parse_request(sock_data->buf, sock_data->request_offset, &request_data);
+ 1418              		.loc 1 304 13 is_stmt 1 view .LVU357
+ 1419              		.loc 1 304 19 is_stmt 0 view .LVU358
+ 1420 0054 01AA     		add	r2, sp, #4
+ 1421 0056 186A     		ldr	r0, [r3, #32]
+ 1422              	.LVL170:
+ 1423              		.loc 1 304 19 view .LVU359
+ 1424 0058 FFF7FEFF 		bl	http_parse_request
+ 1425              	.LVL171:
+ 305:../../util/httpserver_util.c ****             if (!res) {
+ 1426              		.loc 1 305 13 is_stmt 1 view .LVU360
+ 1427              		.loc 1 305 16 is_stmt 0 view .LVU361
+ 1428 005c E0B1     		cbz	r0, .L99
+ 306:../../util/httpserver_util.c ****                  httpserver_init_socket_data(index);
+ 307:../../util/httpserver_util.c ****                  return;
+ 308:../../util/httpserver_util.c ****             }
+ 309:../../util/httpserver_util.c **** 
+ 310:../../util/httpserver_util.c **** 
+ 311:../../util/httpserver_util.c ****             if (request_data.body) {
+ 1429              		.loc 1 311 13 is_stmt 1 view .LVU362
+ 1430              		.loc 1 311 29 is_stmt 0 view .LVU363
+ 1431 005e 079B     		ldr	r3, [sp, #28]
+ 1432              		.loc 1 311 16 view .LVU364
+ 1433 0060 F3B1     		cbz	r3, .L91
+ 312:../../util/httpserver_util.c ****                 sock_data->state = HS_STATE_RECV_REQUEST_BODY;
+ 1434              		.loc 1 312 17 is_stmt 1 view .LVU365
+ 1435              		.loc 1 312 34 is_stmt 0 view .LVU366
+ 1436 0062 04EBC402 		add	r2, r4, r4, lsl #3
+ 1437 0066 3C4B     		ldr	r3, .L103
+ 1438 0068 0221     		movs	r1, #2
+ 1439 006a 03F82210 		strb	r1, [r3, r2, lsl #2]
+ 313:../../util/httpserver_util.c ****                 httpserver_fill_sock_data(sock_data, &request_data);
+ 1440              		.loc 1 313 17 is_stmt 1 view .LVU367
+ 1441 006e 01A9     		add	r1, sp, #4
+ 1442 0070 2846     		mov	r0, r5
+ 1443              	.LVL172:
+ 1444              		.loc 1 313 17 is_stmt 0 view .LVU368
+ 1445 0072 FFF7FEFF 		bl	httpserver_fill_sock_data
+ 1446              	.LVL173:
+ 314:../../util/httpserver_util.c ****                 httpserver_on_recv_body(sock_data, index, request_data.body, request_data.body_len)
+ 1447              		.loc 1 314 17 is_stmt 1 view .LVU369
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 34
+
+
+ 1448 0076 089B     		ldr	r3, [sp, #32]
+ 1449 0078 079A     		ldr	r2, [sp, #28]
+ 1450 007a 2146     		mov	r1, r4
+ 1451 007c 2846     		mov	r0, r5
+ 1452 007e FFF7FEFF 		bl	httpserver_on_recv_body
+ 1453              	.LVL174:
+ 1454 0082 62E0     		b	.L83
+ 1455              	.LVL175:
+ 1456              	.L97:
+ 294:../../util/httpserver_util.c **** 
+ 1457              		.loc 1 294 24 discriminator 1 view .LVU370
+ 294:../../util/httpserver_util.c **** 
+ 1458              		.loc 1 294 41 is_stmt 0 discriminator 1 view .LVU371
+ 1459 0084 4FF48050 		mov	r0, #4096
+ 1460              	.LVL176:
+ 294:../../util/httpserver_util.c **** 
+ 1461              		.loc 1 294 41 discriminator 1 view .LVU372
+ 1462 0088 FFF7FEFF 		bl	malloc
+ 1463              	.LVL177:
+ 294:../../util/httpserver_util.c **** 
+ 1464              		.loc 1 294 39 discriminator 1 view .LVU373
+ 1465 008c 2862     		str	r0, [r5, #32]
+ 1466 008e C2E7     		b	.L84
+ 1467              	.LVL178:
+ 1468              	.L98:
+ 300:../../util/httpserver_util.c ****                return;
+ 1469              		.loc 1 300 16 is_stmt 1 view .LVU374
+ 1470 0090 2046     		mov	r0, r4
+ 1471              	.LVL179:
+ 300:../../util/httpserver_util.c ****                return;
+ 1472              		.loc 1 300 16 is_stmt 0 view .LVU375
+ 1473 0092 FFF7FEFF 		bl	httpserver_close_and_init
+ 1474              	.LVL180:
+ 301:../../util/httpserver_util.c ****             }
+ 1475              		.loc 1 301 16 is_stmt 1 view .LVU376
+ 1476 0096 58E0     		b	.L83
+ 1477              	.LVL181:
+ 1478              	.L99:
+ 306:../../util/httpserver_util.c ****                  return;
+ 1479              		.loc 1 306 18 view .LVU377
+ 1480 0098 2046     		mov	r0, r4
+ 1481              	.LVL182:
+ 306:../../util/httpserver_util.c ****                  return;
+ 1482              		.loc 1 306 18 is_stmt 0 view .LVU378
+ 1483 009a FFF7FEFF 		bl	httpserver_init_socket_data
+ 1484              	.LVL183:
+ 307:../../util/httpserver_util.c ****             }
+ 1485              		.loc 1 307 18 is_stmt 1 view .LVU379
+ 1486 009e 54E0     		b	.L83
+ 1487              	.LVL184:
+ 1488              	.L91:
+ 315:../../util/httpserver_util.c ****             }
+ 316:../../util/httpserver_util.c ****             else sock_data->state = HS_STATE_RECV_REQUEST_HEADER;
+ 1489              		.loc 1 316 18 view .LVU380
+ 1490              		.loc 1 316 35 is_stmt 0 view .LVU381
+ 1491 00a0 04EBC404 		add	r4, r4, r4, lsl #3
+ 1492              	.LVL185:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 35
+
+
+ 1493              		.loc 1 316 35 view .LVU382
+ 1494 00a4 2C4B     		ldr	r3, .L103
+ 1495 00a6 0122     		movs	r2, #1
+ 1496 00a8 03F82420 		strb	r2, [r3, r4, lsl #2]
+ 1497 00ac 4DE0     		b	.L83
+ 1498              	.LVL186:
+ 1499              	.L85:
+ 317:../../util/httpserver_util.c **** 
+ 318:../../util/httpserver_util.c **** //#ifdef HTTP_SERVER_DEBUG
+ 319:../../util/httpserver_util.c **** //            httpserver_on_request_data(request_data.request , request_data.path, request_data.pat
+ 320:../../util/httpserver_util.c **** //#endif
+ 321:../../util/httpserver_util.c **** 
+ 322:../../util/httpserver_util.c ****         break;
+ 323:../../util/httpserver_util.c ****         case HS_STATE_RECV_REQUEST_HEADER:
+ 324:../../util/httpserver_util.c ****            rc = httpserver_recv(index, &sock_data->buf[sock_data->request_offset], HTTPSERVER_MAX_B
+ 1500              		.loc 1 324 12 is_stmt 1 view .LVU383
+ 1501              		.loc 1 324 50 is_stmt 0 view .LVU384
+ 1502 00ae 04EBC402 		add	r2, r4, r4, lsl #3
+ 1503 00b2 294B     		ldr	r3, .L103
+ 1504 00b4 03EB8203 		add	r3, r3, r2, lsl #2
+ 1505 00b8 196A     		ldr	r1, [r3, #32]
+ 1506              		.loc 1 324 65 view .LVU385
+ 1507 00ba 5B68     		ldr	r3, [r3, #4]
+ 1508              		.loc 1 324 17 view .LVU386
+ 1509 00bc C3F58052 		rsb	r2, r3, #4096
+ 1510 00c0 1944     		add	r1, r1, r3
+ 1511 00c2 2046     		mov	r0, r4
+ 1512 00c4 FFF7FEFF 		bl	httpserver_recv
+ 1513              	.LVL187:
+ 325:../../util/httpserver_util.c ****            if (rc < 1) {
+ 1514              		.loc 1 325 12 is_stmt 1 view .LVU387
+ 1515              		.loc 1 325 15 is_stmt 0 view .LVU388
+ 1516 00c8 0028     		cmp	r0, #0
+ 1517              		.loc 1 325 15 view .LVU389
+ 1518 00ca 1FDD     		ble	.L100
+ 326:../../util/httpserver_util.c ****                httpserver_close_and_init(index);
+ 327:../../util/httpserver_util.c ****                return;
+ 328:../../util/httpserver_util.c ****             }
+ 329:../../util/httpserver_util.c ****             sock_data->request_offset += rc;
+ 1519              		.loc 1 329 13 is_stmt 1 view .LVU390
+ 1520              		.loc 1 329 22 is_stmt 0 view .LVU391
+ 1521 00cc 04EBC402 		add	r2, r4, r4, lsl #3
+ 1522 00d0 214B     		ldr	r3, .L103
+ 1523 00d2 03EB8203 		add	r3, r3, r2, lsl #2
+ 1524 00d6 5968     		ldr	r1, [r3, #4]
+ 1525              		.loc 1 329 39 view .LVU392
+ 1526 00d8 0144     		add	r1, r1, r0
+ 1527 00da 5960     		str	r1, [r3, #4]
+ 330:../../util/httpserver_util.c ****             res = http_parse_request(sock_data->buf, sock_data->request_offset, &request_data);
+ 1528              		.loc 1 330 13 is_stmt 1 view .LVU393
+ 1529              		.loc 1 330 19 is_stmt 0 view .LVU394
+ 1530 00dc 01AA     		add	r2, sp, #4
+ 1531 00de 186A     		ldr	r0, [r3, #32]
+ 1532              	.LVL188:
+ 1533              		.loc 1 330 19 view .LVU395
+ 1534 00e0 FFF7FEFF 		bl	http_parse_request
+ 1535              	.LVL189:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 36
+
+
+ 331:../../util/httpserver_util.c ****             if (!res) {
+ 1536              		.loc 1 331 13 is_stmt 1 view .LVU396
+ 1537              		.loc 1 331 16 is_stmt 0 view .LVU397
+ 1538 00e4 B0B1     		cbz	r0, .L101
+ 332:../../util/httpserver_util.c ****                  httpserver_init_socket_data(index);
+ 333:../../util/httpserver_util.c ****                 	//ulog("7"CRLF);
+ 334:../../util/httpserver_util.c ****                  return;
+ 335:../../util/httpserver_util.c ****             }
+ 336:../../util/httpserver_util.c ****             if (!request_data.body) return;
+ 1539              		.loc 1 336 13 is_stmt 1 view .LVU398
+ 1540              		.loc 1 336 30 is_stmt 0 view .LVU399
+ 1541 00e6 079B     		ldr	r3, [sp, #28]
+ 1542              		.loc 1 336 16 view .LVU400
+ 1543 00e8 7BB3     		cbz	r3, .L83
+ 337:../../util/httpserver_util.c ****             sock_data->state = HS_STATE_RECV_REQUEST_BODY;
+ 1544              		.loc 1 337 13 is_stmt 1 view .LVU401
+ 1545              		.loc 1 337 30 is_stmt 0 view .LVU402
+ 1546 00ea 04EBC402 		add	r2, r4, r4, lsl #3
+ 1547 00ee 1A4B     		ldr	r3, .L103
+ 1548 00f0 0221     		movs	r1, #2
+ 1549 00f2 03F82210 		strb	r1, [r3, r2, lsl #2]
+ 338:../../util/httpserver_util.c ****             httpserver_fill_sock_data(sock_data, &request_data);
+ 1550              		.loc 1 338 13 is_stmt 1 view .LVU403
+ 1551 00f6 01A9     		add	r1, sp, #4
+ 1552 00f8 2846     		mov	r0, r5
+ 1553              	.LVL190:
+ 1554              		.loc 1 338 13 is_stmt 0 view .LVU404
+ 1555 00fa FFF7FEFF 		bl	httpserver_fill_sock_data
+ 1556              	.LVL191:
+ 339:../../util/httpserver_util.c ****             httpserver_on_recv_body(sock_data, index, request_data.body, request_data.body_len);
+ 1557              		.loc 1 339 13 is_stmt 1 view .LVU405
+ 1558 00fe 089B     		ldr	r3, [sp, #32]
+ 1559 0100 079A     		ldr	r2, [sp, #28]
+ 1560 0102 2146     		mov	r1, r4
+ 1561 0104 2846     		mov	r0, r5
+ 1562 0106 FFF7FEFF 		bl	httpserver_on_recv_body
+ 1563              	.LVL192:
+ 340:../../util/httpserver_util.c **** 
+ 341:../../util/httpserver_util.c ****         break;
+ 1564              		.loc 1 341 9 view .LVU406
+ 1565 010a 1EE0     		b	.L83
+ 1566              	.LVL193:
+ 1567              	.L100:
+ 326:../../util/httpserver_util.c ****                return;
+ 1568              		.loc 1 326 16 view .LVU407
+ 1569 010c 2046     		mov	r0, r4
+ 1570              	.LVL194:
+ 326:../../util/httpserver_util.c ****                return;
+ 1571              		.loc 1 326 16 is_stmt 0 view .LVU408
+ 1572 010e FFF7FEFF 		bl	httpserver_close_and_init
+ 1573              	.LVL195:
+ 327:../../util/httpserver_util.c ****             }
+ 1574              		.loc 1 327 16 is_stmt 1 view .LVU409
+ 1575 0112 1AE0     		b	.L83
+ 1576              	.LVL196:
+ 1577              	.L101:
+ 332:../../util/httpserver_util.c ****                 	//ulog("7"CRLF);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 37
+
+
+ 1578              		.loc 1 332 18 view .LVU410
+ 1579 0114 2046     		mov	r0, r4
+ 1580              	.LVL197:
+ 332:../../util/httpserver_util.c ****                 	//ulog("7"CRLF);
+ 1581              		.loc 1 332 18 is_stmt 0 view .LVU411
+ 1582 0116 FFF7FEFF 		bl	httpserver_init_socket_data
+ 1583              	.LVL198:
+ 334:../../util/httpserver_util.c ****             }
+ 1584              		.loc 1 334 18 is_stmt 1 view .LVU412
+ 1585 011a 16E0     		b	.L83
+ 1586              	.LVL199:
+ 1587              	.L86:
+ 342:../../util/httpserver_util.c ****         case HS_STATE_RECV_REQUEST_BODY:
+ 343:../../util/httpserver_util.c ****            rc = httpserver_recv(index, sock_data->buf, HTTPSERVER_MAX_BUF_SIZE);
+ 1588              		.loc 1 343 12 view .LVU413
+ 1589              		.loc 1 343 17 is_stmt 0 view .LVU414
+ 1590 011c 04EBC402 		add	r2, r4, r4, lsl #3
+ 1591 0120 0D4B     		ldr	r3, .L103
+ 1592 0122 03EB8203 		add	r3, r3, r2, lsl #2
+ 1593 0126 4FF48052 		mov	r2, #4096
+ 1594 012a 196A     		ldr	r1, [r3, #32]
+ 1595 012c 2046     		mov	r0, r4
+ 1596 012e FFF7FEFF 		bl	httpserver_recv
+ 1597              	.LVL200:
+ 344:../../util/httpserver_util.c ****            if (rc < 1) {
+ 1598              		.loc 1 344 12 is_stmt 1 view .LVU415
+ 1599              		.loc 1 344 15 is_stmt 0 view .LVU416
+ 1600 0132 031E     		subs	r3, r0, #0
+ 1601 0134 0BDD     		ble	.L102
+ 345:../../util/httpserver_util.c ****                httpserver_close_and_init(index);
+ 346:../../util/httpserver_util.c ****                return;
+ 347:../../util/httpserver_util.c ****             }
+ 348:../../util/httpserver_util.c ****             httpserver_on_recv_body(sock_data, index, sock_data->buf, rc);
+ 1602              		.loc 1 348 13 is_stmt 1 view .LVU417
+ 1603 0136 04EBC401 		add	r1, r4, r4, lsl #3
+ 1604 013a 074A     		ldr	r2, .L103
+ 1605 013c 02EB8102 		add	r2, r2, r1, lsl #2
+ 1606 0140 126A     		ldr	r2, [r2, #32]
+ 1607 0142 2146     		mov	r1, r4
+ 1608 0144 2846     		mov	r0, r5
+ 1609              	.LVL201:
+ 1610              		.loc 1 348 13 is_stmt 0 view .LVU418
+ 1611 0146 FFF7FEFF 		bl	httpserver_on_recv_body
+ 1612              	.LVL202:
+ 349:../../util/httpserver_util.c ****         break;
+ 1613              		.loc 1 349 9 is_stmt 1 view .LVU419
+ 1614              	.L83:
+ 350:../../util/httpserver_util.c ****   }
+ 351:../../util/httpserver_util.c **** 
+ 352:../../util/httpserver_util.c **** }
+ 1615              		.loc 1 352 1 is_stmt 0 view .LVU420
+ 1616 014a 0DB0     		add	sp, sp, #52
+ 1617              	.LCFI21:
+ 1618              		.cfi_remember_state
+ 1619              		.cfi_def_cfa_offset 12
+ 1620              		@ sp needed
+ 1621 014c 30BD     		pop	{r4, r5, pc}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 38
+
+
+ 1622              	.LVL203:
+ 1623              	.L102:
+ 1624              	.LCFI22:
+ 1625              		.cfi_restore_state
+ 345:../../util/httpserver_util.c ****                return;
+ 1626              		.loc 1 345 16 is_stmt 1 view .LVU421
+ 1627 014e 2046     		mov	r0, r4
+ 1628              	.LVL204:
+ 345:../../util/httpserver_util.c ****                return;
+ 1629              		.loc 1 345 16 is_stmt 0 view .LVU422
+ 1630 0150 FFF7FEFF 		bl	httpserver_close_and_init
+ 1631              	.LVL205:
+ 346:../../util/httpserver_util.c ****             }
+ 1632              		.loc 1 346 16 is_stmt 1 view .LVU423
+ 1633 0154 F9E7     		b	.L83
+ 1634              	.L104:
+ 1635 0156 00BF     		.align	2
+ 1636              	.L103:
+ 1637 0158 00000000 		.word	hs_sock_data
+ 1638              		.cfi_endproc
+ 1639              	.LFE146:
+ 1641              		.section	.text.httpserver_init,"ax",%progbits
+ 1642              		.align	1
+ 1643              		.global	httpserver_init
+ 1644              		.syntax unified
+ 1645              		.thumb
+ 1646              		.thumb_func
+ 1648              	httpserver_init:
+ 1649              	.LFB147:
+ 353:../../util/httpserver_util.c **** 
+ 354:../../util/httpserver_util.c **** 
+ 355:../../util/httpserver_util.c **** 
+ 356:../../util/httpserver_util.c **** void httpserver_init(void)
+ 357:../../util/httpserver_util.c **** {
+ 1650              		.loc 1 357 1 view -0
+ 1651              		.cfi_startproc
+ 1652              		@ args = 0, pretend = 0, frame = 0
+ 1653              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1654 0000 08B5     		push	{r3, lr}
+ 1655              	.LCFI23:
+ 1656              		.cfi_def_cfa_offset 8
+ 1657              		.cfi_offset 3, -8
+ 1658              		.cfi_offset 14, -4
+ 358:../../util/httpserver_util.c **** 	memset(hs_sock_data, 0, sizeof(hs_sock_data));
+ 1659              		.loc 1 358 2 view .LVU425
+ 1660 0002 9022     		movs	r2, #144
+ 1661 0004 0021     		movs	r1, #0
+ 1662 0006 0248     		ldr	r0, .L107
+ 1663 0008 FFF7FEFF 		bl	memset
+ 1664              	.LVL206:
+ 359:../../util/httpserver_util.c **** }
+ 1665              		.loc 1 359 1 is_stmt 0 view .LVU426
+ 1666 000c 08BD     		pop	{r3, pc}
+ 1667              	.L108:
+ 1668 000e 00BF     		.align	2
+ 1669              	.L107:
+ 1670 0010 00000000 		.word	hs_sock_data
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 39
+
+
+ 1671              		.cfi_endproc
+ 1672              	.LFE147:
+ 1674              		.section	.bss.hs_sock_data,"aw",%nobits
+ 1675              		.align	2
+ 1678              	hs_sock_data:
+ 1679 0000 00000000 		.space	144
+ 1679      00000000 
+ 1679      00000000 
+ 1679      00000000 
+ 1679      00000000 
+ 1680              		.text
+ 1681              	.Letext0:
+ 1682              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 1683              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1684              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1685              		.file 5 "../../util/http_util.h"
+ 1686              		.file 6 "../../util/httpserver_util.h"
+ 1687              		.file 7 "../../util/str_util.h"
+ 1688              		.file 8 "C:/msys64/ucrt64/arm-none-eabi/include/stdlib.h"
+ 1689              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
+ 1690              		.file 10 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 1691              		.file 11 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 40
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 httpserver_util.c
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:21     .text.httpserver_init_socket_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:27     .text.httpserver_init_socket_data:00000000 httpserver_init_socket_data
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:153    .text.httpserver_init_socket_data:000000b8 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1678   .bss.hs_sock_data:00000000 hs_sock_data
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:158    .text.httpserver_on_accept:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:164    .text.httpserver_on_accept:00000000 httpserver_on_accept
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:186    .text.httpserver_close_and_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:192    .text.httpserver_close_and_init:00000000 httpserver_close_and_init
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:220    .rodata.httpserver_send_404.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:224    .text.httpserver_send_404:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:230    .text.httpserver_send_404:00000000 httpserver_send_404
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:291    .text.httpserver_send_404:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:298    .text.httpserver_send_200:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:304    .text.httpserver_send_200:00000000 httpserver_send_200
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:361    .text.httpserver_send_200:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:368    .rodata.httpserver_send_200_file.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:377    .text.httpserver_send_200_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:383    .text.httpserver_send_200_file:00000000 httpserver_send_200_file
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:437    .text.httpserver_send_200_file:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:442    .text.httpserver_send_answer:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:448    .text.httpserver_send_answer:00000000 httpserver_send_answer
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:642    .rodata.httpserver_fill_sock_data.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:649    .text.httpserver_fill_sock_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:655    .text.httpserver_fill_sock_data:00000000 httpserver_fill_sock_data
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:899    .text.httpserver_fill_sock_data:000000f4 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:905    .rodata.httpserver_find_upload_file.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:912    .text.httpserver_find_upload_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:918    .text.httpserver_find_upload_file:00000000 httpserver_find_upload_file
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1034   .text.httpserver_find_upload_file:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1040   .text.httpserver_upload_file_finish:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1046   .text.httpserver_upload_file_finish:00000000 httpserver_upload_file_finish
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1121   .text.httpserver_on_recv_body:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1127   .text.httpserver_on_recv_body:00000000 httpserver_on_recv_body
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1339   .text.httpserver_on_recv_body:000000d0 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1344   .text.httpserver_on_recv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1350   .text.httpserver_on_recv:00000000 httpserver_on_recv
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1637   .text.httpserver_on_recv:00000158 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1642   .text.httpserver_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1648   .text.httpserver_init:00000000 httpserver_init
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1670   .text.httpserver_init:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s:1675   .bss.hs_sock_data:00000000 $d
+
+UNDEFINED SYMBOLS
+free
+memset
+httpserver_close
+http_create_answer
+strlen
+httpserver_send
+http_delimetr_rn
+http_code_404
+http_code_200
+snprintf
+http_type_to_uri_type
+httpserver_file_exist
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccVsgWC0.s 			page 41
+
+
+httpserver_get_file_size
+httpserver_file_type_is_web
+httpserver_read_file
+httpserver_read_cgi
+strncpy_s
+strcpy_s
+http_type_from_file_name
+malloc
+strstr_s
+strright
+memrfind
+httpserver_write_upload_file
+httpserver_create_upload_file
+http_delimetr_rnrn
+httpserver_recv
+http_parse_request

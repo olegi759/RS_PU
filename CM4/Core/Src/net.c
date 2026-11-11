@@ -16,6 +16,7 @@
 #include "str_util.h"
 #include "common.h"
 
+#include "ws_server.h"
 
 //#define USE_IO_LIBRARY	1
 
@@ -63,6 +64,28 @@ static BOOL ip_assigned = FALSE;
 
 uint32_t http_session_tick = 0;
 
+void W5500_SelectMainChip(void)
+{
+	//ulog("CS0 main"CRLF);
+    HAL_GPIO_WritePin(E_CS_SPI_GPIO_Port, E_CS_SPI_Pin, GPIO_PIN_RESET);
+}
+
+void W5500_SelectReserveChip(void)
+{
+	//ulog("CS0 reserve"CRLF);
+    HAL_GPIO_WritePin(E_CS_SPI_GPIO_Port, E_CS_SPI_Pin, GPIO_PIN_RESET);
+} 
+
+void W5500_UnselectMainChip(void)
+{
+	//ulog("CS1"CRLF);
+    HAL_GPIO_WritePin(E_CS_SPI_GPIO_Port, E_CS_SPI_Pin, GPIO_PIN_SET);
+}
+void W5500_UnselectReserveChip(void)
+{
+	//ulog("CS1"CRLF);
+    HAL_GPIO_WritePin(E_CS_SPI_GPIO_Port, E_CS_SPI_Pin, GPIO_PIN_SET);
+}
 
 void W5500_Select(void)
 {
@@ -197,6 +220,7 @@ void net_init_continue(void)
 	display_reg_webContent_list();
 #else
 	http_server_init();
+	ws_server_init(4);
 #endif
 
 
@@ -283,7 +307,7 @@ void net_init(void)
 
 	ulog(CONM"net: Calling wizchip_init()..."CRLF);
 	//uint8_t rx_tx_buff_sizes[] = {2, 2, 2, 2, 2, 2, 2, 2};
-	uint8_t rx_tx_buff_sizes[] = {4, 4, 4, 4, 0, 0, 0, 0};
+	uint8_t rx_tx_buff_sizes[] = {2, 4, 4, 4, 2, 0, 0, 0};
 	if (wizchip_init(rx_tx_buff_sizes, rx_tx_buff_sizes) < 0) {
 		ulog(CONM"net: Calling wizchip_init() error"CRLF);
 	}

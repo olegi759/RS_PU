@@ -1,0 +1,609 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bq32000.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../bq32000/bq32000.c"
+  20              		.section	.text.RTC_BQ32000_Init,"ax",%progbits
+  21              		.align	1
+  22              		.global	RTC_BQ32000_Init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	RTC_BQ32000_Init:
+  28              	.LVL0:
+  29              	.LFB132:
+   1:../../bq32000/bq32000.c **** #include "bq32000.h"
+   2:../../bq32000/bq32000.c **** 
+   3:../../bq32000/bq32000.c **** RTC_Time globalRTC_Time; // Define global variable
+   4:../../bq32000/bq32000.c **** 
+   5:../../bq32000/bq32000.c **** void RTC_BQ32000_Init(I2C_HandleTypeDef* hi2c) {
+  30              		.loc 1 5 48 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+   6:../../bq32000/bq32000.c ****     // Initialization code if needed
+   7:../../bq32000/bq32000.c **** }
+  35              		.loc 1 7 1 view .LVU1
+  36 0000 7047     		bx	lr
+  37              		.cfi_endproc
+  38              	.LFE132:
+  40              		.section	.text.RTC_BQ32000_ReadRegister,"ax",%progbits
+  41              		.align	1
+  42              		.global	RTC_BQ32000_ReadRegister
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  47              	RTC_BQ32000_ReadRegister:
+  48              	.LVL1:
+  49              	.LFB133:
+   8:../../bq32000/bq32000.c **** 
+   9:../../bq32000/bq32000.c **** HAL_StatusTypeDef RTC_BQ32000_ReadRegister(I2C_HandleTypeDef* hi2c, uint8_t reg, uint8_t* data) {
+  50              		.loc 1 9 97 view -0
+  51              		.cfi_startproc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 2
+
+
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              		.loc 1 9 97 is_stmt 0 view .LVU3
+  55 0000 00B5     		push	{lr}
+  56              	.LCFI0:
+  57              		.cfi_def_cfa_offset 4
+  58              		.cfi_offset 14, -4
+  59 0002 85B0     		sub	sp, sp, #20
+  60              	.LCFI1:
+  61              		.cfi_def_cfa_offset 24
+  10:../../bq32000/bq32000.c ****     return HAL_I2C_Mem_Read(hi2c, RTC_I2C_ADDRESS << 1, reg, I2C_MEMADD_SIZE_8BIT, data, 1, HAL_MAX
+  62              		.loc 1 10 5 is_stmt 1 view .LVU4
+  63              		.loc 1 10 12 is_stmt 0 view .LVU5
+  64 0004 4FF0FF33 		mov	r3, #-1
+  65 0008 0293     		str	r3, [sp, #8]
+  66 000a 0123     		movs	r3, #1
+  67 000c 0193     		str	r3, [sp, #4]
+  68 000e 0092     		str	r2, [sp]
+  69 0010 0A46     		mov	r2, r1
+  70              	.LVL2:
+  71              		.loc 1 10 12 view .LVU6
+  72 0012 D021     		movs	r1, #208
+  73              	.LVL3:
+  74              		.loc 1 10 12 view .LVU7
+  75 0014 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+  76              	.LVL4:
+  11:../../bq32000/bq32000.c **** }
+  77              		.loc 1 11 1 view .LVU8
+  78 0018 05B0     		add	sp, sp, #20
+  79              	.LCFI2:
+  80              		.cfi_def_cfa_offset 4
+  81              		@ sp needed
+  82 001a 5DF804FB 		ldr	pc, [sp], #4
+  83              		.cfi_endproc
+  84              	.LFE133:
+  86              		.section	.text.RTC_BQ32000_WriteRegister,"ax",%progbits
+  87              		.align	1
+  88              		.global	RTC_BQ32000_WriteRegister
+  89              		.syntax unified
+  90              		.thumb
+  91              		.thumb_func
+  93              	RTC_BQ32000_WriteRegister:
+  94              	.LVL5:
+  95              	.LFB134:
+  12:../../bq32000/bq32000.c **** 
+  13:../../bq32000/bq32000.c **** HAL_StatusTypeDef RTC_BQ32000_WriteRegister(I2C_HandleTypeDef* hi2c, uint8_t reg, uint8_t data) {
+  96              		.loc 1 13 97 is_stmt 1 view -0
+  97              		.cfi_startproc
+  98              		@ args = 0, pretend = 0, frame = 8
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100              		.loc 1 13 97 is_stmt 0 view .LVU10
+ 101 0000 00B5     		push	{lr}
+ 102              	.LCFI3:
+ 103              		.cfi_def_cfa_offset 4
+ 104              		.cfi_offset 14, -4
+ 105 0002 87B0     		sub	sp, sp, #28
+ 106              	.LCFI4:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 3
+
+
+ 107              		.cfi_def_cfa_offset 32
+ 108 0004 8DF81720 		strb	r2, [sp, #23]
+  14:../../bq32000/bq32000.c ****     return HAL_I2C_Mem_Write(hi2c, RTC_I2C_ADDRESS << 1, reg, I2C_MEMADD_SIZE_8BIT, &data, 1, HAL_M
+ 109              		.loc 1 14 5 is_stmt 1 view .LVU11
+ 110              		.loc 1 14 12 is_stmt 0 view .LVU12
+ 111 0008 4FF0FF33 		mov	r3, #-1
+ 112 000c 0293     		str	r3, [sp, #8]
+ 113 000e 0123     		movs	r3, #1
+ 114 0010 0193     		str	r3, [sp, #4]
+ 115 0012 0DF11702 		add	r2, sp, #23
+ 116              	.LVL6:
+ 117              		.loc 1 14 12 view .LVU13
+ 118 0016 0092     		str	r2, [sp]
+ 119 0018 0A46     		mov	r2, r1
+ 120              	.LVL7:
+ 121              		.loc 1 14 12 view .LVU14
+ 122 001a D021     		movs	r1, #208
+ 123              	.LVL8:
+ 124              		.loc 1 14 12 view .LVU15
+ 125 001c FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 126              	.LVL9:
+  15:../../bq32000/bq32000.c **** }
+ 127              		.loc 1 15 1 view .LVU16
+ 128 0020 07B0     		add	sp, sp, #28
+ 129              	.LCFI5:
+ 130              		.cfi_def_cfa_offset 4
+ 131              		@ sp needed
+ 132 0022 5DF804FB 		ldr	pc, [sp], #4
+ 133              		.cfi_endproc
+ 134              	.LFE134:
+ 136              		.section	.text.RTC_BQ32000_ReadTime,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	RTC_BQ32000_ReadTime
+ 139              		.syntax unified
+ 140              		.thumb
+ 141              		.thumb_func
+ 143              	RTC_BQ32000_ReadTime:
+ 144              	.LVL10:
+ 145              	.LFB135:
+  16:../../bq32000/bq32000.c **** 
+  17:../../bq32000/bq32000.c **** HAL_StatusTypeDef RTC_BQ32000_ReadTime(I2C_HandleTypeDef* hi2c, RTC_Time* rtcTime) {
+ 146              		.loc 1 17 84 is_stmt 1 view -0
+ 147              		.cfi_startproc
+ 148              		@ args = 0, pretend = 0, frame = 8
+ 149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150              		.loc 1 17 84 is_stmt 0 view .LVU18
+ 151 0000 10B5     		push	{r4, lr}
+ 152              	.LCFI6:
+ 153              		.cfi_def_cfa_offset 8
+ 154              		.cfi_offset 4, -8
+ 155              		.cfi_offset 14, -4
+ 156 0002 86B0     		sub	sp, sp, #24
+ 157              	.LCFI7:
+ 158              		.cfi_def_cfa_offset 32
+ 159 0004 0C46     		mov	r4, r1
+  18:../../bq32000/bq32000.c ****     // Read the time registers
+  19:../../bq32000/bq32000.c ****     uint8_t data[7];
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 4
+
+
+ 160              		.loc 1 19 5 is_stmt 1 view .LVU19
+  20:../../bq32000/bq32000.c ****     HAL_StatusTypeDef status = HAL_I2C_Mem_Read(hi2c, RTC_I2C_ADDRESS << 1, RTC_REG_TIME_SEC, I2C_M
+ 161              		.loc 1 20 5 view .LVU20
+ 162              		.loc 1 20 32 is_stmt 0 view .LVU21
+ 163 0006 4FF0FF33 		mov	r3, #-1
+ 164 000a 0293     		str	r3, [sp, #8]
+ 165 000c 0723     		movs	r3, #7
+ 166 000e 0193     		str	r3, [sp, #4]
+ 167 0010 04AB     		add	r3, sp, #16
+ 168 0012 0093     		str	r3, [sp]
+ 169 0014 0123     		movs	r3, #1
+ 170 0016 0022     		movs	r2, #0
+ 171 0018 D021     		movs	r1, #208
+ 172              	.LVL11:
+ 173              		.loc 1 20 32 view .LVU22
+ 174 001a FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 175              	.LVL12:
+  21:../../bq32000/bq32000.c **** 
+  22:../../bq32000/bq32000.c ****     if (status == HAL_OK) {
+ 176              		.loc 1 22 5 is_stmt 1 view .LVU23
+ 177              		.loc 1 22 8 is_stmt 0 view .LVU24
+ 178 001e 0246     		mov	r2, r0
+ 179 0020 0028     		cmp	r0, #0
+ 180 0022 47D1     		bne	.L7
+  23:../../bq32000/bq32000.c ****         rtcTime->seconds = ((data[0] & 0xF0) >> 4) * 10 + (data[0] & 0x0F);
+ 181              		.loc 1 23 9 is_stmt 1 view .LVU25
+ 182              		.loc 1 23 34 is_stmt 0 view .LVU26
+ 183 0024 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 184              		.loc 1 23 46 view .LVU27
+ 185 0028 1909     		lsrs	r1, r3, #4
+ 186              		.loc 1 23 68 view .LVU28
+ 187 002a 03F00F03 		and	r3, r3, #15
+ 188              		.loc 1 23 57 view .LVU29
+ 189 002e 01EB8101 		add	r1, r1, r1, lsl #2
+ 190 0032 03EB4103 		add	r3, r3, r1, lsl #1
+ 191              		.loc 1 23 26 view .LVU30
+ 192 0036 2370     		strb	r3, [r4]
+  24:../../bq32000/bq32000.c ****         rtcTime->minutes = ((data[1] & 0xF0) >> 4) * 10 + (data[1] & 0x0F);
+ 193              		.loc 1 24 9 is_stmt 1 view .LVU31
+ 194              		.loc 1 24 34 is_stmt 0 view .LVU32
+ 195 0038 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
+ 196              		.loc 1 24 46 view .LVU33
+ 197 003c 1909     		lsrs	r1, r3, #4
+ 198              		.loc 1 24 68 view .LVU34
+ 199 003e 03F00F03 		and	r3, r3, #15
+ 200              		.loc 1 24 57 view .LVU35
+ 201 0042 01EB8101 		add	r1, r1, r1, lsl #2
+ 202 0046 03EB4103 		add	r3, r3, r1, lsl #1
+ 203              		.loc 1 24 26 view .LVU36
+ 204 004a 6370     		strb	r3, [r4, #1]
+  25:../../bq32000/bq32000.c ****         rtcTime->hours = ((data[2] & 0xF0) >> 4) * 10 + (data[2] & 0x0F);
+ 205              		.loc 1 25 9 is_stmt 1 view .LVU37
+ 206              		.loc 1 25 32 is_stmt 0 view .LVU38
+ 207 004c 9DF81230 		ldrb	r3, [sp, #18]	@ zero_extendqisi2
+ 208              		.loc 1 25 44 view .LVU39
+ 209 0050 1909     		lsrs	r1, r3, #4
+ 210              		.loc 1 25 66 view .LVU40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 5
+
+
+ 211 0052 03F00F03 		and	r3, r3, #15
+ 212              		.loc 1 25 55 view .LVU41
+ 213 0056 01EB8101 		add	r1, r1, r1, lsl #2
+ 214 005a 03EB4103 		add	r3, r3, r1, lsl #1
+ 215              		.loc 1 25 24 view .LVU42
+ 216 005e A370     		strb	r3, [r4, #2]
+  26:../../bq32000/bq32000.c ****         rtcTime->dayOfWeek = data[3];
+ 217              		.loc 1 26 9 is_stmt 1 view .LVU43
+ 218              		.loc 1 26 34 is_stmt 0 view .LVU44
+ 219 0060 9DF81330 		ldrb	r3, [sp, #19]	@ zero_extendqisi2
+ 220              		.loc 1 26 28 view .LVU45
+ 221 0064 E370     		strb	r3, [r4, #3]
+  27:../../bq32000/bq32000.c ****         rtcTime->day = ((data[4] & 0xF0) >> 4) * 10 + (data[4] & 0x0F);
+ 222              		.loc 1 27 9 is_stmt 1 view .LVU46
+ 223              		.loc 1 27 30 is_stmt 0 view .LVU47
+ 224 0066 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 225              		.loc 1 27 42 view .LVU48
+ 226 006a 1909     		lsrs	r1, r3, #4
+ 227              		.loc 1 27 64 view .LVU49
+ 228 006c 03F00F03 		and	r3, r3, #15
+ 229              		.loc 1 27 53 view .LVU50
+ 230 0070 01EB8101 		add	r1, r1, r1, lsl #2
+ 231 0074 03EB4103 		add	r3, r3, r1, lsl #1
+ 232              		.loc 1 27 22 view .LVU51
+ 233 0078 2371     		strb	r3, [r4, #4]
+  28:../../bq32000/bq32000.c ****         rtcTime->month = ((data[5] & 0xF0) >> 4) * 10 + (data[5] & 0x0F);
+ 234              		.loc 1 28 9 is_stmt 1 view .LVU52
+ 235              		.loc 1 28 32 is_stmt 0 view .LVU53
+ 236 007a 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
+ 237              		.loc 1 28 44 view .LVU54
+ 238 007e 1909     		lsrs	r1, r3, #4
+ 239              		.loc 1 28 66 view .LVU55
+ 240 0080 03F00F03 		and	r3, r3, #15
+ 241              		.loc 1 28 55 view .LVU56
+ 242 0084 01EB8101 		add	r1, r1, r1, lsl #2
+ 243 0088 03EB4103 		add	r3, r3, r1, lsl #1
+ 244              		.loc 1 28 24 view .LVU57
+ 245 008c 6371     		strb	r3, [r4, #5]
+  29:../../bq32000/bq32000.c ****         rtcTime->year = ((data[6] & 0xF0) >> 4) * 10 + (data[6] & 0x0F);
+ 246              		.loc 1 29 9 is_stmt 1 view .LVU58
+ 247              		.loc 1 29 31 is_stmt 0 view .LVU59
+ 248 008e 9DF81630 		ldrb	r3, [sp, #22]	@ zero_extendqisi2
+ 249              		.loc 1 29 43 view .LVU60
+ 250 0092 1909     		lsrs	r1, r3, #4
+ 251              		.loc 1 29 65 view .LVU61
+ 252 0094 03F00F03 		and	r3, r3, #15
+ 253              		.loc 1 29 54 view .LVU62
+ 254 0098 01EB8101 		add	r1, r1, r1, lsl #2
+ 255 009c 03EB4103 		add	r3, r3, r1, lsl #1
+ 256              		.loc 1 29 23 view .LVU63
+ 257 00a0 A371     		strb	r3, [r4, #6]
+  30:../../bq32000/bq32000.c ****         // Update the global variable
+  31:../../bq32000/bq32000.c ****         if (&globalRTC_Time != rtcTime) globalRTC_Time = *rtcTime;
+ 258              		.loc 1 31 9 is_stmt 1 view .LVU64
+ 259              		.loc 1 31 12 is_stmt 0 view .LVU65
+ 260 00a2 064B     		ldr	r3, .L9
+ 261 00a4 9C42     		cmp	r4, r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 6
+
+
+ 262 00a6 05D0     		beq	.L7
+ 263              		.loc 1 31 41 is_stmt 1 discriminator 1 view .LVU66
+ 264              		.loc 1 31 56 is_stmt 0 discriminator 1 view .LVU67
+ 265 00a8 2068     		ldr	r0, [r4]	@ unaligned
+ 266              	.LVL13:
+ 267              		.loc 1 31 56 discriminator 1 view .LVU68
+ 268 00aa 1860     		str	r0, [r3]
+ 269 00ac A088     		ldrh	r0, [r4, #4]	@ unaligned
+ 270 00ae A179     		ldrb	r1, [r4, #6]	@ zero_extendqisi2
+ 271 00b0 9880     		strh	r0, [r3, #4]	@ unaligned
+ 272 00b2 9971     		strb	r1, [r3, #6]
+ 273              	.L7:
+  32:../../bq32000/bq32000.c ****     }
+  33:../../bq32000/bq32000.c **** 
+  34:../../bq32000/bq32000.c ****     return status;
+ 274              		.loc 1 34 5 is_stmt 1 view .LVU69
+  35:../../bq32000/bq32000.c **** }
+ 275              		.loc 1 35 1 is_stmt 0 view .LVU70
+ 276 00b4 1046     		mov	r0, r2
+ 277 00b6 06B0     		add	sp, sp, #24
+ 278              	.LCFI8:
+ 279              		.cfi_def_cfa_offset 8
+ 280              		@ sp needed
+ 281 00b8 10BD     		pop	{r4, pc}
+ 282              	.LVL14:
+ 283              	.L10:
+ 284              		.loc 1 35 1 view .LVU71
+ 285 00ba 00BF     		.align	2
+ 286              	.L9:
+ 287 00bc 00000000 		.word	globalRTC_Time
+ 288              		.cfi_endproc
+ 289              	.LFE135:
+ 291              		.section	.text.RTC_BQ32000_SetTime,"ax",%progbits
+ 292              		.align	1
+ 293              		.global	RTC_BQ32000_SetTime
+ 294              		.syntax unified
+ 295              		.thumb
+ 296              		.thumb_func
+ 298              	RTC_BQ32000_SetTime:
+ 299              	.LVL15:
+ 300              	.LFB136:
+  36:../../bq32000/bq32000.c **** 
+  37:../../bq32000/bq32000.c **** HAL_StatusTypeDef RTC_BQ32000_SetTime(I2C_HandleTypeDef* hi2c, RTC_Time* rtcTime) {
+ 301              		.loc 1 37 83 is_stmt 1 view -0
+ 302              		.cfi_startproc
+ 303              		@ args = 0, pretend = 0, frame = 8
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305              		.loc 1 37 83 is_stmt 0 view .LVU73
+ 306 0000 00B5     		push	{lr}
+ 307              	.LCFI9:
+ 308              		.cfi_def_cfa_offset 4
+ 309              		.cfi_offset 14, -4
+ 310 0002 87B0     		sub	sp, sp, #28
+ 311              	.LCFI10:
+ 312              		.cfi_def_cfa_offset 32
+  38:../../bq32000/bq32000.c ****     // Write the time registers
+  39:../../bq32000/bq32000.c ****     uint8_t data[7] = {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 7
+
+
+ 313              		.loc 1 39 5 is_stmt 1 view .LVU74
+  40:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 314              		.loc 1 40 18 is_stmt 0 view .LVU75
+ 315 0004 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+ 316              		.loc 1 40 40 view .LVU76
+ 317 0006 324B     		ldr	r3, .L13
+ 318 0008 A3FB02EC 		umull	lr, ip, r3, r2
+ 319 000c 4FEADC0E 		lsr	lr, ip, #3
+ 320 0010 F446     		mov	ip, lr
+ 321 0012 0EEB8E0E 		add	lr, lr, lr, lsl #2
+ 322 0016 A2EB4E02 		sub	r2, r2, lr, lsl #1
+ 323 001a 42EA0C12 		orr	r2, r2, ip, lsl #4
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 324              		.loc 1 39 13 view .LVU77
+ 325 001e 8DF81020 		strb	r2, [sp, #16]
+  41:../../bq32000/bq32000.c ****         ((rtcTime->minutes / 10) << 4) | (rtcTime->minutes % 10),
+ 326              		.loc 1 41 18 view .LVU78
+ 327 0022 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 328              		.loc 1 41 40 view .LVU79
+ 329 0024 A3FB02EC 		umull	lr, ip, r3, r2
+ 330 0028 4FEADC0E 		lsr	lr, ip, #3
+ 331 002c F446     		mov	ip, lr
+ 332 002e 0EEB8E0E 		add	lr, lr, lr, lsl #2
+ 333 0032 A2EB4E02 		sub	r2, r2, lr, lsl #1
+ 334 0036 42EA0C12 		orr	r2, r2, ip, lsl #4
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 335              		.loc 1 39 13 view .LVU80
+ 336 003a 8DF81120 		strb	r2, [sp, #17]
+  42:../../bq32000/bq32000.c ****         ((rtcTime->hours / 10) << 4) | (rtcTime->hours % 10),
+ 337              		.loc 1 42 18 view .LVU81
+ 338 003e 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 339              		.loc 1 42 38 view .LVU82
+ 340 0040 A3FB02EC 		umull	lr, ip, r3, r2
+ 341 0044 4FEADC0E 		lsr	lr, ip, #3
+ 342 0048 F446     		mov	ip, lr
+ 343 004a 0EEB8E0E 		add	lr, lr, lr, lsl #2
+ 344 004e A2EB4E02 		sub	r2, r2, lr, lsl #1
+ 345 0052 42EA0C12 		orr	r2, r2, ip, lsl #4
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 346              		.loc 1 39 13 view .LVU83
+ 347 0056 8DF81220 		strb	r2, [sp, #18]
+  43:../../bq32000/bq32000.c ****         rtcTime->dayOfWeek,
+ 348              		.loc 1 43 16 view .LVU84
+ 349 005a CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 350              		.loc 1 39 13 view .LVU85
+ 351 005c 8DF81320 		strb	r2, [sp, #19]
+  44:../../bq32000/bq32000.c ****         ((rtcTime->day / 10) << 4) | (rtcTime->day % 10),
+ 352              		.loc 1 44 18 view .LVU86
+ 353 0060 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
+ 354              		.loc 1 44 36 view .LVU87
+ 355 0062 A3FB02EC 		umull	lr, ip, r3, r2
+ 356 0066 4FEADC0E 		lsr	lr, ip, #3
+ 357 006a F446     		mov	ip, lr
+ 358 006c 0EEB8E0E 		add	lr, lr, lr, lsl #2
+ 359 0070 A2EB4E02 		sub	r2, r2, lr, lsl #1
+ 360 0074 42EA0C12 		orr	r2, r2, ip, lsl #4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 8
+
+
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 361              		.loc 1 39 13 view .LVU88
+ 362 0078 8DF81420 		strb	r2, [sp, #20]
+  45:../../bq32000/bq32000.c ****         ((rtcTime->month / 10) << 4) | (rtcTime->month % 10),
+ 363              		.loc 1 45 18 view .LVU89
+ 364 007c 4A79     		ldrb	r2, [r1, #5]	@ zero_extendqisi2
+ 365              		.loc 1 45 38 view .LVU90
+ 366 007e A3FB02EC 		umull	lr, ip, r3, r2
+ 367 0082 4FEADC0E 		lsr	lr, ip, #3
+ 368 0086 F446     		mov	ip, lr
+ 369 0088 0EEB8E0E 		add	lr, lr, lr, lsl #2
+ 370 008c A2EB4E02 		sub	r2, r2, lr, lsl #1
+ 371 0090 42EA0C12 		orr	r2, r2, ip, lsl #4
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 372              		.loc 1 39 13 view .LVU91
+ 373 0094 8DF81520 		strb	r2, [sp, #21]
+  46:../../bq32000/bq32000.c ****         ((rtcTime->year / 10) << 4) | (rtcTime->year % 10),
+ 374              		.loc 1 46 18 view .LVU92
+ 375 0098 8A79     		ldrb	r2, [r1, #6]	@ zero_extendqisi2
+ 376              		.loc 1 46 37 view .LVU93
+ 377 009a A3FB0213 		umull	r1, r3, r3, r2
+ 378              	.LVL16:
+ 379              		.loc 1 46 37 view .LVU94
+ 380 009e D908     		lsrs	r1, r3, #3
+ 381 00a0 0B46     		mov	r3, r1
+ 382 00a2 01EB8101 		add	r1, r1, r1, lsl #2
+ 383 00a6 A2EB4102 		sub	r2, r2, r1, lsl #1
+ 384 00aa 42EA0312 		orr	r2, r2, r3, lsl #4
+  39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
+ 385              		.loc 1 39 13 view .LVU95
+ 386 00ae 8DF81620 		strb	r2, [sp, #22]
+  47:../../bq32000/bq32000.c ****     };
+  48:../../bq32000/bq32000.c **** 
+  49:../../bq32000/bq32000.c ****     return HAL_I2C_Mem_Write(hi2c, RTC_I2C_ADDRESS << 1, RTC_REG_TIME_SEC, I2C_MEMADD_SIZE_8BIT, da
+ 387              		.loc 1 49 5 is_stmt 1 view .LVU96
+ 388              		.loc 1 49 12 is_stmt 0 view .LVU97
+ 389 00b2 4FF0FF33 		mov	r3, #-1
+ 390 00b6 0293     		str	r3, [sp, #8]
+ 391 00b8 0723     		movs	r3, #7
+ 392 00ba 0193     		str	r3, [sp, #4]
+ 393 00bc 04AB     		add	r3, sp, #16
+ 394 00be 0093     		str	r3, [sp]
+ 395 00c0 0123     		movs	r3, #1
+ 396 00c2 0022     		movs	r2, #0
+ 397 00c4 D021     		movs	r1, #208
+ 398 00c6 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 399              	.LVL17:
+  50:../../bq32000/bq32000.c **** }
+ 400              		.loc 1 50 1 view .LVU98
+ 401 00ca 07B0     		add	sp, sp, #28
+ 402              	.LCFI11:
+ 403              		.cfi_def_cfa_offset 4
+ 404              		@ sp needed
+ 405 00cc 5DF804FB 		ldr	pc, [sp], #4
+ 406              	.L14:
+ 407              		.align	2
+ 408              	.L13:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 9
+
+
+ 409 00d0 CDCCCCCC 		.word	-858993459
+ 410              		.cfi_endproc
+ 411              	.LFE136:
+ 413              		.section	.text.RTC_Time2tm,"ax",%progbits
+ 414              		.align	1
+ 415              		.global	RTC_Time2tm
+ 416              		.syntax unified
+ 417              		.thumb
+ 418              		.thumb_func
+ 420              	RTC_Time2tm:
+ 421              	.LVL18:
+ 422              	.LFB137:
+  51:../../bq32000/bq32000.c **** 
+  52:../../bq32000/bq32000.c **** 
+  53:../../bq32000/bq32000.c **** void RTC_Time2tm(RTC_Time * rtc_time, struct tm *timeptr)
+  54:../../bq32000/bq32000.c **** {
+ 423              		.loc 1 54 1 is_stmt 1 view -0
+ 424              		.cfi_startproc
+ 425              		@ args = 0, pretend = 0, frame = 0
+ 426              		@ frame_needed = 0, uses_anonymous_args = 0
+ 427              		@ link register save eliminated.
+  55:../../bq32000/bq32000.c **** 	timeptr->tm_sec = rtc_time->seconds;   // секунды [0, 61] (допускаются висо�
+ 428              		.loc 1 55 2 view .LVU100
+ 429              		.loc 1 55 28 is_stmt 0 view .LVU101
+ 430 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 431              		.loc 1 55 18 view .LVU102
+ 432 0002 0B60     		str	r3, [r1]
+  56:../../bq32000/bq32000.c **** 	timeptr->tm_min = rtc_time->minutes;   // минуты [0, 59]
+ 433              		.loc 1 56 2 is_stmt 1 view .LVU103
+ 434              		.loc 1 56 28 is_stmt 0 view .LVU104
+ 435 0004 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 436              		.loc 1 56 18 view .LVU105
+ 437 0006 4B60     		str	r3, [r1, #4]
+  57:../../bq32000/bq32000.c **** 	timeptr->tm_hour = rtc_time->hours;  // часы [0, 23]
+ 438              		.loc 1 57 2 is_stmt 1 view .LVU106
+ 439              		.loc 1 57 29 is_stmt 0 view .LVU107
+ 440 0008 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 441              		.loc 1 57 19 view .LVU108
+ 442 000a 8B60     		str	r3, [r1, #8]
+  58:../../bq32000/bq32000.c **** 	timeptr->tm_mday = rtc_time->day;  // день месяца [1, 31]
+ 443              		.loc 1 58 2 is_stmt 1 view .LVU109
+ 444              		.loc 1 58 29 is_stmt 0 view .LVU110
+ 445 000c 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 446              		.loc 1 58 19 view .LVU111
+ 447 000e CB60     		str	r3, [r1, #12]
+  59:../../bq32000/bq32000.c **** 	timeptr->tm_mon = rtc_time->month - 1;   // месяц [0, 11], где 0 = январь, 11 = де
+ 448              		.loc 1 59 2 is_stmt 1 view .LVU112
+ 449              		.loc 1 59 28 is_stmt 0 view .LVU113
+ 450 0010 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 451              		.loc 1 59 36 view .LVU114
+ 452 0012 013B     		subs	r3, r3, #1
+ 453              		.loc 1 59 18 view .LVU115
+ 454 0014 0B61     		str	r3, [r1, #16]
+  60:../../bq32000/bq32000.c **** 	timeptr->tm_year = (2000 + rtc_time->year) - 1900;  // годы с 1900 (например, 2024 �
+ 455              		.loc 1 60 2 is_stmt 1 view .LVU116
+ 456              		.loc 1 60 37 is_stmt 0 view .LVU117
+ 457 0016 8379     		ldrb	r3, [r0, #6]	@ zero_extendqisi2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 10
+
+
+ 458              		.loc 1 60 45 view .LVU118
+ 459 0018 6433     		adds	r3, r3, #100
+ 460              		.loc 1 60 19 view .LVU119
+ 461 001a 4B61     		str	r3, [r1, #20]
+  61:../../bq32000/bq32000.c **** 	timeptr->tm_wday = rtc_time->dayOfWeek;  // день недели [0, 6], где 0 = воскре�
+ 462              		.loc 1 61 2 is_stmt 1 view .LVU120
+ 463              		.loc 1 61 29 is_stmt 0 view .LVU121
+ 464 001c C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 465              		.loc 1 61 19 view .LVU122
+ 466 001e 8B61     		str	r3, [r1, #24]
+  62:../../bq32000/bq32000.c **** 	timeptr->tm_yday = 0;  // день года [0, 365] (0 = 1 января)
+ 467              		.loc 1 62 2 is_stmt 1 view .LVU123
+ 468              		.loc 1 62 19 is_stmt 0 view .LVU124
+ 469 0020 0023     		movs	r3, #0
+ 470 0022 CB61     		str	r3, [r1, #28]
+  63:../../bq32000/bq32000.c **** 	timeptr->tm_isdst = -1; // флаг летнего времени: >0 — действует, 0�
+ 471              		.loc 1 63 2 is_stmt 1 view .LVU125
+ 472              		.loc 1 63 20 is_stmt 0 view .LVU126
+ 473 0024 4FF0FF33 		mov	r3, #-1
+ 474 0028 0B62     		str	r3, [r1, #32]
+  64:../../bq32000/bq32000.c **** }
+ 475              		.loc 1 64 1 view .LVU127
+ 476 002a 7047     		bx	lr
+ 477              		.cfi_endproc
+ 478              	.LFE137:
+ 480              		.global	globalRTC_Time
+ 481              		.section	.bss.globalRTC_Time,"aw",%nobits
+ 482              		.align	2
+ 485              	globalRTC_Time:
+ 486 0000 00000000 		.space	7
+ 486      000000
+ 487              		.text
+ 488              	.Letext0:
+ 489              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 490              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 491              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 492              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 493              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 494              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h"
+ 495              		.file 8 "../../bq32000/bq32000.h"
+ 496              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/time.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bq32000.c
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:21     .text.RTC_BQ32000_Init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:27     .text.RTC_BQ32000_Init:00000000 RTC_BQ32000_Init
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:41     .text.RTC_BQ32000_ReadRegister:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:47     .text.RTC_BQ32000_ReadRegister:00000000 RTC_BQ32000_ReadRegister
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:87     .text.RTC_BQ32000_WriteRegister:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:93     .text.RTC_BQ32000_WriteRegister:00000000 RTC_BQ32000_WriteRegister
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:137    .text.RTC_BQ32000_ReadTime:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:143    .text.RTC_BQ32000_ReadTime:00000000 RTC_BQ32000_ReadTime
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:287    .text.RTC_BQ32000_ReadTime:000000bc $d
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:485    .bss.globalRTC_Time:00000000 globalRTC_Time
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:292    .text.RTC_BQ32000_SetTime:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:298    .text.RTC_BQ32000_SetTime:00000000 RTC_BQ32000_SetTime
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:409    .text.RTC_BQ32000_SetTime:000000d0 $d
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:414    .text.RTC_Time2tm:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:420    .text.RTC_Time2tm:00000000 RTC_Time2tm
+C:\Users\oleg\AppData\Local\Temp\ccKpxOre.s:482    .bss.globalRTC_Time:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_I2C_Mem_Read
+HAL_I2C_Mem_Write

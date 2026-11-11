@@ -15,6 +15,7 @@ void net_init(void);
 void net_task(void);
 void net_int_change(void);
 
+
 extern wiz_NetInfo net_info;
 
 extern uint32_t http_session_tick;

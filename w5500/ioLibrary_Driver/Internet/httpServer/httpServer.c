@@ -827,7 +827,7 @@ uint8_t display_reg_webContent_list(void)
 	return ret;
 }
 
-uint8_t find_userReg_webContent(uint8_t * content_name, uint16_t * content_num, uint32_t * file_len)
+uint8_t find_userReg_webContent(uint8_t * content_name, uint16_t * content_num, uint32_t* file_len)
 {
 	uint16_t i;
 	uint8_t ret = 0; // '0' means 'File Not Found'

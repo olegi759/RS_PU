@@ -1,0 +1,468 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"mx25lm51245g_io.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../../mx25lm51245g/mx25lm51245g_io.c"
+  20              		.section	.text.flash_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	flash_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	flash_init:
+  28              	.LFB132:
+   1:../../mx25lm51245g/mx25lm51245g_io.c **** /*
+   2:../../mx25lm51245g/mx25lm51245g_io.c ****  * w25qx_io.c
+   3:../../mx25lm51245g/mx25lm51245g_io.c ****  *
+   4:../../mx25lm51245g/mx25lm51245g_io.c ****  *  Created on: 24 апр. 2024 г.
+   5:../../mx25lm51245g/mx25lm51245g_io.c ****  *      Author: Rafael Boltachev
+   6:../../mx25lm51245g/mx25lm51245g_io.c ****  */
+   7:../../mx25lm51245g/mx25lm51245g_io.c **** 
+   8:../../mx25lm51245g/mx25lm51245g_io.c **** 
+   9:../../mx25lm51245g/mx25lm51245g_io.c **** #include "flash_io.h"
+  10:../../mx25lm51245g/mx25lm51245g_io.c **** #include "mx25lm51245g_conf.h"
+  11:../../mx25lm51245g/mx25lm51245g_io.c **** #include "mx25lm51245g.h"
+  12:../../mx25lm51245g/mx25lm51245g_io.c **** #include "diskio.h"
+  13:../../mx25lm51245g/mx25lm51245g_io.c **** #include "stm_util.h"
+  14:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  15:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  16:../../mx25lm51245g/mx25lm51245g_io.c **** BOOL flash_init(void)
+  17:../../mx25lm51245g/mx25lm51245g_io.c **** {
+  29              		.loc 1 17 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  18:../../mx25lm51245g/mx25lm51245g_io.c **** 	return TRUE;
+  34              		.loc 1 18 2 view .LVU1
+  19:../../mx25lm51245g/mx25lm51245g_io.c **** }
+  35              		.loc 1 19 1 is_stmt 0 view .LVU2
+  36 0000 0120     		movs	r0, #1
+  37 0002 7047     		bx	lr
+  38              		.cfi_endproc
+  39              	.LFE132:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 2
+
+
+  41              		.section	.text.flash_read,"ax",%progbits
+  42              		.align	1
+  43              		.global	flash_read
+  44              		.syntax unified
+  45              		.thumb
+  46              		.thumb_func
+  48              	flash_read:
+  49              	.LVL0:
+  50              	.LFB133:
+  20:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  21:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  22:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  23:../../mx25lm51245g/mx25lm51245g_io.c **** BOOL flash_read(uint8_t *buf, uint32_t sector, uint32_t count)
+  24:../../mx25lm51245g/mx25lm51245g_io.c **** {
+  51              		.loc 1 24 1 is_stmt 1 view -0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		.loc 1 24 1 is_stmt 0 view .LVU4
+  56 0000 08B5     		push	{r3, lr}
+  57              	.LCFI0:
+  58              		.cfi_def_cfa_offset 8
+  59              		.cfi_offset 3, -8
+  60              		.cfi_offset 14, -4
+  25:../../mx25lm51245g/mx25lm51245g_io.c **** 	uint32_t ReadAddr, Size;
+  61              		.loc 1 25 2 is_stmt 1 view .LVU5
+  26:../../mx25lm51245g/mx25lm51245g_io.c **** 	uint8_t mx25_res;
+  62              		.loc 1 26 2 view .LVU6
+  27:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  28:../../mx25lm51245g/mx25lm51245g_io.c **** 	ReadAddr = sector * MX25L512_SUBSECTOR_SIZE;
+  63              		.loc 1 28 2 view .LVU7
+  64              	.LVL1:
+  29:../../mx25lm51245g/mx25lm51245g_io.c **** 	Size = count * MX25L512_SUBSECTOR_SIZE;
+  65              		.loc 1 29 2 view .LVU8
+  30:../../mx25lm51245g/mx25lm51245g_io.c **** 	//fulog_fmt("disk_read(%lu[%lu] %lu)"CRLF, sector, ReadAddr, count);
+  31:../../mx25lm51245g/mx25lm51245g_io.c **** 	mx25_res = mx25_QSPI_Read(&hqspi, buf, ReadAddr, Size);
+  66              		.loc 1 31 2 view .LVU9
+  67              		.loc 1 31 13 is_stmt 0 view .LVU10
+  68 0002 1303     		lsls	r3, r2, #12
+  69              	.LVL2:
+  70              		.loc 1 31 13 view .LVU11
+  71 0004 0A03     		lsls	r2, r1, #12
+  72              	.LVL3:
+  73              		.loc 1 31 13 view .LVU12
+  74 0006 0146     		mov	r1, r0
+  75              	.LVL4:
+  76              		.loc 1 31 13 view .LVU13
+  77 0008 0348     		ldr	r0, .L4
+  78              	.LVL5:
+  79              		.loc 1 31 13 view .LVU14
+  80 000a FFF7FEFF 		bl	mx25_QSPI_Read
+  81              	.LVL6:
+  32:../../mx25lm51245g/mx25lm51245g_io.c **** 	//ulog_fmt("disk_read(%lu[%lu] %lu)=%d"CRLF, sector, ReadAddr, count, mx25_res);
+  33:../../mx25lm51245g/mx25lm51245g_io.c ****     return mx25_res == RES_OK ? TRUE : FALSE;
+  82              		.loc 1 33 5 is_stmt 1 view .LVU15
+  34:../../mx25lm51245g/mx25lm51245g_io.c **** }
+  83              		.loc 1 34 1 is_stmt 0 view .LVU16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 3
+
+
+  84 000e B0FA80F0 		clz	r0, r0
+  85              	.LVL7:
+  86              		.loc 1 34 1 view .LVU17
+  87 0012 4009     		lsrs	r0, r0, #5
+  88 0014 08BD     		pop	{r3, pc}
+  89              	.L5:
+  90 0016 00BF     		.align	2
+  91              	.L4:
+  92 0018 00000000 		.word	hqspi
+  93              		.cfi_endproc
+  94              	.LFE133:
+  96              		.section	.text.flash_write,"ax",%progbits
+  97              		.align	1
+  98              		.global	flash_write
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 103              	flash_write:
+ 104              	.LVL8:
+ 105              	.LFB134:
+  35:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  36:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  37:../../mx25lm51245g/mx25lm51245g_io.c **** BOOL flash_write(uint8_t *buf,	uint32_t sector, uint32_t count)
+  38:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 106              		.loc 1 38 1 is_stmt 1 view -0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              		.loc 1 38 1 is_stmt 0 view .LVU19
+ 111 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 112              	.LCFI1:
+ 113              		.cfi_def_cfa_offset 24
+ 114              		.cfi_offset 3, -24
+ 115              		.cfi_offset 4, -20
+ 116              		.cfi_offset 5, -16
+ 117              		.cfi_offset 6, -12
+ 118              		.cfi_offset 7, -8
+ 119              		.cfi_offset 14, -4
+ 120 0002 0746     		mov	r7, r0
+ 121 0004 0E46     		mov	r6, r1
+ 122 0006 1546     		mov	r5, r2
+  39:../../mx25lm51245g/mx25lm51245g_io.c **** 	uint32_t WriteAddr, Size;
+ 123              		.loc 1 39 2 is_stmt 1 view .LVU20
+  40:../../mx25lm51245g/mx25lm51245g_io.c **** 	uint8_t mx25_res;
+ 124              		.loc 1 40 2 view .LVU21
+  41:../../mx25lm51245g/mx25lm51245g_io.c **** 	UINT i;
+ 125              		.loc 1 41 2 view .LVU22
+  42:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  43:../../mx25lm51245g/mx25lm51245g_io.c **** 	for (i = 0; i < count; ++i) {
+ 126              		.loc 1 43 2 view .LVU23
+ 127              	.LVL9:
+ 128              		.loc 1 43 9 is_stmt 0 view .LVU24
+ 129 0008 0024     		movs	r4, #0
+ 130              		.loc 1 43 2 view .LVU25
+ 131 000a 04E0     		b	.L7
+ 132              	.LVL10:
+ 133              	.L8:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 4
+
+
+  44:../../mx25lm51245g/mx25lm51245g_io.c **** 		WriteAddr = sector * MX25L512_SUBSECTOR_SIZE;
+ 134              		.loc 1 44 3 is_stmt 1 view .LVU26
+  45:../../mx25lm51245g/mx25lm51245g_io.c **** 		mx25_res = mx25_QSPI_Erase_SubSector(&hqspi, WriteAddr);
+ 135              		.loc 1 45 3 view .LVU27
+ 136              		.loc 1 45 14 is_stmt 0 view .LVU28
+ 137 000c 3103     		lsls	r1, r6, #12
+ 138              	.LVL11:
+ 139              		.loc 1 45 14 view .LVU29
+ 140 000e 0848     		ldr	r0, .L10
+ 141 0010 FFF7FEFF 		bl	mx25_QSPI_Erase_SubSector
+ 142              	.LVL12:
+  43:../../mx25lm51245g/mx25lm51245g_io.c **** 		WriteAddr = sector * MX25L512_SUBSECTOR_SIZE;
+ 143              		.loc 1 43 25 is_stmt 1 discriminator 3 view .LVU30
+ 144 0014 0134     		adds	r4, r4, #1
+ 145              	.LVL13:
+ 146              	.L7:
+  43:../../mx25lm51245g/mx25lm51245g_io.c **** 		WriteAddr = sector * MX25L512_SUBSECTOR_SIZE;
+ 147              		.loc 1 43 16 discriminator 1 view .LVU31
+ 148 0016 AC42     		cmp	r4, r5
+ 149 0018 F8D3     		bcc	.L8
+  46:../../mx25lm51245g/mx25lm51245g_io.c **** 	}
+  47:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  48:../../mx25lm51245g/mx25lm51245g_io.c **** 	WriteAddr = sector * MX25L512_SUBSECTOR_SIZE;
+ 150              		.loc 1 48 2 view .LVU32
+ 151              	.LVL14:
+  49:../../mx25lm51245g/mx25lm51245g_io.c **** 	Size = count * MX25L512_SUBSECTOR_SIZE;
+ 152              		.loc 1 49 2 view .LVU33
+  50:../../mx25lm51245g/mx25lm51245g_io.c **** 	//ulog_fmt("disk_write(%lu[%lu] %lu)"CRLF, sector, WriteAddr, count);
+  51:../../mx25lm51245g/mx25lm51245g_io.c **** 	mx25_res = mx25_QSPI_Write(&hqspi, buf, WriteAddr, Size);
+ 153              		.loc 1 51 2 view .LVU34
+ 154              		.loc 1 51 13 is_stmt 0 view .LVU35
+ 155 001a 2B03     		lsls	r3, r5, #12
+ 156              	.LVL15:
+ 157              		.loc 1 51 13 view .LVU36
+ 158 001c 3203     		lsls	r2, r6, #12
+ 159              	.LVL16:
+ 160              		.loc 1 51 13 view .LVU37
+ 161 001e 3946     		mov	r1, r7
+ 162 0020 0348     		ldr	r0, .L10
+ 163 0022 FFF7FEFF 		bl	mx25_QSPI_Write
+ 164              	.LVL17:
+  52:../../mx25lm51245g/mx25lm51245g_io.c **** 	//ulog_fmt("disk_write(%lu[%lu] %lu)=%d"CRLF, sector, WriteAddr, count, mx25_res);
+  53:../../mx25lm51245g/mx25lm51245g_io.c ****     return mx25_res == RES_OK ? TRUE: FALSE;
+ 165              		.loc 1 53 5 is_stmt 1 view .LVU38
+  54:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 166              		.loc 1 54 1 is_stmt 0 view .LVU39
+ 167 0026 B0FA80F0 		clz	r0, r0
+ 168              	.LVL18:
+ 169              		.loc 1 54 1 view .LVU40
+ 170 002a 4009     		lsrs	r0, r0, #5
+ 171 002c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 172              	.LVL19:
+ 173              	.L11:
+ 174              		.loc 1 54 1 view .LVU41
+ 175 002e 00BF     		.align	2
+ 176              	.L10:
+ 177 0030 00000000 		.word	hqspi
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 5
+
+
+ 178              		.cfi_endproc
+ 179              	.LFE134:
+ 181              		.section	.text.flash_sector_size,"ax",%progbits
+ 182              		.align	1
+ 183              		.global	flash_sector_size
+ 184              		.syntax unified
+ 185              		.thumb
+ 186              		.thumb_func
+ 188              	flash_sector_size:
+ 189              	.LFB135:
+  55:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  56:../../mx25lm51245g/mx25lm51245g_io.c **** uint32_t flash_sector_size(void)
+  57:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 190              		.loc 1 57 1 is_stmt 1 view -0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194              		@ link register save eliminated.
+  58:../../mx25lm51245g/mx25lm51245g_io.c **** 	return MX25L512_SUBSECTOR_SIZE;
+ 195              		.loc 1 58 2 view .LVU43
+  59:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 196              		.loc 1 59 1 is_stmt 0 view .LVU44
+ 197 0000 4FF48050 		mov	r0, #4096
+ 198 0004 7047     		bx	lr
+ 199              		.cfi_endproc
+ 200              	.LFE135:
+ 202              		.section	.text.flash_sector_count,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	flash_sector_count
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	flash_sector_count:
+ 210              	.LFB136:
+  60:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  61:../../mx25lm51245g/mx25lm51245g_io.c **** uint32_t flash_sector_count(void)
+  62:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 211              		.loc 1 62 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+  63:../../mx25lm51245g/mx25lm51245g_io.c **** 	return MX25L512_FLASH_SIZE / MX25L512_SUBSECTOR_SIZE;
+ 216              		.loc 1 63 2 view .LVU46
+  64:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 217              		.loc 1 64 1 is_stmt 0 view .LVU47
+ 218 0000 4FF48040 		mov	r0, #16384
+ 219 0004 7047     		bx	lr
+ 220              		.cfi_endproc
+ 221              	.LFE136:
+ 223              		.section	.text.flash_block_size,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	flash_block_size
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 230              	flash_block_size:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 6
+
+
+ 231              	.LFB137:
+  65:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  66:../../mx25lm51245g/mx25lm51245g_io.c **** uint32_t flash_block_size(void)
+  67:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 232              		.loc 1 67 1 is_stmt 1 view -0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 0
+ 235              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236              		@ link register save eliminated.
+  68:../../mx25lm51245g/mx25lm51245g_io.c **** 	return MX25L512_SECTOR_SIZE;
+ 237              		.loc 1 68 2 view .LVU49
+  69:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 238              		.loc 1 69 1 is_stmt 0 view .LVU50
+ 239 0000 4FF48030 		mov	r0, #65536
+ 240 0004 7047     		bx	lr
+ 241              		.cfi_endproc
+ 242              	.LFE137:
+ 244              		.section	.text.flash_full_size,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	flash_full_size
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 251              	flash_full_size:
+ 252              	.LFB138:
+  70:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  71:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  72:../../mx25lm51245g/mx25lm51245g_io.c **** uint64_t flash_full_size(void)
+  73:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 253              		.loc 1 73 1 is_stmt 1 view -0
+ 254              		.cfi_startproc
+ 255              		@ args = 0, pretend = 0, frame = 0
+ 256              		@ frame_needed = 0, uses_anonymous_args = 0
+ 257              		@ link register save eliminated.
+  74:../../mx25lm51245g/mx25lm51245g_io.c **** 	return MX25L512_FLASH_SIZE;
+ 258              		.loc 1 74 2 view .LVU52
+  75:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 259              		.loc 1 75 1 is_stmt 0 view .LVU53
+ 260 0000 4FF08060 		mov	r0, #67108864
+ 261 0004 0021     		movs	r1, #0
+ 262 0006 7047     		bx	lr
+ 263              		.cfi_endproc
+ 264              	.LFE138:
+ 266              		.section	.text.flash_block_count,"ax",%progbits
+ 267              		.align	1
+ 268              		.global	flash_block_count
+ 269              		.syntax unified
+ 270              		.thumb
+ 271              		.thumb_func
+ 273              	flash_block_count:
+ 274              	.LFB139:
+  76:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  77:../../mx25lm51245g/mx25lm51245g_io.c **** uint32_t flash_block_count(void)
+  78:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 275              		.loc 1 78 1 is_stmt 1 view -0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 7
+
+
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+  79:../../mx25lm51245g/mx25lm51245g_io.c **** 	return MX25L512_FLASH_SIZE / MX25L512_SECTOR_SIZE;
+ 280              		.loc 1 79 2 view .LVU55
+  80:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 281              		.loc 1 80 1 is_stmt 0 view .LVU56
+ 282 0000 4FF48060 		mov	r0, #1024
+ 283 0004 7047     		bx	lr
+ 284              		.cfi_endproc
+ 285              	.LFE139:
+ 287              		.section	.text.flash_device_id,"ax",%progbits
+ 288              		.align	1
+ 289              		.global	flash_device_id
+ 290              		.syntax unified
+ 291              		.thumb
+ 292              		.thumb_func
+ 294              	flash_device_id:
+ 295              	.LFB140:
+  81:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  82:../../mx25lm51245g/mx25lm51245g_io.c **** uint16_t flash_device_id(void)
+  83:../../mx25lm51245g/mx25lm51245g_io.c **** {
+ 296              		.loc 1 83 1 is_stmt 1 view -0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 128
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300 0000 00B5     		push	{lr}
+ 301              	.LCFI2:
+ 302              		.cfi_def_cfa_offset 4
+ 303              		.cfi_offset 14, -4
+ 304 0002 A1B0     		sub	sp, sp, #132
+ 305              	.LCFI3:
+ 306              		.cfi_def_cfa_offset 136
+  84:../../mx25lm51245g/mx25lm51245g_io.c **** 	uint8_t identification_data[128];
+ 307              		.loc 1 84 2 view .LVU58
+  85:../../mx25lm51245g/mx25lm51245g_io.c **** 
+  86:../../mx25lm51245g/mx25lm51245g_io.c **** 	mx25_QSPI_GetIdentification(&hqspi, identification_data);
+ 308              		.loc 1 86 2 view .LVU59
+ 309 0004 6946     		mov	r1, sp
+ 310 0006 0448     		ldr	r0, .L19
+ 311 0008 FFF7FEFF 		bl	mx25_QSPI_GetIdentification
+ 312              	.LVL20:
+  87:../../mx25lm51245g/mx25lm51245g_io.c **** 	return *(uint16_t *)identification_data;
+ 313              		.loc 1 87 2 view .LVU60
+  88:../../mx25lm51245g/mx25lm51245g_io.c **** }
+ 314              		.loc 1 88 1 is_stmt 0 view .LVU61
+ 315 000c BDF80000 		ldrh	r0, [sp]
+ 316 0010 21B0     		add	sp, sp, #132
+ 317              	.LCFI4:
+ 318              		.cfi_def_cfa_offset 4
+ 319              		@ sp needed
+ 320 0012 5DF804FB 		ldr	pc, [sp], #4
+ 321              	.L20:
+ 322 0016 00BF     		.align	2
+ 323              	.L19:
+ 324 0018 00000000 		.word	hqspi
+ 325              		.cfi_endproc
+ 326              	.LFE140:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 8
+
+
+ 328              		.text
+ 329              	.Letext0:
+ 330              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 331              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 332              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 333              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 334              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h"
+ 335              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h"
+ 336              		.file 8 "../../fatfs/ff.h"
+ 337              		.file 9 "../../fatfs/diskio.h"
+ 338              		.file 10 "../../mx25lm51245g/mx25lm51245g.h"
+ 339              		.file 11 "../../CM4/Core/Inc/main.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mx25lm51245g_io.c
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:21     .text.flash_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:27     .text.flash_init:00000000 flash_init
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:42     .text.flash_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:48     .text.flash_read:00000000 flash_read
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:92     .text.flash_read:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:97     .text.flash_write:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:103    .text.flash_write:00000000 flash_write
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:177    .text.flash_write:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:182    .text.flash_sector_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:188    .text.flash_sector_size:00000000 flash_sector_size
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:203    .text.flash_sector_count:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:209    .text.flash_sector_count:00000000 flash_sector_count
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:224    .text.flash_block_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:230    .text.flash_block_size:00000000 flash_block_size
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:245    .text.flash_full_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:251    .text.flash_full_size:00000000 flash_full_size
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:267    .text.flash_block_count:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:273    .text.flash_block_count:00000000 flash_block_count
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:288    .text.flash_device_id:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:294    .text.flash_device_id:00000000 flash_device_id
+C:\Users\oleg\AppData\Local\Temp\cc8LxslO.s:324    .text.flash_device_id:00000018 $d
+
+UNDEFINED SYMBOLS
+mx25_QSPI_Read
+hqspi
+mx25_QSPI_Erase_SubSector
+mx25_QSPI_Write
+mx25_QSPI_GetIdentification
