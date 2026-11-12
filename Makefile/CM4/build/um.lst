@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
   27:../../CM4/Core/Src/um.c **** static uint32_t um_rcv_tick[7] = {0};
   28:../../CM4/Core/Src/um.c **** 
   29:../../CM4/Core/Src/um.c **** static uint8_t um_channel_mode_1[7] = {0};
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 2
 
 
   30:../../CM4/Core/Src/um.c **** static uint8_t um_channel_mode_2[7] = {0};
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
   74 0000 434D342E 		.ascii	"CM4.um: addr:%d change device_mistake %s->%s\015\012"
   74      756D3A20 
   74      61646472 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 3
 
 
   74      3A256420 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  117              		.loc 1 51 5 is_stmt 0 view .LVU16
  118 0014 15F0010F 		tst	r5, #1
  119 0018 41D0     		beq	.L5
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 4
 
 
  120              		.loc 1 51 50 is_stmt 1 discriminator 1 view .LVU17
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  161 005a 04F15B00 		add	r0, r4, #91
  162 005e C0B2     		uxtb	r0, r0
  163 0060 FFF7FEFF 		bl	fault_set
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 5
 
 
  164              	.LVL14:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
   48:../../CM4/Core/Src/um.c **** 	}
  202              		.loc 1 48 3 discriminator 2 view .LVU43
  203 0092 4246     		mov	r2, r8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 6
 
 
  204 0094 2146     		mov	r1, r4
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  252 00e6 00BF     		.align	2
  253              	.L19:
  254 00e8 00000000 		.word	um_device_mistake
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 7
 
 
  255 00ec 00000000 		.word	um_channel_mode_1
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  300 000e 8A42     		cmp	r2, r1
  301 0010 03D1     		bne	.L22
  302              		.loc 1 82 52 discriminator 1 view .LVU55
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 8
 
 
  303 0012 164B     		ldr	r3, .L29+4
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  347 0042 04F16D00 		add	r0, r4, #109
  348 0046 C0B2     		uxtb	r0, r0
  349 0048 FFF7FEFF 		bl	fault_unset
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 9
 
 
  350              	.LVL32:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  399              		@ frame_needed = 0, uses_anonymous_args = 0
  400              		.loc 1 97 1 is_stmt 0 view .LVU77
  401 0000 38B5     		push	{r3, r4, r5, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 10
 
 
  402              	.LCFI8:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  439              	.LVL39:
  115:../../CM4/Core/Src/um.c **** 		break;
  440              		.loc 1 115 3 view .LVU89
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 11
 
 
  116:../../CM4/Core/Src/um.c **** 	}
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  488 0004 8DF80C10 		strb	r1, [sp, #12]
  489 0008 8DF80D20 		strb	r2, [sp, #13]
  123:../../CM4/Core/Src/um.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 12
 
 
  124:../../CM4/Core/Src/um.c **** 	um_transmit_piv(addr, setting.uart_local_addr, UM_CMD_MODES, buf, 2);
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  540              		.loc 1 129 2 is_stmt 0 view .LVU106
  541 0006 FF20     		movs	r0, #255
  542              	.LVL48:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 13
 
 
  543              		.loc 1 129 2 view .LVU107
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  569 0004 002A     		cmp	r2, #0
  570 0006 30D0     		beq	.L49
  158:../../CM4/Core/Src/um.c **** 	if (!setting.um_count) return;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 14
 
 
  571              		.loc 1 158 1 view .LVU113
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  617              		.loc 1 167 51 discriminator 1 view .LVU126
  618 003e 0B4B     		ldr	r3, .L52
  619 0040 5B7F     		ldrb	r3, [r3, #29]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 15
 
 
  620              		.loc 1 167 61 discriminator 1 view .LVU127
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  668              		.thumb
  669              		.thumb_func
  671              	um_snd_set_addr:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 16
 
 
  672              	.LVL54:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  723              		.section	.bss.um_device_mistake,"aw",%nobits
  724              		.align	2
  727              	um_device_mistake:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 17
 
 
  728 0000 00000000 		.space	7
@@ -994,48 +994,48 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 1
  759              		.file 7 "../../util/stm_util.h"
  760              		.file 8 "../../util/str_util.h"
  761              		.file 9 "../../common/common.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 um.c
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:21     .text.um_transmit_piv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:27     .text.um_transmit_piv:00000000 um_transmit_piv
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:72     .rodata.um_rcv_state.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:77     .text.um_rcv_state:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:83     .text.um_rcv_state:00000000 um_rcv_state
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:254    .text.um_rcv_state:000000e8 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:727    .bss.um_device_mistake:00000000 um_device_mistake
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:739    .bss.um_channel_mode_1:00000000 um_channel_mode_1
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:733    .bss.um_channel_mode_2:00000000 um_channel_mode_2
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:262    .rodata.um_rcv_test_line.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:267    .text.um_rcv_test_line:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:273    .text.um_rcv_test_line:00000000 um_rcv_test_line
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:380    .text.um_rcv_test_line:00000068 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:721    .bss.um_test_line1:00000000 um_test_line1
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:715    .bss.um_test_line2:00000000 um_test_line2
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:387    .text.um_rcv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:393    .text.um_rcv:00000000 um_rcv
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:460    .text.um_rcv:00000040 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:745    .bss.um_rcv_tick:00000000 um_rcv_tick
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:465    .text.um_snd_modes:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:471    .text.um_snd_modes:00000000 um_snd_modes
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:512    .text.um_snd_modes:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:517    .text.um_snd_modes_all:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:523    .text.um_snd_modes_all:00000000 um_snd_modes_all
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:552    .text.um_snd_query:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:558    .text.um_snd_query:00000000 um_snd_query
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:658    .text.um_snd_query:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:750    .data.um_addr:00000000 um_addr
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:665    .text.um_snd_set_addr:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:671    .text.um_snd_set_addr:00000000 um_snd_set_addr
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:707    .text.um_snd_set_addr:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:712    .bss.um_test_line2:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:718    .bss.um_test_line1:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:724    .bss.um_device_mistake:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:730    .bss.um_channel_mode_2:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:736    .bss.um_channel_mode_1:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc5kUK4j.s:742    .bss.um_rcv_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:21     .text.um_transmit_piv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:27     .text.um_transmit_piv:00000000 um_transmit_piv
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:72     .rodata.um_rcv_state.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:77     .text.um_rcv_state:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:83     .text.um_rcv_state:00000000 um_rcv_state
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:254    .text.um_rcv_state:000000e8 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:727    .bss.um_device_mistake:00000000 um_device_mistake
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:739    .bss.um_channel_mode_1:00000000 um_channel_mode_1
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:733    .bss.um_channel_mode_2:00000000 um_channel_mode_2
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:262    .rodata.um_rcv_test_line.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:267    .text.um_rcv_test_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:273    .text.um_rcv_test_line:00000000 um_rcv_test_line
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:380    .text.um_rcv_test_line:00000068 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:721    .bss.um_test_line1:00000000 um_test_line1
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:715    .bss.um_test_line2:00000000 um_test_line2
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:387    .text.um_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:393    .text.um_rcv:00000000 um_rcv
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:460    .text.um_rcv:00000040 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:745    .bss.um_rcv_tick:00000000 um_rcv_tick
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:465    .text.um_snd_modes:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:471    .text.um_snd_modes:00000000 um_snd_modes
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:512    .text.um_snd_modes:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:517    .text.um_snd_modes_all:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:523    .text.um_snd_modes_all:00000000 um_snd_modes_all
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:552    .text.um_snd_query:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:558    .text.um_snd_query:00000000 um_snd_query
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:658    .text.um_snd_query:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:750    .data.um_addr:00000000 um_addr
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:665    .text.um_snd_set_addr:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:671    .text.um_snd_set_addr:00000000 um_snd_set_addr
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:707    .text.um_snd_set_addr:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:712    .bss.um_test_line2:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:718    .bss.um_test_line1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:724    .bss.um_device_mistake:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:730    .bss.um_channel_mode_2:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:736    .bss.um_channel_mode_1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccb6C2Dc.s:742    .bss.um_rcv_tick:00000000 $d
 
 UNDEFINED SYMBOLS
 uart6_transmit_piv

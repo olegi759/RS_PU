@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
   27:../../CM4/Core/Src/mkk.c **** //uint8_t mkk_rcv_insig[24] = {0};
   28:../../CM4/Core/Src/mkk.c **** //контроль исправностей линий старт
   29:../../CM4/Core/Src/mkk.c **** //uint8_t mkk_rcv_start[2] = {0};
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 2
 
 
   30:../../CM4/Core/Src/mkk.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
   63 0014 0021     		movs	r1, #0
   64              	.LVL3:
   65              		.loc 1 50 10 view .LVU14
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 3
 
 
   66 0016 0CE0     		b	.L2
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  110              	.LVL10:
  111              		.loc 1 57 19 view .LVU32
  112 0048 21F812E0 		strh	lr, [r1, r2, lsl #1]	@ movhi
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 4
 
 
   58:../../CM4/Core/Src/mkk.c **** 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  157              		.cfi_endproc
  158              	.LFE133:
  160              		.section	.text.mkk_send_version,"ax",%progbits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 5
 
 
  161              		.align	1
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  205              		.loc 1 82 1 is_stmt 0 view .LVU44
  206 0000 00B5     		push	{lr}
  207              	.LCFI3:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 6
 
 
  208              		.cfi_def_cfa_offset 4
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  255 0004 02D0     		beq	.L23
   92:../../CM4/Core/Src/mkk.c **** 		val = setting.mkk_insig_lines & 0xFFF;
   93:../../CM4/Core/Src/mkk.c **** 		if (GETBIT(setting.mkk_start_lines, 0)) SETBIT(val, 12);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 7
 
 
   94:../../CM4/Core/Src/mkk.c **** 		mkk_send_insig_on(mux, HTONS(val));
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  292              		.loc 1 94 3 is_stmt 0 view .LVU65
  293 003a E6E7     		b	.L17
  294              	.LVL23:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 8
 
 
  295              	.L24:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  103:../../CM4/Core/Src/mkk.c **** 
  104:../../CM4/Core/Src/mkk.c **** //Послать комманду включи контроль линий звука
  105:../../CM4/Core/Src/mkk.c **** void mkk_send_lin_on(uart2_mux_t mux, uint16_t value)
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 9
 
 
  106:../../CM4/Core/Src/mkk.c **** {
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  390              		.cfi_offset 14, -4
  113:../../CM4/Core/Src/mkk.c **** 	uint16_t val;
  391              		.loc 1 113 2 is_stmt 1 view .LVU83
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 10
 
 
  114:../../CM4/Core/Src/mkk.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  427 0024 054B     		ldr	r3, .L35
  428 0026 196B     		ldr	r1, [r3, #48]
  120:../../CM4/Core/Src/mkk.c **** 		val = (setting.mkk_sound_lines >> 12) & 0xFFF;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 11
 
 
  429              		.loc 1 120 7 view .LVU98
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  468              		.cfi_offset 14, -4
  138:../../CM4/Core/Src/mkk.c **** 	uart2_transmit(mux, (uint16_t *)mkk_cmd_insig_lin, 4);
  469              		.loc 1 138 2 is_stmt 1 view .LVU105
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 12
 
 
  470 0002 0422     		movs	r2, #4
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  513              		.loc 1 151 2 is_stmt 1 view .LVU111
  514 0018 0423     		movs	r3, #4
  515 001a 0DEB0302 		add	r2, sp, r3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 13
 
 
  516              	.LVL39:
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  559 0006 0228     		cmp	r0, #2
  560 0008 1AD1     		bne	.L43
  165:../../CM4/Core/Src/mkk.c **** 		val1 = (setting.mkk_um1 >> 12) & 0xFFF;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 14
 
 
  561              		.loc 1 165 3 is_stmt 1 view .LVU122
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  604 003a 89B2     		uxth	r1, r1
  605 003c FFF7FEFF 		bl	mkk_send_lin
  606              	.LVL49:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 15
 
 
  607              	.L43:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  652 000c 1340     		ands	r3, r3, r2
  653              	.LVL52:
  181:../../CM4/Core/Src/mkk.c **** 	val2 = ls & setting.mkk_um2;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 16
 
 
  654              		.loc 1 181 2 is_stmt 1 view .LVU149
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  692              		.loc 1 190 3 view .LVU161
  190:../../CM4/Core/Src/mkk.c **** 		val1 = ls & (setting.mkk_um1 >> 12);
  693              		.loc 1 190 6 is_stmt 0 view .LVU162
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 17
 
 
  694 0036 C4F30B34 		ubfx	r4, r4, #12, #12
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  737              		.loc 1 201 1 is_stmt 1 view -0
  738              		.cfi_startproc
  739              		@ args = 0, pretend = 0, frame = 8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 18
 
 
  740              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  208:../../CM4/Core/Src/mkk.c **** 	mkk_send(mux, MKK_CMD_RELAY, &state, 1);
  790              		.loc 1 208 2 is_stmt 1 view .LVU178
  791 0008 0123     		movs	r3, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 19
 
 
  792 000a 0DF10702 		add	r2, sp, #7
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  839 000c 0029     		cmp	r1, #0
  840 000e 10DB     		blt	.L67
  841              	.L63:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 20
 
 
  842              		.loc 1 217 10 discriminator 1 view .LVU188
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  888 005e E3E7     		b	.L64
  889              	.L68:
  890 0060 CA1D     		adds	r2, r1, #7
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 21
 
 
  891 0062 EFE7     		b	.L65
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  944              	.LFB147:
  227:../../CM4/Core/Src/mkk.c **** 
  228:../../CM4/Core/Src/mkk.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 22
 
 
  229:../../CM4/Core/Src/mkk.c **** /*
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  950 0000 08B5     		push	{r3, lr}
  951              	.LCFI24:
  952              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 23
 
 
  953              		.cfi_offset 3, -8
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1001              		.loc 1 285 1 view .LVU213
  1002 000c 08BD     		pop	{r3, pc}
  1003              	.L81:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 24
 
 
  1004 000e 00BF     		.align	2
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1055              	is_fault_insig_line:
  1056              	.LVL92:
  1057              	.LFB150:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 25
 
 
  293:../../CM4/Core/Src/mkk.c **** 
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1100              		.align	1
  1101              		.global	is_fault_sound_line
  1102              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 26
 
 
  1103              		.thumb
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1151 000a 01D0     		beq	.L98
  306:../../CM4/Core/Src/mkk.c **** 	return  ((value ==  MKK_START_STATE_BREAK) || (value ==  MKK_START_STATE_UNCERTAINTY) || (value ==
  1152              		.loc 1 306 1 is_stmt 0 view .LVU237
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 27
 
 
  1153 000c 0020     		movs	r0, #0
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1197              		.cfi_offset 3, -16
  1198              		.cfi_offset 4, -12
  1199              		.cfi_offset 5, -8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 28
 
 
  1200              		.cfi_offset 14, -4
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  318:../../CM4/Core/Src/mkk.c **** 		if ( (GETBIT(setting.mkk_insig_lines, i)) && (is_fault_insig_line(mkk_insig_lin_replay.insig[i]))
  1241              		.loc 1 318 6 view .LVU258
  1242 002c 13F0010F 		tst	r3, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 29
 
 
  1243 0030 EBD0     		beq	.L102
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1279              		.loc 1 327 23 discriminator 2 view .LVU267
  1280 005e 0134     		adds	r4, r4, #1
  1281              	.LVL122:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 30
 
 
  1282              	.L105:
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  337:../../CM4/Core/Src/mkk.c **** 	}
  338:../../CM4/Core/Src/mkk.c **** 
  339:../../CM4/Core/Src/mkk.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 31
 
 
  340:../../CM4/Core/Src/mkk.c **** 	for (i = 0; i < 2; i++) {
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  354:../../CM4/Core/Src/mkk.c **** 				fault_set(FAULT_MKK_START_1 + i);
  355:../../CM4/Core/Src/mkk.c **** 			} else {
  356:../../CM4/Core/Src/mkk.c **** 				fault_unset(FAULT_MKK_START_1 + i);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 32
 
 
  1364              		.loc 1 356 5 is_stmt 1 view .LVU287
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1404 0110 2346     		mov	r3, r4
  1405 0112 002C     		cmp	r4, #0
  1406 0114 DEDB     		blt	.L126
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 33
 
 
  1407              	.L114:
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1447 015a 38BD     		pop	{r3, r4, r5, pc}
  1448              	.LVL141:
  1449              	.L128:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 34
 
 
  1450              		.loc 1 368 1 view .LVU308
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  382:../../CM4/Core/Src/mkk.c **** 	if (!(packet[0] & 0x0100)) return;
  1485              		.loc 1 382 2 view .LVU313
  1486              		.loc 1 382 14 is_stmt 0 view .LVU314
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 35
 
 
  1487 0000 0B88     		ldrh	r3, [r1]
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1532 0036 9C46     		mov	ip, r3
  1533              		.loc 1 389 2 view .LVU332
  1534 0038 06E0     		b	.L131
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 36
 
 
  1535              	.LVL145:
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  402:../../CM4/Core/Src/mkk.c **** 
  403:../../CM4/Core/Src/mkk.c **** 
  404:../../CM4/Core/Src/mkk.c **** 			change = FALSE;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 37
 
 
  1572              		.loc 1 404 11 view .LVU347
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1610              	.LVL154:
  405:../../CM4/Core/Src/mkk.c **** 				val = packet[2 + i] & 0xFF;
  1611              		.loc 1 405 25 is_stmt 0 discriminator 2 view .LVU363
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 38
 
 
  1612 0080 9BB2     		uxth	r3, r3
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1642              		.loc 1 436 37 is_stmt 0 view .LVU377
  1643 009e 3A4D     		ldr	r5, .L159+4
  1644 00a0 ED5C     		ldrb	r5, [r5, r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 39
 
 
  1645              		.loc 1 436 10 view .LVU378
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  423:../../CM4/Core/Src/mkk.c **** 							mkk_insig_lin_replay.start[0] = val;
  1686              		.loc 1 423 8 is_stmt 1 view .LVU393
  1687              	.LVL161:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 40
 
 
  424:../../CM4/Core/Src/mkk.c **** 						}
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1726              		.loc 1 443 8 is_stmt 1 view .LVU408
  1727              	.LVL165:
  444:../../CM4/Core/Src/mkk.c **** 							mkk_insig_lin_replay.start[1] = val;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 41
 
 
  1728              		.loc 1 444 8 view .LVU409
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  475:../../CM4/Core/Src/mkk.c **** 				for (i = 0; i < rcrc; ++i) {
  476:../../CM4/Core/Src/mkk.c **** 					mkk1_version[i] = packet[2 + i] & 0xFF;
  477:../../CM4/Core/Src/mkk.c **** 				}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 42
 
 
  478:../../CM4/Core/Src/mkk.c **** 				fault_unset(FAULT_MKK1_NOT_RECV);
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  473:../../CM4/Core/Src/mkk.c **** 				if (rcrc > packet[1]) rcrc = packet[1];
  1778              		.loc 1 473 10 view .LVU428
  1779 0122 1F20     		movs	r0, #31
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 43
 
 
  1780              	.L143:
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  482:../../CM4/Core/Src/mkk.c **** 				rcrc = sizeof(mkk2_version) - 1;
  1821              		.loc 1 482 5 view .LVU442
  1822 014a 2022     		movs	r2, #32
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 44
 
 
  1823              	.LVL182:
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1861 016c 9BB2     		uxth	r3, r3
  1862              	.LVL188:
  1863              	.L147:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 45
 
 
  485:../../CM4/Core/Src/mkk.c **** 					mkk2_version[i] = packet[2 + i] & 0xFF;
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1918              		.section	.rodata.mkk_cmd_reboot,"a"
  1919              		.align	2
  1922              	mkk_cmd_reboot:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 46
 
 
  1923 0000 0101     		.short	257
@@ -2728,83 +2728,83 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 1
  1945              		.file 12 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  1946              		.file 13 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
  1947              		.file 14 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 47
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 mkk.c
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:21     .text.mkk_send:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:27     .text.mkk_send:00000000 mkk_send
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:122    .text.mkk_send:00000054 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1931   .bss.mkk_tx_buf:00000000 mkk_tx_buf
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:127    .text.mkk_send_reboot:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:133    .text.mkk_send_reboot:00000000 mkk_send_reboot
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:156    .text.mkk_send_reboot:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1922   .rodata.mkk_cmd_reboot:00000000 mkk_cmd_reboot
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:161    .text.mkk_send_version:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:167    .text.mkk_send_version:00000000 mkk_send_version
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:192    .text.mkk_send_insig_on:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:198    .text.mkk_send_insig_on:00000000 mkk_send_insig_on
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:232    .text.mkk_send_insig_on_from_setting:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:238    .text.mkk_send_insig_on_from_setting:00000000 mkk_send_insig_on_from_setting
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:327    .text.mkk_send_insig_on_from_setting:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:332    .text.mkk_send_lin_on:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:338    .text.mkk_send_lin_on:00000000 mkk_send_lin_on
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:372    .text.mkk_send_lin_on_from_setting:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:378    .text.mkk_send_lin_on_from_setting:00000000 mkk_send_lin_on_from_setting
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:445    .text.mkk_send_lin_on_from_setting:0000003c $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:450    .text.mkk_send_insig_lin:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:456    .text.mkk_send_insig_lin:00000000 mkk_send_insig_lin
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:479    .text.mkk_send_insig_lin:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1912   .rodata.mkk_cmd_insig_lin:00000000 mkk_cmd_insig_lin
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:484    .text.mkk_send_lin:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:490    .text.mkk_send_lin:00000000 mkk_send_lin
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:533    .text.mkk_send_lin_from_setting:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:539    .text.mkk_send_lin_from_setting:00000000 mkk_send_lin_from_setting
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:613    .text.mkk_send_lin_from_setting:00000044 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:618    .text.mkk_enable_sound_lines:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:624    .text.mkk_enable_sound_lines:00000000 mkk_enable_sound_lines
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:723    .text.mkk_enable_sound_lines:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:728    .text.mkk_send_lin_met:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:734    .text.mkk_send_lin_met:00000000 mkk_send_lin_met
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:768    .text.mkk_send_relay:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:774    .text.mkk_send_relay:00000000 mkk_send_relay
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:808    .text.mkk_send_relay_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:814    .text.mkk_send_relay_mux:00000000 mkk_send_relay_mux
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:895    .text.mkk_send_relay_mux:00000064 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1905   .bss.mkk_relay_values:00000000 mkk_relay_values
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:900    .text.mkk_get_relay_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:906    .text.mkk_get_relay_mux:00000000 mkk_get_relay_mux
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:931    .text.mkk_get_relay_mux:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:936    .text.mkk_get_lin_state_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:942    .text.mkk_get_lin_state_str:00000000 mkk_get_lin_state_str
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:968    .text.mkk_get_lin_state_str:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:973    .text.mkk_get_insig_state_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:979    .text.mkk_get_insig_state_str:00000000 mkk_get_insig_state_str
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1006   .text.mkk_get_insig_state_str:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1011   .text.mkk_get_start_state_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1017   .text.mkk_get_start_state_str:00000000 mkk_get_start_state_str
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1044   .text.mkk_get_start_state_str:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1049   .text.is_fault_insig_line:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1055   .text.is_fault_insig_line:00000000 is_fault_insig_line
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1100   .text.is_fault_sound_line:00000000 $t
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s 			page 48
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:21     .text.mkk_send:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:27     .text.mkk_send:00000000 mkk_send
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:122    .text.mkk_send:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1931   .bss.mkk_tx_buf:00000000 mkk_tx_buf
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:127    .text.mkk_send_reboot:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:133    .text.mkk_send_reboot:00000000 mkk_send_reboot
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:156    .text.mkk_send_reboot:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1922   .rodata.mkk_cmd_reboot:00000000 mkk_cmd_reboot
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:161    .text.mkk_send_version:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:167    .text.mkk_send_version:00000000 mkk_send_version
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:192    .text.mkk_send_insig_on:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:198    .text.mkk_send_insig_on:00000000 mkk_send_insig_on
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:232    .text.mkk_send_insig_on_from_setting:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:238    .text.mkk_send_insig_on_from_setting:00000000 mkk_send_insig_on_from_setting
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:327    .text.mkk_send_insig_on_from_setting:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:332    .text.mkk_send_lin_on:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:338    .text.mkk_send_lin_on:00000000 mkk_send_lin_on
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:372    .text.mkk_send_lin_on_from_setting:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:378    .text.mkk_send_lin_on_from_setting:00000000 mkk_send_lin_on_from_setting
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:445    .text.mkk_send_lin_on_from_setting:0000003c $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:450    .text.mkk_send_insig_lin:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:456    .text.mkk_send_insig_lin:00000000 mkk_send_insig_lin
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:479    .text.mkk_send_insig_lin:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1912   .rodata.mkk_cmd_insig_lin:00000000 mkk_cmd_insig_lin
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:484    .text.mkk_send_lin:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:490    .text.mkk_send_lin:00000000 mkk_send_lin
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:533    .text.mkk_send_lin_from_setting:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:539    .text.mkk_send_lin_from_setting:00000000 mkk_send_lin_from_setting
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:613    .text.mkk_send_lin_from_setting:00000044 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:618    .text.mkk_enable_sound_lines:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:624    .text.mkk_enable_sound_lines:00000000 mkk_enable_sound_lines
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:723    .text.mkk_enable_sound_lines:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:728    .text.mkk_send_lin_met:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:734    .text.mkk_send_lin_met:00000000 mkk_send_lin_met
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:768    .text.mkk_send_relay:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:774    .text.mkk_send_relay:00000000 mkk_send_relay
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:808    .text.mkk_send_relay_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:814    .text.mkk_send_relay_mux:00000000 mkk_send_relay_mux
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:895    .text.mkk_send_relay_mux:00000064 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1905   .bss.mkk_relay_values:00000000 mkk_relay_values
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:900    .text.mkk_get_relay_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:906    .text.mkk_get_relay_mux:00000000 mkk_get_relay_mux
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:931    .text.mkk_get_relay_mux:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:936    .text.mkk_get_lin_state_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:942    .text.mkk_get_lin_state_str:00000000 mkk_get_lin_state_str
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:968    .text.mkk_get_lin_state_str:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:973    .text.mkk_get_insig_state_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:979    .text.mkk_get_insig_state_str:00000000 mkk_get_insig_state_str
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1006   .text.mkk_get_insig_state_str:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1011   .text.mkk_get_start_state_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1017   .text.mkk_get_start_state_str:00000000 mkk_get_start_state_str
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1044   .text.mkk_get_start_state_str:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1049   .text.is_fault_insig_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1055   .text.is_fault_insig_line:00000000 is_fault_insig_line
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1100   .text.is_fault_sound_line:00000000 $t
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s 			page 48
 
 
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1106   .text.is_fault_sound_line:00000000 is_fault_sound_line
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1131   .text.is_fault_start_line:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1137   .text.is_fault_start_line:00000000 is_fault_start_line
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1182   .text.mkk_change:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1188   .text.mkk_change:00000000 mkk_change
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1453   .text.mkk_change:0000015c $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1462   .rodata.mkk_rcv.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1469   .text.mkk_rcv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1475   .text.mkk_rcv:00000000 mkk_rcv
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1892   .text.mkk_rcv:00000184 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1902   .bss.mkk_relay_values:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1909   .rodata.mkk_cmd_insig_lin:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1919   .rodata.mkk_cmd_reboot:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccumRY2F.s:1928   .bss.mkk_tx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1106   .text.is_fault_sound_line:00000000 is_fault_sound_line
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1131   .text.is_fault_start_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1137   .text.is_fault_start_line:00000000 is_fault_start_line
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1182   .text.mkk_change:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1188   .text.mkk_change:00000000 mkk_change
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1453   .text.mkk_change:0000015c $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1462   .rodata.mkk_rcv.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1469   .text.mkk_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1475   .text.mkk_rcv:00000000 mkk_rcv
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1892   .text.mkk_rcv:00000184 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1902   .bss.mkk_relay_values:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1909   .rodata.mkk_cmd_insig_lin:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1919   .rodata.mkk_cmd_reboot:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccGiTAQk.s:1928   .bss.mkk_tx_buf:00000000 $d
 
 UNDEFINED SYMBOLS
 uart2_transmit

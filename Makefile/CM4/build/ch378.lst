@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
   27:../../ch378/ch378.c **** //6.  Микроконтроллер запрещает выбор микросхемы SPI CH378 �
   28:../../ch378/ch378.c **** 
   29:../../ch378/ch378.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 2
 
 
   30:../../ch378/ch378.c **** #define CH378_CHIP_SELECT 			PIN_CLR(UCN_NSS)
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
   50 0008 0724     		movs	r4, #7
   51              		.loc 1 63 2 view .LVU5
   52 000a 14E0     		b	.L2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 3
 
 
   53              	.LVL2:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
   63:../../ch378/ch378.c **** 	//for (int i = 0; i <=7 ; i++) {
   99              		.loc 1 63 20 discriminator 1 view .LVU14
  100 0036 002C     		cmp	r4, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 4
 
 
  101 0038 13DB     		blt	.L8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  144              	.LFE132:
  146              		.section	.text.ch378_spi_ReadByte,"ax",%progbits
  147              		.align	1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 5
 
 
  148              		.global	ch378_spi_ReadByte
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  191              	.L16:
   88:../../ch378/ch378.c **** 		else CLRBIT(value, i);
   89:../../ch378/ch378.c **** 		CH378_SCK(0);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 6
 
 
  192              		.loc 1 89 3 is_stmt 1 view .LVU32
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  237 0050 DDDA     		bge	.L15
  238 0052 E31D     		adds	r3, r4, #7
  239 0054 DBE7     		b	.L15
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 7
 
 
  240              	.L14:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  284 0088 00000258 		.word	1476526080
  285              		.cfi_endproc
  286              	.LFE133:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 8
 
 
  288              		.section	.text.ch378_spi_transmit,"ax",%progbits
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  103:../../ch378/ch378.c **** 		ch378_spi_WriteByte(tx[i]);
  332              		.loc 1 103 25 is_stmt 1 discriminator 1 view .LVU58
  333 0016 AC42     		cmp	r4, r5
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 9
 
 
  334 0018 F8D3     		bcc	.L27
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  375              		.cfi_offset 14, -4
  376 0004 0D46     		mov	r5, r1
  377 0006 0646     		mov	r6, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 10
 
 
  378              	.LBB5:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  418              		.global	ch378_spi_transmit_and_receive
  419              		.syntax unified
  420              		.thumb
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 11
 
 
  421              		.thumb_func
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  466              		.loc 1 140 2 view .LVU82
  467 0028 2946     		mov	r1, r5
  468 002a 2046     		mov	r0, r4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 12
 
 
  469 002c FFF7FEFF 		bl	ch378_spi_receive
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  512 0006 8DF80430 		strb	r3, [sp, #4]
  154:../../ch378/ch378.c **** 
  155:../../ch378/ch378.c **** 	CH378_CHIP_SELECT;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 13
 
 
  513              		.loc 1 155 2 is_stmt 1 view .LVU89
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  562              	.LCFI15:
  563              		.cfi_def_cfa_offset 16
  163:../../ch378/ch378.c **** 	uint8_t tx[1] = {CMD_GET_IC_VER};
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 14
 
 
  564              		.loc 1 163 2 view .LVU94
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  610              		.cfi_def_cfa_offset 16
  174:../../ch378/ch378.c **** 	uint8_t tx[2] = {CMD_CHECK_EXIST, in};
  611              		.loc 1 174 2 is_stmt 1 view .LVU103
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 15
 
 
  612              		.loc 1 174 10 is_stmt 0 view .LVU104
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  658              	.LCFI21:
  659              		.cfi_def_cfa_offset 16
  185:../../ch378/ch378.c **** 	uint8_t tx[1] = {CMD_GET_STATUS};
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 16
 
 
  660              		.loc 1 185 2 view .LVU112
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  706              		.loc 1 195 2 view .LVU120
  707              		.loc 1 195 10 is_stmt 0 view .LVU121
  708 0004 3023     		movs	r3, #48
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 17
 
 
  709 0006 8DF80430 		strb	r3, [sp, #4]
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  747 0000 00B5     		push	{lr}
  748              	.LCFI26:
  749              		.cfi_def_cfa_offset 4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 18
 
 
  750              		.cfi_offset 14, -4
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  794              		@ args = 0, pretend = 0, frame = 8
  795              		@ frame_needed = 0, uses_anonymous_args = 0
  796 0000 00B5     		push	{lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 19
 
 
  797              	.LCFI29:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  840              		@ args = 0, pretend = 0, frame = 8
  841              		@ frame_needed = 0, uses_anonymous_args = 0
  842 0000 00B5     		push	{lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 20
 
 
  843              	.LCFI32:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  887              		@ frame_needed = 0, uses_anonymous_args = 0
  888 0000 00B5     		push	{lr}
  889              	.LCFI35:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 21
 
 
  890              		.cfi_def_cfa_offset 4
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  935              	.LCFI38:
  936              		.cfi_def_cfa_offset 4
  937              		.cfi_offset 14, -4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 22
 
 
  938 0002 83B0     		sub	sp, sp, #12
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  279:../../ch378/ch378.c **** uint8_t ch378_closeFile(uint8_t update)
  280:../../ch378/ch378.c **** {
  977              		.loc 1 280 1 is_stmt 1 view -0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 23
 
 
  978              		.cfi_startproc
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1027              	.LFB148:
  288:../../ch378/ch378.c **** 
  289:../../ch378/ch378.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 24
 
 
  290:../../ch378/ch378.c **** //Команда, используемая для установки имени файла или �
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  318:../../ch378/ch378.c **** 
  319:../../ch378/ch378.c **** 	len = strlen(path);
  1054              		.loc 1 319 2 view .LVU186
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 25
 
 
  1055              		.loc 1 319 8 is_stmt 0 view .LVU187
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  325:../../ch378/ch378.c **** 	}
  326:../../ch378/ch378.c **** 	tx[len + 1] = 0;
  1102              		.loc 1 326 2 view .LVU205
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 26
 
 
  1103              		.loc 1 326 14 is_stmt 0 view .LVU206
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1153              	.LFB149:
  333:../../ch378/ch378.c **** 
  334:../../ch378/ch378.c **** uint32_t ch378_getFileSize(void)
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 27
 
 
  335:../../ch378/ch378.c **** {
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1199 003c 5DF804FB 		ldr	pc, [sp], #4
  1200              		.cfi_endproc
  1201              	.LFE149:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 28
 
 
  1203              		.section	.text.ch378_byteRead,"ax",%progbits
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1240 001c 6A46     		mov	r2, sp
  1241 001e 0321     		movs	r1, #3
  1242 0020 01A8     		add	r0, sp, #4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 29
 
 
  1243 0022 FFF7FEFF 		bl	ch378_spi_transmit_and_receive
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1290 0010 8DF80600 		strb	r0, [sp, #6]
  371:../../ch378/ch378.c **** 	uint8_t rx[2] = {0};
  1291              		.loc 1 371 2 is_stmt 1 view .LVU245
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 30
 
 
  1292              		.loc 1 371 10 is_stmt 0 view .LVU246
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  394:../../ch378/ch378.c **** //5 MCU передает CMD_BYTE_RD_GO для приказа CH378 продолжить чтени
  395:../../ch378/ch378.c **** //6 файл заканчивается или запрошенные байты чтения бы�
  396:../../ch378/ch378.c **** //MCU будет прервана несколько раз, чтобы получить уведо
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 31
 
 
  397:../../ch378/ch378.c **** //если сумма меньше запрошенного номера байта, это озн�
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1370              	ch378_byteWrGo:
  1371              	.LFB153:
  409:../../ch378/ch378.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 32
 
 
  410:../../ch378/ch378.c **** 
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1417              	.LVL88:
  1418              	.LFB154:
  421:../../ch378/ch378.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 33
 
 
  422:../../ch378/ch378.c **** 
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  442:../../ch378/ch378.c **** 	CH378_INT_DELAY;
  1453              		.loc 1 442 2 view .LVU277
  1454 0022 0320     		movs	r0, #3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 34
 
 
  1455 0024 FFF7FEFF 		bl	delay_us_cycle
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1500              		.align	1
  1501              		.global	ch378_rd_host_req_data
  1502              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 35
 
 
  1503              		.thumb
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1545              	.LVL101:
  465:../../ch378/ch378.c **** 	CH378_INT_DELAY;
  1546              		.loc 1 465 2 view .LVU296
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 36
 
 
  1547 0022 0320     		movs	r0, #3
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1592 0056 F2E7     		b	.L93
  1593              	.L97:
  1594              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 37
 
 
  1595              	.L96:
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1641 0020 03B0     		add	sp, sp, #12
  1642              	.LCFI72:
  1643              		.cfi_def_cfa_offset 4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 38
 
 
  1644              		@ sp needed
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1691              		.loc 1 492 2 view .LVU322
  1692 0020 FFF7FEFF 		bl	HAL_GPIO_WritePin
  1693              	.LVL116:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 39
 
 
  493:../../ch378/ch378.c **** 
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  504:../../ch378/ch378.c **** {
  1739              		.loc 1 504 1 is_stmt 1 view -0
  1740              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 40
 
 
  1741              		@ args = 0, pretend = 0, frame = 8
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1784              		.loc 1 515 2 view .LVU341
  1785              		.loc 1 515 8 is_stmt 0 view .LVU342
  1786 0030 9DF80010 		ldrb	r1, [sp]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 41
 
 
  1787              		.loc 1 515 5 view .LVU343
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1829              		.thumb
  1830              		.thumb_func
  1832              	ch378_diskQuery:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 42
 
 
  1833              	.LFB159:
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1874              		.syntax unified
  1875              		.thumb
  1876              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 43
 
 
  1878              	ch378_fileEnumGo:
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  1919              		.global	ch378_filePosition
  1920              		.syntax unified
  1921              		.thumb
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 44
 
 
  1922              		.thumb_func
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  564:../../ch378/ch378.c **** 
  565:../../ch378/ch378.c **** 	return rx[0];
  1968              		.loc 1 565 2 view .LVU378
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 45
 
 
  566:../../ch378/ch378.c **** }
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  2010 0014 084C     		ldr	r4, .L118
  2011 0016 0022     		movs	r2, #0
  2012 0018 1021     		movs	r1, #16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 46
 
 
  2013 001a 2046     		mov	r0, r4
@@ -2742,86 +2742,86 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 1
  2049              		.file 7 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  2050              		.file 8 "../../util/stm_util.h"
  2051              		.file 9 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 47
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ch378.c
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:21     .text.ch378_spi_WriteByte:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:27     .text.ch378_spi_WriteByte:00000000 ch378_spi_WriteByte
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:142    .text.ch378_spi_WriteByte:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:147    .text.ch378_spi_ReadByte:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:153    .text.ch378_spi_ReadByte:00000000 ch378_spi_ReadByte
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:284    .text.ch378_spi_ReadByte:00000088 $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:289    .text.ch378_spi_transmit:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:295    .text.ch378_spi_transmit:00000000 ch378_spi_transmit
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:352    .text.ch378_spi_receive:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:358    .text.ch378_spi_receive:00000000 ch378_spi_receive
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:417    .text.ch378_spi_transmit_and_receive:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:423    .text.ch378_spi_transmit_and_receive:00000000 ch378_spi_transmit_and_receive
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:484    .text.ch378_spi_transmit_and_receive:00000040 $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:489    .text.ch378_resetAll:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:495    .text.ch378_resetAll:00000000 ch378_resetAll
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:540    .text.ch378_resetAll:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:545    .text.ch378_getVersion:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:551    .text.ch378_getVersion:00000000 ch378_getVersion
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:590    .text.ch378_checkExist:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:596    .text.ch378_checkExist:00000000 ch378_checkExist
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:641    .text.ch378_getStatus:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:647    .text.ch378_getStatus:00000000 ch378_getStatus
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:687    .text.ch378_diskConnectionStatus:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:693    .text.ch378_diskConnectionStatus:00000000 ch378_diskConnectionStatus
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:733    .text.ch378_setUSBmode:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:739    .text.ch378_setUSBmode:00000000 ch378_setUSBmode
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:784    .text.ch378_mount:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:790    .text.ch378_mount:00000000 ch378_mount
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:830    .text.ch378_openFile:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:836    .text.ch378_openFile:00000000 ch378_openFile
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:876    .text.ch378_createFile:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:882    .text.ch378_createFile:00000000 ch378_createFile
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:922    .text.ch378_deleteFile:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:928    .text.ch378_deleteFile:00000000 ch378_deleteFile
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:968    .text.ch378_closeFile:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:974    .text.ch378_closeFile:00000000 ch378_closeFile
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1019   .text.ch378_setFileName:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1025   .text.ch378_setFileName:00000000 ch378_setFileName
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1141   .text.ch378_setFileName:00000068 $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1146   .text.ch378_getFileSize:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1152   .text.ch378_getFileSize:00000000 ch378_getFileSize
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1204   .text.ch378_byteRead:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1210   .text.ch378_byteRead:00000000 ch378_byteRead
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1261   .text.ch378_byteWrite:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1267   .text.ch378_byteWrite:00000000 ch378_byteWrite
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1318   .text.ch378_byteReadGo:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1324   .text.ch378_byteReadGo:00000000 ch378_byteReadGo
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1364   .text.ch378_byteWrGo:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1370   .text.ch378_byteWrGo:00000000 ch378_byteWrGo
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1410   .text.ch378_readData0:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1416   .text.ch378_readData0:00000000 ch378_readData0
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1495   .text.ch378_readData0:00000050 $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1500   .text.ch378_rd_host_req_data:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1506   .text.ch378_rd_host_req_data:00000000 ch378_rd_host_req_data
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1596   .text.ch378_rd_host_req_data:00000058 $d
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s 			page 48
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:21     .text.ch378_spi_WriteByte:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:27     .text.ch378_spi_WriteByte:00000000 ch378_spi_WriteByte
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:142    .text.ch378_spi_WriteByte:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:147    .text.ch378_spi_ReadByte:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:153    .text.ch378_spi_ReadByte:00000000 ch378_spi_ReadByte
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:284    .text.ch378_spi_ReadByte:00000088 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:289    .text.ch378_spi_transmit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:295    .text.ch378_spi_transmit:00000000 ch378_spi_transmit
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:352    .text.ch378_spi_receive:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:358    .text.ch378_spi_receive:00000000 ch378_spi_receive
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:417    .text.ch378_spi_transmit_and_receive:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:423    .text.ch378_spi_transmit_and_receive:00000000 ch378_spi_transmit_and_receive
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:484    .text.ch378_spi_transmit_and_receive:00000040 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:489    .text.ch378_resetAll:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:495    .text.ch378_resetAll:00000000 ch378_resetAll
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:540    .text.ch378_resetAll:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:545    .text.ch378_getVersion:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:551    .text.ch378_getVersion:00000000 ch378_getVersion
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:590    .text.ch378_checkExist:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:596    .text.ch378_checkExist:00000000 ch378_checkExist
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:641    .text.ch378_getStatus:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:647    .text.ch378_getStatus:00000000 ch378_getStatus
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:687    .text.ch378_diskConnectionStatus:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:693    .text.ch378_diskConnectionStatus:00000000 ch378_diskConnectionStatus
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:733    .text.ch378_setUSBmode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:739    .text.ch378_setUSBmode:00000000 ch378_setUSBmode
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:784    .text.ch378_mount:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:790    .text.ch378_mount:00000000 ch378_mount
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:830    .text.ch378_openFile:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:836    .text.ch378_openFile:00000000 ch378_openFile
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:876    .text.ch378_createFile:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:882    .text.ch378_createFile:00000000 ch378_createFile
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:922    .text.ch378_deleteFile:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:928    .text.ch378_deleteFile:00000000 ch378_deleteFile
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:968    .text.ch378_closeFile:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:974    .text.ch378_closeFile:00000000 ch378_closeFile
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1019   .text.ch378_setFileName:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1025   .text.ch378_setFileName:00000000 ch378_setFileName
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1141   .text.ch378_setFileName:00000068 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1146   .text.ch378_getFileSize:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1152   .text.ch378_getFileSize:00000000 ch378_getFileSize
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1204   .text.ch378_byteRead:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1210   .text.ch378_byteRead:00000000 ch378_byteRead
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1261   .text.ch378_byteWrite:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1267   .text.ch378_byteWrite:00000000 ch378_byteWrite
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1318   .text.ch378_byteReadGo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1324   .text.ch378_byteReadGo:00000000 ch378_byteReadGo
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1364   .text.ch378_byteWrGo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1370   .text.ch378_byteWrGo:00000000 ch378_byteWrGo
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1410   .text.ch378_readData0:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1416   .text.ch378_readData0:00000000 ch378_readData0
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1495   .text.ch378_readData0:00000050 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1500   .text.ch378_rd_host_req_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1506   .text.ch378_rd_host_req_data:00000000 ch378_rd_host_req_data
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1596   .text.ch378_rd_host_req_data:00000058 $d
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczfY34V.s 			page 48
 
 
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1601   .text.ch378_rd_host_cur_data:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1607   .text.ch378_rd_host_cur_data:00000000 ch378_rd_host_cur_data
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1650   .text.ch378_wr_host_cur_data:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1656   .text.ch378_wr_host_cur_data:00000000 ch378_wr_host_cur_data
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1725   .text.ch378_wr_host_cur_data:00000048 $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1730   .text.ch378_writeReqData:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1736   .text.ch378_writeReqData:00000000 ch378_writeReqData
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1821   .text.ch378_writeReqData:00000058 $d
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1826   .text.ch378_diskQuery:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1832   .text.ch378_diskQuery:00000000 ch378_diskQuery
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1872   .text.ch378_fileEnumGo:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1878   .text.ch378_fileEnumGo:00000000 ch378_fileEnumGo
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1918   .text.ch378_filePosition:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1924   .text.ch378_filePosition:00000000 ch378_filePosition
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1980   .text.ch378_setSd0Int:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:1986   .text.ch378_setSd0Int:00000000 ch378_setSd0Int
-C:\Users\oleg\AppData\Local\Temp\ccdqsl3q.s:2038   .text.ch378_setSd0Int:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1601   .text.ch378_rd_host_cur_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1607   .text.ch378_rd_host_cur_data:00000000 ch378_rd_host_cur_data
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1650   .text.ch378_wr_host_cur_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1656   .text.ch378_wr_host_cur_data:00000000 ch378_wr_host_cur_data
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1725   .text.ch378_wr_host_cur_data:00000048 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1730   .text.ch378_writeReqData:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1736   .text.ch378_writeReqData:00000000 ch378_writeReqData
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1821   .text.ch378_writeReqData:00000058 $d
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1826   .text.ch378_diskQuery:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1832   .text.ch378_diskQuery:00000000 ch378_diskQuery
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1872   .text.ch378_fileEnumGo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1878   .text.ch378_fileEnumGo:00000000 ch378_fileEnumGo
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1918   .text.ch378_filePosition:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1924   .text.ch378_filePosition:00000000 ch378_filePosition
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1980   .text.ch378_setSd0Int:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:1986   .text.ch378_setSd0Int:00000000 ch378_setSd0Int
+C:\Users\oleg\AppData\Local\Temp\cczfY34V.s:2038   .text.ch378_setSd0Int:00000038 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

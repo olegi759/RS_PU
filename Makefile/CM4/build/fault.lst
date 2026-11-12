@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
    9:../../CM4/Core/Src/fault.c **** #include "fault.h"
   10:../../CM4/Core/Src/fault.c **** #include "fault_data.h"
   11:../../CM4/Core/Src/fault.c **** #include "mki.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 2
 
 
   12:../../CM4/Core/Src/fault.c **** #include "mup.h"
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
   40:../../CM4/Core/Src/fault.c **** 	buf[0] = '\0';
   41:../../CM4/Core/Src/fault.c **** 	if ((num >= FAULT_MKK_INSIG_1) && (num <= FAULT_MKK_INSIG_2)) {
   42:../../CM4/Core/Src/fault.c **** 		strcpy_s(buf, sizeof(buf), mkk_get_insig_state_str(num - FAULT_MKK_INSIG_1));
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 3
 
 
   43:../../CM4/Core/Src/fault.c **** 	}
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
   87 0028 C0B2     		uxtb	r0, r0
   41:../../CM4/Core/Src/fault.c **** 		strcpy_s(buf, sizeof(buf), mkk_get_insig_state_str(num - FAULT_MKK_INSIG_1));
   88              		.loc 1 41 5 view .LVU13
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 4
 
 
   89 002a 0128     		cmp	r0, #1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
  130              		.loc 1 59 8 view .LVU26
  131 0062 0C2B     		cmp	r3, #12
  132 0064 25D8     		bhi	.L13
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 5
 
 
  133              	.L7:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
  178              		.loc 1 48 3 is_stmt 0 discriminator 1 view .LVU35
  179 00a8 4021     		movs	r1, #64
  180 00aa 6846     		mov	r0, sp
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 6
 
 
  181 00ac FFF7FEFF 		bl	strcpy_s
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
   70:../../CM4/Core/Src/fault.c **** //Снять ошибку
   71:../../CM4/Core/Src/fault.c **** void fault_unset(uint8_t num)
   72:../../CM4/Core/Src/fault.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 7
 
 
  222              		.loc 1 72 1 view -0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
   77:../../CM4/Core/Src/fault.c **** 		mki_send_one_small_led(MKI_LED_FAULT, LED_COLOR_BLACK); //если нет ошибок погас
  255              		.loc 1 77 6 is_stmt 0 view .LVU47
  256 001a FFF7FEFF 		bl	fault_count
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 8
 
 
  257              	.LVL25:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
  300              		.loc 1 82 7 is_stmt 1 view .LVU58
  301 005a 3220     		movs	r0, #50
  302 005c FFF7FEFF 		bl	HAL_Delay
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 9
 
 
  303              	.LVL32:
@@ -513,19 +513,19 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 1
  332              		.file 12 "../../common/mkk_data.h"
  333              		.file 13 "../../util/str_util.h"
  334              		.file 14 "../../util/math_util.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 fault.c
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:21     .rodata.fault_set.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:28     .text.fault_set:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:34     .text.fault_set:00000000 fault_set
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:199    .text.fault_set:000000c4 $d
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:206    .rodata.fault_unset.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:213    .text.fault_unset:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:219    .text.fault_unset:00000000 fault_unset
-C:\Users\oleg\AppData\Local\Temp\ccWBha4f.s:314    .text.fault_unset:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:21     .rodata.fault_set.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:28     .text.fault_set:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:34     .text.fault_set:00000000 fault_set
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:199    .text.fault_set:000000c4 $d
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:206    .rodata.fault_unset.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:213    .text.fault_unset:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:219    .text.fault_unset:00000000 fault_unset
+C:\Users\oleg\AppData\Local\Temp\ccCV84bL.s:314    .text.fault_unset:0000006c $d
 
 UNDEFINED SYMBOLS
 bitget

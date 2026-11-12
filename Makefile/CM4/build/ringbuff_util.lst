@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
   27:../../util/ringbuff_util.c ****  * OTHER DEALINGS IN THE SOFTWARE.
   28:../../util/ringbuff_util.c ****  *
   29:../../util/ringbuff_util.c ****  * This file is part of ring buffer library.
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 2
 
 
   30:../../util/ringbuff_util.c ****  *
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
   60:../../util/ringbuff_util.c ****         return 0;
   53              		.loc 1 60 16 view .LVU5
   54 0012 0020     		movs	r0, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 3
 
 
   55              	.LVL1:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
   73:../../util/ringbuff_util.c **** }
   84              		.loc 1 73 5 is_stmt 1 view .LVU18
   73:../../util/ringbuff_util.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 4
 
 
   85              		.loc 1 73 12 is_stmt 0 view .LVU19
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  131 0008 01D0     		beq	.L19
  132              		.loc 1 83 12 discriminator 10 view .LVU26
  133 000a 0020     		movs	r0, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 5
 
 
  134              	.LVL9:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  187 0038 10415221 		.word	559038736
  188              		.cfi_endproc
  189              	.LFE1:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 6
 
 
  191              		.section	.text.ringbuff_free,"ax",%progbits
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  230 001e F4D0     		beq	.L23
   95:../../util/ringbuff_util.c ****         buff->buff = NULL;
  231              		.loc 1 95 9 is_stmt 1 view .LVU49
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 7
 
 
   95:../../util/ringbuff_util.c ****         buff->buff = NULL;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  106:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
  275              		.loc 1 106 9 discriminator 2 view .LVU58
  276 000e D869     		ldr	r0, [r3, #28]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 8
 
 
  277 0010 064A     		ldr	r2, .L31+4
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  128:../../util/ringbuff_util.c ****         return 0;
  129:../../util/ringbuff_util.c ****     }
  130:../../util/ringbuff_util.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 9
 
 
  131:../../util/ringbuff_util.c ****     /* Calculate maximum number of bytes available to write */
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  185:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
  186:../../util/ringbuff_util.c ****     buff->r += tocopy;
  187:../../util/ringbuff_util.c ****     btr -= tocopy;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 10
 
 
  188:../../util/ringbuff_util.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  242:../../util/ringbuff_util.c ****     tocopy = BUF_MIN(buff->size - r, btp);
  243:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[r], tocopy);
  244:../../util/ringbuff_util.c ****     btp -= tocopy;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 11
 
 
  245:../../util/ringbuff_util.c **** 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  342              	.LVL25:
  268:../../util/ringbuff_util.c ****     r = buff->r;
  343              		.loc 1 268 5 is_stmt 1 view .LVU75
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 12
 
 
  344              		.loc 1 268 7 is_stmt 0 view .LVU76
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  382              		.loc 1 274 14 view .LVU92
  383 0036 1044     		add	r0, r0, r2
  384              	.LVL33:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 13
 
 
  274:../../util/ringbuff_util.c ****     }
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  432              	.LVL42:
  433              	.LFB4:
  123:../../util/ringbuff_util.c ****     size_t tocopy, free;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 14
 
 
  434              		.loc 1 123 82 is_stmt 1 view -0
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  477 0026 002D     		cmp	r5, #0
  478 0028 3DD0     		beq	.L45
  127:../../util/ringbuff_util.c ****         return 0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 15
 
 
  479              		.loc 1 127 52 discriminator 5 view .LVU114
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  140:../../util/ringbuff_util.c ****     buff->w += tocopy;
  520              		.loc 1 140 5 view .LVU128
  521 005a 3246     		mov	r2, r6
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 16
 
 
  522 005c 3946     		mov	r1, r7
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  560 0082 2A46     		mov	r2, r5
  561 0084 0121     		movs	r1, #1
  562 0086 2046     		mov	r0, r4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 17
 
 
  563 0088 9847     		blx	r3
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  607              	.L54:
  608 00b4 0025     		movs	r5, #0
  609 00b6 F6E7     		b	.L45
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 18
 
 
  610              	.L59:
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  655 001a 98B1     		cbz	r0, .L60
  291:../../util/ringbuff_util.c ****         return 0;
  292:../../util/ringbuff_util.c ****     }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 19
 
 
  293:../../util/ringbuff_util.c **** 
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  698              	.L64:
  291:../../util/ringbuff_util.c ****     }
  699              		.loc 1 291 16 view .LVU182
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 20
 
 
  700 0036 0020     		movs	r0, #0
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  746              		@ args = 0, pretend = 0, frame = 0
  747              		@ frame_needed = 0, uses_anonymous_args = 0
  168:../../util/ringbuff_util.c ****     size_t tocopy, full;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 21
 
 
  748              		.loc 1 168 75 is_stmt 0 view .LVU191
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  791 002e 5B09     		lsrs	r3, r3, #5
  172:../../util/ringbuff_util.c ****         return 0;
  792              		.loc 1 172 45 discriminator 5 view .LVU203
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 22
 
 
  793 0030 0029     		cmp	r1, #0
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  185:../../util/ringbuff_util.c ****     buff->r += tocopy;
  834              		.loc 1 185 5 view .LVU217
  835 0060 FFF7FEFF 		bl	memcpy
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 23
 
 
  836              	.LVL85:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  874 0088 9847     		blx	r3
  875              	.LVL88:
  876 008a 0CE0     		b	.L70
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 24
 
 
  877              	.LVL89:
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  921              	.L84:
  922              		.align	2
  923              	.L83:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 25
 
 
  924 00b8 EFBEADDE 		.word	-559038737
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  971 0014 9A42     		cmp	r2, r3
  972 0016 35D1     		bne	.L90
  216:../../util/ringbuff_util.c ****         return 0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 26
 
 
  973              		.loc 1 216 10 discriminator 2 view .LVU253
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1011              		.loc 1 231 5 is_stmt 1 view .LVU269
  231:../../util/ringbuff_util.c ****         r -= buff->size;
  1012              		.loc 1 231 18 is_stmt 0 view .LVU270
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 27
 
 
  1013 0044 A268     		ldr	r2, [r4, #8]
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1052              		.loc 1 243 5 view .LVU285
  1053 006a FFF7FEFF 		bl	memcpy
  1054              	.LVL108:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 28
 
 
  244:../../util/ringbuff_util.c **** 
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1096 0090 0025     		movs	r5, #0
  1097 0092 F8E7     		b	.L85
  1098              	.L93:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 29
 
 
  1099 0094 0025     		movs	r5, #0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1145 0012 FAD1     		bne	.L102
  1146              		.loc 1 313 9 discriminator 3 view .LVU306
  1147 0014 4268     		ldr	r2, [r0, #4]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 30
 
 
  1148 0016 002A     		cmp	r2, #0
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1198              	.LFB10:
  319:../../util/ringbuff_util.c **** 
  320:../../util/ringbuff_util.c **** /**
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 31
 
 
  321:../../util/ringbuff_util.c ****  * \brief           Get linear address for buffer for fast read
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1242 0026 0020     		movs	r0, #0
  1243              	.LVL124:
  328:../../util/ringbuff_util.c ****         return NULL;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 32
 
 
  1244              		.loc 1 328 16 view .LVU333
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1286              		.loc 1 342 10 discriminator 1 view .LVU341
  1287 0004 0168     		ldr	r1, [r0]
  1288 0006 104A     		ldr	r2, .L124
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 33
 
 
  1289 0008 9142     		cmp	r1, r2
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1333 002e 181A     		subs	r0, r3, r0
  1334              	.LVL134:
  1335              		.loc 1 352 13 view .LVU360
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 34
 
 
  1336 0030 7047     		bx	lr
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1377 004c 10415221 		.word	559038736
  1378              		.cfi_endproc
  1379              	.LFE11:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 35
 
 
  1381              		.section	.text.ringbuff_skip,"ax",%progbits
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1421 001a 23B3     		cbz	r3, .L132
  1422              		.loc 1 372 10 discriminator 4 view .LVU379
  1423 001c 8468     		ldr	r4, [r0, #8]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 36
 
 
  1424              		.loc 1 372 9 discriminator 4 view .LVU380
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1468 0048 7369     		ldr	r3, [r6, #20]
  1469 004a 43B1     		cbz	r3, .L126
  1470              		.loc 1 382 5 discriminator 1 view .LVU400
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 37
 
 
  1471 004c 7369     		ldr	r3, [r6, #20]
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  388:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
  389:../../util/ringbuff_util.c ****  * \return          Linear buffer start address
  390:../../util/ringbuff_util.c ****  */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 38
 
 
  391:../../util/ringbuff_util.c **** void *
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1565 0028 7047     		bx	lr
  1566              	.LVL158:
  1567              	.L142:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 39
 
 
  394:../../util/ringbuff_util.c ****         return NULL;
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1610 000a 15D1     		bne	.L150
  1611              		.loc 1 408 10 discriminator 2 view .LVU430
  1612 000c C169     		ldr	r1, [r0, #28]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 40
 
 
  1613 000e 0E4A     		ldr	r2, .L153+4
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1647              	.LVL165:
  1648              		.loc 1 428 13 is_stmt 0 view .LVU446
  1649 002c 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 41
 
 
  1650              	.LVL166:
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1691              		.align	2
  1692              	.L153:
  1693 0044 EFBEADDE 		.word	-559038737
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 42
 
 
  1694 0048 10415221 		.word	559038736
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1734 0014 9A42     		cmp	r2, r3
  1735 0016 24D1     		bne	.L160
  1736              		.loc 1 450 10 discriminator 3 view .LVU466
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 43
 
 
  1737 0018 4368     		ldr	r3, [r0, #4]
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  459:../../util/ringbuff_util.c ****     }
  460:../../util/ringbuff_util.c ****     BUF_SEND_EVT(buff, RINGBUFF_EVT_WRITE, len);
  1783              		.loc 1 460 5 is_stmt 1 view .LVU486
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 44
 
 
  1784              		.loc 1 460 5 view .LVU487
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1835              	.LFB16:
  463:../../util/ringbuff_util.c **** 
  464:../../util/ringbuff_util.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 45
 
 
  465:../../util/ringbuff_util.c **** 
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  481:../../util/ringbuff_util.c **** 
  482:../../util/ringbuff_util.c **** 	return ringbuff_write(buff, packet, packet_len);
  483:../../util/ringbuff_util.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 46
 
 
  1874              		.loc 1 483 1 view .LVU505
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1917              		.loc 1 482 2 is_stmt 1 view .LVU516
  482:../../util/ringbuff_util.c **** }
  1918              		.loc 1 482 9 is_stmt 0 view .LVU517
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 47
 
 
  1919 0054 BDF80620 		ldrh	r2, [sp, #6]
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  1966 000c 00E0     		b	.L178
  1967              	.LVL195:
  1968              	.L180:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 48
 
 
  1969              		.loc 1 490 8 view .LVU526
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  2014 0044 01D9     		bls	.L186
  2015              		.loc 1 499 36 discriminator 1 view .LVU542
  2016 0046 0020     		movs	r0, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 49
 
 
  2017 0048 06E0     		b	.L177
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  506:../../util/ringbuff_util.c **** 	buff->busy = value;
  2065              		.loc 1 506 2 view .LVU551
  2066              		.loc 1 506 13 is_stmt 0 view .LVU552
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 50
 
 
  2067 0000 0176     		strb	r1, [r0, #24]
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  2115              	.LVL207:
  517:../../util/ringbuff_util.c **** }
  2116              		.loc 1 517 1 view .LVU561
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 51
 
 
  2117 0002 7047     		bx	lr
@@ -3038,74 +3038,74 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 1
  2149              		.file 5 "../../util/ringbuff_util.h"
  2150              		.file 6 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  2151              		.file 7 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 52
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ringbuff_util.c
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:21     .text.ringbuff_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:27     .text.ringbuff_init:00000000 ringbuff_init
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:104    .text.ringbuff_init:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:110    .text.ringbuff_is_ready:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:116    .text.ringbuff_is_ready:00000000 ringbuff_is_ready
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:186    .text.ringbuff_is_ready:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:192    .text.ringbuff_free:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:198    .text.ringbuff_free:00000000 ringbuff_free
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:240    .text.ringbuff_free:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:246    .text.ringbuff_set_evt_fn:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:252    .text.ringbuff_set_evt_fn:00000000 ringbuff_set_evt_fn
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:296    .text.ringbuff_set_evt_fn:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:302    .text.ringbuff_get_free:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:308    .text.ringbuff_get_free:00000000 ringbuff_get_free
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:419    .text.ringbuff_get_free:0000004c $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:425    .text.ringbuff_write:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:431    .text.ringbuff_write:00000000 ringbuff_write
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:613    .text.ringbuff_write:000000b8 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:619    .text.ringbuff_get_full:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:625    .text.ringbuff_get_full:00000000 ringbuff_get_full
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:729    .text.ringbuff_get_full:00000048 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:735    .text.ringbuff_read:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:741    .text.ringbuff_read:00000000 ringbuff_read
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:924    .text.ringbuff_read:000000b8 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:930    .text.ringbuff_peek:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:936    .text.ringbuff_peek:00000000 ringbuff_peek
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1111   .text.ringbuff_peek:0000009c $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1117   .text.ringbuff_reset:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1123   .text.ringbuff_reset:00000000 ringbuff_reset
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1184   .text.ringbuff_reset:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1190   .text.ringbuff_get_linear_block_read_address:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1196   .text.ringbuff_get_linear_block_read_address:00000000 ringbuff_get_linear_block_read_address
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1261   .text.ringbuff_get_linear_block_read_address:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1267   .text.ringbuff_get_linear_block_read_length:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1273   .text.ringbuff_get_linear_block_read_length:00000000 ringbuff_get_linear_block_read_length
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1376   .text.ringbuff_get_linear_block_read_length:00000048 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1382   .text.ringbuff_skip:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1388   .text.ringbuff_skip:00000000 ringbuff_skip
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1504   .text.ringbuff_skip:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1510   .text.ringbuff_get_linear_block_write_address:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1516   .text.ringbuff_get_linear_block_write_address:00000000 ringbuff_get_linear_block_write_address
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1581   .text.ringbuff_get_linear_block_write_address:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1587   .text.ringbuff_get_linear_block_write_length:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1593   .text.ringbuff_get_linear_block_write_length:00000000 ringbuff_get_linear_block_write_length
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1693   .text.ringbuff_get_linear_block_write_length:00000044 $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1699   .text.ringbuff_advance:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1705   .text.ringbuff_advance:00000000 ringbuff_advance
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1821   .text.ringbuff_advance:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1827   .text.ringbuff_write_packet:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1833   .text.ringbuff_write_packet:00000000 ringbuff_write_packet
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1932   .text.ringbuff_read_packet:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:1938   .text.ringbuff_read_packet:00000000 ringbuff_read_packet
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2051   .text.ringbuff_set_busy:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2057   .text.ringbuff_set_busy:00000000 ringbuff_set_busy
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2074   .text.ringbuff_get_busy:00000000 $t
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s 			page 53
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:21     .text.ringbuff_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:27     .text.ringbuff_init:00000000 ringbuff_init
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:104    .text.ringbuff_init:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:110    .text.ringbuff_is_ready:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:116    .text.ringbuff_is_ready:00000000 ringbuff_is_ready
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:186    .text.ringbuff_is_ready:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:192    .text.ringbuff_free:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:198    .text.ringbuff_free:00000000 ringbuff_free
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:240    .text.ringbuff_free:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:246    .text.ringbuff_set_evt_fn:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:252    .text.ringbuff_set_evt_fn:00000000 ringbuff_set_evt_fn
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:296    .text.ringbuff_set_evt_fn:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:302    .text.ringbuff_get_free:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:308    .text.ringbuff_get_free:00000000 ringbuff_get_free
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:419    .text.ringbuff_get_free:0000004c $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:425    .text.ringbuff_write:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:431    .text.ringbuff_write:00000000 ringbuff_write
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:613    .text.ringbuff_write:000000b8 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:619    .text.ringbuff_get_full:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:625    .text.ringbuff_get_full:00000000 ringbuff_get_full
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:729    .text.ringbuff_get_full:00000048 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:735    .text.ringbuff_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:741    .text.ringbuff_read:00000000 ringbuff_read
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:924    .text.ringbuff_read:000000b8 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:930    .text.ringbuff_peek:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:936    .text.ringbuff_peek:00000000 ringbuff_peek
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1111   .text.ringbuff_peek:0000009c $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1117   .text.ringbuff_reset:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1123   .text.ringbuff_reset:00000000 ringbuff_reset
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1184   .text.ringbuff_reset:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1190   .text.ringbuff_get_linear_block_read_address:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1196   .text.ringbuff_get_linear_block_read_address:00000000 ringbuff_get_linear_block_read_address
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1261   .text.ringbuff_get_linear_block_read_address:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1267   .text.ringbuff_get_linear_block_read_length:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1273   .text.ringbuff_get_linear_block_read_length:00000000 ringbuff_get_linear_block_read_length
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1376   .text.ringbuff_get_linear_block_read_length:00000048 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1382   .text.ringbuff_skip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1388   .text.ringbuff_skip:00000000 ringbuff_skip
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1504   .text.ringbuff_skip:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1510   .text.ringbuff_get_linear_block_write_address:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1516   .text.ringbuff_get_linear_block_write_address:00000000 ringbuff_get_linear_block_write_address
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1581   .text.ringbuff_get_linear_block_write_address:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1587   .text.ringbuff_get_linear_block_write_length:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1593   .text.ringbuff_get_linear_block_write_length:00000000 ringbuff_get_linear_block_write_length
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1693   .text.ringbuff_get_linear_block_write_length:00000044 $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1699   .text.ringbuff_advance:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1705   .text.ringbuff_advance:00000000 ringbuff_advance
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1821   .text.ringbuff_advance:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1827   .text.ringbuff_write_packet:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1833   .text.ringbuff_write_packet:00000000 ringbuff_write_packet
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1932   .text.ringbuff_read_packet:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:1938   .text.ringbuff_read_packet:00000000 ringbuff_read_packet
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2051   .text.ringbuff_set_busy:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2057   .text.ringbuff_set_busy:00000000 ringbuff_set_busy
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2074   .text.ringbuff_get_busy:00000000 $t
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s 			page 53
 
 
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2080   .text.ringbuff_get_busy:00000000 ringbuff_get_busy
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2098   .text.ringbuff_get_max_size:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2104   .text.ringbuff_get_max_size:00000000 ringbuff_get_max_size
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2122   .text.ringbuff_set_max_size:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccx7Jb6b.s:2128   .text.ringbuff_set_max_size:00000000 ringbuff_set_max_size
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2080   .text.ringbuff_get_busy:00000000 ringbuff_get_busy
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2098   .text.ringbuff_get_max_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2104   .text.ringbuff_get_max_size:00000000 ringbuff_get_max_size
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2122   .text.ringbuff_set_max_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccH6vzmN.s:2128   .text.ringbuff_set_max_size:00000000 ringbuff_set_max_size
 
 UNDEFINED SYMBOLS
 memset

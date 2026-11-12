@@ -59,8 +59,8 @@ build/main.o: ../../CM4/Core/Src/main.c ../../CM4/Core/Inc/main.h \
  ../../ch378/ch378.h ../../CM4/Core/Inc/speaker.h \
  ../../CM4/Core/Inc/fault.h ../../common/fault_data.h \
  ../../CM7/Core/Inc/pu.h ../../ws_rubetec/ws_server.h \
- ../../ws_rubetec/ws_rubetec.h ../../util/logfile_util.h \
- ../../util/fatfs_util.h
+ ../../ws_rubetec/ws_rubetec.h ../../ws_rubetec/user_timer.h \
+ ../../util/logfile_util.h ../../util/fatfs_util.h
 ../../CM4/Core/Inc/main.h:
 ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
 ../../CM4/Core/Inc/stm32h7xx_hal_conf.h:
@@ -145,5 +145,6 @@ build/main.o: ../../CM4/Core/Src/main.c ../../CM4/Core/Inc/main.h \
 ../../CM7/Core/Inc/pu.h:
 ../../ws_rubetec/ws_server.h:
 ../../ws_rubetec/ws_rubetec.h:
+../../ws_rubetec/user_timer.h:
 ../../util/logfile_util.h:
 ../../util/fatfs_util.h:

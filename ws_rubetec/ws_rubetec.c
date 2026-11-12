@@ -9,7 +9,11 @@
 #include "stm_util.h"
 
 static char answer_buf[2048];
+static char request_copy_buff[512];
 static JsonSlice last_response_slice;
+static uint8_t last_sock_num = 0xFF;
+static bool has_parsed = false;          //если еще не ответили на запрос - мы заняты, новые команды не принимаем
+static bool has_answer_sended = false; //был ли отправлен ответ
 
 typedef bool (*cmd_handler_t)(JsonSlice);
 
@@ -17,6 +21,8 @@ typedef struct rubetec_cmd_entry_t{
     const char* name;
     cmd_handler_t handler;
 }rubetec_cmd_entry_t;
+
+static bool try_parce_json_msg(uint8_t* request_data, uint32_t data_len);
 
 static bool parse_uint8_slice(JsonSlice s, uint8_t *out);
 static bool slice_is_literal(JsonSlice v);
@@ -48,24 +54,45 @@ static const rubetec_cmd_entry_t commands[] = {
     { "get_status",       handle_get_status      },
 };
 
-bool try_parce_rubetec_msg(uint8_t* request_data, uint32_t data_len){
+static const char* busy_json = "{\"status\":\"busy\"}";
+
+void rubetec_msg_handler(uint8_t sock_num, uint8_t* request_data, uint32_t data_len){
+    if(has_parsed && !has_answer_sended){
+        ws_send_data(sock_num, (uint8_t*)busy_json, strlen(busy_json), 0x1); 
+        return;
+    }
+    //начинаем новый обмен, запрос уже получили
+    last_sock_num = sock_num;
+    has_answer_sended = false; // еще не ответили
+    has_parsed = try_parce_json_msg(request_data, data_len);
+    if(has_parsed){
+        //если данные не распарсили как json или была ошибка в json параметрах
+        //мы либо ответили ошибкой, либо просто пропустили сообщение
+        return;
+    }
+    //сообщение уже распарсили, нужно проверить ответили ли мы уже на него
+    if(has_answer_sended == false){
+        //ответ еще не отправили, значит нужно сохранить данные запроса, что бы сформировать ответ
+        memcpy(request_copy_buff, request_data, data_len);
+        //last_response_slice - всего лишь указатель, request_data перезапишется, когда мы выйдем из функции
+        last_response_slice = json_from_parts((const char *)request_copy_buff, data_len);
+    }  
+    
+}
+
+
+static bool try_parce_json_msg(uint8_t* request_data, uint32_t data_len){
 
     JsonSlice json_slice = json_from_parts((const char *)request_data, data_len);
 
     JsonSlice cmd_slice;
     if (json_get(json_slice, "cmd", &cmd_slice)){
         last_response_slice = json_slice;
-        if(GetHandle(cmd_slice)(json_slice)){
-            return true;
-        } else {
-            //какие-то ошибки при парсе Json сообщения
-            //поэтому говорим web soacket чтобы принмал новые данные
-            ws_start_waiting_new_msg();
-            return false;
-       }
+        cmd_handler_t handler = GetHandle(cmd_slice);
+        if(handler == 0) return false;
+        return handler(json_slice);
     }
 
-    ws_start_waiting_new_msg();
     return false;
 }
 
@@ -410,8 +437,8 @@ static void send_answer(){
 #ifdef RUBETEC_LOG
     ulog(answer_buf);
 #endif
-    ws_send_data((uint8_t*)answer_buf, strlen(answer_buf), 0x01);
-    ws_start_waiting_new_msg();
+    ws_send_data(last_sock_num, (uint8_t*)answer_buf, strlen(answer_buf), 0x01);
+    has_answer_sended = true;
 }
 
 static bool handle_start_alert(JsonSlice json_slice){
@@ -434,27 +461,26 @@ static bool handle_start_alert(JsonSlice json_slice){
     if (!parse_uint8_slice(pu_id_slice, &pu_id)) {
         make_json_err(json_slice, "param_err", "internal pu_id");
         send_answer();
-        return true;
+        return false;
     }
     if(pu_id == 0 || pu_id > 32) {
         make_json_err(json_slice, "param_err", "pu_id должен быть от (1..32)");
         send_answer();
-        return true;
+        return false;
     }  
     uint8_t input_line_id = 0;
     if (!parse_uint8_slice(input_slice, &input_line_id)) {
         make_json_err(json_slice, "param_err", "internal input");
         send_answer();
-        return true;
+        return false;
     }
     if(input_line_id == 0 || input_line_id > 24) {
         make_json_err(json_slice, "param_err", "input должен быть от (1..24)");
         send_answer();
-        return true;
+        return false;
     }
 
     rubetec_on_start_alert_rec(pu_id, input_line_id);
-
     return true;
 }
 
@@ -480,7 +506,7 @@ static bool handle_reset(JsonSlice json_slice)
         make_json_err(json_slice, "param_err",
                       "pu_id должен быть массивом номеров ПУ (1..32)");
         send_answer();
-        return true;
+        return false;
     }
 //    if (pu_id == 0) {
 //        make_json_err(json_slice, "param_err", "ни один ПУ не выбран");
@@ -513,7 +539,7 @@ static bool handle_emergency_start(JsonSlice json_slice){
         make_json_err(json_slice, "param_err",
                       "pu_id должен быть массивом номеров ПУ (1..32)");
         send_answer();
-        return true;
+        return false;
     }
 //    if (pu_id == 0) {
 //        make_json_err(json_slice, "param_err", "ни один ПУ не выбран");
@@ -522,7 +548,6 @@ static bool handle_emergency_start(JsonSlice json_slice){
 //    }
 
     rubetec_on_emergency_start(pu_id);
-    
     return true;
 }
 
@@ -547,7 +572,7 @@ static bool handle_get_status(JsonSlice json_slice){
         make_json_err(json_slice, "param_err",
                       "pu_id должен быть массивом номеров ПУ (1..32)");
         send_answer();
-        return true;
+        return false;
     }
 //    if (pu_id == 0) {
 //        make_json_err(json_slice, "param_err", "ни один ПУ не выбран");
@@ -556,7 +581,6 @@ static bool handle_get_status(JsonSlice json_slice){
 //    }
 
     rubetec_on_get_status(pu_id);
-    
     return true;
 }
 

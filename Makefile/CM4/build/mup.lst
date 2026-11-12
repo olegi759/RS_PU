@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
   28:../../CM4/Core/Src/mup.c **** uint8_t mup_errrors = 0xFF;
   29:../../CM4/Core/Src/mup.c **** static uint8_t mup_relays = 0;
   30:../../CM4/Core/Src/mup.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 2
 
 
   31:../../CM4/Core/Src/mup.c **** //Послать запрос к МУП
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
   71              		.loc 1 40 1 is_stmt 0 view .LVU4
   72 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
   73              	.LCFI1:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 3
 
 
   74              		.cfi_def_cfa_offset 24
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  114 002e C4F3C007 		ubfx	r7, r4, #3, #1
  115              		.loc 1 54 5 view .LVU17
  116 0032 14F0080F 		tst	r4, #8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 4
 
 
  117 0036 14D0     		beq	.L10
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
   55:../../CM4/Core/Src/mup.c **** 
  152              		.loc 1 55 7 view .LVU27
  153 0062 0320     		movs	r0, #3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 5
 
 
  154 0064 FFF7FEFF 		bl	fault_unset
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  197 0094 00000000 		.word	.LC0
  198              		.cfi_endproc
  199              	.LFE133:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 6
 
 
  201              		.section	.text.mup_change_relays,"ax",%progbits
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  239 0000 0B29     		cmp	r1, #11
  240 0002 32D9     		bls	.L29
   90:../../CM4/Core/Src/mup.c **** 	uint16_t * ptr, crc_sum, crc_rcv;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 7
 
 
  241              		.loc 1 90 1 view .LVU45
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  283 002c 0133     		adds	r3, r3, #1
  284              	.LVL22:
  107:../../CM4/Core/Src/mup.c **** 		crc_sum += (ptr[i] & 0xFF);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 8
 
 
  285              		.loc 1 107 23 is_stmt 0 discriminator 3 view .LVU62
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  321              		.loc 1 125 17 is_stmt 0 view .LVU76
  322 004c 094B     		ldr	r3, .L33+8
  323 004e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 9
 
 
  324              		.loc 1 125 23 view .LVU77
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  371              	mup_relays:
  372 0000 00       		.space	1
  373              		.global	mup_errrors
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 10
 
 
  374              		.section	.data.mup_errrors,"aw"
@@ -570,28 +570,28 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 1
  404              		.file 7 "../../CM4/Core/Inc/fault.h"
  405              		.file 8 "../../util/stm_util.h"
  406              		.file 9 "../../util/str_util.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 mup.c
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:21     .text.mup_send_query:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:27     .text.mup_send_query:00000000 mup_send_query
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:49     .text.mup_send_query:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:384    .rodata.mup_query:00000000 mup_query
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:54     .rodata.mup_change_errors.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:58     .text.mup_change_errors:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:64     .text.mup_change_errors:00000000 mup_change_errors
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:197    .text.mup_change_errors:00000094 $d
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:202    .text.mup_change_relays:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:208    .text.mup_change_relays:00000000 mup_change_relays
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:222    .text.mup_rcv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:228    .text.mup_rcv:00000000 mup_rcv
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:362    .text.mup_rcv:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:377    .data.mup_errrors:00000000 mup_errrors
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:371    .bss.mup_relays:00000000 mup_relays
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:372    .bss.mup_relays:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cccrFAj6.s:381    .rodata.mup_query:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:21     .text.mup_send_query:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:27     .text.mup_send_query:00000000 mup_send_query
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:49     .text.mup_send_query:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:384    .rodata.mup_query:00000000 mup_query
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:54     .rodata.mup_change_errors.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:58     .text.mup_change_errors:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:64     .text.mup_change_errors:00000000 mup_change_errors
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:197    .text.mup_change_errors:00000094 $d
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:202    .text.mup_change_relays:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:208    .text.mup_change_relays:00000000 mup_change_relays
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:222    .text.mup_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:228    .text.mup_rcv:00000000 mup_rcv
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:362    .text.mup_rcv:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:377    .data.mup_errrors:00000000 mup_errrors
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:371    .bss.mup_relays:00000000 mup_relays
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:372    .bss.mup_relays:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccWKbiEH.s:381    .rodata.mup_query:00000000 $d
 
 UNDEFINED SYMBOLS
 uart2_transmit

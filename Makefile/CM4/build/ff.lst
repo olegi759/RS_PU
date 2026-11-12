@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
   28:../../fatfs/ff.c ****    Module Private Definitions
   29:../../fatfs/ff.c **** 
   30:../../fatfs/ff.c **** ---------------------------------------------------------------------------*/
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 2
 
 
   31:../../fatfs/ff.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
   85:../../fatfs/ff.c **** #define	ET_FILENAME	0xC1	/* Name extension */
   86:../../fatfs/ff.c **** 
   87:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 3
 
 
   88:../../fatfs/ff.c **** /* FatFs refers the FAT structure as simple byte array instead of structure member
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  142:../../fatfs/ff.c **** #define BPB_DrvNumEx		111		/* exFAT: Physical drive number for int13h (BYTE) */
  143:../../fatfs/ff.c **** #define BPB_PercInUseEx		112		/* exFAT: Percent in use (BYTE) */
  144:../../fatfs/ff.c **** #define BPB_RsvdEx			113		/* exFAT: Reserved (7-byte) */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 4
 
 
  145:../../fatfs/ff.c **** #define BS_BootCodeEx		120		/* exFAT: Boot code (390-byte) */
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  199:../../fatfs/ff.c **** #define PTE_StCyl			3		/* MBR PTE: Start cylinder */
  200:../../fatfs/ff.c **** #define PTE_System			4		/* MBR PTE: System ID */
  201:../../fatfs/ff.c **** #define PTE_EdHead			5		/* MBR PTE: End head */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 5
 
 
  202:../../fatfs/ff.c **** #define PTE_EdSec			6		/* MBR PTE: End sector */
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  256:../../fatfs/ff.c **** #error Wrong sector size configuration
  257:../../fatfs/ff.c **** #endif
  258:../../fatfs/ff.c **** #if FF_MAX_SS == FF_MIN_SS
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 6
 
 
  259:../../fatfs/ff.c **** #define SS(fs)	((UINT)FF_MAX_SS)	/* Fixed sector size */
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  313:../../fatfs/ff.c **** 					0x97,0xEA,0xEB,0xEC,0xE4,0xED,0xEE,0xEF,0xF5,0xF0,0xEA,0xEB,0xEC,0xED,0xEE,0xEF, \
  314:../../fatfs/ff.c **** 					0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0xFE,0xFF}
  315:../../fatfs/ff.c **** #define TBL_CT771  {0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8A,0x8B,0x8C,0x8D,0x8E,0x8F
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 7
 
 
  316:../../fatfs/ff.c **** 					0x90,0x91,0x92,0x93,0x94,0x95,0x96,0x97,0x98,0x99,0x9A,0x9B,0x9C,0x9D,0x9E,0x9F, \
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  370:../../fatfs/ff.c **** 					0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0xFE,0xFF}
  371:../../fatfs/ff.c **** #define TBL_CT861  {0x80,0x9A,0x90,0x41,0x8E,0x41,0x8F,0x80,0x45,0x45,0x45,0x8B,0x8B,0x8D,0x8E,0x8F
  372:../../fatfs/ff.c **** 					0x90,0x92,0x92,0x4F,0x99,0x8D,0x55,0x97,0x97,0x99,0x9A,0x9D,0x9C,0x9D,0x9E,0x9F, \
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 8
 
 
  373:../../fatfs/ff.c **** 					0xA4,0xA5,0xA6,0xA7,0xA4,0xA5,0xA6,0xA7,0xA8,0xA9,0xAA,0xAB,0xAC,0xAD,0xAE,0xAF, \
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  427:../../fatfs/ff.c **** 
  428:../../fatfs/ff.c **** 
  429:../../fatfs/ff.c **** /* DBCS code range |----- 1st byte -----|  |----------- 2nd byte -----------| */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 9
 
 
  430:../../fatfs/ff.c **** /*                  <------>    <------>    <------>    <------>    <------>  */
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  484:../../fatfs/ff.c **** 
  485:../../fatfs/ff.c **** 
  486:../../fatfs/ff.c **** /*--------------------------------*/
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 10
 
 
  487:../../fatfs/ff.c **** /* LFN/Directory working buffer   */
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  541:../../fatfs/ff.c **** #define INIT_NAMBUF(fs)	{ lfn = ff_memalloc((FF_MAX_LFN+1)*2); if (!lfn) LEAVE_FF(fs, FR_NOT_ENOUGH
  542:../../fatfs/ff.c **** #define FREE_NAMBUF()	ff_memfree(lfn)
  543:../../fatfs/ff.c **** #endif
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 11
 
 
  544:../../fatfs/ff.c **** #define LEAVE_MKFS(res)	{ if (!work) ff_memfree(buf); return res; }
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  598:../../fatfs/ff.c **** 
  599:../../fatfs/ff.c **** /*--------------------------------------------------------------------------
  600:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 12
 
 
  601:../../fatfs/ff.c ****    Module Private Functions
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
   65              		@ link register save eliminated.
  621:../../fatfs/ff.c **** 	DWORD rv;
   66              		.loc 1 621 2 view .LVU10
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 13
 
 
  622:../../fatfs/ff.c **** 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  640:../../fatfs/ff.c **** 	rv = rv << 8 | ptr[2];
  641:../../fatfs/ff.c **** 	rv = rv << 8 | ptr[1];
  642:../../fatfs/ff.c **** 	rv = rv << 8 | ptr[0];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 14
 
 
  643:../../fatfs/ff.c **** 	return rv;
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  146 0002 C1F30723 		ubfx	r3, r1, #8, #8
  147              		.loc 1 657 9 view .LVU38
  148 0006 4370     		strb	r3, [r0, #1]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 15
 
 
  149              		.loc 1 657 22 is_stmt 1 view .LVU39
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  685:../../fatfs/ff.c **** {
  178              		.loc 1 685 1 is_stmt 1 view -0
  179              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 16
 
 
  180              		@ args = 0, pretend = 0, frame = 0
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  222              		.loc 1 699 1 is_stmt 1 view -0
  223              		.cfi_startproc
  224              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 17
 
 
  225              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  266              		.loc 1 714 2 view .LVU73
  715:../../fatfs/ff.c **** 		r = *d++ - *s++;
  267              		.loc 1 715 3 view .LVU74
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 18
 
 
  268              		.loc 1 715 7 is_stmt 0 view .LVU75
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  314              	.L16:
  315              		.loc 1 725 30 is_stmt 1 discriminator 3 view .LVU87
  316              		.loc 1 725 33 is_stmt 0 discriminator 3 view .LVU88
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 19
 
 
  317 0004 0133     		adds	r3, r3, #1
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  351              		.loc 1 747 1 is_stmt 0 view .LVU98
  352 0000 0020     		movs	r0, #0
  353              	.LVL36:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 20
 
 
  354              		.loc 1 747 1 view .LVU99
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  390              	.LVL39:
  391              	.LFB10:
  770:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 21
 
 
  771:../../fatfs/ff.c **** 
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  419 000c 13F0800F 		tst	r3, #128
  420 0010 03D1     		bne	.L31
  421              	.LVL44:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 22
 
 
  422              	.L20:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  429              		.loc 1 844 1 is_stmt 0 view .LVU120
  430 0016 5DF804FB 		ldr	pc, [sp], #4
  431              	.LVL46:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 23
 
 
  432              	.L31:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  469              		.loc 1 812 6 is_stmt 0 view .LVU137
  470 0040 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
  471 0042 0132     		adds	r2, r2, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 24
 
 
  472              	.LVL51:
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  817:../../fatfs/ff.c **** 	}
  510              		.loc 1 817 62 discriminator 1 view .LVU154
  511 0078 0C4B     		ldr	r3, .L34
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 25
 
 
  512 007a 03EA8113 		and	r3, r3, r1, lsl #6
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  816:../../fatfs/ff.c **** 		if (uc >= 0x010000) uc = 0xD800DC00 | ((uc - 0x10000) << 6 & 0x3FF0000) | (uc & 0x3FF);	/* Make a
  553              		.loc 1 816 62 discriminator 3 view .LVU168
  554 00a2 B8E7     		b	.L19
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 26
 
 
  555              	.LVL66:
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  870:../../fatfs/ff.c **** 	DWORD hc;
  584              		.loc 1 870 2 view .LVU172
  871:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 27
 
 
  872:../../fatfs/ff.c **** 	if (chr < 0x80) {	/* Single byte code? */
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  630              	.LVL74:
  631              		.loc 1 880 12 view .LVU194
  632 002a 40F08000 		orr	r0, r0, #128
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 28
 
 
  633              		.loc 1 880 10 view .LVU195
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  680              	.LVL80:
  681              		.loc 1 887 12 view .LVU216
  682 0064 40F08000 		orr	r0, r0, #128
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 29
 
 
  683              		.loc 1 887 10 view .LVU217
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  728              		.loc 1 896 11 view .LVU236
  729 0098 42F0F002 		orr	r2, r2, #240
  730              		.loc 1 896 9 view .LVU237
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 30
 
 
  731 009c 0A70     		strb	r2, [r1]
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  777              	.L45:
  891:../../fatfs/ff.c **** 	hc = ((chr & 0xFFFF0000) - 0xD8000000) >> 6;	/* Get high 10 bits */
  778              		.loc 1 891 22 discriminator 1 view .LVU257
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 31
 
 
  779 00c8 0020     		movs	r0, #0
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  804              	.LVL100:
  805              	.LFB15:
  930:../../fatfs/ff.c **** #endif	/* FF_USE_LFN */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 32
 
 
  931:../../fatfs/ff.c **** 
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  985:../../fatfs/ff.c **** 
  986:../../fatfs/ff.c **** 	/* The object was opened. Reject any open against writing file and all write mode open */
  987:../../fatfs/ff.c **** 	return (acc != 0 || Files[i].ctr == 0x100) ? FR_LOCKED : FR_OK;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 33
 
 
  988:../../fatfs/ff.c **** }
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1042:../../fatfs/ff.c **** 		if (n > 0) n--;				/* Decrement read mode open count */
 1043:../../fatfs/ff.c **** 		Files[i].ctr = n;
 1044:../../fatfs/ff.c **** 		if (n == 0) Files[i].fs = 0;	/* Delete the entry if open count gets zero */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 34
 
 
 1045:../../fatfs/ff.c **** 		res = FR_OK;
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1099:../../fatfs/ff.c **** 	FRESULT res = FR_OK;
 1100:../../fatfs/ff.c **** 
 1101:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 35
 
 
 1102:../../fatfs/ff.c **** 	if (sect != fs->winsect) {	/* Window offset changed? */
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1156:../../fatfs/ff.c **** 
 1157:../../fatfs/ff.c **** 
 1158:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 36
 
 
 1159:../../fatfs/ff.c **** /* Get physical sector number from cluster number                        */
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  849              	ld_clust:
  850              	.LVL105:
  851              	.LFB24:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 37
 
 
 1171:../../fatfs/ff.c **** 
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1225:../../fatfs/ff.c **** 					val = clst + 1; 	/* Generate the value */
 1226:../../fatfs/ff.c **** 					break;
 1227:../../fatfs/ff.c **** 				}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 38
 
 
 1228:../../fatfs/ff.c **** 				if (obj->stat != 2) {	/* Get value from FAT if FAT chain is valid */
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1282:../../fatfs/ff.c **** 
 1283:../../fatfs/ff.c **** 		case FS_FAT16 :
 1284:../../fatfs/ff.c **** 			res = move_window(fs, fs->fatbase + (clst / (SS(fs) / 2)));
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 39
 
 
 1285:../../fatfs/ff.c **** 			if (res != FR_OK) break;
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1339:../../fatfs/ff.c **** 			do {
 1340:../../fatfs/ff.c **** 				bv = fs->win[i] & bm; bm <<= 1;		/* Get bit value */
 1341:../../fatfs/ff.c **** 				if (++val >= fs->n_fatent - 2) {	/* Next cluster (with wrap-around) */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 40
 
 
 1342:../../fatfs/ff.c **** 					val = 0; bm = 0; i = SS(fs);
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1396:../../fatfs/ff.c **** 
 1397:../../fatfs/ff.c **** static FRESULT fill_first_frag (
 1398:../../fatfs/ff.c **** 	FFOBJID* obj	/* Pointer to the corresponding object */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 41
 
 
 1399:../../fatfs/ff.c **** )
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1453:../../fatfs/ff.c **** 	DWORD nxt;
 1454:../../fatfs/ff.c **** 	FATFS *fs = obj->fs;
 1455:../../fatfs/ff.c **** #if FF_FS_EXFAT || FF_USE_TRIM
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 42
 
 
 1456:../../fatfs/ff.c **** 	DWORD scl = clst, ecl = clst;
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1510:../../fatfs/ff.c **** 		} else {
 1511:../../fatfs/ff.c **** 			if (obj->stat == 0) {	/* Is it a fragmented chain from the beginning of this session? */
 1512:../../fatfs/ff.c **** 				clst = obj->sclust;		/* Follow the chain to check if it gets contiguous */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 43
 
 
 1513:../../fatfs/ff.c **** 				while (clst != pclst) {
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1567:../../fatfs/ff.c **** 		if (ncl == 0 || ncl == 0xFFFFFFFF) return ncl;	/* No free cluster or hard error? */
 1568:../../fatfs/ff.c **** 		res = change_bitmap(fs, ncl, 1, 1);			/* Mark the cluster 'in use' */
 1569:../../fatfs/ff.c **** 		if (res == FR_INT_ERR) return 1;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 44
 
 
 1570:../../fatfs/ff.c **** 		if (res == FR_DISK_ERR) return 0xFFFFFFFF;
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1624:../../fatfs/ff.c **** 		fs->last_clst = ncl;
 1625:../../fatfs/ff.c **** 		if (fs->free_clst <= fs->n_fatent - 2) fs->free_clst--;
 1626:../../fatfs/ff.c **** 		fs->fsi_flag |= 1;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 45
 
 
 1627:../../fatfs/ff.c **** 	} else {
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1681:../../fatfs/ff.c **** 	BYTE *ibuf;
 1682:../../fatfs/ff.c **** 
 1683:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 46
 
 
 1684:../../fatfs/ff.c **** 	if (sync_window(fs) != FR_OK) return FR_DISK_ERR;	/* Flush disk access window */
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1738:../../fatfs/ff.c **** 		while (ofs >= csz) {				/* Follow cluster chain */
 1739:../../fatfs/ff.c **** 			clst = get_fat(&dp->obj, clst);				/* Get next cluster */
 1740:../../fatfs/ff.c **** 			if (clst == 0xFFFFFFFF) return FR_DISK_ERR;	/* Disk error */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 47
 
 
 1741:../../fatfs/ff.c **** 			if (clst < 2 || clst >= fs->n_fatent) return FR_INT_ERR;	/* Reached to end of table or internal 
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1795:../../fatfs/ff.c **** 					if (clst == 0xFFFFFFFF) return FR_DISK_ERR;	/* Disk error */
 1796:../../fatfs/ff.c **** 					if (dir_clear(fs, clst) != FR_OK) return FR_DISK_ERR;	/* Clean up the stretched table */
 1797:../../fatfs/ff.c **** 					if (FF_FS_EXFAT) dp->obj.stat |= 4;			/* exFAT: The directory has been stretched */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 48
 
 
 1798:../../fatfs/ff.c **** #else
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1852:../../fatfs/ff.c **** 	return res;
 1853:../../fatfs/ff.c **** }
 1854:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 49
 
 
 1855:../../fatfs/ff.c **** #endif	/* !FF_FS_READONLY */
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  883 0014 70BD     		pop	{r4, r5, r6, pc}
  884              	.LVL109:
  885              	.L57:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 50
 
 
  886              		.loc 1 1877 1 view .LVU285
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  927 0006 1546     		mov	r5, r2
 1887:../../fatfs/ff.c **** 	st_word(dir + DIR_FstClusLO, (WORD)cl);
  928              		.loc 1 1887 2 is_stmt 1 view .LVU294
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 51
 
 
  929 0008 91B2     		uxth	r1, r2
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1905:../../fatfs/ff.c **** {
 1906:../../fatfs/ff.c **** 	UINT i, s;
 1907:../../fatfs/ff.c **** 	WCHAR wc, uc;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 52
 
 
 1908:../../fatfs/ff.c **** 
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1944:../../fatfs/ff.c **** 
 1945:../../fatfs/ff.c **** 
 1946:../../fatfs/ff.c **** 	if (ld_word(dir + LDIR_FstClusLO) != 0) return 0;	/* Check LDIR_FstClusLO is 0 */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 53
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 53
 
 
  985              		.loc 1 1946 2 view .LVU307
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1027 0032 0C2C     		cmp	r4, #12
  1028 0034 0DD8     		bhi	.L75
 1951:../../fatfs/ff.c **** 		uc = ld_word(dir + LfnOfs[s]);		/* Pick an LFN character */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 54
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 54
 
 
  1029              		.loc 1 1951 3 view .LVU325
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1067              		.loc 1 1961 6 is_stmt 0 view .LVU342
  1068 005c FF2D     		cmp	r5, #255
  1069 005e 0FD8     		bhi	.L73
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 55
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 55
 
 
 1962:../../fatfs/ff.c **** 		lfnbuf[i] = 0;
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1112              	.L76:
  1113 0084 00000000 		.word	LfnOfs
  1114              		.cfi_endproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 56
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 56
 
 
  1115              	.LFE27:
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1150              		.loc 1 1987 2 is_stmt 1 view .LVU360
  1151              		.loc 1 1987 17 is_stmt 0 view .LVU361
  1152 000c 0F23     		movs	r3, #15
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 57
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 57
 
 
  1153              	.LVL137:
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1194 0034 4FF6FF73 		movw	r3, #65535
  1195 0038 9D42     		cmp	r5, r3
  1196 003a 02D0     		beq	.L79
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 58
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 58
 
 
 1994:../../fatfs/ff.c **** 		st_word(dir + LfnOfs[s], wc);		/* Put it */
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1240              	.L83:
 1999:../../fatfs/ff.c **** 	dir[LDIR_Ord] = ord;			/* Set the LFN order */
  1241              		.loc 1 1999 2 is_stmt 1 view .LVU395
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 59
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 59
 
 
  1242              		.loc 1 1999 16 is_stmt 0 view .LVU396
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1279              		.cfi_def_cfa_offset 32
  1280 0004 0646     		mov	r6, r0
  1281 0006 1546     		mov	r5, r2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 60
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 60
 
 
  1282 0008 1C46     		mov	r4, r3
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2034:../../fatfs/ff.c **** 				if (sreg & 0x10000) sreg ^= 0x11021;
  1321              		.loc 1 2034 5 is_stmt 1 view .LVU417
  1322              		.loc 1 2034 8 is_stmt 0 view .LVU418
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 61
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 61
 
 
  1323 0028 14F4803F 		tst	r4, #65536
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1359              		.loc 1 2046 3 is_stmt 1 view .LVU432
  1360              		.loc 1 2046 7 is_stmt 0 view .LVU433
  1361 0050 2309     		lsrs	r3, r4, #4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 62
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 62
 
 
  1362              	.LVL167:
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2050:../../fatfs/ff.c **** 	/* Append the number to the SFN body */
 2051:../../fatfs/ff.c **** 	for (j = 0; j < i && dst[j] != ' '; j++) {
  1402              		.loc 1 2051 2 is_stmt 1 view .LVU450
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 63
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 63
 
 
  1403              		.loc 1 2051 9 is_stmt 0 view .LVU451
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2059:../../fatfs/ff.c **** 	} while (j < 8);
  1450              		.loc 1 2059 13 is_stmt 1 view .LVU469
  1451 00a0 072B     		cmp	r3, #7
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 64
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 64
 
 
  1452 00a2 09D8     		bhi	.L109
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2068:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
 2069:../../fatfs/ff.c **** 
 2070:../../fatfs/ff.c **** static BYTE sum_sfn (
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 65
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 65
 
 
 2071:../../fatfs/ff.c **** 	const BYTE* dir		/* Pointer to the SFN entry */
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1536              		.syntax unified
  1537              		.thumb
  1538              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 66
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 66
 
 
  1540              	get_ldnumber:
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2133:../../fatfs/ff.c **** 	DWORD sum			/* Previous sum value */
 2134:../../fatfs/ff.c **** )
 2135:../../fatfs/ff.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 67
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 67
 
 
 2136:../../fatfs/ff.c **** 	sum = ((sum & 1) ? 0x80000000 : 0) + (sum >> 1) + dat;
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2190:../../fatfs/ff.c **** )
 2191:../../fatfs/ff.c **** {
 2192:../../fatfs/ff.c **** 	FRESULT res;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 68
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 68
 
 
 2193:../../fatfs/ff.c **** 	UINT i, sz_ent;
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2247:../../fatfs/ff.c **** 	obj->n_frag = 0;										/* No last fragment info */
 2248:../../fatfs/ff.c **** }
 2249:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 69
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 69
 
 
 2250:../../fatfs/ff.c **** 
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2304:../../fatfs/ff.c **** 		dp->obj.fs->wflag = 1;
 2305:../../fatfs/ff.c **** 		if (--nent == 0) break;
 2306:../../fatfs/ff.c **** 		dirb += SZDIRE;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 70
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 70
 
 
 2307:../../fatfs/ff.c **** 		res = dir_next(dp, 0);
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2361:../../fatfs/ff.c **** #define DIR_READ_FILE(dp) dir_read(dp, 0)
 2362:../../fatfs/ff.c **** #define DIR_READ_LABEL(dp) dir_read(dp, 1)
 2363:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 71
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 71
 
 
 2364:../../fatfs/ff.c **** static FRESULT dir_read (
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2418:../../fatfs/ff.c **** 				}
 2419:../../fatfs/ff.c **** 			}
 2420:../../fatfs/ff.c **** #else		/* Non LFN configuration */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 72
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 72
 
 
 2421:../../fatfs/ff.c **** 			if (b != DDEM && b != '.' && attr != AM_LFN && (int)((attr & ~AM_ARC) == AM_VOL) == vol) {	/* Is
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2475:../../fatfs/ff.c **** 	/* On the FAT/FAT32 volume */
 2476:../../fatfs/ff.c **** #if FF_USE_LFN
 2477:../../fatfs/ff.c **** 	ord = sum = 0xFF; dp->blk_ofs = 0xFFFFFFFF;	/* Reset LFN sequence */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 73
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 73
 
 
 2478:../../fatfs/ff.c **** #endif
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2532:../../fatfs/ff.c **** 
 2533:../../fatfs/ff.c **** 
 2534:../../fatfs/ff.c **** 	if (dp->fn[NSFLAG] & (NS_DOT | NS_NONAME)) return FR_INVALID_NAME;	/* Check name validity */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 74
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 74
 
 
 2535:../../fatfs/ff.c **** 	for (nlen = 0; fs->lfnbuf[nlen]; nlen++) ;	/* Get lfn length */
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2589:../../fatfs/ff.c **** 			do {					/* Store LFN entries in bottom first */
 2590:../../fatfs/ff.c **** 				res = move_window(fs, dp->sect);
 2591:../../fatfs/ff.c **** 				if (res != FR_OK) break;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 75
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 75
 
 
 2592:../../fatfs/ff.c **** 				put_lfn(fs->lfnbuf, dp->dir, (BYTE)nent, sum);
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2646:../../fatfs/ff.c **** 				dp->dir[DIR_Name] = DDEM;	/* Mark the entry 'deleted'. */
 2647:../../fatfs/ff.c **** 			}
 2648:../../fatfs/ff.c **** 			fs->wflag = 1;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 76
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 76
 
 
 2649:../../fatfs/ff.c **** 			if (dp->dptr >= last) break;	/* If reached last entry then all entries of the object has been de
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2703:../../fatfs/ff.c **** 			while (fs->lfnbuf[si] != 0) {
 2704:../../fatfs/ff.c **** 				wc = fs->lfnbuf[si++];		/* Get an LFN character (UTF-16) */
 2705:../../fatfs/ff.c **** 				if (hs == 0 && IsSurrogate(wc)) {	/* Is it a surrogate? */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 77
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 77
 
 
 2706:../../fatfs/ff.c **** 					hs = wc; continue;		/* Get low surrogate */
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2760:../../fatfs/ff.c **** 		if (si == 9) fno->fname[di++] = '.';/* Insert a . if extension is exist */
 2761:../../fatfs/ff.c **** 		fno->fname[di++] = c;
 2762:../../fatfs/ff.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 78
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 78
 
 
 2763:../../fatfs/ff.c **** 	fno->fname[di] = 0;
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2817:../../fatfs/ff.c **** )
 2818:../../fatfs/ff.c **** {
 2819:../../fatfs/ff.c **** 	const TCHAR *pp, *np;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 79
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 79
 
 
 2820:../../fatfs/ff.c **** 	DWORD pc, nc;
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2874:../../fatfs/ff.c **** 	for (;;) {
 2875:../../fatfs/ff.c **** 		uc = tchar2uni(&p);			/* Get a character */
 2876:../../fatfs/ff.c **** 		if (uc == 0xFFFFFFFF) return FR_INVALID_NAME;		/* Invalid code or UTF decode error */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 80
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 80
 
 
 2877:../../fatfs/ff.c **** 		if (uc >= 0x10000) lfn[di++] = (WCHAR)(uc >> 16);	/* Store high surrogate if needed */
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2931:../../fatfs/ff.c **** 			if (si != di) cf |= NS_LOSS | NS_LFN;	/* Name body overflow? */
 2932:../../fatfs/ff.c **** 			if (si > di) break;						/* No name extension? */
 2933:../../fatfs/ff.c **** 			si = di; i = 8; ni = 11; b <<= 2;		/* Enter name extension */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 81
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 81
 
 
 2934:../../fatfs/ff.c **** 			continue;
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2988:../../fatfs/ff.c **** 
 2989:../../fatfs/ff.c **** #else	/* FF_USE_LFN : Non-LFN configuration */
 2990:../../fatfs/ff.c **** 	BYTE c, d, *sfn;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 82
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 82
 
 
 2991:../../fatfs/ff.c **** 	UINT ni, si, i;
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3045:../../fatfs/ff.c **** 
 3046:../../fatfs/ff.c **** 	if (sfn[0] == DDEM) sfn[0] = RDDEM;	/* If the first character collides with DDEM, replace it with 
 3047:../../fatfs/ff.c **** 	sfn[NSFLAG] = (c <= ' ') ? NS_LAST : 0;		/* Set last segment flag if end of the path */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 83
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 83
 
 
 3048:../../fatfs/ff.c **** 
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3102:../../fatfs/ff.c **** 			res = create_name(dp, &path);	/* Get a segment name of the path */
 3103:../../fatfs/ff.c **** 			if (res != FR_OK) break;
 3104:../../fatfs/ff.c **** 			res = dir_find(dp);				/* Find an object with the segment name */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 84
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 84
 
 
 3105:../../fatfs/ff.c **** 			ns = dp->fn[NSFLAG];
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1550              		.loc 1 3151 2 is_stmt 1 view .LVU497
 3152:../../fatfs/ff.c **** 	TCHAR tc;
  1551              		.loc 1 3152 2 view .LVU498
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 85
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 85
 
 
 3153:../../fatfs/ff.c **** 	int i, vol = -1;
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3172:../../fatfs/ff.c **** 				sp = VolumeStr[i]; tp = *path;	/* This string volume ID and path name */
 3173:../../fatfs/ff.c **** 				do {	/* Compare the volume ID with path name */
 3174:../../fatfs/ff.c **** 					c = *sp++; tc = *tp++;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 86
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 86
 
 
 3175:../../fatfs/ff.c **** 					if (IsLower(c)) c -= 0x20;
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1598              		.loc 1 3165 7 view .LVU518
  1599 0026 A3F13001 		sub	r1, r3, #48
  1600 002a C9B2     		uxtb	r1, r1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 87
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 87
 
 
 3165:../../fatfs/ff.c **** 			i = (int)*tp - '0';	/* Get the LD number */
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1639              		.loc 1 3153 9 view .LVU534
  1640 0050 4FF0FF30 		mov	r0, #-1
  1641              	.LVL205:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 88
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 88
 
 
 3153:../../fatfs/ff.c **** #if FF_STR_VOLUME_ID		/* Find string volume ID */
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3245:../../fatfs/ff.c **** )
 3246:../../fatfs/ff.c **** {
 3247:../../fatfs/ff.c **** 	UINT i;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 89
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 89
 
 
 3248:../../fatfs/ff.c **** 	DWORD bcc;
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3302:../../fatfs/ff.c **** 
 3303:../../fatfs/ff.c **** 	if (FF_FS_EXFAT && !mem_cmp(fs->win + BS_JmpBoot, "\xEB\x76\x90" "EXFAT   ", 11)) return 1;	/* Che
 3304:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 90
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 90
 
 
 3305:../../fatfs/ff.c **** 	if (fs->win[BS_JmpBoot] == 0xE9 || fs->win[BS_JmpBoot] == 0xEB || fs->win[BS_JmpBoot] == 0xE8) {	/
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3359:../../fatfs/ff.c **** 	} while (part == 0 && fmt >= 2 && ++i < 4);
 3360:../../fatfs/ff.c **** 	return fmt;
 3361:../../fatfs/ff.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 91
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 91
 
 
 3362:../../fatfs/ff.c **** 
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3416:../../fatfs/ff.c **** 		return FR_NOT_READY;			/* Failed to initialize due to no medium or hard error */
 3417:../../fatfs/ff.c **** 	}
 3418:../../fatfs/ff.c **** 	if (!FF_FS_READONLY && mode && (stat & STA_PROTECT)) { /* Check disk write protection if needed */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 92
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 92
 
 
 3419:../../fatfs/ff.c **** 		return FR_WRITE_PROTECTED;
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3473:../../fatfs/ff.c **** 			if (i == 0) {
 3474:../../fatfs/ff.c **** 				if (so >= fs->csize) return FR_NO_FILESYSTEM;	/* Not found? */
 3475:../../fatfs/ff.c **** 				if (move_window(fs, clst2sect(fs, (DWORD)fs->dirbase) + so) != FR_OK) return FR_DISK_ERR;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 93
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 93
 
 
 3476:../../fatfs/ff.c **** 				so++;
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3530:../../fatfs/ff.c **** 
 3531:../../fatfs/ff.c **** 		/* Boundaries and Limits */
 3532:../../fatfs/ff.c **** 		fs->n_fatent = nclst + 2;						/* Number of FAT entries */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 94
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 94
 
 
 3533:../../fatfs/ff.c **** 		fs->volbase = bsect;							/* Volume start sector */
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3587:../../fatfs/ff.c **** 	clear_lock(fs);
 3588:../../fatfs/ff.c **** #endif
 3589:../../fatfs/ff.c **** 	return FR_OK;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 95
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 95
 
 
 3590:../../fatfs/ff.c **** }
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1698              		.loc 1 3604 10 view .LVU550
  1699 0018 0920     		movs	r0, #9
  1700              	.LVL211:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 96
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 96
 
 
 3608:../../fatfs/ff.c **** #if FF_FS_REENTRANT
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1728              		.loc 1 3624 34 discriminator 1 view .LVU562
  1729 002e F5E7     		b	.L127
  1730              	.LVL218:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 97
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 97
 
 
  1731              	.L128:
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1776              	.LFB12:
 1075:../../fatfs/ff.c **** 	FRESULT res = FR_OK;
  1777              		.loc 1 1075 1 is_stmt 1 view -0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 98
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 98
 
 
  1778              		.cfi_startproc
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1819 001c 0546     		mov	r5, r0
  1820 001e 88B9     		cbnz	r0, .L137
 1081:../../fatfs/ff.c **** 			if (fs->winsect - fs->fatbase < fs->fsize) {	/* Is it in the 1st FAT? */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 99
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 99
 
 
  1821              		.loc 1 1081 4 is_stmt 1 view .LVU588
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1865              	.LVL234:
  1866              	.LFB13:
 1098:../../fatfs/ff.c **** 	FRESULT res = FR_OK;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 100
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 100
 
 
  1867              		.loc 1 1098 1 is_stmt 1 view -0
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1908 001a F6D1     		bne	.L141
 1107:../../fatfs/ff.c **** 				sect = (LBA_t)0 - 1;	/* Invalidate window if read data is not valid */
  1909              		.loc 1 1107 4 is_stmt 1 view .LVU615
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 101
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 101
 
 
 1107:../../fatfs/ff.c **** 				sect = (LBA_t)0 - 1;	/* Invalidate window if read data is not valid */
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1956 0000 10B5     		push	{r4, lr}
  1957              	.LCFI11:
  1958              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 102
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 102
 
 
  1959              		.cfi_offset 4, -8
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  1997              		.loc 1 3309 9 view .LVU640
  1998 0034 0220     		movs	r0, #2
  1999 0036 12E0     		b	.L147
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 103
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 103
 
 
  2000              	.L149:
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2042              		.align	2
  2043              	.L156:
  2044 0068 00000000 		.word	.LC0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 104
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 104
 
 
  2045 006c 04000000 		.word	.LC1
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3326:../../fatfs/ff.c **** 
  2091              		.loc 1 3326 28 discriminator 1 view .LVU663
  2092 0018 0228     		cmp	r0, #2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 105
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 105
 
 
  2093 001a 88BF     		it	hi
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2133              		.loc 1 3356 22 discriminator 1 view .LVU677
  2134 004c 6C1E     		subs	r4, r5, #1
  2135              	.LVL257:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 106
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 106
 
 
 3356:../../fatfs/ff.c **** 	do {							/* Find an FAT volume */
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2177 007a EBD1     		bne	.L171
 3358:../../fatfs/ff.c **** 	} while (part == 0 && fmt >= 2 && ++i < 4);
  2178              		.loc 1 3358 45 discriminator 2 view .LVU691
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 107
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 107
 
 
  2179 007c 0320     		movs	r0, #3
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2226              		.loc 1 3380 2 view .LVU700
 3381:../../fatfs/ff.c **** 	UINT fmt;
  2227              		.loc 1 3381 2 view .LVU701
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 108
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 108
 
 
 3382:../../fatfs/ff.c **** 
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3400:../../fatfs/ff.c **** 		if (!(stat & STA_NOINIT)) {		/* and the physical drive is kept initialized */
  2263              		.loc 1 3400 10 is_stmt 0 view .LVU721
  2264 002c 7878     		ldrb	r0, [r7, #1]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 109
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 109
 
 
  2265              	.LVL269:
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2302 0056 10F00104 		ands	r4, r0, #1
  2303 005a 40F0FF80 		bne	.L188
 3418:../../fatfs/ff.c **** 		return FR_WRITE_PROTECTED;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 110
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 110
 
 
  2304              		.loc 1 3418 2 is_stmt 1 view .LVU739
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3500:../../fatfs/ff.c **** 		if (fasize == 0) fasize = ld_dword(fs->win + BPB_FATSz32);
  2342              		.loc 1 3500 12 is_stmt 0 view .LVU756
  2343 008e 07F14A00 		add	r0, r7, #74
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 111
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 111
 
 
  2344 0092 FFF7FEFF 		bl	ld_word
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2381              		.loc 1 3508 3 is_stmt 1 view .LVU773
 3508:../../fatfs/ff.c **** 		if (fs->csize == 0 || (fs->csize & (fs->csize - 1))) return FR_NO_FILESYSTEM;	/* (Must be power o
  2382              		.loc 1 3508 22 is_stmt 0 view .LVU774
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 112
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 112
 
 
  2383 00ba 97F84190 		ldrb	r9, [r7, #65]	@ zero_extendqisi2
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2420 00f6 07F15400 		add	r0, r7, #84
  2421              	.LVL288:
 3515:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 113
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 113
 
 
  2422              		.loc 1 3515 27 discriminator 1 view .LVU792
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3525:../../fatfs/ff.c **** 		if (nclst <= MAX_FAT32) fmt = FS_FAT32;
  2461              		.loc 1 3525 3 is_stmt 1 view .LVU808
  2462              	.LVL296:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 114
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 114
 
 
 3526:../../fatfs/ff.c **** 		if (nclst <= MAX_FAT16) fmt = FS_FAT16;
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2502              		.loc 1 3532 16 view .LVU823
  2503 0158 C7F81890 		str	r9, [r7, #24]
 3533:../../fatfs/ff.c **** 		fs->fatbase = bsect + nrsv; 					/* FAT start sector */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 115
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 115
 
 
  2504              		.loc 1 3533 3 is_stmt 1 view .LVU824
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3545:../../fatfs/ff.c **** 		}
  2540              		.loc 1 3545 22 discriminator 2 view .LVU843
  2541 0186 09EB5309 		add	r9, r9, r3, lsr #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 116
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 116
 
 
  2542              	.LVL305:
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2579 01b8 3C4B     		ldr	r3, .L213+12
  2580 01ba FB60     		str	r3, [r7, #12]
 3589:../../fatfs/ff.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 117
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 117
 
 
  2581              		.loc 1 3589 2 is_stmt 1 view .LVU861
@@ -7018,7 +7018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3540:../../fatfs/ff.c **** 		} else {
  2621              		.loc 1 3540 11 view .LVU876
  2622 01ea CEE7     		b	.L182
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 118
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 118
 
 
  2623              	.LVL313:
@@ -7078,7 +7078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2665 022a BDD1     		bne	.L184
 3561:../../fatfs/ff.c **** 			{
  2666              		.loc 1 3561 8 view .LVU889
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 119
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 119
 
 
  2667 022c 07F50670 		add	r0, r7, #536
@@ -7138,7 +7138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2709 025e F8E7     		b	.L173
  2710              	.L189:
 3419:../../fatfs/ff.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 120
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 120
 
 
  2711              		.loc 1 3419 10 view .LVU902
@@ -7198,7 +7198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3524:../../fatfs/ff.c **** 		fmt = 0;
  2757              		.loc 1 3524 26 discriminator 1 view .LVU911
  2758 0288 0D24     		movs	r4, #13
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 121
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 121
 
 
  2759 028a E2E7     		b	.L173
@@ -7258,7 +7258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1261:../../fatfs/ff.c **** 	UINT bc;
  2809              		.loc 1 1261 1 is_stmt 0 view .LVU918
  2810 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 122
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 122
 
 
  2811              	.LCFI16:
@@ -7318,7 +7318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2852              	.LVL341:
 1271:../../fatfs/ff.c **** 			if (res != FR_OK) break;
  2853              		.loc 1 1271 4 is_stmt 1 view .LVU932
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 123
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 123
 
 
 1271:../../fatfs/ff.c **** 			if (res != FR_OK) break;
@@ -7378,7 +7378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2892 005a 0123     		movs	r3, #1
  2893 005c FB70     		strb	r3, [r7, #3]
 1276:../../fatfs/ff.c **** 			if (res != FR_OK) break;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 124
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 124
 
 
  2894              		.loc 1 1276 4 is_stmt 1 view .LVU949
@@ -7438,7 +7438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2933              	.L221:
 1279:../../fatfs/ff.c **** 			fs->wflag = 1;
  2934              		.loc 1 1279 43 discriminator 2 view .LVU965
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 125
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 125
 
 
  2935 0088 1AF80930 		ldrb	r3, [r10, r9]	@ zero_extendqisi2
@@ -7498,7 +7498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  2975              	.L218:
 1294:../../fatfs/ff.c **** 			if (res != FR_OK) break;
  2976              		.loc 1 1294 4 view .LVU980
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 126
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 126
 
 
 1294:../../fatfs/ff.c **** 			if (res != FR_OK) break;
@@ -7558,7 +7558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3016              	.LVL366:
 1300:../../fatfs/ff.c **** 			break;
  3017              		.loc 1 1300 4 is_stmt 1 view .LVU996
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 127
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 127
 
 
 1300:../../fatfs/ff.c **** 			break;
@@ -7618,7 +7618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3065              		.cfi_offset 6, -12
  3066              		.cfi_offset 7, -8
  3067              		.cfi_offset 14, -4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 128
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 128
 
 
 1184:../../fatfs/ff.c **** 	DWORD val;
@@ -7678,7 +7678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3105              	.LVL375:
 1198:../../fatfs/ff.c **** 			wc = fs->win[bc++ % SS(fs)];		/* Get 1st byte of the entry */
  3106              		.loc 1 1198 8 view .LVU1023
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 129
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 129
 
 
  3107 0024 01EB1631 		add	r1, r1, r6, lsr #12
@@ -7738,7 +7738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3146              		.loc 1 1201 7 view .LVU1038
  3147 005a 46EA0320 		orr	r0, r6, r3, lsl #8
  3148              	.LVL382:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 130
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 130
 
 
 1202:../../fatfs/ff.c **** 			break;
@@ -7798,7 +7798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3188 008a FFF7FEFF 		bl	ld_word
  3189              	.LVL390:
 1208:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 131
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 131
 
 
  3190              		.loc 1 1208 4 is_stmt 1 view .LVU1054
@@ -7858,7 +7858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3231              	.LVL400:
  3232              	.L233:
 1190:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 132
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 132
 
 
  3233              		.loc 1 1190 7 view .LVU1068
@@ -7918,7 +7918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3279              	.LCFI18:
  3280              		.cfi_def_cfa_offset 24
  3281              		.cfi_offset 4, -24
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 133
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 133
 
 
  3282              		.cfi_offset 5, -20
@@ -7978,7 +7978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1729:../../fatfs/ff.c **** 	}
  3320              		.loc 1 1729 3 is_stmt 1 view .LVU1095
  3321              	.L244:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 134
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 134
 
 
 1732:../../fatfs/ff.c **** 		if (ofs / SZDIRE >= fs->n_rootdir) return FR_INT_ERR;	/* Is index out of range? */
@@ -8038,7 +8038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3357 0050 4144     		add	r1, r1, r8
 1749:../../fatfs/ff.c **** 
  3358              		.loc 1 1749 10 view .LVU1115
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 135
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 135
 
 
  3359 0052 F961     		str	r1, [r7, #28]
@@ -8098,7 +8098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1742:../../fatfs/ff.c **** 		}
  3398              		.loc 1 1742 4 is_stmt 1 view .LVU1131
 1742:../../fatfs/ff.c **** 		}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 136
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 136
 
 
  3399              		.loc 1 1742 8 is_stmt 0 view .LVU1132
@@ -8158,7 +8158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1740:../../fatfs/ff.c **** 			if (clst < 2 || clst >= fs->n_fatent) return FR_INT_ERR;	/* Reached to end of table or internal 
  3442              		.loc 1 1740 35 discriminator 1 view .LVU1144
  3443 009e F7E7     		b	.L242
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 137
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 137
 
 
  3444              	.LVL427:
@@ -8218,7 +8218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3492              		.loc 1 1546 2 is_stmt 1 view .LVU1152
 1547:../../fatfs/ff.c **** 	FATFS *fs = obj->fs;
  3493              		.loc 1 1547 2 view .LVU1153
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 138
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 138
 
 
 1548:../../fatfs/ff.c **** 
@@ -8278,7 +8278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3531 0022 7CD9     		bls	.L271
 1558:../../fatfs/ff.c **** 		if (cs < fs->n_fatent) return cs;	/* It is already followed by next cluster */
  3532              		.loc 1 1558 3 is_stmt 1 view .LVU1171
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 139
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 139
 
 
 1558:../../fatfs/ff.c **** 		if (cs < fs->n_fatent) return cs;	/* It is already followed by next cluster */
@@ -8338,7 +8338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3571              		.loc 1 1604 8 view .LVU1187
  3572 004e 2C46     		mov	r4, r5
  3573 0050 2DE0     		b	.L265
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 140
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 140
 
 
  3574              	.LVL443:
@@ -8398,7 +8398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3612              		.loc 1 1599 8 is_stmt 0 view .LVU1203
  3613 0074 012B     		cmp	r3, #1
  3614 0076 07D9     		bls	.L275
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 141
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 141
 
 
 1599:../../fatfs/ff.c **** 				ncl = 0;
@@ -8458,7 +8458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3656 00a8 3CD0     		beq	.L278
 1614:../../fatfs/ff.c **** 			}
  3657              		.loc 1 1614 5 is_stmt 1 view .LVU1217
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 142
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 142
 
 
 1614:../../fatfs/ff.c **** 			}
@@ -8518,7 +8518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1618:../../fatfs/ff.c **** 			res = put_fat(fs, clst, ncl);		/* Link it from the previous one if needed */
  3697              		.loc 1 1618 11 is_stmt 0 view .LVU1233
  3698 00cc 0246     		mov	r2, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 143
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 143
 
 
 1618:../../fatfs/ff.c **** 			res = put_fat(fs, clst, ncl);		/* Link it from the previous one if needed */
@@ -8578,7 +8578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3736              		.loc 1 1626 16 view .LVU1250
  3737 00f4 43F00103 		orr	r3, r3, #1
  3738 00f8 3B71     		strb	r3, [r7, #4]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 144
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 144
 
 
  3739              	.LVL463:
@@ -8638,7 +8638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3781              	.LVL472:
  3782              	.L278:
 1613:../../fatfs/ff.c **** 				if (ncl == scl) return 0;		/* No free cluster found? */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 145
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 145
 
 
  3783              		.loc 1 1613 45 discriminator 1 view .LVU1263
@@ -8698,7 +8698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3829              		.loc 1 1462 15 discriminator 2 view .LVU1273
  3830 0010 A342     		cmp	r3, r4
  3831 0012 2BD9     		bls	.L290
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 146
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 146
 
 
 1465:../../fatfs/ff.c **** 		res = put_fat(fs, pclst, 0xFFFFFFFF);
@@ -8758,7 +8758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3870              		.loc 1 1473 6 view .LVU1289
  3871 0036 E0B1     		cbz	r0, .L291
 1474:../../fatfs/ff.c **** 		if (nxt == 0xFFFFFFFF) return FR_DISK_ERR;	/* Disk error? */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 147
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 147
 
 
  3872              		.loc 1 1474 3 is_stmt 1 view .LVU1290
@@ -8818,7 +8818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3909 005c 6B61     		str	r3, [r5, #20]
 1482:../../fatfs/ff.c **** 		}
  3910              		.loc 1 1482 4 is_stmt 1 view .LVU1308
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 148
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 148
 
 
 1482:../../fatfs/ff.c **** 		}
@@ -8878,7 +8878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  3955              		.section	.text.dir_clear,"ax",%progbits
  3956              		.align	1
  3957              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 149
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 149
 
 
  3958              		.thumb
@@ -8938,7 +8938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4001 0014 FFF7FEFF 		bl	clst2sect
  4002              	.LVL500:
  4003 0018 0646     		mov	r6, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 150
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 150
 
 
  4004              	.LVL501:
@@ -8998,7 +8998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4042 003c 3946     		mov	r1, r7
  4043 003e 6878     		ldrb	r0, [r5, #1]	@ zero_extendqisi2
  4044 0040 FFF7FEFF 		bl	disk_write
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 151
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 151
 
 
  4045              	.LVL507:
@@ -9058,7 +9058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4092              	.LVL509:
 1770:../../fatfs/ff.c **** 	if (ofs >= (DWORD)((FF_FS_EXFAT && fs->fs_type == FS_EXFAT) ? MAX_DIR_EX : MAX_DIR)) dp->sect = 0;
  4093              		.loc 1 1770 2 is_stmt 1 view .LVU1357
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 152
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 152
 
 
 1770:../../fatfs/ff.c **** 	if (ofs >= (DWORD)((FF_FS_EXFAT && fs->fs_type == FS_EXFAT) ? MAX_DIR_EX : MAX_DIR)) dp->sect = 0;
@@ -9118,7 +9118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1778:../../fatfs/ff.c **** 				dp->sect = 0; return FR_NO_FILE;
  4130              		.loc 1 1778 26 is_stmt 0 view .LVU1376
  4131 002c 3B89     		ldrh	r3, [r7, #8]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 153
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 153
 
 
 1778:../../fatfs/ff.c **** 				dp->sect = 0; return FR_NO_FILE;
@@ -9178,7 +9178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4169 004c 7B89     		ldrh	r3, [r7, #10]
 1783:../../fatfs/ff.c **** 				clst = get_fat(&dp->obj, dp->clust);		/* Get next cluster */
  4170              		.loc 1 1783 35 view .LVU1394
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 154
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 154
 
 
  4171 004e 013B     		subs	r3, r3, #1
@@ -9238,7 +9238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4209              	.LVL520:
 1793:../../fatfs/ff.c **** 					if (clst == 1) return FR_INT_ERR;			/* Internal error */
  4210              		.loc 1 1793 6 is_stmt 1 view .LVU1411
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 155
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 155
 
 
 1793:../../fatfs/ff.c **** 					if (clst == 1) return FR_INT_ERR;			/* Internal error */
@@ -9298,7 +9298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4249 00a4 0023     		movs	r3, #0
  4250 00a6 A361     		str	r3, [r4, #24]
 1790:../../fatfs/ff.c **** 					}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 156
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 156
 
 
  4251              		.loc 1 1790 21 is_stmt 1 view .LVU1428
@@ -9358,7 +9358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4293              	.L315:
 1795:../../fatfs/ff.c **** 					if (dir_clear(fs, clst) != FR_OK) return FR_DISK_ERR;	/* Clean up the stretched table */
  4294              		.loc 1 1795 37 discriminator 1 view .LVU1441
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 157
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 157
 
 
  4295 00c0 0120     		movs	r0, #1
@@ -9418,7 +9418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1832:../../fatfs/ff.c **** 	if (res == FR_OK) {
  4341              		.loc 1 1832 8 view .LVU1452
  4342 000a FFF7FEFF 		bl	dir_sdi
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 158
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 158
 
 
  4343              	.LVL541:
@@ -9478,7 +9478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1841:../../fatfs/ff.c **** #endif
  4383              		.loc 1 1841 4 is_stmt 1 view .LVU1467
 1841:../../fatfs/ff.c **** #endif
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 159
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 159
 
 
  4384              		.loc 1 1841 10 is_stmt 0 view .LVU1468
@@ -9538,7 +9538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4429              	.LVL554:
  4430              	.LFB31:
 2368:../../fatfs/ff.c **** 	FRESULT res = FR_NO_FILE;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 160
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 160
 
 
  4431              		.loc 1 2368 1 is_stmt 1 view -0
@@ -9598,7 +9598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2406:../../fatfs/ff.c **** 						sum = dp->dir[LDIR_Chksum];
  4472              		.loc 1 2406 6 is_stmt 1 view .LVU1494
 2406:../../fatfs/ff.c **** 						sum = dp->dir[LDIR_Chksum];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 161
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 161
 
 
  4473              		.loc 1 2406 9 is_stmt 0 view .LVU1495
@@ -9658,7 +9658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4511              		.loc 1 2412 10 discriminator 6 view .LVU1511
  4512 003a FF26     		movs	r6, #255
  4513              	.LVL564:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 162
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 162
 
 
 2412:../../fatfs/ff.c **** 				} else {					/* An SFN entry is found */
@@ -9718,7 +9718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4555              	.L332:
 2426:../../fatfs/ff.c **** 		if (res != FR_OK) break;
  4556              		.loc 1 2426 3 is_stmt 1 view .LVU1525
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 163
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 163
 
 
 2426:../../fatfs/ff.c **** 		if (res != FR_OK) break;
@@ -9778,7 +9778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2400:../../fatfs/ff.c **** #if FF_USE_LFN		/* LFN configuration */
  4594              		.loc 1 2400 24 view .LVU1543
  4595 0084 03F03F03 		and	r3, r3, #63
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 164
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 164
 
 
  4596              	.LVL577:
@@ -9838,7 +9838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2430:../../fatfs/ff.c **** 	return res;
  4637              		.loc 1 2430 20 is_stmt 1 discriminator 1 view .LVU1557
 2430:../../fatfs/ff.c **** 	return res;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 165
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 165
 
 
  4638              		.loc 1 2430 29 is_stmt 0 discriminator 1 view .LVU1558
@@ -9898,7 +9898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4682              		.loc 1 2638 11 is_stmt 0 view .LVU1570
  4683 0008 C16A     		ldr	r1, [r0, #44]
 2638:../../fatfs/ff.c **** 	if (res == FR_OK) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 166
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 166
 
 
  4684              		.loc 1 2638 44 view .LVU1571
@@ -9958,7 +9958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4721              		.loc 1 2649 7 view .LVU1588
  4722 002c B242     		cmp	r2, r6
  4723 002e 06D2     		bcs	.L351
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 167
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 167
 
 
 2650:../../fatfs/ff.c **** 		} while (res == FR_OK);
@@ -10018,7 +10018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4767              		.align	2
  4768              	.LC2:
  4769 0000 222A3A3C 		.ascii	"\"*:<>?|\177\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 168
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 168
 
 
  4769      3E3F7C7F 
@@ -10078,7 +10078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4812              		.loc 1 2873 4 view .LVU1610
  4813 000c 0393     		str	r3, [sp, #12]
 2873:../../fatfs/ff.c **** 	for (;;) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 169
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 169
 
 
  4814              		.loc 1 2873 13 is_stmt 1 view .LVU1611
@@ -10138,7 +10138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2874:../../fatfs/ff.c **** 		uc = tchar2uni(&p);			/* Get a character */
  4853              		.loc 1 2874 2 is_stmt 1 view .LVU1627
 2882:../../fatfs/ff.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 170
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 170
 
 
  4854              		.loc 1 2882 9 is_stmt 0 view .LVU1628
@@ -10198,7 +10198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4893 005a 0028     		cmp	r0, #0
  4894 005c E4D0     		beq	.L362
 2880:../../fatfs/ff.c **** 		if (di >= FF_MAX_LFN) return FR_INVALID_NAME;	/* Reject too long name */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 171
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 171
 
 
  4895              		.loc 1 2880 57 discriminator 2 view .LVU1644
@@ -10258,7 +10258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4935              		.loc 1 2904 3 view .LVU1658
 2904:../../fatfs/ff.c **** 		if (wc != ' ' && wc != '.') break;
  4936              		.loc 1 2904 11 is_stmt 0 view .LVU1659
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 172
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 172
 
 
  4937 0086 6FF00043 		mvn	r3, #-2147483648
@@ -10318,7 +10318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  4976              		.loc 1 2912 23 discriminator 1 view .LVU1674
  4977 00b2 202B     		cmp	r3, #32
  4978 00b4 FAD0     		beq	.L371
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 173
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 173
 
 
 2913:../../fatfs/ff.c **** 	while (di > 0 && lfn[di - 1] != '.') di--;	/* Find last dot (di<=si: no extension) */
@@ -10378,7 +10378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2917:../../fatfs/ff.c **** 	for (;;) {
  5018              		.loc 1 2917 16 is_stmt 0 view .LVU1690
  5019 00e0 4FF0080B 		mov	fp, #8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 174
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 174
 
 
 2917:../../fatfs/ff.c **** 	for (;;) {
@@ -10438,7 +10438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2921:../../fatfs/ff.c **** 			cf |= NS_LOSS | NS_LFN;
  5059              		.loc 1 2921 17 discriminator 2 view .LVU1706
  5060 010e 002B     		cmp	r3, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 175
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 175
 
 
  5061 0110 EDD1     		bne	.L379
@@ -10498,7 +10498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2978:../../fatfs/ff.c **** 	if (!(cf & NS_LFN)) {				/* When LFN is in 8.3 format without extended character, NT flags are cre
  5099              		.loc 1 2978 5 is_stmt 0 view .LVU1723
  5100 013e 009A     		ldr	r2, [sp]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 176
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 176
 
 
  5101 0140 02F00C03 		and	r3, r2, #12
@@ -10558,7 +10558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5140 0172 88F82B90 		strb	r9, [r8, #43]
 2986:../../fatfs/ff.c **** 
  5141              		.loc 1 2986 2 is_stmt 1 view .LVU1739
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 177
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 177
 
 
 2986:../../fatfs/ff.c **** 
@@ -10618,7 +10618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5182 0192 4FF0080A 		mov	r10, #8
 2934:../../fatfs/ff.c **** 		}
  5183              		.loc 1 2934 4 view .LVU1754
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 178
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 178
 
 
  5184 0196 ADE7     		b	.L377
@@ -10678,7 +10678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5223 01b4 49F00203 		orr	r3, r9, #2
  5224 01b8 0193     		str	r3, [sp, #4]
  5225              	.LVL646:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 179
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 179
 
 
 2947:../../fatfs/ff.c **** 			if (wc & 0x80) wc = ExCvt[wc & 0x7F];	/* Convert extended character to upper (SBCS) */
@@ -10738,7 +10738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5264 01e6 C0F30723 		ubfx	r3, r0, #8, #8
 2959:../../fatfs/ff.c **** 		} else {						/* SBC */
  5265              		.loc 1 2959 16 view .LVU1786
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 180
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 180
 
 
  5266 01ea 08EB0A02 		add	r2, r8, r10
@@ -10798,7 +10798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2964:../../fatfs/ff.c **** 					b |= 2;
  5306              		.loc 1 2964 8 view .LVU1801
  5307 021e 192B     		cmp	r3, #25
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 181
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 181
 
 
  5308 0220 03D8     		bhi	.L391
@@ -10858,7 +10858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5348 024e DBB2     		uxtb	r3, r3
  5349 0250 0093     		str	r3, [sp]
  5350              	.LVL661:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 182
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 182
 
 
 2977:../../fatfs/ff.c **** 	if ((b & 0x0C) == 0x0C || (b & 0x03) == 0x03) cf |= NS_LFN;	/* LFN entry needs to be created if co
@@ -10918,7 +10918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5399              		.cfi_offset 5, -28
  5400              		.cfi_offset 6, -24
  5401              		.cfi_offset 7, -20
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 183
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 183
 
 
  5402              		.cfi_offset 8, -16
@@ -10978,7 +10978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 1918:../../fatfs/ff.c **** 			}
  5440              		.loc 1 1918 5 is_stmt 1 view .LVU1840
 1918:../../fatfs/ff.c **** 			}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 184
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 184
 
 
  5441              		.loc 1 1918 12 is_stmt 0 view .LVU1841
@@ -11038,7 +11038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5482 0056 8046     		mov	r8, r0
  5483              	.LVL678:
 1917:../../fatfs/ff.c **** 				return 0;					/* Not matched */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 185
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 185
 
 
  5484              		.loc 1 1917 70 discriminator 1 view .LVU1855
@@ -11098,7 +11098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5525              	.L429:
 1922:../../fatfs/ff.c **** 		}
  5526              		.loc 1 1922 29 discriminator 1 view .LVU1869
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 186
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 186
 
 
  5527 008c 0020     		movs	r0, #0
@@ -11158,7 +11158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2447:../../fatfs/ff.c **** 	BYTE c;
  5577              		.loc 1 2447 2 view .LVU1876
 2447:../../fatfs/ff.c **** 	BYTE c;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 187
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 187
 
 
  5578              		.loc 1 2447 9 is_stmt 0 view .LVU1877
@@ -11218,7 +11218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5616              	.L438:
 2509:../../fatfs/ff.c **** 	} while (res == FR_OK);
  5617              		.loc 1 2509 3 is_stmt 1 view .LVU1894
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 188
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 188
 
 
 2509:../../fatfs/ff.c **** 	} while (res == FR_OK);
@@ -11278,7 +11278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5656              		.loc 1 2485 20 view .LVU1910
  5657 0052 02F03F01 		and	r1, r2, #63
  5658              	.LVL698:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 189
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 189
 
 
 2485:../../fatfs/ff.c **** 		if (c == DDEM || ((a & AM_VOL) && a != AM_LFN)) {	/* An entry without valid data */
@@ -11338,7 +11338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5695 0080 E262     		str	r2, [r4, #44]
 2493:../../fatfs/ff.c **** 						dp->blk_ofs = dp->dptr;	/* Start offset of LFN */
  5696              		.loc 1 2493 29 view .LVU1929
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 190
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 190
 
 
  5697 0082 1F46     		mov	r7, r3
@@ -11398,7 +11398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5736 00a8 04F12001 		add	r1, r4, #32
  5737 00ac 2846     		mov	r0, r5
  5738 00ae FFF7FEFF 		bl	mem_cmp
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 191
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 191
 
 
  5739              	.LVL706:
@@ -11458,7 +11458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5779 00d4 013F     		subs	r7, r7, #1
  5780              	.LVL715:
 2497:../../fatfs/ff.c **** 				}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 192
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 192
 
 
  5781              		.loc 1 2497 10 discriminator 5 view .LVU1959
@@ -11518,7 +11518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5829 0004 0446     		mov	r4, r0
  5830 0006 0191     		str	r1, [sp, #4]
 3065:../../fatfs/ff.c **** 	BYTE ns;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 193
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 193
 
 
  5831              		.loc 1 3065 2 is_stmt 1 view .LVU1968
@@ -11578,7 +11578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5868              		.loc 1 3102 4 view .LVU1985
 3102:../../fatfs/ff.c **** 			if (res != FR_OK) break;
  5869              		.loc 1 3102 10 is_stmt 0 view .LVU1986
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 194
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 194
 
 
  5870 0026 01A9     		add	r1, sp, #4
@@ -11638,7 +11638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5907 0052 2369     		ldr	r3, [r4, #16]
 3132:../../fatfs/ff.c **** 			}
  5908              		.loc 1 3132 54 view .LVU2004
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 195
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 195
 
 
  5909 0054 C3F30B03 		ubfx	r3, r3, #0, #12
@@ -11698,7 +11698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  5950              	.LVL735:
  5951              	.L461:
  5952              	.LCFI35:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 196
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 196
 
 
  5953              		.cfi_restore_state
@@ -11758,7 +11758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2527:../../fatfs/ff.c **** 	FATFS *fs = dp->obj.fs;
  6000              		.loc 1 2527 2 is_stmt 1 view .LVU2027
 2528:../../fatfs/ff.c **** #if FF_USE_LFN		/* LFN configuration */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 197
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 197
 
 
  6001              		.loc 1 2528 2 view .LVU2028
@@ -11818,7 +11818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6039              		.loc 1 2569 2 view .LVU2044
  6040 0030 FFF7FEFF 		bl	mem_cpy
  6041              	.LVL741:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 198
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 198
 
 
 2570:../../fatfs/ff.c **** 		dp->fn[NSFLAG] = NS_NOLFN;		/* Find only SFN */
@@ -11878,7 +11878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6081 0060 8146     		mov	r9, r0
  6082 0062 0028     		cmp	r0, #0
  6083 0064 F0D0     		beq	.L477
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 199
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 199
 
 
  6084              	.LVL747:
@@ -11938,7 +11938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6123              	.LVL752:
  6124              	.L470:
 2584:../../fatfs/ff.c **** 	if (res == FR_OK && --nent) {	/* Set LFN entry if needed */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 200
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 200
 
 
  6125              		.loc 1 2584 2 is_stmt 1 view .LVU2075
@@ -11998,7 +11998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6166              	.LVL759:
 2609:../../fatfs/ff.c **** #if FF_USE_LFN
  6167              		.loc 1 2609 4 is_stmt 1 view .LVU2089
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 201
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 201
 
 
  6168 00c2 0B22     		movs	r2, #11
@@ -12058,7 +12058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2588:../../fatfs/ff.c **** 			do {					/* Store LFN entries in bottom first */
  6207              		.loc 1 2588 10 view .LVU2105
  6208 00f0 FFF7FEFF 		bl	sum_sfn
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 202
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 202
 
 
  6209              	.LVL765:
@@ -12118,7 +12118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6250 0122 013C     		subs	r4, r4, #1
  6251              	.LVL772:
 2595:../../fatfs/ff.c **** 		}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 203
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 203
 
 
  6252              		.loc 1 2595 26 discriminator 1 view .LVU2119
@@ -12178,7 +12178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6302              		.cfi_offset 4, -16
  6303              		.cfi_offset 5, -12
  6304              		.cfi_offset 6, -8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 204
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 204
 
 
  6305              		.cfi_offset 14, -4
@@ -12238,7 +12238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6344 0024 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
 1134:../../fatfs/ff.c **** 			/* Create FSInfo structure */
  6345              		.loc 1 1134 31 discriminator 1 view .LVU2141
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 205
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 205
 
 
  6346 0026 012B     		cmp	r3, #1
@@ -12298,7 +12298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6388 006e 0132     		adds	r2, r2, #1
 1143:../../fatfs/ff.c **** 			disk_write(fs->pdrv, fs->win, fs->winsect, 1);
  6389              		.loc 1 1143 16 view .LVU2154
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 206
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 206
 
 
  6390 0070 2263     		str	r2, [r4, #48]
@@ -12358,7 +12358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3651:../../fatfs/ff.c **** 	FRESULT res;
 3652:../../fatfs/ff.c **** 	const TCHAR *rp = path;
 3653:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 207
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 207
 
 
 3654:../../fatfs/ff.c **** 
@@ -12418,7 +12418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3708:../../fatfs/ff.c **** 	if (!fp) return FR_INVALID_OBJECT;
 3709:../../fatfs/ff.c **** 
 3710:../../fatfs/ff.c **** 	/* Get logical drive number */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 208
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 208
 
 
 3711:../../fatfs/ff.c **** 	mode &= FF_FS_READONLY ? FA_READ : FA_READ | FA_WRITE | FA_CREATE_ALWAYS | FA_CREATE_NEW | FA_OPEN
@@ -12478,7 +12478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3765:../../fatfs/ff.c **** #endif
 3766:../../fatfs/ff.c **** 				{
 3767:../../fatfs/ff.c **** 					/* Set directory entry initial state */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 209
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 209
 
 
 3768:../../fatfs/ff.c **** 					cl = ld_clust(fs, dj.dir);			/* Get current cluster chain */
@@ -12538,7 +12538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3822:../../fatfs/ff.c **** 				fp->obj.c_ofs = dj.blk_ofs;
 3823:../../fatfs/ff.c **** 				init_alloc_info(fs, &fp->obj);
 3824:../../fatfs/ff.c **** 			} else
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 210
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 210
 
 
 3825:../../fatfs/ff.c **** #endif
@@ -12598,7 +12598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3879:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
 3880:../../fatfs/ff.c **** /* Read File                                                             */
 3881:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 211
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 211
 
 
 3882:../../fatfs/ff.c **** 
@@ -12658,7 +12658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3936:../../fatfs/ff.c **** #if !FF_FS_READONLY && FF_FS_MINIMIZE <= 2		/* Replace one of the read sectors with cached data if 
 3937:../../fatfs/ff.c **** #if FF_FS_TINY
 3938:../../fatfs/ff.c **** 				if (fs->wflag && fs->winsect - sect < cc) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 212
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 212
 
 
 3939:../../fatfs/ff.c **** 					mem_cpy(rbuff + ((fs->winsect - sect) * SS(fs)), fs->win, SS(fs));
@@ -12718,7 +12718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3993:../../fatfs/ff.c **** 	DWORD clst;
 3994:../../fatfs/ff.c **** 	LBA_t sect;
 3995:../../fatfs/ff.c **** 	UINT wcnt, cc, csect;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 213
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 213
 
 
 3996:../../fatfs/ff.c **** 	const BYTE *wbuff = (const BYTE*)buff;
@@ -12778,7 +12778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4050:../../fatfs/ff.c **** 				}
 4051:../../fatfs/ff.c **** 				if (disk_write(fs->pdrv, wbuff, sect, cc) != RES_OK) ABORT(fs, FR_DISK_ERR);
 4052:../../fatfs/ff.c **** #if FF_FS_MINIMIZE <= 2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 214
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 214
 
 
 4053:../../fatfs/ff.c **** #if FF_FS_TINY
@@ -12838,7 +12838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4107:../../fatfs/ff.c **** 	FIL* fp		/* Pointer to the file object */
 4108:../../fatfs/ff.c **** )
 4109:../../fatfs/ff.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 215
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 215
 
 
 4110:../../fatfs/ff.c **** 	FRESULT res;
@@ -12898,7 +12898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4164:../../fatfs/ff.c **** 					st_dword(dir + DIR_FileSize, (DWORD)fp->obj.objsize);	/* Update file size */
 4165:../../fatfs/ff.c **** 					st_dword(dir + DIR_ModTime, tm);				/* Update modified time */
 4166:../../fatfs/ff.c **** 					st_word(dir + DIR_LstAccDate, 0);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 216
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 216
 
 
 4167:../../fatfs/ff.c **** 					fs->wflag = 1;
@@ -12958,7 +12958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4221:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
 4222:../../fatfs/ff.c **** 
 4223:../../fatfs/ff.c **** FRESULT f_chdrive (
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 217
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 217
 
 
 4224:../../fatfs/ff.c **** 	const TCHAR* path		/* Drive number to set */
@@ -13018,7 +13018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4278:../../fatfs/ff.c **** #endif
 4279:../../fatfs/ff.c **** 					{
 4280:../../fatfs/ff.c **** 						fs->cdir = ld_clust(fs, dj.dir);					/* Sub-directory cluster */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 218
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 218
 
 
 4281:../../fatfs/ff.c **** 					}
@@ -13078,7 +13078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4335:../../fatfs/ff.c **** 				res = dir_sdi(&dj, 1 * SZDIRE);	/* Get parent directory */
 4336:../../fatfs/ff.c **** 				if (res != FR_OK) break;
 4337:../../fatfs/ff.c **** 				res = move_window(fs, dj.sect);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 219
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 219
 
 
 4338:../../fatfs/ff.c **** 				if (res != FR_OK) break;
@@ -13138,7 +13138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4392:../../fatfs/ff.c **** #endif /* FF_FS_RPATH >= 2 */
 4393:../../fatfs/ff.c **** #endif /* FF_FS_RPATH >= 1 */
 4394:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 220
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 220
 
 
 4395:../../fatfs/ff.c **** 
@@ -13198,7 +13198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4449:../../fatfs/ff.c **** 				*tbl = 0;		/* Terminate table */
 4450:../../fatfs/ff.c **** 			} else {
 4451:../../fatfs/ff.c **** 				res = FR_NOT_ENOUGH_CORE;	/* Given table size is smaller than required */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 221
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 221
 
 
 4452:../../fatfs/ff.c **** 			}
@@ -13258,7 +13258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4506:../../fatfs/ff.c **** 			}
 4507:../../fatfs/ff.c **** 			if (clst != 0) {
 4508:../../fatfs/ff.c **** 				while (ofs > bcs) {						/* Cluster following loop */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 222
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 222
 
 
 4509:../../fatfs/ff.c **** 					ofs -= bcs; fp->fptr += bcs;
@@ -13318,7 +13318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4563:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
 4564:../../fatfs/ff.c **** 
 4565:../../fatfs/ff.c **** FRESULT f_opendir (
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 223
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 223
 
 
 4566:../../fatfs/ff.c **** 	DIR* dp,			/* Pointer to directory object to create */
@@ -13378,7 +13378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4620:../../fatfs/ff.c **** 
 4621:../../fatfs/ff.c **** 	LEAVE_FF(fs, res);
 4622:../../fatfs/ff.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 224
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 224
 
 
 4623:../../fatfs/ff.c **** 
@@ -13438,7 +13438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4677:../../fatfs/ff.c **** 			res = DIR_READ_FILE(dp);		/* Read an item */
 4678:../../fatfs/ff.c **** 			if (res == FR_NO_FILE) res = FR_OK;	/* Ignore end of directory */
 4679:../../fatfs/ff.c **** 			if (res == FR_OK) {				/* A valid entry is found */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 225
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 225
 
 
 4680:../../fatfs/ff.c **** 				get_fileinfo(dp, fno);		/* Get the object information */
@@ -13498,7 +13498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4734:../../fatfs/ff.c **** 	if (res == FR_OK) {
 4735:../../fatfs/ff.c **** 		res = f_findnext(dp, fno);	/* Find the first item */
 4736:../../fatfs/ff.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 226
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 226
 
 
 4737:../../fatfs/ff.c **** 	return res;
@@ -13558,7 +13558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4791:../../fatfs/ff.c **** 	FATFS *fs;
 4792:../../fatfs/ff.c **** 	DWORD nfree, clst, stat;
 4793:../../fatfs/ff.c **** 	LBA_t sect;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 227
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 227
 
 
 4794:../../fatfs/ff.c **** 	UINT i;
@@ -13618,7 +13618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4848:../../fatfs/ff.c **** 							if (ld_word(fs->win + i) == 0) nfree++;
 4849:../../fatfs/ff.c **** 							i += 2;
 4850:../../fatfs/ff.c **** 						} else {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 228
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 228
 
 
 4851:../../fatfs/ff.c **** 							if ((ld_dword(fs->win + i) & 0x0FFFFFFF) == 0) nfree++;
@@ -13678,7 +13678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4905:../../fatfs/ff.c **** 				res = FR_DISK_ERR;
 4906:../../fatfs/ff.c **** 			} else {
 4907:../../fatfs/ff.c **** 				fp->flag &= (BYTE)~FA_DIRTY;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 229
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 229
 
 
 4908:../../fatfs/ff.c **** 			}
@@ -13738,7 +13738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4962:../../fatfs/ff.c **** 					init_alloc_info(fs, &obj);
 4963:../../fatfs/ff.c **** 					dclst = obj.sclust;
 4964:../../fatfs/ff.c **** 				} else
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 230
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 230
 
 
 4965:../../fatfs/ff.c **** #endif
@@ -13798,7 +13798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5019:../../fatfs/ff.c **** 	const TCHAR* path		/* Pointer to the directory path */
 5020:../../fatfs/ff.c **** )
 5021:../../fatfs/ff.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 231
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 231
 
 
 5022:../../fatfs/ff.c **** 	FRESULT res;
@@ -13858,7 +13858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5076:../../fatfs/ff.c **** 				{
 5077:../../fatfs/ff.c **** 					st_dword(dj.dir + DIR_ModTime, tm);	/* Created time */
 5078:../../fatfs/ff.c **** 					st_clust(fs, dj.dir, dcl);			/* Table start cluster */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 232
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 232
 
 
 5079:../../fatfs/ff.c **** 					dj.dir[DIR_Attr] = AM_DIR;			/* Attribute */
@@ -13918,7 +13918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5133:../../fatfs/ff.c **** 				mem_cpy(buf, fs->dirbuf, SZDIRE * 2);	/* Save 85+C0 entry of old object */
 5134:../../fatfs/ff.c **** 				mem_cpy(&djn, &djo, sizeof djo);
 5135:../../fatfs/ff.c **** 				res = follow_path(&djn, path_new);		/* Make sure if new object name is not in use */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 233
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 233
 
 
 5136:../../fatfs/ff.c **** 				if (res == FR_OK) {						/* Is new name already in use by any other object? */
@@ -13978,7 +13978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5190:../../fatfs/ff.c **** 				}
 5191:../../fatfs/ff.c **** 			}
 5192:../../fatfs/ff.c **** /* End of the critical section */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 234
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 234
 
 
 5193:../../fatfs/ff.c **** 		}
@@ -14038,7 +14038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5247:../../fatfs/ff.c **** 	}
 5248:../../fatfs/ff.c **** 
 5249:../../fatfs/ff.c **** 	LEAVE_FF(fs, res);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 235
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 235
 
 
 5250:../../fatfs/ff.c **** }
@@ -14098,7 +14098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5304:../../fatfs/ff.c **** /*-----------------------------------------------------------------------*/
 5305:../../fatfs/ff.c **** 
 5306:../../fatfs/ff.c **** FRESULT f_getlabel (
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 236
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 236
 
 
 5307:../../fatfs/ff.c **** 	const TCHAR* path,	/* Logical drive number */
@@ -14158,7 +14158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5361:../../fatfs/ff.c **** 						label[di] = 0;
 5362:../../fatfs/ff.c **** 						if (di == 0) break;
 5363:../../fatfs/ff.c **** 					} while (label[--di] == ' ');
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 237
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 237
 
 
 5364:../../fatfs/ff.c **** 				}
@@ -14218,7 +14218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5418:../../fatfs/ff.c **** 	if (res != FR_OK) LEAVE_FF(fs, res);
 5419:../../fatfs/ff.c **** 
 5420:../../fatfs/ff.c **** #if FF_FS_EXFAT
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 238
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 238
 
 
 5421:../../fatfs/ff.c **** 	if (fs->fs_type == FS_EXFAT) {	/* On the exFAT volume */
@@ -14278,7 +14278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5475:../../fatfs/ff.c **** 				mem_cpy(dj.dir + XDIR_Label, dirvn, 22);
 5476:../../fatfs/ff.c **** 			} else {
 5477:../../fatfs/ff.c **** 				if (di != 0) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 239
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 239
 
 
 5478:../../fatfs/ff.c **** 					mem_cpy(dj.dir, dirvn, 11);	/* Change the volume label */
@@ -14338,7 +14338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5532:../../fatfs/ff.c **** 	res = validate(&fp->obj, &fs);		/* Check validity of the file object */
 5533:../../fatfs/ff.c **** 	if (res != FR_OK || (res = (FRESULT)fp->err) != FR_OK) LEAVE_FF(fs, res);
 5534:../../fatfs/ff.c **** 	if (fsz == 0 || fp->obj.objsize != 0 || !(fp->flag & FA_WRITE)) LEAVE_FF(fs, FR_DENIED);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 240
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 240
 
 
 5535:../../fatfs/ff.c **** #if FF_FS_EXFAT
@@ -14398,7 +14398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5589:../../fatfs/ff.c **** 			fp->obj.objsize = fsz;
 5590:../../fatfs/ff.c **** 			if (FF_FS_EXFAT) fp->obj.stat = 2;	/* Set status 'contiguous chain' */
 5591:../../fatfs/ff.c **** 			fp->flag |= FA_MODIFIED;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 241
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 241
 
 
 5592:../../fatfs/ff.c **** 			if (fs->free_clst <= fs->n_fatent - 2) {	/* Update FSINFO */
@@ -14458,7 +14458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5646:../../fatfs/ff.c **** 		}
 5647:../../fatfs/ff.c **** 		sect = clst2sect(fs, fp->clust);			/* Get current data sector */
 5648:../../fatfs/ff.c **** 		if (sect == 0) ABORT(fs, FR_INT_ERR);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 242
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 242
 
 
 5649:../../fatfs/ff.c **** 		sect += csect;
@@ -14518,7 +14518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6425              	.LCFI41:
  6426              		.cfi_def_cfa_offset 36
  6427              		.cfi_offset 4, -36
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 243
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 243
 
 
  6428              		.cfi_offset 5, -32
@@ -14578,7 +14578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5719:../../fatfs/ff.c **** 		rnd = GET_FATTIME();			/* Random seed */
 5720:../../fatfs/ff.c **** 		align = GPT_ALIGN / ss;			/* Partition alignment [sector] */
 5721:../../fatfs/ff.c **** 		sz_pt = GPT_ITEMS * SZ_GPTE / ss;	/* Size of PT [sector] */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 244
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 244
 
 
 5722:../../fatfs/ff.c **** 		s_bpt = sz_drv - sz_pt - 1;		/* Backup PT start sector */
@@ -14638,7 +14638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5776:../../fatfs/ff.c **** 		for (i = 0, bcc= 0xFFFFFFFF; i < 92; bcc = crc32(bcc, buf[i++])) ;	/* Calculate header check sum 
 5777:../../fatfs/ff.c **** 		st_dword(buf + GPTH_Bcc, ~bcc);					/* Header check sum */
 5778:../../fatfs/ff.c **** 		if (disk_write(drv, buf, sz_drv - 1, 1) != RES_OK) return FR_DISK_ERR;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 245
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 245
 
 
 5779:../../fatfs/ff.c **** 
@@ -14698,7 +14698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6498 0040 009C     		ldr	r4, [sp]
  6499 0042 2046     		mov	r0, r4
  6500 0044 FFF7FEFF 		bl	mem_set
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 246
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 246
 
 
  6501              	.LVL800:
@@ -14758,7 +14758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5805:../../fatfs/ff.c **** 
 5806:../../fatfs/ff.c **** 			cy = (UINT)(s_lba32 / n_sc / n_hd);		/* Start cylinder */
  6545              		.loc 1 5806 4 is_stmt 1 view .LVU2200
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 247
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 247
 
 
  6546              		.loc 1 5806 24 is_stmt 0 view .LVU2201
@@ -14818,7 +14818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6593 00ae A2FB0312 		umull	r1, r2, r2, r3
  6594              	.LVL814:
  6595              		.loc 1 5813 40 view .LVU2222
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 248
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 248
 
 
  6596 00b2 991A     		subs	r1, r3, r2
@@ -14878,7 +14878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5796:../../fatfs/ff.c **** 			n_lba32 = (DWORD)plst[i];	/* Get partition size */
  6641              		.loc 1 5796 53 is_stmt 1 discriminator 1 view .LVU2243
 5796:../../fatfs/ff.c **** 			n_lba32 = (DWORD)plst[i];	/* Get partition size */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 249
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 249
 
 
  6642              		.loc 1 5796 37 is_stmt 0 discriminator 1 view .LVU2244
@@ -14938,7 +14938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6682 0116 A2D2     		bcs	.L498
  6683 0118 9FE7     		b	.L497
  6684              	.LVL823:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 250
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 250
 
 
  6685              	.L499:
@@ -14998,7 +14998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6729              	.L507:
  6730 0144 05411004 		.word	68174085
  6731 0148 1F85EB51 		.word	1374389535
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 251
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 251
 
 
  6732              		.cfi_endproc
@@ -15058,7 +15058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6776 000e 00F0A680 		beq	.L509
  6777 0012 8146     		mov	r9, r0
  6778 0014 8846     		mov	r8, r1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 252
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 252
 
 
 2701:../../fatfs/ff.c **** 			si = di = hs = 0;
@@ -15118,7 +15118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6817              		.loc 1 2703 26 is_stmt 1 view .LVU2295
 2703:../../fatfs/ff.c **** 				wc = fs->lfnbuf[si++];		/* Get an LFN character (UTF-16) */
  6818              		.loc 1 2703 13 is_stmt 0 view .LVU2296
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 253
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 253
 
 
  6819 0040 FB68     		ldr	r3, [r7, #12]
@@ -15178,7 +15178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6857              		.loc 1 2714 19 is_stmt 0 view .LVU2312
  6858 0064 4444     		add	r4, r4, r8
  6859              	.LVL843:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 254
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 254
 
 
 2714:../../fatfs/ff.c **** 		}
@@ -15238,7 +15238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2732:../../fatfs/ff.c **** #else					/* ANSI/OEM output */
  6901              		.loc 1 2732 6 is_stmt 0 view .LVU2326
  6902 0096 0444     		add	r4, r4, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 255
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 255
 
 
  6903              	.LVL850:
@@ -15298,7 +15298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6942              		.loc 1 2723 50 discriminator 1 view .LVU2341
  6943 00be 0134     		adds	r4, r4, #1
  6944              	.LVL856:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 256
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 256
 
 
  6945              	.L520:
@@ -15358,7 +15358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  6985              		.loc 1 2720 18 view .LVU2355
  6986 00f8 3E46     		mov	r6, r7
  6987 00fa CEE7     		b	.L523
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 257
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 257
 
 
  6988              	.LVL861:
@@ -15418,7 +15418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7026 011e D9F81C30 		ldr	r3, [r9, #28]
 2751:../../fatfs/ff.c **** 	}
  7027              		.loc 1 2751 15 view .LVU2372
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 258
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 258
 
 
  7028 0122 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
@@ -15478,7 +15478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7065 0156 FFF7FEFF 		bl	ld_word
  7066              	.LVL868:
 2769:../../fatfs/ff.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 259
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 259
 
 
  7067              		.loc 1 2769 13 discriminator 1 view .LVU2390
@@ -15538,7 +15538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 2744:../../fatfs/ff.c **** 				if (wc == '.') lcf = NS_EXT;
  7108              		.loc 1 2744 5 is_stmt 1 view .LVU2404
 2744:../../fatfs/ff.c **** 				if (wc == '.') lcf = NS_EXT;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 260
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 260
 
 
  7109              		.loc 1 2744 8 is_stmt 0 view .LVU2405
@@ -15598,7 +15598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7150              		.section	.text.f_mount,"ax",%progbits
  7151              		.align	1
  7152              		.global	f_mount
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 261
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 261
 
 
  7153              		.syntax unified
@@ -15658,7 +15658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7194              		.loc 1 3658 2 is_stmt 1 view .LVU2433
 3658:../../fatfs/ff.c **** 
  7195              		.loc 1 3658 6 is_stmt 0 view .LVU2434
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 262
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 262
 
 
  7196 0016 0D4B     		ldr	r3, .L552
@@ -15718,7 +15718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7234 0036 04B0     		add	sp, sp, #16
  7235              	.LCFI48:
  7236              		.cfi_remember_state
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 263
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 263
 
 
  7237              		.cfi_def_cfa_offset 8
@@ -15778,7 +15778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7285              	.LCFI50:
  7286              		.cfi_def_cfa_offset 24
  7287              		.cfi_offset 4, -24
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 264
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 264
 
 
  7288              		.cfi_offset 5, -20
@@ -15838,7 +15838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7326 0020 0546     		mov	r5, r0
  7327 0022 28B1     		cbz	r0, .L581
  7328              	.LVL899:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 265
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 265
 
 
  7329              	.L556:
@@ -15898,7 +15898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7369 0044 002B     		cmp	r3, #0
  7370 0046 3EDB     		blt	.L582
  7371              	.L557:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 266
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 266
 
 
  7372              	.LVL904:
@@ -15958,7 +15958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7411              	.LVL908:
 3769:../../fatfs/ff.c **** 					dj.dir[DIR_Attr] = AM_ARC;			/* Reset attribute */
  7412              		.loc 1 3769 6 is_stmt 0 view .LVU2504
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 267
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 267
 
 
  7413 0078 FFF7FEFF 		bl	st_dword
@@ -16018,7 +16018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7453              		.loc 1 3777 7 is_stmt 1 view .LVU2518
 3777:../../fatfs/ff.c **** 							res = move_window(fs, sc);
  7454              		.loc 1 3777 10 is_stmt 0 view .LVU2519
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 268
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 268
 
 
  7455 00ae 0546     		mov	r5, r0
@@ -16078,7 +16078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7496              		.loc 1 3741 8 view .LVU2532
  7497 00d8 13F0110F 		tst	r3, #17
  7498 00dc 13D1     		bne	.L571
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 269
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 269
 
 
 3744:../../fatfs/ff.c **** 				}
@@ -16138,7 +16138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3796:../../fatfs/ff.c **** 			if (mode & FA_CREATE_ALWAYS) mode |= FA_MODIFIED;	/* Set file change flag if created or overwrit
  7538              		.loc 1 3796 3 is_stmt 1 view .LVU2548
 3796:../../fatfs/ff.c **** 			if (mode & FA_CREATE_ALWAYS) mode |= FA_MODIFIED;	/* Set file change flag if created or overwrit
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 270
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 270
 
 
  7539              		.loc 1 3796 6 is_stmt 0 view .LVU2549
@@ -16198,7 +16198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7576              		.loc 1 3828 21 discriminator 1 view .LVU2566
  7577 0136 F060     		str	r0, [r6, #12]
 3833:../../fatfs/ff.c **** 			fp->obj.id = fs->id;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 271
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 271
 
 
  7578              		.loc 1 3833 4 is_stmt 1 view .LVU2567
@@ -16258,7 +16258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7613              		.loc 1 3843 28 discriminator 1 view .LVU2586
  7614 015e 7CB3     		cbz	r4, .L564
 3844:../../fatfs/ff.c **** 				bcs = (DWORD)fs->csize * SS(fs);	/* Cluster size in byte */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 272
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 272
 
 
  7615              		.loc 1 3844 5 is_stmt 1 view .LVU2587
@@ -16318,7 +16318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3848:../../fatfs/ff.c **** 					if (clst <= 1) res = FR_INT_ERR;
  7654              		.loc 1 3848 13 is_stmt 0 view .LVU2603
  7655 017c 3046     		mov	r0, r6
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 273
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 273
 
 
  7656 017e FFF7FEFF 		bl	get_fat
@@ -16378,7 +16378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7694              	.LVL942:
 3855:../../fatfs/ff.c **** 						res = FR_INT_ERR;
  7695              		.loc 1 3855 6 is_stmt 1 view .LVU2620
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 274
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 274
 
 
 3855:../../fatfs/ff.c **** 						res = FR_INT_ERR;
@@ -16438,7 +16438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3788:../../fatfs/ff.c **** 				} else {
  7735              		.loc 1 3788 10 view .LVU2636
  7736 01ca 2BE7     		b	.L556
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 275
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 275
 
 
  7737              	.LVL950:
@@ -16498,7 +16498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7788 000a 1746     		mov	r7, r2
  7789 000c 9846     		mov	r8, r3
 3890:../../fatfs/ff.c **** 	FATFS *fs;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 276
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 276
 
 
  7790              		.loc 1 3890 2 is_stmt 1 view .LVU2642
@@ -16558,7 +16558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7826              	.LVL959:
 3902:../../fatfs/ff.c **** 	remain = fp->obj.objsize - fp->fptr;
  7827              		.loc 1 3902 5 view .LVU2661
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 277
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 277
 
 
  7828 002e 13F0010F 		tst	r3, #1
@@ -16618,7 +16618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7868 005c 4FF0010A 		mov	r10, #1
  7869 0060 84F811A0 		strb	r10, [r4, #17]
 3924:../../fatfs/ff.c **** 				fp->clust = clst;				/* Update current cluster */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 278
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 278
 
 
  7870              		.loc 1 3924 29 discriminator 1 view .LVU2676
@@ -16678,7 +16678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3943:../../fatfs/ff.c **** 				}
  7910              		.loc 1 3943 6 is_stmt 1 view .LVU2691
  7911 0090 4FF48052 		mov	r2, #4096
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 279
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 279
 
 
  7912 0094 04F12801 		add	r1, r4, #40
@@ -16738,7 +16738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7952 00c8 6369     		ldr	r3, [r4, #20]
 3963:../../fatfs/ff.c **** 		if (rcnt > btr) rcnt = btr;					/* Clip it by btr if needed */
  7953              		.loc 1 3963 34 view .LVU2706
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 280
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 280
 
 
  7954 00ca C3F30B03 		ubfx	r3, r3, #0, #12
@@ -16798,7 +16798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  7994              	.L609:
 3906:../../fatfs/ff.c **** 		btr -= rcnt, *br += rcnt, rbuff += rcnt, fp->fptr += rcnt) {
  7995              		.loc 1 3906 11 is_stmt 1 view .LVU2721
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 281
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 281
 
 
  7996 00fa 002D     		cmp	r5, #0
@@ -16858,7 +16858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3924:../../fatfs/ff.c **** 				fp->clust = clst;				/* Update current cluster */
  8033              		.loc 1 3924 5 view .LVU2739
 3924:../../fatfs/ff.c **** 				fp->clust = clst;				/* Update current cluster */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 282
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 282
 
 
  8034              		.loc 1 3924 8 is_stmt 0 view .LVU2740
@@ -16918,7 +16918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8071              		.loc 1 3932 24 view .LVU2757
  8072 0148 BBF80A20 		ldrh	r2, [fp, #10]
 3932:../../fatfs/ff.c **** 					cc = fs->csize - csect;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 283
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 283
 
 
  8073              		.loc 1 3932 8 view .LVU2758
@@ -16978,7 +16978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8116 017c 04F12801 		add	r1, r4, #40
  8117 0180 9BF80100 		ldrb	r0, [fp, #1]	@ zero_extendqisi2
  8118 0184 FFF7FEFF 		bl	disk_write
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 284
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 284
 
 
  8119              	.LVL993:
@@ -17038,7 +17038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 3902:../../fatfs/ff.c **** 	remain = fp->obj.objsize - fp->fptr;
  8159              		.loc 1 3902 29 discriminator 1 view .LVU2784
  8160 01b4 DDE7     		b	.L590
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 285
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 285
 
 
  8161              		.cfi_endproc
@@ -17098,7 +17098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8207 000e 0023     		movs	r3, #0
  8208              	.LVL1003:
 3999:../../fatfs/ff.c **** 	res = validate(&fp->obj, &fs);			/* Check validity of the file object */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 286
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 286
 
 
  8209              		.loc 1 3999 6 view .LVU2795
@@ -17158,7 +17158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8247              		.loc 1 4006 7 view .LVU2811
  8248 003c A6E0     		b	.L645
  8249              	.LVL1009:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 287
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 287
 
 
  8250              	.L629:
@@ -17218,7 +17218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8286              		.loc 1 4038 4 is_stmt 1 view .LVU2829
 4038:../../fatfs/ff.c **** 				if (disk_write(fs->pdrv, fp->buf, fp->sect, 1) != RES_OK) ABORT(fs, FR_DISK_ERR);
  8287              		.loc 1 4038 8 is_stmt 0 view .LVU2830
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 288
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 288
 
 
  8288 005e 94F91030 		ldrsb	r3, [r4, #16]
@@ -17278,7 +17278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4049:../../fatfs/ff.c **** 				}
  8326              		.loc 1 4049 6 is_stmt 1 view .LVU2847
 4049:../../fatfs/ff.c **** 				}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 289
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 289
 
 
  8327              		.loc 1 4049 9 is_stmt 0 view .LVU2848
@@ -17338,7 +17338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8371              	.L651:
 4031:../../fatfs/ff.c **** 				fp->clust = clst;			/* Update current cluster */
  8372              		.loc 1 4031 29 is_stmt 1 discriminator 1 view .LVU2859
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 290
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 290
 
 
  8373 00c6 4FF0010A 		mov	r10, #1
@@ -17398,7 +17398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8414 0102 84F811A0 		strb	r10, [r4, #17]
 4044:../../fatfs/ff.c **** 			sect += csect;
  8415              		.loc 1 4044 19 discriminator 1 view .LVU2873
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 291
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 291
 
 
  8416 0106 CDF804A0 		str	r10, [sp, #4]
@@ -17458,7 +17458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8455              		.loc 1 4074 10 is_stmt 0 view .LVU2888
  8456 0136 E369     		ldr	r3, [r4, #28]
 4074:../../fatfs/ff.c **** 				fp->fptr < fp->obj.objsize &&
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 292
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 292
 
 
  8457              		.loc 1 4074 7 view .LVU2889
@@ -17518,7 +17518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8495 015e 3146     		mov	r1, r6
  8496 0160 1844     		add	r0, r0, r3
  8497 0162 FFF7FEFF 		bl	mem_cpy
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 293
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 293
 
 
  8498              	.LVL1035:
@@ -17578,7 +17578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8536              		.loc 1 4011 9 is_stmt 0 view .LVU2921
  8537 018e 6369     		ldr	r3, [r4, #20]
 4011:../../fatfs/ff.c **** 			csect = (UINT)(fp->fptr / SS(fs)) & (fs->csize - 1);	/* Sector offset in the cluster */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 294
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 294
 
 
  8538              		.loc 1 4011 16 view .LVU2922
@@ -17638,7 +17638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4017:../../fatfs/ff.c **** 					}
  8576              		.loc 1 4017 14 view .LVU2939
  8577 01bc 43E7     		b	.L631
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 295
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 295
 
 
  8578              	.LVL1044:
@@ -17698,7 +17698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8621              		.section	.text.f_sync,"ax",%progbits
  8622              		.align	1
  8623              		.global	f_sync
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 296
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 296
 
 
  8624              		.syntax unified
@@ -17758,7 +17758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4120:../../fatfs/ff.c **** 				if (disk_write(fs->pdrv, fp->buf, fp->sect, 1) != RES_OK) LEAVE_FF(fs, FR_DISK_ERR);
  8665              		.loc 1 4120 7 is_stmt 0 view .LVU2966
  8666 0016 13F0800F 		tst	r3, #128
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 297
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 297
 
 
  8667 001a 06D1     		bne	.L662
@@ -17818,7 +17818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8709 0042 2374     		strb	r3, [r4, #16]
  8710 0044 EAE7     		b	.L659
  8711              	.LVL1058:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 298
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 298
 
 
  8712              	.L663:
@@ -17878,7 +17878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8752              		.loc 1 4168 12 is_stmt 0 view .LVU2992
  8753 007e 0198     		ldr	r0, [sp, #4]
  8754 0080 FFF7FEFF 		bl	sync_fs
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 299
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 299
 
 
  8755              	.LVL1065:
@@ -17938,7 +17938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4195:../../fatfs/ff.c **** 	if (res == FR_OK)
  8802              		.loc 1 4195 8 is_stmt 0 view .LVU3002
  8803 0006 FFF7FEFF 		bl	f_sync
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 300
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 300
 
 
  8804              	.LVL1068:
@@ -17998,7 +17998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8849              		.loc 1 4406 1 is_stmt 1 view -0
  8850              		.cfi_startproc
  8851              		@ args = 0, pretend = 0, frame = 8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 301
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 301
 
 
  8852              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -18058,7 +18058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8891 001a B8F1000F 		cmp	r8, #0
  8892 001e 42D1     		bne	.L673
 4483:../../fatfs/ff.c **** 			ofs = fp->obj.objsize;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 302
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 302
 
 
  8893              		.loc 1 4483 3 is_stmt 1 view .LVU3029
@@ -18118,7 +18118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8930 0040 6B1E     		subs	r3, r5, #1
 4491:../../fatfs/ff.c **** 				fp->fptr = (ifptr - 1) & ~(FSIZE_t)(bcs - 1);	/* start from the current cluster */
  8931              		.loc 1 4491 15 view .LVU3047
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 303
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 303
 
 
  8932 0042 B3FBF7F3 		udiv	r3, r3, r7
@@ -18178,7 +18178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  8969              		.loc 1 4505 5 is_stmt 1 view .LVU3064
 4505:../../fatfs/ff.c **** 			}
  8970              		.loc 1 4505 15 is_stmt 0 view .LVU3065
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 304
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 304
 
 
  8971 0060 A061     		str	r0, [r4, #24]
@@ -18238,7 +18238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9009 0086 0ED0     		beq	.L673
 4544:../../fatfs/ff.c **** 				if (disk_write(fs->pdrv, fp->buf, fp->sect, 1) != RES_OK) ABORT(fs, FR_DISK_ERR);
  9010              		.loc 1 4544 4 is_stmt 1 view .LVU3082
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 305
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 305
 
 
 4544:../../fatfs/ff.c **** 				if (disk_write(fs->pdrv, fp->buf, fp->sect, 1) != RES_OK) ABORT(fs, FR_DISK_ERR);
@@ -18298,7 +18298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9053 00b2 FFF7FEFF 		bl	create_chain
  9054              	.LVL1091:
 4500:../../fatfs/ff.c **** 					if (clst == 0xFFFFFFFF) ABORT(fs, FR_DISK_ERR);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 306
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 306
 
 
  9055              		.loc 1 4500 6 is_stmt 1 view .LVU3095
@@ -18358,7 +18358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9092 00d8 2946     		mov	r1, r5
  9093 00da 2046     		mov	r0, r4
  9094 00dc FFF7FEFF 		bl	get_fat
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 307
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 307
 
 
  9095              	.LVL1096:
@@ -18418,7 +18418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4511:../../fatfs/ff.c **** 						if (FF_FS_EXFAT && fp->fptr > fp->obj.objsize) {	/* No FAT chain object needs correct objsize
  9133              		.loc 1 4511 6 is_stmt 1 view .LVU3129
 4511:../../fatfs/ff.c **** 						if (FF_FS_EXFAT && fp->fptr > fp->obj.objsize) {	/* No FAT chain object needs correct objsize
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 308
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 308
 
 
  9134              		.loc 1 4511 12 is_stmt 0 view .LVU3130
@@ -18478,7 +18478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9172              		.loc 1 4532 6 is_stmt 1 view .LVU3146
 4532:../../fatfs/ff.c **** 					nsect += (DWORD)(ofs / SS(fs));
  9173              		.loc 1 4532 9 is_stmt 0 view .LVU3147
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 309
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 309
 
 
  9174 012e 60B1     		cbz	r0, .L704
@@ -18538,7 +18538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9212              	.LVL1110:
  9213              	.L696:
 4487:../../fatfs/ff.c **** 		if (ofs > 0) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 310
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 310
 
 
  9214              		.loc 1 4487 20 view .LVU3164
@@ -18598,7 +18598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9254 0180 84F81180 		strb	r8, [r4, #17]
 4549:../../fatfs/ff.c **** #endif
  9255              		.loc 1 4549 58 is_stmt 1 discriminator 1 view .LVU3179
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 311
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 311
 
 
 4549:../../fatfs/ff.c **** #endif
@@ -18658,7 +18658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9301 0012 FFF7FEFF 		bl	mount_volume
  9302              	.LVL1120:
 4579:../../fatfs/ff.c **** 		dp->obj.fs = fs;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 312
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 312
 
 
  9303              		.loc 1 4579 2 is_stmt 1 view .LVU3191
@@ -18718,7 +18718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9344              		.loc 1 4584 4 is_stmt 1 view .LVU3204
 4584:../../fatfs/ff.c **** 				if (dp->obj.attr & AM_DIR) {		/* This object is a sub-directory */
  9345              		.loc 1 4584 8 is_stmt 0 view .LVU3205
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 313
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 313
 
 
  9346 0034 94F92B30 		ldrsb	r3, [r4, #43]
@@ -18778,7 +18778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9384              		.loc 1 4617 3 view .LVU3221
 4617:../../fatfs/ff.c **** 	}
  9385              		.loc 1 4617 6 is_stmt 0 view .LVU3222
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 314
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 314
 
 
  9386 005e 042B     		cmp	r3, #4
@@ -18838,7 +18838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4635:../../fatfs/ff.c **** 	FATFS *fs;
  9435              		.loc 1 4635 2 is_stmt 1 view .LVU3230
 4636:../../fatfs/ff.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 315
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 315
 
 
  9436              		.loc 1 4636 2 view .LVU3231
@@ -18898,7 +18898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9481              		.cfi_offset 14, -4
  9482 0002 82B0     		sub	sp, sp, #8
  9483              	.LCFI82:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 316
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 316
 
 
  9484              		.cfi_def_cfa_offset 24
@@ -18958,7 +18958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4680:../../fatfs/ff.c **** 				res = dir_next(dp, 0);		/* Increment index for next */
  9521              		.loc 1 4680 5 is_stmt 1 view .LVU3260
  9522 0022 2946     		mov	r1, r5
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 317
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 317
 
 
  9523 0024 2046     		mov	r0, r4
@@ -19018,7 +19018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9565              		.loc 1 4688 1 view .LVU3272
  9566 004a 0646     		mov	r6, r0
  9567 004c FAE7     		b	.L720
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 318
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 318
 
 
  9568              		.cfi_endproc
@@ -19078,7 +19078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9614              	.LVL1151:
  9615              	.L727:
 4771:../../fatfs/ff.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 319
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 319
 
 
  9616              		.loc 1 4771 16 is_stmt 1 view .LVU3283
@@ -19138,7 +19138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9656 0038 02A8     		add	r0, sp, #8
  9657              	.LVL1155:
 4768:../../fatfs/ff.c **** 			}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 320
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 320
 
 
  9658              		.loc 1 4768 14 is_stmt 0 discriminator 1 view .LVU3298
@@ -19198,7 +19198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9706              		.loc 1 4794 2 view .LVU3306
 4795:../../fatfs/ff.c **** 
  9707              		.loc 1 4795 2 view .LVU3307
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 321
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 321
 
 
 4799:../../fatfs/ff.c **** 	if (res == FR_OK) {
@@ -19258,7 +19258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9745              		.loc 1 4807 4 is_stmt 1 view .LVU3324
  9746              	.LVL1163:
 4808:../../fatfs/ff.c **** 				clst = 2; obj.fs = fs;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 322
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 322
 
 
  9747              		.loc 1 4808 4 view .LVU3325
@@ -19318,7 +19318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4815:../../fatfs/ff.c **** 			} else {
  9786              		.loc 1 4815 21 view .LVU3341
  9787 0050 A342     		cmp	r3, r4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 323
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 323
 
 
  9788 0052 33D9     		bls	.L735
@@ -19378,7 +19378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4845:../../fatfs/ff.c **** 						}
  9827              		.loc 1 4845 8 is_stmt 1 view .LVU3357
 4845:../../fatfs/ff.c **** 						}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 324
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 324
 
 
  9828              		.loc 1 4845 11 is_stmt 0 view .LVU3358
@@ -19438,7 +19438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4855:../../fatfs/ff.c **** 				}
  9867              		.loc 1 4855 15 is_stmt 0 view .LVU3374
  9868 0098 013D     		subs	r5, r5, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 325
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 325
 
 
  9869              	.LVL1183:
@@ -19498,7 +19498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9908              	.LVL1189:
  9909              	.L735:
 4858:../../fatfs/ff.c **** 			fs->free_clst = nfree;	/* Now free_clst is valid */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 326
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 326
 
 
  9910              		.loc 1 4858 4 is_stmt 1 view .LVU3390
@@ -19558,7 +19558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9955              	.LVL1193:
  9956              	.LFB55:
 4877:../../fatfs/ff.c **** 	FRESULT res;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 327
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 327
 
 
  9957              		.loc 1 4877 1 is_stmt 1 view -0
@@ -19618,7 +19618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  9997              		.loc 1 4887 2 is_stmt 1 view .LVU3416
 4887:../../fatfs/ff.c **** 		if (fp->fptr == 0) {	/* When set file size to zero, remove entire cluster chain */
  9998              		.loc 1 4887 8 is_stmt 0 view .LVU3417
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 328
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 328
 
 
  9999 0020 6369     		ldr	r3, [r4, #20]
@@ -19678,7 +19678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4903:../../fatfs/ff.c **** 			if (disk_write(fs->pdrv, fp->buf, fp->sect, 1) != RES_OK) {
  10037              		.loc 1 4903 20 discriminator 1 view .LVU3434
  10038 0048 13F0800F 		tst	r3, #128
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 329
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 329
 
 
  10039 004c 2BD0     		beq	.L753
@@ -19738,7 +19738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10078 007c 002D     		cmp	r5, #0
  10079 007e DCD1     		bne	.L755
 4896:../../fatfs/ff.c **** 				res = remove_chain(&fp->obj, ncl, fp->clust);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 330
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 330
 
 
  10080              		.loc 1 4896 32 discriminator 1 view .LVU3450
@@ -19798,7 +19798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4885:../../fatfs/ff.c **** 
  10122              		.loc 1 4885 30 discriminator 1 view .LVU3463
  10123 00a4 0725     		movs	r5, #7
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 331
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 331
 
 
  10124              	.LVL1209:
@@ -19858,7 +19858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10170              		.loc 1 4939 8 is_stmt 0 view .LVU3473
  10171 0006 0222     		movs	r2, #2
  10172 0008 03A9     		add	r1, sp, #12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 332
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 332
 
 
  10173 000a 01A8     		add	r0, sp, #4
@@ -19918,7 +19918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 4950:../../fatfs/ff.c **** 			if (dj.fn[NSFLAG] & NS_NONAME) {
  10213              		.loc 1 4950 6 is_stmt 0 view .LVU3488
  10214 0026 0446     		mov	r4, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 333
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 333
 
 
  10215 0028 0028     		cmp	r0, #0
@@ -19978,7 +19978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10252 0054 0021     		movs	r1, #0
  10253 0056 04A8     		add	r0, sp, #16
  10254              	.LVL1221:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 334
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 334
 
 
 4984:../../fatfs/ff.c **** 						if (res == FR_OK) {
@@ -20038,7 +20038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10294              		.loc 1 4994 5 is_stmt 1 view .LVU3520
 4994:../../fatfs/ff.c **** 				if (res == FR_OK && dclst != 0) {	/* Remove the cluster chain if exist */
  10295              		.loc 1 4994 11 is_stmt 0 view .LVU3521
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 335
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 335
 
 
  10296 007c 10A8     		add	r0, sp, #64
@@ -20098,7 +20098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10337 00a6 2946     		mov	r1, r5
  10338 00a8 10A8     		add	r0, sp, #64
  10339 00aa FFF7FEFF 		bl	remove_chain
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 336
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 336
 
 
  10340              	.LVL1235:
@@ -20158,7 +20158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10385 0006 0222     		movs	r2, #2
  10386 0008 03A9     		add	r1, sp, #12
  10387 000a 01A8     		add	r0, sp, #4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 337
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 337
 
 
  10388              	.LVL1239:
@@ -20218,7 +20218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10428 0028 67D0     		beq	.L780
 5036:../../fatfs/ff.c **** 			res = FR_INVALID_NAME;
  10429              		.loc 1 5036 3 is_stmt 1 view .LVU3560
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 338
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 338
 
 
 5039:../../fatfs/ff.c **** 			sobj.fs = fs;						/* New object id to create a new chain */
@@ -20278,7 +20278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10468 004c B5F1FF3F 		cmp	r5, #-1
  10469 0050 51D0     		beq	.L788
  10470              	.LVL1248:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 339
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 339
 
 
  10471              	.L778:
@@ -20338,7 +20338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10511              		.loc 1 5052 9 is_stmt 0 view .LVU3590
  10512 007a 0398     		ldr	r0, [sp, #12]
 5052:../../fatfs/ff.c **** 						fs->win[DIR_Attr] = AM_DIR;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 340
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 340
 
 
  10513              		.loc 1 5052 25 view .LVU3591
@@ -20398,7 +20398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5059:../../fatfs/ff.c **** 					}
  10554              		.loc 1 5059 7 view .LVU3605
 5059:../../fatfs/ff.c **** 					}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 341
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 341
 
 
  10555              		.loc 1 5059 17 is_stmt 0 view .LVU3606
@@ -20458,7 +20458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10595              		.loc 1 5083 12 is_stmt 0 view .LVU3620
  10596 00ec 0398     		ldr	r0, [sp, #12]
  10597 00ee FFF7FEFF 		bl	sync_fs
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 342
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 342
 
 
  10598              	.LVL1266:
@@ -20518,7 +20518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5107:../../fatfs/ff.c **** 	DIR djo, djn;
  10648              		.loc 1 5107 2 is_stmt 1 view .LVU3627
 5108:../../fatfs/ff.c **** 	FATFS *fs;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 343
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 343
 
 
  10649              		.loc 1 5108 2 view .LVU3628
@@ -20578,7 +20578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10689 0024 1893     		str	r3, [sp, #96]
 5119:../../fatfs/ff.c **** 		res = follow_path(&djo, path_old);		/* Check old object */
  10690              		.loc 1 5119 18 is_stmt 1 view .LVU3643
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 344
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 344
 
 
 5120:../../fatfs/ff.c **** 		if (res == FR_OK && (djo.fn[NSFLAG] & (NS_DOT | NS_NONAME))) res = FR_INVALID_NAME;	/* Check vali
@@ -20638,7 +20638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10731              		.loc 1 5157 11 is_stmt 0 view .LVU3657
  10732 0058 0099     		ldr	r1, [sp]
  10733 005a 0CA8     		add	r0, sp, #48
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 345
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 345
 
 
  10734 005c FFF7FEFF 		bl	follow_path
@@ -20698,7 +20698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10775 0084 18A8     		add	r0, sp, #96
  10776 0086 FFF7FEFF 		bl	dir_remove
  10777              	.LVL1290:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 346
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 346
 
 
 5188:../../fatfs/ff.c **** 					res = sync_fs(fs);
@@ -20758,7 +20758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5166:../../fatfs/ff.c **** 						if (!(dir[DIR_Attr] & AM_DIR)) dir[DIR_Attr] |= AM_ARC;	/* Set archive attribute if it is a f
  10818              		.loc 1 5166 7 is_stmt 1 view .LVU3685
 5166:../../fatfs/ff.c **** 						if (!(dir[DIR_Attr] & AM_DIR)) dir[DIR_Attr] |= AM_ARC;	/* Set archive attribute if it is a f
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 347
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 347
 
 
  10819              		.loc 1 5166 26 is_stmt 0 view .LVU3686
@@ -20818,7 +20818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10858              		.loc 1 5170 15 discriminator 1 view .LVU3701
  10859 00ea 2046     		mov	r0, r4
  10860 00ec FFF7FEFF 		bl	clst2sect
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 348
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 348
 
 
  10861              	.LVL1301:
@@ -20878,7 +20878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10900 0116 FFF7FEFF 		bl	st_clust
  10901              	.LVL1308:
 5179:../../fatfs/ff.c **** 								}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 349
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 349
 
 
  10902              		.loc 1 5179 10 is_stmt 1 view .LVU3717
@@ -20938,7 +20938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10937              	.LCFI108:
  10938              		.cfi_def_cfa_offset 36
  10939              		.cfi_offset 4, -36
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 350
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 350
 
 
  10940              		.cfi_offset 5, -32
@@ -20998,7 +20998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  10975              		.loc 1 5857 2 is_stmt 1 view .LVU3737
  10976              		.loc 1 5857 5 is_stmt 0 view .LVU3738
  10977 0014 0028     		cmp	r0, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 351
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 351
 
 
  10978              		.loc 1 5857 5 view .LVU3739
@@ -21058,7 +21058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5869:../../fatfs/ff.c **** 	if (sz_blk == 0 && disk_ioctl(pdrv, GET_BLOCK_SIZE, &sz_blk) != RES_OK) sz_blk = 1;
  11021              		.loc 1 5869 2 is_stmt 1 view .LVU3760
  11022              		.loc 1 5869 5 is_stmt 0 view .LVU3761
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 352
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 352
 
 
  11023 0044 F3B1     		cbz	r3, .L895
@@ -21118,7 +21118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11064              		.loc 1 5882 29 view .LVU3778
  11065 006a 09F1FF33 		add	r3, r9, #-1
  11066              		.loc 1 5882 106 view .LVU3779
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 353
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 353
 
 
  11067 006e B3F5004F 		cmp	r3, #32768
@@ -21178,7 +21178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11112              		.loc 1 5883 14 is_stmt 0 view .LVU3792
  11113 00a0 ED68     		ldr	r5, [r5, #12]
  11114              	.LVL1328:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 354
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 354
 
 
  11115              		.loc 1 5883 97 view .LVU3793
@@ -21238,7 +21238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11153 00ce 0023     		movs	r3, #0
  11154 00d0 0C93     		str	r3, [sp, #48]
  11155              	.LVL1333:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 355
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 355
 
 
 5900:../../fatfs/ff.c **** 	if (FF_MULTI_PARTITION && ipart != 0) {	/* Is the volume associated with any specific partition? *
@@ -21298,7 +21298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11173 00e8 07D1     		bne	.L865
 5937:../../fatfs/ff.c **** 			/* Create a single-partition on the drive in this function */
 5938:../../fatfs/ff.c **** #if FF_LBA64
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 356
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 356
 
 
 5939:../../fatfs/ff.c **** 			if (sz_vol >= FF_MIN_GPT) {	/* Which partition type to create, MBR or GPT? */
@@ -21358,7 +21358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 5961:../../fatfs/ff.c **** 		}
 5962:../../fatfs/ff.c **** #if FF_LBA64
 5963:../../fatfs/ff.c **** 		if (sz_vol >= 0x100000000) LEAVE_MKFS(FR_MKFS_ABORTED);	/* Too large volume for FAT/FAT32 */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 357
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 357
 
 
 5964:../../fatfs/ff.c **** #endif
@@ -21418,7 +21418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11247 013c 54E0     		b	.L820
  11248              	.LVL1344:
  11249              	.L876:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 358
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 358
 
 
 5973:../../fatfs/ff.c **** 	} while (0);
@@ -21478,7 +21478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6027:../../fatfs/ff.c **** 				/* go to next case */
 6028:../../fatfs/ff.c **** 			case 1:
 6029:../../fatfs/ff.c **** 				ch = si++;		/* Fill the short run */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 359
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 359
 
 
 6030:../../fatfs/ff.c **** 				if (--j == 0) st = 0;
@@ -21538,7 +21538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6084:../../fatfs/ff.c **** //ulog("4");
 6085:../../fatfs/ff.c **** 
 6086:../../fatfs/ff.c **** 		/* Initialize the root directory */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 360
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 360
 
 
 6087:../../fatfs/ff.c **** 		mem_set(buf, 0, sz_buf * ss);
@@ -21598,7 +21598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6141:../../fatfs/ff.c **** 				if (disk_write(pdrv, buf, sect++, 1) != RES_OK) LEAVE_MKFS(FR_DISK_ERR);
 6142:../../fatfs/ff.c **** 			}
 6143:../../fatfs/ff.c **** 			/* Sum record (+11) */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 361
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 361
 
 
 6144:../../fatfs/ff.c **** 			for (i = 0; i < ss; i += 4) st_dword(buf + i, sum);		/* Fill with checksum value */
@@ -21658,7 +21658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6198:../../fatfs/ff.c **** 			/* Determine number of clusters and final check of validity of the FAT sub-type */
 6199:../../fatfs/ff.c **** 			if (sz_vol < b_data + pau * 16 - b_vol) LEAVE_MKFS(FR_MKFS_ABORTED);	/* Too small volume? */
 6200:../../fatfs/ff.c **** 			n_clst = ((DWORD)sz_vol - sz_rsv - sz_fat * n_fat - sz_dir) / pau;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 362
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 362
 
 
 6201:../../fatfs/ff.c **** 			if (fsty == FS_FAT32) {
@@ -21718,7 +21718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11281              		.loc 1 6162 5 is_stmt 1 view .LVU3854
 6163:../../fatfs/ff.c **** //ulog("4.1.1\r\n");
  11282              		.loc 1 6163 5 view .LVU3855
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 363
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 363
 
 
 6166:../../fatfs/ff.c **** 			} else {				/* FAT volume */
@@ -21778,7 +21778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11321 017c 4F4B     		ldr	r3, .L910+16
  11322 017e 33F81230 		ldrh	r3, [r3, r2, lsl #1]
 6158:../../fatfs/ff.c **** 				}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 364
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 364
 
 
  11323              		.loc 1 6158 36 discriminator 1 view .LVU3872
@@ -21838,7 +21838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11363              	.LVL1361:
  11364              	.L829:
 6176:../../fatfs/ff.c **** 					n = (n_clst * 3 + 1) / 2 + 3;	/* FAT size [byte] */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 365
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 365
 
 
  11365              		.loc 1 6176 6 is_stmt 1 view .LVU3887
@@ -21898,7 +21898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11403 01ca 7408     		lsrs	r4, r6, #1
  11404              	.LVL1367:
 6203:../../fatfs/ff.c **** 					LEAVE_MKFS(FR_MKFS_ABORTED);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 366
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 366
 
 
  11405              		.loc 1 6203 21 discriminator 1 view .LVU3904
@@ -21958,7 +21958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6172:../../fatfs/ff.c **** 				if (n_clst > MAX_FAT12) {
  11444              		.loc 1 6172 5 is_stmt 1 view .LVU3920
 6172:../../fatfs/ff.c **** 				if (n_clst > MAX_FAT12) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 367
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 367
 
 
  11445              		.loc 1 6172 12 is_stmt 0 view .LVU3921
@@ -22018,7 +22018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11483 0218 07FB05C2 		mla	r2, r7, r5, ip
 6184:../../fatfs/ff.c **** 
  11484              		.loc 1 6184 11 view .LVU3938
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 368
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 368
 
 
  11485 021c 7244     		add	r2, r2, lr
@@ -22078,7 +22078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11522              	.LVL1382:
  11523              	.L833:
 6194:../../fatfs/ff.c **** 			}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 369
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 369
 
 
  11524              		.loc 1 6194 5 is_stmt 1 view .LVU3956
@@ -22138,7 +22138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6209:../../fatfs/ff.c **** 					if (sz_au == 0 && (pau * 2) <= 64) {
  11562              		.loc 1 6209 8 is_stmt 0 view .LVU3973
  11563 0280 4FF6F572 		movw	r2, #65525
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 370
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 370
 
 
  11564 0284 9342     		cmp	r3, r2
@@ -22198,7 +22198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11606 02c0 00000000 		.word	cst.0
  11607              	.L836:
 6222:../../fatfs/ff.c **** 				}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 371
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 371
 
 
 6223:../../fatfs/ff.c **** 			}
@@ -22258,7 +22258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11643 02fc 0B22     		movs	r2, #11
  11644 02fe C649     		ldr	r1, .L912
  11645 0300 4046     		mov	r0, r8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 372
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 372
 
 
  11646 0302 FFF7FEFF 		bl	mem_cpy
@@ -22318,7 +22318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6250:../../fatfs/ff.c **** 			st_dword(buf + BPB_TotSec32, (DWORD)sz_vol);	/* Volume size in 32-bit LBA */
 6251:../../fatfs/ff.c **** 		}
 6252:../../fatfs/ff.c **** 		buf[BPB_Media] = 0xF8;							/* Media descriptor byte */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 373
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 373
 
 
  11692              		.loc 1 6252 3 view .LVU4010
@@ -22378,7 +22378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11730              		.loc 1 6268 4 view .LVU4019
  11731              		.loc 1 6268 19 is_stmt 0 view .LVU4020
  11732 039a 8023     		movs	r3, #128
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 374
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 374
 
 
  11733 039c 0298     		ldr	r0, [sp, #8]
@@ -22438,7 +22438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
 6286:../../fatfs/ff.c **** 			disk_write(pdrv, buf, b_vol + 7, 1);		/* Write backup FSINFO (VBR + 7) */
 6287:../../fatfs/ff.c **** 			disk_write(pdrv, buf, b_vol + 1, 1);		/* Write original FSINFO (VBR + 1) */
 6288:../../fatfs/ff.c **** 		}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 375
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 375
 
 
 6289:../../fatfs/ff.c **** 
@@ -22498,7 +22498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11813              	.LVL1416:
  11814              	.L847:
  11815              		.loc 1 6299 5 discriminator 2 view .LVU4044
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 376
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 376
 
 
  11816 041c 019E     		ldr	r6, [sp, #4]
@@ -22558,7 +22558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11860              	.LVL1424:
 6293:../../fatfs/ff.c **** 			if (fsty == FS_FAT32) {
  11861              		.loc 1 6293 27 is_stmt 0 discriminator 2 view .LVU4059
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 377
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 377
 
 
  11862 0458 D0E7     		b	.L845
@@ -22618,7 +22618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11907              		.loc 1 6262 21 is_stmt 0 view .LVU4068
  11908 04a6 8023     		movs	r3, #128
  11909 04a8 0298     		ldr	r0, [sp, #8]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 378
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 378
 
 
  11910 04aa 80F84030 		strb	r3, [r0, #64]
@@ -22678,7 +22678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  11955 04fa 03F5F470 		add	r0, r3, #488
  11956 04fe FFF7FEFF 		bl	st_dword
  11957              	.LVL1438:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 379
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 379
 
 
 6284:../../fatfs/ff.c **** 			st_word(buf + BS_55AA, 0xAA55);
@@ -22738,7 +22738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12005              	.L907:
 6299:../../fatfs/ff.c **** 			}
  12006              		.loc 1 6299 5 is_stmt 0 discriminator 1 view .LVU4085
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 380
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 380
 
 
  12007 055e 3449     		ldr	r1, .L912+24
@@ -22798,7 +22798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12052              		.loc 1 6316 12 view .LVU4101
  12053 0592 761B     		subs	r6, r6, r5
  12054              	.LVL1453:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 381
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 381
 
 
  12055              		.loc 1 6316 12 is_stmt 0 view .LVU4102
@@ -22858,7 +22858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12090 05bc 0C22     		movs	r2, #12
  12091              	.L853:
  12092              	.LVL1457:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 382
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 382
 
 
 6333:../../fatfs/ff.c **** 			}
@@ -22918,7 +22918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12126              		.loc 1 6353 48 discriminator 1 view .LVU4129
  12127 05e2 0120     		movs	r0, #1
  12128 05e4 04E0     		b	.L807
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 383
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 383
 
 
  12129              	.LVL1461:
@@ -22978,7 +22978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12171 05fe 1120     		movs	r0, #17
  12172 0600 F6E7     		b	.L807
  12173              	.LVL1470:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 384
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 384
 
 
  12174              	.L864:
@@ -23038,7 +23038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12220 063c 0E20     		movs	r0, #14
  12221 063e D7E7     		b	.L807
  12222              	.LVL1477:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 385
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 385
 
 
  12223              	.L880:
@@ -23098,7 +23098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12280              		.section	.rodata.ExCvt,"a"
  12281              		.align	2
  12284              	ExCvt:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 386
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 386
 
 
  12285 0000 80818283 		.ascii	"\200\201\202\203\204\205\206\207\210\211\212\213\214"
@@ -23158,7 +23158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12307              		.section	.bss.Fsid,"aw",%nobits
  12308              		.align	1
  12311              	Fsid:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 387
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 387
 
 
  12312 0000 0000     		.space	2
@@ -23172,177 +23172,177 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 1
  12322              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
  12323              		.file 4 "../../fatfs/ff.h"
  12324              		.file 5 "../../fatfs/diskio.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 388
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 388
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ff.c
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:21     .text.ld_word:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:26     .text.ld_word:00000000 ld_word
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:53     .text.ld_dword:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:58     .text.ld_dword:00000000 ld_dword
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:97     .text.st_word:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:102    .text.st_word:00000000 st_word
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:126    .text.st_dword:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:131    .text.st_dword:00000000 st_dword
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:170    .text.mem_cpy:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:175    .text.mem_cpy:00000000 mem_cpy
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:215    .text.mem_set:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:220    .text.mem_set:00000000 mem_set
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:247    .text.mem_cmp:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:252    .text.mem_cmp:00000000 mem_cmp
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:295    .text.chk_chr:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:300    .text.chk_chr:00000000 chk_chr
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:336    .text.dbc_1st:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:341    .text.dbc_1st:00000000 dbc_1st
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:360    .text.dbc_2nd:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:365    .text.dbc_2nd:00000000 dbc_2nd
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:384    .text.tchar2uni:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:389    .text.tchar2uni:00000000 tchar2uni
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:565    .text.tchar2uni:000000ac $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:571    .text.put_utf:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:576    .text.put_utf:00000000 put_utf
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:793    .text.put_utf:000000d0 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:798    .text.clst2sect:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:803    .text.clst2sect:00000000 clst2sect
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:844    .text.ld_clust:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:849    .text.ld_clust:00000000 ld_clust
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:905    .text.st_clust:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:910    .text.st_clust:00000000 st_clust
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:959    .text.pick_lfn:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:964    .text.pick_lfn:00000000 pick_lfn
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1113   .text.pick_lfn:00000084 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12305  .rodata.LfnOfs:00000000 LfnOfs
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1118   .text.put_lfn:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1123   .text.put_lfn:00000000 put_lfn
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1251   .text.put_lfn:00000074 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1256   .text.gen_numname:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1261   .text.gen_numname:00000000 gen_numname
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1485   .text.sum_sfn:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1490   .text.sum_sfn:00000000 sum_sfn
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1535   .text.get_ldnumber:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1540   .text.get_ldnumber:00000000 get_ldnumber
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1655   .text.validate:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1660   .text.validate:00000000 validate
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1769   .text.sync_window:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1774   .text.sync_window:00000000 sync_window
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1859   .text.move_window:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1864   .text.move_window:00000000 move_window
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1936   .rodata.check_fs.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1943   .text.check_fs:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:1948   .text.check_fs:00000000 check_fs
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2044   .text.check_fs:00000068 $d
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 389
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:21     .text.ld_word:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:26     .text.ld_word:00000000 ld_word
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:53     .text.ld_dword:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:58     .text.ld_dword:00000000 ld_dword
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:97     .text.st_word:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:102    .text.st_word:00000000 st_word
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:126    .text.st_dword:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:131    .text.st_dword:00000000 st_dword
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:170    .text.mem_cpy:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:175    .text.mem_cpy:00000000 mem_cpy
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:215    .text.mem_set:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:220    .text.mem_set:00000000 mem_set
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:247    .text.mem_cmp:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:252    .text.mem_cmp:00000000 mem_cmp
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:295    .text.chk_chr:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:300    .text.chk_chr:00000000 chk_chr
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:336    .text.dbc_1st:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:341    .text.dbc_1st:00000000 dbc_1st
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:360    .text.dbc_2nd:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:365    .text.dbc_2nd:00000000 dbc_2nd
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:384    .text.tchar2uni:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:389    .text.tchar2uni:00000000 tchar2uni
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:565    .text.tchar2uni:000000ac $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:571    .text.put_utf:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:576    .text.put_utf:00000000 put_utf
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:793    .text.put_utf:000000d0 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:798    .text.clst2sect:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:803    .text.clst2sect:00000000 clst2sect
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:844    .text.ld_clust:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:849    .text.ld_clust:00000000 ld_clust
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:905    .text.st_clust:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:910    .text.st_clust:00000000 st_clust
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:959    .text.pick_lfn:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:964    .text.pick_lfn:00000000 pick_lfn
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1113   .text.pick_lfn:00000084 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12305  .rodata.LfnOfs:00000000 LfnOfs
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1118   .text.put_lfn:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1123   .text.put_lfn:00000000 put_lfn
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1251   .text.put_lfn:00000074 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1256   .text.gen_numname:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1261   .text.gen_numname:00000000 gen_numname
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1485   .text.sum_sfn:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1490   .text.sum_sfn:00000000 sum_sfn
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1535   .text.get_ldnumber:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1540   .text.get_ldnumber:00000000 get_ldnumber
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1655   .text.validate:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1660   .text.validate:00000000 validate
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1769   .text.sync_window:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1774   .text.sync_window:00000000 sync_window
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1859   .text.move_window:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1864   .text.move_window:00000000 move_window
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1936   .rodata.check_fs.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1943   .text.check_fs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:1948   .text.check_fs:00000000 check_fs
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2044   .text.check_fs:00000068 $d
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 389
 
 
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2050   .text.find_volume:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2055   .text.find_volume:00000000 find_volume
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2194   .text.mount_volume:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2199   .text.mount_volume:00000000 mount_volume
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2787   .text.mount_volume:000002a0 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12317  .bss.FatFs:00000000 FatFs
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12311  .bss.Fsid:00000000 Fsid
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12299  .bss.LfnBuf:00000000 LfnBuf
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2797   .text.put_fat:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:2802   .text.put_fat:00000000 put_fat
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3046   .text.get_fat:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3051   .text.get_fat:00000000 get_fat
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3265   .text.dir_sdi:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3270   .text.dir_sdi:00000000 dir_sdi
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3467   .text.create_chain:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3472   .text.create_chain:00000000 create_chain
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3790   .text.remove_chain:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3795   .text.remove_chain:00000000 remove_chain
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3956   .text.dir_clear:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:3961   .text.dir_clear:00000000 dir_clear
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4062   .text.dir_next:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4067   .text.dir_next:00000000 dir_next
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4307   .text.dir_alloc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4312   .text.dir_alloc:00000000 dir_alloc
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4423   .text.dir_read:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4428   .text.dir_read:00000000 dir_read
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4651   .text.dir_remove:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4656   .text.dir_remove:00000000 dir_remove
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4767   .rodata.create_name.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4774   .text.create_name:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:4779   .text.create_name:00000000 create_name
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5375   .text.create_name:00000260 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12284  .rodata.ExCvt:00000000 ExCvt
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5382   .text.cmp_lfn:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5387   .text.cmp_lfn:00000000 cmp_lfn
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5546   .text.cmp_lfn:0000009c $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5551   .text.dir_find:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5556   .text.dir_find:00000000 dir_find
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5807   .text.follow_path:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5812   .text.follow_path:00000000 follow_path
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5974   .text.dir_register:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:5979   .text.dir_register:00000000 dir_register
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6281   .text.dir_register:0000013c $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6286   .text.sync_fs:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6291   .text.sync_fs:00000000 sync_fs
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6405   .text.sync_fs:00000084 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6411   .text.create_partition:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6416   .text.create_partition:00000000 create_partition
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6730   .text.create_partition:00000144 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6736   .text.get_fileinfo:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:6741   .text.get_fileinfo:00000000 get_fileinfo
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7151   .text.f_mount:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7157   .text.f_mount:00000000 f_mount
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7265   .text.f_mount:0000004c $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7270   .text.f_open:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7276   .text.f_open:00000000 f_open
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7752   .text.f_open:000001d4 $d
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 390
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2050   .text.find_volume:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2055   .text.find_volume:00000000 find_volume
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2194   .text.mount_volume:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2199   .text.mount_volume:00000000 mount_volume
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2787   .text.mount_volume:000002a0 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12317  .bss.FatFs:00000000 FatFs
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12311  .bss.Fsid:00000000 Fsid
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12299  .bss.LfnBuf:00000000 LfnBuf
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2797   .text.put_fat:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:2802   .text.put_fat:00000000 put_fat
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3046   .text.get_fat:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3051   .text.get_fat:00000000 get_fat
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3265   .text.dir_sdi:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3270   .text.dir_sdi:00000000 dir_sdi
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3467   .text.create_chain:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3472   .text.create_chain:00000000 create_chain
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3790   .text.remove_chain:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3795   .text.remove_chain:00000000 remove_chain
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3956   .text.dir_clear:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:3961   .text.dir_clear:00000000 dir_clear
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4062   .text.dir_next:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4067   .text.dir_next:00000000 dir_next
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4307   .text.dir_alloc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4312   .text.dir_alloc:00000000 dir_alloc
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4423   .text.dir_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4428   .text.dir_read:00000000 dir_read
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4651   .text.dir_remove:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4656   .text.dir_remove:00000000 dir_remove
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4767   .rodata.create_name.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4774   .text.create_name:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:4779   .text.create_name:00000000 create_name
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5375   .text.create_name:00000260 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12284  .rodata.ExCvt:00000000 ExCvt
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5382   .text.cmp_lfn:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5387   .text.cmp_lfn:00000000 cmp_lfn
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5546   .text.cmp_lfn:0000009c $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5551   .text.dir_find:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5556   .text.dir_find:00000000 dir_find
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5807   .text.follow_path:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5812   .text.follow_path:00000000 follow_path
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5974   .text.dir_register:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:5979   .text.dir_register:00000000 dir_register
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6281   .text.dir_register:0000013c $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6286   .text.sync_fs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6291   .text.sync_fs:00000000 sync_fs
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6405   .text.sync_fs:00000084 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6411   .text.create_partition:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6416   .text.create_partition:00000000 create_partition
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6730   .text.create_partition:00000144 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6736   .text.get_fileinfo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:6741   .text.get_fileinfo:00000000 get_fileinfo
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7151   .text.f_mount:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7157   .text.f_mount:00000000 f_mount
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7265   .text.f_mount:0000004c $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7270   .text.f_open:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7276   .text.f_open:00000000 f_open
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7752   .text.f_open:000001d4 $d
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 390
 
 
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7757   .text.f_read:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:7763   .text.f_read:00000000 f_read
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8165   .text.f_write:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8171   .text.f_write:00000000 f_write
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8622   .text.f_sync:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8628   .text.f_sync:00000000 f_sync
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8771   .text.f_sync:00000094 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8776   .text.f_close:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8782   .text.f_close:00000000 f_close
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8840   .text.f_lseek:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:8846   .text.f_lseek:00000000 f_lseek
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9262   .text.f_opendir:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9268   .text.f_opendir:00000000 f_opendir
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9412   .text.f_closedir:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9418   .text.f_closedir:00000000 f_closedir
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9461   .text.f_readdir:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9467   .text.f_readdir:00000000 f_readdir
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9572   .text.f_stat:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9578   .text.f_stat:00000000 f_stat
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9671   .text.f_getfree:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9677   .text.f_getfree:00000000 f_getfree
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9948   .text.f_truncate:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:9954   .text.f_truncate:00000000 f_truncate
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10138  .text.f_unlink:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10144  .text.f_unlink:00000000 f_unlink
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10354  .text.f_mkdir:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10360  .text.f_mkdir:00000000 f_mkdir
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10618  .text.f_mkdir:00000100 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10623  .text.f_rename:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10629  .text.f_rename:00000000 f_rename
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10912  .rodata.f_mkfs.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10922  .text.f_mkfs:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:10928  .text.f_mkfs:00000000 f_mkfs
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:11601  .text.f_mkfs:000002ac $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12273  .rodata.defopt.2:00000000 defopt.2
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12261  .rodata.cst32.1:00000000 cst32.1
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12249  .rodata.cst.0:00000000 cst.0
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:11609  .text.f_mkfs:000002c4 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12200  .text.f_mkfs:00000618 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12210  .text.f_mkfs:00000634 $t
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12246  .rodata.cst.0:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12258  .rodata.cst32.1:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12270  .rodata.defopt.2:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12281  .rodata.ExCvt:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12296  .bss.LfnBuf:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12302  .rodata.LfnOfs:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12308  .bss.Fsid:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s:12314  .bss.FatFs:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7757   .text.f_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:7763   .text.f_read:00000000 f_read
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8165   .text.f_write:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8171   .text.f_write:00000000 f_write
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8622   .text.f_sync:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8628   .text.f_sync:00000000 f_sync
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8771   .text.f_sync:00000094 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8776   .text.f_close:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8782   .text.f_close:00000000 f_close
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8840   .text.f_lseek:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:8846   .text.f_lseek:00000000 f_lseek
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9262   .text.f_opendir:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9268   .text.f_opendir:00000000 f_opendir
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9412   .text.f_closedir:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9418   .text.f_closedir:00000000 f_closedir
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9461   .text.f_readdir:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9467   .text.f_readdir:00000000 f_readdir
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9572   .text.f_stat:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9578   .text.f_stat:00000000 f_stat
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9671   .text.f_getfree:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9677   .text.f_getfree:00000000 f_getfree
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9948   .text.f_truncate:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:9954   .text.f_truncate:00000000 f_truncate
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10138  .text.f_unlink:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10144  .text.f_unlink:00000000 f_unlink
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10354  .text.f_mkdir:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10360  .text.f_mkdir:00000000 f_mkdir
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10618  .text.f_mkdir:00000100 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10623  .text.f_rename:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10629  .text.f_rename:00000000 f_rename
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10912  .rodata.f_mkfs.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10922  .text.f_mkfs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:10928  .text.f_mkfs:00000000 f_mkfs
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:11601  .text.f_mkfs:000002ac $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12273  .rodata.defopt.2:00000000 defopt.2
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12261  .rodata.cst32.1:00000000 cst32.1
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12249  .rodata.cst.0:00000000 cst.0
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:11609  .text.f_mkfs:000002c4 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12200  .text.f_mkfs:00000618 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12210  .text.f_mkfs:00000634 $t
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12246  .rodata.cst.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12258  .rodata.cst32.1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12270  .rodata.defopt.2:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12281  .rodata.ExCvt:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12296  .bss.LfnBuf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12302  .rodata.LfnOfs:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12308  .bss.Fsid:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cczIM47o.s:12314  .bss.FatFs:00000000 $d
 
 UNDEFINED SYMBOLS
 disk_status
@@ -23352,7 +23352,7 @@ disk_initialize
 ff_uni2oem
 ff_wtoupper
 disk_ioctl
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKmj3Yf.s 			page 391
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cczIM47o.s 			page 391
 
 
 ff_oem2uni

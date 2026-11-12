@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
   22:../../CM4/Core/Src/setting.c **** 
   23:../../CM4/Core/Src/setting.c **** void mode_mchs_to_str(mode_mchs_t * mode_mchs, char * buf, uint16_t buf_len)
   24:../../CM4/Core/Src/setting.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 2
 
 
   34              		.loc 1 24 1 view -0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
   85              		@ frame_needed = 0, uses_anonymous_args = 0
   86              		.loc 1 29 1 is_stmt 0 view .LVU8
   87 0000 10B5     		push	{r4, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 3
 
 
   88              	.LCFI1:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  127      6C752C69 
  127      31333A25 
  128 0099 256C752C 		.ascii	"%lu,i18:%lu,i19:%lu,i20:%lu,i21:%lu,i22:%lu,i23:%lu"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 4
 
 
  128      6931383A 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  146              	.LCFI2:
  147              		.cfi_def_cfa_offset 28
  148              		.cfi_offset 4, -28
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 5
 
 
  149              		.cfi_offset 5, -24
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  199 004e 1292     		str	r2, [sp, #72]
  200 0050 626C     		ldr	r2, [r4, #68]
  201 0052 1192     		str	r2, [sp, #68]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 6
 
 
  202 0054 226C     		ldr	r2, [r4, #64]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  250              		.cfi_endproc
  251              	.LFE137:
  253              		.section	.rodata.str_to_mode_fire.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 7
 
 
  254              		.align	2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  306              	.LC20:
  307 004c 6931323A 		.ascii	"i12:\000"
  307      00
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 8
 
 
  308 0051 000000   		.align	2
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  351              	str_to_mode_fire:
  352              	.LVL17:
  353              	.LFB138:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 9
 
 
   75:../../CM4/Core/Src/setting.c **** 
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  398 0020 10B1     		cbz	r0, .L16
  399              		.loc 1 84 11 is_stmt 1 discriminator 1 view .LVU47
  400              		.loc 1 84 30 is_stmt 0 discriminator 1 view .LVU48
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 10
 
 
  401 0022 FFF7FEFF 		bl	str2ull
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
   93:../../CM4/Core/Src/setting.c **** 	if (ptr) {
  447              		.loc 1 93 2 is_stmt 1 view .LVU66
  448              		.loc 1 93 5 is_stmt 0 view .LVU67
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 11
 
 
  449 0058 0746     		mov	r7, r0
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  494 0090 FFF7FEFF 		bl	strright
  495              	.LVL34:
  103:../../CM4/Core/Src/setting.c **** 	if (ptr) mode_fire->input_lines[2] = str2ul(ptr);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 12
 
 
  496              		.loc 1 103 2 is_stmt 1 view .LVU83
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  542 00c0 644A     		ldr	r2, .L45+40
  543 00c2 2946     		mov	r1, r5
  544 00c4 2046     		mov	r0, r4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 13
 
 
  545 00c6 FFF7FEFF 		bl	strright
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  120:../../CM4/Core/Src/setting.c **** 	ptr = strright(buf, buf_len, "i8:");
  591              		.loc 1 120 2 is_stmt 1 view .LVU123
  592              		.loc 1 120 8 is_stmt 0 view .LVU124
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 14
 
 
  593 00f6 5A4A     		ldr	r2, .L45+52
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  640 012a 7063     		str	r0, [r6, #52]
  641              	.L29:
  128:../../CM4/Core/Src/setting.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 15
 
 
  129:../../CM4/Core/Src/setting.c **** 	ptr = strright(buf, buf_len, "i11:");
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  687              		.loc 1 137 40 is_stmt 0 discriminator 1 view .LVU163
  688 015c FFF7FEFF 		bl	str2ul
  689              	.LVL57:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 16
 
 
  690              		.loc 1 137 38 discriminator 1 view .LVU164
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  735              		.loc 1 146 5 is_stmt 0 view .LVU182
  736 0190 10B1     		cbz	r0, .L35
  737              		.loc 1 146 11 is_stmt 1 discriminator 1 view .LVU183
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 17
 
 
  738              		.loc 1 146 40 is_stmt 0 discriminator 1 view .LVU184
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  784              	.LVL68:
  155:../../CM4/Core/Src/setting.c **** 	if (ptr) mode_fire->input_lines[19] = str2ul(ptr);
  785              		.loc 1 155 2 is_stmt 1 view .LVU202
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 18
 
 
  786              		.loc 1 155 5 is_stmt 0 view .LVU203
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  832 01f4 2946     		mov	r1, r5
  833 01f6 2046     		mov	r0, r4
  834 01f8 FFF7FEFF 		bl	strright
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 19
 
 
  835              	.LVL74:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  881 0228 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  882              	.LVL80:
  883              	.L46:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 20
 
 
  884              		.loc 1 171 1 view .LVU243
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  174:../../CM4/Core/Src/setting.c **** {
  934              		.loc 1 174 1 is_stmt 1 view -0
  935              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 21
 
 
  936              		@ args = 0, pretend = 0, frame = 0
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  988              	.LFE139:
  990              		.section	.rodata.str_to_mode_sound.str1.4,"aMS",%progbits,1
  991              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 22
 
 
  992              	.LC34:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1037              		.loc 1 186 32 discriminator 1 view .LVU264
  1038 0014 3071     		strb	r0, [r6, #4]
  1039              	.L52:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 23
 
 
  187:../../CM4/Core/Src/setting.c **** 
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1084              	.LVL95:
  1085              		.loc 1 196 5 view .LVU283
  1086 0046 68B1     		cbz	r0, .L51
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 24
 
 
  197:../../CM4/Core/Src/setting.c **** 		ptr2 = strstr_s(ptr, strlen(ptr), ",");
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1133              		.cfi_endproc
  1134              	.LFE140:
  1136              		.section	.rodata.netfunc_fire_to_str.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 25
 
 
  1137              		.align	2
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1184 001c FFF7FEFF 		bl	snprintf
  1185              	.LVL108:
  207:../../CM4/Core/Src/setting.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 26
 
 
  1186              		.loc 1 207 1 view .LVU304
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1236              		.loc 1 213 8 is_stmt 0 view .LVU309
  1237 0008 124A     		ldr	r2, .L70
  1238              	.LVL110:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 27
 
 
  1239              		.loc 1 213 8 view .LVU310
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  221:../../CM4/Core/Src/setting.c **** 
  222:../../CM4/Core/Src/setting.c **** 	ptr = strright(buf, buf_len, "f:");
  1286              		.loc 1 222 2 is_stmt 1 view .LVU330
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 28
 
 
  1287              		.loc 1 222 8 is_stmt 0 view .LVU331
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1334              		.cfi_startproc
  1335              		@ args = 0, pretend = 0, frame = 0
  1336              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 29
 
 
  1337              		.loc 1 229 1 is_stmt 0 view .LVU339
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1388              		@ frame_needed = 0, uses_anonymous_args = 0
  1389              		.loc 1 234 1 is_stmt 0 view .LVU346
  1390 0000 70B5     		push	{r4, r5, r6, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 30
 
 
  1391              	.LCFI17:
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1436 0028 70BD     		pop	{r4, r5, r6, pc}
  1437              	.LVL133:
  1438              	.L81:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 31
 
 
  1439              		.loc 1 243 1 view .LVU364
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1487              	.LVL138:
  1488              		.loc 1 247 2 view .LVU371
  1489 0012 034A     		ldr	r2, .L84
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 32
 
 
  1490 0014 FFF7FEFF 		bl	snprintf
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  252:../../CM4/Core/Src/setting.c **** 	char * ptr, * ptr2;
  1542              		.loc 1 252 2 is_stmt 1 view .LVU375
  253:../../CM4/Core/Src/setting.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 33
 
 
  254:../../CM4/Core/Src/setting.c **** 	ptr = strright(buf, buf_len, "nm:");
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1587 003a 0746     		mov	r7, r0
  1588 003c 68B1     		cbz	r0, .L88
  264:../../CM4/Core/Src/setting.c **** 		ptr2 = strstr_s(ptr, strlen(ptr), ",");
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 34
 
 
  1589              		.loc 1 264 3 is_stmt 1 view .LVU393
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1633              	.L92:
  1634              		.loc 1 274 1 view .LVU409
  1635 006e 00BF     		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 35
 
 
  1636              	.L91:
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  279:../../CM4/Core/Src/setting.c **** }
  1686              		.loc 1 279 2 is_stmt 1 view .LVU418
  279:../../CM4/Core/Src/setting.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 36
 
 
  1687              		.loc 1 279 9 is_stmt 0 view .LVU419
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1727              	.LCFI23:
  1728              		.cfi_def_cfa_offset 12
  1729              		.cfi_offset 4, -12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 37
 
 
  1730              		.cfi_offset 5, -8
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  302:../../CM4/Core/Src/setting.c **** 	snprintf(mac_str, sizeof(mac_str), "8A:EF:%02X:%02X:%02X:%02X", (uid >> 24) & 0xFF, (uid >> 16) & 
  1766              		.loc 1 302 2 is_stmt 1 view .LVU436
  1767 0026 C3B2     		uxtb	r3, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 38
 
 
  1768 0028 0293     		str	r3, [sp, #8]
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1815 0070 2061     		str	r0, [r4, #16]
  310:../../CM4/Core/Src/setting.c **** 	setting.dns =  str2ip("8.8.8.8");
  1816              		.loc 1 310 2 is_stmt 1 view .LVU452
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 39
 
 
  1817              		.loc 1 310 17 is_stmt 0 view .LVU453
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1854              	.L100:
  1855 009c 00000000 		.word	setting
  1856 00a0 00000000 		.word	.LC45
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 40
 
 
  1857 00a4 1C000000 		.word	.LC46
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1901              	.LC61:
  1902 0058 6D636873 		.ascii	"mchsvolume\000"
  1902      766F6C75 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 41
 
 
  1902      6D6500
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1938 00d8 6D696366 		.ascii	"micfix\000"
  1938      697800
  1939 00df 00       		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 42
 
 
  1940              	.LC74:
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  1969              		.section	.text.load_setting,"ax",%progbits
  1970              		.align	1
  1971              		.global	load_setting
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 43
 
 
  1972              		.syntax unified
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  342:../../CM4/Core/Src/setting.c **** 
  343:../../CM4/Core/Src/setting.c **** 	if ( f_open(&cfg_file, path, FA_READ) != FR_OK)  return FALSE;
  344:../../CM4/Core/Src/setting.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 44
 
 
  345:../../CM4/Core/Src/setting.c **** 	f_readln_init();
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  399:../../CM4/Core/Src/setting.c **** 		//}
  400:../../CM4/Core/Src/setting.c **** 
  401:../../CM4/Core/Src/setting.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 45
 
 
  402:../../CM4/Core/Src/setting.c **** 		else if (strcmp_s(buf, key_len, "user_")) {
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2015 0018 03B0     		add	sp, sp, #12
  2016              	.LCFI29:
  2017              		.cfi_remember_state
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 46
 
 
  2018              		.cfi_def_cfa_offset 12
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2059              		.loc 1 349 6 is_stmt 0 view .LVU492
  2060 0048 0146     		mov	r1, r0
  2061 004a 0028     		cmp	r0, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 47
 
 
  2062 004c F0D0     		beq	.L104
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  356:../../CM4/Core/Src/setting.c **** 		//else if (compare_key(buf, key_len, KEY_NAME)) strcpy_s(setting.name, sizeof(setting.name), val)
  2100              		.loc 1 356 55 is_stmt 1 discriminator 1 view .LVU509
  356:../../CM4/Core/Src/setting.c **** 		//else if (compare_key(buf, key_len, KEY_NAME)) strcpy_s(setting.name, sizeof(setting.name), val)
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 48
 
 
  2101              		.loc 1 356 81 is_stmt 0 discriminator 1 view .LVU510
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  359:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MAC)) memcpy(setting.mac, str2mac(val), sizeof(setting.mac
  2143              		.loc 1 359 76 discriminator 1 view .LVU523
  2144 00a4 824B     		ldr	r3, .L144+12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 49
 
 
  2145 00a6 1871     		strb	r0, [r3, #4]
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2187 00e2 A5E7     		b	.L104
  2188              	.L110:
  362:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_GW)) setting.gw = str2ip(val);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 50
 
 
  2189              		.loc 1 362 8 is_stmt 1 view .LVU536
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2230 0116 2146     		mov	r1, r4
  2231 0118 6846     		mov	r0, sp
  2232 011a FFF7FEFF 		bl	compare_key
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 51
 
 
  2233              	.LVL197:
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  366:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MCHS_VOLUME)) setting.mchs_volume = str2int(val);
  2274              		.loc 1 366 55 is_stmt 1 discriminator 1 view .LVU563
  366:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MCHS_VOLUME)) setting.mchs_volume = str2int(val);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 52
 
 
  2275              		.loc 1 366 76 is_stmt 0 discriminator 1 view .LVU564
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  368:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_UM_COUNT)) setting.um_count = str2int(val);
  2317              		.loc 1 368 70 discriminator 1 view .LVU577
  2318 0186 4A4B     		ldr	r3, .L144+12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 53
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 53
 
 
  2319 0188 1877     		strb	r0, [r3, #28]
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2360              		.loc 1 371 8 is_stmt 1 view .LVU590
  371:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MKK_INSIG_LINES)) setting.mkk_insig_lines = str2ul(val);
  2361              		.loc 1 371 12 is_stmt 0 view .LVU591
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 54
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 54
 
 
  2362 01be 4A4A     		ldr	r2, .L144+68
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2404              	.LVL215:
  373:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MKK_UM2)) setting.mkk_um2 = str2ul(val);
  2405              		.loc 1 373 11 discriminator 1 view .LVU604
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 55
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 55
 
 
  2406 01f8 28B1     		cbz	r0, .L122
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2446              		.loc 1 375 86 is_stmt 0 discriminator 1 view .LVU618
  2447 022a 2846     		mov	r0, r5
  2448 022c FFF7FEFF 		bl	str2ul
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 56
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 56
 
 
  2449              	.LVL220:
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  379:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MIC_FIX)) setting.mic_is_fix = str2bool(val);
  2492              		.loc 1 379 8 view .LVU630
  379:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MIC_FIX)) setting.mic_is_fix = str2bool(val);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 57
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 57
 
 
  2493              		.loc 1 379 12 is_stmt 0 view .LVU631
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2537 02b4 14000000 		.word	.LC52
  2538 02b8 20000000 		.word	.LC53
  2539 02bc 2C000000 		.word	.LC54
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 58
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 58
 
 
  2540 02c0 30000000 		.word	.LC55
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2586              	.LVL231:
  383:../../CM4/Core/Src/setting.c **** 		else if (compare_key(buf, key_len, KEY_MANUAL_TILIBOM_FILE)) setting.mode_manual_tilibom_file = s
  2587              		.loc 1 383 11 discriminator 1 view .LVU650
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 59
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 59
 
 
  2588 0334 30B1     		cbz	r0, .L130
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  404:../../CM4/Core/Src/setting.c **** 			str_to_user(val, strlen(val), &setting.users[ival]);
  2629              		.loc 1 404 4 view .LVU664
  404:../../CM4/Core/Src/setting.c **** 			str_to_user(val, strlen(val), &setting.users[ival]);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 60
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 60
 
 
  2630              		.loc 1 404 11 is_stmt 0 view .LVU665
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2673              	.LVL245:
  417:../../CM4/Core/Src/setting.c **** 		}
  2674              		.loc 1 417 4 discriminator 1 view .LVU677
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 61
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 61
 
 
  2675 03a6 3B4A     		ldr	r2, .L146+24
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2717 03dc 0DF10900 		add	r0, sp, #9
  2718              	.LVL252:
  424:../../CM4/Core/Src/setting.c **** 			str_to_mode_fire(val, strlen(val), &setting.mode_fire[ival]);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 62
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 62
 
 
  2719              		.loc 1 424 11 view .LVU690
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2761              		.loc 1 434 11 view .LVU702
  2762 0414 FFF7FEFF 		bl	str2int
  2763              	.LVL262:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 63
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 63
 
 
  434:../../CM4/Core/Src/setting.c **** 			str_to_netfunc_fire(val, strlen(val), &setting.netfunc_fire[ival]);
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2805              		.loc 1 440 11 view .LVU715
  2806 044c F0E5     		b	.L104
  2807              	.LVL272:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 64
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 64
 
 
  2808              	.L137:
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2853 04a0 34010000 		.word	.LC80
  2854 04a4 40010000 		.word	.LC81
  2855 04a8 50010000 		.word	.LC82
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 65
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 65
 
 
  2856 04ac 5C010000 		.word	.LC83
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2891      5F25643D 
  2891      00
  2892 0079 000000   		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 66
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 66
 
 
  2893              	.LC94:
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2934              		.loc 1 462 2 view .LVU729
  463:../../CM4/Core/Src/setting.c **** 	int i;
  2935              		.loc 1 463 2 view .LVU730
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 67
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 67
 
 
  464:../../CM4/Core/Src/setting.c **** 
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  510:../../CM4/Core/Src/setting.c **** 
  511:../../CM4/Core/Src/setting.c **** 	snprintf(buf, sizeof(buf), "%s=%d"CRLF, KEY_UM_COUNT, setting.um_count);
  512:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 68
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 68
 
 
  513:../../CM4/Core/Src/setting.c **** 
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  567:../../CM4/Core/Src/setting.c **** 
  568:../../CM4/Core/Src/setting.c **** 	for (i = 1; i <= 10; ++i) {
  569:../../CM4/Core/Src/setting.c **** 		if ( (setting.users[i].pin_code[0] == '\0') || (setting.users[i].name[0] == '\0') || (setting.use
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 69
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 69
 
 
  570:../../CM4/Core/Src/setting.c **** 		snprintf(buf, sizeof(buf), "user_%d=", i);
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  624:../../CM4/Core/Src/setting.c **** 	strcat_s(buf, sizeof(buf), CRLF);
  625:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
  626:../../CM4/Core/Src/setting.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 70
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 70
 
 
  627:../../CM4/Core/Src/setting.c **** 
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  2972 0030 00000000 		.word	.LC84
  2973              	.L162:
  474:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 71
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 71
 
 
  2974              		.loc 1 474 2 is_stmt 1 view .LVU739
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3019              	.LVL287:
  480:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
  3020              		.loc 1 480 2 is_stmt 1 view .LVU749
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 72
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 72
 
 
  480:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3066              		.loc 1 486 2 is_stmt 1 view .LVU758
  3067 00ce E07A     		ldrb	r0, [r4, #11]	@ zero_extendqisi2
  3068 00d0 FFF7FEFF 		bl	bool2str
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 73
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 73
 
 
  3069              	.LVL295:
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3115              	.LVL303:
  492:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
  3116              		.loc 1 492 2 is_stmt 0 discriminator 1 view .LVU767
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 74
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 74
 
 
  3117 0124 0090     		str	r0, [sp]
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3163 0174 0090     		str	r0, [sp]
  3164 0176 6E4B     		ldr	r3, .L166+44
  3165 0178 3A46     		mov	r2, r7
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 75
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 75
 
 
  3166 017a 4FF40071 		mov	r1, #512
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3210 01c2 4FF40071 		mov	r1, #512
  3211 01c6 03A8     		add	r0, sp, #12
  3212 01c8 FFF7FEFF 		bl	snprintf
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 76
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 76
 
 
  3213              	.LVL318:
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3257              	.LVL324:
  512:../../CM4/Core/Src/setting.c **** 
  3258              		.loc 1 512 2 is_stmt 1 view .LVU796
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 77
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 77
 
 
  3259 0214 03A8     		add	r0, sp, #12
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3305 0268 0246     		mov	r2, r0
  518:../../CM4/Core/Src/setting.c **** 
  3306              		.loc 1 518 2 is_stmt 0 discriminator 1 view .LVU805
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 78
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 78
 
 
  3307 026a 83AB     		add	r3, sp, #524
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3353              		.loc 1 529 71 is_stmt 0 view .LVU813
  3354 02bc 94F84838 		ldrb	r3, [r4, #2120]	@ zero_extendqisi2
  529:../../CM4/Core/Src/setting.c **** 	f_write(&tmp_file, buf, strlen(buf), &bw);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 79
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 79
 
 
  3355              		.loc 1 529 2 view .LVU814
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3404 032c 3C000000 		.word	.LC57
  3405 0330 48000000 		.word	.LC59
  3406 0334 4C000000 		.word	.LC60
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 80
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 80
 
 
  3407 0338 58000000 		.word	.LC61
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3455 03a4 03A8     		add	r0, sp, #12
  3456 03a6 FFF7FEFF 		bl	strlen
  3457              	.LVL350:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 81
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 81
 
 
  3458 03aa 0246     		mov	r2, r0
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3503 03fa 03A9     		add	r1, sp, #12
  3504 03fc 84A8     		add	r0, sp, #528
  3505 03fe FFF7FEFF 		bl	f_write
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 82
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 82
 
 
  3506              	.LVL357:
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3552              	.LVL365:
  568:../../CM4/Core/Src/setting.c **** 		if ( (setting.users[i].pin_code[0] == '\0') || (setting.users[i].name[0] == '\0') || (setting.use
  3553              		.loc 1 568 2 is_stmt 1 view .LVU843
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 83
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 83
 
 
  568:../../CM4/Core/Src/setting.c **** 		if ( (setting.users[i].pin_code[0] == '\0') || (setting.users[i].name[0] == '\0') || (setting.use
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3596              	.LVL368:
  571:../../CM4/Core/Src/setting.c **** 		strcat_s(buf, sizeof(buf), CRLF);
  3597              		.loc 1 571 3 view .LVU856
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 84
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 84
 
 
  571:../../CM4/Core/Src/setting.c **** 		strcat_s(buf, sizeof(buf), CRLF);
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  584:../../CM4/Core/Src/setting.c **** 	strcat_s(buf, sizeof(buf), CRLF);
  3643              		.loc 1 584 45 is_stmt 0 view .LVU866
  3644 04ea 03A8     		add	r0, sp, #12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 85
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 85
 
 
  3645 04ec FFF7FEFF 		bl	strlen
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3690 053a 03AB     		add	r3, sp, #12
  3691 053c 1918     		adds	r1, r3, r0
  3692 053e 06F2C470 		addw	r0, r6, #1988
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 86
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 86
 
 
  3693 0542 FFF7FEFF 		bl	mode_sound_to_str
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3738 0594 03A8     		add	r0, sp, #12
  3739 0596 FFF7FEFF 		bl	strlen
  3740              	.LVL391:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 87
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 87
 
 
  3741 059a 0246     		mov	r2, r0
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3784 05e0 03A8     		add	r0, sp, #12
  3785 05e2 FFF7FEFF 		bl	strcat_s
  3786              	.LVL397:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 88
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 88
 
 
  603:../../CM4/Core/Src/setting.c **** 	}
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3834 0646 FFF7FEFF 		bl	snprintf
  3835              	.LVL403:
  609:../../CM4/Core/Src/setting.c **** 		strcat_s(buf, sizeof(buf), CRLF);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 89
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 89
 
 
  3836              		.loc 1 609 3 view .LVU903
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3880              		.loc 1 622 2 view .LVU913
  3881 0690 2D4B     		ldr	r3, .L171+12
  3882 0692 2E4A     		ldr	r2, .L171+16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 90
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 90
 
 
  3883 0694 4FF40071 		mov	r1, #512
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3927 06d4 0C2C     		cmp	r4, #12
  3928 06d6 F3DD     		ble	.L158
  635:../../CM4/Core/Src/setting.c **** 	arr_to_str(&setting.groups[1], 12, VAR_TYPE_UINT32, buf + strlen(buf), sizeof(buf) - strlen(buf), 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 91
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 91
 
 
  3929              		.loc 1 635 2 view .LVU924
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  3975 0728 2846     		mov	r0, r5
  3976 072a FFF7FEFF 		bl	f_unlink
  3977              	.LVL425:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 92
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 92
 
 
  645:../../CM4/Core/Src/setting.c **** 
@@ -5503,83 +5503,83 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 1
  4015              		.file 14 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
  4016              		.file 15 "C:/msys64/ucrt64/arm-none-eabi/include/stdlib.h"
  4017              		.file 16 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 93
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 93
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 setting.c
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:21     .rodata.mode_mchs_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:25     .text.mode_mchs_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:31     .text.mode_mchs_to_str:00000000 mode_mchs_to_str
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:64     .text.mode_mchs_to_str:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:69     .rodata.str_to_mode_mchs.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:73     .text.str_to_mode_mchs:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:79     .text.str_to_mode_mchs:00000000 str_to_mode_mchs
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:118    .text.str_to_mode_mchs:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:123    .rodata.mode_fire_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:131    .text.mode_fire_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:137    .text.mode_fire_to_str:00000000 mode_fire_to_str
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:249    .text.mode_fire_to_str:000000a8 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:254    .rodata.str_to_mode_fire.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:345    .text.str_to_mode_fire:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:351    .text.str_to_mode_fire:00000000 str_to_mode_fire
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:887    .text.str_to_mode_fire:0000022c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:921    .rodata.mode_sound_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:925    .text.mode_sound_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:931    .text.mode_sound_to_str:00000000 mode_sound_to_str
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:986    .text.mode_sound_to_str:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:991    .rodata.str_to_mode_sound.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:998    .text.str_to_mode_sound:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1004   .text.str_to_mode_sound:00000000 str_to_mode_sound
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1128   .text.str_to_mode_sound:00000074 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1137   .rodata.netfunc_fire_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1141   .text.netfunc_fire_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1147   .text.netfunc_fire_to_str:00000000 netfunc_fire_to_str
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1195   .text.netfunc_fire_to_str:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1200   .rodata.str_to_netfunc_fire.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1210   .text.str_to_netfunc_fire:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1216   .text.str_to_netfunc_fire:00000000 str_to_netfunc_fire
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1312   .text.str_to_netfunc_fire:00000054 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1320   .rodata.netfunc_mchs_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1324   .text.netfunc_mchs_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1330   .text.netfunc_mchs_to_str:00000000 netfunc_mchs_to_str
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1371   .text.netfunc_mchs_to_str:0000001c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1376   .text.str_to_netfunc_mchs:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1382   .text.str_to_netfunc_mchs:00000000 str_to_netfunc_mchs
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1442   .text.str_to_netfunc_mchs:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1448   .rodata.user_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1452   .text.user_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1458   .text.user_to_str:00000000 user_to_str
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1501   .text.user_to_str:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1506   .rodata.str_to_user.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1516   .text.str_to_user:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1522   .text.str_to_user:00000000 str_to_user
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1637   .text.str_to_user:00000070 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1645   .text.compare_key:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1651   .text.compare_key:00000000 compare_key
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1698   .rodata.default_setting.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1714   .text.default_setting:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1720   .text.default_setting:00000000 default_setting
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1855   .text.default_setting:0000009c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1867   .rodata.load_setting.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1970   .text.load_setting:00000000 $t
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s 			page 94
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:21     .rodata.mode_mchs_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:25     .text.mode_mchs_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:31     .text.mode_mchs_to_str:00000000 mode_mchs_to_str
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:64     .text.mode_mchs_to_str:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:69     .rodata.str_to_mode_mchs.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:73     .text.str_to_mode_mchs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:79     .text.str_to_mode_mchs:00000000 str_to_mode_mchs
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:118    .text.str_to_mode_mchs:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:123    .rodata.mode_fire_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:131    .text.mode_fire_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:137    .text.mode_fire_to_str:00000000 mode_fire_to_str
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:249    .text.mode_fire_to_str:000000a8 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:254    .rodata.str_to_mode_fire.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:345    .text.str_to_mode_fire:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:351    .text.str_to_mode_fire:00000000 str_to_mode_fire
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:887    .text.str_to_mode_fire:0000022c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:921    .rodata.mode_sound_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:925    .text.mode_sound_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:931    .text.mode_sound_to_str:00000000 mode_sound_to_str
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:986    .text.mode_sound_to_str:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:991    .rodata.str_to_mode_sound.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:998    .text.str_to_mode_sound:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1004   .text.str_to_mode_sound:00000000 str_to_mode_sound
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1128   .text.str_to_mode_sound:00000074 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1137   .rodata.netfunc_fire_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1141   .text.netfunc_fire_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1147   .text.netfunc_fire_to_str:00000000 netfunc_fire_to_str
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1195   .text.netfunc_fire_to_str:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1200   .rodata.str_to_netfunc_fire.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1210   .text.str_to_netfunc_fire:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1216   .text.str_to_netfunc_fire:00000000 str_to_netfunc_fire
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1312   .text.str_to_netfunc_fire:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1320   .rodata.netfunc_mchs_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1324   .text.netfunc_mchs_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1330   .text.netfunc_mchs_to_str:00000000 netfunc_mchs_to_str
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1371   .text.netfunc_mchs_to_str:0000001c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1376   .text.str_to_netfunc_mchs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1382   .text.str_to_netfunc_mchs:00000000 str_to_netfunc_mchs
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1442   .text.str_to_netfunc_mchs:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1448   .rodata.user_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1452   .text.user_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1458   .text.user_to_str:00000000 user_to_str
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1501   .text.user_to_str:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1506   .rodata.str_to_user.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1516   .text.str_to_user:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1522   .text.str_to_user:00000000 str_to_user
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1637   .text.str_to_user:00000070 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1645   .text.compare_key:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1651   .text.compare_key:00000000 compare_key
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1698   .rodata.default_setting.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1714   .text.default_setting:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1720   .text.default_setting:00000000 default_setting
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1855   .text.default_setting:0000009c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1867   .rodata.load_setting.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1970   .text.load_setting:00000000 $t
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s 			page 94
 
 
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:1976   .text.load_setting:00000000 load_setting
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2533   .text.load_setting:000002a4 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2563   .text.load_setting:00000310 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2844   .text.load_setting:0000047c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2862   .rodata.save_setting.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2902   .text.save_setting:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2908   .text.save_setting:00000000 save_setting
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2971   .text.save_setting:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:2976   .text.save_setting:00000034 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:3394   .text.save_setting:00000304 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:3418   .text.save_setting:00000360 $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:3813   .text.save_setting:00000604 $d
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:3830   .text.save_setting:0000063c $t
-C:\Users\oleg\AppData\Local\Temp\ccvBtCiv.s:3990   .text.save_setting:0000073c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:1976   .text.load_setting:00000000 load_setting
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2533   .text.load_setting:000002a4 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2563   .text.load_setting:00000310 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2844   .text.load_setting:0000047c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2862   .rodata.save_setting.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2902   .text.save_setting:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2908   .text.save_setting:00000000 save_setting
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2971   .text.save_setting:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:2976   .text.save_setting:00000034 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:3394   .text.save_setting:00000304 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:3418   .text.save_setting:00000360 $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:3813   .text.save_setting:00000604 $d
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:3830   .text.save_setting:0000063c $t
+C:\Users\oleg\AppData\Local\Temp\ccF84SZh.s:3990   .text.save_setting:0000073c $d
 
 UNDEFINED SYMBOLS
 snprintf

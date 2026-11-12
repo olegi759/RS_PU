@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
   37              		.cfi_offset 14, -4
   20:../../CM4/Core/Src/rtc.c **** 	  RTC_BQ32000_Init(&hi2c1);
   38              		.loc 1 20 4 view .LVU1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 2
 
 
   39 0002 0248     		ldr	r0, .L3
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
   81              	.LCFI2:
   82              		.cfi_def_cfa_offset 40
   83 0004 8446     		mov	ip, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 3
 
 
   84 0006 0846     		mov	r0, r1
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  132 003c 9CF80420 		ldrb	r2, [ip, #4]	@ zero_extendqisi2
  133              	.LVL9:
   28:../../CM4/Core/Src/rtc.c ****     else snprintf(buf, buf_size, "20%02d-%02d-%02dT%02d:%02d", rtcTim->year, rtcTim->month, rtcTim-
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 4
 
 
  134              		.loc 1 28 112 view .LVU19
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  184              		.cfi_def_cfa_offset 16
  185              		.cfi_offset 4, -16
  186              		.cfi_offset 5, -12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 5
 
 
  187              		.cfi_offset 6, -8
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
   41:../../CM4/Core/Src/rtc.c **** 	rtcTime->year = year - 2000;
  213              		.loc 1 41 2 is_stmt 1 view .LVU34
   41:../../CM4/Core/Src/rtc.c **** 	rtcTime->year = year - 2000;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 6
 
 
  214              		.loc 1 41 23 is_stmt 0 view .LVU35
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  253              		.loc 1 48 2 is_stmt 1 view .LVU50
   48:../../CM4/Core/Src/rtc.c **** 	rtcTime->day = str2int(ptr);
  254              		.loc 1 48 5 is_stmt 0 view .LVU51
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 7
 
 
  255 004c 0646     		mov	r6, r0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  295              	.LVL26:
   55:../../CM4/Core/Src/rtc.c **** 
  296              		.loc 1 55 2 is_stmt 1 view .LVU66
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 8
 
 
   55:../../CM4/Core/Src/rtc.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  336 00a8 B7E7     		b	.L12
  337              	.LVL33:
  338              	.L17:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 9
 
 
   48:../../CM4/Core/Src/rtc.c **** 	rtcTime->day = str2int(ptr);
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  385              		.loc 1 67 2 is_stmt 1 view .LVU88
   68:../../CM4/Core/Src/rtc.c **** 
   69:../../CM4/Core/Src/rtc.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 10
 
 
   70:../../CM4/Core/Src/rtc.c ****     RTC_BQ32000_ReadTime(&hi2c1, &rtcTime);
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  427              		.align	1
  428              		.global	rtc_set_datetime_str
  429              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 11
 
 
  430              		.thumb
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
   88:../../CM4/Core/Src/rtc.c **** 	RTC_BQ32000_SetTime(&hi2c1, &rtcTime);
  473              		.loc 1 88 2 is_stmt 1 view .LVU106
  474 0030 04A9     		add	r1, sp, #16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 12
 
 
  475 0032 0648     		ldr	r0, .L32+4
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
   92:../../CM4/Core/Src/rtc.c **** // RTC_Time в стринг (только время)
   93:../../CM4/Core/Src/rtc.c **** void rtctime2str(RTC_Time *rtcTim, char * buf, uint16_t buf_size, BOOL with_second)
   94:../../CM4/Core/Src/rtc.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 13
 
 
  521              		.loc 1 94 1 view -0
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  570 0028 9CF80130 		ldrb	r3, [ip, #1]	@ zero_extendqisi2
  571              	.LVL54:
   96:../../CM4/Core/Src/rtc.c ****     else snprintf(buf, buf_size, "%02d:%02d", rtcTim->hours, rtcTim->minutes);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 14
 
 
  572              		.loc 1 96 10 view .LVU122
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  618 0008 0648     		ldr	r0, .L42
  619              	.LVL58:
  620              		.loc 1 106 5 is_stmt 0 view .LVU129
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 15
 
 
  621 000a FFF7FEFF 		bl	RTC_BQ32000_ReadTime
@@ -896,38 +896,38 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 1
  667              		.file 12 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  668              		.file 13 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
  669              		.file 14 "../../CM4/Core/Inc/main.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 rtc.c
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:21     .text.rtc_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:27     .text.rtc_init:00000000 rtc_init
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:47     .text.rtc_init:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:52     .rodata.rtcdatetime2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:59     .text.rtcdatetime2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:65     .text.rtcdatetime2str:00000000 rtcdatetime2str
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:152    .text.rtcdatetime2str:0000005c $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:158    .rodata.str2rtcdatetime.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:168    .text.str2rtcdatetime:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:174    .text.str2rtcdatetime:00000000 str2rtcdatetime
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:354    .text.str2rtcdatetime:000000b4 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:361    .text.rtc_read_datetime_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:367    .text.rtc_read_datetime_str:00000000 rtc_read_datetime_str
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:414    .text.rtc_read_datetime_str:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:653    .bss.__rtc_read_datetime_str:00000000 __rtc_read_datetime_str
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:420    .rodata.rtc_set_datetime_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:427    .text.rtc_set_datetime_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:433    .text.rtc_set_datetime_str:00000000 rtc_set_datetime_str
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:498    .text.rtc_set_datetime_str:00000048 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:505    .rodata.rtctime2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:512    .text.rtctime2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:518    .text.rtctime2str:00000000 rtctime2str
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:585    .text.rtctime2str:0000003c $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:591    .text.rtc_read_time_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:597    .text.rtc_read_time_str:00000000 rtc_read_time_str
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:644    .text.rtc_read_time_str:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\ccNZlByZ.s:650    .bss.__rtc_read_datetime_str:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:21     .text.rtc_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:27     .text.rtc_init:00000000 rtc_init
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:47     .text.rtc_init:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:52     .rodata.rtcdatetime2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:59     .text.rtcdatetime2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:65     .text.rtcdatetime2str:00000000 rtcdatetime2str
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:152    .text.rtcdatetime2str:0000005c $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:158    .rodata.str2rtcdatetime.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:168    .text.str2rtcdatetime:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:174    .text.str2rtcdatetime:00000000 str2rtcdatetime
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:354    .text.str2rtcdatetime:000000b4 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:361    .text.rtc_read_datetime_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:367    .text.rtc_read_datetime_str:00000000 rtc_read_datetime_str
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:414    .text.rtc_read_datetime_str:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:653    .bss.__rtc_read_datetime_str:00000000 __rtc_read_datetime_str
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:420    .rodata.rtc_set_datetime_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:427    .text.rtc_set_datetime_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:433    .text.rtc_set_datetime_str:00000000 rtc_set_datetime_str
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:498    .text.rtc_set_datetime_str:00000048 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:505    .rodata.rtctime2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:512    .text.rtctime2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:518    .text.rtctime2str:00000000 rtctime2str
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:585    .text.rtctime2str:0000003c $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:591    .text.rtc_read_time_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:597    .text.rtc_read_time_str:00000000 rtc_read_time_str
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:644    .text.rtc_read_time_str:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccrYbtCR.s:650    .bss.__rtc_read_datetime_str:00000000 $d
 
 UNDEFINED SYMBOLS
 RTC_BQ32000_Init

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cchoihoR.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
   38              		.loc 1 18 1 is_stmt 0 view .LVU1
   39 0000 10B5     		push	{r4, lr}
   40              	.LCFI0:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cchoihoR.s 			page 2
 
 
   41              		.cfi_def_cfa_offset 8
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
   89              	.LFE132:
   91              		.section	.rodata.logfile_add.str1.4,"aMS",%progbits,1
   92              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cchoihoR.s 			page 3
 
 
   93              	.LC1:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
  136              		.loc 1 33 35 discriminator 1 view .LVU21
  137 0014 114B     		ldr	r3, .L13
  138 0016 D3F8A439 		ldr	r3, [r3, #2468]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cchoihoR.s 			page 4
 
 
  139              		.loc 1 33 5 discriminator 1 view .LVU22
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
   40:../../util/logfile_util.c **** 	} else {
  177              		.loc 1 40 3 view .LVU32
   40:../../util/logfile_util.c **** 	} else {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cchoihoR.s 			page 5
 
 
  178              		.loc 1 40 8 is_stmt 0 discriminator 1 view .LVU33
@@ -278,19 +278,19 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 1
  210              		.file 8 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  211              		.file 9 "../../util/str_util.h"
  212              		.file 10 "../../common/common.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cchoihoR.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 logfile_util.c
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:21     .rodata.logfile_add_str_and_lf.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:25     .text.logfile_add_str_and_lf:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:31     .text.logfile_add_str_and_lf:00000000 logfile_add_str_and_lf
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:87     .text.logfile_add_str_and_lf:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:92     .rodata.logfile_add.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:99     .text.logfile_add:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:105    .text.logfile_add:00000000 logfile_add
-C:\Users\oleg\AppData\Local\Temp\ccrRTZHu.s:196    .text.logfile_add:0000005c $d
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:21     .rodata.logfile_add_str_and_lf.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:25     .text.logfile_add_str_and_lf:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:31     .text.logfile_add_str_and_lf:00000000 logfile_add_str_and_lf
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:87     .text.logfile_add_str_and_lf:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:92     .rodata.logfile_add.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:99     .text.logfile_add:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:105    .text.logfile_add:00000000 logfile_add
+C:\Users\oleg\AppData\Local\Temp\cchoihoR.s:196    .text.logfile_add:0000005c $d
 
 UNDEFINED SYMBOLS
 strcpy_s

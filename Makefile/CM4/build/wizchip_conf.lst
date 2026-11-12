@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
   28:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //! 
   29:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //!     * Redistributions of source code must retain the above copyright 
   30:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //! notice, this list of conditions and the following disclaimer. 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 2
 
 
   31:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //!     * Redistributions in binary form must reproduce the above copyright
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
   68:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
   69:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** /**
   70:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****  * @brief Default function to disable interrupt.
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 3
 
 
   71:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****  * @note This function help not to access wrong address. If you do not describe this function or re
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
   91:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** void 	wizchip_cs_deselect(void)          {}
   86              		.loc 1 91 42 view -0
   87              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 4
 
 
   88              		@ args = 0, pretend = 0, frame = 0
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  108:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //void 	wizchip_bus_writebyte(uint32_t AddrSel, uint8_t wb)  { *((volatile uint8_t*)((ptrdiff_t)Add
  109:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** void 	wizchip_bus_writedata(uint32_t AddrSel, iodata_t wb)  { *((volatile iodata_t*)((ptrdiff_t)Add
  130              		.loc 1 109 61 is_stmt 1 view -0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 5
 
 
  131              		.cfi_startproc
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  125:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** void 	wizchip_spi_writebyte(uint8_t wb) {}
  174              		.loc 1 125 41 is_stmt 1 view -0
  175              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 6
 
 
  176              		@ args = 0, pretend = 0, frame = 0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  218              		@ link register save eliminated.
  219              		.loc 1 141 60 view .LVU24
  220 0000 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 7
 
 
  221              		.cfi_endproc
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  185:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
  186:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****     }
  187:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** };
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 8
 
 
  188:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  269 001c 5DF8044B 		ldr	r4, [sp], #4
  270              	.LCFI1:
  271              		.cfi_restore 4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 9
 
 
  272              		.cfi_def_cfa_offset 0
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  213:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    }
  214:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    else
  215:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 10
 
 
  216:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       WIZCHIP.CS._select   = cs_sel;
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  227:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    /*
  228:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    if(!bus_rb || !bus_wb)
  229:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 11
 
 
  230:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       WIZCHIP.IF.BUS._read_byte   = wizchip_bus_readbyte;
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  400              		.section	.text.reg_wizchip_spi_cbfunc,"ax",%progbits
  401              		.align	1
  402              		.global	reg_wizchip_spi_cbfunc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 12
 
 
  403              		.syntax unified
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  444              		.loc 1 263 7 is_stmt 1 view .LVU78
  445              		.loc 1 263 35 is_stmt 0 view .LVU79
  446 0022 1962     		str	r1, [r3, #32]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 13
 
 
  264:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    }
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  275:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       WIZCHIP.IF.SPI._write_burst  = wizchip_spi_writeburst;
  492              		.loc 1 275 7 is_stmt 1 view .LVU89
  493              		.loc 1 275 36 is_stmt 0 view .LVU90
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 14
 
 
  494 0018 054A     		ldr	r2, .L43+8
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  301:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          return wizchip_init(ptmp[0], ptmp[1]);
  302:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       case CW_CLR_INTERRUPT:
  303:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          wizchip_clrinterrupt(*((intr_kind*)arg));
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 15
 
 
  304:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          break;
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  358:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          break;
  359:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    #endif      
  360:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       default:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 16
 
 
  361:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          return -1;
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  402:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    setMR(mr | MR_IND);
  403:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** #endif
  404:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 17
 
 
  405:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    getSHAR(mac);
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  581 0056 FFF7FEFF 		bl	WIZCHIP_WRITE_BUF
  582              	.LVL18:
  416:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    setSUBR(sn);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 18
 
 
  583              		.loc 1 416 4 view .LVU107
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  629              		.loc 1 426 4 view .LVU113
  630              	.LVL22:
  427:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    wizchip_sw_reset();
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 19
 
 
  631              		.loc 1 427 4 view .LVU114
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  662              		.loc 1 441 40 is_stmt 0 discriminator 2 view .LVU127
  663 0020 5BB2     		sxtb	r3, r3
  664              	.LVL28:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 20
 
 
  441:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 		{
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  697 0042 0022     		movs	r2, #0
  467:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** #if _WIZCHIP_ == W5300
  468:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       for(i = 0 ; i < _WIZCHIP_SOCK_NUM_; i++)
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 21
 
 
  469:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 		{
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  490:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 			while((rxsize[i] >> j != 1)&&(txsize[i] !=0)){j++;}
  491:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 			setSn_RXBUF_SIZE(i, j);
  492:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** #else
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 22
 
 
  493:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 			setSn_RXBUF_SIZE(i, rxsize[i]);
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  769 0084 4FF0FF30 		mov	r0, #-1
  770 0088 F8E7     		b	.L50
  771              		.cfi_endproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 23
 
 
  772              	.LFE150:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  804 0008 4FF4A850 		mov	r0, #5376
  805              	.LVL50:
  806              		.loc 1 522 4 is_stmt 0 view .LVU164
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 24
 
 
  807 000c FFF7FEFF 		bl	WIZCHIP_WRITE
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  855              	wizchip_getinterrupt:
  856              	.LFB152:
  531:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 25
 
 
  532:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** intr_kind wizchip_getinterrupt(void)
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  559:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****   ret = (ret << 8) + ir;
  884              		.loc 1 559 3 view .LVU187
  885              		.loc 1 559 14 is_stmt 0 view .LVU188
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 26
 
 
  886 0016 0002     		lsls	r0, r0, #8
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  575:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    simr &= 0x0F;
  576:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    imr |= simr;
  577:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    setIMR(imr);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 27
 
 
  578:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //A20150601 : For integrating with W5300
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  594:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    simr = imr & 0x0F;
  595:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** //A20150601 : For integrating with W5300
  596:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** #elif _WIZCHIP_ == W5300
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 28
 
 
  597:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    ret = getIMR();
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  615:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
  616:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** int8_t wizphy_getphylink(void)
  617:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 29
 
 
  1005              		.loc 1 617 1 is_stmt 1 view -0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1042              		.syntax unified
  1043              		.thumb
  1044              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 30
 
 
  1046              	wizphy_getphypmode:
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1078 0016 0120     		movs	r0, #1
  1079 0018 FCE7     		b	.L83
  1080              		.cfi_endproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 31
 
 
  1081              	.LFE156:
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  700:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    {
  701:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 	   phyconf->mode = PHY_MODE_AUTONEGO;
  702:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 32
 
 
  703:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    else
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  743:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    tmp &= PHYCFGR_RST;
  1106              		.loc 1 743 4 is_stmt 1 view .LVU241
  744:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    setPHYCFGR(tmp);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 33
 
 
  1107              		.loc 1 744 4 view .LVU242
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1155              	.LVL88:
  753:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    if(phyconf->by == PHY_CONFBY_SW)
  1156              		.loc 1 753 4 view .LVU254
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 34
 
 
  1157              		.loc 1 753 14 is_stmt 0 view .LVU255
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1192              		.loc 1 754 11 view .LVU270
  1193 0022 4021     		movs	r1, #64
  1194 0024 F1E7     		b	.L90
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 35
 
 
  1195              	.LVL92:
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  764:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          else
  1232              		.loc 1 764 17 view .LVU285
  1233 0048 EFE7     		b	.L92
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 36
 
 
  1234              		.cfi_endproc
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  791:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       default:
  792:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          phyconf->mode = PHY_MODE_MANUAL;
  1278              		.loc 1 792 10 view .LVU296
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 37
 
 
  1279              		.loc 1 792 24 is_stmt 0 view .LVU297
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  808:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       case PHYCFGR_OPMDC_100FA:
  809:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       case PHYCFGR_OPMDC_100F:
  810:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       case PHYCFGR_OPMDC_10F:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 38
 
 
  811:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          phyconf->duplex = PHY_DUPLEX_FULL;
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  819:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** void wizphy_getphystat(wiz_PhyConf* phyconf)
  820:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** {
  1357              		.loc 1 820 1 is_stmt 1 view -0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 39
 
 
  1358              		.cfi_startproc
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1407              	.LCFI18:
  1408              		.cfi_def_cfa_offset 8
  1409              		.cfi_offset 4, -8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 40
 
 
  1410              		.cfi_offset 14, -4
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1452 0032 012C     		cmp	r4, #1
  1453 0034 07D0     		beq	.L124
  840:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 41
 
 
  841:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       if(tmp & PHYCFGR_OPMDC_PDOWN) return 0;
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1491              	.L125:
  847:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** }
  1492              		.loc 1 847 11 view .LVU364
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 42
 
 
  1493 0056 4FF0FF30 		mov	r0, #-1
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1540 000c 0F28     		cmp	r0, #15
  1541 000e 09D8     		bhi	.L128
  1542 0010 DFE800F0 		tbb	[pc, r0]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 43
 
 
  1543              	.L130:
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1586 0036 0834     		adds	r4, r4, #8
  299:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          }
  1587              		.loc 1 299 21 view .LVU385
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 44
 
 
  1588 0038 0194     		str	r4, [sp, #4]
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1627              	.LVL142:
  1628              	.L141:
  309:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          break;         
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 45
 
 
  1629              		.loc 1 309 10 is_stmt 1 view .LVU401
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1669              	.LVL151:
  318:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          break;
  1670              		.loc 1 318 38 discriminator 2 view .LVU416
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 46
 
 
  319:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       case CW_GET_INTRTIME:
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  326:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          ((uint8_t*)arg)[2] = WIZCHIP.id[2];
  1709              		.loc 1 326 41 is_stmt 0 view .LVU433
  1710 00a8 DA78     		ldrb	r2, [r3, #3]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 47
 
 
  326:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          ((uint8_t*)arg)[2] = WIZCHIP.id[2];
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1746              		.loc 1 336 10 view .LVU452
  363:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** }
  1747              		.loc 1 363 11 is_stmt 0 view .LVU453
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 48
 
 
  1748 00c6 0020     		movs	r0, #0
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1787 00e4 10E0     		b	.L133
  1788              	.LVL169:
  1789              	.L131:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 49
 
 
  350:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          if((int8_t)tmp == -1) return -1;
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1826              		.loc 1 358 10 is_stmt 1 view .LVU486
  363:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** }
  1827              		.loc 1 363 11 is_stmt 0 view .LVU487
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 50
 
 
  1828 0102 0020     		movs	r0, #0
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1877              	.LFB162:
  849:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** #endif
  850:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 51
 
 
  851:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c **** 
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  1923 003e E27C     		ldrb	r2, [r4, #19]	@ zero_extendqisi2
  1924              		.loc 1 859 13 view .LVU507
  1925 0040 5A70     		strb	r2, [r3, #1]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 52
 
 
  860:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    _DNS_[2] = pnetinfo->dns[2];
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  867:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    getSHAR(pnetinfo->mac);
  1975              		.loc 1 867 4 is_stmt 1 view .LVU521
  1976 0004 0622     		movs	r2, #6
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 53
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 53
 
 
  1977 0006 0146     		mov	r1, r0
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2023              		.loc 1 875 20 is_stmt 0 view .LVU539
  2024 004a 034B     		ldr	r3, .L159+4
  2025 004c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 54
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 54
 
 
  2026 004e A375     		strb	r3, [r4, #22]
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2070 000c FFF7FEFF 		bl	WIZCHIP_READ
  2071              	.LVL199:
  887:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****    tmp |= (uint8_t)netmode;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 55
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 55
 
 
  2072              		.loc 1 887 4 is_stmt 1 view .LVU550
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2120              		.loc 1 894 26 is_stmt 0 view .LVU561
  2121 0002 0020     		movs	r0, #0
  2122 0004 FFF7FEFF 		bl	WIZCHIP_READ
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 56
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 56
 
 
  2123              	.LVL204:
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2172              		.cfi_endproc
  2173              	.LFE166:
  2175              		.section	.text.wizchip_gettimeout,"ax",%progbits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 57
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 57
 
 
  2176              		.align	1
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2225              		.cfi_endproc
  2226              	.LFE167:
  2228              		.section	.text.ctlnetwork,"ax",%progbits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 58
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 58
 
 
  2229              		.align	1
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  376:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****          break;
  2276              		.loc 1 376 10 is_stmt 1 view .LVU593
  2277 001c 0846     		mov	r0, r1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 59
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 59
 
 
  2278              	.LVL219:
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2316              		.loc 1 384 10 is_stmt 0 view .LVU609
  2317 003a FFF7FEFF 		bl	wizchip_settimeout
  2318              	.LVL228:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 60
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 60
 
 
  385:../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.c ****       case CN_GET_TIMEOUT:
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2369 0010 00000000 		.word	wizchip_cris_exit
  2370 0014 00000000 		.word	wizchip_cs_select
  2371 0018 00000000 		.word	wizchip_cs_deselect
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 61
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 61
 
 
  2372 001c 00000000 		.word	wizchip_bus_readdata
@@ -3612,105 +3612,105 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 1
  2379              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
  2380              		.file 5 "../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h"
  2381              		.file 6 "../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 62
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 62
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 wizchip_conf.c
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:21     .text.wizchip_cris_enter:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:27     .text.wizchip_cris_enter:00000000 wizchip_cris_enter
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:40     .text.wizchip_cris_exit:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:46     .text.wizchip_cris_exit:00000000 wizchip_cris_exit
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:59     .text.wizchip_cs_select:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:65     .text.wizchip_cs_select:00000000 wizchip_cs_select
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:78     .text.wizchip_cs_deselect:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:84     .text.wizchip_cs_deselect:00000000 wizchip_cs_deselect
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:97     .text.wizchip_bus_readdata:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:103    .text.wizchip_bus_readdata:00000000 wizchip_bus_readdata
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:121    .text.wizchip_bus_writedata:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:127    .text.wizchip_bus_writedata:00000000 wizchip_bus_writedata
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:144    .text.wizchip_spi_readbyte:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:150    .text.wizchip_spi_readbyte:00000000 wizchip_spi_readbyte
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:165    .text.wizchip_spi_writebyte:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:171    .text.wizchip_spi_writebyte:00000000 wizchip_spi_writebyte
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:185    .text.wizchip_spi_readburst:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:191    .text.wizchip_spi_readburst:00000000 wizchip_spi_readburst
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:205    .text.wizchip_spi_writeburst:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:211    .text.wizchip_spi_writeburst:00000000 wizchip_spi_writeburst
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:225    .text.reg_wizchip_cris_cbfunc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:231    .text.reg_wizchip_cris_cbfunc:00000000 reg_wizchip_cris_cbfunc
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:277    .text.reg_wizchip_cris_cbfunc:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2363   .data.WIZCHIP:00000000 WIZCHIP
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:284    .text.reg_wizchip_cs_cbfunc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:290    .text.reg_wizchip_cs_cbfunc:00000000 reg_wizchip_cs_cbfunc
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:336    .text.reg_wizchip_cs_cbfunc:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:343    .text.reg_wizchip_bus_cbfunc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:349    .text.reg_wizchip_bus_cbfunc:00000000 reg_wizchip_bus_cbfunc
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:394    .text.reg_wizchip_bus_cbfunc:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:401    .text.reg_wizchip_spi_cbfunc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:407    .text.reg_wizchip_spi_cbfunc:00000000 reg_wizchip_spi_cbfunc
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:452    .text.reg_wizchip_spi_cbfunc:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:459    .text.reg_wizchip_spiburst_cbfunc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:465    .text.reg_wizchip_spiburst_cbfunc:00000000 reg_wizchip_spiburst_cbfunc
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:510    .text.reg_wizchip_spiburst_cbfunc:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:517    .text.wizchip_sw_reset:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:523    .text.wizchip_sw_reset:00000000 wizchip_sw_reset
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:605    .text.wizchip_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:611    .text.wizchip_init:00000000 wizchip_init
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:775    .text.wizchip_clrinterrupt:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:781    .text.wizchip_clrinterrupt:00000000 wizchip_clrinterrupt
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:849    .text.wizchip_getinterrupt:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:855    .text.wizchip_getinterrupt:00000000 wizchip_getinterrupt
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:902    .text.wizchip_setinterruptmask:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:908    .text.wizchip_setinterruptmask:00000000 wizchip_setinterruptmask
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:946    .text.wizchip_getinterruptmask:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:952    .text.wizchip_getinterruptmask:00000000 wizchip_getinterruptmask
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:997    .text.wizphy_getphylink:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1003   .text.wizphy_getphylink:00000000 wizphy_getphylink
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1040   .text.wizphy_getphypmode:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1046   .text.wizphy_getphypmode:00000000 wizphy_getphypmode
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1084   .text.wizphy_reset:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1090   .text.wizphy_reset:00000000 wizphy_reset
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1135   .text.wizphy_setphyconf:00000000 $t
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s 			page 63
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:21     .text.wizchip_cris_enter:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:27     .text.wizchip_cris_enter:00000000 wizchip_cris_enter
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:40     .text.wizchip_cris_exit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:46     .text.wizchip_cris_exit:00000000 wizchip_cris_exit
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:59     .text.wizchip_cs_select:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:65     .text.wizchip_cs_select:00000000 wizchip_cs_select
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:78     .text.wizchip_cs_deselect:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:84     .text.wizchip_cs_deselect:00000000 wizchip_cs_deselect
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:97     .text.wizchip_bus_readdata:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:103    .text.wizchip_bus_readdata:00000000 wizchip_bus_readdata
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:121    .text.wizchip_bus_writedata:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:127    .text.wizchip_bus_writedata:00000000 wizchip_bus_writedata
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:144    .text.wizchip_spi_readbyte:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:150    .text.wizchip_spi_readbyte:00000000 wizchip_spi_readbyte
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:165    .text.wizchip_spi_writebyte:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:171    .text.wizchip_spi_writebyte:00000000 wizchip_spi_writebyte
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:185    .text.wizchip_spi_readburst:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:191    .text.wizchip_spi_readburst:00000000 wizchip_spi_readburst
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:205    .text.wizchip_spi_writeburst:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:211    .text.wizchip_spi_writeburst:00000000 wizchip_spi_writeburst
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:225    .text.reg_wizchip_cris_cbfunc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:231    .text.reg_wizchip_cris_cbfunc:00000000 reg_wizchip_cris_cbfunc
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:277    .text.reg_wizchip_cris_cbfunc:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2363   .data.WIZCHIP:00000000 WIZCHIP
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:284    .text.reg_wizchip_cs_cbfunc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:290    .text.reg_wizchip_cs_cbfunc:00000000 reg_wizchip_cs_cbfunc
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:336    .text.reg_wizchip_cs_cbfunc:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:343    .text.reg_wizchip_bus_cbfunc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:349    .text.reg_wizchip_bus_cbfunc:00000000 reg_wizchip_bus_cbfunc
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:394    .text.reg_wizchip_bus_cbfunc:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:401    .text.reg_wizchip_spi_cbfunc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:407    .text.reg_wizchip_spi_cbfunc:00000000 reg_wizchip_spi_cbfunc
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:452    .text.reg_wizchip_spi_cbfunc:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:459    .text.reg_wizchip_spiburst_cbfunc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:465    .text.reg_wizchip_spiburst_cbfunc:00000000 reg_wizchip_spiburst_cbfunc
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:510    .text.reg_wizchip_spiburst_cbfunc:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:517    .text.wizchip_sw_reset:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:523    .text.wizchip_sw_reset:00000000 wizchip_sw_reset
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:605    .text.wizchip_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:611    .text.wizchip_init:00000000 wizchip_init
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:775    .text.wizchip_clrinterrupt:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:781    .text.wizchip_clrinterrupt:00000000 wizchip_clrinterrupt
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:849    .text.wizchip_getinterrupt:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:855    .text.wizchip_getinterrupt:00000000 wizchip_getinterrupt
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:902    .text.wizchip_setinterruptmask:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:908    .text.wizchip_setinterruptmask:00000000 wizchip_setinterruptmask
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:946    .text.wizchip_getinterruptmask:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:952    .text.wizchip_getinterruptmask:00000000 wizchip_getinterruptmask
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:997    .text.wizphy_getphylink:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1003   .text.wizphy_getphylink:00000000 wizphy_getphylink
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1040   .text.wizphy_getphypmode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1046   .text.wizphy_getphypmode:00000000 wizphy_getphypmode
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1084   .text.wizphy_reset:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1090   .text.wizphy_reset:00000000 wizphy_reset
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1135   .text.wizphy_setphyconf:00000000 $t
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s 			page 63
 
 
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1141   .text.wizphy_setphyconf:00000000 wizphy_setphyconf
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1238   .text.wizphy_getphyconf:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1244   .text.wizphy_getphyconf:00000000 wizphy_getphyconf
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1342   .text.wizphy_getphyconf:00000068 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1348   .text.wizphy_getphystat:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1354   .text.wizphy_getphystat:00000000 wizphy_getphystat
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1392   .text.wizphy_setphypmode:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1398   .text.wizphy_setphypmode:00000000 wizphy_setphypmode
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1508   .text.ctlwizchip:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1514   .text.ctlwizchip:00000000 ctlwizchip
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1544   .text.ctlwizchip:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1560   .text.ctlwizchip:00000024 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1864   .text.ctlwizchip:00000118 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1869   .text.wizchip_setnetinfo:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1875   .text.wizchip_setnetinfo:00000000 wizchip_setnetinfo
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1949   .text.wizchip_setnetinfo:00000054 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2356   .bss._DNS_:00000000 _DNS_
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2350   .bss._DHCP_:00000000 _DHCP_
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1955   .text.wizchip_getnetinfo:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:1961   .text.wizchip_getnetinfo:00000000 wizchip_getnetinfo
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2034   .text.wizchip_getnetinfo:00000054 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2040   .text.wizchip_setnetmode:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2046   .text.wizchip_setnetmode:00000000 wizchip_setnetmode
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2102   .text.wizchip_getnetmode:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2108   .text.wizchip_getnetmode:00000000 wizchip_getnetmode
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2130   .text.wizchip_settimeout:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2136   .text.wizchip_settimeout:00000000 wizchip_settimeout
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2176   .text.wizchip_gettimeout:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2182   .text.wizchip_gettimeout:00000000 wizchip_gettimeout
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2229   .text.ctlnetwork:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2235   .text.ctlnetwork:00000000 ctlnetwork
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2254   .text.ctlnetwork:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2260   .text.ctlnetwork:00000012 $t
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2351   .bss._DHCP_:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2353   .bss._DNS_:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc3qJrKR.s:2360   .data.WIZCHIP:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1141   .text.wizphy_setphyconf:00000000 wizphy_setphyconf
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1238   .text.wizphy_getphyconf:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1244   .text.wizphy_getphyconf:00000000 wizphy_getphyconf
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1342   .text.wizphy_getphyconf:00000068 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1348   .text.wizphy_getphystat:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1354   .text.wizphy_getphystat:00000000 wizphy_getphystat
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1392   .text.wizphy_setphypmode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1398   .text.wizphy_setphypmode:00000000 wizphy_setphypmode
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1508   .text.ctlwizchip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1514   .text.ctlwizchip:00000000 ctlwizchip
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1544   .text.ctlwizchip:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1560   .text.ctlwizchip:00000024 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1864   .text.ctlwizchip:00000118 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1869   .text.wizchip_setnetinfo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1875   .text.wizchip_setnetinfo:00000000 wizchip_setnetinfo
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1949   .text.wizchip_setnetinfo:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2356   .bss._DNS_:00000000 _DNS_
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2350   .bss._DHCP_:00000000 _DHCP_
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1955   .text.wizchip_getnetinfo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:1961   .text.wizchip_getnetinfo:00000000 wizchip_getnetinfo
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2034   .text.wizchip_getnetinfo:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2040   .text.wizchip_setnetmode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2046   .text.wizchip_setnetmode:00000000 wizchip_setnetmode
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2102   .text.wizchip_getnetmode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2108   .text.wizchip_getnetmode:00000000 wizchip_getnetmode
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2130   .text.wizchip_settimeout:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2136   .text.wizchip_settimeout:00000000 wizchip_settimeout
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2176   .text.wizchip_gettimeout:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2182   .text.wizchip_gettimeout:00000000 wizchip_gettimeout
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2229   .text.ctlnetwork:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2235   .text.ctlnetwork:00000000 ctlnetwork
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2254   .text.ctlnetwork:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2260   .text.ctlnetwork:00000012 $t
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2351   .bss._DHCP_:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2353   .bss._DNS_:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccawbVqc.s:2360   .data.WIZCHIP:00000000 $d
 
 UNDEFINED SYMBOLS
 WIZCHIP_READ_BUF

@@ -20,10 +20,11 @@
 
 #define RUBETEC_LOG
 
-#define MAX_PU_NUMBER 32
+#define MAX_PU_NUMBER         32
 #define RUBETEC_MAX_FAULTS    5
+#define RUBETEC_SOCK_NUM      4
 
-bool try_parce_rubetec_msg(uint8_t* request_data, uint32_t data_len);
+void rubetec_msg_handler(uint8_t sock_num, uint8_t* request_data, uint32_t data_len);
 
 typedef struct rubetec_pu_fault_t{
     char* type;                            // тип ошибки

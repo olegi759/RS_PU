@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccapqas2.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
   17:../../CM4/Core/Src/speaker.c **** 	switch (internal_speaker_mux) {
   40              		.loc 1 17 2 is_stmt 1 view .LVU2
   41 0002 0428     		cmp	r0, #4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccapqas2.s 			page 2
 
 
   42 0004 09D8     		bhi	.L1
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
   69 0020 2048     		ldr	r0, .L11
   70              	.LVL4:
   22:../../CM4/Core/Src/speaker.c **** 			PIN_WRITE(A0_SPK, 0);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccapqas2.s 			page 3
 
 
   71              		.loc 1 22 4 is_stmt 0 view .LVU8
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
  116              		.loc 1 32 4 view .LVU17
  117 0060 0122     		movs	r2, #1
  118 0062 2021     		movs	r1, #32
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccapqas2.s 			page 4
 
 
  119 0064 0F48     		ldr	r0, .L11
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
  164 00a2 BAE7     		b	.L1
  165              	.L12:
  166              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccapqas2.s 			page 5
 
 
  167              	.L11:
@@ -253,17 +253,17 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 1
  177              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
  178              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
  179              		.file 6 "../../CM4/Core/Inc/speaker.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccapqas2.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 speaker.c
-C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:21     .text.internal_speaker_set_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:27     .text.internal_speaker_set_mux:00000000 internal_speaker_set_mux
-C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:45     .text.internal_speaker_set_mux:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:168    .text.internal_speaker_set_mux:000000a4 $d
-C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:50     .text.internal_speaker_set_mux:0000000f $d
-C:\Users\oleg\AppData\Local\Temp\cc6MROQU.s:50     .text.internal_speaker_set_mux:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccapqas2.s:21     .text.internal_speaker_set_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccapqas2.s:27     .text.internal_speaker_set_mux:00000000 internal_speaker_set_mux
+C:\Users\oleg\AppData\Local\Temp\ccapqas2.s:45     .text.internal_speaker_set_mux:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccapqas2.s:168    .text.internal_speaker_set_mux:000000a4 $d
+C:\Users\oleg\AppData\Local\Temp\ccapqas2.s:50     .text.internal_speaker_set_mux:0000000f $d
+C:\Users\oleg\AppData\Local\Temp\ccapqas2.s:50     .text.internal_speaker_set_mux:00000010 $t
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

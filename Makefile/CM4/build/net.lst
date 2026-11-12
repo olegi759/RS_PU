@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
   28:../../CM4/Core/Src/net.c **** 
   29:../../CM4/Core/Src/net.c **** #define DHCP_SOCKET     0
   30:../../CM4/Core/Src/net.c **** //#define DNS_SOCKET      1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 2
 
 
   31:../../CM4/Core/Src/net.c **** //#define HTTP_SOCKET     2
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
   85:../../CM4/Core/Src/net.c **** {
   86:../../CM4/Core/Src/net.c **** 	//ulog("CS1"CRLF);
   87:../../CM4/Core/Src/net.c ****     HAL_GPIO_WritePin(E_CS_SPI_GPIO_Port, E_CS_SPI_Pin, GPIO_PIN_SET);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 3
 
 
   88:../../CM4/Core/Src/net.c **** }
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
   73 0004 4FF48071 		mov	r1, #256
   74 0008 0148     		ldr	r0, .L7
   75 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 4
 
 
   76              	.LVL1:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  115:../../CM4/Core/Src/net.c **** }
  117              		.loc 1 115 1 view .LVU11
  118 000e 08BD     		pop	{r3, pc}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 5
 
 
  119              	.L12:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  151              	.LVL6:
  140:../../CM4/Core/Src/net.c ****     return byte;
  152              		.loc 1 140 5 view .LVU15
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 6
 
 
  141:../../CM4/Core/Src/net.c **** }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  203              		.section	.text.W5500_WriteByte,"ax",%progbits
  204              		.align	1
  205              		.global	W5500_WriteByte
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 7
 
 
  206              		.syntax unified
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  251              		.thumb_func
  253              	Callback_IPConflict:
  254              	.LFB145:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 8
 
 
  149:../../CM4/Core/Src/net.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  203:../../CM4/Core/Src/net.c **** 	reg_httpServer_webContent((uint8_t *)"img.html", (uint8_t *)img_page);					// img.html 		: Base64 
  204:../../CM4/Core/Src/net.c **** 
  205:../../CM4/Core/Src/net.c **** 	// Example #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 9
 
 
  206:../../CM4/Core/Src/net.c **** 	reg_httpServer_webContent((uint8_t *)"dio.html", (uint8_t *)dio_page);					// dio.html 		: Digital
@@ -498,77 +498,78 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  220:../../CM4/Core/Src/net.c **** 	display_reg_webContent_list();
  221:../../CM4/Core/Src/net.c **** #else
  222:../../CM4/Core/Src/net.c **** 	http_server_init();
- 223:../../CM4/Core/Src/net.c **** 	ws_server_init(4);
- 224:../../CM4/Core/Src/net.c **** #endif
- 225:../../CM4/Core/Src/net.c **** 
+ 223:../../CM4/Core/Src/net.c **** 	ws_server_init(4, 8080, 0); // протокольный WS (ctx 0)
+ 224:../../CM4/Core/Src/net.c ****     ws_server_init(5, 8081, 1); // heartbeat WS (ctx 1)
+ 225:../../CM4/Core/Src/net.c **** #endif
  226:../../CM4/Core/Src/net.c **** 
  227:../../CM4/Core/Src/net.c **** 
- 228:../../CM4/Core/Src/net.c **** }
- 229:../../CM4/Core/Src/net.c **** 
+ 228:../../CM4/Core/Src/net.c **** 
+ 229:../../CM4/Core/Src/net.c **** }
  230:../../CM4/Core/Src/net.c **** 
  231:../../CM4/Core/Src/net.c **** 
  232:../../CM4/Core/Src/net.c **** 
- 233:../../CM4/Core/Src/net.c **** void Callback_IPAssigned(void)
- 234:../../CM4/Core/Src/net.c **** {
- 235:../../CM4/Core/Src/net.c ****     ulog_fmt(CONM"net: Callback: IP assigned! Leased time: %d sec"CRLF,  getDHCPLeasetime());
- 236:../../CM4/Core/Src/net.c ****     ip_assigned = TRUE;
- 237:../../CM4/Core/Src/net.c **** 
- 238:../../CM4/Core/Src/net.c ****     getSHAR(net_info.mac);
- 239:../../CM4/Core/Src/net.c ****     getIPfromDHCP(net_info.ip);
- 240:../../CM4/Core/Src/net.c ****     getGWfromDHCP(net_info.gw);
- 241:../../CM4/Core/Src/net.c ****     getSNfromDHCP(net_info.sn);
- 242:../../CM4/Core/Src/net.c ****     getDNSfromDHCP(net_info.dns);
- 243:../../CM4/Core/Src/net.c ****     net_info.dhcp = NETINFO_DHCP;
- 244:../../CM4/Core/Src/net.c **** 
- 245:../../CM4/Core/Src/net.c ****     if (dhcp_buffer) {
- 246:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
- 247:../../CM4/Core/Src/net.c ****     	dhcp_buffer = NULL;
- 248:../../CM4/Core/Src/net.c ****     }
- 249:../../CM4/Core/Src/net.c **** 
- 250:../../CM4/Core/Src/net.c ****     net_init_continue();
- 251:../../CM4/Core/Src/net.c **** }
- 252:../../CM4/Core/Src/net.c **** 
- 253:../../CM4/Core/Src/net.c **** void Callback_IPConflict(void)
- 254:../../CM4/Core/Src/net.c **** {
- 255              		.loc 1 254 1 is_stmt 1 view -0
+ 233:../../CM4/Core/Src/net.c **** 
+ 234:../../CM4/Core/Src/net.c **** void Callback_IPAssigned(void)
+ 235:../../CM4/Core/Src/net.c **** {
+ 236:../../CM4/Core/Src/net.c ****     ulog_fmt(CONM"net: Callback: IP assigned! Leased time: %d sec"CRLF,  getDHCPLeasetime());
+ 237:../../CM4/Core/Src/net.c ****     ip_assigned = TRUE;
+ 238:../../CM4/Core/Src/net.c **** 
+ 239:../../CM4/Core/Src/net.c ****     getSHAR(net_info.mac);
+ 240:../../CM4/Core/Src/net.c ****     getIPfromDHCP(net_info.ip);
+ 241:../../CM4/Core/Src/net.c ****     getGWfromDHCP(net_info.gw);
+ 242:../../CM4/Core/Src/net.c ****     getSNfromDHCP(net_info.sn);
+ 243:../../CM4/Core/Src/net.c ****     getDNSfromDHCP(net_info.dns);
+ 244:../../CM4/Core/Src/net.c ****     net_info.dhcp = NETINFO_DHCP;
+ 245:../../CM4/Core/Src/net.c **** 
+ 246:../../CM4/Core/Src/net.c ****     if (dhcp_buffer) {
+ 247:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
+ 248:../../CM4/Core/Src/net.c ****     	dhcp_buffer = NULL;
+ 249:../../CM4/Core/Src/net.c ****     }
+ 250:../../CM4/Core/Src/net.c **** 
+ 251:../../CM4/Core/Src/net.c ****     net_init_continue();
+ 252:../../CM4/Core/Src/net.c **** }
+ 253:../../CM4/Core/Src/net.c **** 
+ 254:../../CM4/Core/Src/net.c **** void Callback_IPConflict(void)
+ 255:../../CM4/Core/Src/net.c **** {
+ 255              		.loc 1 255 1 is_stmt 1 view -0
  256              		.cfi_startproc
  257              		@ args = 0, pretend = 0, frame = 0
  258              		@ frame_needed = 0, uses_anonymous_args = 0
  259 0000 08B5     		push	{r3, lr}
  260              	.LCFI10:
  261              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 10
+
+
  262              		.cfi_offset 3, -8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 10
-
-
  263              		.cfi_offset 14, -4
- 255:../../CM4/Core/Src/net.c ****     ulog(CONM"net: Callback: IP conflict!"CRLF);
- 264              		.loc 1 255 5 view .LVU29
+ 256:../../CM4/Core/Src/net.c ****     ulog(CONM"net: Callback: IP conflict!"CRLF);
+ 264              		.loc 1 256 5 view .LVU29
  265 0002 0648     		ldr	r0, .L24
  266 0004 FFF7FEFF 		bl	ulog
  267              	.LVL14:
- 256:../../CM4/Core/Src/net.c **** 
- 257:../../CM4/Core/Src/net.c ****     if (dhcp_buffer) {
- 268              		.loc 1 257 5 view .LVU30
- 269              		.loc 1 257 9 is_stmt 0 view .LVU31
+ 257:../../CM4/Core/Src/net.c **** 
+ 258:../../CM4/Core/Src/net.c ****     if (dhcp_buffer) {
+ 268              		.loc 1 258 5 view .LVU30
+ 269              		.loc 1 258 9 is_stmt 0 view .LVU31
  270 0008 054B     		ldr	r3, .L24+4
  271 000a 1868     		ldr	r0, [r3]
- 272              		.loc 1 257 8 view .LVU32
+ 272              		.loc 1 258 8 view .LVU32
  273 000c 20B1     		cbz	r0, .L21
- 258:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
- 274              		.loc 1 258 6 is_stmt 1 view .LVU33
+ 259:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
+ 274              		.loc 1 259 6 is_stmt 1 view .LVU33
  275 000e FFF7FEFF 		bl	free
  276              	.LVL15:
- 259:../../CM4/Core/Src/net.c ****     	dhcp_buffer = NULL;
- 277              		.loc 1 259 6 view .LVU34
- 278              		.loc 1 259 18 is_stmt 0 view .LVU35
+ 260:../../CM4/Core/Src/net.c ****     	dhcp_buffer = NULL;
+ 277              		.loc 1 260 6 view .LVU34
+ 278              		.loc 1 260 18 is_stmt 0 view .LVU35
  279 0012 034B     		ldr	r3, .L24+4
  280 0014 0022     		movs	r2, #0
  281 0016 1A60     		str	r2, [r3]
  282              	.L21:
- 260:../../CM4/Core/Src/net.c ****     }
- 261:../../CM4/Core/Src/net.c **** }
- 283              		.loc 1 261 1 view .LVU36
+ 261:../../CM4/Core/Src/net.c ****     }
+ 262:../../CM4/Core/Src/net.c **** }
+ 283              		.loc 1 262 1 view .LVU36
  284 0018 08BD     		pop	{r3, pc}
  285              	.L25:
  286 001a 00BF     		.align	2
@@ -597,10 +598,10 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  310              		.cfi_offset 14, -4
   70:../../CM4/Core/Src/net.c **** }
  311              		.loc 1 70 5 view .LVU38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 11
+
+
  312 0002 0022     		movs	r2, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 11
-
-
  313 0004 4FF48071 		mov	r1, #256
  314 0008 0148     		ldr	r0, .L28
  315 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
@@ -657,10 +658,10 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  366              	W5500_UnselectMainChip:
  367              	.LFB134:
   80:../../CM4/Core/Src/net.c **** 	//ulog("CS1"CRLF);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 12
+
+
  368              		.loc 1 80 1 is_stmt 1 view -0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 12
-
-
  369              		.cfi_startproc
  370              		@ args = 0, pretend = 0, frame = 0
  371              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -717,10 +718,10 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  419              		.align	2
  420              	.L40:
  421 0010 00180258 		.word	1476532224
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 13
+
+
  422              		.cfi_endproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 13
-
-
  423              	.LFE135:
  425              		.section	.rodata.net_print_net_info.str1.4,"aMS",%progbits,1
  426              		.align	2
@@ -777,10 +778,10 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  459              		.cfi_offset 7, -24
  460              		.cfi_offset 8, -20
  461              		.cfi_offset 9, -16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 14
+
+
  462              		.cfi_offset 10, -12
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 14
-
-
  463              		.cfi_offset 11, -8
  464              		.cfi_offset 14, -4
  465 0004 9FB0     		sub	sp, sp, #124
@@ -837,10 +838,10 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  502              		.loc 1 158 58 view .LVU64
  503 0030 047C     		ldrb	r4, [r0, #16]	@ zero_extendqisi2
  158:../../CM4/Core/Src/net.c ****         pnet_info->sn[0], pnet_info->sn[1], pnet_info->sn[2], pnet_info->sn[3],
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 15
+
+
  504              		.loc 1 158 76 view .LVU65
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 15
-
-
  505 0032 457C     		ldrb	r5, [r0, #17]	@ zero_extendqisi2
  159:../../CM4/Core/Src/net.c ****         pnet_info->dns[0], pnet_info->dns[1], pnet_info->dns[2], pnet_info->dns[3],
  506              		.loc 1 159 22 view .LVU66
@@ -897,10 +898,10 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  546 0080 0790     		str	r0, [sp, #28]
  547 0082 1B98     		ldr	r0, [sp, #108]
  548 0084 0690     		str	r0, [sp, #24]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 16
+
+
  549 0086 1A98     		ldr	r0, [sp, #104]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 16
-
-
  550 0088 0590     		str	r0, [sp, #20]
  551 008a 1998     		ldr	r0, [sp, #100]
  552 008c 0490     		str	r0, [sp, #16]
@@ -957,766 +958,777 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 1
  167:../../CM4/Core/Src/net.c **** 
  599              		.loc 1 167 1 is_stmt 1 view -0
  600              		.cfi_startproc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 17
+
+
  601              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 17
-
-
  602              		@ frame_needed = 0, uses_anonymous_args = 0
- 603 0000 10B5     		push	{r4, lr}
+ 603 0000 38B5     		push	{r3, r4, r5, lr}
  604              	.LCFI19:
- 605              		.cfi_def_cfa_offset 8
- 606              		.cfi_offset 4, -8
- 607              		.cfi_offset 14, -4
+ 605              		.cfi_def_cfa_offset 16
+ 606              		.cfi_offset 3, -16
+ 607              		.cfi_offset 4, -12
+ 608              		.cfi_offset 5, -8
+ 609              		.cfi_offset 14, -4
  170:../../CM4/Core/Src/net.c ****     wizchip_setnetinfo(&net_info);
- 608              		.loc 1 170 5 view .LVU81
- 609 0002 0D48     		ldr	r0, .L51
- 610 0004 FFF7FEFF 		bl	ulog
- 611              	.LVL23:
+ 610              		.loc 1 170 5 view .LVU81
+ 611 0002 1248     		ldr	r0, .L51
+ 612 0004 FFF7FEFF 		bl	ulog
+ 613              	.LVL23:
  171:../../CM4/Core/Src/net.c ****     memset(&net_info, 0, sizeof(net_info));
- 612              		.loc 1 171 5 view .LVU82
- 613 0008 0C4C     		ldr	r4, .L51+4
- 614 000a 2046     		mov	r0, r4
- 615 000c FFF7FEFF 		bl	wizchip_setnetinfo
- 616              	.LVL24:
+ 614              		.loc 1 171 5 view .LVU82
+ 615 0008 114C     		ldr	r4, .L51+4
+ 616 000a 2046     		mov	r0, r4
+ 617 000c FFF7FEFF 		bl	wizchip_setnetinfo
+ 618              	.LVL24:
  172:../../CM4/Core/Src/net.c ****     wizchip_getnetinfo(&net_info);
- 617              		.loc 1 172 5 view .LVU83
- 618 0010 0023     		movs	r3, #0
- 619 0012 2360     		str	r3, [r4]
- 620 0014 6360     		str	r3, [r4, #4]
- 621 0016 A360     		str	r3, [r4, #8]
- 622 0018 E360     		str	r3, [r4, #12]
- 623 001a 2361     		str	r3, [r4, #16]
- 624 001c C4F81330 		str	r3, [r4, #19]	@ unaligned
+ 619              		.loc 1 172 5 view .LVU83
+ 620 0010 0025     		movs	r5, #0
+ 621 0012 2560     		str	r5, [r4]
+ 622 0014 6560     		str	r5, [r4, #4]
+ 623 0016 A560     		str	r5, [r4, #8]
+ 624 0018 E560     		str	r5, [r4, #12]
+ 625 001a 2561     		str	r5, [r4, #16]
+ 626 001c C4F81350 		str	r5, [r4, #19]	@ unaligned
  173:../../CM4/Core/Src/net.c ****     net_print_net_info(&net_info);
- 625              		.loc 1 173 5 view .LVU84
- 626 0020 2046     		mov	r0, r4
- 627 0022 FFF7FEFF 		bl	wizchip_getnetinfo
- 628              	.LVL25:
+ 627              		.loc 1 173 5 view .LVU84
+ 628 0020 2046     		mov	r0, r4
+ 629 0022 FFF7FEFF 		bl	wizchip_getnetinfo
+ 630              	.LVL25:
  174:../../CM4/Core/Src/net.c **** 
- 629              		.loc 1 174 5 view .LVU85
- 630 0026 2046     		mov	r0, r4
- 631 0028 FFF7FEFF 		bl	net_print_net_info
- 632              	.LVL26:
- 222:../../CM4/Core/Src/net.c **** 	ws_server_init(4);
- 633              		.loc 1 222 2 view .LVU86
- 634 002c FFF7FEFF 		bl	http_server_init
- 635              	.LVL27:
- 223:../../CM4/Core/Src/net.c **** #endif
- 636              		.loc 1 223 2 view .LVU87
- 637 0030 0420     		movs	r0, #4
- 638 0032 FFF7FEFF 		bl	ws_server_init
- 639              	.LVL28:
- 228:../../CM4/Core/Src/net.c **** 
- 640              		.loc 1 228 1 is_stmt 0 view .LVU88
- 641 0036 10BD     		pop	{r4, pc}
- 642              	.L52:
- 643              		.align	2
- 644              	.L51:
- 645 0038 00000000 		.word	.LC4
- 646 003c 00000000 		.word	net_info
- 647              		.cfi_endproc
- 648              	.LFE143:
- 650              		.section	.rodata.Callback_IPAssigned.str1.4,"aMS",%progbits,1
- 651              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 18
+ 631              		.loc 1 174 5 view .LVU85
+ 632 0026 2046     		mov	r0, r4
+ 633 0028 FFF7FEFF 		bl	net_print_net_info
+ 634              	.LVL26:
+ 222:../../CM4/Core/Src/net.c **** 	ws_server_init(4, 8080, 0); // протокольный WS (ctx 0)
+ 635              		.loc 1 222 2 view .LVU86
+ 636 002c FFF7FEFF 		bl	http_server_init
+ 637              	.LVL27:
+ 223:../../CM4/Core/Src/net.c ****     ws_server_init(5, 8081, 1); // heartbeat WS (ctx 1)
+ 638              		.loc 1 223 2 view .LVU87
+ 639 0030 2A46     		mov	r2, r5
+ 640 0032 41F69071 		movw	r1, #8080
+ 641 0036 0420     		movs	r0, #4
+ 642 0038 FFF7FEFF 		bl	ws_server_init
+ 643              	.LVL28:
+ 224:../../CM4/Core/Src/net.c **** #endif
+ 644              		.loc 1 224 5 view .LVU88
+ 645 003c 0122     		movs	r2, #1
+ 646 003e 41F69171 		movw	r1, #8081
+ 647 0042 0520     		movs	r0, #5
+ 648 0044 FFF7FEFF 		bl	ws_server_init
+ 649              	.LVL29:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 18
 
 
- 652              	.LC5:
- 653 0000 434D342E 		.ascii	"CM4.net: Callback: IP assigned! Leased time: %d sec"
- 653      6E65743A 
- 653      2043616C 
- 653      6C626163 
- 653      6B3A2049 
- 654 0033 0D0A00   		.ascii	"\015\012\000"
- 655              		.section	.text.Callback_IPAssigned,"ax",%progbits
- 656              		.align	1
- 657              		.global	Callback_IPAssigned
- 658              		.syntax unified
- 659              		.thumb
- 660              		.thumb_func
- 662              	Callback_IPAssigned:
- 663              	.LFB144:
- 234:../../CM4/Core/Src/net.c ****     ulog_fmt(CONM"net: Callback: IP assigned! Leased time: %d sec"CRLF,  getDHCPLeasetime());
- 664              		.loc 1 234 1 is_stmt 1 view -0
- 665              		.cfi_startproc
- 666              		@ args = 0, pretend = 0, frame = 0
- 667              		@ frame_needed = 0, uses_anonymous_args = 0
- 668 0000 10B5     		push	{r4, lr}
- 669              	.LCFI20:
- 670              		.cfi_def_cfa_offset 8
- 671              		.cfi_offset 4, -8
- 672              		.cfi_offset 14, -4
- 235:../../CM4/Core/Src/net.c ****     ip_assigned = TRUE;
- 673              		.loc 1 235 5 view .LVU90
- 674 0002 FFF7FEFF 		bl	getDHCPLeasetime
- 675              	.LVL29:
- 676 0006 0146     		mov	r1, r0
- 235:../../CM4/Core/Src/net.c ****     ip_assigned = TRUE;
- 677              		.loc 1 235 5 is_stmt 0 discriminator 1 view .LVU91
- 678 0008 1448     		ldr	r0, .L56
- 679 000a FFF7FEFF 		bl	ulog_fmt
- 680              	.LVL30:
- 236:../../CM4/Core/Src/net.c **** 
- 681              		.loc 1 236 5 is_stmt 1 view .LVU92
- 236:../../CM4/Core/Src/net.c **** 
- 682              		.loc 1 236 17 is_stmt 0 view .LVU93
- 683 000e 144B     		ldr	r3, .L56+4
- 684 0010 0122     		movs	r2, #1
- 685 0012 1A70     		strb	r2, [r3]
- 238:../../CM4/Core/Src/net.c ****     getIPfromDHCP(net_info.ip);
- 686              		.loc 1 238 5 is_stmt 1 view .LVU94
- 687 0014 134C     		ldr	r4, .L56+8
- 688 0016 0622     		movs	r2, #6
- 689 0018 2146     		mov	r1, r4
- 690 001a 4FF41060 		mov	r0, #2304
- 691 001e FFF7FEFF 		bl	WIZCHIP_READ_BUF
- 692              	.LVL31:
- 239:../../CM4/Core/Src/net.c ****     getGWfromDHCP(net_info.gw);
- 693              		.loc 1 239 5 view .LVU95
- 694 0022 A01D     		adds	r0, r4, #6
- 695 0024 FFF7FEFF 		bl	getIPfromDHCP
- 696              	.LVL32:
- 240:../../CM4/Core/Src/net.c ****     getSNfromDHCP(net_info.sn);
- 697              		.loc 1 240 5 view .LVU96
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 19
+ 229:../../CM4/Core/Src/net.c **** 
+ 650              		.loc 1 229 1 is_stmt 0 view .LVU89
+ 651 0048 38BD     		pop	{r3, r4, r5, pc}
+ 652              	.L52:
+ 653 004a 00BF     		.align	2
+ 654              	.L51:
+ 655 004c 00000000 		.word	.LC4
+ 656 0050 00000000 		.word	net_info
+ 657              		.cfi_endproc
+ 658              	.LFE143:
+ 660              		.section	.rodata.Callback_IPAssigned.str1.4,"aMS",%progbits,1
+ 661              		.align	2
+ 662              	.LC5:
+ 663 0000 434D342E 		.ascii	"CM4.net: Callback: IP assigned! Leased time: %d sec"
+ 663      6E65743A 
+ 663      2043616C 
+ 663      6C626163 
+ 663      6B3A2049 
+ 664 0033 0D0A00   		.ascii	"\015\012\000"
+ 665              		.section	.text.Callback_IPAssigned,"ax",%progbits
+ 666              		.align	1
+ 667              		.global	Callback_IPAssigned
+ 668              		.syntax unified
+ 669              		.thumb
+ 670              		.thumb_func
+ 672              	Callback_IPAssigned:
+ 673              	.LFB144:
+ 235:../../CM4/Core/Src/net.c ****     ulog_fmt(CONM"net: Callback: IP assigned! Leased time: %d sec"CRLF,  getDHCPLeasetime());
+ 674              		.loc 1 235 1 is_stmt 1 view -0
+ 675              		.cfi_startproc
+ 676              		@ args = 0, pretend = 0, frame = 0
+ 677              		@ frame_needed = 0, uses_anonymous_args = 0
+ 678 0000 10B5     		push	{r4, lr}
+ 679              	.LCFI20:
+ 680              		.cfi_def_cfa_offset 8
+ 681              		.cfi_offset 4, -8
+ 682              		.cfi_offset 14, -4
+ 236:../../CM4/Core/Src/net.c ****     ip_assigned = TRUE;
+ 683              		.loc 1 236 5 view .LVU91
+ 684 0002 FFF7FEFF 		bl	getDHCPLeasetime
+ 685              	.LVL30:
+ 686 0006 0146     		mov	r1, r0
+ 236:../../CM4/Core/Src/net.c ****     ip_assigned = TRUE;
+ 687              		.loc 1 236 5 is_stmt 0 discriminator 1 view .LVU92
+ 688 0008 1448     		ldr	r0, .L56
+ 689 000a FFF7FEFF 		bl	ulog_fmt
+ 690              	.LVL31:
+ 237:../../CM4/Core/Src/net.c **** 
+ 691              		.loc 1 237 5 is_stmt 1 view .LVU93
+ 237:../../CM4/Core/Src/net.c **** 
+ 692              		.loc 1 237 17 is_stmt 0 view .LVU94
+ 693 000e 144B     		ldr	r3, .L56+4
+ 694 0010 0122     		movs	r2, #1
+ 695 0012 1A70     		strb	r2, [r3]
+ 239:../../CM4/Core/Src/net.c ****     getIPfromDHCP(net_info.ip);
+ 696              		.loc 1 239 5 is_stmt 1 view .LVU95
+ 697 0014 134C     		ldr	r4, .L56+8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 19
 
 
- 698 0028 04F10E00 		add	r0, r4, #14
- 699 002c FFF7FEFF 		bl	getGWfromDHCP
- 700              	.LVL33:
- 241:../../CM4/Core/Src/net.c ****     getDNSfromDHCP(net_info.dns);
- 701              		.loc 1 241 5 view .LVU97
- 702 0030 04F10A00 		add	r0, r4, #10
- 703 0034 FFF7FEFF 		bl	getSNfromDHCP
- 704              	.LVL34:
- 242:../../CM4/Core/Src/net.c ****     net_info.dhcp = NETINFO_DHCP;
- 705              		.loc 1 242 5 view .LVU98
- 706 0038 04F11200 		add	r0, r4, #18
- 707 003c FFF7FEFF 		bl	getDNSfromDHCP
- 708              	.LVL35:
- 243:../../CM4/Core/Src/net.c **** 
- 709              		.loc 1 243 5 view .LVU99
- 243:../../CM4/Core/Src/net.c **** 
- 710              		.loc 1 243 19 is_stmt 0 view .LVU100
- 711 0040 0223     		movs	r3, #2
- 712 0042 A375     		strb	r3, [r4, #22]
- 245:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
- 713              		.loc 1 245 5 is_stmt 1 view .LVU101
- 245:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
- 714              		.loc 1 245 9 is_stmt 0 view .LVU102
- 715 0044 084B     		ldr	r3, .L56+12
- 716 0046 1868     		ldr	r0, [r3]
- 245:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
- 717              		.loc 1 245 8 view .LVU103
- 718 0048 20B1     		cbz	r0, .L54
- 246:../../CM4/Core/Src/net.c ****     	dhcp_buffer = NULL;
- 719              		.loc 1 246 6 is_stmt 1 view .LVU104
- 720 004a FFF7FEFF 		bl	free
- 721              	.LVL36:
- 247:../../CM4/Core/Src/net.c ****     }
- 722              		.loc 1 247 6 view .LVU105
- 247:../../CM4/Core/Src/net.c ****     }
- 723              		.loc 1 247 18 is_stmt 0 view .LVU106
- 724 004e 064B     		ldr	r3, .L56+12
- 725 0050 0022     		movs	r2, #0
- 726 0052 1A60     		str	r2, [r3]
- 727              	.L54:
- 250:../../CM4/Core/Src/net.c **** }
- 728              		.loc 1 250 5 is_stmt 1 view .LVU107
- 729 0054 FFF7FEFF 		bl	net_init_continue
- 730              	.LVL37:
- 251:../../CM4/Core/Src/net.c **** 
- 731              		.loc 1 251 1 is_stmt 0 view .LVU108
- 732 0058 10BD     		pop	{r4, pc}
- 733              	.L57:
- 734 005a 00BF     		.align	2
- 735              	.L56:
- 736 005c 00000000 		.word	.LC5
- 737 0060 00000000 		.word	ip_assigned
- 738 0064 00000000 		.word	net_info
- 739 0068 00000000 		.word	dhcp_buffer
- 740              		.cfi_endproc
- 741              	.LFE144:
- 743              		.section	.text.net_task_execute,"ax",%progbits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 20
+ 698 0016 0622     		movs	r2, #6
+ 699 0018 2146     		mov	r1, r4
+ 700 001a 4FF41060 		mov	r0, #2304
+ 701 001e FFF7FEFF 		bl	WIZCHIP_READ_BUF
+ 702              	.LVL32:
+ 240:../../CM4/Core/Src/net.c ****     getGWfromDHCP(net_info.gw);
+ 703              		.loc 1 240 5 view .LVU96
+ 704 0022 A01D     		adds	r0, r4, #6
+ 705 0024 FFF7FEFF 		bl	getIPfromDHCP
+ 706              	.LVL33:
+ 241:../../CM4/Core/Src/net.c ****     getSNfromDHCP(net_info.sn);
+ 707              		.loc 1 241 5 view .LVU97
+ 708 0028 04F10E00 		add	r0, r4, #14
+ 709 002c FFF7FEFF 		bl	getGWfromDHCP
+ 710              	.LVL34:
+ 242:../../CM4/Core/Src/net.c ****     getDNSfromDHCP(net_info.dns);
+ 711              		.loc 1 242 5 view .LVU98
+ 712 0030 04F10A00 		add	r0, r4, #10
+ 713 0034 FFF7FEFF 		bl	getSNfromDHCP
+ 714              	.LVL35:
+ 243:../../CM4/Core/Src/net.c ****     net_info.dhcp = NETINFO_DHCP;
+ 715              		.loc 1 243 5 view .LVU99
+ 716 0038 04F11200 		add	r0, r4, #18
+ 717 003c FFF7FEFF 		bl	getDNSfromDHCP
+ 718              	.LVL36:
+ 244:../../CM4/Core/Src/net.c **** 
+ 719              		.loc 1 244 5 view .LVU100
+ 244:../../CM4/Core/Src/net.c **** 
+ 720              		.loc 1 244 19 is_stmt 0 view .LVU101
+ 721 0040 0223     		movs	r3, #2
+ 722 0042 A375     		strb	r3, [r4, #22]
+ 246:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
+ 723              		.loc 1 246 5 is_stmt 1 view .LVU102
+ 246:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
+ 724              		.loc 1 246 9 is_stmt 0 view .LVU103
+ 725 0044 084B     		ldr	r3, .L56+12
+ 726 0046 1868     		ldr	r0, [r3]
+ 246:../../CM4/Core/Src/net.c ****     	free(dhcp_buffer);
+ 727              		.loc 1 246 8 view .LVU104
+ 728 0048 20B1     		cbz	r0, .L54
+ 247:../../CM4/Core/Src/net.c ****     	dhcp_buffer = NULL;
+ 729              		.loc 1 247 6 is_stmt 1 view .LVU105
+ 730 004a FFF7FEFF 		bl	free
+ 731              	.LVL37:
+ 248:../../CM4/Core/Src/net.c ****     }
+ 732              		.loc 1 248 6 view .LVU106
+ 248:../../CM4/Core/Src/net.c ****     }
+ 733              		.loc 1 248 18 is_stmt 0 view .LVU107
+ 734 004e 064B     		ldr	r3, .L56+12
+ 735 0050 0022     		movs	r2, #0
+ 736 0052 1A60     		str	r2, [r3]
+ 737              	.L54:
+ 251:../../CM4/Core/Src/net.c **** }
+ 738              		.loc 1 251 5 is_stmt 1 view .LVU108
+ 739 0054 FFF7FEFF 		bl	net_init_continue
+ 740              	.LVL38:
+ 252:../../CM4/Core/Src/net.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 20
 
 
- 744              		.align	1
- 745              		.global	net_task_execute
- 746              		.syntax unified
- 747              		.thumb
- 748              		.thumb_func
- 750              	net_task_execute:
- 751              	.LFB146:
- 262:../../CM4/Core/Src/net.c **** 
+ 741              		.loc 1 252 1 is_stmt 0 view .LVU109
+ 742 0058 10BD     		pop	{r4, pc}
+ 743              	.L57:
+ 744 005a 00BF     		.align	2
+ 745              	.L56:
+ 746 005c 00000000 		.word	.LC5
+ 747 0060 00000000 		.word	ip_assigned
+ 748 0064 00000000 		.word	net_info
+ 749 0068 00000000 		.word	dhcp_buffer
+ 750              		.cfi_endproc
+ 751              	.LFE144:
+ 753              		.section	.text.net_task_execute,"ax",%progbits
+ 754              		.align	1
+ 755              		.global	net_task_execute
+ 756              		.syntax unified
+ 757              		.thumb
+ 758              		.thumb_func
+ 760              	net_task_execute:
+ 761              	.LFB146:
  263:../../CM4/Core/Src/net.c **** 
- 264:../../CM4/Core/Src/net.c **** void net_task_execute(void)
- 265:../../CM4/Core/Src/net.c **** {
- 752              		.loc 1 265 1 is_stmt 1 view -0
- 753              		.cfi_startproc
- 754              		@ args = 0, pretend = 0, frame = 0
- 755              		@ frame_needed = 0, uses_anonymous_args = 0
- 756 0000 10B5     		push	{r4, lr}
- 757              	.LCFI21:
- 758              		.cfi_def_cfa_offset 8
- 759              		.cfi_offset 4, -8
- 760              		.cfi_offset 14, -4
- 266:../../CM4/Core/Src/net.c **** 	uint8_t i;
- 761              		.loc 1 266 2 view .LVU110
- 267:../../CM4/Core/Src/net.c **** 
- 268:../../CM4/Core/Src/net.c **** #ifdef USE_IO_LIBRARY
- 269:../../CM4/Core/Src/net.c **** 	for (i = 0; i < MAX_HTTPSOCK; i++) {
- 270:../../CM4/Core/Src/net.c **** 		httpServer_run(i); 	// HTTP Server handler
- 271:../../CM4/Core/Src/net.c **** 	}
- 272:../../CM4/Core/Src/net.c **** #else
- 273:../../CM4/Core/Src/net.c **** 	for (i = 0; i < MAX_HTTPSOCK; i++) {
- 762              		.loc 1 273 2 view .LVU111
- 763              	.LVL38:
- 764              		.loc 1 273 9 is_stmt 0 view .LVU112
- 765 0002 0024     		movs	r4, #0
- 766              		.loc 1 273 2 view .LVU113
- 767 0004 05E0     		b	.L59
- 768              	.LVL39:
- 769              	.L60:
+ 264:../../CM4/Core/Src/net.c **** 
+ 265:../../CM4/Core/Src/net.c **** void net_task_execute(void)
+ 266:../../CM4/Core/Src/net.c **** {
+ 762              		.loc 1 266 1 is_stmt 1 view -0
+ 763              		.cfi_startproc
+ 764              		@ args = 0, pretend = 0, frame = 0
+ 765              		@ frame_needed = 0, uses_anonymous_args = 0
+ 766 0000 10B5     		push	{r4, lr}
+ 767              	.LCFI21:
+ 768              		.cfi_def_cfa_offset 8
+ 769              		.cfi_offset 4, -8
+ 770              		.cfi_offset 14, -4
+ 267:../../CM4/Core/Src/net.c **** 	uint8_t i;
+ 771              		.loc 1 267 2 view .LVU111
+ 268:../../CM4/Core/Src/net.c **** 
+ 269:../../CM4/Core/Src/net.c **** #ifdef USE_IO_LIBRARY
+ 270:../../CM4/Core/Src/net.c **** 	for (i = 0; i < MAX_HTTPSOCK; i++) {
+ 271:../../CM4/Core/Src/net.c **** 		httpServer_run(i); 	// HTTP Server handler
+ 272:../../CM4/Core/Src/net.c **** 	}
+ 273:../../CM4/Core/Src/net.c **** #else
+ 274:../../CM4/Core/Src/net.c **** 	for (i = 0; i < MAX_HTTPSOCK; i++) {
+ 772              		.loc 1 274 2 view .LVU112
+ 773              	.LVL39:
+ 774              		.loc 1 274 9 is_stmt 0 view .LVU113
+ 775 0002 0024     		movs	r4, #0
+ 776              		.loc 1 274 2 view .LVU114
+ 777 0004 05E0     		b	.L59
+ 778              	.LVL40:
+ 779              	.L60:
+ 275:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
+ 780              		.loc 1 275 3 is_stmt 1 view .LVU115
+ 781 0006 044B     		ldr	r3, .L62
+ 782 0008 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
+ 783 000a FFF7FEFF 		bl	http_server_run
+ 784              	.LVL41:
  274:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
- 770              		.loc 1 274 3 is_stmt 1 view .LVU114
- 771 0006 044B     		ldr	r3, .L62
- 772 0008 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
- 773 000a FFF7FEFF 		bl	http_server_run
- 774              	.LVL40:
- 273:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
- 775              		.loc 1 273 33 discriminator 3 view .LVU115
- 776 000e 0134     		adds	r4, r4, #1
- 777              	.LVL41:
- 273:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
- 778              		.loc 1 273 33 is_stmt 0 discriminator 3 view .LVU116
- 779 0010 E4B2     		uxtb	r4, r4
- 780              	.LVL42:
- 781              	.L59:
- 273:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
- 782              		.loc 1 273 16 is_stmt 1 discriminator 1 view .LVU117
- 783 0012 032C     		cmp	r4, #3
- 784 0014 F7D9     		bls	.L60
- 275:../../CM4/Core/Src/net.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 21
+ 785              		.loc 1 274 33 discriminator 3 view .LVU116
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 21
 
 
- 276:../../CM4/Core/Src/net.c **** #endif
- 277:../../CM4/Core/Src/net.c **** 
- 278:../../CM4/Core/Src/net.c **** }
- 785              		.loc 1 278 1 is_stmt 0 view .LVU118
- 786 0016 10BD     		pop	{r4, pc}
- 787              	.LVL43:
- 788              	.L63:
- 789              		.loc 1 278 1 view .LVU119
- 790              		.align	2
- 791              	.L62:
- 792 0018 00000000 		.word	socknumlist
- 793              		.cfi_endproc
- 794              	.LFE146:
- 796              		.section	.text.net_task,"ax",%progbits
- 797              		.align	1
- 798              		.global	net_task
- 799              		.syntax unified
- 800              		.thumb
- 801              		.thumb_func
- 803              	net_task:
- 804              	.LFB147:
- 279:../../CM4/Core/Src/net.c **** 
- 280:../../CM4/Core/Src/net.c **** void net_task(void)
- 281:../../CM4/Core/Src/net.c **** {
- 805              		.loc 1 281 1 is_stmt 1 view -0
- 806              		.cfi_startproc
- 807              		@ args = 0, pretend = 0, frame = 0
- 808              		@ frame_needed = 0, uses_anonymous_args = 0
- 809 0000 08B5     		push	{r3, lr}
- 810              	.LCFI22:
- 811              		.cfi_def_cfa_offset 8
- 812              		.cfi_offset 3, -8
- 813              		.cfi_offset 14, -4
- 282:../../CM4/Core/Src/net.c **** 	if (ip_assigned) {
- 814              		.loc 1 282 2 view .LVU121
- 815              		.loc 1 282 6 is_stmt 0 view .LVU122
- 816 0002 044B     		ldr	r3, .L68
- 817 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 818              		.loc 1 282 5 view .LVU123
- 819 0006 13B1     		cbz	r3, .L65
- 283:../../CM4/Core/Src/net.c **** 		net_task_execute();
- 820              		.loc 1 283 3 is_stmt 1 view .LVU124
- 821 0008 FFF7FEFF 		bl	net_task_execute
- 822              	.LVL44:
- 823              	.L64:
- 284:../../CM4/Core/Src/net.c **** 		//loopback_tcps(SOCK_TCPS, RX_BUF, 5000);
- 285:../../CM4/Core/Src/net.c **** 	} else {
- 286:../../CM4/Core/Src/net.c **** 		DHCP_run();
+ 786 000e 0134     		adds	r4, r4, #1
+ 787              	.LVL42:
+ 274:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
+ 788              		.loc 1 274 33 is_stmt 0 discriminator 3 view .LVU117
+ 789 0010 E4B2     		uxtb	r4, r4
+ 790              	.LVL43:
+ 791              	.L59:
+ 274:../../CM4/Core/Src/net.c **** 		http_server_run(socknumlist[i]);
+ 792              		.loc 1 274 16 is_stmt 1 discriminator 1 view .LVU118
+ 793 0012 032C     		cmp	r4, #3
+ 794 0014 F7D9     		bls	.L60
+ 276:../../CM4/Core/Src/net.c **** 	}
+ 277:../../CM4/Core/Src/net.c **** #endif
+ 278:../../CM4/Core/Src/net.c **** 
+ 279:../../CM4/Core/Src/net.c **** }
+ 795              		.loc 1 279 1 is_stmt 0 view .LVU119
+ 796 0016 10BD     		pop	{r4, pc}
+ 797              	.LVL44:
+ 798              	.L63:
+ 799              		.loc 1 279 1 view .LVU120
+ 800              		.align	2
+ 801              	.L62:
+ 802 0018 00000000 		.word	socknumlist
+ 803              		.cfi_endproc
+ 804              	.LFE146:
+ 806              		.section	.text.net_task,"ax",%progbits
+ 807              		.align	1
+ 808              		.global	net_task
+ 809              		.syntax unified
+ 810              		.thumb
+ 811              		.thumb_func
+ 813              	net_task:
+ 814              	.LFB147:
+ 280:../../CM4/Core/Src/net.c **** 
+ 281:../../CM4/Core/Src/net.c **** void net_task(void)
+ 282:../../CM4/Core/Src/net.c **** {
+ 815              		.loc 1 282 1 is_stmt 1 view -0
+ 816              		.cfi_startproc
+ 817              		@ args = 0, pretend = 0, frame = 0
+ 818              		@ frame_needed = 0, uses_anonymous_args = 0
+ 819 0000 08B5     		push	{r3, lr}
+ 820              	.LCFI22:
+ 821              		.cfi_def_cfa_offset 8
+ 822              		.cfi_offset 3, -8
+ 823              		.cfi_offset 14, -4
+ 283:../../CM4/Core/Src/net.c **** 	if (ip_assigned) {
+ 824              		.loc 1 283 2 view .LVU122
+ 825              		.loc 1 283 6 is_stmt 0 view .LVU123
+ 826 0002 044B     		ldr	r3, .L68
+ 827 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 828              		.loc 1 283 5 view .LVU124
+ 829 0006 13B1     		cbz	r3, .L65
+ 284:../../CM4/Core/Src/net.c **** 		net_task_execute();
+ 830              		.loc 1 284 3 is_stmt 1 view .LVU125
+ 831 0008 FFF7FEFF 		bl	net_task_execute
+ 832              	.LVL45:
+ 833              	.L64:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 22
+
+
+ 285:../../CM4/Core/Src/net.c **** 		//loopback_tcps(SOCK_TCPS, RX_BUF, 5000);
+ 286:../../CM4/Core/Src/net.c **** 	} else {
+ 287:../../CM4/Core/Src/net.c **** 		DHCP_run();
+ 288:../../CM4/Core/Src/net.c **** 	}
+ 289:../../CM4/Core/Src/net.c **** 
+ 290:../../CM4/Core/Src/net.c **** }
+ 834              		.loc 1 290 1 is_stmt 0 view .LVU126
+ 835 000c 08BD     		pop	{r3, pc}
+ 836              	.L65:
  287:../../CM4/Core/Src/net.c **** 	}
- 288:../../CM4/Core/Src/net.c **** 
- 289:../../CM4/Core/Src/net.c **** }
- 824              		.loc 1 289 1 is_stmt 0 view .LVU125
- 825 000c 08BD     		pop	{r3, pc}
- 826              	.L65:
- 286:../../CM4/Core/Src/net.c **** 	}
- 827              		.loc 1 286 3 is_stmt 1 view .LVU126
- 828 000e FFF7FEFF 		bl	DHCP_run
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 22
+ 837              		.loc 1 287 3 is_stmt 1 view .LVU127
+ 838 000e FFF7FEFF 		bl	DHCP_run
+ 839              	.LVL46:
+ 840              		.loc 1 290 1 is_stmt 0 view .LVU128
+ 841 0012 FBE7     		b	.L64
+ 842              	.L69:
+ 843              		.align	2
+ 844              	.L68:
+ 845 0014 00000000 		.word	ip_assigned
+ 846              		.cfi_endproc
+ 847              	.LFE147:
+ 849              		.section	.rodata.net_init.str1.4,"aMS",%progbits,1
+ 850              		.align	2
+ 851              	.LC6:
+ 852 0000 434D342E 		.ascii	"CM4.net: Registering W5500 callbacks...\015\012\000"
+ 852      6E65743A 
+ 852      20526567 
+ 852      69737465 
+ 852      72696E67 
+ 853 002a 0000     		.align	2
+ 854              	.LC7:
+ 855 002c 434D342E 		.ascii	"CM4.net: Calling wizchip_init()...\015\012\000"
+ 855      6E65743A 
+ 855      2043616C 
+ 855      6C696E67 
+ 855      2077697A 
+ 856 0051 000000   		.align	2
+ 857              	.LC9:
+ 858 0054 434D342E 		.ascii	"CM4.net: Calling wizchip_init() error\015\012\000"
+ 858      6E65743A 
+ 858      2043616C 
+ 858      6C696E67 
+ 858      2077697A 
+ 859              		.align	2
+ 860              	.LC10:
+ 861 007c 434D342E 		.ascii	"CM4.net: Registering DHCP callbacks...\015\012\000"
+ 861      6E65743A 
+ 861      20526567 
+ 861      69737465 
+ 861      72696E67 
+ 862 00a5 000000   		.align	2
+ 863              	.LC11:
+ 864 00a8 434D342E 		.ascii	"CM4.net: Calling DHCP_init()...\015\012\000"
+ 864      6E65743A 
+ 864      2043616C 
+ 864      6C696E67 
+ 864      20444843 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 23
 
 
- 829              	.LVL45:
- 830              		.loc 1 289 1 is_stmt 0 view .LVU127
- 831 0012 FBE7     		b	.L64
- 832              	.L69:
- 833              		.align	2
- 834              	.L68:
- 835 0014 00000000 		.word	ip_assigned
- 836              		.cfi_endproc
- 837              	.LFE147:
- 839              		.section	.rodata.net_init.str1.4,"aMS",%progbits,1
- 840              		.align	2
- 841              	.LC6:
- 842 0000 434D342E 		.ascii	"CM4.net: Registering W5500 callbacks...\015\012\000"
- 842      6E65743A 
- 842      20526567 
- 842      69737465 
- 842      72696E67 
- 843 002a 0000     		.align	2
- 844              	.LC7:
- 845 002c 434D342E 		.ascii	"CM4.net: Calling wizchip_init()...\015\012\000"
- 845      6E65743A 
- 845      2043616C 
- 845      6C696E67 
- 845      2077697A 
- 846 0051 000000   		.align	2
- 847              	.LC9:
- 848 0054 434D342E 		.ascii	"CM4.net: Calling wizchip_init() error\015\012\000"
- 848      6E65743A 
- 848      2043616C 
- 848      6C696E67 
- 848      2077697A 
- 849              		.align	2
- 850              	.LC10:
- 851 007c 434D342E 		.ascii	"CM4.net: Registering DHCP callbacks...\015\012\000"
- 851      6E65743A 
- 851      20526567 
- 851      69737465 
- 851      72696E67 
- 852 00a5 000000   		.align	2
- 853              	.LC11:
- 854 00a8 434D342E 		.ascii	"CM4.net: Calling DHCP_init()...\015\012\000"
- 854      6E65743A 
- 854      2043616C 
- 854      6C696E67 
- 854      20444843 
- 855 00ca 0000     		.align	2
- 856              	.LC12:
- 857 00cc 434D342E 		.ascii	"CM4.net: Calling DHCP_run()...\015\012\000"
- 857      6E65743A 
- 857      2043616C 
- 857      6C696E67 
- 857      20444843 
- 858              		.section	.text.net_init,"ax",%progbits
- 859              		.align	1
- 860              		.global	net_init
- 861              		.syntax unified
- 862              		.thumb
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 23
-
-
- 863              		.thumb_func
- 865              	net_init:
- 866              	.LFB148:
- 290:../../CM4/Core/Src/net.c **** 
- 291:../../CM4/Core/Src/net.c **** //void W5500_Critical_Enter(void) {}
- 292:../../CM4/Core/Src/net.c **** 
- 293:../../CM4/Core/Src/net.c **** //void W5500_Critical_Exit(void) {}
- 294:../../CM4/Core/Src/net.c **** 
- 295:../../CM4/Core/Src/net.c **** void net_init(void)
- 296:../../CM4/Core/Src/net.c **** {
- 867              		.loc 1 296 1 is_stmt 1 view -0
- 868              		.cfi_startproc
- 869              		@ args = 0, pretend = 0, frame = 8
- 870              		@ frame_needed = 0, uses_anonymous_args = 0
- 871 0000 10B5     		push	{r4, lr}
- 872              	.LCFI23:
- 873              		.cfi_def_cfa_offset 8
- 874              		.cfi_offset 4, -8
- 875              		.cfi_offset 14, -4
- 876 0002 82B0     		sub	sp, sp, #8
- 877              	.LCFI24:
- 878              		.cfi_def_cfa_offset 16
- 297:../../CM4/Core/Src/net.c **** 
- 298:../../CM4/Core/Src/net.c **** 	//setting.dhcp = FALSE;
- 299:../../CM4/Core/Src/net.c **** 
+ 865 00ca 0000     		.align	2
+ 866              	.LC12:
+ 867 00cc 434D342E 		.ascii	"CM4.net: Calling DHCP_run()...\015\012\000"
+ 867      6E65743A 
+ 867      2043616C 
+ 867      6C696E67 
+ 867      20444843 
+ 868              		.section	.text.net_init,"ax",%progbits
+ 869              		.align	1
+ 870              		.global	net_init
+ 871              		.syntax unified
+ 872              		.thumb
+ 873              		.thumb_func
+ 875              	net_init:
+ 876              	.LFB148:
+ 291:../../CM4/Core/Src/net.c **** 
+ 292:../../CM4/Core/Src/net.c **** //void W5500_Critical_Enter(void) {}
+ 293:../../CM4/Core/Src/net.c **** 
+ 294:../../CM4/Core/Src/net.c **** //void W5500_Critical_Exit(void) {}
+ 295:../../CM4/Core/Src/net.c **** 
+ 296:../../CM4/Core/Src/net.c **** void net_init(void)
+ 297:../../CM4/Core/Src/net.c **** {
+ 877              		.loc 1 297 1 is_stmt 1 view -0
+ 878              		.cfi_startproc
+ 879              		@ args = 0, pretend = 0, frame = 8
+ 880              		@ frame_needed = 0, uses_anonymous_args = 0
+ 881 0000 10B5     		push	{r4, lr}
+ 882              	.LCFI23:
+ 883              		.cfi_def_cfa_offset 8
+ 884              		.cfi_offset 4, -8
+ 885              		.cfi_offset 14, -4
+ 886 0002 82B0     		sub	sp, sp, #8
+ 887              	.LCFI24:
+ 888              		.cfi_def_cfa_offset 16
+ 298:../../CM4/Core/Src/net.c **** 
+ 299:../../CM4/Core/Src/net.c **** 	//setting.dhcp = FALSE;
  300:../../CM4/Core/Src/net.c **** 
- 301:../../CM4/Core/Src/net.c **** 	//Далее распределяем память между сокетами. Пусть у ка
- 302:../../CM4/Core/Src/net.c **** 
- 303:../../CM4/Core/Src/net.c **** 	ulog(CONM"net: Registering W5500 callbacks..."CRLF);
- 879              		.loc 1 303 2 view .LVU129
- 880 0004 3348     		ldr	r0, .L76
- 881 0006 FFF7FEFF 		bl	ulog
- 882              	.LVL46:
- 304:../../CM4/Core/Src/net.c **** 	reg_wizchip_cs_cbfunc(W5500_Select, W5500_Unselect);
- 883              		.loc 1 304 2 view .LVU130
- 884 000a 3349     		ldr	r1, .L76+4
- 885 000c 3348     		ldr	r0, .L76+8
- 886 000e FFF7FEFF 		bl	reg_wizchip_cs_cbfunc
- 887              	.LVL47:
- 305:../../CM4/Core/Src/net.c **** 	reg_wizchip_spi_cbfunc(W5500_ReadByte, W5500_WriteByte);
- 888              		.loc 1 305 2 view .LVU131
- 889 0012 3349     		ldr	r1, .L76+12
- 890 0014 3348     		ldr	r0, .L76+16
- 891 0016 FFF7FEFF 		bl	reg_wizchip_spi_cbfunc
- 892              	.LVL48:
- 306:../../CM4/Core/Src/net.c **** 	reg_wizchip_spiburst_cbfunc(W5500_ReadBuff, W5500_WriteBuff);
- 893              		.loc 1 306 2 view .LVU132
- 894 001a 3349     		ldr	r1, .L76+20
- 895 001c 3348     		ldr	r0, .L76+24
- 896 001e FFF7FEFF 		bl	reg_wizchip_spiburst_cbfunc
- 897              	.LVL49:
- 307:../../CM4/Core/Src/net.c **** 
- 308:../../CM4/Core/Src/net.c **** 	ulog(CONM"net: Calling wizchip_init()..."CRLF);
- 898              		.loc 1 308 2 view .LVU133
- 899 0022 3348     		ldr	r0, .L76+28
- 900 0024 FFF7FEFF 		bl	ulog
- 901              	.LVL50:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 24
+ 301:../../CM4/Core/Src/net.c **** 
+ 302:../../CM4/Core/Src/net.c **** 	//Далее распределяем память между сокетами. Пусть у ка
+ 303:../../CM4/Core/Src/net.c **** 
+ 304:../../CM4/Core/Src/net.c **** 	ulog(CONM"net: Registering W5500 callbacks..."CRLF);
+ 889              		.loc 1 304 2 view .LVU130
+ 890 0004 3348     		ldr	r0, .L76
+ 891 0006 FFF7FEFF 		bl	ulog
+ 892              	.LVL47:
+ 305:../../CM4/Core/Src/net.c **** 	reg_wizchip_cs_cbfunc(W5500_Select, W5500_Unselect);
+ 893              		.loc 1 305 2 view .LVU131
+ 894 000a 3349     		ldr	r1, .L76+4
+ 895 000c 3348     		ldr	r0, .L76+8
+ 896 000e FFF7FEFF 		bl	reg_wizchip_cs_cbfunc
+ 897              	.LVL48:
+ 306:../../CM4/Core/Src/net.c **** 	reg_wizchip_spi_cbfunc(W5500_ReadByte, W5500_WriteByte);
+ 898              		.loc 1 306 2 view .LVU132
+ 899 0012 3349     		ldr	r1, .L76+12
+ 900 0014 3348     		ldr	r0, .L76+16
+ 901 0016 FFF7FEFF 		bl	reg_wizchip_spi_cbfunc
+ 902              	.LVL49:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 24
 
 
- 309:../../CM4/Core/Src/net.c **** 	//uint8_t rx_tx_buff_sizes[] = {2, 2, 2, 2, 2, 2, 2, 2};
- 310:../../CM4/Core/Src/net.c **** 	uint8_t rx_tx_buff_sizes[] = {2, 4, 4, 4, 2, 0, 0, 0};
- 902              		.loc 1 310 2 view .LVU134
- 903              		.loc 1 310 10 is_stmt 0 view .LVU135
- 904 0028 324A     		ldr	r2, .L76+32
- 905 002a 6B46     		mov	r3, sp
- 906 002c 92E80300 		ldm	r2, {r0, r1}
- 907 0030 83E80300 		stm	r3, {r0, r1}
- 311:../../CM4/Core/Src/net.c **** 	if (wizchip_init(rx_tx_buff_sizes, rx_tx_buff_sizes) < 0) {
- 908              		.loc 1 311 2 is_stmt 1 view .LVU136
- 909              		.loc 1 311 6 is_stmt 0 view .LVU137
- 910 0034 1946     		mov	r1, r3
- 911 0036 1846     		mov	r0, r3
- 912 0038 FFF7FEFF 		bl	wizchip_init
- 913              	.LVL51:
- 914              		.loc 1 311 5 discriminator 1 view .LVU138
- 915 003c 0028     		cmp	r0, #0
- 916 003e 29DB     		blt	.L75
- 917              	.L71:
- 312:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Calling wizchip_init() error"CRLF);
- 313:../../CM4/Core/Src/net.c **** 	}
- 314:../../CM4/Core/Src/net.c **** 
- 315:../../CM4/Core/Src/net.c **** 	//reg_wizchip_cris_cbfunc(W5500_Critical_Enter, W5500_Critical_Exit);
- 316:../../CM4/Core/Src/net.c **** 
+ 307:../../CM4/Core/Src/net.c **** 	reg_wizchip_spiburst_cbfunc(W5500_ReadBuff, W5500_WriteBuff);
+ 903              		.loc 1 307 2 view .LVU133
+ 904 001a 3349     		ldr	r1, .L76+20
+ 905 001c 3348     		ldr	r0, .L76+24
+ 906 001e FFF7FEFF 		bl	reg_wizchip_spiburst_cbfunc
+ 907              	.LVL50:
+ 308:../../CM4/Core/Src/net.c **** 
+ 309:../../CM4/Core/Src/net.c **** 	ulog(CONM"net: Calling wizchip_init()..."CRLF);
+ 908              		.loc 1 309 2 view .LVU134
+ 909 0022 3348     		ldr	r0, .L76+28
+ 910 0024 FFF7FEFF 		bl	ulog
+ 911              	.LVL51:
+ 310:../../CM4/Core/Src/net.c **** 	//uint8_t rx_tx_buff_sizes[] = {2, 2, 2, 2, 2, 2, 2, 2};
+ 311:../../CM4/Core/Src/net.c **** 	uint8_t rx_tx_buff_sizes[] = {2, 4, 4, 4, 1, 1, 0, 0};
+ 912              		.loc 1 311 2 view .LVU135
+ 913              		.loc 1 311 10 is_stmt 0 view .LVU136
+ 914 0028 324A     		ldr	r2, .L76+32
+ 915 002a 6B46     		mov	r3, sp
+ 916 002c 92E80300 		ldm	r2, {r0, r1}
+ 917 0030 83E80300 		stm	r3, {r0, r1}
+ 312:../../CM4/Core/Src/net.c **** 	if (wizchip_init(rx_tx_buff_sizes, rx_tx_buff_sizes) < 0) {
+ 918              		.loc 1 312 2 is_stmt 1 view .LVU137
+ 919              		.loc 1 312 6 is_stmt 0 view .LVU138
+ 920 0034 1946     		mov	r1, r3
+ 921 0036 1846     		mov	r0, r3
+ 922 0038 FFF7FEFF 		bl	wizchip_init
+ 923              	.LVL52:
+ 924              		.loc 1 312 5 discriminator 1 view .LVU139
+ 925 003c 0028     		cmp	r0, #0
+ 926 003e 29DB     		blt	.L75
+ 927              	.L71:
+ 313:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Calling wizchip_init() error"CRLF);
+ 314:../../CM4/Core/Src/net.c **** 	}
+ 315:../../CM4/Core/Src/net.c **** 
+ 316:../../CM4/Core/Src/net.c **** 	//reg_wizchip_cris_cbfunc(W5500_Critical_Enter, W5500_Critical_Exit);
  317:../../CM4/Core/Src/net.c **** 
- 318:../../CM4/Core/Src/net.c **** 	wizchip_setinterruptmask(IK_SOCK_ALL);
- 918              		.loc 1 318 2 is_stmt 1 view .LVU139
- 919 0040 4FF47F40 		mov	r0, #65280
- 920 0044 FFF7FEFF 		bl	wizchip_setinterruptmask
- 921              	.LVL52:
- 319:../../CM4/Core/Src/net.c **** 
- 320:../../CM4/Core/Src/net.c **** 	if (setting.dhcp) {
- 922              		.loc 1 320 2 view .LVU140
- 923              		.loc 1 320 13 is_stmt 0 view .LVU141
- 924 0048 2B4B     		ldr	r3, .L76+36
- 925 004a DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
- 926              		.loc 1 320 5 view .LVU142
- 927 004c 33B3     		cbz	r3, .L72
- 321:../../CM4/Core/Src/net.c **** 
- 322:../../CM4/Core/Src/net.c **** 		ip_assigned = FALSE;
- 928              		.loc 1 322 3 is_stmt 1 view .LVU143
- 929              		.loc 1 322 15 is_stmt 0 view .LVU144
- 930 004e 0024     		movs	r4, #0
- 931 0050 2A4B     		ldr	r3, .L76+40
- 932 0052 1C70     		strb	r4, [r3]
- 323:../../CM4/Core/Src/net.c **** 
+ 318:../../CM4/Core/Src/net.c **** 
+ 319:../../CM4/Core/Src/net.c **** 	wizchip_setinterruptmask(IK_SOCK_ALL);
+ 928              		.loc 1 319 2 is_stmt 1 view .LVU140
+ 929 0040 4FF47F40 		mov	r0, #65280
+ 930 0044 FFF7FEFF 		bl	wizchip_setinterruptmask
+ 931              	.LVL53:
+ 320:../../CM4/Core/Src/net.c **** 
+ 321:../../CM4/Core/Src/net.c **** 	if (setting.dhcp) {
+ 932              		.loc 1 321 2 view .LVU141
+ 933              		.loc 1 321 13 is_stmt 0 view .LVU142
+ 934 0048 2B4B     		ldr	r3, .L76+36
+ 935 004a DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
+ 936              		.loc 1 321 5 view .LVU143
+ 937 004c 33B3     		cbz	r3, .L72
+ 322:../../CM4/Core/Src/net.c **** 
+ 323:../../CM4/Core/Src/net.c **** 		ip_assigned = FALSE;
+ 938              		.loc 1 323 3 is_stmt 1 view .LVU144
+ 939              		.loc 1 323 15 is_stmt 0 view .LVU145
+ 940 004e 0024     		movs	r4, #0
+ 941 0050 2A4B     		ldr	r3, .L76+40
+ 942 0052 1C70     		strb	r4, [r3]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 25
+
+
  324:../../CM4/Core/Src/net.c **** 
- 325:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Registering DHCP callbacks..."CRLF);
- 933              		.loc 1 325 3 is_stmt 1 view .LVU145
- 934 0054 2A48     		ldr	r0, .L76+44
- 935 0056 FFF7FEFF 		bl	ulog
- 936              	.LVL53:
- 326:../../CM4/Core/Src/net.c **** 		reg_dhcp_cbfunc(Callback_IPAssigned, Callback_IPAssigned, Callback_IPConflict);
- 937              		.loc 1 326 3 view .LVU146
- 938 005a 2A48     		ldr	r0, .L76+48
- 939 005c 2A4A     		ldr	r2, .L76+52
- 940 005e 0146     		mov	r1, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 25
-
-
- 941 0060 FFF7FEFF 		bl	reg_dhcp_cbfunc
- 942              	.LVL54:
- 327:../../CM4/Core/Src/net.c **** 
- 328:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Calling DHCP_init()..."CRLF);
- 943              		.loc 1 328 3 view .LVU147
- 944 0064 2948     		ldr	r0, .L76+56
- 945 0066 FFF7FEFF 		bl	ulog
- 946              	.LVL55:
- 329:../../CM4/Core/Src/net.c **** 		// set MAC address before using DHCP
- 330:../../CM4/Core/Src/net.c **** 		setSHAR(setting.mac);
- 947              		.loc 1 330 3 view .LVU148
- 948 006a 0622     		movs	r2, #6
- 949 006c 2849     		ldr	r1, .L76+60
- 950 006e 4FF41060 		mov	r0, #2304
- 951 0072 FFF7FEFF 		bl	WIZCHIP_WRITE_BUF
- 952              	.LVL56:
- 331:../../CM4/Core/Src/net.c **** 		dhcp_buffer = malloc(548);
- 953              		.loc 1 331 3 view .LVU149
- 954              		.loc 1 331 17 is_stmt 0 view .LVU150
- 955 0076 4FF40970 		mov	r0, #548
- 956 007a FFF7FEFF 		bl	malloc
- 957              	.LVL57:
- 958 007e 0146     		mov	r1, r0
- 959              		.loc 1 331 15 discriminator 1 view .LVU151
- 960 0080 244B     		ldr	r3, .L76+64
- 961 0082 1860     		str	r0, [r3]
- 332:../../CM4/Core/Src/net.c **** 		DHCP_init(DHCP_SOCKET, dhcp_buffer);
- 962              		.loc 1 332 3 is_stmt 1 view .LVU152
- 963 0084 2046     		mov	r0, r4
- 964 0086 FFF7FEFF 		bl	DHCP_init
- 965              	.LVL58:
- 333:../../CM4/Core/Src/net.c **** 
+ 325:../../CM4/Core/Src/net.c **** 
+ 326:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Registering DHCP callbacks..."CRLF);
+ 943              		.loc 1 326 3 is_stmt 1 view .LVU146
+ 944 0054 2A48     		ldr	r0, .L76+44
+ 945 0056 FFF7FEFF 		bl	ulog
+ 946              	.LVL54:
+ 327:../../CM4/Core/Src/net.c **** 		reg_dhcp_cbfunc(Callback_IPAssigned, Callback_IPAssigned, Callback_IPConflict);
+ 947              		.loc 1 327 3 view .LVU147
+ 948 005a 2A48     		ldr	r0, .L76+48
+ 949 005c 2A4A     		ldr	r2, .L76+52
+ 950 005e 0146     		mov	r1, r0
+ 951 0060 FFF7FEFF 		bl	reg_dhcp_cbfunc
+ 952              	.LVL55:
+ 328:../../CM4/Core/Src/net.c **** 
+ 329:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Calling DHCP_init()..."CRLF);
+ 953              		.loc 1 329 3 view .LVU148
+ 954 0064 2948     		ldr	r0, .L76+56
+ 955 0066 FFF7FEFF 		bl	ulog
+ 956              	.LVL56:
+ 330:../../CM4/Core/Src/net.c **** 		// set MAC address before using DHCP
+ 331:../../CM4/Core/Src/net.c **** 		setSHAR(setting.mac);
+ 957              		.loc 1 331 3 view .LVU149
+ 958 006a 0622     		movs	r2, #6
+ 959 006c 2849     		ldr	r1, .L76+60
+ 960 006e 4FF41060 		mov	r0, #2304
+ 961 0072 FFF7FEFF 		bl	WIZCHIP_WRITE_BUF
+ 962              	.LVL57:
+ 332:../../CM4/Core/Src/net.c **** 		dhcp_buffer = malloc(548);
+ 963              		.loc 1 332 3 view .LVU150
+ 964              		.loc 1 332 17 is_stmt 0 view .LVU151
+ 965 0076 4FF40970 		mov	r0, #548
+ 966 007a FFF7FEFF 		bl	malloc
+ 967              	.LVL58:
+ 968 007e 0146     		mov	r1, r0
+ 969              		.loc 1 332 15 discriminator 1 view .LVU152
+ 970 0080 244B     		ldr	r3, .L76+64
+ 971 0082 1860     		str	r0, [r3]
+ 333:../../CM4/Core/Src/net.c **** 		DHCP_init(DHCP_SOCKET, dhcp_buffer);
+ 972              		.loc 1 333 3 is_stmt 1 view .LVU153
+ 973 0084 2046     		mov	r0, r4
+ 974 0086 FFF7FEFF 		bl	DHCP_init
+ 975              	.LVL59:
  334:../../CM4/Core/Src/net.c **** 
- 335:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Calling DHCP_run()..."CRLF);
- 966              		.loc 1 335 3 view .LVU153
- 967 008a 2348     		ldr	r0, .L76+68
- 968 008c FFF7FEFF 		bl	ulog
- 969              	.LVL59:
- 970              	.L70:
- 336:../../CM4/Core/Src/net.c **** 	}
- 337:../../CM4/Core/Src/net.c ****     else {
- 338:../../CM4/Core/Src/net.c **** 
- 339:../../CM4/Core/Src/net.c ****     	ip_assigned = TRUE;
- 340:../../CM4/Core/Src/net.c **** 
- 341:../../CM4/Core/Src/net.c ****     	memcpy(net_info.mac, setting.mac, sizeof(net_info.mac));
- 342:../../CM4/Core/Src/net.c ****     	memcpy(net_info.ip, &setting.ip, sizeof(net_info.ip));
- 343:../../CM4/Core/Src/net.c ****     	memcpy(net_info.gw, &setting.gw, sizeof(net_info.gw));
- 344:../../CM4/Core/Src/net.c ****     	memcpy(net_info.sn, &setting.mask, sizeof(net_info.sn));
- 345:../../CM4/Core/Src/net.c ****     	memcpy(net_info.dns, &setting.dns, sizeof(net_info.dns));
- 346:../../CM4/Core/Src/net.c ****         net_info.dhcp = NETINFO_STATIC;
- 347:../../CM4/Core/Src/net.c **** 
+ 335:../../CM4/Core/Src/net.c **** 
+ 336:../../CM4/Core/Src/net.c **** 		ulog(CONM"net: Calling DHCP_run()..."CRLF);
+ 976              		.loc 1 336 3 view .LVU154
+ 977 008a 2348     		ldr	r0, .L76+68
+ 978 008c FFF7FEFF 		bl	ulog
+ 979              	.LVL60:
+ 980              	.L70:
+ 337:../../CM4/Core/Src/net.c **** 	}
+ 338:../../CM4/Core/Src/net.c ****     else {
+ 339:../../CM4/Core/Src/net.c **** 
+ 340:../../CM4/Core/Src/net.c ****     	ip_assigned = TRUE;
+ 341:../../CM4/Core/Src/net.c **** 
+ 342:../../CM4/Core/Src/net.c ****     	memcpy(net_info.mac, setting.mac, sizeof(net_info.mac));
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 26
+
+
+ 343:../../CM4/Core/Src/net.c ****     	memcpy(net_info.ip, &setting.ip, sizeof(net_info.ip));
+ 344:../../CM4/Core/Src/net.c ****     	memcpy(net_info.gw, &setting.gw, sizeof(net_info.gw));
+ 345:../../CM4/Core/Src/net.c ****     	memcpy(net_info.sn, &setting.mask, sizeof(net_info.sn));
+ 346:../../CM4/Core/Src/net.c ****     	memcpy(net_info.dns, &setting.dns, sizeof(net_info.dns));
+ 347:../../CM4/Core/Src/net.c ****         net_info.dhcp = NETINFO_STATIC;
  348:../../CM4/Core/Src/net.c **** 
- 349:../../CM4/Core/Src/net.c ****         net_init_continue();
+ 349:../../CM4/Core/Src/net.c **** 
+ 350:../../CM4/Core/Src/net.c ****         net_init_continue();
+ 351:../../CM4/Core/Src/net.c ****     }
+ 352:../../CM4/Core/Src/net.c **** 
+ 353:../../CM4/Core/Src/net.c **** }
+ 981              		.loc 1 353 1 is_stmt 0 view .LVU155
+ 982 0090 02B0     		add	sp, sp, #8
+ 983              	.LCFI25:
+ 984              		.cfi_remember_state
+ 985              		.cfi_def_cfa_offset 8
+ 986              		@ sp needed
+ 987 0092 10BD     		pop	{r4, pc}
+ 988              	.L75:
+ 989              	.LCFI26:
+ 990              		.cfi_restore_state
+ 313:../../CM4/Core/Src/net.c **** 	}
+ 991              		.loc 1 313 3 is_stmt 1 view .LVU156
+ 992 0094 2148     		ldr	r0, .L76+72
+ 993 0096 FFF7FEFF 		bl	ulog
+ 994              	.LVL61:
+ 995 009a D1E7     		b	.L71
+ 996              	.L72:
+ 340:../../CM4/Core/Src/net.c **** 
+ 997              		.loc 1 340 6 view .LVU157
+ 340:../../CM4/Core/Src/net.c **** 
+ 998              		.loc 1 340 18 is_stmt 0 view .LVU158
+ 999 009c 0121     		movs	r1, #1
+ 1000 009e 174B     		ldr	r3, .L76+40
+ 1001 00a0 1970     		strb	r1, [r3]
+ 342:../../CM4/Core/Src/net.c ****     	memcpy(net_info.ip, &setting.ip, sizeof(net_info.ip));
+ 1002              		.loc 1 342 6 is_stmt 1 view .LVU159
+ 1003 00a2 1F4B     		ldr	r3, .L76+76
+ 1004 00a4 144A     		ldr	r2, .L76+36
+ 1005 00a6 D2F80500 		ldr	r0, [r2, #5]	@ unaligned
+ 1006 00aa 1860     		str	r0, [r3]
+ 1007 00ac B2F80900 		ldrh	r0, [r2, #9]	@ unaligned
+ 1008 00b0 9880     		strh	r0, [r3, #4]	@ unaligned
+ 343:../../CM4/Core/Src/net.c ****     	memcpy(net_info.gw, &setting.gw, sizeof(net_info.gw));
+ 1009              		.loc 1 343 6 view .LVU160
+ 1010 00b2 D068     		ldr	r0, [r2, #12]
+ 1011 00b4 C3F80600 		str	r0, [r3, #6]	@ unaligned
+ 344:../../CM4/Core/Src/net.c ****     	memcpy(net_info.sn, &setting.mask, sizeof(net_info.sn));
+ 1012              		.loc 1 344 6 view .LVU161
+ 1013 00b8 5069     		ldr	r0, [r2, #20]
+ 1014 00ba C3F80E00 		str	r0, [r3, #14]	@ unaligned
+ 345:../../CM4/Core/Src/net.c ****     	memcpy(net_info.dns, &setting.dns, sizeof(net_info.dns));
+ 1015              		.loc 1 345 6 view .LVU162
+ 1016 00be 1069     		ldr	r0, [r2, #16]
+ 1017 00c0 C3F80A00 		str	r0, [r3, #10]	@ unaligned
+ 346:../../CM4/Core/Src/net.c ****         net_info.dhcp = NETINFO_STATIC;
+ 1018              		.loc 1 346 6 view .LVU163
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 27
+
+
+ 1019 00c4 9269     		ldr	r2, [r2, #24]
+ 1020 00c6 C3F81220 		str	r2, [r3, #18]	@ unaligned
+ 347:../../CM4/Core/Src/net.c **** 
+ 1021              		.loc 1 347 9 view .LVU164
+ 347:../../CM4/Core/Src/net.c **** 
+ 1022              		.loc 1 347 23 is_stmt 0 view .LVU165
+ 1023 00ca 9975     		strb	r1, [r3, #22]
  350:../../CM4/Core/Src/net.c ****     }
- 351:../../CM4/Core/Src/net.c **** 
- 352:../../CM4/Core/Src/net.c **** }
- 971              		.loc 1 352 1 is_stmt 0 view .LVU154
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 26
+ 1024              		.loc 1 350 9 is_stmt 1 view .LVU166
+ 1025 00cc FFF7FEFF 		bl	net_init_continue
+ 1026              	.LVL62:
+ 1027              		.loc 1 353 1 is_stmt 0 view .LVU167
+ 1028 00d0 DEE7     		b	.L70
+ 1029              	.L77:
+ 1030 00d2 00BF     		.align	2
+ 1031              	.L76:
+ 1032 00d4 00000000 		.word	.LC6
+ 1033 00d8 00000000 		.word	W5500_Unselect
+ 1034 00dc 00000000 		.word	W5500_Select
+ 1035 00e0 00000000 		.word	W5500_WriteByte
+ 1036 00e4 00000000 		.word	W5500_ReadByte
+ 1037 00e8 00000000 		.word	W5500_WriteBuff
+ 1038 00ec 00000000 		.word	W5500_ReadBuff
+ 1039 00f0 2C000000 		.word	.LC7
+ 1040 00f4 00000000 		.word	.LANCHOR0
+ 1041 00f8 00000000 		.word	setting
+ 1042 00fc 00000000 		.word	ip_assigned
+ 1043 0100 7C000000 		.word	.LC10
+ 1044 0104 00000000 		.word	Callback_IPAssigned
+ 1045 0108 00000000 		.word	Callback_IPConflict
+ 1046 010c A8000000 		.word	.LC11
+ 1047 0110 05000000 		.word	setting+5
+ 1048 0114 00000000 		.word	dhcp_buffer
+ 1049 0118 CC000000 		.word	.LC12
+ 1050 011c 54000000 		.word	.LC9
+ 1051 0120 00000000 		.word	net_info
+ 1052              		.cfi_endproc
+ 1053              	.LFE148:
+ 1055              		.global	http_session_tick
+ 1056              		.section	.bss.http_session_tick,"aw",%nobits
+ 1057              		.align	2
+ 1060              	http_session_tick:
+ 1061 0000 00000000 		.space	4
+ 1062              		.section	.bss.ip_assigned,"aw",%nobits
+ 1065              	ip_assigned:
+ 1066 0000 00       		.space	1
+ 1067              		.global	net_info
+ 1068              		.section	.bss.net_info,"aw",%nobits
+ 1069              		.align	2
+ 1072              	net_info:
+ 1073 0000 00000000 		.space	23
+ 1073      00000000 
+ 1073      00000000 
+ 1073      00000000 
+ 1073      00000000 
+ 1074              		.section	.bss.dhcp_buffer,"aw",%nobits
+ 1075              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 28
 
 
- 972 0090 02B0     		add	sp, sp, #8
- 973              	.LCFI25:
- 974              		.cfi_remember_state
- 975              		.cfi_def_cfa_offset 8
- 976              		@ sp needed
- 977 0092 10BD     		pop	{r4, pc}
- 978              	.L75:
- 979              	.LCFI26:
- 980              		.cfi_restore_state
- 312:../../CM4/Core/Src/net.c **** 	}
- 981              		.loc 1 312 3 is_stmt 1 view .LVU155
- 982 0094 2148     		ldr	r0, .L76+72
- 983 0096 FFF7FEFF 		bl	ulog
- 984              	.LVL60:
- 985 009a D1E7     		b	.L71
- 986              	.L72:
- 339:../../CM4/Core/Src/net.c **** 
- 987              		.loc 1 339 6 view .LVU156
- 339:../../CM4/Core/Src/net.c **** 
- 988              		.loc 1 339 18 is_stmt 0 view .LVU157
- 989 009c 0121     		movs	r1, #1
- 990 009e 174B     		ldr	r3, .L76+40
- 991 00a0 1970     		strb	r1, [r3]
- 341:../../CM4/Core/Src/net.c ****     	memcpy(net_info.ip, &setting.ip, sizeof(net_info.ip));
- 992              		.loc 1 341 6 is_stmt 1 view .LVU158
- 993 00a2 1F4B     		ldr	r3, .L76+76
- 994 00a4 144A     		ldr	r2, .L76+36
- 995 00a6 D2F80500 		ldr	r0, [r2, #5]	@ unaligned
- 996 00aa 1860     		str	r0, [r3]
- 997 00ac B2F80900 		ldrh	r0, [r2, #9]	@ unaligned
- 998 00b0 9880     		strh	r0, [r3, #4]	@ unaligned
- 342:../../CM4/Core/Src/net.c ****     	memcpy(net_info.gw, &setting.gw, sizeof(net_info.gw));
- 999              		.loc 1 342 6 view .LVU159
- 1000 00b2 D068     		ldr	r0, [r2, #12]
- 1001 00b4 C3F80600 		str	r0, [r3, #6]	@ unaligned
- 343:../../CM4/Core/Src/net.c ****     	memcpy(net_info.sn, &setting.mask, sizeof(net_info.sn));
- 1002              		.loc 1 343 6 view .LVU160
- 1003 00b8 5069     		ldr	r0, [r2, #20]
- 1004 00ba C3F80E00 		str	r0, [r3, #14]	@ unaligned
- 344:../../CM4/Core/Src/net.c ****     	memcpy(net_info.dns, &setting.dns, sizeof(net_info.dns));
- 1005              		.loc 1 344 6 view .LVU161
- 1006 00be 1069     		ldr	r0, [r2, #16]
- 1007 00c0 C3F80A00 		str	r0, [r3, #10]	@ unaligned
- 345:../../CM4/Core/Src/net.c ****         net_info.dhcp = NETINFO_STATIC;
- 1008              		.loc 1 345 6 view .LVU162
- 1009 00c4 9269     		ldr	r2, [r2, #24]
- 1010 00c6 C3F81220 		str	r2, [r3, #18]	@ unaligned
- 346:../../CM4/Core/Src/net.c **** 
- 1011              		.loc 1 346 9 view .LVU163
- 346:../../CM4/Core/Src/net.c **** 
- 1012              		.loc 1 346 23 is_stmt 0 view .LVU164
- 1013 00ca 9975     		strb	r1, [r3, #22]
- 349:../../CM4/Core/Src/net.c ****     }
- 1014              		.loc 1 349 9 is_stmt 1 view .LVU165
- 1015 00cc FFF7FEFF 		bl	net_init_continue
- 1016              	.LVL61:
- 1017              		.loc 1 352 1 is_stmt 0 view .LVU166
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 27
-
-
- 1018 00d0 DEE7     		b	.L70
- 1019              	.L77:
- 1020 00d2 00BF     		.align	2
- 1021              	.L76:
- 1022 00d4 00000000 		.word	.LC6
- 1023 00d8 00000000 		.word	W5500_Unselect
- 1024 00dc 00000000 		.word	W5500_Select
- 1025 00e0 00000000 		.word	W5500_WriteByte
- 1026 00e4 00000000 		.word	W5500_ReadByte
- 1027 00e8 00000000 		.word	W5500_WriteBuff
- 1028 00ec 00000000 		.word	W5500_ReadBuff
- 1029 00f0 2C000000 		.word	.LC7
- 1030 00f4 00000000 		.word	.LANCHOR0
- 1031 00f8 00000000 		.word	setting
- 1032 00fc 00000000 		.word	ip_assigned
- 1033 0100 7C000000 		.word	.LC10
- 1034 0104 00000000 		.word	Callback_IPAssigned
- 1035 0108 00000000 		.word	Callback_IPConflict
- 1036 010c A8000000 		.word	.LC11
- 1037 0110 05000000 		.word	setting+5
- 1038 0114 00000000 		.word	dhcp_buffer
- 1039 0118 CC000000 		.word	.LC12
- 1040 011c 54000000 		.word	.LC9
- 1041 0120 00000000 		.word	net_info
- 1042              		.cfi_endproc
- 1043              	.LFE148:
- 1045              		.global	http_session_tick
- 1046              		.section	.bss.http_session_tick,"aw",%nobits
- 1047              		.align	2
- 1050              	http_session_tick:
- 1051 0000 00000000 		.space	4
- 1052              		.section	.bss.ip_assigned,"aw",%nobits
- 1055              	ip_assigned:
- 1056 0000 00       		.space	1
- 1057              		.global	net_info
- 1058              		.section	.bss.net_info,"aw",%nobits
- 1059              		.align	2
- 1062              	net_info:
- 1063 0000 00000000 		.space	23
- 1063      00000000 
- 1063      00000000 
- 1063      00000000 
- 1063      00000000 
- 1064              		.section	.bss.dhcp_buffer,"aw",%nobits
- 1065              		.align	2
- 1068              	dhcp_buffer:
- 1069 0000 00000000 		.space	4
- 1070              		.global	socknumlist
- 1071              		.section	.rodata.socknumlist,"a"
- 1072              		.align	2
- 1075              	socknumlist:
- 1076 0000 00010203 		.ascii	"\000\001\002\003"
- 1077              		.section	.rodata
- 1078              		.align	2
- 1079              		.set	.LANCHOR0,. + 0
- 1080              	.LC8:
- 1081 0000 02040404 		.ascii	"\002\004\004\004\002\000\000\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 28
-
-
- 1081      02000000 
- 1082              		.text
- 1083              	.Letext0:
- 1084              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
- 1085              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
- 1086              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
- 1087              		.file 5 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
- 1088              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
- 1089              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
- 1090              		.file 8 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
- 1091              		.file 9 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h"
- 1092              		.file 10 "../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h"
- 1093              		.file 11 "../../CM4/Core/Inc/main.h"
- 1094              		.file 12 "../../CM4/Core/Inc/net.h"
- 1095              		.file 13 "../../common/setting_data.h"
- 1096              		.file 14 "../../common/common.h"
- 1097              		.file 15 "../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.h"
- 1098              		.file 16 "../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.h"
- 1099              		.file 17 "C:/msys64/ucrt64/arm-none-eabi/include/stdlib.h"
- 1100              		.file 18 "../../CM4/Core/Inc/http_server.h"
- 1101              		.file 19 "../../ws_rubetec/ws_server.h"
- 1102              		.file 20 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
- 1103              		.file 21 "../../util/stm_util.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 29
+ 1078              	dhcp_buffer:
+ 1079 0000 00000000 		.space	4
+ 1080              		.global	socknumlist
+ 1081              		.section	.rodata.socknumlist,"a"
+ 1082              		.align	2
+ 1085              	socknumlist:
+ 1086 0000 00010203 		.ascii	"\000\001\002\003"
+ 1087              		.section	.rodata
+ 1088              		.align	2
+ 1089              		.set	.LANCHOR0,. + 0
+ 1090              	.LC8:
+ 1091 0000 02040404 		.ascii	"\002\004\004\004\001\001\000\000"
+ 1091      01010000 
+ 1092              		.text
+ 1093              	.Letext0:
+ 1094              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1095              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1096              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 1097              		.file 5 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 1098              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 1099              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 1100              		.file 8 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 1101              		.file 9 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h"
+ 1102              		.file 10 "../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h"
+ 1103              		.file 11 "../../CM4/Core/Inc/main.h"
+ 1104              		.file 12 "../../CM4/Core/Inc/net.h"
+ 1105              		.file 13 "../../common/setting_data.h"
+ 1106              		.file 14 "../../common/common.h"
+ 1107              		.file 15 "../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.h"
+ 1108              		.file 16 "../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.h"
+ 1109              		.file 17 "C:/msys64/ucrt64/arm-none-eabi/include/stdlib.h"
+ 1110              		.file 18 "../../CM4/Core/Inc/http_server.h"
+ 1111              		.file 19 "../../ws_rubetec/ws_server.h"
+ 1112              		.file 20 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 1113              		.file 21 "../../util/stm_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 29
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 net.c
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:21     .text.W5500_Select:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:27     .text.W5500_Select:00000000 W5500_Select
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:49     .text.W5500_Select:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:54     .text.W5500_Unselect:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:60     .text.W5500_Unselect:00000000 W5500_Unselect
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:82     .text.W5500_Unselect:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:87     .text.W5500_ReadBuff:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:93     .text.W5500_ReadBuff:00000000 W5500_ReadBuff
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:122    .text.W5500_ReadBuff:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:127    .text.W5500_ReadByte:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:133    .text.W5500_ReadByte:00000000 W5500_ReadByte
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:164    .text.W5500_WriteBuff:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:170    .text.W5500_WriteBuff:00000000 W5500_WriteBuff
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:199    .text.W5500_WriteBuff:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:204    .text.W5500_WriteByte:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:210    .text.W5500_WriteByte:00000000 W5500_WriteByte
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:243    .rodata.Callback_IPConflict.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:247    .text.Callback_IPConflict:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:253    .text.Callback_IPConflict:00000000 Callback_IPConflict
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:288    .text.Callback_IPConflict:0000001c $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1068   .bss.dhcp_buffer:00000000 dhcp_buffer
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:294    .text.W5500_SelectMainChip:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:300    .text.W5500_SelectMainChip:00000000 W5500_SelectMainChip
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:322    .text.W5500_SelectMainChip:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:327    .text.W5500_SelectReserveChip:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:333    .text.W5500_SelectReserveChip:00000000 W5500_SelectReserveChip
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:355    .text.W5500_SelectReserveChip:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:360    .text.W5500_UnselectMainChip:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:366    .text.W5500_UnselectMainChip:00000000 W5500_UnselectMainChip
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:388    .text.W5500_UnselectMainChip:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:393    .text.W5500_UnselectReserveChip:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:399    .text.W5500_UnselectReserveChip:00000000 W5500_UnselectReserveChip
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:421    .text.W5500_UnselectReserveChip:00000010 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:426    .rodata.net_print_net_info.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:439    .text.net_print_net_info:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:445    .text.net_print_net_info:00000000 net_print_net_info
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:580    .text.net_print_net_info:000000b0 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:587    .rodata.net_init_continue.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:591    .text.net_init_continue:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:597    .text.net_init_continue:00000000 net_init_continue
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:645    .text.net_init_continue:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1062   .bss.net_info:00000000 net_info
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:651    .rodata.Callback_IPAssigned.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:656    .text.Callback_IPAssigned:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:662    .text.Callback_IPAssigned:00000000 Callback_IPAssigned
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:736    .text.Callback_IPAssigned:0000005c $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1055   .bss.ip_assigned:00000000 ip_assigned
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:744    .text.net_task_execute:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:750    .text.net_task_execute:00000000 net_task_execute
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:792    .text.net_task_execute:00000018 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1075   .rodata.socknumlist:00000000 socknumlist
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:797    .text.net_task:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:803    .text.net_task:00000000 net_task
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:835    .text.net_task:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:840    .rodata.net_init.str1.4:00000000 $d
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s 			page 30
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:21     .text.W5500_Select:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:27     .text.W5500_Select:00000000 W5500_Select
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:49     .text.W5500_Select:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:54     .text.W5500_Unselect:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:60     .text.W5500_Unselect:00000000 W5500_Unselect
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:82     .text.W5500_Unselect:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:87     .text.W5500_ReadBuff:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:93     .text.W5500_ReadBuff:00000000 W5500_ReadBuff
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:122    .text.W5500_ReadBuff:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:127    .text.W5500_ReadByte:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:133    .text.W5500_ReadByte:00000000 W5500_ReadByte
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:164    .text.W5500_WriteBuff:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:170    .text.W5500_WriteBuff:00000000 W5500_WriteBuff
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:199    .text.W5500_WriteBuff:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:204    .text.W5500_WriteByte:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:210    .text.W5500_WriteByte:00000000 W5500_WriteByte
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:243    .rodata.Callback_IPConflict.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:247    .text.Callback_IPConflict:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:253    .text.Callback_IPConflict:00000000 Callback_IPConflict
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:288    .text.Callback_IPConflict:0000001c $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1078   .bss.dhcp_buffer:00000000 dhcp_buffer
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:294    .text.W5500_SelectMainChip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:300    .text.W5500_SelectMainChip:00000000 W5500_SelectMainChip
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:322    .text.W5500_SelectMainChip:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:327    .text.W5500_SelectReserveChip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:333    .text.W5500_SelectReserveChip:00000000 W5500_SelectReserveChip
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:355    .text.W5500_SelectReserveChip:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:360    .text.W5500_UnselectMainChip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:366    .text.W5500_UnselectMainChip:00000000 W5500_UnselectMainChip
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:388    .text.W5500_UnselectMainChip:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:393    .text.W5500_UnselectReserveChip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:399    .text.W5500_UnselectReserveChip:00000000 W5500_UnselectReserveChip
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:421    .text.W5500_UnselectReserveChip:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:426    .rodata.net_print_net_info.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:439    .text.net_print_net_info:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:445    .text.net_print_net_info:00000000 net_print_net_info
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:580    .text.net_print_net_info:000000b0 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:587    .rodata.net_init_continue.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:591    .text.net_init_continue:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:597    .text.net_init_continue:00000000 net_init_continue
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:655    .text.net_init_continue:0000004c $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1072   .bss.net_info:00000000 net_info
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:661    .rodata.Callback_IPAssigned.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:666    .text.Callback_IPAssigned:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:672    .text.Callback_IPAssigned:00000000 Callback_IPAssigned
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:746    .text.Callback_IPAssigned:0000005c $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1065   .bss.ip_assigned:00000000 ip_assigned
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:754    .text.net_task_execute:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:760    .text.net_task_execute:00000000 net_task_execute
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:802    .text.net_task_execute:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1085   .rodata.socknumlist:00000000 socknumlist
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:807    .text.net_task:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:813    .text.net_task:00000000 net_task
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:845    .text.net_task:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:850    .rodata.net_init.str1.4:00000000 $d
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s 			page 30
 
 
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:859    .text.net_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:865    .text.net_init:00000000 net_init
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1022   .text.net_init:000000d4 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1050   .bss.http_session_tick:00000000 http_session_tick
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1047   .bss.http_session_tick:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1056   .bss.ip_assigned:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1059   .bss.net_info:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1065   .bss.dhcp_buffer:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1072   .rodata.socknumlist:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccHcUbpB.s:1078   .rodata:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:869    .text.net_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:875    .text.net_init:00000000 net_init
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1032   .text.net_init:000000d4 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1060   .bss.http_session_tick:00000000 http_session_tick
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1057   .bss.http_session_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1066   .bss.ip_assigned:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1069   .bss.net_info:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1075   .bss.dhcp_buffer:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1082   .rodata.socknumlist:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccJjuHJd.s:1088   .rodata:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

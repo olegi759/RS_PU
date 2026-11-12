@@ -121,7 +121,8 @@ C_SOURCES =  \
 ../../w5500/ioLibrary_driver/Application/loopback/loopback.c \
 ../../ws_rubetec/ws_crypto.c \
 ../../ws_rubetec/ws_rubetec.c \
-../../ws_server.c
+../../ws_server.c \
+../../ws_rubetec/user_timer.c 
 
 
 # ASM sources

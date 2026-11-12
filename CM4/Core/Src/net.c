@@ -220,7 +220,8 @@ void net_init_continue(void)
 	display_reg_webContent_list();
 #else
 	http_server_init();
-	ws_server_init(4);
+	ws_server_init(4, 8080, 0); // протокольный WS (ctx 0)
+    ws_server_init(5, 8081, 1); // heartbeat WS (ctx 1)
 #endif
 
 
@@ -307,7 +308,7 @@ void net_init(void)
 
 	ulog(CONM"net: Calling wizchip_init()..."CRLF);
 	//uint8_t rx_tx_buff_sizes[] = {2, 2, 2, 2, 2, 2, 2, 2};
-	uint8_t rx_tx_buff_sizes[] = {2, 4, 4, 4, 2, 0, 0, 0};
+	uint8_t rx_tx_buff_sizes[] = {2, 4, 4, 4, 1, 1, 0, 0};
 	if (wizchip_init(rx_tx_buff_sizes, rx_tx_buff_sizes) < 0) {
 		ulog(CONM"net: Calling wizchip_init() error"CRLF);
 	}

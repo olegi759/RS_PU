@@ -42,8 +42,7 @@ build/ws_server.o: ../../ws_rubetec/ws_server.c \
  ../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.h \
  ../../w5500/ioLibrary_driver/Ethernet/socket.h \
  ../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h \
- ../../ws_rubetec/ws_crypto.h ../../ws_rubetec/ws_server.h \
- ../../ws_rubetec/ws_rubetec.h
+ ../../ws_rubetec/ws_crypto.h ../../ws_rubetec/ws_server.h
 ../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h:
 ../../util/stm_util.h:
 ../../util/def_util.h:
@@ -91,4 +90,3 @@ build/ws_server.o: ../../ws_rubetec/ws_server.c \
 ../../w5500/ioLibrary_driver/Ethernet/wizchip_conf.h:
 ../../ws_rubetec/ws_crypto.h:
 ../../ws_rubetec/ws_server.h:
-../../ws_rubetec/ws_rubetec.h:

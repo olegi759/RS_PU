@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
   37              		.loc 1 17 1 view -0
   38              		.cfi_startproc
   39              		@ args = 0, pretend = 0, frame = 9304
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 2
 
 
   40              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
   29:../../util/txt_file_util.c **** 	if (f_open(&txt_file, file_name, FA_READ) != FR_OK)  return FALSE;
   30:../../util/txt_file_util.c **** 
   31:../../util/txt_file_util.c **** 	if ( f_open(&tmp_file, "tfcbsol."TMP_FILE_EXT, FA_CREATE_ALWAYS | FA_WRITE) != FR_OK) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 3
 
 
   32:../../util/txt_file_util.c **** 		f_close(&txt_file);
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
   29:../../util/txt_file_util.c **** 
  109              		.loc 1 29 62 discriminator 1 view .LVU19
  110 003e 0027     		movs	r7, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 4
 
 
  111 0040 EEE7     		b	.L2
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  153 0080 FFF7FEFF 		bl	f_write
  154              	.LVL12:
  155              	.L4:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 5
 
 
   38:../../util/txt_file_util.c **** 		if (strlen(buf) == 0) continue;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  196              	.LVL15:
  197 00c2 CEE7     		b	.L6
  198              	.L15:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 6
 
 
   48:../../util/txt_file_util.c **** 	f_close(&tmp_file);
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  244              		.loc 1 59 1 is_stmt 1 view -0
  245              		.cfi_startproc
  246              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 7
 
 
  247              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  294              		.loc 1 68 2 view .LVU62
   69:../../util/txt_file_util.c **** 	size_t str_len;
  295              		.loc 1 69 2 view .LVU63
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 8
 
 
   70:../../util/txt_file_util.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  339 0036 1048     		ldr	r0, .L30
  340 0038 FFF7FEFF 		bl	strlen
  341              	.LVL30:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 9
 
 
   81:../../util/txt_file_util.c **** 		if (!len) continue;
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  386              	.LVL37:
  387              	.L25:
  388              	.LCFI10:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 10
 
 
  389              		.cfi_restore_state
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  436 0006 0446     		mov	r4, r0
  437 0008 0A46     		mov	r2, r1
   95:../../util/txt_file_util.c **** 		char buf[MAX_STR_SIZE];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 11
 
 
  438              		.loc 1 95 3 is_stmt 1 view .LVU102
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  489              	.LFB136:
  101:../../util/txt_file_util.c **** 
  102:../../util/txt_file_util.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 12
 
 
  103:../../util/txt_file_util.c **** BOOL txt_file_add_str(const char * file_name, const char * str)
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  531 0024 38BD     		pop	{r3, r4, r5, pc}
  532              	.LVL54:
  533              	.L40:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 13
 
 
  108:../../util/txt_file_util.c **** 		fr = f_append(file_name, str, strlen(str));
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  578              	.LVL57:
  579              		.loc 1 124 7 view .LVU134
  580 0010 FFF7FEFF 		bl	f_open
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 14
 
 
  581              	.LVL58:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  129:../../util/txt_file_util.c **** 		ulog(buf);
  615              		.loc 1 129 6 view .LVU145
  616 003a 002B     		cmp	r3, #0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 15
 
 
  617 003c F3D0     		beq	.L43
@@ -889,30 +889,30 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 1
  656              		.file 7 "../../util/str_util.h"
  657              		.file 8 "../../util/stm_util.h"
  658              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 txt_file_util.c
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:21     .rodata.txt_file_change_by_start_of_line.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:28     .text.txt_file_change_by_start_of_line:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:34     .text.txt_file_change_by_start_of_line:00000000 txt_file_change_by_start_of_line
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:229    .text.txt_file_change_by_start_of_line:000000ec $d
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:235    .text.txt_file_remove_by_start_of_line:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:241    .text.txt_file_remove_by_start_of_line:00000000 txt_file_remove_by_start_of_line
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:265    .text.txt_file_find_by_start_of_line:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:271    .text.txt_file_find_by_start_of_line:00000000 txt_file_find_by_start_of_line
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:409    .text.txt_file_find_by_start_of_line:00000078 $d
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:647    .bss.__txt_file_find_by_start_of_line_buf.0:00000000 __txt_file_find_by_start_of_line_buf.0
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:414    .text.txt_file_append_CRLF:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:420    .text.txt_file_append_CRLF:00000000 txt_file_append_CRLF
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:476    .text.txt_file_append_CRLF:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:481    .text.txt_file_add_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:487    .text.txt_file_add_str:00000000 txt_file_add_str
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:547    .text.txt_file_print:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:553    .text.txt_file_print:00000000 txt_file_print
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:639    .text.txt_file_print:00000058 $d
-C:\Users\oleg\AppData\Local\Temp\ccezpO2w.s:644    .bss.__txt_file_find_by_start_of_line_buf.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:21     .rodata.txt_file_change_by_start_of_line.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:28     .text.txt_file_change_by_start_of_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:34     .text.txt_file_change_by_start_of_line:00000000 txt_file_change_by_start_of_line
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:229    .text.txt_file_change_by_start_of_line:000000ec $d
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:235    .text.txt_file_remove_by_start_of_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:241    .text.txt_file_remove_by_start_of_line:00000000 txt_file_remove_by_start_of_line
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:265    .text.txt_file_find_by_start_of_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:271    .text.txt_file_find_by_start_of_line:00000000 txt_file_find_by_start_of_line
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:409    .text.txt_file_find_by_start_of_line:00000078 $d
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:647    .bss.__txt_file_find_by_start_of_line_buf.0:00000000 __txt_file_find_by_start_of_line_buf.0
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:414    .text.txt_file_append_CRLF:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:420    .text.txt_file_append_CRLF:00000000 txt_file_append_CRLF
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:476    .text.txt_file_append_CRLF:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:481    .text.txt_file_add_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:487    .text.txt_file_add_str:00000000 txt_file_add_str
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:547    .text.txt_file_print:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:553    .text.txt_file_print:00000000 txt_file_print
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:639    .text.txt_file_print:00000058 $d
+C:\Users\oleg\AppData\Local\Temp\ccjkQysi.s:644    .bss.__txt_file_find_by_start_of_line_buf.0:00000000 $d
 
 UNDEFINED SYMBOLS
 strlen

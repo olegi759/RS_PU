@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
   28:../../common/common.c **** 
   29:../../common/common.c **** uint32_t pu_enable_lines = 0;
   30:../../common/common.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 2
 
 
   31:../../common/common.c **** pu_mode_t pu_mode = PU_MODE_DEJURNIY;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
   64              		.cfi_endproc
   65              	.LFE135:
   67              		.section	.rodata.get_date_time_str.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 3
 
 
   68              		.align	2
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  114 001e 2046     		mov	r0, r4
  115 0020 FFF7FEFF 		bl	snprintf
  116              	.LVL2:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 4
 
 
   55:../../common/common.c **** 	return __get_date_time_str;
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  164 0006 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
  165              		.loc 1 61 2 view .LVU24
  166 0008 064C     		ldr	r4, .L11+4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 5
 
 
  167 000a 0092     		str	r2, [sp]
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  215              		.loc 1 69 72 view .LVU33
  216 000a 0D48     		ldr	r0, .L14+4
  217 000c 00FB03F3 		mul	r3, r0, r3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 6
 
 
  218              		.loc 1 69 51 view .LVU34
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  271              	.LC8:
  272 0018 3700     		.ascii	"7\000"
  273 001a 0000     		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 7
 
 
  274              	.LC9:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  327 0065 000000   		.align	2
  328              	.LC27:
  329 0068 4D555445 		.ascii	"MUTE\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 8
 
 
  329      00
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  370              	.LC41:
  371 00d8 554E4B4E 		.ascii	"UNKNOW\000"
  371      4F5700
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 9
 
 
  372              		.section	.text.mki_get_key_name,"ax",%progbits
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  420 0023 44       		.byte	(.L33-.L19)/2
  421 0024 46       		.byte	(.L32-.L19)/2
  422 0025 48       		.byte	(.L31-.L19)/2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 10
 
 
  423 0026 4A       		.byte	(.L30-.L19)/2
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  468              		.loc 1 87 26 is_stmt 0 view .LVU58
  469 004a 2948     		ldr	r0, .L60+24
  470 004c 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 11
 
 
  471              	.L50:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  516              	.L41:
   97:../../common/common.c **** 		case MKI_KEY_18: return "18";
  517              		.loc 1 97 20 is_stmt 1 view .LVU77
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 12
 
 
  518              		.loc 1 97 27 is_stmt 0 view .LVU78
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  108:../../common/common.c **** 		case MKI_KEY_RESET: return "RESET";
  562              		.loc 1 108 23 is_stmt 1 view .LVU95
  563              		.loc 1 108 30 is_stmt 0 view .LVU96
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 13
 
 
  564 0096 2948     		ldr	r0, .L60+100
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  609 00ba 2848     		ldr	r0, .L60+132
  610 00bc 7047     		bx	lr
  611              	.L22:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 14
 
 
  118:../../common/common.c **** 		case MKI_KEY_ZONES: return "ZONES";
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  657 010c 38000000 		.word	.LC16
  658 0110 3C000000 		.word	.LC17
  659 0114 40000000 		.word	.LC18
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 15
 
 
  660 0118 44000000 		.word	.LC19
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  710              		.cfi_offset 14, -4
  131:../../common/common.c **** 	int i;
  711              		.loc 1 131 2 view .LVU128
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 16
 
 
  132:../../common/common.c **** 	BOOL flag;
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  752 002c 00E0     		b	.L67
  753              	.LVL11:
  754              	.L68:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 17
 
 
  755              		.loc 1 142 23 is_stmt 1 discriminator 2 view .LVU144
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  802 0072 2846     		mov	r0, r5
  803 0074 38BD     		pop	{r3, r4, r5, pc}
  804              	.LVL16:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 18
 
 
  805              	.L71:
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  850 000a 30BB     		cbnz	r0, .L81
  157:../../common/common.c **** 
  158:../../common/common.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 19
 
 
  159:../../common/common.c **** 	for (i = 1; i <= 10; ++i) {
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  899              		.loc 1 164 9 view .LVU178
  900 0056 0020     		movs	r0, #0
  901              	.LVL22:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 20
 
 
  902              	.L76:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  936      8BD188D0 
  936      B520D0BD 
  936      D0BED1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 21
 
 
  937 0069 80D0BCD1 		.ascii	"\200\320\274\321\213\000"
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  972 0006 DFE800F0 		tbb	[pc, r0]
  973              	.L89:
  974 000a 03       		.byte	(.L94-.L89)/2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 22
 
 
  975 000b 0F       		.byte	(.L95-.L89)/2
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  185:../../common/common.c **** }
  1014              		.loc 1 185 1 view .LVU196
  1015 002a 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 23
 
 
  1016              	.L97:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1048              		.global	mkk_insig_state2str
  1049              		.syntax unified
  1050              		.thumb
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 24
 
 
  1051              		.thumb_func
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1091              	.L102:
  201:../../common/common.c **** 		//Норма сигнал есть, сопротивление 2,35 кОм (2…3 кОм)
  202:../../common/common.c **** 		case MKK_INSIG_STATE_NORM_YES_SIGNAL: return "Норма сигнал есть";
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 25
 
 
  1092              		.loc 1 202 41 is_stmt 1 view .LVU205
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1132              		.align	1
  1133              		.global	mkk_start_state2str
  1134              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 26
 
 
  1135              		.thumb
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1175 001a 7047     		bx	lr
  1176              	.L114:
  223:../../common/common.c **** 		//Норма сигнал есть, сопротивление 2,35 кОм (2…3 кОм)
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 27
 
 
  224:../../common/common.c **** 		case MKK_START_STATE_NORM_YES_SIGNAL: return "Норма сигнал есть";
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1219      D0A3D09A 
  1219      2ED092D0 
  1219      95D0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 28
 
 
  1220 002e A92E00   		.ascii	"\251.\000"
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  230:../../common/common.c **** 
  231:../../common/common.c **** 
  232:../../common/common.c **** //Из pu_mode_t в стринг
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 29
 
 
  233:../../common/common.c **** const char * pu_mode2str(pu_mode_t mode)
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1299 0022 0948     		ldr	r0, .L134+16
  1300 0024 7047     		bx	lr
  1301              	.L127:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 30
 
 
  242:../../common/common.c **** 		case PU_MODE_RUCHNOI_PUSK_PD: return "РУЧ.ПУСК.ПД";
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1347              		.cfi_startproc
  1348              		@ args = 0, pretend = 0, frame = 0
  1349              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 31
 
 
  1350              		@ link register save eliminated.
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1396 0028 7047     		bx	lr
  1397              	.L138:
  260:../../common/common.c **** 		case PU_MODE_UPRAVLENIE_DRUGIMI_PU: return LED_COLOR_FUCHSIA;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 32
 
 
  1398              		.loc 1 260 39 is_stmt 1 view .LVU263
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1442 0010 08BD     		pop	{r3, pc}
  1443              	.L150:
  1444 0012 00BF     		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 33
 
 
  1445              	.L149:
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  278:../../common/common.c **** 		if (fault_is_set(i)) return i;
  1491              		.loc 1 278 30 discriminator 2 view .LVU283
  1492 0016 F5E7     		b	.L152
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 34
 
 
  1493              	.L156:
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1537 0008 0134     		adds	r4, r4, #1
  1538              	.LVL49:
  1539              		.loc 1 290 30 is_stmt 0 discriminator 2 view .LVU294
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 35
 
 
  1540 000a E4B2     		uxtb	r4, r4
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1580      82D0BED1 
  1580      87D0BDD0 
  1580      B8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 36
 
 
  1581 003b D0BAD0B0 		.ascii	"\320\272\320\260\000"
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1604      D0B3D180 
  1604      D0
  1605 00d9 B5D0B220 		.ascii	"\265\320\262 \320\221\320\237\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 37
 
 
  1605      D091D09F 
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1626      93D09D2E 
  1626      203400
  1627 018e 0000     		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 38
 
 
  1628              	.LC76:
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1649      D092D0
  1650 023f A52E20D0 		.ascii	"\245. \320\241\320\230\320\223\320\235. 10\000"
  1650      A1D098D0 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 39
 
 
  1650      93D09D2E 
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1673 02f0 D09DD095 		.ascii	"\320\235\320\225\320\230\320\241\320\237. \320\222\320"
  1673      D098D0A1 
  1673      D09F2E20 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 40
 
 
  1673      D092D0
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1694      20323100 
  1695 03af 00       		.align	2
  1696              	.LC93:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 41
 
 
  1697 03b0 D09DD095 		.ascii	"\320\235\320\225\320\230\320\241\320\237. \320\222\320"
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1717      D09F2E20 
  1717      D09BD0
  1718 045f 98D09D2E 		.ascii	"\230\320\235. \320\236\320\237\320\236\320\222. 3\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 42
 
 
  1718      20D09ED0 
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1738 04ff 98D09D2E 		.ascii	"\230\320\235. \320\236\320\237\320\236\320\222. 9\000"
  1738      20D09ED0 
  1738      9FD09ED0 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 43
 
 
  1738      922E2039 
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1758      9FD09ED0 
  1758      922E2031 
  1758      3400
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 44
 
 
  1759 05c1 000000   		.align	2
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1778      3900
  1779 0675 000000   		.align	2
  1780              	.LC114:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 45
 
 
  1781 0678 D09DD095 		.ascii	"\320\235\320\225\320\230\320\241\320\237. \320\233\320"
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1800              	.LC119:
  1801 072c D09DD095 		.ascii	"\320\235\320\225\320\230\320\241\320\237. \320\233\320"
  1801      D098D0A1 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 46
 
 
  1801      D09F2E20 
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1824 07d7 D0942D32 		.ascii	"\320\224-2\000"
  1824      00
  1825              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 47
 
 
  1826              	.LC125:
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1852      D09DD090 
  1852      D09BD090 
  1852      20D0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 48
 
 
  1853 0871 A3D09C2D 		.ascii	"\243\320\234-1\000"
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1876      D0A2D090 
  1876      203120
  1877 0917 D09AD090 		.ascii	"\320\232\320\220\320\235\320\220\320\233\320\220 \320"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 49
 
 
  1877      D09DD090 
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1900              	.LC141:
  1901 09bc D097D090 		.ascii	"\320\227\320\220\320\251\320\230\320\242\320\220 2 "
  1901      D0A9D098 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 50
 
 
  1901      D0A2D090 
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1923      D09FD098 
  1923      D0A2D0
  1924 0a73 90D09DD0 		.ascii	"\220\320\235\320\230\320\257 \320\243\320\234-4\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 51
 
 
  1924      98D0AF20 
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1946      D09C
  1947 0b21 2D3300   		.ascii	"-3\000"
  1948              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 52
 
 
  1949              	.LC152:
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1973 0bbc 3120D09B 		.ascii	"1 \320\233\320\230\320\235\320\230\320\230 \320\222"
  1973      D098D09D 
  1973      D098D098 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 53
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 53
 
 
  1973      20D092
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  1994      00
  1995              		.align	2
  1996              	.LC163:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 54
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 54
 
 
  1997 0c64 3220D09B 		.ascii	"2 \320\233\320\230\320\235\320\230\320\230 \320\222"
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2018 0d02 9DD098D0 		.ascii	"\235\320\230\320\230 1 \320\243\320\234-2\000"
  2018      98203120 
  2018      D0A3D09C 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 55
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 55
 
 
  2018      2D3200
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2041      D0A1D0A2 
  2041      20D09BD0 
  2041      98D0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 56
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 56
 
 
  2042 0dc2 9DD098D0 		.ascii	"\235\320\230\320\230 2 \320\243\320\234-2\000"
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2063 0e70 D09000   		.ascii	"\320\220\000"
  2064 0e73 00       		.align	2
  2065              	.LC180:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 57
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 57
 
 
  2066 0e74 D09FD0A3 		.ascii	"\320\237\320\243 \320\240\320\220\320\227\320\240\320"
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2087 0f17 00       		.align	2
  2088              	.LC185:
  2089 0f18 D09FD095 		.ascii	"\320\237\320\225\320\240\320\225\320\223\320\240\320"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 58
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 58
 
 
  2089      D0A0D095 
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2110      9820D0A1 
  2110      20D09C
  2111 0fc9 D09AD09A 		.ascii	"\320\232\320\2322\000"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 59
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 59
 
 
  2111      3200
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2151 0028 9B00     		.2byte	(.L277-.L166)/2
  2152 002a 9D00     		.2byte	(.L276-.L166)/2
  2153 002c 9F00     		.2byte	(.L275-.L166)/2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 60
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 60
 
 
  2154 002e A100     		.2byte	(.L274-.L166)/2
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2208 009a 0D01     		.2byte	(.L220-.L166)/2
  2209 009c 0F01     		.2byte	(.L219-.L166)/2
  2210 009e 1101     		.2byte	(.L218-.L166)/2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 61
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 61
 
 
  2211 00a0 1301     		.2byte	(.L217-.L166)/2
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2265 0108 7E48     		ldr	r0, .L294
  2266              	.LVL55:
  2267              		.loc 1 305 2 is_stmt 0 view .LVU308
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 62
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 62
 
 
  2268 010a 7047     		bx	lr
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2309              	.LVL66:
  2310              	.L285:
  319:../../common/common.c **** 		//авария тепература акк
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 63
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 63
 
 
  320:../../common/common.c **** 		case FAULT_MUP_TD_ACC: return MUP_BIT_TD_ACC_STR;
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2357              	.LVL78:
  2358              	.L279:
  328:../../common/common.c **** 		case FAULT_MKK_INSIG_6: return MKK_INSIG_FAULT"6";
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 64
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 64
 
 
  2359              		.loc 1 328 27 is_stmt 1 view .LVU342
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2407              		.loc 1 334 28 is_stmt 1 view .LVU360
  2408              		.loc 1 334 35 is_stmt 0 view .LVU361
  2409 0150 7E48     		ldr	r0, .L294+72
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 65
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 65
 
 
  2410              	.LVL91:
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2458              	.LVL103:
  2459              		.loc 1 340 35 view .LVU380
  2460 016a 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 66
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 66
 
 
  2461              	.LVL104:
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2509              	.LVL116:
  2510              	.L260:
  347:../../common/common.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 67
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 67
 
 
  348:../../common/common.c **** 		case FAULT_MKK_SOUND_1: return MKK_SOUND_FAULT"1";
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  354:../../common/common.c **** 		case FAULT_MKK_SOUND_7: return MKK_SOUND_FAULT"7";
  2559              		.loc 1 354 27 is_stmt 1 view .LVU417
  2560              		.loc 1 354 34 is_stmt 0 view .LVU418
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 68
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 68
 
 
  2561 019c 7E48     		ldr	r0, .L294+148
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2609 01b4 7D48     		ldr	r0, .L294+168
  2610              	.LVL141:
  2611              		.loc 1 360 35 view .LVU437
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 69
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 69
 
 
  2612 01b6 7047     		bx	lr
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2660 01ce 7047     		bx	lr
  2661              	.LVL154:
  2662              	.L241:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 70
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 70
 
 
  367:../../common/common.c **** 		case FAULT_MKK_SOUND_20: return MKK_SOUND_FAULT"20";
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2710              	.L235:
  374:../../common/common.c **** 		case FAULT_MKK_START_2: return MKK_START_FAULT"2";
  2711              		.loc 1 374 27 is_stmt 1 view .LVU474
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 71
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 71
 
 
  2712              		.loc 1 374 34 is_stmt 0 view .LVU475
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2758              	.L229:
  383:../../common/common.c **** 		case FAULT_UM_CON_2: return UN_CON_FAULT"2";
  2759              		.loc 1 383 24 is_stmt 1 view .LVU492
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 72
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 72
 
 
  2760              		.loc 1 383 31 is_stmt 0 view .LVU493
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2806              	.L223:
  392:../../common/common.c **** 		case FAULT_UM_PROTECT_CH1_2: return UM_PROTECT_CH1" УМ-2";
  2807              		.loc 1 392 32 is_stmt 1 view .LVU510
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 73
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 73
 
 
  2808              		.loc 1 392 39 is_stmt 0 view .LVU511
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2855              		.loc 1 399 32 is_stmt 1 view .LVU528
  2856              		.loc 1 399 39 is_stmt 0 view .LVU529
  2857 0230 7D48     		ldr	r0, .L294+292
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 74
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 74
 
 
  2858              	.LVL203:
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2905 0248 7D48     		ldr	r0, .L294+316
  2906              	.LVL215:
  2907              		.loc 1 406 35 view .LVU548
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 75
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 75
 
 
  2908 024a 7047     		bx	lr
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  2955              		.loc 1 413 39 view .LVU566
  2956 0262 7047     		bx	lr
  2957              	.LVL228:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 76
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 76
 
 
  2958              	.L204:
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3005              	.LVL240:
  3006              	.L198:
  421:../../common/common.c **** 		case FAULT_UM_CH1_OUTAGE_3: return UM_CH1_OUTAGE" УМ-3";
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 77
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 77
 
 
  3007              		.loc 1 421 31 is_stmt 1 view .LVU585
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  428:../../common/common.c **** 		case FAULT_UM_CH2_OUTAGE_3: return UM_CH2_OUTAGE" УМ-3";
  3055              		.loc 1 428 31 is_stmt 1 view .LVU603
  3056              		.loc 1 428 38 is_stmt 0 view .LVU604
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 78
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 78
 
 
  3057 0294 7D48     		ldr	r0, .L294+392
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3103              		.loc 1 436 31 is_stmt 1 view .LVU621
  3104              		.loc 1 436 38 is_stmt 0 view .LVU622
  3105 02ac 7D48     		ldr	r0, .L294+416
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 79
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 79
 
 
  3106              	.LVL265:
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3153 02c4 7D48     		ldr	r0, .L294+440
  3154              	.LVL277:
  3155              		.loc 1 443 38 view .LVU641
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 80
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 80
 
 
  3156 02c6 7047     		bx	lr
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3202              	.LVL289:
  3203              		.loc 1 451 36 view .LVU659
  3204 02de 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 81
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 81
 
 
  3205              	.LVL290:
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3250              	.LVL301:
  3251              		.loc 1 460 35 view .LVU677
  3252 02f6 7047     		bx	lr
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 82
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 82
 
 
  3253              	.LVL302:
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3302 035c F0020000 		.word	.LC87
  3303 0360 10030000 		.word	.LC88
  3304 0364 30030000 		.word	.LC89
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 83
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 83
 
 
  3305 0368 50030000 		.word	.LC90
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3359 0440 240A0000 		.word	.LC144
  3360 0444 440A0000 		.word	.LC145
  3361 0448 640A0000 		.word	.LC146
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 84
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 84
 
 
  3362 044c 840A0000 		.word	.LC147
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3413              	.L297:
  3414              		.align	2
  3415              	.L296:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 85
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 85
 
 
  3416 0500 20000000 		.word	.LC65
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3460 0014 AB55     		strb	r3, [r5, r6]
  479:../../common/common.c **** 	packet[packet_len - 1] = crc & 0xFF;
  3461              		.loc 1 479 2 is_stmt 1 view .LVU699
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 86
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 86
 
 
  3462              		.loc 1 479 8 is_stmt 0 view .LVU700
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  506:../../common/common.c **** 
  507:../../common/common.c **** 	return len + 2;
  508:../../common/common.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 87
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 87
 
 
  509:../../common/common.c **** */
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3531              		.loc 1 523 2 is_stmt 1 view .LVU720
  3532              		.loc 1 523 5 is_stmt 0 view .LVU721
  3533 001a 40B1     		cbz	r0, .L306
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 88
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 88
 
 
  524:../../common/common.c **** 		for (i = 0; i < cmd_data_len; ++i) {
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3575              		.loc 1 533 2 is_stmt 1 view .LVU737
  3576              		.loc 1 533 5 is_stmt 0 view .LVU738
  3577 003e 0136     		adds	r6, r6, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 89
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 89
 
 
  3578              	.LVL326:
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3626              	.LVL329:
  542:../../common/common.c **** }
  3627              		.loc 1 542 1 view .LVU748
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 90
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 90
 
 
  3628 0018 05B0     		add	sp, sp, #20
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3675 0016 0094     		str	r4, [sp]
  3676 0018 FFF7FEFF 		bl	create_piv_packet_cmd
  3677              	.LVL332:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 91
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 91
 
 
  552:../../common/common.c **** }
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3725              		.loc 1 560 8 view .LVU769
  3726 0014 FFF7FEFF 		bl	Crc16
  3727              	.LVL337:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 92
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 92
 
 
  561:../../common/common.c **** 	return rcrc == crc;
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3778              		.section	.text.parse_piv_packet,"ax",%progbits
  3779              		.align	1
  3780              		.global	parse_piv_packet
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 93
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 93
 
 
  3781              		.syntax unified
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3825              	.LVL344:
  3826              	.L320:
  3827              	.LCFI23:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 94
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 94
 
 
  3828              		.cfi_def_cfa_offset 0
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3876              	.LCFI25:
  3877              		.cfi_def_cfa_offset 16
  3878              		.cfi_offset 0, -16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 95
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 95
 
 
  3879              		.cfi_offset 1, -12
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  596:../../common/common.c **** 
  597:../../common/common.c **** 	va_end(arg);
  3920              		.loc 1 597 2 is_stmt 1 view .LVU810
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 96
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 96
 
 
  598:../../common/common.c **** 
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  3968              		.syntax unified
  3969              		.thumb
  3970              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 97
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 97
 
 
  3972              	pu_lines_to_str:
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4015 001a 0246     		mov	r2, r0
  4016              		.loc 1 616 4 discriminator 1 view .LVU827
  4017 001c 3146     		mov	r1, r6
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 98
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 98
 
 
  4018 001e 2846     		mov	r0, r5
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4059 005a 02B0     		add	sp, sp, #8
  4060              	.LCFI33:
  4061              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 99
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 99
 
 
  4062              		@ sp needed
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4108 0012 01EBC301 		add	r1, r1, r3, lsl #3
  4109 0016 074D     		ldr	r5, .L344+4
  4110              		.loc 1 629 2 view .LVU849
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 100
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 100
 
 
  4111 0018 4922     		movs	r2, #73
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4156              		.loc 1 640 3 view .LVU859
  4157              		.loc 1 640 32 is_stmt 0 view .LVU860
  4158 0006 064A     		ldr	r2, .L352
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 101
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 101
 
 
  4159 0008 1621     		movs	r1, #22
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  649:../../common/common.c **** 	char str[100];
  4204              		.loc 1 649 2 view .LVU869
  650:../../common/common.c **** 	uint8_t * u8mem = (uint8_t *)mem;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 102
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 102
 
 
  4205              		.loc 1 650 2 view .LVU870
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4246              	.L359:
  663:../../common/common.c **** 		}
  664:../../common/common.c **** 		strcat_s(str, sizeof(str), " ");
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 103
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 103
 
 
  4247              		.loc 1 664 3 is_stmt 1 view .LVU882
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4288              		.loc 1 669 1 is_stmt 0 view .LVU894
  4289 005a 1BB0     		add	sp, sp, #108
  4290              	.LCFI37:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 104
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 104
 
 
  4291              		.cfi_def_cfa_offset 20
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  676:../../common/common.c **** 	str2lower(buf, sizeof(buf), filename);
  4340              		.loc 1 676 2 view .LVU899
  4341 0008 4FF48061 		mov	r1, #1024
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 105
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 105
 
 
  4342 000c 6846     		mov	r0, sp
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4390              		@ args = 0, pretend = 0, frame = 1024
  4391              		@ frame_needed = 0, uses_anonymous_args = 0
  4392              		.loc 1 683 1 is_stmt 0 view .LVU906
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 106
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 106
 
 
  4393 0000 00B5     		push	{lr}
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4439      D094D0
  4440 000f A03A00   		.ascii	"\240:\000"
  4441              		.section	.text.get_pu_name,"ax",%progbits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 107
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 107
 
 
  4442              		.align	1
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4487 0028 00000000 		.word	.LC196
  4488 002c 00000000 		.word	setting
  4489              		.cfi_endproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 108
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 108
 
 
  4490              	.LFE165:
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4541              		.global	sm
  4542              		.section	.data.sm,"aw"
  4543              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 109
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 109
 
 
  4546              	sm:
@@ -6538,165 +6538,165 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 1
  4602              		.file 13 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  4603              		.file 14 "../../util/math_util.h"
  4604              		.file 15 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 110
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 110
 
 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 111
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 111
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 common.c
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:21     .text.shared_memory_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:27     .text.shared_memory_init:00000000 shared_memory_init
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:63     .text.shared_memory_init:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4546   .data.sm:00000000 sm
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:68     .rodata.get_date_time_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:72     .text.get_date_time_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:78     .text.get_date_time_str:00000000 get_date_time_str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:128    .text.get_date_time_str:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4573   .bss.date_time:00000000 date_time
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4519   .bss.__get_date_time_str.4:00000000 __get_date_time_str.4
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:135    .rodata.get_time_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:139    .text.get_time_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:145    .text.get_time_str:00000000 get_time_str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:185    .text.get_time_str:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4513   .bss.__get_time_str.3:00000000 __get_time_str.3
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:192    .text.get_time_stamp:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:198    .text.get_time_stamp:00000000 get_time_stamp
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:245    .text.get_time_stamp:0000003c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:252    .rodata.mki_get_key_name.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:373    .text.mki_get_key_name:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:379    .text.mki_get_key_name:00000000 mki_get_key_name
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:395    .text.mki_get_key_name:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:435    .text.mki_get_key_name:00000032 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:644    .text.mki_get_key_name:000000d8 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:688    .rodata.safety_get_level_from_pin_code.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:692    .text.safety_get_level_from_pin_code:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:698    .text.safety_get_level_from_pin_code:00000000 safety_get_level_from_pin_code
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:814    .text.safety_get_level_from_pin_code:0000007c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4553   .bss.safety_pin_code:00000000 safety_pin_code
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4587   .bss.setting:00000000 setting
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:821    .rodata.safety_get_name_from_pin_code.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:825    .text.safety_get_name_from_pin_code:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:831    .text.safety_get_name_from_pin_code:00000000 safety_get_name_from_pin_code
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:912    .text.safety_get_name_from_pin_code:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:920    .rodata.mkk_lin_state2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:952    .text.mkk_lin_state2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:958    .text.mkk_lin_state2str:00000000 mkk_lin_state2str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:974    .text.mkk_lin_state2str:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:980    .text.mkk_lin_state2str:00000010 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1019   .text.mkk_lin_state2str:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1030   .rodata.mkk_insig_state2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1047   .text.mkk_insig_state2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1053   .text.mkk_insig_state2str:00000000 mkk_insig_state2str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1069   .text.mkk_insig_state2str:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1075   .text.mkk_insig_state2str:00000010 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1114   .text.mkk_insig_state2str:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1125   .rodata.mkk_start_state2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1132   .text.mkk_start_state2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1138   .text.mkk_start_state2str:00000000 mkk_start_state2str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1154   .text.mkk_start_state2str:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1160   .text.mkk_start_state2str:00000010 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1199   .text.mkk_start_state2str:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1210   .rodata.pu_mode2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1245   .text.pu_mode2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1251   .text.pu_mode2str:00000000 pu_mode2str
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 112
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:21     .text.shared_memory_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:27     .text.shared_memory_init:00000000 shared_memory_init
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:63     .text.shared_memory_init:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4546   .data.sm:00000000 sm
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:68     .rodata.get_date_time_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:72     .text.get_date_time_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:78     .text.get_date_time_str:00000000 get_date_time_str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:128    .text.get_date_time_str:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4573   .bss.date_time:00000000 date_time
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4519   .bss.__get_date_time_str.4:00000000 __get_date_time_str.4
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:135    .rodata.get_time_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:139    .text.get_time_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:145    .text.get_time_str:00000000 get_time_str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:185    .text.get_time_str:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4513   .bss.__get_time_str.3:00000000 __get_time_str.3
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:192    .text.get_time_stamp:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:198    .text.get_time_stamp:00000000 get_time_stamp
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:245    .text.get_time_stamp:0000003c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:252    .rodata.mki_get_key_name.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:373    .text.mki_get_key_name:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:379    .text.mki_get_key_name:00000000 mki_get_key_name
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:395    .text.mki_get_key_name:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:435    .text.mki_get_key_name:00000032 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:644    .text.mki_get_key_name:000000d8 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:688    .rodata.safety_get_level_from_pin_code.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:692    .text.safety_get_level_from_pin_code:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:698    .text.safety_get_level_from_pin_code:00000000 safety_get_level_from_pin_code
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:814    .text.safety_get_level_from_pin_code:0000007c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4553   .bss.safety_pin_code:00000000 safety_pin_code
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4587   .bss.setting:00000000 setting
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:821    .rodata.safety_get_name_from_pin_code.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:825    .text.safety_get_name_from_pin_code:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:831    .text.safety_get_name_from_pin_code:00000000 safety_get_name_from_pin_code
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:912    .text.safety_get_name_from_pin_code:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:920    .rodata.mkk_lin_state2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:952    .text.mkk_lin_state2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:958    .text.mkk_lin_state2str:00000000 mkk_lin_state2str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:974    .text.mkk_lin_state2str:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:980    .text.mkk_lin_state2str:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1019   .text.mkk_lin_state2str:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1030   .rodata.mkk_insig_state2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1047   .text.mkk_insig_state2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1053   .text.mkk_insig_state2str:00000000 mkk_insig_state2str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1069   .text.mkk_insig_state2str:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1075   .text.mkk_insig_state2str:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1114   .text.mkk_insig_state2str:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1125   .rodata.mkk_start_state2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1132   .text.mkk_start_state2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1138   .text.mkk_start_state2str:00000000 mkk_start_state2str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1154   .text.mkk_start_state2str:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1160   .text.mkk_start_state2str:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1199   .text.mkk_start_state2str:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1210   .rodata.pu_mode2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1245   .text.pu_mode2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1251   .text.pu_mode2str:00000000 pu_mode2str
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 112
 
 
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1267   .text.pu_mode2str:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1275   .text.pu_mode2str:00000012 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1324   .text.pu_mode2str:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1337   .text.pu_mode2ledcolor:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1343   .text.pu_mode2ledcolor:00000000 pu_mode2ledcolor
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1359   .text.pu_mode2ledcolor:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1411   .text.fault_is_set:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1417   .text.fault_is_set:00000000 fault_is_set
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1446   .text.fault_is_set:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4580   .bss.faults:00000000 faults
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1451   .text.fault_first:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1457   .text.fault_first:00000000 fault_first
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1505   .text.fault_count:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1511   .text.fault_count:00000000 fault_count
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1573   .rodata.fault2str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:2117   .text.fault2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:2123   .text.fault2str:00000000 fault2str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:2136   .text.fault2str:0000000a $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:2263   .text.fault2str:00000108 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3280   .text.fault2str:00000304 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3409   .text.fault2str:000004fc $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3416   .text.fault2str:00000500 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3421   .text.fill_crc16:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3427   .text.fill_crc16:00000000 fill_crc16
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3483   .text.create_piv_packet_cmd2:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3489   .text.create_piv_packet_cmd2:00000000 create_piv_packet_cmd2
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3593   .text.create_piv_packet_cmd:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3599   .text.create_piv_packet_cmd:00000000 create_piv_packet_cmd
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3638   .text.create_piv_packet:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3644   .text.create_piv_packet:00000000 create_piv_packet
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3689   .text.is_correct_crc16:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3695   .text.is_correct_crc16:00000000 is_correct_crc16
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3742   .text.is_correct_datalen:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3748   .text.is_correct_datalen:00000000 is_correct_datalen
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3779   .text.parse_piv_packet:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3785   .text.parse_piv_packet:00000000 parse_piv_packet
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3857   .rodata.filelog_fmt.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3861   .text.filelog_fmt:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3867   .text.filelog_fmt:00000000 filelog_fmt
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3957   .text.filelog_fmt:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3962   .rodata.pu_lines_to_str.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3966   .text.pu_lines_to_str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:3972   .text.pu_lines_to_str:00000000 pu_lines_to_str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4069   .text.pu_lines_to_str:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4074   .text.pu_lines2str:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4080   .text.pu_lines2str:00000000 pu_lines2str
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4127   .text.pu_lines2str:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4507   .bss.__pu_lines2str_index.2:00000000 __pu_lines2str_index.2
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4502   .bss.__pu_lines2str.1:00000000 __pu_lines2str.1
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4133   .text.is_set_setting_pin_code:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4139   .text.is_set_setting_pin_code:00000000 is_set_setting_pin_code
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4181   .text.is_set_setting_pin_code:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4186   .rodata.ulogmem.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4190   .text.ulogmem:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4196   .text.ulogmem:00000000 ulogmem
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4308   .text.ulogmem:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4313   .rodata.is_file_name_opus.str1.4:00000000 $d
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s 			page 113
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1267   .text.pu_mode2str:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1275   .text.pu_mode2str:00000012 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1324   .text.pu_mode2str:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1337   .text.pu_mode2ledcolor:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1343   .text.pu_mode2ledcolor:00000000 pu_mode2ledcolor
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1359   .text.pu_mode2ledcolor:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1411   .text.fault_is_set:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1417   .text.fault_is_set:00000000 fault_is_set
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1446   .text.fault_is_set:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4580   .bss.faults:00000000 faults
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1451   .text.fault_first:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1457   .text.fault_first:00000000 fault_first
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1505   .text.fault_count:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1511   .text.fault_count:00000000 fault_count
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1573   .rodata.fault2str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:2117   .text.fault2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:2123   .text.fault2str:00000000 fault2str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:2136   .text.fault2str:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:2263   .text.fault2str:00000108 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3280   .text.fault2str:00000304 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3409   .text.fault2str:000004fc $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3416   .text.fault2str:00000500 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3421   .text.fill_crc16:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3427   .text.fill_crc16:00000000 fill_crc16
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3483   .text.create_piv_packet_cmd2:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3489   .text.create_piv_packet_cmd2:00000000 create_piv_packet_cmd2
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3593   .text.create_piv_packet_cmd:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3599   .text.create_piv_packet_cmd:00000000 create_piv_packet_cmd
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3638   .text.create_piv_packet:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3644   .text.create_piv_packet:00000000 create_piv_packet
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3689   .text.is_correct_crc16:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3695   .text.is_correct_crc16:00000000 is_correct_crc16
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3742   .text.is_correct_datalen:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3748   .text.is_correct_datalen:00000000 is_correct_datalen
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3779   .text.parse_piv_packet:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3785   .text.parse_piv_packet:00000000 parse_piv_packet
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3857   .rodata.filelog_fmt.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3861   .text.filelog_fmt:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3867   .text.filelog_fmt:00000000 filelog_fmt
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3957   .text.filelog_fmt:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3962   .rodata.pu_lines_to_str.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3966   .text.pu_lines_to_str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:3972   .text.pu_lines_to_str:00000000 pu_lines_to_str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4069   .text.pu_lines_to_str:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4074   .text.pu_lines2str:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4080   .text.pu_lines2str:00000000 pu_lines2str
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4127   .text.pu_lines2str:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4507   .bss.__pu_lines2str_index.2:00000000 __pu_lines2str_index.2
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4502   .bss.__pu_lines2str.1:00000000 __pu_lines2str.1
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4133   .text.is_set_setting_pin_code:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4139   .text.is_set_setting_pin_code:00000000 is_set_setting_pin_code
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4181   .text.is_set_setting_pin_code:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4186   .rodata.ulogmem.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4190   .text.ulogmem:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4196   .text.ulogmem:00000000 ulogmem
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4308   .text.ulogmem:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4313   .rodata.is_file_name_opus.str1.4:00000000 $d
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s 			page 113
 
 
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4317   .text.is_file_name_opus:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4323   .text.is_file_name_opus:00000000 is_file_name_opus
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4370   .text.is_file_name_opus:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4375   .rodata.is_file_name_mp3.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4379   .text.is_file_name_mp3:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4385   .text.is_file_name_mp3:00000000 is_file_name_mp3
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4432   .text.is_file_name_mp3:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4437   .rodata.get_pu_name.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4442   .text.get_pu_name:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4448   .text.get_pu_name:00000000 get_pu_name
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4486   .text.get_pu_name:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4496   .bss.__get_pu_name.0:00000000 __get_pu_name.0
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4493   .bss.__get_pu_name.0:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4499   .bss.__pu_lines2str.1:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4508   .bss.__pu_lines2str_index.2:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4510   .bss.__get_time_str.3:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4516   .bss.__get_date_time_str.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4526   .bss.stm32_uid:00000000 stm32_uid
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4523   .bss.stm32_uid:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4533   .bss.mkk_insig_lin_replay:00000000 mkk_insig_lin_replay
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4530   .bss.mkk_insig_lin_replay:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4539   .bss.pu_option:00000000 pu_option
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4540   .bss.pu_option:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4543   .data.sm:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4550   .bss.safety_pin_code:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4559   .data.pu_mode:00000000 pu_mode
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4566   .bss.pu_enable_lines:00000000 pu_enable_lines
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4563   .bss.pu_enable_lines:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4570   .bss.date_time:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4577   .bss.faults:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:4584   .bss.setting:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1366   .text.pu_mode2ledcolor:00000011 $d
-C:\Users\oleg\AppData\Local\Temp\cc4TCfia.s:1366   .text.pu_mode2ledcolor:00000012 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4317   .text.is_file_name_opus:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4323   .text.is_file_name_opus:00000000 is_file_name_opus
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4370   .text.is_file_name_opus:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4375   .rodata.is_file_name_mp3.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4379   .text.is_file_name_mp3:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4385   .text.is_file_name_mp3:00000000 is_file_name_mp3
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4432   .text.is_file_name_mp3:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4437   .rodata.get_pu_name.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4442   .text.get_pu_name:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4448   .text.get_pu_name:00000000 get_pu_name
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4486   .text.get_pu_name:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4496   .bss.__get_pu_name.0:00000000 __get_pu_name.0
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4493   .bss.__get_pu_name.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4499   .bss.__pu_lines2str.1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4508   .bss.__pu_lines2str_index.2:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4510   .bss.__get_time_str.3:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4516   .bss.__get_date_time_str.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4526   .bss.stm32_uid:00000000 stm32_uid
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4523   .bss.stm32_uid:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4533   .bss.mkk_insig_lin_replay:00000000 mkk_insig_lin_replay
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4530   .bss.mkk_insig_lin_replay:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4539   .bss.pu_option:00000000 pu_option
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4540   .bss.pu_option:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4543   .data.sm:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4550   .bss.safety_pin_code:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4559   .data.pu_mode:00000000 pu_mode
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4566   .bss.pu_enable_lines:00000000 pu_enable_lines
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4563   .bss.pu_enable_lines:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4570   .bss.date_time:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4577   .bss.faults:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:4584   .bss.setting:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1366   .text.pu_mode2ledcolor:00000011 $d
+C:\Users\oleg\AppData\Local\Temp\ccMMYbta.s:1366   .text.pu_mode2ledcolor:00000012 $t
 
 UNDEFINED SYMBOLS
 ringbuff_init

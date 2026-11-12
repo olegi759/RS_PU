@@ -57,7 +57,7 @@
 #include "pu.h"
 #include "ws_server.h"
 #include "ws_rubetec.h"
-
+#include "user_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -143,6 +143,11 @@ char mkk2_version[32] = {'\0'};
 
 void rubetec_on_start_alert_rec(uint8_t pu_id, uint8_t input_line){
   rubetec_send_acept();
+        if(ws_try_ping_pong(RUBETEC_SOCK_NUM, 500)){
+        ulog("++++++++++++++++"CRLF);
+      } else {
+        ulog("---------------"CRLF);        
+      }
      //rubetec_send_error("errEpta", "rubetec_on_start_alert_rec");
 }
 
@@ -852,6 +857,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  user_timer_t ws_period_timer;
+  initTimer(&ws_period_timer);
+  startTimer(&ws_period_timer);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -877,16 +885,26 @@ int main(void)
 		  //ulog(CONM"net_int_state"CRLF);
 		  net_int_state = FALSE;
 		  net_task();
-      ws_server_poll();
+      ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
+      ws_server_poll(5, NULL);
+      startTimer(&ws_period_timer);                               // heartbeat
+      // ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
+      // ws_server_poll(5, NULL);                               // heartbeat
 	  }
 
 	  //E_INT_SPI все время в 1 , при прерывании падает в ноль
 	  //ulog_fmt("E_INT_SPI %d"CRLF, PIN_GET(E_INT_SPI));
 	  if (PIN_GET(E_INT_SPI) == 0) {
-		  net_task();
-      ws_server_poll();
+		   net_task();
+       ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
+       ws_server_poll(5, NULL);                               // heartbeat
+       startTimer(&ws_period_timer); 
 	  }
 
+    if(isTimerExpired(&ws_period_timer, 500)){
+      ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
+      ws_server_poll(5, NULL);                               // heartbeat
+    }
 
 	  //if (mki_int_button_flag_fast) {
 	//	  mki_send_key();

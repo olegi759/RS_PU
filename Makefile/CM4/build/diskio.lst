@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
   30              		.loc 1 26 1 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 2
 
 
   33              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
   34:../../fatfs/diskio.c **** 
   35:../../fatfs/diskio.c **** /*-----------------------------------------------------------------------*/
   36:../../fatfs/diskio.c **** /* Get Drive Status                                                      */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 3
 
 
   37:../../fatfs/diskio.c **** /*-----------------------------------------------------------------------*/
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  102              		.thumb
  103              		.thumb_func
  105              	disk_initialize:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 4
 
 
  106              	.LVL3:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  120 0002 FFF7FEFF 		bl	flash_init
  121              	.LVL4:
  114:../../fatfs/diskio.c **** }
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 5
 
 
  122              		.loc 1 114 1 view .LVU15
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  139:../../fatfs/diskio.c **** 		// translate the reslut code here
  140:../../fatfs/diskio.c **** 
  141:../../fatfs/diskio.c **** 		return res;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 6
 
 
  142:../../fatfs/diskio.c **** 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  174:../../fatfs/diskio.c **** 
  175:../../fatfs/diskio.c **** DRESULT disk_write (
  176:../../fatfs/diskio.c **** 	BYTE pdrv,			/* Physical drive nmuber to identify the drive */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 7
 
 
  177:../../fatfs/diskio.c **** 	const BYTE *buff,	/* Data to be written */
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  221:../../fatfs/diskio.c **** 	if (disk_write_forbidden) return RES_ERROR;
  188              		.loc 1 221 2 is_stmt 1 view .LVU26
  189              		.loc 1 221 6 is_stmt 0 view .LVU27
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 8
 
 
  190 0004 064A     		ldr	r2, .L20
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  228:../../fatfs/diskio.c **** 
  229:../../fatfs/diskio.c **** /*-----------------------------------------------------------------------*/
  230:../../fatfs/diskio.c **** /* Miscellaneous Functions                                               */
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 9
 
 
  231:../../fatfs/diskio.c **** /*-----------------------------------------------------------------------*/
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  248 0004 0329     		cmp	r1, #3
  249 0006 14D8     		bhi	.L29
  250 0008 DFE801F0 		tbb	[pc, r1]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 10
 
 
  251              	.L25:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  281              		.loc 1 280 24 discriminator 1 view .LVU48
  282 0022 2080     		strh	r0, [r4]	@ movhi
  281:../../fatfs/diskio.c ****     	case GET_BLOCK_SIZE:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 11
 
 
  283              		.loc 1 281 7 is_stmt 1 view .LVU49
@@ -644,32 +644,32 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 1
  318              		.file 4 "../../fatfs/ff.h"
  319              		.file 5 "../../fatfs/diskio.h"
  320              		.file 6 "../../mx25lm51245g/flash_io.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 diskio.c
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:21     .text.disk_write_set_forbidden:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:27     .text.disk_write_set_forbidden:00000000 disk_write_set_forbidden
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:44     .text.disk_write_set_forbidden:00000008 $d
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:312    .bss.disk_write_forbidden:00000000 disk_write_forbidden
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:49     .text.disk_write_get_forbidden:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:55     .text.disk_write_get_forbidden:00000000 disk_write_get_forbidden
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:70     .text.disk_write_get_forbidden:00000008 $d
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:75     .text.disk_status:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:81     .text.disk_status:00000000 disk_status
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:99     .text.disk_initialize:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:105    .text.disk_initialize:00000000 disk_initialize
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:130    .text.disk_read:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:136    .text.disk_read:00000000 disk_read
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:169    .text.disk_write:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:175    .text.disk_write:00000000 disk_write
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:222    .text.disk_write:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:227    .text.disk_ioctl:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:233    .text.disk_ioctl:00000000 disk_ioctl
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:252    .text.disk_ioctl:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:256    .text.disk_ioctl:00000010 $t
-C:\Users\oleg\AppData\Local\Temp\ccwWeKya.s:313    .bss.disk_write_forbidden:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:21     .text.disk_write_set_forbidden:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:27     .text.disk_write_set_forbidden:00000000 disk_write_set_forbidden
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:44     .text.disk_write_set_forbidden:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:312    .bss.disk_write_forbidden:00000000 disk_write_forbidden
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:49     .text.disk_write_get_forbidden:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:55     .text.disk_write_get_forbidden:00000000 disk_write_get_forbidden
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:70     .text.disk_write_get_forbidden:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:75     .text.disk_status:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:81     .text.disk_status:00000000 disk_status
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:99     .text.disk_initialize:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:105    .text.disk_initialize:00000000 disk_initialize
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:130    .text.disk_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:136    .text.disk_read:00000000 disk_read
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:169    .text.disk_write:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:175    .text.disk_write:00000000 disk_write
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:222    .text.disk_write:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:227    .text.disk_ioctl:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:233    .text.disk_ioctl:00000000 disk_ioctl
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:252    .text.disk_ioctl:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:256    .text.disk_ioctl:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccsdcic7.s:313    .bss.disk_write_forbidden:00000000 $d
 
 UNDEFINED SYMBOLS
 flash_init
