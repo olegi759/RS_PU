@@ -51,7 +51,7 @@ build/net.o: ../../CM4/Core/Src/net.c ../../CM4/Core/Inc/net.h \
  ../../w5500/ioLibrary_driver/Application/loopback/loopback.h \
  ../../CM4/Core/Inc/setting.h ../../util/str_util.h ../../common/common.h \
  ../../common/shared_memory.h ../../ws_rubetec/ws_server.h \
- ../../CM4/Core/Inc/http_server.h
+ ../../ws_rubetec/web_keep_alive.h ../../CM4/Core/Inc/http_server.h
 ../../CM4/Core/Inc/net.h:
 ../../CM4/Core/Inc/main.h:
 ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
@@ -116,4 +116,5 @@ build/net.o: ../../CM4/Core/Src/net.c ../../CM4/Core/Inc/net.h \
 ../../common/common.h:
 ../../common/shared_memory.h:
 ../../ws_rubetec/ws_server.h:
+../../ws_rubetec/web_keep_alive.h:
 ../../CM4/Core/Inc/http_server.h:

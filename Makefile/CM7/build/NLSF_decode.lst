@@ -1,0 +1,424 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"NLSF_decode.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/NLSF_decode.c"
+  19              		.section	.text.silk_NLSF_residual_dequant,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	silk_NLSF_residual_dequant:
+  26              	.LVL0:
+  27              	.LFB25:
+   1:../../opus/silk/NLSF_decode.c **** /***********************************************************************
+   2:../../opus/silk/NLSF_decode.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/NLSF_decode.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/NLSF_decode.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/NLSF_decode.c **** are met:
+   6:../../opus/silk/NLSF_decode.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/NLSF_decode.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/NLSF_decode.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/NLSF_decode.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/NLSF_decode.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/NLSF_decode.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/NLSF_decode.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/NLSF_decode.c **** products derived from this software without specific prior written
+  14:../../opus/silk/NLSF_decode.c **** permission.
+  15:../../opus/silk/NLSF_decode.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/NLSF_decode.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/NLSF_decode.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/NLSF_decode.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/NLSF_decode.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/NLSF_decode.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/NLSF_decode.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/NLSF_decode.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/NLSF_decode.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/NLSF_decode.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/NLSF_decode.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/NLSF_decode.c **** ***********************************************************************/
+  27:../../opus/silk/NLSF_decode.c **** 
+  28:../../opus/silk/NLSF_decode.c **** #include "opus_config.h"
+  29:../../opus/silk/NLSF_decode.c **** 
+  30:../../opus/silk/NLSF_decode.c **** #include "main.h"
+  31:../../opus/silk/NLSF_decode.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 2
+
+
+  32:../../opus/silk/NLSF_decode.c **** /* Predictive dequantizer for NLSF residuals */
+  33:../../opus/silk/NLSF_decode.c **** static OPUS_INLINE void silk_NLSF_residual_dequant(          /* O    Returns RD value in Q30       
+  34:../../opus/silk/NLSF_decode.c ****           opus_int16         x_Q10[],                        /* O    Output [ order ]              
+  35:../../opus/silk/NLSF_decode.c ****     const opus_int8          indices[],                      /* I    Quantization indices [ order ]
+  36:../../opus/silk/NLSF_decode.c ****     const opus_uint8         pred_coef_Q8[],                 /* I    Backward predictor coefs [ ord
+  37:../../opus/silk/NLSF_decode.c ****     const opus_int           quant_step_size_Q16,            /* I    Quantization step size        
+  38:../../opus/silk/NLSF_decode.c ****     const opus_int16         order                           /* I    Number of input values        
+  39:../../opus/silk/NLSF_decode.c **** )
+  40:../../opus/silk/NLSF_decode.c **** {
+  28              		.loc 1 40 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 4, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 40 1 is_stmt 0 view .LVU1
+  33 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 20
+  36              		.cfi_offset 4, -20
+  37              		.cfi_offset 5, -16
+  38              		.cfi_offset 6, -12
+  39              		.cfi_offset 7, -8
+  40              		.cfi_offset 14, -4
+  41:../../opus/silk/NLSF_decode.c ****     opus_int     i, out_Q10, pred_Q10;
+  41              		.loc 1 41 5 is_stmt 1 view .LVU2
+  42:../../opus/silk/NLSF_decode.c **** 
+  43:../../opus/silk/NLSF_decode.c ****     out_Q10 = 0;
+  42              		.loc 1 43 5 view .LVU3
+  43              	.LVL1:
+  44:../../opus/silk/NLSF_decode.c ****     for( i = order-1; i >= 0; i-- ) {
+  44              		.loc 1 44 5 view .LVU4
+  45              		.loc 1 44 12 is_stmt 0 view .LVU5
+  46 0002 BDF914E0 		ldrsh	lr, [sp, #20]
+  47 0006 0EF1FF3E 		add	lr, lr, #-1
+  48              	.LVL2:
+  43:../../opus/silk/NLSF_decode.c ****     for( i = order-1; i >= 0; i-- ) {
+  49              		.loc 1 43 13 view .LVU6
+  50 000a 4FF0000C 		mov	ip, #0
+  51              		.loc 1 44 5 view .LVU7
+  52 000e 11E0     		b	.L2
+  53              	.LVL3:
+  54              	.L8:
+  45:../../opus/silk/NLSF_decode.c ****         pred_Q10 = silk_RSHIFT( silk_SMULBB( out_Q10, (opus_int16)pred_coef_Q8[ i ] ), 8 );
+  46:../../opus/silk/NLSF_decode.c ****         out_Q10  = silk_LSHIFT( indices[ i ], 10 );
+  47:../../opus/silk/NLSF_decode.c ****         if( out_Q10 > 0 ) {
+  48:../../opus/silk/NLSF_decode.c ****             out_Q10 = silk_SUB16( out_Q10, SILK_FIX_CONST( NLSF_QUANT_LEVEL_ADJ, 10 ) );
+  55              		.loc 1 48 13 is_stmt 1 view .LVU8
+  56              		.loc 1 48 21 is_stmt 0 view .LVU9
+  57 0010 ACF1660C 		sub	ip, ip, #102
+  58              	.LVL4:
+  59              	.L4:
+  49:../../opus/silk/NLSF_decode.c ****         } else if( out_Q10 < 0 ) {
+  50:../../opus/silk/NLSF_decode.c ****             out_Q10 = silk_ADD16( out_Q10, SILK_FIX_CONST( NLSF_QUANT_LEVEL_ADJ, 10 ) );
+  51:../../opus/silk/NLSF_decode.c ****         }
+  52:../../opus/silk/NLSF_decode.c ****         out_Q10  = silk_SMLAWB( pred_Q10, (opus_int32)out_Q10, quant_step_size_Q16 );
+  60              		.loc 1 52 9 is_stmt 1 view .LVU10
+  61              		.loc 1 52 20 is_stmt 0 view .LVU11
+  62 0014 4FEA2C47 		asr	r7, ip, #16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 3
+
+
+  63 0018 1DB2     		sxth	r5, r3
+  64 001a 1FFA8CFC 		uxth	ip, ip
+  65              	.LVL5:
+  66              		.loc 1 52 20 view .LVU12
+  67 001e 0CFB05FC 		mul	ip, ip, r5
+  68 0022 4FEA2C4C 		asr	ip, ip, #16
+  69 0026 05FB07CC 		mla	ip, r5, r7, ip
+  70              		.loc 1 52 18 view .LVU13
+  71 002a B444     		add	ip, ip, r6
+  72              	.LVL6:
+  53:../../opus/silk/NLSF_decode.c ****         x_Q10[ i ] = out_Q10;
+  73              		.loc 1 53 9 is_stmt 1 view .LVU14
+  74              		.loc 1 53 20 is_stmt 0 view .LVU15
+  75 002c 20F814C0 		strh	ip, [r0, r4, lsl #1]	@ movhi
+  44:../../opus/silk/NLSF_decode.c ****         pred_Q10 = silk_RSHIFT( silk_SMULBB( out_Q10, (opus_int16)pred_coef_Q8[ i ] ), 8 );
+  76              		.loc 1 44 32 is_stmt 1 discriminator 2 view .LVU16
+  77 0030 0EF1FF3E 		add	lr, lr, #-1
+  78              	.LVL7:
+  79              	.L2:
+  44:../../opus/silk/NLSF_decode.c ****         pred_Q10 = silk_RSHIFT( silk_SMULBB( out_Q10, (opus_int16)pred_coef_Q8[ i ] ), 8 );
+  80              		.loc 1 44 25 discriminator 1 view .LVU17
+  81 0034 BEF1000F 		cmp	lr, #0
+  82 0038 15DB     		blt	.L7
+  45:../../opus/silk/NLSF_decode.c ****         out_Q10  = silk_LSHIFT( indices[ i ], 10 );
+  83              		.loc 1 45 9 view .LVU18
+  45:../../opus/silk/NLSF_decode.c ****         out_Q10  = silk_LSHIFT( indices[ i ], 10 );
+  84              		.loc 1 45 20 is_stmt 0 view .LVU19
+  85 003a 0FFA8CFC 		sxth	ip, ip
+  86              	.LVL8:
+  45:../../opus/silk/NLSF_decode.c ****         out_Q10  = silk_LSHIFT( indices[ i ], 10 );
+  87              		.loc 1 45 20 view .LVU20
+  88 003e 7446     		mov	r4, lr
+  89 0040 12F80E50 		ldrb	r5, [r2, lr]	@ zero_extendqisi2
+  90 0044 05FB0CFC 		mul	ip, r5, ip
+  45:../../opus/silk/NLSF_decode.c ****         out_Q10  = silk_LSHIFT( indices[ i ], 10 );
+  91              		.loc 1 45 18 view .LVU21
+  92 0048 4FEA2C26 		asr	r6, ip, #8
+  93              	.LVL9:
+  46:../../opus/silk/NLSF_decode.c ****         if( out_Q10 > 0 ) {
+  94              		.loc 1 46 9 is_stmt 1 view .LVU22
+  46:../../opus/silk/NLSF_decode.c ****         if( out_Q10 > 0 ) {
+  95              		.loc 1 46 20 is_stmt 0 view .LVU23
+  96 004c 11F90EC0 		ldrsb	ip, [r1, lr]
+  46:../../opus/silk/NLSF_decode.c ****         if( out_Q10 > 0 ) {
+  97              		.loc 1 46 18 view .LVU24
+  98 0050 4FEA8C2C 		lsl	ip, ip, #10
+  99              	.LVL10:
+  47:../../opus/silk/NLSF_decode.c ****             out_Q10 = silk_SUB16( out_Q10, SILK_FIX_CONST( NLSF_QUANT_LEVEL_ADJ, 10 ) );
+ 100              		.loc 1 47 9 is_stmt 1 view .LVU25
+  47:../../opus/silk/NLSF_decode.c ****             out_Q10 = silk_SUB16( out_Q10, SILK_FIX_CONST( NLSF_QUANT_LEVEL_ADJ, 10 ) );
+ 101              		.loc 1 47 11 is_stmt 0 view .LVU26
+ 102 0054 BCF1000F 		cmp	ip, #0
+ 103 0058 DADC     		bgt	.L8
+  49:../../opus/silk/NLSF_decode.c ****             out_Q10 = silk_ADD16( out_Q10, SILK_FIX_CONST( NLSF_QUANT_LEVEL_ADJ, 10 ) );
+ 104              		.loc 1 49 16 is_stmt 1 view .LVU27
+  49:../../opus/silk/NLSF_decode.c ****             out_Q10 = silk_ADD16( out_Q10, SILK_FIX_CONST( NLSF_QUANT_LEVEL_ADJ, 10 ) );
+ 105              		.loc 1 49 18 is_stmt 0 view .LVU28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 4
+
+
+ 106 005a BCF1000F 		cmp	ip, #0
+ 107 005e D9DA     		bge	.L4
+  50:../../opus/silk/NLSF_decode.c ****         }
+ 108              		.loc 1 50 13 is_stmt 1 view .LVU29
+  50:../../opus/silk/NLSF_decode.c ****         }
+ 109              		.loc 1 50 21 is_stmt 0 view .LVU30
+ 110 0060 0CF1660C 		add	ip, ip, #102
+ 111              	.LVL11:
+  50:../../opus/silk/NLSF_decode.c ****         }
+ 112              		.loc 1 50 21 view .LVU31
+ 113 0064 D6E7     		b	.L4
+ 114              	.LVL12:
+ 115              	.L7:
+  54:../../opus/silk/NLSF_decode.c ****     }
+  55:../../opus/silk/NLSF_decode.c **** }
+ 116              		.loc 1 55 1 view .LVU32
+ 117 0066 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 118              		.loc 1 55 1 view .LVU33
+ 119              		.cfi_endproc
+ 120              	.LFE25:
+ 122              		.section	.text.silk_NLSF_decode,"ax",%progbits
+ 123              		.align	1
+ 124              		.global	silk_NLSF_decode
+ 125              		.syntax unified
+ 126              		.thumb
+ 127              		.thumb_func
+ 129              	silk_NLSF_decode:
+ 130              	.LVL13:
+ 131              	.LFB26:
+  56:../../opus/silk/NLSF_decode.c **** 
+  57:../../opus/silk/NLSF_decode.c **** 
+  58:../../opus/silk/NLSF_decode.c **** /***********************/
+  59:../../opus/silk/NLSF_decode.c **** /* NLSF vector decoder */
+  60:../../opus/silk/NLSF_decode.c **** /***********************/
+  61:../../opus/silk/NLSF_decode.c **** void silk_NLSF_decode(
+  62:../../opus/silk/NLSF_decode.c ****           opus_int16            *pNLSF_Q15,                     /* O    Quantized NLSF vector [ LPC
+  63:../../opus/silk/NLSF_decode.c ****           opus_int8             *NLSFIndices,                   /* I    Codebook path vector [ LPC_
+  64:../../opus/silk/NLSF_decode.c ****     const silk_NLSF_CB_struct   *psNLSF_CB                      /* I    Codebook object            
+  65:../../opus/silk/NLSF_decode.c **** )
+  66:../../opus/silk/NLSF_decode.c **** {
+ 132              		.loc 1 66 1 is_stmt 1 view -0
+ 133              		.cfi_startproc
+ 134              		@ args = 0, pretend = 0, frame = 80
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136              		.loc 1 66 1 is_stmt 0 view .LVU35
+ 137 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 138              	.LCFI1:
+ 139              		.cfi_def_cfa_offset 20
+ 140              		.cfi_offset 4, -20
+ 141              		.cfi_offset 5, -16
+ 142              		.cfi_offset 6, -12
+ 143              		.cfi_offset 7, -8
+ 144              		.cfi_offset 14, -4
+ 145 0002 97B0     		sub	sp, sp, #92
+ 146              	.LCFI2:
+ 147              		.cfi_def_cfa_offset 112
+ 148 0004 0546     		mov	r5, r0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 5
+
+
+ 149 0006 0E46     		mov	r6, r1
+ 150 0008 1446     		mov	r4, r2
+  67:../../opus/silk/NLSF_decode.c ****     opus_int         i;
+ 151              		.loc 1 67 5 is_stmt 1 view .LVU36
+  68:../../opus/silk/NLSF_decode.c ****     opus_uint8       pred_Q8[  MAX_LPC_ORDER ];
+ 152              		.loc 1 68 5 view .LVU37
+  69:../../opus/silk/NLSF_decode.c ****     opus_int16       ec_ix[    MAX_LPC_ORDER ];
+ 153              		.loc 1 69 5 view .LVU38
+  70:../../opus/silk/NLSF_decode.c ****     opus_int16       res_Q10[  MAX_LPC_ORDER ];
+ 154              		.loc 1 70 5 view .LVU39
+  71:../../opus/silk/NLSF_decode.c ****     opus_int32       NLSF_Q15_tmp;
+ 155              		.loc 1 71 5 view .LVU40
+  72:../../opus/silk/NLSF_decode.c ****     const opus_uint8 *pCB_element;
+ 156              		.loc 1 72 5 view .LVU41
+  73:../../opus/silk/NLSF_decode.c ****     const opus_int16 *pCB_Wght_Q9;
+ 157              		.loc 1 73 5 view .LVU42
+  74:../../opus/silk/NLSF_decode.c **** 
+  75:../../opus/silk/NLSF_decode.c ****     /* Unpack entropy table indices and predictor for current CB1 index */
+  76:../../opus/silk/NLSF_decode.c ****     silk_NLSF_unpack( ec_ix, pred_Q8, psNLSF_CB, NLSFIndices[ 0 ] );
+ 158              		.loc 1 76 5 view .LVU43
+ 159              		.loc 1 76 61 is_stmt 0 view .LVU44
+ 160 000a 0F46     		mov	r7, r1
+ 161              		.loc 1 76 5 view .LVU45
+ 162 000c 17F9013B 		ldrsb	r3, [r7], #1
+ 163 0010 12A9     		add	r1, sp, #72
+ 164              	.LVL14:
+ 165              		.loc 1 76 5 view .LVU46
+ 166 0012 0AA8     		add	r0, sp, #40
+ 167              	.LVL15:
+ 168              		.loc 1 76 5 view .LVU47
+ 169 0014 FFF7FEFF 		bl	silk_NLSF_unpack
+ 170              	.LVL16:
+  77:../../opus/silk/NLSF_decode.c **** 
+  78:../../opus/silk/NLSF_decode.c ****     /* Predictive residual dequantizer */
+  79:../../opus/silk/NLSF_decode.c ****     silk_NLSF_residual_dequant( res_Q10, &NLSFIndices[ 1 ], pred_Q8, psNLSF_CB->quantStepSize_Q16, 
+ 171              		.loc 1 79 5 is_stmt 1 view .LVU48
+ 172              		.loc 1 79 109 is_stmt 0 view .LVU49
+ 173 0018 B4F90230 		ldrsh	r3, [r4, #2]
+ 174              		.loc 1 79 5 view .LVU50
+ 175 001c 0093     		str	r3, [sp]
+ 176 001e B4F90430 		ldrsh	r3, [r4, #4]
+ 177 0022 12AA     		add	r2, sp, #72
+ 178 0024 3946     		mov	r1, r7
+ 179 0026 02A8     		add	r0, sp, #8
+ 180 0028 FFF7FEFF 		bl	silk_NLSF_residual_dequant
+ 181              	.LVL17:
+  80:../../opus/silk/NLSF_decode.c **** 
+  81:../../opus/silk/NLSF_decode.c ****     /* Apply inverse square-rooted weights to first stage and add to output */
+  82:../../opus/silk/NLSF_decode.c ****     pCB_element = &psNLSF_CB->CB1_NLSF_Q8[ NLSFIndices[ 0 ] * psNLSF_CB->order ];
+ 182              		.loc 1 82 5 is_stmt 1 view .LVU51
+ 183              		.loc 1 82 29 is_stmt 0 view .LVU52
+ 184 002c A768     		ldr	r7, [r4, #8]
+ 185              		.loc 1 82 55 view .LVU53
+ 186 002e 96F900C0 		ldrsb	ip, [r6]
+ 187              		.loc 1 82 72 view .LVU54
+ 188 0032 B4F90230 		ldrsh	r3, [r4, #2]
+ 189              		.loc 1 82 61 view .LVU55
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 6
+
+
+ 190 0036 03FB0CFC 		mul	ip, r3, ip
+ 191              	.LVL18:
+  83:../../opus/silk/NLSF_decode.c ****     pCB_Wght_Q9 = &psNLSF_CB->CB1_Wght_Q9[ NLSFIndices[ 0 ] * psNLSF_CB->order ];
+ 192              		.loc 1 83 5 is_stmt 1 view .LVU56
+ 193              		.loc 1 83 29 is_stmt 0 view .LVU57
+ 194 003a E668     		ldr	r6, [r4, #12]
+ 195              	.LVL19:
+  84:../../opus/silk/NLSF_decode.c ****     for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 196              		.loc 1 84 5 is_stmt 1 view .LVU58
+ 197              		.loc 1 84 12 is_stmt 0 view .LVU59
+ 198 003c 0021     		movs	r1, #0
+ 199              		.loc 1 84 5 view .LVU60
+ 200 003e 04E0     		b	.L10
+ 201              	.LVL20:
+ 202              	.L13:
+  85:../../opus/silk/NLSF_decode.c ****         NLSF_Q15_tmp = silk_ADD_LSHIFT32( silk_DIV32_16( silk_LSHIFT( (opus_int32)res_Q10[ i ], 14 
+  86:../../opus/silk/NLSF_decode.c ****         pNLSF_Q15[ i ] = (opus_int16)silk_LIMIT( NLSF_Q15_tmp, 0, 32767 );
+ 203              		.loc 1 86 26 discriminator 2 view .LVU61
+ 204 0040 47F6FF73 		movw	r3, #32767
+ 205              	.LVL21:
+ 206              	.L11:
+ 207              		.loc 1 86 24 discriminator 8 view .LVU62
+ 208 0044 25F81030 		strh	r3, [r5, r0, lsl #1]	@ movhi
+ 209              	.LVL22:
+  84:../../opus/silk/NLSF_decode.c ****     for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 210              		.loc 1 84 40 is_stmt 1 discriminator 2 view .LVU63
+ 211 0048 0131     		adds	r1, r1, #1
+ 212              	.LVL23:
+ 213              	.L10:
+  84:../../opus/silk/NLSF_decode.c ****     for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 214              		.loc 1 84 19 discriminator 1 view .LVU64
+  84:../../opus/silk/NLSF_decode.c ****     for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 215              		.loc 1 84 30 is_stmt 0 discriminator 1 view .LVU65
+ 216 004a B4F90220 		ldrsh	r2, [r4, #2]
+  84:../../opus/silk/NLSF_decode.c ****     for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 217              		.loc 1 84 19 discriminator 1 view .LVU66
+ 218 004e 8A42     		cmp	r2, r1
+ 219 0050 18DD     		ble	.L16
+  85:../../opus/silk/NLSF_decode.c ****         NLSF_Q15_tmp = silk_ADD_LSHIFT32( silk_DIV32_16( silk_LSHIFT( (opus_int32)res_Q10[ i ], 14 
+ 220              		.loc 1 85 9 is_stmt 1 view .LVU67
+  85:../../opus/silk/NLSF_decode.c ****         NLSF_Q15_tmp = silk_ADD_LSHIFT32( silk_DIV32_16( silk_LSHIFT( (opus_int32)res_Q10[ i ], 14 
+ 221              		.loc 1 85 24 is_stmt 0 view .LVU68
+ 222 0052 16AB     		add	r3, sp, #88
+ 223 0054 03EB4103 		add	r3, r3, r1, lsl #1
+ 224 0058 33F9503C 		ldrsh	r3, [r3, #-80]
+ 225 005c 9B03     		lsls	r3, r3, #14
+ 226 005e 0846     		mov	r0, r1
+ 227 0060 0CEB0102 		add	r2, ip, r1
+ 228 0064 36F912E0 		ldrsh	lr, [r6, r2, lsl #1]
+ 229 0068 93FBFEF3 		sdiv	r3, r3, lr
+ 230 006c BA5C     		ldrb	r2, [r7, r2]	@ zero_extendqisi2
+  85:../../opus/silk/NLSF_decode.c ****         NLSF_Q15_tmp = silk_ADD_LSHIFT32( silk_DIV32_16( silk_LSHIFT( (opus_int32)res_Q10[ i ], 14 
+ 231              		.loc 1 85 22 view .LVU69
+ 232 006e 03EBC213 		add	r3, r3, r2, lsl #7
+ 233              	.LVL24:
+ 234              		.loc 1 86 9 is_stmt 1 view .LVU70
+ 235              		.loc 1 86 26 is_stmt 0 view .LVU71
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 7
+
+
+ 236 0072 B3F5004F 		cmp	r3, #32768
+ 237 0076 E3DA     		bge	.L13
+ 238              		.loc 1 86 26 discriminator 1 view .LVU72
+ 239 0078 002B     		cmp	r3, #0
+ 240 007a 01DB     		blt	.L14
+ 241              		.loc 1 86 26 discriminator 3 view .LVU73
+ 242 007c 1BB2     		sxth	r3, r3
+ 243              	.LVL25:
+ 244              		.loc 1 86 26 discriminator 3 view .LVU74
+ 245 007e E1E7     		b	.L11
+ 246              	.LVL26:
+ 247              	.L14:
+ 248              		.loc 1 86 26 discriminator 4 view .LVU75
+ 249 0080 0023     		movs	r3, #0
+ 250              	.LVL27:
+ 251              		.loc 1 86 26 discriminator 4 view .LVU76
+ 252 0082 DFE7     		b	.L11
+ 253              	.LVL28:
+ 254              	.L16:
+  87:../../opus/silk/NLSF_decode.c ****     }
+  88:../../opus/silk/NLSF_decode.c **** 
+  89:../../opus/silk/NLSF_decode.c ****     /* NLSF stabilization */
+  90:../../opus/silk/NLSF_decode.c ****     silk_NLSF_stabilize( pNLSF_Q15, psNLSF_CB->deltaMin_Q15, psNLSF_CB->order );
+ 255              		.loc 1 90 5 is_stmt 1 view .LVU77
+ 256 0084 616A     		ldr	r1, [r4, #36]
+ 257              	.LVL29:
+ 258              		.loc 1 90 5 is_stmt 0 view .LVU78
+ 259 0086 2846     		mov	r0, r5
+ 260 0088 FFF7FEFF 		bl	silk_NLSF_stabilize
+ 261              	.LVL30:
+  91:../../opus/silk/NLSF_decode.c **** }
+ 262              		.loc 1 91 1 view .LVU79
+ 263 008c 17B0     		add	sp, sp, #92
+ 264              	.LCFI3:
+ 265              		.cfi_def_cfa_offset 20
+ 266              		@ sp needed
+ 267 008e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 268              		.loc 1 91 1 view .LVU80
+ 269              		.cfi_endproc
+ 270              	.LFE26:
+ 272              		.text
+ 273              	.Letext0:
+ 274              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 275              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 276              		.file 4 "../../opus/include/opus_types.h"
+ 277              		.file 5 "../../opus/silk/structs.h"
+ 278              		.file 6 "../../opus/silk/SigProc_FIX.h"
+ 279              		.file 7 "../../opus/silk/main.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NLSF_decode.c
+C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s:20     .text.silk_NLSF_residual_dequant:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s:25     .text.silk_NLSF_residual_dequant:00000000 silk_NLSF_residual_dequant
+C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s:123    .text.silk_NLSF_decode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccJIFY9H.s:129    .text.silk_NLSF_decode:00000000 silk_NLSF_decode
+
+UNDEFINED SYMBOLS
+silk_NLSF_unpack
+silk_NLSF_stabilize

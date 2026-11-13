@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
    9:../../bq32000/bq32000.c **** HAL_StatusTypeDef RTC_BQ32000_ReadRegister(I2C_HandleTypeDef* hi2c, uint8_t reg, uint8_t* data) {
   50              		.loc 1 9 97 view -0
   51              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 2
 
 
   52              		@ args = 0, pretend = 0, frame = 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  104              		.cfi_offset 14, -4
  105 0002 87B0     		sub	sp, sp, #28
  106              	.LCFI4:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 3
 
 
  107              		.cfi_def_cfa_offset 32
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  159 0004 0C46     		mov	r4, r1
   18:../../bq32000/bq32000.c ****     // Read the time registers
   19:../../bq32000/bq32000.c ****     uint8_t data[7];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 4
 
 
  160              		.loc 1 19 5 is_stmt 1 view .LVU19
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  208              		.loc 1 25 44 view .LVU39
  209 0050 1909     		lsrs	r1, r3, #4
  210              		.loc 1 25 66 view .LVU40
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 5
 
 
  211 0052 03F00F03 		and	r3, r3, #15
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  259              		.loc 1 31 12 is_stmt 0 view .LVU65
  260 00a2 064B     		ldr	r3, .L9
  261 00a4 9C42     		cmp	r4, r3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 6
 
 
  262 00a6 05D0     		beq	.L7
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  312              		.cfi_def_cfa_offset 32
   38:../../bq32000/bq32000.c ****     // Write the time registers
   39:../../bq32000/bq32000.c ****     uint8_t data[7] = {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 7
 
 
  313              		.loc 1 39 5 is_stmt 1 view .LVU74
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  358 006c 0EEB8E0E 		add	lr, lr, lr, lsl #2
  359 0070 A2EB4E02 		sub	r2, r2, lr, lsl #1
  360 0074 42EA0C12 		orr	r2, r2, ip, lsl #4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 8
 
 
   39:../../bq32000/bq32000.c ****         ((rtcTime->seconds / 10) << 4) | (rtcTime->seconds % 10),
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  406              	.L14:
  407              		.align	2
  408              	.L13:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 9
 
 
  409 00d0 CDCCCCCC 		.word	-858993459
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  455              		.loc 1 60 2 is_stmt 1 view .LVU116
  456              		.loc 1 60 37 is_stmt 0 view .LVU117
  457 0016 8379     		ldrb	r3, [r0, #6]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 10
 
 
  458              		.loc 1 60 45 view .LVU118
@@ -582,27 +582,27 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 1
  494              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h"
  495              		.file 8 "../../bq32000/bq32000.h"
  496              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/time.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 bq32000.c
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:21     .text.RTC_BQ32000_Init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:27     .text.RTC_BQ32000_Init:00000000 RTC_BQ32000_Init
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:41     .text.RTC_BQ32000_ReadRegister:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:47     .text.RTC_BQ32000_ReadRegister:00000000 RTC_BQ32000_ReadRegister
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:87     .text.RTC_BQ32000_WriteRegister:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:93     .text.RTC_BQ32000_WriteRegister:00000000 RTC_BQ32000_WriteRegister
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:137    .text.RTC_BQ32000_ReadTime:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:143    .text.RTC_BQ32000_ReadTime:00000000 RTC_BQ32000_ReadTime
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:287    .text.RTC_BQ32000_ReadTime:000000bc $d
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:485    .bss.globalRTC_Time:00000000 globalRTC_Time
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:292    .text.RTC_BQ32000_SetTime:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:298    .text.RTC_BQ32000_SetTime:00000000 RTC_BQ32000_SetTime
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:409    .text.RTC_BQ32000_SetTime:000000d0 $d
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:414    .text.RTC_Time2tm:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:420    .text.RTC_Time2tm:00000000 RTC_Time2tm
-C:\Users\oleg\AppData\Local\Temp\ccq3zoTC.s:482    .bss.globalRTC_Time:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:21     .text.RTC_BQ32000_Init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:27     .text.RTC_BQ32000_Init:00000000 RTC_BQ32000_Init
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:41     .text.RTC_BQ32000_ReadRegister:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:47     .text.RTC_BQ32000_ReadRegister:00000000 RTC_BQ32000_ReadRegister
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:87     .text.RTC_BQ32000_WriteRegister:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:93     .text.RTC_BQ32000_WriteRegister:00000000 RTC_BQ32000_WriteRegister
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:137    .text.RTC_BQ32000_ReadTime:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:143    .text.RTC_BQ32000_ReadTime:00000000 RTC_BQ32000_ReadTime
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:287    .text.RTC_BQ32000_ReadTime:000000bc $d
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:485    .bss.globalRTC_Time:00000000 globalRTC_Time
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:292    .text.RTC_BQ32000_SetTime:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:298    .text.RTC_BQ32000_SetTime:00000000 RTC_BQ32000_SetTime
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:409    .text.RTC_BQ32000_SetTime:000000d0 $d
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:414    .text.RTC_Time2tm:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:420    .text.RTC_Time2tm:00000000 RTC_Time2tm
+C:\Users\oleg\AppData\Local\Temp\ccchFXOl.s:482    .bss.globalRTC_Time:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Mem_Read

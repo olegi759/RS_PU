@@ -1,0 +1,438 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"HP_variable_cutoff.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/HP_variable_cutoff.c"
+  19              		.section	.text.silk_HP_variable_cutoff,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_HP_variable_cutoff
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_HP_variable_cutoff:
+  27              	.LVL0:
+  28              	.LFB360:
+   1:../../opus/silk/HP_variable_cutoff.c **** /***********************************************************************
+   2:../../opus/silk/HP_variable_cutoff.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/HP_variable_cutoff.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/HP_variable_cutoff.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/HP_variable_cutoff.c **** are met:
+   6:../../opus/silk/HP_variable_cutoff.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/HP_variable_cutoff.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/HP_variable_cutoff.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/HP_variable_cutoff.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/HP_variable_cutoff.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/HP_variable_cutoff.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/HP_variable_cutoff.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/HP_variable_cutoff.c **** products derived from this software without specific prior written
+  14:../../opus/silk/HP_variable_cutoff.c **** permission.
+  15:../../opus/silk/HP_variable_cutoff.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/HP_variable_cutoff.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/HP_variable_cutoff.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/HP_variable_cutoff.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/HP_variable_cutoff.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/HP_variable_cutoff.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/HP_variable_cutoff.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/HP_variable_cutoff.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/HP_variable_cutoff.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/HP_variable_cutoff.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/HP_variable_cutoff.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/HP_variable_cutoff.c **** ***********************************************************************/
+  27:../../opus/silk/HP_variable_cutoff.c **** 
+  28:../../opus/silk/HP_variable_cutoff.c **** #include "opus_config.h"
+  29:../../opus/silk/HP_variable_cutoff.c **** 
+  30:../../opus/silk/HP_variable_cutoff.c **** #ifdef FIXED_POINT
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 2
+
+
+  31:../../opus/silk/HP_variable_cutoff.c **** #include "main_FIX.h"
+  32:../../opus/silk/HP_variable_cutoff.c **** #else
+  33:../../opus/silk/HP_variable_cutoff.c **** #include "main_FLP.h"
+  34:../../opus/silk/HP_variable_cutoff.c **** #endif
+  35:../../opus/silk/HP_variable_cutoff.c **** #include "tuning_parameters.h"
+  36:../../opus/silk/HP_variable_cutoff.c **** 
+  37:../../opus/silk/HP_variable_cutoff.c **** /* High-pass filter with cutoff frequency adaptation based on pitch lag statistics */
+  38:../../opus/silk/HP_variable_cutoff.c **** void silk_HP_variable_cutoff(
+  39:../../opus/silk/HP_variable_cutoff.c ****     silk_encoder_state_Fxx          state_Fxx[]                         /* I/O  Encoder states     
+  40:../../opus/silk/HP_variable_cutoff.c **** )
+  41:../../opus/silk/HP_variable_cutoff.c **** {
+  29              		.loc 1 41 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 41 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 3, -32
+  38              		.cfi_offset 4, -28
+  39              		.cfi_offset 5, -24
+  40              		.cfi_offset 6, -20
+  41              		.cfi_offset 7, -16
+  42              		.cfi_offset 8, -12
+  43              		.cfi_offset 9, -8
+  44              		.cfi_offset 14, -4
+  42:../../opus/silk/HP_variable_cutoff.c ****    opus_int   quality_Q15;
+  45              		.loc 1 42 4 is_stmt 1 view .LVU2
+  43:../../opus/silk/HP_variable_cutoff.c ****    opus_int32 pitch_freq_Hz_Q16, pitch_freq_log_Q7, delta_freq_Q7;
+  46              		.loc 1 43 4 view .LVU3
+  44:../../opus/silk/HP_variable_cutoff.c ****    silk_encoder_state *psEncC1 = &state_Fxx[ 0 ].sCmn;
+  47              		.loc 1 44 4 view .LVU4
+  48              	.LVL1:
+  45:../../opus/silk/HP_variable_cutoff.c **** 
+  46:../../opus/silk/HP_variable_cutoff.c ****    /* Adaptive cutoff frequency: estimate low end of pitch frequency range */
+  47:../../opus/silk/HP_variable_cutoff.c ****    if( psEncC1->prevSignalType == TYPE_VOICED ) {
+  49              		.loc 1 47 4 view .LVU5
+  50              		.loc 1 47 15 is_stmt 0 view .LVU6
+  51 0004 00F58053 		add	r3, r0, #4096
+  52 0008 93F9BD31 		ldrsb	r3, [r3, #445]
+  53              		.loc 1 47 6 view .LVU7
+  54 000c 022B     		cmp	r3, #2
+  55 000e 01D0     		beq	.L14
+  56              	.LVL2:
+  57              	.L1:
+  48:../../opus/silk/HP_variable_cutoff.c ****       /* difference, in log domain */
+  49:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_Hz_Q16 = silk_DIV32_16( silk_LSHIFT( silk_MUL( psEncC1->fs_kHz, 1000 ), 16 ), psEn
+  50:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_lin2log( pitch_freq_Hz_Q16 ) - ( 16 << 7 );
+  51:../../opus/silk/HP_variable_cutoff.c **** 
+  52:../../opus/silk/HP_variable_cutoff.c ****       /* adjustment based on quality */
+  53:../../opus/silk/HP_variable_cutoff.c ****       quality_Q15 = psEncC1->input_quality_bands_Q15[ 0 ];
+  54:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_SMLAWB( pitch_freq_log_Q7, silk_SMULWB( silk_LSHIFT( -quality_Q15, 2
+  55:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+  56:../../opus/silk/HP_variable_cutoff.c **** 
+  57:../../opus/silk/HP_variable_cutoff.c ****       /* delta_freq = pitch_freq_log - psEnc->variable_HP_smth1; */
+  58:../../opus/silk/HP_variable_cutoff.c ****       delta_freq_Q7 = pitch_freq_log_Q7 - silk_RSHIFT( psEncC1->variable_HP_smth1_Q15, 8 );
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 3
+
+
+  59:../../opus/silk/HP_variable_cutoff.c ****       if( delta_freq_Q7 < 0 ) {
+  60:../../opus/silk/HP_variable_cutoff.c ****          /* less smoothing for decreasing pitch frequency, to track something close to the minimum 
+  61:../../opus/silk/HP_variable_cutoff.c ****          delta_freq_Q7 = silk_MUL( delta_freq_Q7, 3 );
+  62:../../opus/silk/HP_variable_cutoff.c ****       }
+  63:../../opus/silk/HP_variable_cutoff.c **** 
+  64:../../opus/silk/HP_variable_cutoff.c ****       /* limit delta, to reduce impact of outliers in pitch estimation */
+  65:../../opus/silk/HP_variable_cutoff.c ****       delta_freq_Q7 = silk_LIMIT_32( delta_freq_Q7, -SILK_FIX_CONST( VARIABLE_HP_MAX_DELTA_FREQ, 7 
+  66:../../opus/silk/HP_variable_cutoff.c **** 
+  67:../../opus/silk/HP_variable_cutoff.c ****       /* update smoother */
+  68:../../opus/silk/HP_variable_cutoff.c ****       psEncC1->variable_HP_smth1_Q15 = silk_SMLAWB( psEncC1->variable_HP_smth1_Q15,
+  69:../../opus/silk/HP_variable_cutoff.c ****             silk_SMULBB( psEncC1->speech_activity_Q8, delta_freq_Q7 ), SILK_FIX_CONST( VARIABLE_HP_
+  70:../../opus/silk/HP_variable_cutoff.c **** 
+  71:../../opus/silk/HP_variable_cutoff.c ****       /* limit frequency range */
+  72:../../opus/silk/HP_variable_cutoff.c ****       psEncC1->variable_HP_smth1_Q15 = silk_LIMIT_32( psEncC1->variable_HP_smth1_Q15,
+  73:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+  74:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MAX_CUTOFF_HZ ), 8 ) );
+  75:../../opus/silk/HP_variable_cutoff.c ****    }
+  76:../../opus/silk/HP_variable_cutoff.c **** }
+  58              		.loc 1 76 1 view .LVU8
+  59 0010 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+  60              	.LVL3:
+  61              	.L14:
+  62              		.loc 1 76 1 view .LVU9
+  63 0014 0446     		mov	r4, r0
+  49:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_lin2log( pitch_freq_Hz_Q16 ) - ( 16 << 7 );
+  64              		.loc 1 49 7 is_stmt 1 view .LVU10
+  49:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_lin2log( pitch_freq_Hz_Q16 ) - ( 16 << 7 );
+  65              		.loc 1 49 27 is_stmt 0 view .LVU11
+  66 0016 00F58055 		add	r5, r0, #4096
+  67 001a D5F8E001 		ldr	r0, [r5, #480]
+  68              	.LVL4:
+  49:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_lin2log( pitch_freq_Hz_Q16 ) - ( 16 << 7 );
+  69              		.loc 1 49 27 view .LVU12
+  70 001e 4FF47A73 		mov	r3, #1000
+  71 0022 03FB00F0 		mul	r0, r3, r0
+  72 0026 0004     		lsls	r0, r0, #16
+  73 0028 D5F8C031 		ldr	r3, [r5, #448]
+  74              	.LVL5:
+  50:../../opus/silk/HP_variable_cutoff.c **** 
+  75              		.loc 1 50 7 is_stmt 1 view .LVU13
+  50:../../opus/silk/HP_variable_cutoff.c **** 
+  76              		.loc 1 50 27 is_stmt 0 view .LVU14
+  77 002c 90FBF3F0 		sdiv	r0, r0, r3
+  78              	.LVL6:
+  50:../../opus/silk/HP_variable_cutoff.c **** 
+  79              		.loc 1 50 27 view .LVU15
+  80 0030 FFF7FEFF 		bl	silk_lin2log
+  81              	.LVL7:
+  50:../../opus/silk/HP_variable_cutoff.c **** 
+  82              		.loc 1 50 25 discriminator 1 view .LVU16
+  83 0034 A0F50066 		sub	r6, r0, #2048
+  84              	.LVL8:
+  53:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_SMLAWB( pitch_freq_log_Q7, silk_SMULWB( silk_LSHIFT( -quality_Q15, 2
+  85              		.loc 1 53 7 is_stmt 1 view .LVU17
+  53:../../opus/silk/HP_variable_cutoff.c ****       pitch_freq_log_Q7 = silk_SMLAWB( pitch_freq_log_Q7, silk_SMULWB( silk_LSHIFT( -quality_Q15, 2
+  86              		.loc 1 53 19 is_stmt 0 view .LVU18
+  87 0038 D5F85832 		ldr	r3, [r5, #600]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 4
+
+
+  88              	.LVL9:
+  54:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+  89              		.loc 1 54 7 is_stmt 1 view .LVU19
+  54:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+  90              		.loc 1 54 27 is_stmt 0 view .LVU20
+  91 003c 5A42     		rsbs	r2, r3, #0
+  92 003e 9700     		lsls	r7, r2, #2
+  93 0040 42F38F32 		sbfx	r2, r2, #14, #16
+  94 0044 1BB2     		sxth	r3, r3
+  95              	.LVL10:
+  54:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+  96              		.loc 1 54 27 view .LVU21
+  97 0046 BFB2     		uxth	r7, r7
+  98 0048 03FB07F7 		mul	r7, r3, r7
+  99 004c 3F14     		asrs	r7, r7, #16
+ 100 004e 03FB0277 		mla	r7, r3, r2, r7
+ 101 0052 4FEA2749 		asr	r9, r7, #16
+ 102 0056 1FFA86F8 		uxth	r8, r6
+ 103 005a 4FF47010 		mov	r0, #3932160
+ 104 005e FFF7FEFF 		bl	silk_lin2log
+ 105              	.LVL11:
+  54:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+ 106              		.loc 1 54 27 discriminator 1 view .LVU22
+ 107 0062 A8EB0005 		sub	r5, r8, r0
+ 108 0066 05F50065 		add	r5, r5, #2048
+ 109 006a 2DB2     		sxth	r5, r5
+ 110 006c 05FB09F5 		mul	r5, r5, r9
+ 111 0070 BFB2     		uxth	r7, r7
+ 112 0072 4FF47010 		mov	r0, #3932160
+ 113 0076 FFF7FEFF 		bl	silk_lin2log
+ 114              	.LVL12:
+  54:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+ 115              		.loc 1 54 27 discriminator 2 view .LVU23
+ 116 007a A8EB0003 		sub	r3, r8, r0
+ 117 007e 03F50063 		add	r3, r3, #2048
+ 118 0082 1BB2     		sxth	r3, r3
+ 119 0084 03FB07F7 		mul	r7, r3, r7
+ 120 0088 05EB2743 		add	r3, r5, r7, asr #16
+  54:../../opus/silk/HP_variable_cutoff.c ****             pitch_freq_log_Q7 - ( silk_lin2log( SILK_FIX_CONST( VARIABLE_HP_MIN_CUTOFF_HZ, 16 ) ) -
+ 121              		.loc 1 54 25 discriminator 2 view .LVU24
+ 122 008c 3344     		add	r3, r3, r6
+ 123              	.LVL13:
+  58:../../opus/silk/HP_variable_cutoff.c ****       if( delta_freq_Q7 < 0 ) {
+ 124              		.loc 1 58 7 is_stmt 1 view .LVU25
+  58:../../opus/silk/HP_variable_cutoff.c ****       if( delta_freq_Q7 < 0 ) {
+ 125              		.loc 1 58 43 is_stmt 0 view .LVU26
+ 126 008e A168     		ldr	r1, [r4, #8]
+ 127              	.LVL14:
+  59:../../opus/silk/HP_variable_cutoff.c ****          /* less smoothing for decreasing pitch frequency, to track something close to the minimum 
+ 128              		.loc 1 59 7 is_stmt 1 view .LVU27
+  59:../../opus/silk/HP_variable_cutoff.c ****          /* less smoothing for decreasing pitch frequency, to track something close to the minimum 
+ 129              		.loc 1 59 9 is_stmt 0 view .LVU28
+ 130 0090 B3EB2123 		subs	r3, r3, r1, asr #8
+ 131              	.LVL15:
+  59:../../opus/silk/HP_variable_cutoff.c ****          /* less smoothing for decreasing pitch frequency, to track something close to the minimum 
+ 132              		.loc 1 59 9 view .LVU29
+ 133 0094 03D4     		bmi	.L15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 5
+
+
+  65:../../opus/silk/HP_variable_cutoff.c **** 
+ 134              		.loc 1 65 7 is_stmt 1 view .LVU30
+  65:../../opus/silk/HP_variable_cutoff.c **** 
+ 135              		.loc 1 65 23 is_stmt 0 view .LVU31
+ 136 0096 332B     		cmp	r3, #51
+ 137 0098 03DD     		ble	.L4
+  65:../../opus/silk/HP_variable_cutoff.c **** 
+ 138              		.loc 1 65 23 discriminator 2 view .LVU32
+ 139 009a 3323     		movs	r3, #51
+ 140              	.LVL16:
+  65:../../opus/silk/HP_variable_cutoff.c **** 
+ 141              		.loc 1 65 23 discriminator 2 view .LVU33
+ 142 009c 06E0     		b	.L5
+ 143              	.LVL17:
+ 144              	.L15:
+  61:../../opus/silk/HP_variable_cutoff.c ****       }
+ 145              		.loc 1 61 10 is_stmt 1 view .LVU34
+  61:../../opus/silk/HP_variable_cutoff.c ****       }
+ 146              		.loc 1 61 24 is_stmt 0 view .LVU35
+ 147 009e 03EB4303 		add	r3, r3, r3, lsl #1
+ 148              	.LVL18:
+  65:../../opus/silk/HP_variable_cutoff.c **** 
+ 149              		.loc 1 65 7 is_stmt 1 view .LVU36
+ 150              	.L4:
+  65:../../opus/silk/HP_variable_cutoff.c **** 
+ 151              		.loc 1 65 23 is_stmt 0 discriminator 1 view .LVU37
+ 152 00a2 6FF03202 		mvn	r2, #50
+ 153 00a6 9342     		cmp	r3, r2
+ 154 00a8 B8BF     		it	lt
+ 155 00aa 1346     		movlt	r3, r2
+ 156              	.LVL19:
+ 157              	.L5:
+  68:../../opus/silk/HP_variable_cutoff.c ****             silk_SMULBB( psEncC1->speech_activity_Q8, delta_freq_Q7 ), SILK_FIX_CONST( VARIABLE_HP_
+ 158              		.loc 1 68 7 is_stmt 1 view .LVU38
+  68:../../opus/silk/HP_variable_cutoff.c ****             silk_SMULBB( psEncC1->speech_activity_Q8, delta_freq_Q7 ), SILK_FIX_CONST( VARIABLE_HP_
+ 159              		.loc 1 68 40 is_stmt 0 view .LVU39
+ 160 00ac 04F58052 		add	r2, r4, #4096
+ 161 00b0 B2F9B421 		ldrsh	r2, [r2, #436]
+ 162 00b4 1BB2     		sxth	r3, r3
+ 163              	.LVL20:
+  68:../../opus/silk/HP_variable_cutoff.c ****             silk_SMULBB( psEncC1->speech_activity_Q8, delta_freq_Q7 ), SILK_FIX_CONST( VARIABLE_HP_
+ 164              		.loc 1 68 40 view .LVU40
+ 165 00b6 02FB03F3 		mul	r3, r2, r3
+ 166 00ba 1814     		asrs	r0, r3, #16
+ 167 00bc 41F69A12 		movw	r2, #6554
+ 168 00c0 9BB2     		uxth	r3, r3
+ 169 00c2 02FB03F3 		mul	r3, r2, r3
+ 170 00c6 1B14     		asrs	r3, r3, #16
+ 171 00c8 02FB0033 		mla	r3, r2, r0, r3
+ 172 00cc 1944     		add	r1, r1, r3
+  68:../../opus/silk/HP_variable_cutoff.c ****             silk_SMULBB( psEncC1->speech_activity_Q8, delta_freq_Q7 ), SILK_FIX_CONST( VARIABLE_HP_
+ 173              		.loc 1 68 38 view .LVU41
+ 174 00ce A160     		str	r1, [r4, #8]
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 175              		.loc 1 72 7 is_stmt 1 view .LVU42
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 176              		.loc 1 72 40 is_stmt 0 view .LVU43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 6
+
+
+ 177 00d0 3C20     		movs	r0, #60
+ 178 00d2 FFF7FEFF 		bl	silk_lin2log
+ 179              	.LVL21:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 180              		.loc 1 72 40 discriminator 1 view .LVU44
+ 181 00d6 0502     		lsls	r5, r0, #8
+ 182              	.LVL22:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 183              		.loc 1 72 40 discriminator 1 view .LVU45
+ 184 00d8 6420     		movs	r0, #100
+ 185 00da FFF7FEFF 		bl	silk_lin2log
+ 186              	.LVL23:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 187              		.loc 1 72 40 discriminator 2 view .LVU46
+ 188 00de B5EB002F 		cmp	r5, r0, lsl #8
+ 189 00e2 1ADD     		ble	.L6
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 190              		.loc 1 72 40 discriminator 1 view .LVU47
+ 191 00e4 A568     		ldr	r5, [r4, #8]
+ 192 00e6 3C20     		movs	r0, #60
+ 193 00e8 FFF7FEFF 		bl	silk_lin2log
+ 194              	.LVL24:
+ 195 00ec B5EB002F 		cmp	r5, r0, lsl #8
+ 196 00f0 05DD     		ble	.L7
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 197              		.loc 1 72 40 discriminator 3 view .LVU48
+ 198 00f2 3C20     		movs	r0, #60
+ 199 00f4 FFF7FEFF 		bl	silk_lin2log
+ 200              	.LVL25:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 201              		.loc 1 72 40 discriminator 1 view .LVU49
+ 202 00f8 0002     		lsls	r0, r0, #8
+ 203              	.L8:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 204              		.loc 1 72 38 discriminator 20 view .LVU50
+ 205 00fa A060     		str	r0, [r4, #8]
+ 206              		.loc 1 76 1 view .LVU51
+ 207 00fc 88E7     		b	.L1
+ 208              	.L7:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 209              		.loc 1 72 40 discriminator 4 view .LVU52
+ 210 00fe A568     		ldr	r5, [r4, #8]
+ 211 0100 6420     		movs	r0, #100
+ 212 0102 FFF7FEFF 		bl	silk_lin2log
+ 213              	.LVL26:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 214              		.loc 1 72 40 discriminator 1 view .LVU53
+ 215 0106 B5EB002F 		cmp	r5, r0, lsl #8
+ 216 010a 01DB     		blt	.L16
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 217              		.loc 1 72 40 discriminator 7 view .LVU54
+ 218 010c A068     		ldr	r0, [r4, #8]
+ 219 010e F4E7     		b	.L8
+ 220              	.L16:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 221              		.loc 1 72 40 discriminator 6 view .LVU55
+ 222 0110 6420     		movs	r0, #100
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 7
+
+
+ 223 0112 FFF7FEFF 		bl	silk_lin2log
+ 224              	.LVL27:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 225              		.loc 1 72 40 discriminator 1 view .LVU56
+ 226 0116 0002     		lsls	r0, r0, #8
+ 227 0118 EFE7     		b	.L8
+ 228              	.L6:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 229              		.loc 1 72 40 discriminator 2 view .LVU57
+ 230 011a A568     		ldr	r5, [r4, #8]
+ 231 011c 6420     		movs	r0, #100
+ 232 011e FFF7FEFF 		bl	silk_lin2log
+ 233              	.LVL28:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 234              		.loc 1 72 40 discriminator 1 view .LVU58
+ 235 0122 B5EB002F 		cmp	r5, r0, lsl #8
+ 236 0126 04DD     		ble	.L10
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 237              		.loc 1 72 40 discriminator 12 view .LVU59
+ 238 0128 6420     		movs	r0, #100
+ 239 012a FFF7FEFF 		bl	silk_lin2log
+ 240              	.LVL29:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 241              		.loc 1 72 40 discriminator 1 view .LVU60
+ 242 012e 0002     		lsls	r0, r0, #8
+ 243 0130 E3E7     		b	.L8
+ 244              	.L10:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 245              		.loc 1 72 40 discriminator 13 view .LVU61
+ 246 0132 A568     		ldr	r5, [r4, #8]
+ 247 0134 3C20     		movs	r0, #60
+ 248 0136 FFF7FEFF 		bl	silk_lin2log
+ 249              	.LVL30:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 250              		.loc 1 72 40 discriminator 1 view .LVU62
+ 251 013a B5EB002F 		cmp	r5, r0, lsl #8
+ 252 013e 01DB     		blt	.L17
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 253              		.loc 1 72 40 discriminator 16 view .LVU63
+ 254 0140 A068     		ldr	r0, [r4, #8]
+ 255 0142 DAE7     		b	.L8
+ 256              	.L17:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 257              		.loc 1 72 40 discriminator 15 view .LVU64
+ 258 0144 3C20     		movs	r0, #60
+ 259 0146 FFF7FEFF 		bl	silk_lin2log
+ 260              	.LVL31:
+  72:../../opus/silk/HP_variable_cutoff.c ****             silk_LSHIFT( silk_lin2log( VARIABLE_HP_MIN_CUTOFF_HZ ), 8 ),
+ 261              		.loc 1 72 40 discriminator 1 view .LVU65
+ 262 014a 0002     		lsls	r0, r0, #8
+ 263 014c D5E7     		b	.L8
+ 264              		.cfi_endproc
+ 265              	.LFE360:
+ 267              		.text
+ 268              	.Letext0:
+ 269              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 270              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 8
+
+
+ 271              		.file 4 "../../opus/include/opus_types.h"
+ 272              		.file 5 "../../opus/silk/resampler_structs.h"
+ 273              		.file 6 "../../opus/silk/structs.h"
+ 274              		.file 7 "../../opus/silk/fixed/structs_FIX.h"
+ 275              		.file 8 "../../opus/silk/SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 HP_variable_cutoff.c
+C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s:20     .text.silk_HP_variable_cutoff:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccAyJtjg.s:26     .text.silk_HP_variable_cutoff:00000000 silk_HP_variable_cutoff
+
+UNDEFINED SYMBOLS
+silk_lin2log

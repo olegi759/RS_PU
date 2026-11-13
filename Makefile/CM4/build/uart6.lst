@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
   27:../../CM4/Core/Src/uart6.c **** 
   28:../../CM4/Core/Src/uart6.c **** //#define DEBUG_UART6 		1
   29:../../CM4/Core/Src/uart6.c **** //#define DEBUG_UART6_CMD		PD_CMD_OTKLUCHENIE
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 2
 
 
   30:../../CM4/Core/Src/uart6.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
   67 002e 032C     		cmp	r4, #3
   68 0030 0FD0     		beq	.L3
   69 0032 012C     		cmp	r4, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 3
 
 
   70 0034 05D1     		bne	.L1
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  104              		.loc 1 58 4 view .LVU14
  105              		.loc 1 61 1 is_stmt 0 view .LVU15
  106 006c E9E7     		b	.L1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 4
 
 
  107              	.L7:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  155 0022 04D1     		bne	.L10
   70:../../CM4/Core/Src/uart6.c **** 	else if (a1) return UART6_MUX_P2C;
  156              		.loc 1 70 7 is_stmt 1 view .LVU25
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 5
 
 
  157              		.loc 1 70 10 is_stmt 0 view .LVU26
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  203              		@ args = 0, pretend = 0, frame = 0
  204              		@ frame_needed = 0, uses_anonymous_args = 0
  205 0000 08B5     		push	{r3, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 6
 
 
  206              	.LCFI2:
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  253              		.loc 1 83 1 view .LVU43
  254 0006 38B5     		push	{r3, r4, r5, lr}
  255              	.LCFI3:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 7
 
 
  256              		.cfi_def_cfa_offset 16
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  294              		.loc 1 91 21 is_stmt 0 view .LVU56
  295 002c 0023     		movs	r3, #0
  296 002e 2B71     		strb	r3, [r5, #4]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 8
 
 
  297 0030 F0E7     		b	.L19
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  103:../../CM4/Core/Src/uart6.c **** 
  104:../../CM4/Core/Src/uart6.c **** 
  105:../../CM4/Core/Src/uart6.c **** 	diff = HAL_DiffTick(uart6_send_tick);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 9
 
 
  342              		.loc 1 105 2 is_stmt 1 view .LVU62
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  383 0050 3046     		mov	r0, r6
  384 0052 FFF7FEFF 		bl	HAL_UART_Transmit
  385              	.LVL33:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 10
 
 
  119:../../CM4/Core/Src/uart6.c **** 	//HAL_UART_Transmit_IT(&huart6, uart6_tx_buf, packet_len);
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  413 007a FFF7FEFF 		bl	HAL_Delay
  414              	.LVL39:
  415 007e CFE7     		b	.L31
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 11
 
 
  416              	.L39:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  463              	.LVL42:
  464              		.loc 1 152 8 view .LVU87
  465 001a 0246     		mov	r2, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 12
 
 
  466              	.LVL43:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  168:../../CM4/Core/Src/uart6.c **** #ifdef DEBUG_UART6
  169:../../CM4/Core/Src/uart6.c **** 
  170:../../CM4/Core/Src/uart6.c **** #ifdef DEBUG_UART6_CMD
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 13
 
 
  171:../../CM4/Core/Src/uart6.c **** 	if (packet[4] == DEBUG_UART6_CMD) {
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  205:../../CM4/Core/Src/uart6.c **** 		default: break;
  206:../../CM4/Core/Src/uart6.c **** 	}
  207:../../CM4/Core/Src/uart6.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 14
 
 
  208:../../CM4/Core/Src/uart6.c **** 
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  201:../../CM4/Core/Src/uart6.c **** 		break;
  568              		.loc 1 201 48 view .LVU111
  569 004a FFF7FEFF 		bl	HAL_GetTick
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 15
 
 
  570              	.LVL58:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  616 0008 0B4F     		ldr	r7, .L54
  617 000a 0333     		adds	r3, r3, #3
  618 000c 57F82300 		ldr	r0, [r7, r3, lsl #2]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 16
 
 
  619              	.LVL60:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  666              		.align	1
  667              		.global	uart6_task_data
  668              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 17
 
 
  669              		.thumb
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  231:../../CM4/Core/Src/uart6.c **** 		uart6_rcv(buf[len - 1], buf, len - 1);
  712              		.loc 1 231 3 view .LVU143
  713 001e 02A9     		add	r1, sp, #8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 18
 
 
  714 0020 9AB2     		uxth	r2, r3
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  761              		.loc 1 240 2 is_stmt 1 view .LVU153
  762 0010 FFF7FEFF 		bl	uart6_task_data
  763              	.LVL71:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 19
 
 
  764 0014 FBE7     		b	.L62
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  809              		.loc 1 252 74 view .LVU162
  810 001a 8A42     		cmp	r2, r1
  811 001c 38D0     		beq	.L90
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 20
 
 
  812              	.L75:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  843 003e 44F62064 		movw	r4, #20000
  844 0042 A042     		cmp	r0, r4
  845 0044 94BF     		ite	ls
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 21
 
 
  846 0046 0026     		movls	r6, #0
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  286:../../CM4/Core/Src/uart6.c **** 		fault_set(FAULT_PD_RING);
  889              		.loc 1 286 3 is_stmt 1 view .LVU182
  890 0088 7420     		movs	r0, #116
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 22
 
 
  891              	.LVL78:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  934 00aa 1B4B     		ldr	r3, .L94+4
  935 00ac 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  259:../../CM4/Core/Src/uart6.c **** 				pd_send_addr = 1;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 23
 
 
  936              		.loc 1 259 7 view .LVU196
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  980              	.LVL82:
  280:../../CM4/Core/Src/uart6.c **** 	}
  981              		.loc 1 280 3 view .LVU207
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 24
 
 
  982 00dc 7420     		movs	r0, #116
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  1024              		.loc 1 289 3 view .LVU214
  1025 010e E8E7     		b	.L80
  1026              	.LVL90:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 25
 
 
  1027              	.L88:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  1075 000a 0133     		adds	r3, r3, #1
  1076 000c DBB2     		uxtb	r3, r3
  1077 000e 094A     		ldr	r2, .L105
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 26
 
 
  1078 0010 1370     		strb	r3, [r2]
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  1113              		.cfi_endproc
  1114              	.LFE146:
  1116              		.section	.data.mux_pd_snd_query,"aw"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 27
 
 
  1119              	mux_pd_snd_query:
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  1175              		.file 9 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
  1176              		.file 10 "../../CM4/Core/Inc/uart6.h"
  1177              		.file 11 "../../util/dynbuf_util.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 28
 
 
  1178              		.file 12 "../../common/setting_data.h"
@@ -1632,67 +1632,67 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 1
  1186              		.file 20 "../../util/stm_util.h"
  1187              		.file 21 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h"
  1188              		.file 22 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 29
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 uart6.c
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:21     .text.uart6_set_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:27     .text.uart6_set_mux:00000000 uart6_set_mux
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:110    .text.uart6_set_mux:00000070 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:115    .text.uart6_get_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:121    .text.uart6_get_mux:00000000 uart6_get_mux
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:188    .text.uart6_get_mux:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:193    .text.HAL_UART6_TxCpltCallback:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:199    .text.HAL_UART6_TxCpltCallback:00000000 HAL_UART6_TxCpltCallback
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:227    .text.HAL_UART6_TxCpltCallback:00000018 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1153   .bss.uart6_rx_buf:00000000 uart6_rx_buf
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:234    .text.HAL_UART6_RxEventCallback:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:240    .text.HAL_UART6_RxEventCallback:00000000 HAL_UART6_RxEventCallback
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:301    .text.HAL_UART6_RxEventCallback:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1159   .data.uart6_dyn_buf:00000000 uart6_dyn_buf
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:307    .text.uart6_transmit:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:313    .text.uart6_transmit:00000000 uart6_transmit
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:419    .text.uart6_transmit:00000080 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1136   .bss.uart6_send_tick:00000000 uart6_send_tick
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1147   .bss.uart6_tx_buf:00000000 uart6_tx_buf
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:428    .text.uart6_transmit_piv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:434    .text.uart6_transmit_piv:00000000 uart6_transmit_piv
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:483    .text.uart6_rcv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:489    .text.uart6_rcv:00000000 uart6_rcv
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:580    .text.uart6_rcv:00000058 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1130   .bss.mux_pd_rcv_tick:00000000 mux_pd_rcv_tick
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:585    .text.uart6_transmit_to_pd_nomux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:591    .text.uart6_transmit_to_pd_nomux:00000000 uart6_transmit_to_pd_nomux
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:661    .text.uart6_transmit_to_pd_nomux:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:666    .text.uart6_task_data:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:672    .text.uart6_task_data:00000000 uart6_task_data
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:723    .text.uart6_task_data:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:728    .text.uart6_task_rx:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:734    .text.uart6_task_rx:00000000 uart6_task_rx
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:768    .text.uart6_task_rx:00000018 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:773    .text.pd_asnd_query:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:779    .text.pd_asnd_query:00000000 pd_asnd_query
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:794    .text.pd_asnd_query:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:798    .text.pd_asnd_query:00000010 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1041   .text.pd_asnd_query:00000114 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1124   .data.pd_send_addr:00000000 pd_send_addr
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1119   .data.mux_pd_snd_query:00000000 mux_pd_snd_query
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1049   .text.uart6_task_tx:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1055   .text.uart6_task_tx:00000000 uart6_task_tx
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1112   .text.uart6_task_tx:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1141   .bss.uart6_tick:00000000 uart6_tick
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1127   .bss.mux_pd_rcv_tick:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1133   .bss.uart6_send_tick:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1142   .bss.uart6_tick:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1144   .bss.uart6_tx_buf:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1150   .bss.uart6_rx_buf:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s:1156   .data.uart6_dyn_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:21     .text.uart6_set_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:27     .text.uart6_set_mux:00000000 uart6_set_mux
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:110    .text.uart6_set_mux:00000070 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:115    .text.uart6_get_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:121    .text.uart6_get_mux:00000000 uart6_get_mux
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:188    .text.uart6_get_mux:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:193    .text.HAL_UART6_TxCpltCallback:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:199    .text.HAL_UART6_TxCpltCallback:00000000 HAL_UART6_TxCpltCallback
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:227    .text.HAL_UART6_TxCpltCallback:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1153   .bss.uart6_rx_buf:00000000 uart6_rx_buf
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:234    .text.HAL_UART6_RxEventCallback:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:240    .text.HAL_UART6_RxEventCallback:00000000 HAL_UART6_RxEventCallback
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:301    .text.HAL_UART6_RxEventCallback:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1159   .data.uart6_dyn_buf:00000000 uart6_dyn_buf
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:307    .text.uart6_transmit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:313    .text.uart6_transmit:00000000 uart6_transmit
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:419    .text.uart6_transmit:00000080 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1136   .bss.uart6_send_tick:00000000 uart6_send_tick
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1147   .bss.uart6_tx_buf:00000000 uart6_tx_buf
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:428    .text.uart6_transmit_piv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:434    .text.uart6_transmit_piv:00000000 uart6_transmit_piv
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:483    .text.uart6_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:489    .text.uart6_rcv:00000000 uart6_rcv
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:580    .text.uart6_rcv:00000058 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1130   .bss.mux_pd_rcv_tick:00000000 mux_pd_rcv_tick
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:585    .text.uart6_transmit_to_pd_nomux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:591    .text.uart6_transmit_to_pd_nomux:00000000 uart6_transmit_to_pd_nomux
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:661    .text.uart6_transmit_to_pd_nomux:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:666    .text.uart6_task_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:672    .text.uart6_task_data:00000000 uart6_task_data
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:723    .text.uart6_task_data:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:728    .text.uart6_task_rx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:734    .text.uart6_task_rx:00000000 uart6_task_rx
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:768    .text.uart6_task_rx:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:773    .text.pd_asnd_query:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:779    .text.pd_asnd_query:00000000 pd_asnd_query
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:794    .text.pd_asnd_query:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:798    .text.pd_asnd_query:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1041   .text.pd_asnd_query:00000114 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1124   .data.pd_send_addr:00000000 pd_send_addr
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1119   .data.mux_pd_snd_query:00000000 mux_pd_snd_query
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1049   .text.uart6_task_tx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1055   .text.uart6_task_tx:00000000 uart6_task_tx
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1112   .text.uart6_task_tx:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1141   .bss.uart6_tick:00000000 uart6_tick
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1127   .bss.mux_pd_rcv_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1133   .bss.uart6_send_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1142   .bss.uart6_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1144   .bss.uart6_tx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1150   .bss.uart6_rx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s:1156   .data.uart6_dyn_buf:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin
 OutPinIsSetted
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccOvcspn.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccf1NAOO.s 			page 30
 
 
 HAL_UARTEx_ReceiveToIdle_IT

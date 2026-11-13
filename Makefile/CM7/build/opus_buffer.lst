@@ -1,0 +1,582 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"opus_buffer.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/opus_buffer.c"
+  19              		.section	.text.opus_buffer_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	opus_buffer_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	opus_buffer_init:
+  27              	.LFB344:
+   1:../../CM7/Core/Src/opus_buffer.c **** /*
+   2:../../CM7/Core/Src/opus_buffer.c ****  * opus_buffer.c
+   3:../../CM7/Core/Src/opus_buffer.c ****  *
+   4:../../CM7/Core/Src/opus_buffer.c ****  *  Created on: 21 июл. 2026 г.
+   5:../../CM7/Core/Src/opus_buffer.c ****  *      Author: Rafael Boltachev
+   6:../../CM7/Core/Src/opus_buffer.c ****  */
+   7:../../CM7/Core/Src/opus_buffer.c **** 
+   8:../../CM7/Core/Src/opus_buffer.c **** #include "opus_buffer.h"
+   9:../../CM7/Core/Src/opus_buffer.c **** #include "ringbuff_util.h"
+  10:../../CM7/Core/Src/opus_buffer.c **** #include "buf_io.h"
+  11:../../CM7/Core/Src/opus_buffer.c **** #include "stm_util.h"
+  12:../../CM7/Core/Src/opus_buffer.c **** #include "oggopus_util.h"
+  13:../../CM7/Core/Src/opus_buffer.c **** #include "pu.h"
+  14:../../CM7/Core/Src/opus_buffer.c **** #include "pcm1753.h"
+  15:../../CM7/Core/Src/opus_buffer.c **** #include "opus_util.h"
+  16:../../CM7/Core/Src/opus_buffer.c **** #include "dynbuf_util.h"
+  17:../../CM7/Core/Src/opus_buffer.c **** 
+  18:../../CM7/Core/Src/opus_buffer.c **** //uint8_t opus_buffer_strategy = 0;
+  19:../../CM7/Core/Src/opus_buffer.c **** 
+  20:../../CM7/Core/Src/opus_buffer.c **** 
+  21:../../CM7/Core/Src/opus_buffer.c **** //буффер c PCM данными
+  22:../../CM7/Core/Src/opus_buffer.c **** static dynamic_buf_t OpusBuffer = DYNAMIC_BUF_STATIC_INIT(64 * 1024);
+  23:../../CM7/Core/Src/opus_buffer.c **** 
+  24:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_CLEAR							dynamic_buf_clear(&OpusBuffer);
+  25:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_FREE_SIZE						dynamic_buf_get_free_size(&OpusBuffer)
+  26:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_PUT_PACKET(data, data_len)		dynamic_buf_push_io(&OpusBuffer, data, data_len)
+  27:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_POP_PACKET(buf, buf_size)		dynamic_buf_pop_io(&OpusBuffer,  buf, buf_size)
+  28:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_IS_EMPTY						DYNAMIC_BUF_IS_EMPTY(OpusBuffer)
+  29:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_FULL_SIZE						dynamic_buf_get_data_size(&OpusBuffer)
+  30:../../CM7/Core/Src/opus_buffer.c **** #define OPUS_BUF_GET_MAX_SIZE					dynamic_buf_get_max_alloc_size(&OpusBuffer)
+  31:../../CM7/Core/Src/opus_buffer.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 2
+
+
+  32:../../CM7/Core/Src/opus_buffer.c **** 
+  33:../../CM7/Core/Src/opus_buffer.c **** void opus_buffer_init(void)
+  34:../../CM7/Core/Src/opus_buffer.c **** {
+  28              		.loc 1 34 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  35:../../CM7/Core/Src/opus_buffer.c **** }
+  33              		.loc 1 35 1 view .LVU1
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE344:
+  38              		.section	.text.opus_buffer_clear,"ax",%progbits
+  39              		.align	1
+  40              		.global	opus_buffer_clear
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  45              	opus_buffer_clear:
+  46              	.LFB345:
+  36:../../CM7/Core/Src/opus_buffer.c **** 
+  37:../../CM7/Core/Src/opus_buffer.c **** 
+  38:../../CM7/Core/Src/opus_buffer.c **** 
+  39:../../CM7/Core/Src/opus_buffer.c **** void opus_buffer_clear(void)
+  40:../../CM7/Core/Src/opus_buffer.c **** {
+  47              		.loc 1 40 1 view -0
+  48              		.cfi_startproc
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51 0000 08B5     		push	{r3, lr}
+  52              	.LCFI0:
+  53              		.cfi_def_cfa_offset 8
+  54              		.cfi_offset 3, -8
+  55              		.cfi_offset 14, -4
+  41:../../CM7/Core/Src/opus_buffer.c **** 	OPUS_BUF_CLEAR;
+  56              		.loc 1 41 2 view .LVU3
+  57 0002 0248     		ldr	r0, .L4
+  58 0004 FFF7FEFF 		bl	dynamic_buf_clear
+  59              	.LVL0:
+  60              		.loc 1 41 16 discriminator 1 view .LVU4
+  42:../../CM7/Core/Src/opus_buffer.c **** }
+  61              		.loc 1 42 1 is_stmt 0 view .LVU5
+  62 0008 08BD     		pop	{r3, pc}
+  63              	.L5:
+  64 000a 00BF     		.align	2
+  65              	.L4:
+  66 000c 00000000 		.word	OpusBuffer
+  67              		.cfi_endproc
+  68              	.LFE345:
+  70              		.section	.rodata.opus_buffer_put.str1.4,"aMS",%progbits,1
+  71              		.align	2
+  72              	.LC0:
+  73 0000 434D372E 		.ascii	"CM7.pu: OpusBuffer FULL(%d)\015\012\000"
+  73      70753A20 
+  73      4F707573 
+  73      42756666 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 3
+
+
+  73      65722046 
+  74              		.section	.text.opus_buffer_put,"ax",%progbits
+  75              		.align	1
+  76              		.global	opus_buffer_put
+  77              		.syntax unified
+  78              		.thumb
+  79              		.thumb_func
+  81              	opus_buffer_put:
+  82              	.LVL1:
+  83              	.LFB346:
+  43:../../CM7/Core/Src/opus_buffer.c **** 
+  44:../../CM7/Core/Src/opus_buffer.c **** 
+  45:../../CM7/Core/Src/opus_buffer.c **** 
+  46:../../CM7/Core/Src/opus_buffer.c **** 
+  47:../../CM7/Core/Src/opus_buffer.c **** BOOL opus_buffer_put(uint8_t * opus, uint16_t opus_len)
+  48:../../CM7/Core/Src/opus_buffer.c **** {
+  84              		.loc 1 48 1 is_stmt 1 view -0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88              		.loc 1 48 1 is_stmt 0 view .LVU7
+  89 0000 10B5     		push	{r4, lr}
+  90              	.LCFI1:
+  91              		.cfi_def_cfa_offset 8
+  92              		.cfi_offset 4, -8
+  93              		.cfi_offset 14, -4
+  94 0002 0C46     		mov	r4, r1
+  49:../../CM7/Core/Src/opus_buffer.c **** 	if (OPUS_BUF_PUT_PACKET(opus, opus_len) < opus_len) {
+  95              		.loc 1 49 2 is_stmt 1 view .LVU8
+  96              		.loc 1 49 6 is_stmt 0 view .LVU9
+  97 0004 0A46     		mov	r2, r1
+  98 0006 0146     		mov	r1, r0
+  99              	.LVL2:
+ 100              		.loc 1 49 6 view .LVU10
+ 101 0008 0648     		ldr	r0, .L11
+ 102              	.LVL3:
+ 103              		.loc 1 49 6 view .LVU11
+ 104 000a FFF7FEFF 		bl	dynamic_buf_push_io
+ 105              	.LVL4:
+ 106              		.loc 1 49 5 discriminator 1 view .LVU12
+ 107 000e 8442     		cmp	r4, r0
+ 108 0010 01D8     		bhi	.L10
+  50:../../CM7/Core/Src/opus_buffer.c **** 		fulog_fmt(CONM"pu: OpusBuffer FULL(%d)"CRLF, opus_len);
+  51:../../CM7/Core/Src/opus_buffer.c **** 		return FALSE;
+  52:../../CM7/Core/Src/opus_buffer.c **** 	}
+  53:../../CM7/Core/Src/opus_buffer.c **** 	else return TRUE;
+ 109              		.loc 1 53 14 view .LVU13
+ 110 0012 0120     		movs	r0, #1
+ 111              	.L7:
+  54:../../CM7/Core/Src/opus_buffer.c **** }
+ 112              		.loc 1 54 1 view .LVU14
+ 113 0014 10BD     		pop	{r4, pc}
+ 114              	.LVL5:
+ 115              	.L10:
+  50:../../CM7/Core/Src/opus_buffer.c **** 		fulog_fmt(CONM"pu: OpusBuffer FULL(%d)"CRLF, opus_len);
+ 116              		.loc 1 50 3 is_stmt 1 view .LVU15
+ 117 0016 2146     		mov	r1, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 4
+
+
+ 118 0018 0348     		ldr	r0, .L11+4
+ 119 001a FFF7FEFF 		bl	fulog_fmt
+ 120              	.LVL6:
+  51:../../CM7/Core/Src/opus_buffer.c **** 	}
+ 121              		.loc 1 51 3 view .LVU16
+  51:../../CM7/Core/Src/opus_buffer.c **** 	}
+ 122              		.loc 1 51 10 is_stmt 0 view .LVU17
+ 123 001e 0020     		movs	r0, #0
+ 124 0020 F8E7     		b	.L7
+ 125              	.L12:
+ 126 0022 00BF     		.align	2
+ 127              	.L11:
+ 128 0024 00000000 		.word	OpusBuffer
+ 129 0028 00000000 		.word	.LC0
+ 130              		.cfi_endproc
+ 131              	.LFE346:
+ 133              		.section	.text.opus_buffer_task_data,"ax",%progbits
+ 134              		.align	1
+ 135              		.global	opus_buffer_task_data
+ 136              		.syntax unified
+ 137              		.thumb
+ 138              		.thumb_func
+ 140              	opus_buffer_task_data:
+ 141              	.LFB347:
+  55:../../CM7/Core/Src/opus_buffer.c **** 
+  56:../../CM7/Core/Src/opus_buffer.c **** /*
+  57:../../CM7/Core/Src/opus_buffer.c **** BOOL opus_buffer_put(uint8_t * opus, uint16_t opus_len)
+  58:../../CM7/Core/Src/opus_buffer.c **** {
+  59:../../CM7/Core/Src/opus_buffer.c **** 	int cnt;
+  60:../../CM7/Core/Src/opus_buffer.c **** 	BOOL res;
+  61:../../CM7/Core/Src/opus_buffer.c **** 
+  62:../../CM7/Core/Src/opus_buffer.c **** 	cnt = BUFIO_FREE_SIZE(&OpusBuffer);
+  63:../../CM7/Core/Src/opus_buffer.c **** 
+  64:../../CM7/Core/Src/opus_buffer.c **** 
+  65:../../CM7/Core/Src/opus_buffer.c **** 	if (cnt < opus_len + 100) {
+  66:../../CM7/Core/Src/opus_buffer.c **** 		fulog_fmt(CONM"pu: OpusBuffer FULL(%d,%d)"CRLF, opus_len, cnt);
+  67:../../CM7/Core/Src/opus_buffer.c **** 		return FALSE;
+  68:../../CM7/Core/Src/opus_buffer.c **** 	}
+  69:../../CM7/Core/Src/opus_buffer.c **** 
+  70:../../CM7/Core/Src/opus_buffer.c **** 	cnt = BUFIO_PUT_PACKET(&OpusBuffer, opus, opus_len);
+  71:../../CM7/Core/Src/opus_buffer.c **** 
+  72:../../CM7/Core/Src/opus_buffer.c **** 	res = (cnt == opus_len);
+  73:../../CM7/Core/Src/opus_buffer.c **** 
+  74:../../CM7/Core/Src/opus_buffer.c **** 	if (!res) {
+  75:../../CM7/Core/Src/opus_buffer.c **** 		fulog_fmt(CONM"pu: error OpusBuffer AFULL (writeln:%d opus_len:%d alloc:%lu max:%lu t:%lu)"CRLF, 
+  76:../../CM7/Core/Src/opus_buffer.c **** 		return FALSE;
+  77:../../CM7/Core/Src/opus_buffer.c **** 	}
+  78:../../CM7/Core/Src/opus_buffer.c **** 
+  79:../../CM7/Core/Src/opus_buffer.c **** 	return res;
+  80:../../CM7/Core/Src/opus_buffer.c **** }
+  81:../../CM7/Core/Src/opus_buffer.c **** 
+  82:../../CM7/Core/Src/opus_buffer.c **** */
+  83:../../CM7/Core/Src/opus_buffer.c **** 
+  84:../../CM7/Core/Src/opus_buffer.c **** 
+  85:../../CM7/Core/Src/opus_buffer.c **** 
+  86:../../CM7/Core/Src/opus_buffer.c **** void opus_buffer_task_data(void)
+  87:../../CM7/Core/Src/opus_buffer.c **** {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 5
+
+
+ 142              		.loc 1 87 1 is_stmt 1 view -0
+ 143              		.cfi_startproc
+ 144              		@ args = 0, pretend = 0, frame = 1280
+ 145              		@ frame_needed = 0, uses_anonymous_args = 0
+ 146 0000 00B5     		push	{lr}
+ 147              	.LCFI2:
+ 148              		.cfi_def_cfa_offset 4
+ 149              		.cfi_offset 14, -4
+ 150 0002 ADF2045D 		subw	sp, sp, #1284
+ 151              	.LCFI3:
+ 152              		.cfi_def_cfa_offset 1288
+  88:../../CM7/Core/Src/opus_buffer.c **** 	uint8_t opus[OPUS_MAX_ENCODE_SIZE];
+ 153              		.loc 1 88 2 view .LVU19
+  89:../../CM7/Core/Src/opus_buffer.c **** 	size_t opus_len;
+ 154              		.loc 1 89 2 view .LVU20
+  90:../../CM7/Core/Src/opus_buffer.c **** 
+  91:../../CM7/Core/Src/opus_buffer.c **** 	opus_len = OPUS_BUF_POP_PACKET(opus, OPUS_MAX_ENCODE_SIZE);
+ 155              		.loc 1 91 2 view .LVU21
+ 156              		.loc 1 91 13 is_stmt 0 view .LVU22
+ 157 0006 40F2FC42 		movw	r2, #1276
+ 158 000a 01A9     		add	r1, sp, #4
+ 159 000c 0648     		ldr	r0, .L18
+ 160 000e FFF7FEFF 		bl	dynamic_buf_pop_io
+ 161              	.LVL7:
+  92:../../CM7/Core/Src/opus_buffer.c **** 	if (!opus_len) return;
+ 162              		.loc 1 92 2 is_stmt 1 view .LVU23
+ 163              		.loc 1 92 5 is_stmt 0 view .LVU24
+ 164 0012 18B9     		cbnz	r0, .L17
+ 165              	.LVL8:
+ 166              	.L13:
+  93:../../CM7/Core/Src/opus_buffer.c **** 
+  94:../../CM7/Core/Src/opus_buffer.c **** 	pu_put_opus_in_pcm1753_now(opus, opus_len);
+  95:../../CM7/Core/Src/opus_buffer.c **** }
+ 167              		.loc 1 95 1 view .LVU25
+ 168 0014 0DF2045D 		addw	sp, sp, #1284
+ 169              	.LCFI4:
+ 170              		.cfi_remember_state
+ 171              		.cfi_def_cfa_offset 4
+ 172              		@ sp needed
+ 173 0018 5DF804FB 		ldr	pc, [sp], #4
+ 174              	.LVL9:
+ 175              	.L17:
+ 176              	.LCFI5:
+ 177              		.cfi_restore_state
+  94:../../CM7/Core/Src/opus_buffer.c **** }
+ 178              		.loc 1 94 2 is_stmt 1 view .LVU26
+ 179 001c 81B2     		uxth	r1, r0
+ 180 001e 01A8     		add	r0, sp, #4
+ 181              	.LVL10:
+  94:../../CM7/Core/Src/opus_buffer.c **** }
+ 182              		.loc 1 94 2 is_stmt 0 view .LVU27
+ 183 0020 FFF7FEFF 		bl	pu_put_opus_in_pcm1753_now
+ 184              	.LVL11:
+ 185 0024 F6E7     		b	.L13
+ 186              	.L19:
+ 187 0026 00BF     		.align	2
+ 188              	.L18:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 6
+
+
+ 189 0028 00000000 		.word	OpusBuffer
+ 190              		.cfi_endproc
+ 191              	.LFE347:
+ 193              		.section	.text.opus_buffer_procent_full,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	opus_buffer_procent_full
+ 196              		.syntax unified
+ 197              		.thumb
+ 198              		.thumb_func
+ 200              	opus_buffer_procent_full:
+ 201              	.LFB349:
+  96:../../CM7/Core/Src/opus_buffer.c **** 
+  97:../../CM7/Core/Src/opus_buffer.c **** 
+  98:../../CM7/Core/Src/opus_buffer.c **** 
+  99:../../CM7/Core/Src/opus_buffer.c **** void opus_buffer_task(void)
+ 100:../../CM7/Core/Src/opus_buffer.c **** {
+ 101:../../CM7/Core/Src/opus_buffer.c **** 
+ 102:../../CM7/Core/Src/opus_buffer.c **** 	if (OPUS_BUF_IS_EMPTY) return;
+ 103:../../CM7/Core/Src/opus_buffer.c **** 
+ 104:../../CM7/Core/Src/opus_buffer.c **** 
+ 105:../../CM7/Core/Src/opus_buffer.c ****     if (pcm1753_is_DMA_started()) {
+ 106:../../CM7/Core/Src/opus_buffer.c **** 
+ 107:../../CM7/Core/Src/opus_buffer.c **** 		if (pcm1753_AudioBufferGetFree() > OPUS_MAX_ENCODE_PCM_SAMPLES_SIZE) { //если в pcm1753 св
+ 108:../../CM7/Core/Src/opus_buffer.c **** 			opus_buffer_task_data();
+ 109:../../CM7/Core/Src/opus_buffer.c **** 		}
+ 110:../../CM7/Core/Src/opus_buffer.c **** 
+ 111:../../CM7/Core/Src/opus_buffer.c ****     } else {
+ 112:../../CM7/Core/Src/opus_buffer.c **** 
+ 113:../../CM7/Core/Src/opus_buffer.c ****     	if (opus_buffer_procent_full() > 50) {
+ 114:../../CM7/Core/Src/opus_buffer.c ****     		opus_buffer_task_data();
+ 115:../../CM7/Core/Src/opus_buffer.c ****     	}
+ 116:../../CM7/Core/Src/opus_buffer.c **** 
+ 117:../../CM7/Core/Src/opus_buffer.c **** 		//if (OPUS_BUF_FREE_SIZE < OPUS_MAX_ENCODE_SIZE) {
+ 118:../../CM7/Core/Src/opus_buffer.c **** 		//	opus_buffer_task_data();
+ 119:../../CM7/Core/Src/opus_buffer.c **** 		//}
+ 120:../../CM7/Core/Src/opus_buffer.c **** 
+ 121:../../CM7/Core/Src/opus_buffer.c ****     }
+ 122:../../CM7/Core/Src/opus_buffer.c **** 
+ 123:../../CM7/Core/Src/opus_buffer.c **** 
+ 124:../../CM7/Core/Src/opus_buffer.c **** }
+ 125:../../CM7/Core/Src/opus_buffer.c **** 
+ 126:../../CM7/Core/Src/opus_buffer.c **** /*
+ 127:../../CM7/Core/Src/opus_buffer.c **** void opus_buffer_task(void)
+ 128:../../CM7/Core/Src/opus_buffer.c **** {
+ 129:../../CM7/Core/Src/opus_buffer.c **** 
+ 130:../../CM7/Core/Src/opus_buffer.c **** 	if (BUFIO_IS_EMPTY(&OpusBuffer)) return;
+ 131:../../CM7/Core/Src/opus_buffer.c **** 
+ 132:../../CM7/Core/Src/opus_buffer.c **** 
+ 133:../../CM7/Core/Src/opus_buffer.c **** 	if (opus_buffer_strategy == 0) {
+ 134:../../CM7/Core/Src/opus_buffer.c **** 		if (BUFIO_FULL_SIZE(&OpusBuffer) > BUFIO_FREE_SIZE(&OpusBuffer)) { //OpusBuffer заполнен 
+ 135:../../CM7/Core/Src/opus_buffer.c **** 			opus_buffer_strategy = 1;
+ 136:../../CM7/Core/Src/opus_buffer.c **** 		}
+ 137:../../CM7/Core/Src/opus_buffer.c **** 	}
+ 138:../../CM7/Core/Src/opus_buffer.c **** 	else if (opus_buffer_strategy == 1) {
+ 139:../../CM7/Core/Src/opus_buffer.c **** 
+ 140:../../CM7/Core/Src/opus_buffer.c **** 		//if (BUFIO_FULL_SIZE(&OpusBuffer) > BUFIO_FREE_SIZE(&OpusBuffer)) { //OpusBuffer заполне�
+ 141:../../CM7/Core/Src/opus_buffer.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 7
+
+
+ 142:../../CM7/Core/Src/opus_buffer.c **** 			if (pcm1753_AudioBufferGetFree() > OPUS_MAX_ENCODE_PCM_SAMPLES_SIZE) { //если в pcm1753 с�
+ 143:../../CM7/Core/Src/opus_buffer.c **** 				opus_buffer_task_data();
+ 144:../../CM7/Core/Src/opus_buffer.c **** 			}
+ 145:../../CM7/Core/Src/opus_buffer.c **** 
+ 146:../../CM7/Core/Src/opus_buffer.c **** 		//} else {
+ 147:../../CM7/Core/Src/opus_buffer.c **** 
+ 148:../../CM7/Core/Src/opus_buffer.c **** 			//if (pcm1753_AudioBufferGetFree() > pcm1753_AudioBufferGetFull()) { //если в pcm1753 св�
+ 149:../../CM7/Core/Src/opus_buffer.c **** 			//	pu_from_OpusBuffer_in_pcm1753_task_data();
+ 150:../../CM7/Core/Src/opus_buffer.c **** 			//}
+ 151:../../CM7/Core/Src/opus_buffer.c **** 
+ 152:../../CM7/Core/Src/opus_buffer.c **** 
+ 153:../../CM7/Core/Src/opus_buffer.c **** 		//}
+ 154:../../CM7/Core/Src/opus_buffer.c **** 
+ 155:../../CM7/Core/Src/opus_buffer.c **** 	}
+ 156:../../CM7/Core/Src/opus_buffer.c **** 	else {
+ 157:../../CM7/Core/Src/opus_buffer.c **** 		opus_buffer_strategy = 0;
+ 158:../../CM7/Core/Src/opus_buffer.c **** 	}
+ 159:../../CM7/Core/Src/opus_buffer.c **** 
+ 160:../../CM7/Core/Src/opus_buffer.c **** 
+ 161:../../CM7/Core/Src/opus_buffer.c **** }
+ 162:../../CM7/Core/Src/opus_buffer.c **** */
+ 163:../../CM7/Core/Src/opus_buffer.c **** 
+ 164:../../CM7/Core/Src/opus_buffer.c **** int opus_buffer_procent_full(void)
+ 165:../../CM7/Core/Src/opus_buffer.c **** {
+ 202              		.loc 1 165 1 is_stmt 1 view -0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206 0000 10B5     		push	{r4, lr}
+ 207              	.LCFI6:
+ 208              		.cfi_def_cfa_offset 8
+ 209              		.cfi_offset 4, -8
+ 210              		.cfi_offset 14, -4
+ 166:../../CM7/Core/Src/opus_buffer.c **** 	size_t max = OPUS_BUF_GET_MAX_SIZE;
+ 211              		.loc 1 166 2 view .LVU29
+ 212              		.loc 1 166 15 is_stmt 0 view .LVU30
+ 213 0002 0848     		ldr	r0, .L25
+ 214 0004 FFF7FEFF 		bl	dynamic_buf_get_max_alloc_size
+ 215              	.LVL12:
+ 167:../../CM7/Core/Src/opus_buffer.c **** 
+ 168:../../CM7/Core/Src/opus_buffer.c **** 	return max ? (OPUS_BUF_FULL_SIZE * 100 / max) : 0;
+ 216              		.loc 1 168 2 is_stmt 1 view .LVU31
+ 217              		.loc 1 168 48 is_stmt 0 view .LVU32
+ 218 0008 08B9     		cbnz	r0, .L24
+ 219              		.loc 1 168 48 discriminator 2 view .LVU33
+ 220 000a 0020     		movs	r0, #0
+ 221              	.LVL13:
+ 222              	.L20:
+ 169:../../CM7/Core/Src/opus_buffer.c **** }
+ 223              		.loc 1 169 1 view .LVU34
+ 224 000c 10BD     		pop	{r4, pc}
+ 225              	.LVL14:
+ 226              	.L24:
+ 227              		.loc 1 169 1 view .LVU35
+ 228 000e 0446     		mov	r4, r0
+ 168:../../CM7/Core/Src/opus_buffer.c **** }
+ 229              		.loc 1 168 16 discriminator 1 view .LVU36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 8
+
+
+ 230 0010 0448     		ldr	r0, .L25
+ 231              	.LVL15:
+ 168:../../CM7/Core/Src/opus_buffer.c **** }
+ 232              		.loc 1 168 16 discriminator 1 view .LVU37
+ 233 0012 FFF7FEFF 		bl	dynamic_buf_get_data_size
+ 234              	.LVL16:
+ 168:../../CM7/Core/Src/opus_buffer.c **** }
+ 235              		.loc 1 168 35 discriminator 1 view .LVU38
+ 236 0016 6423     		movs	r3, #100
+ 237 0018 03FB00F0 		mul	r0, r3, r0
+ 168:../../CM7/Core/Src/opus_buffer.c **** }
+ 238              		.loc 1 168 41 discriminator 1 view .LVU39
+ 239 001c B0FBF4F0 		udiv	r0, r0, r4
+ 240 0020 F4E7     		b	.L20
+ 241              	.L26:
+ 242 0022 00BF     		.align	2
+ 243              	.L25:
+ 244 0024 00000000 		.word	OpusBuffer
+ 245              		.cfi_endproc
+ 246              	.LFE349:
+ 248              		.section	.text.opus_buffer_task,"ax",%progbits
+ 249              		.align	1
+ 250              		.global	opus_buffer_task
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 255              	opus_buffer_task:
+ 256              	.LFB348:
+ 100:../../CM7/Core/Src/opus_buffer.c **** 
+ 257              		.loc 1 100 1 is_stmt 1 view -0
+ 258              		.cfi_startproc
+ 259              		@ args = 0, pretend = 0, frame = 0
+ 260              		@ frame_needed = 0, uses_anonymous_args = 0
+ 261 0000 08B5     		push	{r3, lr}
+ 262              	.LCFI7:
+ 263              		.cfi_def_cfa_offset 8
+ 264              		.cfi_offset 3, -8
+ 265              		.cfi_offset 14, -4
+ 102:../../CM7/Core/Src/opus_buffer.c **** 
+ 266              		.loc 1 102 2 view .LVU41
+ 102:../../CM7/Core/Src/opus_buffer.c **** 
+ 267              		.loc 1 102 6 is_stmt 0 view .LVU42
+ 268 0002 0B4B     		ldr	r3, .L32
+ 269 0004 1B68     		ldr	r3, [r3]
+ 102:../../CM7/Core/Src/opus_buffer.c **** 
+ 270              		.loc 1 102 5 view .LVU43
+ 271 0006 3BB1     		cbz	r3, .L27
+ 105:../../CM7/Core/Src/opus_buffer.c **** 
+ 272              		.loc 1 105 5 is_stmt 1 view .LVU44
+ 105:../../CM7/Core/Src/opus_buffer.c **** 
+ 273              		.loc 1 105 9 is_stmt 0 view .LVU45
+ 274 0008 FFF7FEFF 		bl	pcm1753_is_DMA_started
+ 275              	.LVL17:
+ 105:../../CM7/Core/Src/opus_buffer.c **** 
+ 276              		.loc 1 105 8 discriminator 1 view .LVU46
+ 277 000c 40B1     		cbz	r0, .L29
+ 107:../../CM7/Core/Src/opus_buffer.c **** 			opus_buffer_task_data();
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 9
+
+
+ 278              		.loc 1 107 3 is_stmt 1 view .LVU47
+ 107:../../CM7/Core/Src/opus_buffer.c **** 			opus_buffer_task_data();
+ 279              		.loc 1 107 7 is_stmt 0 view .LVU48
+ 280 000e FFF7FEFF 		bl	pcm1753_AudioBufferGetFree
+ 281              	.LVL18:
+ 107:../../CM7/Core/Src/opus_buffer.c **** 			opus_buffer_task_data();
+ 282              		.loc 1 107 6 discriminator 1 view .LVU49
+ 283 0012 B0F5B45F 		cmp	r0, #5760
+ 284 0016 00D8     		bhi	.L31
+ 285              	.L27:
+ 124:../../CM7/Core/Src/opus_buffer.c **** 
+ 286              		.loc 1 124 1 view .LVU50
+ 287 0018 08BD     		pop	{r3, pc}
+ 288              	.L31:
+ 108:../../CM7/Core/Src/opus_buffer.c **** 		}
+ 289              		.loc 1 108 4 is_stmt 1 view .LVU51
+ 290 001a FFF7FEFF 		bl	opus_buffer_task_data
+ 291              	.LVL19:
+ 292 001e FBE7     		b	.L27
+ 293              	.L29:
+ 113:../../CM7/Core/Src/opus_buffer.c ****     		opus_buffer_task_data();
+ 294              		.loc 1 113 6 view .LVU52
+ 113:../../CM7/Core/Src/opus_buffer.c ****     		opus_buffer_task_data();
+ 295              		.loc 1 113 10 is_stmt 0 view .LVU53
+ 296 0020 FFF7FEFF 		bl	opus_buffer_procent_full
+ 297              	.LVL20:
+ 113:../../CM7/Core/Src/opus_buffer.c ****     		opus_buffer_task_data();
+ 298              		.loc 1 113 9 discriminator 1 view .LVU54
+ 299 0024 3228     		cmp	r0, #50
+ 300 0026 F7DD     		ble	.L27
+ 114:../../CM7/Core/Src/opus_buffer.c ****     	}
+ 301              		.loc 1 114 7 is_stmt 1 view .LVU55
+ 302 0028 FFF7FEFF 		bl	opus_buffer_task_data
+ 303              	.LVL21:
+ 304 002c F4E7     		b	.L27
+ 305              	.L33:
+ 306 002e 00BF     		.align	2
+ 307              	.L32:
+ 308 0030 00000000 		.word	OpusBuffer
+ 309              		.cfi_endproc
+ 310              	.LFE348:
+ 312              		.section	.data.OpusBuffer,"aw"
+ 313              		.align	2
+ 316              	OpusBuffer:
+ 317 0000 00000000 		.word	0
+ 318 0004 00       		.byte	0
+ 319 0005 00000100 		.4byte	65536
+ 320 0009 00000000 		.4byte	0
+ 321 000d 00000000 		.4byte	0
+ 322 0011 00000000 		.4byte	0
+ 323              		.text
+ 324              	.Letext0:
+ 325              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 326              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 327              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 328              		.file 5 "../../opus/celt/celt.h"
+ 329              		.file 6 "../../util/dynbuf_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 10
+
+
+ 330              		.file 7 "../../pcm1753/pcm1753.h"
+ 331              		.file 8 "../../CM7/Core/Inc/pu.h"
+ 332              		.file 9 "../../util/stm_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 opus_buffer.c
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:20     .text.opus_buffer_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:26     .text.opus_buffer_init:00000000 opus_buffer_init
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:39     .text.opus_buffer_clear:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:45     .text.opus_buffer_clear:00000000 opus_buffer_clear
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:66     .text.opus_buffer_clear:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:316    .data.OpusBuffer:00000000 OpusBuffer
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:71     .rodata.opus_buffer_put.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:75     .text.opus_buffer_put:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:81     .text.opus_buffer_put:00000000 opus_buffer_put
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:128    .text.opus_buffer_put:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:134    .text.opus_buffer_task_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:140    .text.opus_buffer_task_data:00000000 opus_buffer_task_data
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:189    .text.opus_buffer_task_data:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:194    .text.opus_buffer_procent_full:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:200    .text.opus_buffer_procent_full:00000000 opus_buffer_procent_full
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:244    .text.opus_buffer_procent_full:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:249    .text.opus_buffer_task:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:255    .text.opus_buffer_task:00000000 opus_buffer_task
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:308    .text.opus_buffer_task:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\cc5XcpBe.s:313    .data.OpusBuffer:00000000 $d
+
+UNDEFINED SYMBOLS
+dynamic_buf_clear
+dynamic_buf_push_io
+fulog_fmt
+dynamic_buf_pop_io
+pu_put_opus_in_pcm1753_now
+dynamic_buf_get_max_alloc_size
+dynamic_buf_get_data_size
+pcm1753_is_DMA_started
+pcm1753_AudioBufferGetFree

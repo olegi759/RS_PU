@@ -1,0 +1,935 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"tables_NLSF_CB_WB.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/tables_NLSF_CB_WB.c"
+  19              		.global	silk_NLSF_CB_WB
+  20              		.section	.rodata.silk_NLSF_CB_WB,"a"
+  21              		.align	2
+  24              	silk_NLSF_CB_WB:
+  25 0000 2000     		.short	32
+  26 0002 1000     		.short	16
+  27 0004 6626     		.short	9830
+  28 0006 AB01     		.short	427
+  29 0008 00000000 		.word	silk_NLSF_CB1_WB_Q8
+  30 000c 00000000 		.word	silk_NLSF_CB1_WB_Wght_Q9
+  31 0010 00000000 		.word	silk_NLSF_CB1_iCDF_WB
+  32 0014 00000000 		.word	silk_NLSF_PRED_WB_Q8
+  33 0018 00000000 		.word	silk_NLSF_CB2_SELECT_WB
+  34 001c 00000000 		.word	silk_NLSF_CB2_iCDF_WB
+  35 0020 00000000 		.word	silk_NLSF_CB2_BITS_WB_Q5
+  36 0024 00000000 		.word	silk_NLSF_DELTA_MIN_WB_Q15
+  37              		.section	.rodata.silk_NLSF_DELTA_MIN_WB_Q15,"a"
+  38              		.align	2
+  41              	silk_NLSF_DELTA_MIN_WB_Q15:
+  42 0000 6400     		.short	100
+  43 0002 0300     		.short	3
+  44 0004 2800     		.short	40
+  45 0006 0300     		.short	3
+  46 0008 0300     		.short	3
+  47 000a 0300     		.short	3
+  48 000c 0500     		.short	5
+  49 000e 0E00     		.short	14
+  50 0010 0E00     		.short	14
+  51 0012 0A00     		.short	10
+  52 0014 0B00     		.short	11
+  53 0016 0300     		.short	3
+  54 0018 0800     		.short	8
+  55 001a 0900     		.short	9
+  56 001c 0700     		.short	7
+  57 001e 0300     		.short	3
+  58 0020 5B01     		.short	347
+  59              		.section	.rodata.silk_NLSF_PRED_WB_Q8,"a"
+  60              		.align	2
+  63              	silk_NLSF_PRED_WB_Q8:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 2
+
+
+  64 0000 AF94A0B0 		.ascii	"\257\224\240\260\262\255\256\244\261\256\304\266\306"
+  64      B2ADAEA4 
+  64      B1AEC4B6 
+  64      C6
+  65 000d C0B6443E 		.ascii	"\300\266D>B<HuUZv\210\227\216\240\216\233"
+  65      423C4875 
+  65      555A7688 
+  65      978EA08E 
+  65      9B
+  66              		.section	.rodata.silk_NLSF_CB2_BITS_WB_Q5,"a"
+  67              		.align	2
+  70              	silk_NLSF_CB2_BITS_WB_Q5:
+  71 0000 FFFFFF9C 		.ascii	"\377\377\377\234\004\232\377\377\377\377\377\343f\017"
+  71      049AFFFF 
+  71      FFFFFFE3 
+  71      660F
+  72 000e 5CFFFFFF 		.ascii	"\\\377\377\377\377\377\325S\030H\354\377\377\377\377"
+  72      FFFFD553 
+  72      1848ECFF 
+  72      FFFFFF
+  73 001d 964C213F 		.ascii	"\226L!?\326\377\377\377\276yM+7\271\377\377\377\365"
+  73      D6FFFFFF 
+  73      BE794D2B 
+  73      37B9FFFF 
+  73      FFF5
+  74 002f 89472B3B 		.ascii	"\211G+;\213\377\377\377\377\203B2Bk\302\377\377\246"
+  74      8BFFFFFF 
+  74      FF834232 
+  74      426BC2FF 
+  74      FFA6
+  75 0041 744C3735 		.ascii	"tL75}\377\377"
+  75      7DFFFF
+  76              		.section	.rodata.silk_NLSF_CB2_iCDF_WB,"a"
+  77              		.align	2
+  80              	silk_NLSF_CB2_iCDF_WB:
+  81 0000 FFFEFDF4 		.ascii	"\377\376\375\364\014\003\002\001\000\377\376\374\340"
+  81      0C030201 
+  81      00FFFEFC 
+  81      E0
+  82 000d 26030201 		.ascii	"&\003\002\001\000\377\376\373\3219\004\002\001\000\377"
+  82      00FFFEFB 
+  82      D1390402 
+  82      0100FF
+  83 001c FEF4C345 		.ascii	"\376\364\303E\004\002\001\000\377\373\350\270T\007\002"
+  83      04020100 
+  83      FFFBE8B8 
+  83      540702
+  84 002b 0100FFFE 		.ascii	"\001\000\377\376\360\272V\016\002\001\000\377\376\357"
+  84      F0BA560E 
+  84      020100FF 
+  84      FEEF
+  85 0039 B25B1E05 		.ascii	"\262[\036\005\001\000\377\370\343\261d\023\002\001\000"
+  85      0100FFF8 
+  85      E3B16413 
+  85      020100
+  86              		.section	.rodata.silk_NLSF_CB2_SELECT_WB,"a"
+  87              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 3
+
+
+  90              	silk_NLSF_CB2_SELECT_WB:
+  91 0000 00000000 		.ascii	"\000\000\000\000\000\000\000\001dffDD$\"`\244k\236\271"
+  91      00000001 
+  91      64666644 
+  91      44242260 
+  91      A46B9EB9 
+  92 0014 B4B98B66 		.ascii	"\264\271\213f@B$\"\"\000\001 \320\213\215\277\230\271"
+  92      40422422 
+  92      22000120 
+  92      D08B8DBF 
+  92      98B9
+  93 0026 9B6860AB 		.ascii	"\233h`\253h\246fff\204\001\000\000\000\000\020\020\000"
+  93      68A66666 
+  93      66840100 
+  93      00000010 
+  93      1000
+  94 0038 506D4E6B 		.ascii	"PmNk\271\213ge\320\324\215\213\255\231{g$\000\000\000"
+  94      B98B6765 
+  94      D0D48D8B 
+  94      AD997B67 
+  94      24000000 
+  95 004c 00000001 		.ascii	"\000\000\000\0010\000\000\000\000\000\000 D\207{wwg"
+  95      30000000 
+  95      00000020 
+  95      44877B77 
+  95      7767
+  96 005e 45624467 		.ascii	"EbDgxvvfGb\206\210\235\270\266\231\213\206\320\250\370"
+  96      78767666 
+  96      47628688 
+  96      9DB8B699 
+  96      8B86D0A8 
+  97 0073 4BBD8F79 		.ascii	"K\275\217yk 1\"\"\"\000\021\002\322\353\213{\271\211"
+  97      6B203122 
+  97      22220011 
+  97      02D2EB8B 
+  97      7BB989
+  98 0086 69866287 		.ascii	"i\206b\207h\266d\267\253\206dFDFBB\"\203@\246fD$\002"
+  98      68B664B7 
+  98      AB866446 
+  98      44464242 
+  98      228340A6 
+  99 009e 010086A6 		.ascii	"\001\000\206\246fD\"\"B\204\324\366\236\213kkWfd\333"
+  99      66442222 
+  99      4284D4F6 
+  99      9E8B6B6B 
+  99      576664DB 
+ 100 00b2 7D7A8976 		.ascii	"}z\211vg\204r\207\211i\253j2\"\244\326\215\217\271\227"
+ 100      67847287 
+ 100      8969AB6A 
+ 100      3222A4D6 
+ 100      8D8FB997 
+ 101 00c6 7967C022 		.ascii	"yg\300\"\000\000\000\000\000\001\320mJ\273\206\371\237"
+ 101      00000000 
+ 101      0001D06D 
+ 101      4ABB86F9 
+ 101      9F
+ 102 00d7 89666E9A 		.ascii	"\211fn\232vWewe\000\002\000$$BD#`\244fd$\000\002!\247"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 4
+
+
+ 102      76576577 
+ 102      65000200 
+ 102      24244244 
+ 102      2360A466 
+ 103 00f1 8AAE6664 		.ascii	"\212\256fdT\002\002dkxw$\305\030\000"
+ 103      54020264 
+ 103      6B787724 
+ 103      C51800
+ 104              		.section	.rodata.silk_NLSF_CB1_iCDF_WB,"a"
+ 105              		.align	2
+ 108              	silk_NLSF_CB1_iCDF_WB:
+ 109 0000 E1CCC9B8 		.ascii	"\341\314\311\270\267\257\236\232\231\207wsqnmcb_OD4"
+ 109      B7AF9E9A 
+ 109      99877773 
+ 109      716E6D63 
+ 109      625F4F44 
+ 110 0015 32302D2B 		.ascii	"20-+ \037\033\022\012\003\000\377\373\353\346\324\311"
+ 110      201F1B12 
+ 110      0A0300FF 
+ 110      FBEBE6D4 
+ 110      C9
+ 111 0026 C4B6A7A6 		.ascii	"\304\266\247\246\243\227\212|nhZNLFE9-\"\030\025\013"
+ 111      A3978A7C 
+ 111      6E685A4E 
+ 111      4C464539 
+ 111      2D221815 
+ 112 003b 06050403 		.ascii	"\006\005\004\003\000"
+ 112      00
+ 113              		.section	.rodata.silk_NLSF_CB1_WB_Wght_Q9,"a"
+ 114              		.align	2
+ 117              	silk_NLSF_CB1_WB_Wght_Q9:
+ 118 0000 490E     		.short	3657
+ 119 0002 6D0B     		.short	2925
+ 120 0004 6D0B     		.short	2925
+ 121 0006 6D0B     		.short	2925
+ 122 0008 6D0B     		.short	2925
+ 123 000a 6D0B     		.short	2925
+ 124 000c 6D0B     		.short	2925
+ 125 000e 6D0B     		.short	2925
+ 126 0010 6D0B     		.short	2925
+ 127 0012 6D0B     		.short	2925
+ 128 0014 6D0B     		.short	2925
+ 129 0016 6D0B     		.short	2925
+ 130 0018 930B     		.short	2963
+ 131 001a 930B     		.short	2963
+ 132 001c 6D0B     		.short	2925
+ 133 001e 1E0B     		.short	2846
+ 134 0020 900C     		.short	3216
+ 135 0022 0D0C     		.short	3085
+ 136 0024 9C0B     		.short	2972
+ 137 0026 F00B     		.short	3056
+ 138 0028 F00B     		.short	3056
+ 139 002a C20B     		.short	3010
+ 140 002c C20B     		.short	3010
+ 141 002e C20B     		.short	3010
+ 142 0030 930B     		.short	2963
+ 143 0032 930B     		.short	2963
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 5
+
+
+ 144 0034 C20B     		.short	3010
+ 145 0036 9C0B     		.short	2972
+ 146 0038 480B     		.short	2888
+ 147 003a 1E0B     		.short	2846
+ 148 003c 1E0B     		.short	2846
+ 149 003e A60A     		.short	2726
+ 150 0040 500F     		.short	3920
+ 151 0042 AE0F     		.short	4014
+ 152 0044 A50B     		.short	2981
+ 153 0046 870C     		.short	3207
+ 154 0048 870C     		.short	3207
+ 155 004a 760B     		.short	2934
+ 156 004c F00B     		.short	3056
+ 157 004e 1E0B     		.short	2846
+ 158 0050 320C     		.short	3122
+ 159 0052 AC0C     		.short	3244
+ 160 0054 6D0B     		.short	2925
+ 161 0056 1E0B     		.short	2846
+ 162 0058 3C0A     		.short	2620
+ 163 005a F909     		.short	2553
+ 164 005c DC0A     		.short	2780
+ 165 005e 6D0B     		.short	2925
+ 166 0060 BC0D     		.short	3516
+ 167 0062 7D0C     		.short	3197
+ 168 0064 C20B     		.short	3010
+ 169 0066 1F0C     		.short	3103
+ 170 0068 CB0B     		.short	3019
+ 171 006a 480B     		.short	2888
+ 172 006c 6D0B     		.short	2925
+ 173 006e 6D0B     		.short	2925
+ 174 0070 6D0B     		.short	2925
+ 175 0072 6D0B     		.short	2925
+ 176 0074 480B     		.short	2888
+ 177 0076 480B     		.short	2888
+ 178 0078 480B     		.short	2888
+ 179 007a 480B     		.short	2888
+ 180 007c 480B     		.short	2888
+ 181 007e C10A     		.short	2753
+ 182 0080 BE13     		.short	5054
+ 183 0082 BE13     		.short	5054
+ 184 0084 760B     		.short	2934
+ 185 0086 F50D     		.short	3573
+ 186 0088 390D     		.short	3385
+ 187 008a F00B     		.short	3056
+ 188 008c 0D0C     		.short	3085
+ 189 008e E90A     		.short	2793
+ 190 0090 580C     		.short	3160
+ 191 0092 580C     		.short	3160
+ 192 0094 9C0B     		.short	2972
+ 193 0096 1E0B     		.short	2846
+ 194 0098 D109     		.short	2513
+ 195 009a EC09     		.short	2540
+ 196 009c C10A     		.short	2753
+ 197 009e 480B     		.short	2888
+ 198 00a0 4C11     		.short	4428
+ 199 00a2 3510     		.short	4149
+ 200 00a4 8C0A     		.short	2700
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 6
+
+
+ 201 00a6 C10A     		.short	2753
+ 202 00a8 9C0B     		.short	2972
+ 203 00aa C20B     		.short	3010
+ 204 00ac 6D0B     		.short	2925
+ 205 00ae 1E0B     		.short	2846
+ 206 00b0 A50B     		.short	2981
+ 207 00b2 CB0B     		.short	3019
+ 208 00b4 6D0B     		.short	2925
+ 209 00b6 6D0B     		.short	2925
+ 210 00b8 6D0B     		.short	2925
+ 211 00ba 6D0B     		.short	2925
+ 212 00bc 480B     		.short	2888
+ 213 00be A60A     		.short	2726
+ 214 00c0 240E     		.short	3620
+ 215 00c2 CB0B     		.short	3019
+ 216 00c4 9C0B     		.short	2972
+ 217 00c6 F00B     		.short	3056
+ 218 00c8 F00B     		.short	3056
+ 219 00ca 390B     		.short	2873
+ 220 00cc F60A     		.short	2806
+ 221 00ce F00B     		.short	3056
+ 222 00d0 900C     		.short	3216
+ 223 00d2 E70B     		.short	3047
+ 224 00d4 A50B     		.short	2981
+ 225 00d6 DB0C     		.short	3291
+ 226 00d8 DB0C     		.short	3291
+ 227 00da A50B     		.short	2981
+ 228 00dc EE0C     		.short	3310
+ 229 00de AF0B     		.short	2991
+ 230 00e0 6B14     		.short	5227
+ 231 00e2 9613     		.short	5014
+ 232 00e4 EC09     		.short	2540
+ 233 00e6 0A0D     		.short	3338
+ 234 00e8 C60D     		.short	3526
+ 235 00ea 390D     		.short	3385
+ 236 00ec 7D0C     		.short	3197
+ 237 00ee 160C     		.short	3094
+ 238 00f0 300D     		.short	3376
+ 239 00f2 A50B     		.short	2981
+ 240 00f4 8C0A     		.short	2700
+ 241 00f6 570A     		.short	2647
+ 242 00f8 7F0A     		.short	2687
+ 243 00fa E90A     		.short	2793
+ 244 00fc 1E0B     		.short	2846
+ 245 00fe 710A     		.short	2673
+ 246 0100 D913     		.short	5081
+ 247 0102 3614     		.short	5174
+ 248 0104 0712     		.short	4615
+ 249 0106 4C11     		.short	4428
+ 250 0108 9C09     		.short	2460
+ 251 010a 510B     		.short	2897
+ 252 010c E70B     		.short	3047
+ 253 010e 870C     		.short	3207
+ 254 0110 610C     		.short	3169
+ 255 0112 7F0A     		.short	2687
+ 256 0114 B40A     		.short	2740
+ 257 0116 480B     		.short	2888
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 7
+
+
+ 258 0118 1E0B     		.short	2846
+ 259 011a E90A     		.short	2793
+ 260 011c 1E0B     		.short	2846
+ 261 011e 8C0A     		.short	2700
+ 262 0120 320C     		.short	3122
+ 263 0122 480B     		.short	2888
+ 264 0124 930B     		.short	2963
+ 265 0126 6D0B     		.short	2925
+ 266 0128 6D0B     		.short	2925
+ 267 012a 6D0B     		.short	2925
+ 268 012c 6D0B     		.short	2925
+ 269 012e 930B     		.short	2963
+ 270 0130 930B     		.short	2963
+ 271 0132 930B     		.short	2963
+ 272 0134 930B     		.short	2963
+ 273 0136 6D0B     		.short	2925
+ 274 0138 6D0B     		.short	2925
+ 275 013a 930B     		.short	2963
+ 276 013c 930B     		.short	2963
+ 277 013e 930B     		.short	2963
+ 278 0140 6A10     		.short	4202
+ 279 0142 870C     		.short	3207
+ 280 0144 A50B     		.short	2981
+ 281 0146 1F0C     		.short	3103
+ 282 0148 C20B     		.short	3010
+ 283 014a 480B     		.short	2888
+ 284 014c 480B     		.short	2888
+ 285 014e 6D0B     		.short	2925
+ 286 0150 9C0B     		.short	2972
+ 287 0152 390B     		.short	2873
+ 288 0154 640B     		.short	2916
+ 289 0156 CB0B     		.short	3019
+ 290 0158 9C0B     		.short	2972
+ 291 015a C20B     		.short	3010
+ 292 015c 7D0C     		.short	3197
+ 293 015e 390B     		.short	2873
+ 294 0160 B00E     		.short	3760
+ 295 0162 B00E     		.short	3760
+ 296 0164 AC0C     		.short	3244
+ 297 0166 1F0C     		.short	3103
+ 298 0168 A50B     		.short	2981
+ 299 016a 480B     		.short	2888
+ 300 016c 6D0B     		.short	2925
+ 301 016e 480B     		.short	2888
+ 302 0170 9C0B     		.short	2972
+ 303 0172 760B     		.short	2934
+ 304 0174 E90A     		.short	2793
+ 305 0176 E90A     		.short	2793
+ 306 0178 1E0B     		.short	2846
+ 307 017a 480B     		.short	2888
+ 308 017c 480B     		.short	2888
+ 309 017e 640A     		.short	2660
+ 310 0180 0E0F     		.short	3854
+ 311 0182 AE0F     		.short	4014
+ 312 0184 870C     		.short	3207
+ 313 0186 320C     		.short	3122
+ 314 0188 AC0C     		.short	3244
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 8
+
+
+ 315 018a 760B     		.short	2934
+ 316 018c E70B     		.short	3047
+ 317 018e 930B     		.short	2963
+ 318 0190 930B     		.short	2963
+ 319 0192 0D0C     		.short	3085
+ 320 0194 1E0B     		.short	2846
+ 321 0196 E90A     		.short	2793
+ 322 0198 E90A     		.short	2793
+ 323 019a E90A     		.short	2793
+ 324 019c E90A     		.short	2793
+ 325 019e 140A     		.short	2580
+ 326 01a0 050F     		.short	3845
+ 327 01a2 F00F     		.short	4080
+ 328 01a4 1D0D     		.short	3357
+ 329 01a6 BC0D     		.short	3516
+ 330 01a8 160C     		.short	3094
+ 331 01aa B40A     		.short	2740
+ 332 01ac C20B     		.short	3010
+ 333 01ae 760B     		.short	2934
+ 334 01b0 320C     		.short	3122
+ 335 01b2 0D0C     		.short	3085
+ 336 01b4 1E0B     		.short	2846
+ 337 01b6 1E0B     		.short	2846
+ 338 01b8 570A     		.short	2647
+ 339 01ba 570A     		.short	2647
+ 340 01bc 1E0B     		.short	2846
+ 341 01be F60A     		.short	2806
+ 342 01c0 1B14     		.short	5147
+ 343 01c2 1E13     		.short	4894
+ 344 01c4 990C     		.short	3225
+ 345 01c6 050F     		.short	3845
+ 346 01c8 710D     		.short	3441
+ 347 01ca 610C     		.short	3169
+ 348 01cc 510B     		.short	2897
+ 349 01ce 550D     		.short	3413
+ 350 01d0 7B0D     		.short	3451
+ 351 01d2 8C0A     		.short	2700
+ 352 01d4 140A     		.short	2580
+ 353 01d6 710A     		.short	2673
+ 354 01d8 B40A     		.short	2740
+ 355 01da 1E0B     		.short	2846
+ 356 01dc F60A     		.short	2806
+ 357 01de C10A     		.short	2753
+ 358 01e0 0D10     		.short	4109
+ 359 01e2 CD0E     		.short	3789
+ 360 01e4 DB0C     		.short	3291
+ 361 01e6 580C     		.short	3160
+ 362 01e8 6D0B     		.short	2925
+ 363 01ea 480B     		.short	2888
+ 364 01ec 480B     		.short	2888
+ 365 01ee 6D0B     		.short	2925
+ 366 01f0 E90A     		.short	2793
+ 367 01f2 B40A     		.short	2740
+ 368 01f4 E90A     		.short	2793
+ 369 01f6 B40A     		.short	2740
+ 370 01f8 E90A     		.short	2793
+ 371 01fa 1E0B     		.short	2846
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 9
+
+
+ 372 01fc 480B     		.short	2888
+ 373 01fe F60A     		.short	2806
+ 374 0200 D913     		.short	5081
+ 375 0202 BE13     		.short	5054
+ 376 0204 E70B     		.short	3047
+ 377 0206 D90D     		.short	3545
+ 378 0208 AC0C     		.short	3244
+ 379 020a F00B     		.short	3056
+ 380 020c 0D0C     		.short	3085
+ 381 020e 800B     		.short	2944
+ 382 0210 1F0C     		.short	3103
+ 383 0212 510B     		.short	2897
+ 384 0214 B40A     		.short	2740
+ 385 0216 B40A     		.short	2740
+ 386 0218 B40A     		.short	2740
+ 387 021a 1E0B     		.short	2846
+ 388 021c E90A     		.short	2793
+ 389 021e 3C0A     		.short	2620
+ 390 0220 D510     		.short	4309
+ 391 0222 D510     		.short	4309
+ 392 0224 2C0B     		.short	2860
+ 393 0226 DF09     		.short	2527
+ 394 0228 870C     		.short	3207
+ 395 022a 300D     		.short	3376
+ 396 022c 300D     		.short	3376
+ 397 022e 030C     		.short	3075
+ 398 0230 030C     		.short	3075
+ 399 0232 300D     		.short	3376
+ 400 0234 F00B     		.short	3056
+ 401 0236 1E0B     		.short	2846
+ 402 0238 570A     		.short	2647
+ 403 023a 140A     		.short	2580
+ 404 023c A60A     		.short	2726
+ 405 023e C10A     		.short	2753
+ 406 0240 F00B     		.short	3056
+ 407 0242 640B     		.short	2916
+ 408 0244 F60A     		.short	2806
+ 409 0246 480B     		.short	2888
+ 410 0248 B40A     		.short	2740
+ 411 024a 7F0A     		.short	2687
+ 412 024c 510B     		.short	2897
+ 413 024e 1F0C     		.short	3103
+ 414 0250 4E0C     		.short	3150
+ 415 0252 4E0C     		.short	3150
+ 416 0254 900C     		.short	3216
+ 417 0256 610C     		.short	3169
+ 418 0258 F00B     		.short	3056
+ 419 025a C20B     		.short	3010
+ 420 025c 930B     		.short	2963
+ 421 025e 1E0B     		.short	2846
+ 422 0260 1711     		.short	4375
+ 423 0262 2A0F     		.short	3882
+ 424 0264 6D0B     		.short	2925
+ 425 0266 480B     		.short	2888
+ 426 0268 1E0B     		.short	2846
+ 427 026a 480B     		.short	2888
+ 428 026c 1E0B     		.short	2846
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 10
+
+
+ 429 026e 1E0B     		.short	2846
+ 430 0270 480B     		.short	2888
+ 431 0272 480B     		.short	2888
+ 432 0274 480B     		.short	2888
+ 433 0276 1E0B     		.short	2846
+ 434 0278 480B     		.short	2888
+ 435 027a 6D0B     		.short	2925
+ 436 027c 480B     		.short	2888
+ 437 027e 1E0B     		.short	2846
+ 438 0280 A50B     		.short	2981
+ 439 0282 640B     		.short	2916
+ 440 0284 640B     		.short	2916
+ 441 0286 A50B     		.short	2981
+ 442 0288 A50B     		.short	2981
+ 443 028a F00B     		.short	3056
+ 444 028c 320C     		.short	3122
+ 445 028e 900C     		.short	3216
+ 446 0290 4E0C     		.short	3150
+ 447 0292 F00B     		.short	3056
+ 448 0294 C20B     		.short	3010
+ 449 0296 9C0B     		.short	2972
+ 450 0298 9C0B     		.short	2972
+ 451 029a 9C0B     		.short	2972
+ 452 029c 6D0B     		.short	2925
+ 453 029e B40A     		.short	2740
+ 454 02a0 8510     		.short	4229
+ 455 02a2 3510     		.short	4149
+ 456 02a4 EE0C     		.short	3310
+ 457 02a6 130D     		.short	3347
+ 458 02a8 6D0B     		.short	2925
+ 459 02aa 930B     		.short	2963
+ 460 02ac 480B     		.short	2888
+ 461 02ae A50B     		.short	2981
+ 462 02b0 A50B     		.short	2981
+ 463 02b2 1E0B     		.short	2846
+ 464 02b4 E90A     		.short	2793
+ 465 02b6 B40A     		.short	2740
+ 466 02b8 1E0B     		.short	2846
+ 467 02ba 1E0B     		.short	2846
+ 468 02bc 1E0B     		.short	2846
+ 469 02be E90A     		.short	2793
+ 470 02c0 F00F     		.short	4080
+ 471 02c2 AE0F     		.short	4014
+ 472 02c4 1F0C     		.short	3103
+ 473 02c6 C20B     		.short	3010
+ 474 02c8 6D0B     		.short	2925
+ 475 02ca 6D0B     		.short	2925
+ 476 02cc 6D0B     		.short	2925
+ 477 02ce 480B     		.short	2888
+ 478 02d0 6D0B     		.short	2925
+ 479 02d2 6D0B     		.short	2925
+ 480 02d4 1E0B     		.short	2846
+ 481 02d6 1E0B     		.short	2846
+ 482 02d8 1E0B     		.short	2846
+ 483 02da E90A     		.short	2793
+ 484 02dc 480B     		.short	2888
+ 485 02de DC0A     		.short	2780
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 11
+
+
+ 486 02e0 0712     		.short	4615
+ 487 02e2 DF11     		.short	4575
+ 488 02e4 610C     		.short	3169
+ 489 02e6 710D     		.short	3441
+ 490 02e8 870C     		.short	3207
+ 491 02ea A50B     		.short	2981
+ 492 02ec 510B     		.short	2897
+ 493 02ee DE0B     		.short	3038
+ 494 02f0 320C     		.short	3122
+ 495 02f2 B40A     		.short	2740
+ 496 02f4 7F0A     		.short	2687
+ 497 02f6 7F0A     		.short	2687
+ 498 02f8 7F0A     		.short	2687
+ 499 02fa B40A     		.short	2740
+ 500 02fc E90A     		.short	2793
+ 501 02fe 8C0A     		.short	2700
+ 502 0300 3510     		.short	4149
+ 503 0302 AD10     		.short	4269
+ 504 0304 CD0E     		.short	3789
+ 505 0306 490E     		.short	3657
+ 506 0308 A60A     		.short	2726
+ 507 030a DC0A     		.short	2780
+ 508 030c 480B     		.short	2888
+ 509 030e 480B     		.short	2888
+ 510 0310 C20B     		.short	3010
+ 511 0312 9C0B     		.short	2972
+ 512 0314 6D0B     		.short	2925
+ 513 0316 1E0B     		.short	2846
+ 514 0318 7F0A     		.short	2687
+ 515 031a 7F0A     		.short	2687
+ 516 031c E90A     		.short	2793
+ 517 031e 480B     		.short	2888
+ 518 0320 7710     		.short	4215
+ 519 0322 E20D     		.short	3554
+ 520 0324 C10A     		.short	2753
+ 521 0326 1E0B     		.short	2846
+ 522 0328 1E0B     		.short	2846
+ 523 032a 480B     		.short	2888
+ 524 032c 480B     		.short	2888
+ 525 032e 480B     		.short	2888
+ 526 0330 6D0B     		.short	2925
+ 527 0332 6D0B     		.short	2925
+ 528 0334 480B     		.short	2888
+ 529 0336 6D0B     		.short	2925
+ 530 0338 6D0B     		.short	2925
+ 531 033a 6D0B     		.short	2925
+ 532 033c 930B     		.short	2963
+ 533 033e 480B     		.short	2888
+ 534 0340 3614     		.short	5174
+ 535 0342 3913     		.short	4921
+ 536 0344 D508     		.short	2261
+ 537 0346 680D     		.short	3432
+ 538 0348 CD0E     		.short	3789
+ 539 034a 970D     		.short	3479
+ 540 034c 130D     		.short	3347
+ 541 034e 1E0B     		.short	2846
+ 542 0350 EE0C     		.short	3310
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 12
+
+
+ 543 0352 970D     		.short	3479
+ 544 0354 4E0C     		.short	3150
+ 545 0356 510B     		.short	2897
+ 546 0358 9C09     		.short	2460
+ 547 035a B709     		.short	2487
+ 548 035c C10A     		.short	2753
+ 549 035e 6D0B     		.short	2925
+ 550 0360 7B0D     		.short	3451
+ 551 0362 650E     		.short	3685
+ 552 0364 320C     		.short	3122
+ 553 0366 7D0C     		.short	3197
+ 554 0368 1D0D     		.short	3357
+ 555 036a E70B     		.short	3047
+ 556 036c 870C     		.short	3207
+ 557 036e 870C     		.short	3207
+ 558 0370 A50B     		.short	2981
+ 559 0372 900C     		.short	3216
+ 560 0374 0D0C     		.short	3085
+ 561 0376 6D0B     		.short	2925
+ 562 0378 6D0B     		.short	2925
+ 563 037a 7F0A     		.short	2687
+ 564 037c EC09     		.short	2540
+ 565 037e 8209     		.short	2434
+ 566 0380 A50B     		.short	2981
+ 567 0382 C20B     		.short	3010
+ 568 0384 E90A     		.short	2793
+ 569 0386 E90A     		.short	2793
+ 570 0388 B40A     		.short	2740
+ 571 038a E90A     		.short	2793
+ 572 038c 1E0B     		.short	2846
+ 573 038e 9C0B     		.short	2972
+ 574 0390 F00B     		.short	3056
+ 575 0392 1F0C     		.short	3103
+ 576 0394 4E0C     		.short	3150
+ 577 0396 4E0C     		.short	3150
+ 578 0398 4E0C     		.short	3150
+ 579 039a 1F0C     		.short	3103
+ 580 039c C20B     		.short	3010
+ 581 039e C20B     		.short	3010
+ 582 03a0 800B     		.short	2944
+ 583 03a2 390B     		.short	2873
+ 584 03a4 7F0A     		.short	2687
+ 585 03a6 A60A     		.short	2726
+ 586 03a8 DC0A     		.short	2780
+ 587 03aa C20B     		.short	3010
+ 588 03ac 680D     		.short	3432
+ 589 03ae D90D     		.short	3545
+ 590 03b0 1D0D     		.short	3357
+ 591 03b2 AC0C     		.short	3244
+ 592 03b4 F00B     		.short	3056
+ 593 03b6 C20B     		.short	3010
+ 594 03b8 930B     		.short	2963
+ 595 03ba 6D0B     		.short	2925
+ 596 03bc 480B     		.short	2888
+ 597 03be 1E0B     		.short	2846
+ 598 03c0 CB0B     		.short	3019
+ 599 03c2 800B     		.short	2944
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 13
+
+
+ 600 03c4 510B     		.short	2897
+ 601 03c6 C20B     		.short	3010
+ 602 03c8 C20B     		.short	3010
+ 603 03ca 9C0B     		.short	2972
+ 604 03cc CB0B     		.short	3019
+ 605 03ce 1F0C     		.short	3103
+ 606 03d0 F00B     		.short	3056
+ 607 03d2 F00B     		.short	3056
+ 608 03d4 C20B     		.short	3010
+ 609 03d6 480B     		.short	2888
+ 610 03d8 1E0B     		.short	2846
+ 611 03da 6D0B     		.short	2925
+ 612 03dc 6D0B     		.short	2925
+ 613 03de 480B     		.short	2888
+ 614 03e0 500F     		.short	3920
+ 615 03e2 7F0F     		.short	3967
+ 616 03e4 C20B     		.short	3010
+ 617 03e6 7D0C     		.short	3197
+ 618 03e8 1D0D     		.short	3357
+ 619 03ea 900C     		.short	3216
+ 620 03ec DB0C     		.short	3291
+ 621 03ee DB0C     		.short	3291
+ 622 03f0 970D     		.short	3479
+ 623 03f2 780E     		.short	3704
+ 624 03f4 710D     		.short	3441
+ 625 03f6 A60A     		.short	2726
+ 626 03f8 8508     		.short	2181
+ 627 03fa 9C09     		.short	2460
+ 628 03fc 140A     		.short	2580
+ 629 03fe 2F0A     		.short	2607
+ 630              		.section	.rodata.silk_NLSF_CB1_WB_Q8,"a"
+ 631              		.align	2
+ 634              	silk_NLSF_CB1_WB_Q8:
+ 635 0000 07172636 		.ascii	"\007\027&6EUdt\203\223\242\262\301\320\337\357\015\031"
+ 635      45556474 
+ 635      8393A2B2 
+ 635      C1D0DFEF 
+ 635      0D19
+ 636 0012 29374553 		.ascii	")7ESbp\177\216\235\253\273\313\334\354\017\025\"3=N"
+ 636      62707F8E 
+ 636      9DABBBCB 
+ 636      DCEC0F15 
+ 636      22333D4E 
+ 637 0026 5C6A7E88 		.ascii	"\\j~\210\230\247\271\315\341\360\012\025$2?O_n~\215"
+ 637      98A7B9CD 
+ 637      E1F00A15 
+ 637      24323F4F 
+ 637      5F6E7E8D 
+ 638 003a 9DADBDCD 		.ascii	"\235\255\275\315\335\355\021\024%3;NYk{\206\226\244"
+ 638      DDED1114 
+ 638      25333B4E 
+ 638      596B7B86 
+ 638      96A4
+ 639 004c B8CDE0F0 		.ascii	"\270\315\340\360\012\017 3CQ`p\201\216\236\255\275\314"
+ 639      0A0F2033 
+ 639      43516070 
+ 639      818E9EAD 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 14
+
+
+ 639      BDCC
+ 640 005e DCEC0815 		.ascii	"\334\354\010\025%3AObq~\212\233\250\263\300\321\332"
+ 640      2533414F 
+ 640      62717E8A 
+ 640      9BA8B3C0 
+ 640      D1DA
+ 641 0070 0C0F2237 		.ascii	"\014\017\"7?NWlv\203\224\247\271\313\333\354\020\023"
+ 641      3F4E576C 
+ 641      768394A7 
+ 641      B9CBDBEC 
+ 641      1013
+ 642 0082 2024384F 		.ascii	" $8O[lv\210\232\253\272\314\334\355\013\034+:JYix\207"
+ 642      5B6C7688 
+ 642      9AABBACC 
+ 642      DCED0B1C 
+ 642      2B3A4A59 
+ 643 0099 96A5B4C4 		.ascii	"\226\245\264\304\323\342\361\006\020!.<K\\k{\211\234"
+ 643      D3E2F106 
+ 643      10212E3C 
+ 643      4B5C6B7B 
+ 643      899C
+ 644 00ab A9B9C7D6 		.ascii	"\251\271\307\326\341\013\023\036,9JYiy\207\230\251\272"
+ 644      E10B131E 
+ 644      2C394A59 
+ 644      69798798 
+ 644      A9BA
+ 645 00bd CADAEA0C 		.ascii	"\312\332\352\014\023\035.9GXdx\204\224\245\266\307\330"
+ 645      131D2E39 
+ 645      47586478 
+ 645      8494A5B6 
+ 645      C7D8
+ 646 00cf E9111723 		.ascii	"\351\021\027#.8M\\j{\206\230\247\271\314\336\355\016"
+ 646      2E384D5C 
+ 646      6A7B8698 
+ 646      A7B9CCDE 
+ 646      ED0E
+ 647 00e1 112D353F 		.ascii	"\021-5?KYks\204\227\253\274\316\335\360\011\020\035"
+ 647      4B596B73 
+ 647      8497ABBC 
+ 647      CEDDF009 
+ 647      101D
+ 648 00f3 28384758 		.ascii	"(8GXgw\211\232\253\275\315\336\355\020\023$09LWiv\204"
+ 648      6777899A 
+ 648      ABBDCDDE 
+ 648      ED101324 
+ 648      30394C57 
+ 649 010a 96A7B9CA 		.ascii	"\226\247\271\312\332\354\014\021\0356GQ^h~\210\225\244"
+ 649      DAEC0C11 
+ 649      1D364751 
+ 649      5E687E88 
+ 649      95A4
+ 650 011c B6C9DDED 		.ascii	"\266\311\335\355\017\034/>Oas\201\216\233\250\264\302"
+ 650      0F1C2F3E 
+ 650      4F617381 
+ 650      8E9BA8B4 
+ 650      C2
+ 651 012d D0DFEE08 		.ascii	"\320\337\356\010\016\036->N^o\177\217\237\257\300\317"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 15
+
+
+ 651      0E1E2D3E 
+ 651      4E5E6F7F 
+ 651      8F9FAFC0 
+ 651      CF
+ 652 013e DFEF111E 		.ascii	"\337\357\021\0361>O\\kw\204\221\240\256\276\314\334"
+ 652      313E4F5C 
+ 652      6B778491 
+ 652      A0AEBECC 
+ 652      DC
+ 653 014f EB0E1324 		.ascii	"\353\016\023$-=L[ly\212\232\254\275\315\336\356\014"
+ 653      2D3D4C5B 
+ 653      6C798A9A 
+ 653      ACBDCDDE 
+ 653      EE0C
+ 654 0161 121F2D3C 		.ascii	"\022\037-<L[k{\212\232\253\273\314\335\354\015\021\037"
+ 654      4C5B6B7B 
+ 654      8A9AABBB 
+ 654      CCDDEC0D 
+ 654      111F
+ 655 0173 2B354653 		.ascii	"+5FSgr\203\225\247\271\313\334\355\021\026#*:N]n}\213"
+ 655      67728395 
+ 655      A7B9CBDC 
+ 655      ED111623 
+ 655      2A3A4E5D 
+ 656 018a 9BAABCCE 		.ascii	"\233\252\274\316\340\360\010\017\"2CScs\203\222\242"
+ 656      E0F0080F 
+ 656      22324353 
+ 656      63738392 
+ 656      A2
+ 657 019b B2C1D1E0 		.ascii	"\262\301\321\340\357\015\020)BIV_o\200\211\226\243\267"
+ 657      EF0D1029 
+ 657      4249565F 
+ 657      6F808996 
+ 657      A3B7
+ 658 01ad CEE1F111 		.ascii	"\316\341\361\021\031%4?K\\fw\204\220\240\257\277\324"
+ 658      1925343F 
+ 658      4B5C6677 
+ 658      8490A0AF 
+ 658      BFD4
+ 659 01bf E7131F31 		.ascii	"\347\023\0371ASdu\205\223\241\256\273\310\325\343\362"
+ 659      41536475 
+ 659      8593A1AE 
+ 659      BBC8D5E3 
+ 659      F2
+ 660 01d0 121F3444 		.ascii	"\022\0374DXgu~\212\225\243\261\300\317\337\357\020\035"
+ 660      5867757E 
+ 660      8A95A3B1 
+ 660      C0CFDFEF 
+ 660      101D
+ 661 01e2 2F3D4C5A 		.ascii	"/=LZjw\205\223\241\260\301\321\340\360\017\025#2=IV"
+ 661      6A778593 
+ 661      A1B0C1D1 
+ 661      E0F00F15 
+ 661      23323D49 
+ 662 01f7 616E7781 		.ascii	"anw\201\215\257\306\332\355"
+ 662      8DAFC6DA 
+ 662      ED
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 16
+
+
+ 663              		.text
+ 664              	.Letext0:
+ 665              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 666              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 667              		.file 4 "../../opus/include/opus_types.h"
+ 668              		.file 5 "../../opus/silk/structs.h"
+ 669              		.file 6 "../../opus/silk/tables.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tables_NLSF_CB_WB.c
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:24     .rodata.silk_NLSF_CB_WB:00000000 silk_NLSF_CB_WB
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:21     .rodata.silk_NLSF_CB_WB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:634    .rodata.silk_NLSF_CB1_WB_Q8:00000000 silk_NLSF_CB1_WB_Q8
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:117    .rodata.silk_NLSF_CB1_WB_Wght_Q9:00000000 silk_NLSF_CB1_WB_Wght_Q9
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:108    .rodata.silk_NLSF_CB1_iCDF_WB:00000000 silk_NLSF_CB1_iCDF_WB
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:63     .rodata.silk_NLSF_PRED_WB_Q8:00000000 silk_NLSF_PRED_WB_Q8
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:90     .rodata.silk_NLSF_CB2_SELECT_WB:00000000 silk_NLSF_CB2_SELECT_WB
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:80     .rodata.silk_NLSF_CB2_iCDF_WB:00000000 silk_NLSF_CB2_iCDF_WB
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:70     .rodata.silk_NLSF_CB2_BITS_WB_Q5:00000000 silk_NLSF_CB2_BITS_WB_Q5
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:41     .rodata.silk_NLSF_DELTA_MIN_WB_Q15:00000000 silk_NLSF_DELTA_MIN_WB_Q15
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:38     .rodata.silk_NLSF_DELTA_MIN_WB_Q15:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:60     .rodata.silk_NLSF_PRED_WB_Q8:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:67     .rodata.silk_NLSF_CB2_BITS_WB_Q5:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:77     .rodata.silk_NLSF_CB2_iCDF_WB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:87     .rodata.silk_NLSF_CB2_SELECT_WB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:105    .rodata.silk_NLSF_CB1_iCDF_WB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:114    .rodata.silk_NLSF_CB1_WB_Wght_Q9:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccRm3tYb.s:631    .rodata.silk_NLSF_CB1_WB_Q8:00000000 $d
+
+NO UNDEFINED SYMBOLS

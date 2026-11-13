@@ -1,0 +1,2633 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"pd.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/pd.c"
+  19              		.section	.text.pd_start_translation,"ax",%progbits
+  20              		.align	1
+  21              		.global	pd_start_translation
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	pd_start_translation:
+  27              	.LVL0:
+  28              	.LFB344:
+   1:../../CM7/Core/Src/pd.c **** /*
+   2:../../CM7/Core/Src/pd.c ****  * pd.c
+   3:../../CM7/Core/Src/pd.c ****  *
+   4:../../CM7/Core/Src/pd.c ****  *  Created on: 20 мар. 2025 г.
+   5:../../CM7/Core/Src/pd.c ****  *      Author: Rafael Boltachev
+   6:../../CM7/Core/Src/pd.c ****  */
+   7:../../CM7/Core/Src/pd.c **** 
+   8:../../CM7/Core/Src/pd.c **** 
+   9:../../CM7/Core/Src/pd.c **** #include "pd.h"
+  10:../../CM7/Core/Src/pd.c **** #include "pd_data.h"
+  11:../../CM7/Core/Src/pd.c **** #include "pu.h"
+  12:../../CM7/Core/Src/pd.c **** #include "pcm1753.h"
+  13:../../CM7/Core/Src/pd.c **** #include "opus_util.h"
+  14:../../CM7/Core/Src/pd.c **** #include "stm_util.h"
+  15:../../CM7/Core/Src/pd.c **** #include "str_util.h"
+  16:../../CM7/Core/Src/pd.c **** #include "math_util.h"
+  17:../../CM7/Core/Src/pd.c **** #include "mkk_data.h"
+  18:../../CM7/Core/Src/pd.c **** #include "fault_data.h"
+  19:../../CM7/Core/Src/pd.c **** #include "pu.h"
+  20:../../CM7/Core/Src/pd.c **** #include "screen0.h"
+  21:../../CM7/Core/Src/pd.c **** #include "screens.h"
+  22:../../CM7/Core/Src/pd.c **** #include "uarts.h"
+  23:../../CM7/Core/Src/pd.c **** #include "cm7core.h"
+  24:../../CM7/Core/Src/pd.c **** #include "mki_data.h"
+  25:../../CM7/Core/Src/pd.c **** #include "common.h"
+  26:../../CM7/Core/Src/pd.c **** #include "net_util.h"
+  27:../../CM7/Core/Src/pd.c **** 
+  28:../../CM7/Core/Src/pd.c **** uint8_t pd_translation_addr = 0;
+  29:../../CM7/Core/Src/pd.c **** uint32_t pd_id = 0;
+  30:../../CM7/Core/Src/pd.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 2
+
+
+  31:../../CM7/Core/Src/pd.c **** 
+  32:../../CM7/Core/Src/pd.c **** BOOL pd_start_translation(uint32_t freq, BOOL stereo)
+  33:../../CM7/Core/Src/pd.c **** {
+  29              		.loc 1 33 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 33 1 is_stmt 0 view .LVU1
+  34 0000 38B5     		push	{r3, r4, r5, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 3, -16
+  38              		.cfi_offset 4, -12
+  39              		.cfi_offset 5, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0446     		mov	r4, r0
+  42 0004 0D46     		mov	r5, r1
+  34:../../CM7/Core/Src/pd.c **** 
+  35:../../CM7/Core/Src/pd.c **** 	pu_stop_translation();
+  43              		.loc 1 35 2 is_stmt 1 view .LVU2
+  44 0006 FFF7FEFF 		bl	pu_stop_translation
+  45              	.LVL1:
+  36:../../CM7/Core/Src/pd.c **** 
+  37:../../CM7/Core/Src/pd.c **** 	if (!pu_prepare_audio_play(freq, stereo)) return FALSE;
+  46              		.loc 1 37 2 view .LVU3
+  47              		.loc 1 37 7 is_stmt 0 view .LVU4
+  48 000a 2946     		mov	r1, r5
+  49 000c 2046     		mov	r0, r4
+  50 000e FFF7FEFF 		bl	pu_prepare_audio_play
+  51              	.LVL2:
+  52              		.loc 1 37 5 discriminator 1 view .LVU5
+  53 0012 00B1     		cbz	r0, .L2
+  38:../../CM7/Core/Src/pd.c **** 
+  39:../../CM7/Core/Src/pd.c **** 	return TRUE;
+  54              		.loc 1 39 9 view .LVU6
+  55 0014 0120     		movs	r0, #1
+  56              	.L2:
+  40:../../CM7/Core/Src/pd.c **** }
+  57              		.loc 1 40 1 view .LVU7
+  58 0016 38BD     		pop	{r3, r4, r5, pc}
+  59              		.loc 1 40 1 view .LVU8
+  60              		.cfi_endproc
+  61              	.LFE344:
+  63              		.section	.text.pd_transmit_piv,"ax",%progbits
+  64              		.align	1
+  65              		.global	pd_transmit_piv
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  70              	pd_transmit_piv:
+  71              	.LVL3:
+  72              	.LFB345:
+  41:../../CM7/Core/Src/pd.c **** 
+  42:../../CM7/Core/Src/pd.c **** 
+  43:../../CM7/Core/Src/pd.c **** void pd_transmit_piv(uint8_t daddr, uint8_t saddr, uint8_t cmd, uint8_t * cmd_data, uint16_t cmd_da
+  44:../../CM7/Core/Src/pd.c **** {
+  73              		.loc 1 44 1 is_stmt 1 view -0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 3
+
+
+  74              		.cfi_startproc
+  75              		@ args = 8, pretend = 0, frame = 0
+  76              		@ frame_needed = 1, uses_anonymous_args = 0
+  77              		.loc 1 44 1 is_stmt 0 view .LVU10
+  78 0000 B0B5     		push	{r4, r5, r7, lr}
+  79              	.LCFI1:
+  80              		.cfi_def_cfa_offset 16
+  81              		.cfi_offset 4, -16
+  82              		.cfi_offset 5, -12
+  83              		.cfi_offset 7, -8
+  84              		.cfi_offset 14, -4
+  85 0002 82B0     		sub	sp, sp, #8
+  86              	.LCFI2:
+  87              		.cfi_def_cfa_offset 24
+  88 0004 02AF     		add	r7, sp, #8
+  89              	.LCFI3:
+  90              		.cfi_def_cfa 7, 16
+  91 0006 8446     		mov	ip, r0
+  92 0008 3C8A     		ldrh	r4, [r7, #16]
+  93 000a 387D     		ldrb	r0, [r7, #20]	@ zero_extendqisi2
+  94              	.LVL4:
+  45:../../CM7/Core/Src/pd.c **** 	uint8_t packet[5 + cmd_data_len + 2];
+  95              		.loc 1 45 2 is_stmt 1 view .LVU11
+  96              		.loc 1 45 10 is_stmt 0 view .LVU12
+  97 000c 04F10E0E 		add	lr, r4, #14
+  98 0010 4FEADE0E 		lsr	lr, lr, #3
+  99 0014 6D46     		mov	r5, sp
+ 100 0016 A5EBCE05 		sub	r5, r5, lr, lsl #3
+ 101 001a AD46     		mov	sp, r5
+ 102              	.LVL5:
+  46:../../CM7/Core/Src/pd.c **** 	uint16_t packet_len;
+ 103              		.loc 1 46 2 is_stmt 1 view .LVU13
+  47:../../CM7/Core/Src/pd.c **** 
+  48:../../CM7/Core/Src/pd.c **** 	if (huart_number) {
+ 104              		.loc 1 48 2 view .LVU14
+ 105              		.loc 1 48 5 is_stmt 0 view .LVU15
+ 106 001c 40B1     		cbz	r0, .L5
+  49:../../CM7/Core/Src/pd.c **** 		uarts_transmit_piv(huart_number, daddr, saddr, cmd, cmd_data, cmd_data_len);
+ 107              		.loc 1 49 3 is_stmt 1 view .LVU16
+ 108 001e 0194     		str	r4, [sp, #4]
+ 109 0020 0093     		str	r3, [sp]
+ 110 0022 1346     		mov	r3, r2
+ 111              	.LVL6:
+ 112              		.loc 1 49 3 is_stmt 0 view .LVU17
+ 113 0024 0A46     		mov	r2, r1
+ 114              	.LVL7:
+ 115              		.loc 1 49 3 view .LVU18
+ 116 0026 6146     		mov	r1, ip
+ 117              	.LVL8:
+ 118              		.loc 1 49 3 view .LVU19
+ 119 0028 FFF7FEFF 		bl	uarts_transmit_piv
+ 120              	.LVL9:
+ 121              	.L4:
+  50:../../CM7/Core/Src/pd.c **** 	} else {
+  51:../../CM7/Core/Src/pd.c **** 		packet_len = create_piv_packet_cmd(packet, daddr, saddr, cmd, cmd_data, cmd_data_len);
+  52:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+  53:../../CM7/Core/Src/pd.c **** 		cm7core_pd_send(packet, packet_len);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 4
+
+
+  54:../../CM7/Core/Src/pd.c **** 	}
+  55:../../CM7/Core/Src/pd.c **** }
+ 122              		.loc 1 55 1 view .LVU20
+ 123 002c BD46     		mov	sp, r7
+ 124              	.LCFI4:
+ 125              		.cfi_remember_state
+ 126              		.cfi_def_cfa_register 13
+ 127              	.LVL10:
+ 128              		.loc 1 55 1 view .LVU21
+ 129              		@ sp needed
+ 130 002e B0BD     		pop	{r4, r5, r7, pc}
+ 131              	.LVL11:
+ 132              	.L5:
+ 133              	.LCFI5:
+ 134              		.cfi_restore_state
+ 135              		.loc 1 55 1 view .LVU22
+ 136 0030 02AD     		add	r5, sp, #8
+ 137              	.LVL12:
+  51:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+ 138              		.loc 1 51 3 is_stmt 1 view .LVU23
+  51:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+ 139              		.loc 1 51 16 is_stmt 0 view .LVU24
+ 140 0032 0194     		str	r4, [sp, #4]
+ 141 0034 0093     		str	r3, [sp]
+ 142 0036 1346     		mov	r3, r2
+ 143              	.LVL13:
+  51:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+ 144              		.loc 1 51 16 view .LVU25
+ 145 0038 0A46     		mov	r2, r1
+ 146              	.LVL14:
+  51:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+ 147              		.loc 1 51 16 view .LVU26
+ 148 003a 6146     		mov	r1, ip
+ 149              	.LVL15:
+  51:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+ 150              		.loc 1 51 16 view .LVU27
+ 151 003c 2846     		mov	r0, r5
+ 152 003e FFF7FEFF 		bl	create_piv_packet_cmd
+ 153              	.LVL16:
+  51:../../CM7/Core/Src/pd.c **** 		//uarts_transmit_it_by_num(huart_number,  packet, packet_len);
+ 154              		.loc 1 51 16 view .LVU28
+ 155 0042 0146     		mov	r1, r0
+ 156              	.LVL17:
+  53:../../CM7/Core/Src/pd.c **** 	}
+ 157              		.loc 1 53 3 is_stmt 1 view .LVU29
+ 158 0044 2846     		mov	r0, r5
+ 159 0046 FFF7FEFF 		bl	cm7core_pd_send
+ 160              	.LVL18:
+ 161              		.loc 1 55 1 is_stmt 0 view .LVU30
+ 162 004a EFE7     		b	.L4
+ 163              		.cfi_endproc
+ 164              	.LFE345:
+ 166              		.section	.rodata.pd_rcv.str1.4,"aMS",%progbits,1
+ 167              		.align	2
+ 168              	.LC0:
+ 169 0000 434D372E 		.ascii	"CM7.pd: PU_MODE_VESHANIE_PD invalid pd_start_transl"
+ 169      70643A20 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 5
+
+
+ 169      50555F4D 
+ 169      4F44455F 
+ 169      56455348 
+ 170 0033 6174696F 		.ascii	"ation\015\012\000"
+ 170      6E0D0A00 
+ 171 003b 00       		.align	2
+ 172              	.LC1:
+ 173 003c 434D372E 		.ascii	"CM7.pd: PU_MODE_VESHANIE_PD change freq:%lu, stereo"
+ 173      70643A20 
+ 173      50555F4D 
+ 173      4F44455F 
+ 173      56455348 
+ 174 006f 3A25730D 		.ascii	":%s\015\012\000"
+ 174      0A00
+ 175 0075 000000   		.align	2
+ 176              	.LC2:
+ 177 0078 434D372E 		.ascii	"CM7.pd: PU_MODE_VESHANIE_PD set mode VESHANIE_PD fr"
+ 177      70643A20 
+ 177      50555F4D 
+ 177      4F44455F 
+ 177      56455348 
+ 178 00ab 65713A25 		.ascii	"eq:%lu, stereo:%s\015\012\000"
+ 178      6C752C20 
+ 178      73746572 
+ 178      656F3A25 
+ 178      730D0A00 
+ 179 00bf 00       		.align	2
+ 180              	.LC3:
+ 181 00c0 70643A20 		.ascii	"pd: PD_CMD_DEJURNIY\015\012\000"
+ 181      50445F43 
+ 181      4D445F44 
+ 181      454A5552 
+ 181      4E49590D 
+ 182 00d6 0000     		.align	2
+ 183              	.LC4:
+ 184 00d8 70643A20 		.ascii	"pd: PD_CMD_ZVUKOVOE_VESHANIE\015\012\000"
+ 184      50445F43 
+ 184      4D445F5A 
+ 184      56554B4F 
+ 184      564F455F 
+ 185 00f7 00       		.align	2
+ 186              	.LC5:
+ 187 00f8 70643A20 		.ascii	"pd: PD_CMD_VESHANIE_POJAR fire_lines:%s\015\012\000"
+ 187      50445F43 
+ 187      4D445F56 
+ 187      45534841 
+ 187      4E49455F 
+ 188 0122 0000     		.align	2
+ 189              	.LC6:
+ 190 0124 70643A20 		.ascii	"pd: PD_CMD_VESHANIE_MCHS\015\012\000"
+ 190      50445F43 
+ 190      4D445F56 
+ 190      45534841 
+ 190      4E49455F 
+ 191 013f 00       		.align	2
+ 192              	.LC7:
+ 193 0140 70643A20 		.ascii	"pd: PD_CMD_OTKLUCHENIE %s\015\012\000"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 6
+
+
+ 193      50445F43 
+ 193      4D445F4F 
+ 193      544B4C55 
+ 193      4348454E 
+ 194              		.align	2
+ 195              	.LC8:
+ 196 015c 70643A20 		.ascii	"pd: PD_CMD_AVTOMATIKA_OTKLUCHENA %s\015\012\000"
+ 196      50445F43 
+ 196      4D445F41 
+ 196      56544F4D 
+ 196      4154494B 
+ 197 0182 0000     		.align	2
+ 198              	.LC9:
+ 199 0184 70643A20 		.ascii	"pd: mode PD_CMD_RUCHNOI_PUSK change frequency:%lu s"
+ 199      6D6F6465 
+ 199      2050445F 
+ 199      434D445F 
+ 199      52554348 
+ 200 01b7 74657265 		.ascii	"tereo:%s\015\012\000"
+ 200      6F3A2573 
+ 200      0D0A00
+ 201 01c2 0000     		.align	2
+ 202              	.LC10:
+ 203 01c4 70643A20 		.ascii	"pd: mode PD_CMD_RUCHNOI_PUSK change lines:%s->pu_en"
+ 203      6D6F6465 
+ 203      2050445F 
+ 203      434D445F 
+ 203      52554348 
+ 204 01f7 61626C65 		.ascii	"able_lines:%s\015\012\000"
+ 204      5F6C696E 
+ 204      65733A25 
+ 204      730D0A00 
+ 205 0207 00       		.align	2
+ 206              	.LC11:
+ 207 0208 70643A20 		.ascii	"pd: set mode PD_CMD_RUCHNOI_PUSK lines:%s->pu_enabl"
+ 207      73657420 
+ 207      6D6F6465 
+ 207      2050445F 
+ 207      434D445F 
+ 208 023b 655F6C69 		.ascii	"e_lines:%s\015\012\000"
+ 208      6E65733A 
+ 208      25730D0A 
+ 208      00
+ 209              		.section	.text.pd_rcv,"ax",%progbits
+ 210              		.align	1
+ 211              		.global	pd_rcv
+ 212              		.syntax unified
+ 213              		.thumb
+ 214              		.thumb_func
+ 216              	pd_rcv:
+ 217              	.LVL19:
+ 218              	.LFB346:
+  56:../../CM7/Core/Src/pd.c **** 
+  57:../../CM7/Core/Src/pd.c **** 
+  58:../../CM7/Core/Src/pd.c **** ///с локальных ПД huart_number == 0
+  59:../../CM7/Core/Src/pd.c **** void pd_rcv(uint8_t * packet, uint16_t packet_len, uint8_t huart_number)
+  60:../../CM7/Core/Src/pd.c **** {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 7
+
+
+ 219              		.loc 1 60 1 is_stmt 1 view -0
+ 220              		.cfi_startproc
+ 221              		@ args = 0, pretend = 0, frame = 1632
+ 222              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223              		.loc 1 60 1 is_stmt 0 view .LVU32
+ 224 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 225              	.LCFI6:
+ 226              		.cfi_def_cfa_offset 24
+ 227              		.cfi_offset 4, -24
+ 228              		.cfi_offset 5, -20
+ 229              		.cfi_offset 6, -16
+ 230              		.cfi_offset 7, -12
+ 231              		.cfi_offset 8, -8
+ 232              		.cfi_offset 14, -4
+ 233 0004 ADF5CD6D 		sub	sp, sp, #1640
+ 234              	.LCFI7:
+ 235              		.cfi_def_cfa_offset 1664
+ 236 0008 0446     		mov	r4, r0
+ 237 000a 1546     		mov	r5, r2
+  61:../../CM7/Core/Src/pd.c **** 	uint8_t info[26];
+ 238              		.loc 1 61 2 is_stmt 1 view .LVU33
+  62:../../CM7/Core/Src/pd.c **** 	uint8_t buf[MAX_PACKET_SIZE];
+ 239              		.loc 1 62 2 view .LVU34
+  63:../../CM7/Core/Src/pd.c **** 	uint32_t freq;
+ 240              		.loc 1 63 2 view .LVU35
+  64:../../CM7/Core/Src/pd.c **** 	BOOL stereo;
+ 241              		.loc 1 64 2 view .LVU36
+  65:../../CM7/Core/Src/pd.c **** 	uint32_t lines;
+ 242              		.loc 1 65 2 view .LVU37
+  66:../../CM7/Core/Src/pd.c **** 	//uint32_t pd_id;
+  67:../../CM7/Core/Src/pd.c **** 	//int i, j;
+  68:../../CM7/Core/Src/pd.c **** 	//pu_small_info_t  small_info;
+  69:../../CM7/Core/Src/pd.c **** 	uint16_t len;
+ 243              		.loc 1 69 2 view .LVU38
+  70:../../CM7/Core/Src/pd.c **** 
+  71:../../CM7/Core/Src/pd.c **** 
+  72:../../CM7/Core/Src/pd.c **** 
+  73:../../CM7/Core/Src/pd.c **** 
+  74:../../CM7/Core/Src/pd.c **** 	switch (packet[4]) {
+ 244              		.loc 1 74 2 view .LVU39
+ 245              		.loc 1 74 16 is_stmt 0 view .LVU40
+ 246 000c 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 247              		.loc 1 74 2 view .LVU41
+ 248 000e 3F3B     		subs	r3, r3, #63
+ 249 0010 362B     		cmp	r3, #54
+ 250 0012 40D8     		bhi	.L8
+ 251 0014 DFE813F0 		tbh	[pc, r3, lsl #1]
+ 252              	.LVL20:
+ 253              	.L11:
+ 254 0018 3700     		.2byte	(.L22-.L11)/2
+ 255 001a 4300     		.2byte	(.L21-.L11)/2
+ 256 001c 5400     		.2byte	(.L20-.L11)/2
+ 257 001e F800     		.2byte	(.L19-.L11)/2
+ 258 0020 1201     		.2byte	(.L18-.L11)/2
+ 259 0022 5501     		.2byte	(.L17-.L11)/2
+ 260 0024 B001     		.2byte	(.L16-.L11)/2
+ 261 0026 F301     		.2byte	(.L15-.L11)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 8
+
+
+ 262 0028 2F02     		.2byte	(.L14-.L11)/2
+ 263 002a 6D02     		.2byte	(.L13-.L11)/2
+ 264 002c 2F03     		.2byte	(.L12-.L11)/2
+ 265 002e 3F00     		.2byte	(.L8-.L11)/2
+ 266 0030 3F00     		.2byte	(.L8-.L11)/2
+ 267 0032 3F00     		.2byte	(.L8-.L11)/2
+ 268 0034 3F00     		.2byte	(.L8-.L11)/2
+ 269 0036 3F00     		.2byte	(.L8-.L11)/2
+ 270 0038 3F00     		.2byte	(.L8-.L11)/2
+ 271 003a 3F00     		.2byte	(.L8-.L11)/2
+ 272 003c 3F00     		.2byte	(.L8-.L11)/2
+ 273 003e 3F00     		.2byte	(.L8-.L11)/2
+ 274 0040 3F00     		.2byte	(.L8-.L11)/2
+ 275 0042 3F00     		.2byte	(.L8-.L11)/2
+ 276 0044 3F00     		.2byte	(.L8-.L11)/2
+ 277 0046 3F00     		.2byte	(.L8-.L11)/2
+ 278 0048 3F00     		.2byte	(.L8-.L11)/2
+ 279 004a 3F00     		.2byte	(.L8-.L11)/2
+ 280 004c 3F00     		.2byte	(.L8-.L11)/2
+ 281 004e 3F00     		.2byte	(.L8-.L11)/2
+ 282 0050 3F00     		.2byte	(.L8-.L11)/2
+ 283 0052 3F00     		.2byte	(.L8-.L11)/2
+ 284 0054 3F00     		.2byte	(.L8-.L11)/2
+ 285 0056 3F00     		.2byte	(.L8-.L11)/2
+ 286 0058 3F00     		.2byte	(.L8-.L11)/2
+ 287 005a 3F00     		.2byte	(.L8-.L11)/2
+ 288 005c 3F00     		.2byte	(.L8-.L11)/2
+ 289 005e 3F00     		.2byte	(.L8-.L11)/2
+ 290 0060 3F00     		.2byte	(.L8-.L11)/2
+ 291 0062 3F00     		.2byte	(.L8-.L11)/2
+ 292 0064 3F00     		.2byte	(.L8-.L11)/2
+ 293 0066 3F00     		.2byte	(.L8-.L11)/2
+ 294 0068 3F00     		.2byte	(.L8-.L11)/2
+ 295 006a 3F00     		.2byte	(.L8-.L11)/2
+ 296 006c 3F00     		.2byte	(.L8-.L11)/2
+ 297 006e 3F00     		.2byte	(.L8-.L11)/2
+ 298 0070 3F00     		.2byte	(.L8-.L11)/2
+ 299 0072 3F00     		.2byte	(.L8-.L11)/2
+ 300 0074 3F00     		.2byte	(.L8-.L11)/2
+ 301 0076 3F00     		.2byte	(.L8-.L11)/2
+ 302 0078 3F00     		.2byte	(.L8-.L11)/2
+ 303 007a 3F00     		.2byte	(.L8-.L11)/2
+ 304 007c 3F00     		.2byte	(.L8-.L11)/2
+ 305 007e 3F00     		.2byte	(.L8-.L11)/2
+ 306 0080 3F00     		.2byte	(.L8-.L11)/2
+ 307 0082 3F00     		.2byte	(.L8-.L11)/2
+ 308 0084 3D03     		.2byte	(.L10-.L11)/2
+ 309              		.p2align 1
+ 310              	.L22:
+  75:../../CM7/Core/Src/pd.c **** 
+  76:../../CM7/Core/Src/pd.c **** 		case PD_CMD_PING:
+  77:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_PONG, NULL, 0, huart_number);
+ 311              		.loc 1 77 4 is_stmt 1 view .LVU42
+ 312 0086 0195     		str	r5, [sp, #4]
+ 313 0088 0023     		movs	r3, #0
+ 314 008a 0093     		str	r3, [sp]
+ 315 008c 6F22     		movs	r2, #111
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 9
+
+
+ 316 008e 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 317              	.LVL21:
+ 318              		.loc 1 77 4 is_stmt 0 view .LVU43
+ 319 0090 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 320              	.LVL22:
+ 321              		.loc 1 77 4 view .LVU44
+ 322 0092 FFF7FEFF 		bl	pd_transmit_piv
+ 323              	.LVL23:
+  78:../../CM7/Core/Src/pd.c **** 		break;
+ 324              		.loc 1 78 3 is_stmt 1 view .LVU45
+ 325              	.L8:
+  79:../../CM7/Core/Src/pd.c **** 		case PD_CMD_INFO:
+  80:../../CM7/Core/Src/pd.c **** 
+  81:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_onlycommand_packet_t)) return;
+  82:../../CM7/Core/Src/pd.c **** 			//if (packet_len != 7) return;
+  83:../../CM7/Core/Src/pd.c **** 
+  84:../../CM7/Core/Src/pd.c **** 			pu_get_info(info);
+  85:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_INFO_RES, info, sizeof(info), huart_number);
+  86:../../CM7/Core/Src/pd.c **** 
+  87:../../CM7/Core/Src/pd.c **** 		break;
+  88:../../CM7/Core/Src/pd.c **** 		case PD_CMD_VESHANIE_PD:
+  89:../../CM7/Core/Src/pd.c **** 
+  90:../../CM7/Core/Src/pd.c **** 
+  91:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_adio_param_packet_t)) return;
+  92:../../CM7/Core/Src/pd.c **** 
+  93:../../CM7/Core/Src/pd.c **** 			if (pu_mode > PU_MODE_VESHANIE_PD) { //больше приоритет
+  94:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+  95:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+  96:../../CM7/Core/Src/pd.c **** 				return;
+  97:../../CM7/Core/Src/pd.c **** 			}
+  98:../../CM7/Core/Src/pd.c **** 
+  99:../../CM7/Core/Src/pd.c **** 
+ 100:../../CM7/Core/Src/pd.c **** 			freq = BE_FOURBYTE2UL(packet[5], packet[6], packet[7], packet[8]);
+ 101:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 102:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 103:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 104:../../CM7/Core/Src/pd.c **** 
+ 105:../../CM7/Core/Src/pd.c **** 			//freq = ((uint32_t)packet[5] << 24) | ((uint32_t)packet[6]  << 16)| ((uint32_t)packet[7] << 8) 
+ 106:../../CM7/Core/Src/pd.c **** 			//lines = ((uint32_t)packet[12]<< 16) | ((uint32_t)packet[11] << 8 )| packet[10];
+ 107:../../CM7/Core/Src/pd.c **** 
+ 108:../../CM7/Core/Src/pd.c **** 
+ 109:../../CM7/Core/Src/pd.c **** 			if (freq == 0) {
+ 110:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 111:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 112:../../CM7/Core/Src/pd.c **** 				return;
+ 113:../../CM7/Core/Src/pd.c **** 			}
+ 114:../../CM7/Core/Src/pd.c **** 
+ 115:../../CM7/Core/Src/pd.c **** 			if (pu_mode == PU_MODE_VESHANIE_PD) {
+ 116:../../CM7/Core/Src/pd.c **** 
+ 117:../../CM7/Core/Src/pd.c **** 				if ((last_frequency != freq) || (pcm1753_GetStereo() != stereo)) {
+ 118:../../CM7/Core/Src/pd.c **** 					 if (!pd_start_translation(freq, stereo)) {
+ 119:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 120:../../CM7/Core/Src/pd.c **** 						pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 121:../../CM7/Core/Src/pd.c **** 						fulog(CONM"pd: PU_MODE_VESHANIE_PD invalid pd_start_translation"CRLF);
+ 122:../../CM7/Core/Src/pd.c **** 						return;
+ 123:../../CM7/Core/Src/pd.c **** 					 }
+ 124:../../CM7/Core/Src/pd.c **** 					 fulog_fmt(CONM"pd: PU_MODE_VESHANIE_PD change freq:%lu, stereo:%s"CRLF, freq, bool2str(stereo
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 10
+
+
+ 125:../../CM7/Core/Src/pd.c **** 				}
+ 126:../../CM7/Core/Src/pd.c **** 				if (pu_need_lines != lines) {
+ 127:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 128:../../CM7/Core/Src/pd.c **** 				}
+ 129:../../CM7/Core/Src/pd.c **** 
+ 130:../../CM7/Core/Src/pd.c **** 
+ 131:../../CM7/Core/Src/pd.c **** 			}
+ 132:../../CM7/Core/Src/pd.c **** 			else {
+ 133:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_PD);
+ 134:../../CM7/Core/Src/pd.c **** 				if (!pd_start_translation(freq, stereo)) {
+ 135:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 136:../../CM7/Core/Src/pd.c **** 					pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 137:../../CM7/Core/Src/pd.c **** 					fulog(CONM"pd: PU_MODE_VESHANIE_PD invalid pd_start_translation"CRLF);
+ 138:../../CM7/Core/Src/pd.c **** 					return;
+ 139:../../CM7/Core/Src/pd.c **** 				}
+ 140:../../CM7/Core/Src/pd.c **** 				fulog_fmt(CONM"pd: PU_MODE_VESHANIE_PD set mode VESHANIE_PD freq:%lu, stereo:%s"CRLF, freq, boo
+ 141:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 142:../../CM7/Core/Src/pd.c **** 			}
+ 143:../../CM7/Core/Src/pd.c **** 
+ 144:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0] , PD_CMD_VESHANIE_PD_RES, NULL, 0, huart_number);
+ 145:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 146:../../CM7/Core/Src/pd.c **** 		break;
+ 147:../../CM7/Core/Src/pd.c **** 
+ 148:../../CM7/Core/Src/pd.c **** 		case PD_CMD_DEJURNIY:
+ 149:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_dejurniy_packet_t)) return;
+ 150:../../CM7/Core/Src/pd.c **** 
+ 151:../../CM7/Core/Src/pd.c **** 			if (pu_mode != PU_MODE_DEJURNIY) {
+ 152:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_DEJURNIY);
+ 153:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_DEJURNIY"CRLF);
+ 154:../../CM7/Core/Src/pd.c **** 			}
+ 155:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_DEJURNIY_RES, NULL, 0, huart_number);
+ 156:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = 0;
+ 157:../../CM7/Core/Src/pd.c **** 		break;
+ 158:../../CM7/Core/Src/pd.c **** 
+ 159:../../CM7/Core/Src/pd.c **** 		case PD_CMD_ZVUKOVOE_VESHANIE:
+ 160:../../CM7/Core/Src/pd.c **** 
+ 161:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_sound_lines_packet_t)) return;
+ 162:../../CM7/Core/Src/pd.c **** 
+ 163:../../CM7/Core/Src/pd.c **** 			if (pu_mode > PU_MODE_ZVUKOVOE_VESHANIE) {
+ 164:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 165:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_ZVUKOVOE_VESHANIE_RES, buf, 1, huart_numbe
+ 166:../../CM7/Core/Src/pd.c **** 				return;
+ 167:../../CM7/Core/Src/pd.c **** 			}
+ 168:../../CM7/Core/Src/pd.c **** 
+ 169:../../CM7/Core/Src/pd.c **** 			if (pu_mode != PU_MODE_ZVUKOVOE_VESHANIE) {
+ 170:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_ZVUKOVOE_VESHANIE);
+ 171:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_ZVUKOVOE_VESHANIE"CRLF);
+ 172:../../CM7/Core/Src/pd.c **** 			}
+ 173:../../CM7/Core/Src/pd.c **** 
+ 174:../../CM7/Core/Src/pd.c **** 			//lines = packet[5] |  ((uint32_t)packet[6] << 8) |  ((uint32_t)packet[7] << 16);
+ 175:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[5], packet[6], packet[7]);
+ 176:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 177:../../CM7/Core/Src/pd.c **** 
+ 178:../../CM7/Core/Src/pd.c **** 			if (pu_need_lines != lines) {
+ 179:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 180:../../CM7/Core/Src/pd.c **** 			}
+ 181:../../CM7/Core/Src/pd.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 11
+
+
+ 182:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_ZVUKOVOE_VESHANIE_RES, NULL, 0, huart_number);
+ 183:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 184:../../CM7/Core/Src/pd.c **** 		break;
+ 185:../../CM7/Core/Src/pd.c **** 
+ 186:../../CM7/Core/Src/pd.c **** 		case PD_CMD_VESHANIE_POJAR:
+ 187:../../CM7/Core/Src/pd.c **** 
+ 188:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_sound_lines_packet_t)) return;
+ 189:../../CM7/Core/Src/pd.c **** 
+ 190:../../CM7/Core/Src/pd.c **** 			if (pu_mode > PU_MODE_VESHANIE_POJAR) {
+ 191:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 192:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_POJAR_RES, buf, 1, huart_number);
+ 193:../../CM7/Core/Src/pd.c **** 				return;
+ 194:../../CM7/Core/Src/pd.c **** 			}
+ 195:../../CM7/Core/Src/pd.c **** 
+ 196:../../CM7/Core/Src/pd.c **** 			//fire_lines_imit = packet[5] |  ((uint32_t)packet[6] << 8) |  ((uint32_t)packet[7] << 16);
+ 197:../../CM7/Core/Src/pd.c **** 			fire_lines_imit = THREEBYTE2LINES(packet[5], packet[6], packet[7]);
+ 198:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 199:../../CM7/Core/Src/pd.c **** 
+ 200:../../CM7/Core/Src/pd.c **** 
+ 201:../../CM7/Core/Src/pd.c **** 			if (pu_mode != PU_MODE_VESHANIE_POJAR) {
+ 202:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_POJAR);
+ 203:../../CM7/Core/Src/pd.c **** 				ulog_fmt("pd: PD_CMD_VESHANIE_POJAR fire_lines:%s"CRLF, u24l2bitstr(fire_lines_imit));
+ 204:../../CM7/Core/Src/pd.c **** 			}
+ 205:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_VESHANIE_POJAR_RES, NULL, 0, huart_number);
+ 206:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 207:../../CM7/Core/Src/pd.c **** 		break;
+ 208:../../CM7/Core/Src/pd.c **** 
+ 209:../../CM7/Core/Src/pd.c **** 		case PD_CMD_VESHANIE_MCHS:
+ 210:../../CM7/Core/Src/pd.c **** 
+ 211:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_sound_lines_packet_t)) return;
+ 212:../../CM7/Core/Src/pd.c **** 
+ 213:../../CM7/Core/Src/pd.c **** 			if (pu_mode > PU_MODE_VESHANIE_MCHS) {
+ 214:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 215:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_MCHS_RES, buf, 1, huart_number);
+ 216:../../CM7/Core/Src/pd.c **** 				return;
+ 217:../../CM7/Core/Src/pd.c **** 			}
+ 218:../../CM7/Core/Src/pd.c **** 
+ 219:../../CM7/Core/Src/pd.c **** 			if (pu_mode != PU_MODE_VESHANIE_MCHS) {
+ 220:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_MCHS);
+ 221:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_VESHANIE_MCHS"CRLF);
+ 222:../../CM7/Core/Src/pd.c **** 			}
+ 223:../../CM7/Core/Src/pd.c **** 
+ 224:../../CM7/Core/Src/pd.c **** 			//lines = packet[5] |  ((uint32_t)packet[6] << 8) |  ((uint32_t)packet[7] << 16);
+ 225:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[5], packet[6], packet[7]);
+ 226:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 227:../../CM7/Core/Src/pd.c **** 
+ 228:../../CM7/Core/Src/pd.c **** 			if (pu_need_lines != lines) {
+ 229:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 230:../../CM7/Core/Src/pd.c **** 			}
+ 231:../../CM7/Core/Src/pd.c **** 
+ 232:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_VESHANIE_MCHS_RES, NULL, 0, huart_number);
+ 233:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 234:../../CM7/Core/Src/pd.c **** 		break;
+ 235:../../CM7/Core/Src/pd.c **** 
+ 236:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OTKLUCHENIE:
+ 237:../../CM7/Core/Src/pd.c **** 
+ 238:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_sound_lines_packet_t)) return;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 12
+
+
+ 239:../../CM7/Core/Src/pd.c **** 
+ 240:../../CM7/Core/Src/pd.c **** 			//pu_option_otkluchenie_lines = packet[5] |  ((uint32_t)packet[6] << 8) |  ((uint32_t)packet[7] 
+ 241:../../CM7/Core/Src/pd.c **** 			pu_option_otkluchenie_lines = THREEBYTE2LINES(packet[5], packet[6], packet[7]);
+ 242:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 243:../../CM7/Core/Src/pd.c **** 			cm7core_send_one_led_color(MKI_LED_DISCONNECT, pu_option_otkluchenie_lines ? LED_COLOR_OPTION_OT
+ 244:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_OTKLUCHENIE %s"CRLF, u24l2bitstr(pu_option_otkluchenie_lines));
+ 245:../../CM7/Core/Src/pd.c **** 
+ 246:../../CM7/Core/Src/pd.c **** 			if (pu_option == PU_OPTION_OTKLUCHENIE) {
+ 247:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_otkluchenie_lines, LED_COLOR_OPTION_OTKLUCHENIE);
+ 248:../../CM7/Core/Src/pd.c **** 				screen0_update();
+ 249:../../CM7/Core/Src/pd.c **** 			}
+ 250:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_OTKLUCHENIE_RES, NULL, 0, huart_number);
+ 251:../../CM7/Core/Src/pd.c **** 
+ 252:../../CM7/Core/Src/pd.c **** 		break;
+ 253:../../CM7/Core/Src/pd.c **** 		case PD_CMD_AVTOMATIKA_OTKLUCHENA:
+ 254:../../CM7/Core/Src/pd.c **** 
+ 255:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_sound_lines_packet_t)) return;
+ 256:../../CM7/Core/Src/pd.c **** 
+ 257:../../CM7/Core/Src/pd.c **** 			//pu_option_avtomatika_otkluchena_lines =packet[5] |  ((uint32_t)packet[6] << 8) |  ((uint32_t)p
+ 258:../../CM7/Core/Src/pd.c **** 			pu_option_avtomatika_otkluchena_lines = THREEBYTE2LINES(packet[5], packet[6], packet[7]);
+ 259:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 260:../../CM7/Core/Src/pd.c **** 			cm7core_set_led_color(MKI_LED_AUTOMATIONOFF, pu_option_avtomatika_otkluchena_lines ? LED_COLOR_O
+ 261:../../CM7/Core/Src/pd.c **** 			cm7core_send_leds();
+ 262:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_AVTOMATIKA_OTKLUCHENA %s"CRLF, u24l2bitstr(pu_option_avtomatika_otkluchena_
+ 263:../../CM7/Core/Src/pd.c **** 
+ 264:../../CM7/Core/Src/pd.c **** 			if (pu_option == PU_OPYION_AVTOMATIKA_OTKLUCHENA) {
+ 265:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_avtomatika_otkluchena_lines, LED_COLOR_OPTION_AVTOMATIKA_OTKLUCHEN
+ 266:../../CM7/Core/Src/pd.c **** 				screen0_update();
+ 267:../../CM7/Core/Src/pd.c **** 			}
+ 268:../../CM7/Core/Src/pd.c **** 
+ 269:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_AVTOMATIKA_OTKLUCHENA_RES, NULL, 0, huart_number);
+ 270:../../CM7/Core/Src/pd.c **** 		break;
+ 271:../../CM7/Core/Src/pd.c **** 		case PD_CMD_RUCHNOI_PUSK:
+ 272:../../CM7/Core/Src/pd.c **** 
+ 273:../../CM7/Core/Src/pd.c **** 			if (packet_len != sizeof(pd_adio_param_packet_t)) return;
+ 274:../../CM7/Core/Src/pd.c **** 
+ 275:../../CM7/Core/Src/pd.c **** 			if (pu_mode > PU_MODE_RUCHNOI_PUSK_PD) {
+ 276:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 277:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 278:../../CM7/Core/Src/pd.c **** 				return;
+ 279:../../CM7/Core/Src/pd.c **** 			}
+ 280:../../CM7/Core/Src/pd.c **** 
+ 281:../../CM7/Core/Src/pd.c **** 			freq = BE_FOURBYTE2UL(packet[5], packet[6], packet[7], packet[8]);
+ 282:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 283:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 284:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 285:../../CM7/Core/Src/pd.c **** 
+ 286:../../CM7/Core/Src/pd.c **** 
+ 287:../../CM7/Core/Src/pd.c **** 			//freq = ((uint32_t)packet[5] << 24) | ((uint32_t)packet[6]  << 16)| ((uint32_t)packet[7] << 8) 
+ 288:../../CM7/Core/Src/pd.c **** 			//lines = ((uint32_t)packet[12]<< 16) | ((uint32_t)packet[11] << 8 )| packet[10];
+ 289:../../CM7/Core/Src/pd.c **** 
+ 290:../../CM7/Core/Src/pd.c **** 
+ 291:../../CM7/Core/Src/pd.c **** 			if (pu_mode == PU_MODE_RUCHNOI_PUSK_PD) {
+ 292:../../CM7/Core/Src/pd.c **** 
+ 293:../../CM7/Core/Src/pd.c **** 				if ((last_frequency != freq) || (pcm1753_GetStereo() != stereo)) {
+ 294:../../CM7/Core/Src/pd.c **** 					if (!pd_start_translation(freq, stereo)) {
+ 295:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 13
+
+
+ 296:../../CM7/Core/Src/pd.c **** 						pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 297:../../CM7/Core/Src/pd.c **** 						return;
+ 298:../../CM7/Core/Src/pd.c **** 					}
+ 299:../../CM7/Core/Src/pd.c **** 					ulog_fmt("pd: mode PD_CMD_RUCHNOI_PUSK change frequency:%lu stereo:%s"CRLF, freq, bool2str(ste
+ 300:../../CM7/Core/Src/pd.c **** 				}
+ 301:../../CM7/Core/Src/pd.c **** 
+ 302:../../CM7/Core/Src/pd.c **** 				if (pu_need_lines != lines) {
+ 303:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 304:../../CM7/Core/Src/pd.c **** 					//if (lines) filelog_fmt("Линии опов.: %s", pu_lines2str(lines));
+ 305:../../CM7/Core/Src/pd.c **** 					ulog_fmt("pd: mode PD_CMD_RUCHNOI_PUSK change lines:%s->pu_enable_lines:%s"CRLF, u24l2bitstr(l
+ 306:../../CM7/Core/Src/pd.c **** 				}
+ 307:../../CM7/Core/Src/pd.c **** 			} else {
+ 308:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_RUCHNOI_PUSK_PD);
+ 309:../../CM7/Core/Src/pd.c **** 				if (!pd_start_translation(freq, stereo)) {
+ 310:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 311:../../CM7/Core/Src/pd.c **** 					pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 312:../../CM7/Core/Src/pd.c **** 					return;
+ 313:../../CM7/Core/Src/pd.c **** 				}
+ 314:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 315:../../CM7/Core/Src/pd.c **** 				//if (lines) filelog_fmt("Линии опов.: %s", pu_lines2str(lines));
+ 316:../../CM7/Core/Src/pd.c **** 				ulog_fmt("pd: set mode PD_CMD_RUCHNOI_PUSK lines:%s->pu_enable_lines:%s"CRLF, u24l2bitstr(lines
+ 317:../../CM7/Core/Src/pd.c **** 			}
+ 318:../../CM7/Core/Src/pd.c **** 
+ 319:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0] , PD_CMD_RUCHNOI_PUSK_RES, NULL, 0, huart_number);
+ 320:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 321:../../CM7/Core/Src/pd.c **** 		break;
+ 322:../../CM7/Core/Src/pd.c **** 		case PD_CMD_SPISOK_PU:
+ 323:../../CM7/Core/Src/pd.c **** 			 pu_fill_local_small_infos();
+ 324:../../CM7/Core/Src/pd.c **** 			 len = pu_get_data_from_small_infos(buf);
+ 325:../../CM7/Core/Src/pd.c **** 
+ 326:../../CM7/Core/Src/pd.c ****  			 pd_transmit_piv(packet[1], packet[0] , PD_CMD_SPISOK_PU_RES, buf, len, huart_number);
+ 327:../../CM7/Core/Src/pd.c **** 		break;
+ 328:../../CM7/Core/Src/pd.c **** 		case PD_CMD_NET_INFO:
+ 329:../../CM7/Core/Src/pd.c **** 			pu_netinfo[0] = packet[5];
+ 330:../../CM7/Core/Src/pd.c **** 			pu_netinfo[1] = packet[6];
+ 331:../../CM7/Core/Src/pd.c **** 			pu_netinfo[2] = packet[7];
+ 332:../../CM7/Core/Src/pd.c **** 
+ 333:../../CM7/Core/Src/pd.c **** 
+ 334:../../CM7/Core/Src/pd.c ****  			pd_transmit_piv(packet[1], packet[0] , PD_CMD_NET_INFO_RES, NULL, 0, huart_number); //отве�
+ 335:../../CM7/Core/Src/pd.c **** 
+ 336:../../CM7/Core/Src/pd.c **** 			if (huart_number == 0) {
+ 337:../../CM7/Core/Src/pd.c **** 				uart4_uart7_snd_piv(0xFF, setting.uart_local_addr, PU_CMD_RING_AUDIO_CHECK, pu_netinfo, sizeof(
+ 338:../../CM7/Core/Src/pd.c **** 			}
+ 339:../../CM7/Core/Src/pd.c **** 
+ 340:../../CM7/Core/Src/pd.c **** 		break;
+ 341:../../CM7/Core/Src/pd.c **** 
+ 342:../../CM7/Core/Src/pd.c **** 	}
+ 343:../../CM7/Core/Src/pd.c **** }
+ 326              		.loc 1 343 1 is_stmt 0 view .LVU46
+ 327 0096 0DF5CD6D 		add	sp, sp, #1640
+ 328              	.LCFI8:
+ 329              		.cfi_remember_state
+ 330              		.cfi_def_cfa_offset 24
+ 331              		@ sp needed
+ 332 009a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 333              	.LVL24:
+ 334              	.L21:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 14
+
+
+ 335              	.LCFI9:
+ 336              		.cfi_restore_state
+  81:../../CM7/Core/Src/pd.c **** 			//if (packet_len != 7) return;
+ 337              		.loc 1 81 4 is_stmt 1 view .LVU47
+  81:../../CM7/Core/Src/pd.c **** 			//if (packet_len != 7) return;
+ 338              		.loc 1 81 7 is_stmt 0 view .LVU48
+ 339 009e 0729     		cmp	r1, #7
+ 340 00a0 F9D1     		bne	.L8
+  84:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_INFO_RES, info, sizeof(info), huart_number);
+ 341              		.loc 1 84 4 is_stmt 1 view .LVU49
+ 342 00a2 0DF24C60 		addw	r0, sp, #1612
+ 343              	.LVL25:
+  84:../../CM7/Core/Src/pd.c **** 			pd_transmit_piv(packet[1], packet[0], PD_CMD_INFO_RES, info, sizeof(info), huart_number);
+ 344              		.loc 1 84 4 is_stmt 0 view .LVU50
+ 345 00a6 FFF7FEFF 		bl	pu_get_info
+ 346              	.LVL26:
+  85:../../CM7/Core/Src/pd.c **** 
+ 347              		.loc 1 85 4 is_stmt 1 view .LVU51
+ 348 00aa 0195     		str	r5, [sp, #4]
+ 349 00ac 1A23     		movs	r3, #26
+ 350 00ae 0093     		str	r3, [sp]
+ 351 00b0 0DF24C63 		addw	r3, sp, #1612
+ 352 00b4 7022     		movs	r2, #112
+ 353 00b6 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 354 00b8 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 355 00ba FFF7FEFF 		bl	pd_transmit_piv
+ 356              	.LVL27:
+  87:../../CM7/Core/Src/pd.c **** 		case PD_CMD_VESHANIE_PD:
+ 357              		.loc 1 87 3 view .LVU52
+ 358 00be EAE7     		b	.L8
+ 359              	.LVL28:
+ 360              	.L20:
+  91:../../CM7/Core/Src/pd.c **** 
+ 361              		.loc 1 91 4 view .LVU53
+  91:../../CM7/Core/Src/pd.c **** 
+ 362              		.loc 1 91 7 is_stmt 0 view .LVU54
+ 363 00c0 1329     		cmp	r1, #19
+ 364 00c2 E8D1     		bne	.L8
+  93:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 365              		.loc 1 93 4 is_stmt 1 view .LVU55
+  93:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 366              		.loc 1 93 16 is_stmt 0 view .LVU56
+ 367 00c4 A04B     		ldr	r3, .L77
+ 368 00c6 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 369              	.LVL29:
+  93:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 370              		.loc 1 93 7 view .LVU57
+ 371 00c8 0328     		cmp	r0, #3
+ 372 00ca 43D8     		bhi	.L57
+ 100:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 373              		.loc 1 100 4 is_stmt 1 view .LVU58
+ 100:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 374              		.loc 1 100 11 is_stmt 0 view .LVU59
+ 375 00cc 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 376 00ce A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 377 00d0 1204     		lsls	r2, r2, #16
+ 378 00d2 42EA0362 		orr	r2, r2, r3, lsl #24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 15
+
+
+ 379 00d6 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 380 00d8 42EA0322 		orr	r2, r2, r3, lsl #8
+ 381 00dc 217A     		ldrb	r1, [r4, #8]	@ zero_extendqisi2
+ 382              	.LVL30:
+ 101:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 383              		.loc 1 101 4 is_stmt 1 view .LVU60
+ 101:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 384              		.loc 1 101 19 is_stmt 0 view .LVU61
+ 385 00de 677A     		ldrb	r7, [r4, #9]	@ zero_extendqisi2
+ 101:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 386              		.loc 1 101 30 view .LVU62
+ 387 00e0 003F     		subs	r7, r7, #0
+ 388 00e2 18BF     		it	ne
+ 389 00e4 0127     		movne	r7, #1
+ 390              	.LVL31:
+ 102:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 391              		.loc 1 102 4 is_stmt 1 view .LVU63
+ 102:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 392              		.loc 1 102 12 is_stmt 0 view .LVU64
+ 393 00e6 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+ 394 00e8 E67A     		ldrb	r6, [r4, #11]	@ zero_extendqisi2
+ 395 00ea 3602     		lsls	r6, r6, #8
+ 396 00ec 46EA0346 		orr	r6, r6, r3, lsl #16
+ 397 00f0 A37A     		ldrb	r3, [r4, #10]	@ zero_extendqisi2
+ 102:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 398              		.loc 1 102 10 view .LVU65
+ 399 00f2 1E43     		orrs	r6, r6, r3
+ 400              	.LVL32:
+ 103:../../CM7/Core/Src/pd.c **** 
+ 401              		.loc 1 103 4 is_stmt 1 view .LVU66
+ 103:../../CM7/Core/Src/pd.c **** 
+ 402              		.loc 1 103 12 is_stmt 0 view .LVU67
+ 403 00f4 94F80DC0 		ldrb	ip, [r4, #13]	@ zero_extendqisi2
+ 404 00f8 A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
+ 405 00fa 1B04     		lsls	r3, r3, #16
+ 406 00fc 43EA0C63 		orr	r3, r3, ip, lsl #24
+ 407 0100 94F80FC0 		ldrb	ip, [r4, #15]	@ zero_extendqisi2
+ 408 0104 43EA0C23 		orr	r3, r3, ip, lsl #8
+ 409 0108 94F810C0 		ldrb	ip, [r4, #16]	@ zero_extendqisi2
+ 410 010c 43EA0C03 		orr	r3, r3, ip
+ 103:../../CM7/Core/Src/pd.c **** 
+ 411              		.loc 1 103 10 view .LVU68
+ 412 0110 DFF854C2 		ldr	ip, .L77+32
+ 413 0114 CCF80030 		str	r3, [ip]
+ 109:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 414              		.loc 1 109 4 is_stmt 1 view .LVU69
+ 109:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 415              		.loc 1 109 7 is_stmt 0 view .LVU70
+ 416 0118 52EA0108 		orrs	r8, r2, r1
+ 417              	.LVL33:
+ 109:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 418              		.loc 1 109 7 view .LVU71
+ 419 011c 26D0     		beq	.L58
+ 115:../../CM7/Core/Src/pd.c **** 
+ 420              		.loc 1 115 4 is_stmt 1 view .LVU72
+ 115:../../CM7/Core/Src/pd.c **** 
+ 421              		.loc 1 115 7 is_stmt 0 view .LVU73
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 16
+
+
+ 422 011e 0328     		cmp	r0, #3
+ 423 0120 44D1     		bne	.L26
+ 117:../../CM7/Core/Src/pd.c **** 					 if (!pd_start_translation(freq, stereo)) {
+ 424              		.loc 1 117 5 is_stmt 1 view .LVU74
+ 117:../../CM7/Core/Src/pd.c **** 					 if (!pd_start_translation(freq, stereo)) {
+ 425              		.loc 1 117 25 is_stmt 0 view .LVU75
+ 426 0122 8A4B     		ldr	r3, .L77+4
+ 427 0124 1B68     		ldr	r3, [r3]
+ 117:../../CM7/Core/Src/pd.c **** 					 if (!pd_start_translation(freq, stereo)) {
+ 428              		.loc 1 117 8 view .LVU76
+ 429 0126 4345     		cmp	r3, r8
+ 430 0128 2CD0     		beq	.L59
+ 431              	.L27:
+ 118:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 432              		.loc 1 118 7 is_stmt 1 view .LVU77
+ 118:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 433              		.loc 1 118 12 is_stmt 0 view .LVU78
+ 434 012a 3946     		mov	r1, r7
+ 435 012c 4046     		mov	r0, r8
+ 436 012e FFF7FEFF 		bl	pd_start_translation
+ 437              	.LVL34:
+ 118:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 438              		.loc 1 118 10 discriminator 1 view .LVU79
+ 439 0132 60B3     		cbz	r0, .L60
+ 124:../../CM7/Core/Src/pd.c **** 				}
+ 440              		.loc 1 124 7 is_stmt 1 view .LVU80
+ 441 0134 3846     		mov	r0, r7
+ 442 0136 FFF7FEFF 		bl	bool2str
+ 443              	.LVL35:
+ 444 013a 0246     		mov	r2, r0
+ 124:../../CM7/Core/Src/pd.c **** 				}
+ 445              		.loc 1 124 7 is_stmt 0 discriminator 1 view .LVU81
+ 446 013c 4146     		mov	r1, r8
+ 447 013e 8448     		ldr	r0, .L77+8
+ 448 0140 FFF7FEFF 		bl	fulog_fmt
+ 449              	.LVL36:
+ 450              	.L28:
+ 126:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 451              		.loc 1 126 5 is_stmt 1 view .LVU82
+ 126:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 452              		.loc 1 126 23 is_stmt 0 view .LVU83
+ 453 0144 834B     		ldr	r3, .L77+12
+ 454 0146 1B68     		ldr	r3, [r3]
+ 126:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 455              		.loc 1 126 8 view .LVU84
+ 456 0148 B342     		cmp	r3, r6
+ 457 014a 42D0     		beq	.L30
+ 127:../../CM7/Core/Src/pd.c **** 				}
+ 458              		.loc 1 127 6 is_stmt 1 view .LVU85
+ 459 014c 3046     		mov	r0, r6
+ 460 014e FFF7FEFF 		bl	pu_enable_sound_lines
+ 461              	.LVL37:
+ 462 0152 3EE0     		b	.L30
+ 463              	.LVL38:
+ 464              	.L57:
+  94:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 465              		.loc 1 94 5 view .LVU86
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 17
+
+
+  94:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 466              		.loc 1 94 12 is_stmt 0 view .LVU87
+ 467 0154 F122     		movs	r2, #241
+ 468 0156 8DF80C20 		strb	r2, [sp, #12]
+  95:../../CM7/Core/Src/pd.c **** 				return;
+ 469              		.loc 1 95 5 is_stmt 1 view .LVU88
+ 470 015a 0195     		str	r5, [sp, #4]
+ 471 015c 0123     		movs	r3, #1
+ 472 015e 0093     		str	r3, [sp]
+ 473 0160 03AB     		add	r3, sp, #12
+ 474 0162 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 475              	.LVL39:
+  95:../../CM7/Core/Src/pd.c **** 				return;
+ 476              		.loc 1 95 5 is_stmt 0 view .LVU89
+ 477 0164 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 478 0166 FFF7FEFF 		bl	pd_transmit_piv
+ 479              	.LVL40:
+  96:../../CM7/Core/Src/pd.c **** 			}
+ 480              		.loc 1 96 5 is_stmt 1 view .LVU90
+ 481 016a 94E7     		b	.L8
+ 482              	.LVL41:
+ 483              	.L58:
+ 110:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 484              		.loc 1 110 5 view .LVU91
+ 110:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 485              		.loc 1 110 12 is_stmt 0 view .LVU92
+ 486 016c F122     		movs	r2, #241
+ 487 016e 8DF80C20 		strb	r2, [sp, #12]
+ 111:../../CM7/Core/Src/pd.c **** 				return;
+ 488              		.loc 1 111 5 is_stmt 1 view .LVU93
+ 489 0172 0195     		str	r5, [sp, #4]
+ 490 0174 0123     		movs	r3, #1
+ 491 0176 0093     		str	r3, [sp]
+ 492 0178 03AB     		add	r3, sp, #12
+ 493 017a 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 494 017c 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 495 017e FFF7FEFF 		bl	pd_transmit_piv
+ 496              	.LVL42:
+ 112:../../CM7/Core/Src/pd.c **** 			}
+ 497              		.loc 1 112 5 view .LVU94
+ 498 0182 88E7     		b	.L8
+ 499              	.L59:
+ 117:../../CM7/Core/Src/pd.c **** 					 if (!pd_start_translation(freq, stereo)) {
+ 500              		.loc 1 117 38 is_stmt 0 discriminator 1 view .LVU95
+ 501 0184 FFF7FEFF 		bl	pcm1753_GetStereo
+ 502              	.LVL43:
+ 117:../../CM7/Core/Src/pd.c **** 					 if (!pd_start_translation(freq, stereo)) {
+ 503              		.loc 1 117 34 discriminator 1 view .LVU96
+ 504 0188 B842     		cmp	r0, r7
+ 505 018a CED1     		bne	.L27
+ 506 018c DAE7     		b	.L28
+ 507              	.L60:
+ 119:../../CM7/Core/Src/pd.c **** 						pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 508              		.loc 1 119 7 is_stmt 1 view .LVU97
+ 119:../../CM7/Core/Src/pd.c **** 						pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 509              		.loc 1 119 14 is_stmt 0 view .LVU98
+ 510 018e F122     		movs	r2, #241
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 18
+
+
+ 511 0190 8DF80C20 		strb	r2, [sp, #12]
+ 120:../../CM7/Core/Src/pd.c **** 						fulog(CONM"pd: PU_MODE_VESHANIE_PD invalid pd_start_translation"CRLF);
+ 512              		.loc 1 120 7 is_stmt 1 view .LVU99
+ 513 0194 0195     		str	r5, [sp, #4]
+ 514 0196 0123     		movs	r3, #1
+ 515 0198 0093     		str	r3, [sp]
+ 516 019a 03AB     		add	r3, sp, #12
+ 517 019c 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 518 019e 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 519 01a0 FFF7FEFF 		bl	pd_transmit_piv
+ 520              	.LVL44:
+ 121:../../CM7/Core/Src/pd.c **** 						return;
+ 521              		.loc 1 121 7 view .LVU100
+ 522 01a4 6C48     		ldr	r0, .L77+16
+ 523 01a6 FFF7FEFF 		bl	fulog
+ 524              	.LVL45:
+ 122:../../CM7/Core/Src/pd.c **** 					 }
+ 525              		.loc 1 122 7 view .LVU101
+ 526 01aa 74E7     		b	.L8
+ 527              	.L26:
+ 133:../../CM7/Core/Src/pd.c **** 				if (!pd_start_translation(freq, stereo)) {
+ 528              		.loc 1 133 5 view .LVU102
+ 529 01ac 0320     		movs	r0, #3
+ 530 01ae FFF7FEFF 		bl	pu_set_mode
+ 531              	.LVL46:
+ 134:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 532              		.loc 1 134 5 view .LVU103
+ 134:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 533              		.loc 1 134 10 is_stmt 0 view .LVU104
+ 534 01b2 3946     		mov	r1, r7
+ 535 01b4 4046     		mov	r0, r8
+ 536 01b6 FFF7FEFF 		bl	pd_start_translation
+ 537              	.LVL47:
+ 134:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 538              		.loc 1 134 8 discriminator 1 view .LVU105
+ 539 01ba B0B1     		cbz	r0, .L61
+ 140:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 540              		.loc 1 140 5 is_stmt 1 view .LVU106
+ 541 01bc 3846     		mov	r0, r7
+ 542 01be FFF7FEFF 		bl	bool2str
+ 543              	.LVL48:
+ 544 01c2 0246     		mov	r2, r0
+ 140:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 545              		.loc 1 140 5 is_stmt 0 discriminator 1 view .LVU107
+ 546 01c4 4146     		mov	r1, r8
+ 547 01c6 6548     		ldr	r0, .L77+20
+ 548 01c8 FFF7FEFF 		bl	fulog_fmt
+ 549              	.LVL49:
+ 141:../../CM7/Core/Src/pd.c **** 			}
+ 550              		.loc 1 141 5 is_stmt 1 view .LVU108
+ 551 01cc 3046     		mov	r0, r6
+ 552 01ce FFF7FEFF 		bl	pu_enable_sound_lines
+ 553              	.LVL50:
+ 554              	.L30:
+ 144:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 555              		.loc 1 144 4 view .LVU109
+ 556 01d2 0195     		str	r5, [sp, #4]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 19
+
+
+ 557 01d4 0023     		movs	r3, #0
+ 558 01d6 0093     		str	r3, [sp]
+ 559 01d8 7122     		movs	r2, #113
+ 560 01da 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 561 01dc 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 562 01de FFF7FEFF 		bl	pd_transmit_piv
+ 563              	.LVL51:
+ 145:../../CM7/Core/Src/pd.c **** 		break;
+ 564              		.loc 1 145 4 view .LVU110
+ 145:../../CM7/Core/Src/pd.c **** 		break;
+ 565              		.loc 1 145 24 is_stmt 0 view .LVU111
+ 566 01e2 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 567 01e4 5E4B     		ldr	r3, .L77+24
+ 568 01e6 1A70     		strb	r2, [r3]
+ 146:../../CM7/Core/Src/pd.c **** 
+ 569              		.loc 1 146 3 is_stmt 1 view .LVU112
+ 570 01e8 55E7     		b	.L8
+ 571              	.L61:
+ 135:../../CM7/Core/Src/pd.c **** 					pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 572              		.loc 1 135 6 view .LVU113
+ 135:../../CM7/Core/Src/pd.c **** 					pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_PD_RES, buf, 1, huart_number);
+ 573              		.loc 1 135 13 is_stmt 0 view .LVU114
+ 574 01ea F122     		movs	r2, #241
+ 575 01ec 8DF80C20 		strb	r2, [sp, #12]
+ 136:../../CM7/Core/Src/pd.c **** 					fulog(CONM"pd: PU_MODE_VESHANIE_PD invalid pd_start_translation"CRLF);
+ 576              		.loc 1 136 6 is_stmt 1 view .LVU115
+ 577 01f0 0195     		str	r5, [sp, #4]
+ 578 01f2 0123     		movs	r3, #1
+ 579 01f4 0093     		str	r3, [sp]
+ 580 01f6 03AB     		add	r3, sp, #12
+ 581 01f8 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 582 01fa 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 583 01fc FFF7FEFF 		bl	pd_transmit_piv
+ 584              	.LVL52:
+ 137:../../CM7/Core/Src/pd.c **** 					return;
+ 585              		.loc 1 137 6 view .LVU116
+ 586 0200 5548     		ldr	r0, .L77+16
+ 587 0202 FFF7FEFF 		bl	fulog
+ 588              	.LVL53:
+ 138:../../CM7/Core/Src/pd.c **** 				}
+ 589              		.loc 1 138 6 view .LVU117
+ 590 0206 46E7     		b	.L8
+ 591              	.LVL54:
+ 592              	.L19:
+ 149:../../CM7/Core/Src/pd.c **** 
+ 593              		.loc 1 149 4 view .LVU118
+ 149:../../CM7/Core/Src/pd.c **** 
+ 594              		.loc 1 149 7 is_stmt 0 view .LVU119
+ 595 0208 0729     		cmp	r1, #7
+ 596 020a 7FF444AF 		bne	.L8
+ 151:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_DEJURNIY);
+ 597              		.loc 1 151 4 is_stmt 1 view .LVU120
+ 151:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_DEJURNIY);
+ 598              		.loc 1 151 16 is_stmt 0 view .LVU121
+ 599 020e 4E4B     		ldr	r3, .L77
+ 600 0210 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 151:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_DEJURNIY);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 20
+
+
+ 601              		.loc 1 151 7 view .LVU122
+ 602 0212 012B     		cmp	r3, #1
+ 603 0214 0BD1     		bne	.L62
+ 604              	.LVL55:
+ 605              	.L32:
+ 155:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = 0;
+ 606              		.loc 1 155 4 is_stmt 1 view .LVU123
+ 607 0216 0195     		str	r5, [sp, #4]
+ 608 0218 0025     		movs	r5, #0
+ 609 021a 0095     		str	r5, [sp]
+ 610 021c 2B46     		mov	r3, r5
+ 611 021e 7222     		movs	r2, #114
+ 612 0220 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 613 0222 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 614 0224 FFF7FEFF 		bl	pd_transmit_piv
+ 615              	.LVL56:
+ 156:../../CM7/Core/Src/pd.c **** 		break;
+ 616              		.loc 1 156 4 view .LVU124
+ 156:../../CM7/Core/Src/pd.c **** 		break;
+ 617              		.loc 1 156 24 is_stmt 0 view .LVU125
+ 618 0228 4D4B     		ldr	r3, .L77+24
+ 619 022a 1D70     		strb	r5, [r3]
+ 157:../../CM7/Core/Src/pd.c **** 
+ 620              		.loc 1 157 3 is_stmt 1 view .LVU126
+ 621 022c 33E7     		b	.L8
+ 622              	.LVL57:
+ 623              	.L62:
+ 152:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_DEJURNIY"CRLF);
+ 624              		.loc 1 152 5 view .LVU127
+ 625 022e 0120     		movs	r0, #1
+ 626              	.LVL58:
+ 152:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_DEJURNIY"CRLF);
+ 627              		.loc 1 152 5 is_stmt 0 view .LVU128
+ 628 0230 FFF7FEFF 		bl	pu_set_mode
+ 629              	.LVL59:
+ 153:../../CM7/Core/Src/pd.c **** 			}
+ 630              		.loc 1 153 5 is_stmt 1 view .LVU129
+ 631 0234 4B48     		ldr	r0, .L77+28
+ 632 0236 FFF7FEFF 		bl	ulog
+ 633              	.LVL60:
+ 634 023a ECE7     		b	.L32
+ 635              	.LVL61:
+ 636              	.L18:
+ 161:../../CM7/Core/Src/pd.c **** 
+ 637              		.loc 1 161 4 view .LVU130
+ 161:../../CM7/Core/Src/pd.c **** 
+ 638              		.loc 1 161 7 is_stmt 0 view .LVU131
+ 639 023c 0E29     		cmp	r1, #14
+ 640 023e 7FF42AAF 		bne	.L8
+ 163:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 641              		.loc 1 163 4 is_stmt 1 view .LVU132
+ 163:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 642              		.loc 1 163 16 is_stmt 0 view .LVU133
+ 643 0242 414B     		ldr	r3, .L77
+ 644 0244 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 163:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 645              		.loc 1 163 7 view .LVU134
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 21
+
+
+ 646 0246 022B     		cmp	r3, #2
+ 647 0248 24D8     		bhi	.L63
+ 169:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_ZVUKOVOE_VESHANIE);
+ 648              		.loc 1 169 4 is_stmt 1 view .LVU135
+ 169:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_ZVUKOVOE_VESHANIE);
+ 649              		.loc 1 169 7 is_stmt 0 view .LVU136
+ 650 024a 022B     		cmp	r3, #2
+ 651 024c 2FD1     		bne	.L64
+ 652              	.LVL62:
+ 653              	.L34:
+ 175:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 654              		.loc 1 175 4 is_stmt 1 view .LVU137
+ 175:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 655              		.loc 1 175 12 is_stmt 0 view .LVU138
+ 656 024e E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 657 0250 A079     		ldrb	r0, [r4, #6]	@ zero_extendqisi2
+ 658 0252 0002     		lsls	r0, r0, #8
+ 659 0254 40EA0340 		orr	r0, r0, r3, lsl #16
+ 660 0258 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 175:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 661              		.loc 1 175 10 view .LVU139
+ 662 025a 1843     		orrs	r0, r0, r3
+ 663              	.LVL63:
+ 176:../../CM7/Core/Src/pd.c **** 
+ 664              		.loc 1 176 4 is_stmt 1 view .LVU140
+ 176:../../CM7/Core/Src/pd.c **** 
+ 665              		.loc 1 176 12 is_stmt 0 view .LVU141
+ 666 025c 227A     		ldrb	r2, [r4, #8]	@ zero_extendqisi2
+ 667 025e 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 668 0260 1B04     		lsls	r3, r3, #16
+ 669 0262 43EA0263 		orr	r3, r3, r2, lsl #24
+ 670 0266 A27A     		ldrb	r2, [r4, #10]	@ zero_extendqisi2
+ 671 0268 43EA0223 		orr	r3, r3, r2, lsl #8
+ 672 026c E27A     		ldrb	r2, [r4, #11]	@ zero_extendqisi2
+ 673 026e 1343     		orrs	r3, r3, r2
+ 176:../../CM7/Core/Src/pd.c **** 
+ 674              		.loc 1 176 10 view .LVU142
+ 675 0270 3D4A     		ldr	r2, .L77+32
+ 676 0272 1360     		str	r3, [r2]
+ 178:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 677              		.loc 1 178 4 is_stmt 1 view .LVU143
+ 178:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 678              		.loc 1 178 22 is_stmt 0 view .LVU144
+ 679 0274 374B     		ldr	r3, .L77+12
+ 680 0276 1B68     		ldr	r3, [r3]
+ 178:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 681              		.loc 1 178 7 view .LVU145
+ 682 0278 8342     		cmp	r3, r0
+ 683 027a 1FD1     		bne	.L65
+ 684              	.LVL64:
+ 685              	.L35:
+ 182:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 686              		.loc 1 182 4 is_stmt 1 view .LVU146
+ 687 027c 0195     		str	r5, [sp, #4]
+ 688 027e 0023     		movs	r3, #0
+ 689 0280 0093     		str	r3, [sp]
+ 690 0282 7322     		movs	r2, #115
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 22
+
+
+ 691 0284 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 692 0286 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 693 0288 FFF7FEFF 		bl	pd_transmit_piv
+ 694              	.LVL65:
+ 183:../../CM7/Core/Src/pd.c **** 		break;
+ 695              		.loc 1 183 4 view .LVU147
+ 183:../../CM7/Core/Src/pd.c **** 		break;
+ 696              		.loc 1 183 24 is_stmt 0 view .LVU148
+ 697 028c 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 698 028e 344B     		ldr	r3, .L77+24
+ 699 0290 1A70     		strb	r2, [r3]
+ 184:../../CM7/Core/Src/pd.c **** 
+ 700              		.loc 1 184 3 is_stmt 1 view .LVU149
+ 701 0292 00E7     		b	.L8
+ 702              	.LVL66:
+ 703              	.L63:
+ 164:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_ZVUKOVOE_VESHANIE_RES, buf, 1, huart_numbe
+ 704              		.loc 1 164 5 view .LVU150
+ 164:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_ZVUKOVOE_VESHANIE_RES, buf, 1, huart_numbe
+ 705              		.loc 1 164 12 is_stmt 0 view .LVU151
+ 706 0294 F123     		movs	r3, #241
+ 707 0296 8DF80C30 		strb	r3, [sp, #12]
+ 165:../../CM7/Core/Src/pd.c **** 				return;
+ 708              		.loc 1 165 5 is_stmt 1 view .LVU152
+ 709 029a 0195     		str	r5, [sp, #4]
+ 710 029c 0123     		movs	r3, #1
+ 711 029e 0093     		str	r3, [sp]
+ 712 02a0 03AB     		add	r3, sp, #12
+ 713 02a2 F322     		movs	r2, #243
+ 714 02a4 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 715              	.LVL67:
+ 165:../../CM7/Core/Src/pd.c **** 				return;
+ 716              		.loc 1 165 5 is_stmt 0 view .LVU153
+ 717 02a6 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 718              	.LVL68:
+ 165:../../CM7/Core/Src/pd.c **** 				return;
+ 719              		.loc 1 165 5 view .LVU154
+ 720 02a8 FFF7FEFF 		bl	pd_transmit_piv
+ 721              	.LVL69:
+ 166:../../CM7/Core/Src/pd.c **** 			}
+ 722              		.loc 1 166 5 is_stmt 1 view .LVU155
+ 723 02ac F3E6     		b	.L8
+ 724              	.LVL70:
+ 725              	.L64:
+ 170:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_ZVUKOVOE_VESHANIE"CRLF);
+ 726              		.loc 1 170 5 view .LVU156
+ 727 02ae 0220     		movs	r0, #2
+ 728              	.LVL71:
+ 170:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_ZVUKOVOE_VESHANIE"CRLF);
+ 729              		.loc 1 170 5 is_stmt 0 view .LVU157
+ 730 02b0 FFF7FEFF 		bl	pu_set_mode
+ 731              	.LVL72:
+ 171:../../CM7/Core/Src/pd.c **** 			}
+ 732              		.loc 1 171 5 is_stmt 1 view .LVU158
+ 733 02b4 2D48     		ldr	r0, .L77+36
+ 734 02b6 FFF7FEFF 		bl	ulog
+ 735              	.LVL73:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 23
+
+
+ 736 02ba C8E7     		b	.L34
+ 737              	.LVL74:
+ 738              	.L65:
+ 179:../../CM7/Core/Src/pd.c **** 			}
+ 739              		.loc 1 179 5 view .LVU159
+ 740 02bc FFF7FEFF 		bl	pu_enable_sound_lines
+ 741              	.LVL75:
+ 179:../../CM7/Core/Src/pd.c **** 			}
+ 742              		.loc 1 179 5 is_stmt 0 view .LVU160
+ 743 02c0 DCE7     		b	.L35
+ 744              	.LVL76:
+ 745              	.L17:
+ 188:../../CM7/Core/Src/pd.c **** 
+ 746              		.loc 1 188 4 is_stmt 1 view .LVU161
+ 188:../../CM7/Core/Src/pd.c **** 
+ 747              		.loc 1 188 7 is_stmt 0 view .LVU162
+ 748 02c2 0E29     		cmp	r1, #14
+ 749 02c4 7FF4E7AE 		bne	.L8
+ 190:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 750              		.loc 1 190 4 is_stmt 1 view .LVU163
+ 190:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 751              		.loc 1 190 16 is_stmt 0 view .LVU164
+ 752 02c8 1F4B     		ldr	r3, .L77
+ 753 02ca 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 190:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 754              		.loc 1 190 7 view .LVU165
+ 755 02cc 042A     		cmp	r2, #4
+ 756 02ce 22D8     		bhi	.L66
+ 197:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 757              		.loc 1 197 4 is_stmt 1 view .LVU166
+ 197:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 758              		.loc 1 197 22 is_stmt 0 view .LVU167
+ 759 02d0 C179     		ldrb	r1, [r0, #7]	@ zero_extendqisi2
+ 760              	.LVL77:
+ 197:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 761              		.loc 1 197 22 view .LVU168
+ 762 02d2 8379     		ldrb	r3, [r0, #6]	@ zero_extendqisi2
+ 763 02d4 1B02     		lsls	r3, r3, #8
+ 764 02d6 43EA0143 		orr	r3, r3, r1, lsl #16
+ 765 02da 4179     		ldrb	r1, [r0, #5]	@ zero_extendqisi2
+ 766 02dc 0B43     		orrs	r3, r3, r1
+ 197:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 767              		.loc 1 197 20 view .LVU169
+ 768 02de 2449     		ldr	r1, .L77+40
+ 769 02e0 0B60     		str	r3, [r1]
+ 198:../../CM7/Core/Src/pd.c **** 
+ 770              		.loc 1 198 4 is_stmt 1 view .LVU170
+ 198:../../CM7/Core/Src/pd.c **** 
+ 771              		.loc 1 198 12 is_stmt 0 view .LVU171
+ 772 02e2 017A     		ldrb	r1, [r0, #8]	@ zero_extendqisi2
+ 773 02e4 437A     		ldrb	r3, [r0, #9]	@ zero_extendqisi2
+ 774 02e6 1B04     		lsls	r3, r3, #16
+ 775 02e8 43EA0163 		orr	r3, r3, r1, lsl #24
+ 776 02ec 817A     		ldrb	r1, [r0, #10]	@ zero_extendqisi2
+ 777 02ee 43EA0123 		orr	r3, r3, r1, lsl #8
+ 778 02f2 C17A     		ldrb	r1, [r0, #11]	@ zero_extendqisi2
+ 779 02f4 0B43     		orrs	r3, r3, r1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 24
+
+
+ 198:../../CM7/Core/Src/pd.c **** 
+ 780              		.loc 1 198 10 view .LVU172
+ 781 02f6 1C49     		ldr	r1, .L77+32
+ 782 02f8 0B60     		str	r3, [r1]
+ 201:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_POJAR);
+ 783              		.loc 1 201 4 is_stmt 1 view .LVU173
+ 201:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_POJAR);
+ 784              		.loc 1 201 7 is_stmt 0 view .LVU174
+ 785 02fa 042A     		cmp	r2, #4
+ 786 02fc 18D1     		bne	.L67
+ 787              	.LVL78:
+ 788              	.L37:
+ 205:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 789              		.loc 1 205 4 is_stmt 1 view .LVU175
+ 790 02fe 0195     		str	r5, [sp, #4]
+ 791 0300 0023     		movs	r3, #0
+ 792 0302 0093     		str	r3, [sp]
+ 793 0304 7422     		movs	r2, #116
+ 794 0306 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 795 0308 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 796 030a FFF7FEFF 		bl	pd_transmit_piv
+ 797              	.LVL79:
+ 206:../../CM7/Core/Src/pd.c **** 		break;
+ 798              		.loc 1 206 4 view .LVU176
+ 206:../../CM7/Core/Src/pd.c **** 		break;
+ 799              		.loc 1 206 24 is_stmt 0 view .LVU177
+ 800 030e 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 801 0310 134B     		ldr	r3, .L77+24
+ 802 0312 1A70     		strb	r2, [r3]
+ 207:../../CM7/Core/Src/pd.c **** 
+ 803              		.loc 1 207 3 is_stmt 1 view .LVU178
+ 804 0314 BFE6     		b	.L8
+ 805              	.LVL80:
+ 806              	.L66:
+ 191:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_POJAR_RES, buf, 1, huart_number);
+ 807              		.loc 1 191 5 view .LVU179
+ 191:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_POJAR_RES, buf, 1, huart_number);
+ 808              		.loc 1 191 12 is_stmt 0 view .LVU180
+ 809 0316 F123     		movs	r3, #241
+ 810 0318 8DF80C30 		strb	r3, [sp, #12]
+ 192:../../CM7/Core/Src/pd.c **** 				return;
+ 811              		.loc 1 192 5 is_stmt 1 view .LVU181
+ 812 031c 0195     		str	r5, [sp, #4]
+ 813 031e 0123     		movs	r3, #1
+ 814 0320 0093     		str	r3, [sp]
+ 815 0322 03AB     		add	r3, sp, #12
+ 816 0324 F422     		movs	r2, #244
+ 817 0326 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 818              	.LVL81:
+ 192:../../CM7/Core/Src/pd.c **** 				return;
+ 819              		.loc 1 192 5 is_stmt 0 view .LVU182
+ 820 0328 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 821              	.LVL82:
+ 192:../../CM7/Core/Src/pd.c **** 				return;
+ 822              		.loc 1 192 5 view .LVU183
+ 823 032a FFF7FEFF 		bl	pd_transmit_piv
+ 824              	.LVL83:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 25
+
+
+ 193:../../CM7/Core/Src/pd.c **** 			}
+ 825              		.loc 1 193 5 is_stmt 1 view .LVU184
+ 826 032e B2E6     		b	.L8
+ 827              	.LVL84:
+ 828              	.L67:
+ 202:../../CM7/Core/Src/pd.c **** 				ulog_fmt("pd: PD_CMD_VESHANIE_POJAR fire_lines:%s"CRLF, u24l2bitstr(fire_lines_imit));
+ 829              		.loc 1 202 5 view .LVU185
+ 830 0330 0420     		movs	r0, #4
+ 831              	.LVL85:
+ 202:../../CM7/Core/Src/pd.c **** 				ulog_fmt("pd: PD_CMD_VESHANIE_POJAR fire_lines:%s"CRLF, u24l2bitstr(fire_lines_imit));
+ 832              		.loc 1 202 5 is_stmt 0 view .LVU186
+ 833 0332 FFF7FEFF 		bl	pu_set_mode
+ 834              	.LVL86:
+ 203:../../CM7/Core/Src/pd.c **** 			}
+ 835              		.loc 1 203 5 is_stmt 1 view .LVU187
+ 836 0336 0E4B     		ldr	r3, .L77+40
+ 837 0338 1868     		ldr	r0, [r3]
+ 838 033a FFF7FEFF 		bl	u24l2bitstr
+ 839              	.LVL87:
+ 840 033e 0146     		mov	r1, r0
+ 203:../../CM7/Core/Src/pd.c **** 			}
+ 841              		.loc 1 203 5 is_stmt 0 discriminator 1 view .LVU188
+ 842 0340 0C48     		ldr	r0, .L77+44
+ 843 0342 FFF7FEFF 		bl	ulog_fmt
+ 844              	.LVL88:
+ 845 0346 DAE7     		b	.L37
+ 846              	.L78:
+ 847              		.align	2
+ 848              	.L77:
+ 849 0348 00000000 		.word	pu_mode
+ 850 034c 00000000 		.word	last_frequency
+ 851 0350 3C000000 		.word	.LC1
+ 852 0354 00000000 		.word	pu_need_lines
+ 853 0358 00000000 		.word	.LC0
+ 854 035c 78000000 		.word	.LC2
+ 855 0360 00000000 		.word	pd_translation_addr
+ 856 0364 C0000000 		.word	.LC3
+ 857 0368 00000000 		.word	pd_id
+ 858 036c D8000000 		.word	.LC4
+ 859 0370 00000000 		.word	fire_lines_imit
+ 860 0374 F8000000 		.word	.LC5
+ 861              	.LVL89:
+ 862              	.L16:
+ 211:../../CM7/Core/Src/pd.c **** 
+ 863              		.loc 1 211 4 is_stmt 1 view .LVU189
+ 211:../../CM7/Core/Src/pd.c **** 
+ 864              		.loc 1 211 7 is_stmt 0 view .LVU190
+ 865 0378 0E29     		cmp	r1, #14
+ 866 037a 7FF48CAE 		bne	.L8
+ 213:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 867              		.loc 1 213 4 is_stmt 1 view .LVU191
+ 213:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 868              		.loc 1 213 16 is_stmt 0 view .LVU192
+ 869 037e A84B     		ldr	r3, .L79
+ 870 0380 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 213:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 871              		.loc 1 213 7 view .LVU193
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 26
+
+
+ 872 0382 052B     		cmp	r3, #5
+ 873 0384 24D8     		bhi	.L68
+ 219:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_MCHS);
+ 874              		.loc 1 219 4 is_stmt 1 view .LVU194
+ 219:../../CM7/Core/Src/pd.c **** 				pu_set_mode(PU_MODE_VESHANIE_MCHS);
+ 875              		.loc 1 219 7 is_stmt 0 view .LVU195
+ 876 0386 052B     		cmp	r3, #5
+ 877 0388 2FD1     		bne	.L69
+ 878              	.LVL90:
+ 879              	.L39:
+ 225:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 880              		.loc 1 225 4 is_stmt 1 view .LVU196
+ 225:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 881              		.loc 1 225 12 is_stmt 0 view .LVU197
+ 882 038a E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 883 038c A079     		ldrb	r0, [r4, #6]	@ zero_extendqisi2
+ 884 038e 0002     		lsls	r0, r0, #8
+ 885 0390 40EA0340 		orr	r0, r0, r3, lsl #16
+ 886 0394 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 225:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 887              		.loc 1 225 10 view .LVU198
+ 888 0396 1843     		orrs	r0, r0, r3
+ 889              	.LVL91:
+ 226:../../CM7/Core/Src/pd.c **** 
+ 890              		.loc 1 226 4 is_stmt 1 view .LVU199
+ 226:../../CM7/Core/Src/pd.c **** 
+ 891              		.loc 1 226 12 is_stmt 0 view .LVU200
+ 892 0398 227A     		ldrb	r2, [r4, #8]	@ zero_extendqisi2
+ 893 039a 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
+ 894 039c 1B04     		lsls	r3, r3, #16
+ 895 039e 43EA0263 		orr	r3, r3, r2, lsl #24
+ 896 03a2 A27A     		ldrb	r2, [r4, #10]	@ zero_extendqisi2
+ 897 03a4 43EA0223 		orr	r3, r3, r2, lsl #8
+ 898 03a8 E27A     		ldrb	r2, [r4, #11]	@ zero_extendqisi2
+ 899 03aa 1343     		orrs	r3, r3, r2
+ 226:../../CM7/Core/Src/pd.c **** 
+ 900              		.loc 1 226 10 view .LVU201
+ 901 03ac 9D4A     		ldr	r2, .L79+4
+ 902 03ae 1360     		str	r3, [r2]
+ 228:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 903              		.loc 1 228 4 is_stmt 1 view .LVU202
+ 228:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 904              		.loc 1 228 22 is_stmt 0 view .LVU203
+ 905 03b0 9D4B     		ldr	r3, .L79+8
+ 906 03b2 1B68     		ldr	r3, [r3]
+ 228:../../CM7/Core/Src/pd.c **** 				pu_enable_sound_lines(lines);
+ 907              		.loc 1 228 7 view .LVU204
+ 908 03b4 8342     		cmp	r3, r0
+ 909 03b6 1FD1     		bne	.L70
+ 910              	.LVL92:
+ 911              	.L40:
+ 232:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 912              		.loc 1 232 4 is_stmt 1 view .LVU205
+ 913 03b8 0195     		str	r5, [sp, #4]
+ 914 03ba 0023     		movs	r3, #0
+ 915 03bc 0093     		str	r3, [sp]
+ 916 03be 7522     		movs	r2, #117
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 27
+
+
+ 917 03c0 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 918 03c2 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 919 03c4 FFF7FEFF 		bl	pd_transmit_piv
+ 920              	.LVL93:
+ 233:../../CM7/Core/Src/pd.c **** 		break;
+ 921              		.loc 1 233 4 view .LVU206
+ 233:../../CM7/Core/Src/pd.c **** 		break;
+ 922              		.loc 1 233 24 is_stmt 0 view .LVU207
+ 923 03c8 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 924 03ca 984B     		ldr	r3, .L79+12
+ 925 03cc 1A70     		strb	r2, [r3]
+ 234:../../CM7/Core/Src/pd.c **** 
+ 926              		.loc 1 234 3 is_stmt 1 view .LVU208
+ 927 03ce 62E6     		b	.L8
+ 928              	.LVL94:
+ 929              	.L68:
+ 214:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_MCHS_RES, buf, 1, huart_number);
+ 930              		.loc 1 214 5 view .LVU209
+ 214:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_VESHANIE_MCHS_RES, buf, 1, huart_number);
+ 931              		.loc 1 214 12 is_stmt 0 view .LVU210
+ 932 03d0 F123     		movs	r3, #241
+ 933 03d2 8DF80C30 		strb	r3, [sp, #12]
+ 215:../../CM7/Core/Src/pd.c **** 				return;
+ 934              		.loc 1 215 5 is_stmt 1 view .LVU211
+ 935 03d6 0195     		str	r5, [sp, #4]
+ 936 03d8 0123     		movs	r3, #1
+ 937 03da 0093     		str	r3, [sp]
+ 938 03dc 03AB     		add	r3, sp, #12
+ 939 03de F522     		movs	r2, #245
+ 940 03e0 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 941              	.LVL95:
+ 215:../../CM7/Core/Src/pd.c **** 				return;
+ 942              		.loc 1 215 5 is_stmt 0 view .LVU212
+ 943 03e2 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 944              	.LVL96:
+ 215:../../CM7/Core/Src/pd.c **** 				return;
+ 945              		.loc 1 215 5 view .LVU213
+ 946 03e4 FFF7FEFF 		bl	pd_transmit_piv
+ 947              	.LVL97:
+ 216:../../CM7/Core/Src/pd.c **** 			}
+ 948              		.loc 1 216 5 is_stmt 1 view .LVU214
+ 949 03e8 55E6     		b	.L8
+ 950              	.LVL98:
+ 951              	.L69:
+ 220:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_VESHANIE_MCHS"CRLF);
+ 952              		.loc 1 220 5 view .LVU215
+ 953 03ea 0520     		movs	r0, #5
+ 954              	.LVL99:
+ 220:../../CM7/Core/Src/pd.c **** 				ulog("pd: PD_CMD_VESHANIE_MCHS"CRLF);
+ 955              		.loc 1 220 5 is_stmt 0 view .LVU216
+ 956 03ec FFF7FEFF 		bl	pu_set_mode
+ 957              	.LVL100:
+ 221:../../CM7/Core/Src/pd.c **** 			}
+ 958              		.loc 1 221 5 is_stmt 1 view .LVU217
+ 959 03f0 8F48     		ldr	r0, .L79+16
+ 960 03f2 FFF7FEFF 		bl	ulog
+ 961              	.LVL101:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 28
+
+
+ 962 03f6 C8E7     		b	.L39
+ 963              	.LVL102:
+ 964              	.L70:
+ 229:../../CM7/Core/Src/pd.c **** 			}
+ 965              		.loc 1 229 5 view .LVU218
+ 966 03f8 FFF7FEFF 		bl	pu_enable_sound_lines
+ 967              	.LVL103:
+ 229:../../CM7/Core/Src/pd.c **** 			}
+ 968              		.loc 1 229 5 is_stmt 0 view .LVU219
+ 969 03fc DCE7     		b	.L40
+ 970              	.LVL104:
+ 971              	.L15:
+ 238:../../CM7/Core/Src/pd.c **** 
+ 972              		.loc 1 238 4 is_stmt 1 view .LVU220
+ 238:../../CM7/Core/Src/pd.c **** 
+ 973              		.loc 1 238 7 is_stmt 0 view .LVU221
+ 974 03fe 0E29     		cmp	r1, #14
+ 975 0400 7FF449AE 		bne	.L8
+ 241:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 976              		.loc 1 241 4 is_stmt 1 view .LVU222
+ 241:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 977              		.loc 1 241 34 is_stmt 0 view .LVU223
+ 978 0404 C379     		ldrb	r3, [r0, #7]	@ zero_extendqisi2
+ 979 0406 8279     		ldrb	r2, [r0, #6]	@ zero_extendqisi2
+ 980 0408 1202     		lsls	r2, r2, #8
+ 981 040a 42EA0342 		orr	r2, r2, r3, lsl #16
+ 982 040e 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 983 0410 1A43     		orrs	r2, r2, r3
+ 241:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 984              		.loc 1 241 32 view .LVU224
+ 985 0412 884B     		ldr	r3, .L79+20
+ 986 0414 1A60     		str	r2, [r3]
+ 242:../../CM7/Core/Src/pd.c **** 			cm7core_send_one_led_color(MKI_LED_DISCONNECT, pu_option_otkluchenie_lines ? LED_COLOR_OPTION_OT
+ 987              		.loc 1 242 4 is_stmt 1 view .LVU225
+ 242:../../CM7/Core/Src/pd.c **** 			cm7core_send_one_led_color(MKI_LED_DISCONNECT, pu_option_otkluchenie_lines ? LED_COLOR_OPTION_OT
+ 988              		.loc 1 242 12 is_stmt 0 view .LVU226
+ 989 0416 017A     		ldrb	r1, [r0, #8]	@ zero_extendqisi2
+ 990              	.LVL105:
+ 242:../../CM7/Core/Src/pd.c **** 			cm7core_send_one_led_color(MKI_LED_DISCONNECT, pu_option_otkluchenie_lines ? LED_COLOR_OPTION_OT
+ 991              		.loc 1 242 12 view .LVU227
+ 992 0418 437A     		ldrb	r3, [r0, #9]	@ zero_extendqisi2
+ 993 041a 1B04     		lsls	r3, r3, #16
+ 994 041c 43EA0163 		orr	r3, r3, r1, lsl #24
+ 995 0420 817A     		ldrb	r1, [r0, #10]	@ zero_extendqisi2
+ 996 0422 43EA0123 		orr	r3, r3, r1, lsl #8
+ 997 0426 C17A     		ldrb	r1, [r0, #11]	@ zero_extendqisi2
+ 998 0428 0B43     		orrs	r3, r3, r1
+ 242:../../CM7/Core/Src/pd.c **** 			cm7core_send_one_led_color(MKI_LED_DISCONNECT, pu_option_otkluchenie_lines ? LED_COLOR_OPTION_OT
+ 999              		.loc 1 242 10 view .LVU228
+ 1000 042a 7E49     		ldr	r1, .L79+4
+ 1001 042c 0B60     		str	r3, [r1]
+ 243:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_OTKLUCHENIE %s"CRLF, u24l2bitstr(pu_option_otkluchenie_lines));
+ 1002              		.loc 1 243 4 is_stmt 1 view .LVU229
+ 1003 042e C2B1     		cbz	r2, .L53
+ 243:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_OTKLUCHENIE %s"CRLF, u24l2bitstr(pu_option_otkluchenie_lines));
+ 1004              		.loc 1 243 4 is_stmt 0 discriminator 1 view .LVU230
+ 1005 0430 0621     		movs	r1, #6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 29
+
+
+ 1006              	.L41:
+ 243:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_OTKLUCHENIE %s"CRLF, u24l2bitstr(pu_option_otkluchenie_lines));
+ 1007              		.loc 1 243 4 discriminator 4 view .LVU231
+ 1008 0432 1D20     		movs	r0, #29
+ 1009              	.LVL106:
+ 243:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_OTKLUCHENIE %s"CRLF, u24l2bitstr(pu_option_otkluchenie_lines));
+ 1010              		.loc 1 243 4 discriminator 4 view .LVU232
+ 1011 0434 FFF7FEFF 		bl	cm7core_send_one_led_color
+ 1012              	.LVL107:
+ 244:../../CM7/Core/Src/pd.c **** 
+ 1013              		.loc 1 244 4 is_stmt 1 view .LVU233
+ 1014 0438 7E4B     		ldr	r3, .L79+20
+ 1015 043a 1868     		ldr	r0, [r3]
+ 1016 043c FFF7FEFF 		bl	u24l2bitstr
+ 1017              	.LVL108:
+ 1018 0440 0146     		mov	r1, r0
+ 244:../../CM7/Core/Src/pd.c **** 
+ 1019              		.loc 1 244 4 is_stmt 0 discriminator 1 view .LVU234
+ 1020 0442 7D48     		ldr	r0, .L79+24
+ 1021 0444 FFF7FEFF 		bl	ulog_fmt
+ 1022              	.LVL109:
+ 246:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_otkluchenie_lines, LED_COLOR_OPTION_OTKLUCHENIE);
+ 1023              		.loc 1 246 4 is_stmt 1 view .LVU235
+ 246:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_otkluchenie_lines, LED_COLOR_OPTION_OTKLUCHENIE);
+ 1024              		.loc 1 246 18 is_stmt 0 view .LVU236
+ 1025 0448 7C4B     		ldr	r3, .L79+28
+ 1026 044a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 246:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_otkluchenie_lines, LED_COLOR_OPTION_OTKLUCHENIE);
+ 1027              		.loc 1 246 7 view .LVU237
+ 1028 044c 012B     		cmp	r3, #1
+ 1029 044e 0AD0     		beq	.L71
+ 1030              	.L42:
+ 250:../../CM7/Core/Src/pd.c **** 
+ 1031              		.loc 1 250 4 is_stmt 1 view .LVU238
+ 1032 0450 0195     		str	r5, [sp, #4]
+ 1033 0452 0023     		movs	r3, #0
+ 1034 0454 0093     		str	r3, [sp]
+ 1035 0456 7622     		movs	r2, #118
+ 1036 0458 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1037 045a 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 1038 045c FFF7FEFF 		bl	pd_transmit_piv
+ 1039              	.LVL110:
+ 252:../../CM7/Core/Src/pd.c **** 		case PD_CMD_AVTOMATIKA_OTKLUCHENA:
+ 1040              		.loc 1 252 3 view .LVU239
+ 1041 0460 19E6     		b	.L8
+ 1042              	.LVL111:
+ 1043              	.L53:
+ 243:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_OTKLUCHENIE %s"CRLF, u24l2bitstr(pu_option_otkluchenie_lines));
+ 1044              		.loc 1 243 4 is_stmt 0 discriminator 2 view .LVU240
+ 1045 0462 0021     		movs	r1, #0
+ 1046 0464 E5E7     		b	.L41
+ 1047              	.LVL112:
+ 1048              	.L71:
+ 247:../../CM7/Core/Src/pd.c **** 				screen0_update();
+ 1049              		.loc 1 247 5 is_stmt 1 view .LVU241
+ 1050 0466 0621     		movs	r1, #6
+ 1051 0468 724B     		ldr	r3, .L79+20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 30
+
+
+ 1052 046a 1868     		ldr	r0, [r3]
+ 1053 046c FFF7FEFF 		bl	pu_paint_led_lines
+ 1054              	.LVL113:
+ 248:../../CM7/Core/Src/pd.c **** 			}
+ 1055              		.loc 1 248 5 view .LVU242
+ 1056 0470 FFF7FEFF 		bl	screen0_update
+ 1057              	.LVL114:
+ 1058 0474 ECE7     		b	.L42
+ 1059              	.LVL115:
+ 1060              	.L14:
+ 255:../../CM7/Core/Src/pd.c **** 
+ 1061              		.loc 1 255 4 view .LVU243
+ 255:../../CM7/Core/Src/pd.c **** 
+ 1062              		.loc 1 255 7 is_stmt 0 view .LVU244
+ 1063 0476 0E29     		cmp	r1, #14
+ 1064 0478 7FF40DAE 		bne	.L8
+ 258:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 1065              		.loc 1 258 4 is_stmt 1 view .LVU245
+ 258:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 1066              		.loc 1 258 44 is_stmt 0 view .LVU246
+ 1067 047c C379     		ldrb	r3, [r0, #7]	@ zero_extendqisi2
+ 1068 047e 8279     		ldrb	r2, [r0, #6]	@ zero_extendqisi2
+ 1069 0480 1202     		lsls	r2, r2, #8
+ 1070 0482 42EA0342 		orr	r2, r2, r3, lsl #16
+ 1071 0486 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 1072 0488 1A43     		orrs	r2, r2, r3
+ 258:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[8], packet[9], packet[10], packet[11]);
+ 1073              		.loc 1 258 42 view .LVU247
+ 1074 048a 6D4B     		ldr	r3, .L79+32
+ 1075 048c 1A60     		str	r2, [r3]
+ 259:../../CM7/Core/Src/pd.c **** 			cm7core_set_led_color(MKI_LED_AUTOMATIONOFF, pu_option_avtomatika_otkluchena_lines ? LED_COLOR_O
+ 1076              		.loc 1 259 4 is_stmt 1 view .LVU248
+ 259:../../CM7/Core/Src/pd.c **** 			cm7core_set_led_color(MKI_LED_AUTOMATIONOFF, pu_option_avtomatika_otkluchena_lines ? LED_COLOR_O
+ 1077              		.loc 1 259 12 is_stmt 0 view .LVU249
+ 1078 048e 017A     		ldrb	r1, [r0, #8]	@ zero_extendqisi2
+ 1079              	.LVL116:
+ 259:../../CM7/Core/Src/pd.c **** 			cm7core_set_led_color(MKI_LED_AUTOMATIONOFF, pu_option_avtomatika_otkluchena_lines ? LED_COLOR_O
+ 1080              		.loc 1 259 12 view .LVU250
+ 1081 0490 437A     		ldrb	r3, [r0, #9]	@ zero_extendqisi2
+ 1082 0492 1B04     		lsls	r3, r3, #16
+ 1083 0494 43EA0163 		orr	r3, r3, r1, lsl #24
+ 1084 0498 817A     		ldrb	r1, [r0, #10]	@ zero_extendqisi2
+ 1085 049a 43EA0123 		orr	r3, r3, r1, lsl #8
+ 1086 049e C17A     		ldrb	r1, [r0, #11]	@ zero_extendqisi2
+ 1087 04a0 0B43     		orrs	r3, r3, r1
+ 259:../../CM7/Core/Src/pd.c **** 			cm7core_set_led_color(MKI_LED_AUTOMATIONOFF, pu_option_avtomatika_otkluchena_lines ? LED_COLOR_O
+ 1088              		.loc 1 259 10 view .LVU251
+ 1089 04a2 6049     		ldr	r1, .L79+4
+ 1090 04a4 0B60     		str	r3, [r1]
+ 260:../../CM7/Core/Src/pd.c **** 			cm7core_send_leds();
+ 1091              		.loc 1 260 4 is_stmt 1 view .LVU252
+ 1092 04a6 D2B1     		cbz	r2, .L54
+ 260:../../CM7/Core/Src/pd.c **** 			cm7core_send_leds();
+ 1093              		.loc 1 260 4 is_stmt 0 discriminator 1 view .LVU253
+ 1094 04a8 0621     		movs	r1, #6
+ 1095              	.L43:
+ 260:../../CM7/Core/Src/pd.c **** 			cm7core_send_leds();
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 31
+
+
+ 1096              		.loc 1 260 4 discriminator 4 view .LVU254
+ 1097 04aa 1E20     		movs	r0, #30
+ 1098              	.LVL117:
+ 260:../../CM7/Core/Src/pd.c **** 			cm7core_send_leds();
+ 1099              		.loc 1 260 4 discriminator 4 view .LVU255
+ 1100 04ac FFF7FEFF 		bl	cm7core_set_led_color
+ 1101              	.LVL118:
+ 261:../../CM7/Core/Src/pd.c **** 			ulog_fmt("pd: PD_CMD_AVTOMATIKA_OTKLUCHENA %s"CRLF, u24l2bitstr(pu_option_avtomatika_otkluchena_
+ 1102              		.loc 1 261 4 is_stmt 1 view .LVU256
+ 1103 04b0 FFF7FEFF 		bl	cm7core_send_leds
+ 1104              	.LVL119:
+ 262:../../CM7/Core/Src/pd.c **** 
+ 1105              		.loc 1 262 4 view .LVU257
+ 1106 04b4 624B     		ldr	r3, .L79+32
+ 1107 04b6 1868     		ldr	r0, [r3]
+ 1108 04b8 FFF7FEFF 		bl	u24l2bitstr
+ 1109              	.LVL120:
+ 1110 04bc 0146     		mov	r1, r0
+ 262:../../CM7/Core/Src/pd.c **** 
+ 1111              		.loc 1 262 4 is_stmt 0 discriminator 1 view .LVU258
+ 1112 04be 6148     		ldr	r0, .L79+36
+ 1113 04c0 FFF7FEFF 		bl	ulog_fmt
+ 1114              	.LVL121:
+ 264:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_avtomatika_otkluchena_lines, LED_COLOR_OPTION_AVTOMATIKA_OTKLUCHEN
+ 1115              		.loc 1 264 4 is_stmt 1 view .LVU259
+ 264:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_avtomatika_otkluchena_lines, LED_COLOR_OPTION_AVTOMATIKA_OTKLUCHEN
+ 1116              		.loc 1 264 18 is_stmt 0 view .LVU260
+ 1117 04c4 5D4B     		ldr	r3, .L79+28
+ 1118 04c6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 264:../../CM7/Core/Src/pd.c **** 				pu_paint_led_lines(pu_option_avtomatika_otkluchena_lines, LED_COLOR_OPTION_AVTOMATIKA_OTKLUCHEN
+ 1119              		.loc 1 264 7 view .LVU261
+ 1120 04c8 022B     		cmp	r3, #2
+ 1121 04ca 0AD0     		beq	.L72
+ 1122              	.L44:
+ 269:../../CM7/Core/Src/pd.c **** 		break;
+ 1123              		.loc 1 269 4 is_stmt 1 view .LVU262
+ 1124 04cc 0195     		str	r5, [sp, #4]
+ 1125 04ce 0023     		movs	r3, #0
+ 1126 04d0 0093     		str	r3, [sp]
+ 1127 04d2 7722     		movs	r2, #119
+ 1128 04d4 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1129 04d6 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 1130 04d8 FFF7FEFF 		bl	pd_transmit_piv
+ 1131              	.LVL122:
+ 270:../../CM7/Core/Src/pd.c **** 		case PD_CMD_RUCHNOI_PUSK:
+ 1132              		.loc 1 270 3 view .LVU263
+ 1133 04dc DBE5     		b	.L8
+ 1134              	.LVL123:
+ 1135              	.L54:
+ 260:../../CM7/Core/Src/pd.c **** 			cm7core_send_leds();
+ 1136              		.loc 1 260 4 is_stmt 0 discriminator 2 view .LVU264
+ 1137 04de 0021     		movs	r1, #0
+ 1138 04e0 E3E7     		b	.L43
+ 1139              	.LVL124:
+ 1140              	.L72:
+ 265:../../CM7/Core/Src/pd.c **** 				screen0_update();
+ 1141              		.loc 1 265 5 is_stmt 1 view .LVU265
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 32
+
+
+ 1142 04e2 0621     		movs	r1, #6
+ 1143 04e4 564B     		ldr	r3, .L79+32
+ 1144 04e6 1868     		ldr	r0, [r3]
+ 1145 04e8 FFF7FEFF 		bl	pu_paint_led_lines
+ 1146              	.LVL125:
+ 266:../../CM7/Core/Src/pd.c **** 			}
+ 1147              		.loc 1 266 5 view .LVU266
+ 1148 04ec FFF7FEFF 		bl	screen0_update
+ 1149              	.LVL126:
+ 1150 04f0 ECE7     		b	.L44
+ 1151              	.LVL127:
+ 1152              	.L13:
+ 273:../../CM7/Core/Src/pd.c **** 
+ 1153              		.loc 1 273 4 view .LVU267
+ 273:../../CM7/Core/Src/pd.c **** 
+ 1154              		.loc 1 273 7 is_stmt 0 view .LVU268
+ 1155 04f2 1329     		cmp	r1, #19
+ 1156 04f4 7FF4CFAD 		bne	.L8
+ 275:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 1157              		.loc 1 275 4 is_stmt 1 view .LVU269
+ 275:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 1158              		.loc 1 275 16 is_stmt 0 view .LVU270
+ 1159 04f8 494B     		ldr	r3, .L79
+ 1160 04fa 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 275:../../CM7/Core/Src/pd.c **** 				buf[0] = MKK_ERROR_PARAMS;
+ 1161              		.loc 1 275 7 view .LVU271
+ 1162 04fc 062A     		cmp	r2, #6
+ 1163 04fe 4BD8     		bhi	.L73
+ 281:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 1164              		.loc 1 281 4 is_stmt 1 view .LVU272
+ 281:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 1165              		.loc 1 281 11 is_stmt 0 view .LVU273
+ 1166 0500 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 1167 0502 8679     		ldrb	r6, [r0, #6]	@ zero_extendqisi2
+ 1168 0504 3604     		lsls	r6, r6, #16
+ 1169 0506 46EA0366 		orr	r6, r6, r3, lsl #24
+ 1170 050a C379     		ldrb	r3, [r0, #7]	@ zero_extendqisi2
+ 1171 050c 46EA0326 		orr	r6, r6, r3, lsl #8
+ 1172 0510 037A     		ldrb	r3, [r0, #8]	@ zero_extendqisi2
+ 281:../../CM7/Core/Src/pd.c **** 			stereo = packet[9] ? TRUE : FALSE;
+ 1173              		.loc 1 281 9 view .LVU274
+ 1174 0512 1E43     		orrs	r6, r6, r3
+ 1175              	.LVL128:
+ 282:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 1176              		.loc 1 282 4 is_stmt 1 view .LVU275
+ 282:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 1177              		.loc 1 282 19 is_stmt 0 view .LVU276
+ 1178 0514 90F80980 		ldrb	r8, [r0, #9]	@ zero_extendqisi2
+ 282:../../CM7/Core/Src/pd.c **** 			lines = THREEBYTE2LINES(packet[10], packet[11], packet[12]);
+ 1179              		.loc 1 282 30 view .LVU277
+ 1180 0518 B8F10008 		subs	r8, r8, #0
+ 1181 051c 18BF     		it	ne
+ 1182 051e 4FF00108 		movne	r8, #1
+ 1183              	.LVL129:
+ 283:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 1184              		.loc 1 283 4 is_stmt 1 view .LVU278
+ 283:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 33
+
+
+ 1185              		.loc 1 283 12 is_stmt 0 view .LVU279
+ 1186 0522 037B     		ldrb	r3, [r0, #12]	@ zero_extendqisi2
+ 1187 0524 C77A     		ldrb	r7, [r0, #11]	@ zero_extendqisi2
+ 1188 0526 3F02     		lsls	r7, r7, #8
+ 1189 0528 47EA0347 		orr	r7, r7, r3, lsl #16
+ 1190 052c 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 283:../../CM7/Core/Src/pd.c **** 			pd_id = BE_FOURBYTE2UL(packet[13], packet[14], packet[15], packet[16]);
+ 1191              		.loc 1 283 10 view .LVU280
+ 1192 052e 1F43     		orrs	r7, r7, r3
+ 1193              	.LVL130:
+ 284:../../CM7/Core/Src/pd.c **** 
+ 1194              		.loc 1 284 4 is_stmt 1 view .LVU281
+ 284:../../CM7/Core/Src/pd.c **** 
+ 1195              		.loc 1 284 12 is_stmt 0 view .LVU282
+ 1196 0530 417B     		ldrb	r1, [r0, #13]	@ zero_extendqisi2
+ 1197              	.LVL131:
+ 284:../../CM7/Core/Src/pd.c **** 
+ 1198              		.loc 1 284 12 view .LVU283
+ 1199 0532 837B     		ldrb	r3, [r0, #14]	@ zero_extendqisi2
+ 1200 0534 1B04     		lsls	r3, r3, #16
+ 1201 0536 43EA0163 		orr	r3, r3, r1, lsl #24
+ 1202 053a C17B     		ldrb	r1, [r0, #15]	@ zero_extendqisi2
+ 1203 053c 43EA0123 		orr	r3, r3, r1, lsl #8
+ 1204 0540 017C     		ldrb	r1, [r0, #16]	@ zero_extendqisi2
+ 1205 0542 0B43     		orrs	r3, r3, r1
+ 284:../../CM7/Core/Src/pd.c **** 
+ 1206              		.loc 1 284 10 view .LVU284
+ 1207 0544 3749     		ldr	r1, .L79+4
+ 1208 0546 0B60     		str	r3, [r1]
+ 291:../../CM7/Core/Src/pd.c **** 
+ 1209              		.loc 1 291 4 is_stmt 1 view .LVU285
+ 291:../../CM7/Core/Src/pd.c **** 
+ 1210              		.loc 1 291 7 is_stmt 0 view .LVU286
+ 1211 0548 062A     		cmp	r2, #6
+ 1212 054a 44D1     		bne	.L46
+ 293:../../CM7/Core/Src/pd.c **** 					if (!pd_start_translation(freq, stereo)) {
+ 1213              		.loc 1 293 5 is_stmt 1 view .LVU287
+ 293:../../CM7/Core/Src/pd.c **** 					if (!pd_start_translation(freq, stereo)) {
+ 1214              		.loc 1 293 25 is_stmt 0 view .LVU288
+ 1215 054c 3E4B     		ldr	r3, .L79+40
+ 1216 054e 1B68     		ldr	r3, [r3]
+ 293:../../CM7/Core/Src/pd.c **** 					if (!pd_start_translation(freq, stereo)) {
+ 1217              		.loc 1 293 8 view .LVU289
+ 1218 0550 B342     		cmp	r3, r6
+ 1219 0552 2ED0     		beq	.L74
+ 1220              	.LVL132:
+ 1221              	.L47:
+ 294:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 1222              		.loc 1 294 6 is_stmt 1 view .LVU290
+ 294:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 1223              		.loc 1 294 11 is_stmt 0 view .LVU291
+ 1224 0554 4146     		mov	r1, r8
+ 1225 0556 3046     		mov	r0, r6
+ 1226 0558 FFF7FEFF 		bl	pd_start_translation
+ 1227              	.LVL133:
+ 294:../../CM7/Core/Src/pd.c **** 						buf[0] = MKK_ERROR_PARAMS;
+ 1228              		.loc 1 294 9 discriminator 1 view .LVU292
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 34
+
+
+ 1229 055c 70B3     		cbz	r0, .L75
+ 299:../../CM7/Core/Src/pd.c **** 				}
+ 1230              		.loc 1 299 6 is_stmt 1 view .LVU293
+ 1231 055e 4046     		mov	r0, r8
+ 1232 0560 FFF7FEFF 		bl	bool2str
+ 1233              	.LVL134:
+ 1234 0564 0246     		mov	r2, r0
+ 299:../../CM7/Core/Src/pd.c **** 				}
+ 1235              		.loc 1 299 6 is_stmt 0 discriminator 1 view .LVU294
+ 1236 0566 3146     		mov	r1, r6
+ 1237 0568 3848     		ldr	r0, .L79+44
+ 1238 056a FFF7FEFF 		bl	ulog_fmt
+ 1239              	.LVL135:
+ 1240              	.L48:
+ 302:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 1241              		.loc 1 302 5 is_stmt 1 view .LVU295
+ 302:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 1242              		.loc 1 302 23 is_stmt 0 view .LVU296
+ 1243 056e 2E4B     		ldr	r3, .L79+8
+ 1244 0570 1B68     		ldr	r3, [r3]
+ 302:../../CM7/Core/Src/pd.c **** 					pu_enable_sound_lines(lines);
+ 1245              		.loc 1 302 8 view .LVU297
+ 1246 0572 BB42     		cmp	r3, r7
+ 1247 0574 48D0     		beq	.L50
+ 303:../../CM7/Core/Src/pd.c **** 					//if (lines) filelog_fmt("Линии опов.: %s", pu_lines2str(lines));
+ 1248              		.loc 1 303 6 is_stmt 1 view .LVU298
+ 1249 0576 3846     		mov	r0, r7
+ 1250 0578 FFF7FEFF 		bl	pu_enable_sound_lines
+ 1251              	.LVL136:
+ 305:../../CM7/Core/Src/pd.c **** 				}
+ 1252              		.loc 1 305 6 view .LVU299
+ 1253 057c 3846     		mov	r0, r7
+ 1254 057e FFF7FEFF 		bl	u24l2bitstr
+ 1255              	.LVL137:
+ 1256 0582 0646     		mov	r6, r0
+ 1257              	.LVL138:
+ 305:../../CM7/Core/Src/pd.c **** 				}
+ 1258              		.loc 1 305 6 is_stmt 0 discriminator 1 view .LVU300
+ 1259 0584 324B     		ldr	r3, .L79+48
+ 1260 0586 1868     		ldr	r0, [r3]
+ 1261 0588 FFF7FEFF 		bl	u24l2bitstr
+ 1262              	.LVL139:
+ 1263 058c 0246     		mov	r2, r0
+ 305:../../CM7/Core/Src/pd.c **** 				}
+ 1264              		.loc 1 305 6 discriminator 2 view .LVU301
+ 1265 058e 3146     		mov	r1, r6
+ 1266 0590 3048     		ldr	r0, .L79+52
+ 1267 0592 FFF7FEFF 		bl	ulog_fmt
+ 1268              	.LVL140:
+ 1269 0596 37E0     		b	.L50
+ 1270              	.LVL141:
+ 1271              	.L73:
+ 276:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 1272              		.loc 1 276 5 is_stmt 1 view .LVU302
+ 276:../../CM7/Core/Src/pd.c **** 				pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 1273              		.loc 1 276 12 is_stmt 0 view .LVU303
+ 1274 0598 F123     		movs	r3, #241
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 35
+
+
+ 1275 059a 8DF80C30 		strb	r3, [sp, #12]
+ 277:../../CM7/Core/Src/pd.c **** 				return;
+ 1276              		.loc 1 277 5 is_stmt 1 view .LVU304
+ 1277 059e 0195     		str	r5, [sp, #4]
+ 1278 05a0 0123     		movs	r3, #1
+ 1279 05a2 0093     		str	r3, [sp]
+ 1280 05a4 03AB     		add	r3, sp, #12
+ 1281 05a6 F822     		movs	r2, #248
+ 1282 05a8 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 1283              	.LVL142:
+ 277:../../CM7/Core/Src/pd.c **** 				return;
+ 1284              		.loc 1 277 5 is_stmt 0 view .LVU305
+ 1285 05aa 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 1286              	.LVL143:
+ 277:../../CM7/Core/Src/pd.c **** 				return;
+ 1287              		.loc 1 277 5 view .LVU306
+ 1288 05ac FFF7FEFF 		bl	pd_transmit_piv
+ 1289              	.LVL144:
+ 278:../../CM7/Core/Src/pd.c **** 			}
+ 1290              		.loc 1 278 5 is_stmt 1 view .LVU307
+ 1291 05b0 71E5     		b	.L8
+ 1292              	.LVL145:
+ 1293              	.L74:
+ 293:../../CM7/Core/Src/pd.c **** 					if (!pd_start_translation(freq, stereo)) {
+ 1294              		.loc 1 293 38 is_stmt 0 discriminator 1 view .LVU308
+ 1295 05b2 FFF7FEFF 		bl	pcm1753_GetStereo
+ 1296              	.LVL146:
+ 293:../../CM7/Core/Src/pd.c **** 					if (!pd_start_translation(freq, stereo)) {
+ 1297              		.loc 1 293 34 discriminator 1 view .LVU309
+ 1298 05b6 4045     		cmp	r0, r8
+ 1299 05b8 CCD1     		bne	.L47
+ 1300 05ba D8E7     		b	.L48
+ 1301              	.L75:
+ 295:../../CM7/Core/Src/pd.c **** 						pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 1302              		.loc 1 295 7 is_stmt 1 view .LVU310
+ 295:../../CM7/Core/Src/pd.c **** 						pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 1303              		.loc 1 295 14 is_stmt 0 view .LVU311
+ 1304 05bc F123     		movs	r3, #241
+ 1305 05be 8DF80C30 		strb	r3, [sp, #12]
+ 296:../../CM7/Core/Src/pd.c **** 						return;
+ 1306              		.loc 1 296 7 is_stmt 1 view .LVU312
+ 1307 05c2 0195     		str	r5, [sp, #4]
+ 1308 05c4 0123     		movs	r3, #1
+ 1309 05c6 0093     		str	r3, [sp]
+ 1310 05c8 03AB     		add	r3, sp, #12
+ 1311 05ca F822     		movs	r2, #248
+ 1312 05cc 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1313 05ce 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 1314 05d0 FFF7FEFF 		bl	pd_transmit_piv
+ 1315              	.LVL147:
+ 297:../../CM7/Core/Src/pd.c **** 					}
+ 1316              		.loc 1 297 7 view .LVU313
+ 1317 05d4 5FE5     		b	.L8
+ 1318              	.LVL148:
+ 1319              	.L46:
+ 308:../../CM7/Core/Src/pd.c **** 				if (!pd_start_translation(freq, stereo)) {
+ 1320              		.loc 1 308 5 view .LVU314
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 36
+
+
+ 1321 05d6 0620     		movs	r0, #6
+ 1322              	.LVL149:
+ 308:../../CM7/Core/Src/pd.c **** 				if (!pd_start_translation(freq, stereo)) {
+ 1323              		.loc 1 308 5 is_stmt 0 view .LVU315
+ 1324 05d8 FFF7FEFF 		bl	pu_set_mode
+ 1325              	.LVL150:
+ 309:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 1326              		.loc 1 309 5 is_stmt 1 view .LVU316
+ 309:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 1327              		.loc 1 309 10 is_stmt 0 view .LVU317
+ 1328 05dc 4146     		mov	r1, r8
+ 1329 05de 3046     		mov	r0, r6
+ 1330 05e0 FFF7FEFF 		bl	pd_start_translation
+ 1331              	.LVL151:
+ 309:../../CM7/Core/Src/pd.c **** 					buf[0] = MKK_ERROR_PARAMS;
+ 1332              		.loc 1 309 8 discriminator 1 view .LVU318
+ 1333 05e4 0028     		cmp	r0, #0
+ 1334 05e6 39D0     		beq	.L76
+ 314:../../CM7/Core/Src/pd.c **** 				//if (lines) filelog_fmt("Линии опов.: %s", pu_lines2str(lines));
+ 1335              		.loc 1 314 5 is_stmt 1 view .LVU319
+ 1336 05e8 3846     		mov	r0, r7
+ 1337 05ea FFF7FEFF 		bl	pu_enable_sound_lines
+ 1338              	.LVL152:
+ 316:../../CM7/Core/Src/pd.c **** 			}
+ 1339              		.loc 1 316 5 view .LVU320
+ 1340 05ee 3846     		mov	r0, r7
+ 1341 05f0 FFF7FEFF 		bl	u24l2bitstr
+ 1342              	.LVL153:
+ 1343 05f4 0646     		mov	r6, r0
+ 1344              	.LVL154:
+ 316:../../CM7/Core/Src/pd.c **** 			}
+ 1345              		.loc 1 316 5 is_stmt 0 discriminator 1 view .LVU321
+ 1346 05f6 164B     		ldr	r3, .L79+48
+ 1347 05f8 1868     		ldr	r0, [r3]
+ 1348 05fa FFF7FEFF 		bl	u24l2bitstr
+ 1349              	.LVL155:
+ 1350 05fe 0246     		mov	r2, r0
+ 316:../../CM7/Core/Src/pd.c **** 			}
+ 1351              		.loc 1 316 5 discriminator 2 view .LVU322
+ 1352 0600 3146     		mov	r1, r6
+ 1353 0602 1548     		ldr	r0, .L79+56
+ 1354 0604 FFF7FEFF 		bl	ulog_fmt
+ 1355              	.LVL156:
+ 1356              	.L50:
+ 319:../../CM7/Core/Src/pd.c **** 			pd_translation_addr = packet[1];
+ 1357              		.loc 1 319 4 is_stmt 1 view .LVU323
+ 1358 0608 0195     		str	r5, [sp, #4]
+ 1359 060a 0023     		movs	r3, #0
+ 1360 060c 0093     		str	r3, [sp]
+ 1361 060e 7822     		movs	r2, #120
+ 1362 0610 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1363 0612 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 1364 0614 FFF7FEFF 		bl	pd_transmit_piv
+ 1365              	.LVL157:
+ 320:../../CM7/Core/Src/pd.c **** 		break;
+ 1366              		.loc 1 320 4 view .LVU324
+ 320:../../CM7/Core/Src/pd.c **** 		break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 37
+
+
+ 1367              		.loc 1 320 24 is_stmt 0 view .LVU325
+ 1368 0618 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 1369 061a 044B     		ldr	r3, .L79+12
+ 1370 061c 1A70     		strb	r2, [r3]
+ 321:../../CM7/Core/Src/pd.c **** 		case PD_CMD_SPISOK_PU:
+ 1371              		.loc 1 321 3 is_stmt 1 view .LVU326
+ 1372 061e 3AE5     		b	.L8
+ 1373              	.L80:
+ 1374              		.align	2
+ 1375              	.L79:
+ 1376 0620 00000000 		.word	pu_mode
+ 1377 0624 00000000 		.word	pd_id
+ 1378 0628 00000000 		.word	pu_need_lines
+ 1379 062c 00000000 		.word	pd_translation_addr
+ 1380 0630 24010000 		.word	.LC6
+ 1381 0634 00000000 		.word	pu_option_otkluchenie_lines
+ 1382 0638 40010000 		.word	.LC7
+ 1383 063c 00000000 		.word	pu_option
+ 1384 0640 00000000 		.word	pu_option_avtomatika_otkluchena_lines
+ 1385 0644 5C010000 		.word	.LC8
+ 1386 0648 00000000 		.word	last_frequency
+ 1387 064c 84010000 		.word	.LC9
+ 1388 0650 00000000 		.word	pu_enable_lines
+ 1389 0654 C4010000 		.word	.LC10
+ 1390 0658 08020000 		.word	.LC11
+ 1391              	.LVL158:
+ 1392              	.L76:
+ 310:../../CM7/Core/Src/pd.c **** 					pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 1393              		.loc 1 310 6 view .LVU327
+ 310:../../CM7/Core/Src/pd.c **** 					pd_transmit_piv(packet[1], packet[0] , 0x80 | PD_CMD_RUCHNOI_PUSK_RES, buf, 1, huart_number);
+ 1394              		.loc 1 310 13 is_stmt 0 view .LVU328
+ 1395 065c F123     		movs	r3, #241
+ 1396 065e 8DF80C30 		strb	r3, [sp, #12]
+ 311:../../CM7/Core/Src/pd.c **** 					return;
+ 1397              		.loc 1 311 6 is_stmt 1 view .LVU329
+ 1398 0662 0195     		str	r5, [sp, #4]
+ 1399 0664 0123     		movs	r3, #1
+ 1400 0666 0093     		str	r3, [sp]
+ 1401 0668 03AB     		add	r3, sp, #12
+ 1402 066a F822     		movs	r2, #248
+ 1403 066c 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1404 066e 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 1405 0670 FFF7FEFF 		bl	pd_transmit_piv
+ 1406              	.LVL159:
+ 312:../../CM7/Core/Src/pd.c **** 				}
+ 1407              		.loc 1 312 6 view .LVU330
+ 1408 0674 0FE5     		b	.L8
+ 1409              	.LVL160:
+ 1410              	.L12:
+ 323:../../CM7/Core/Src/pd.c **** 			 len = pu_get_data_from_small_infos(buf);
+ 1411              		.loc 1 323 5 view .LVU331
+ 1412 0676 FFF7FEFF 		bl	pu_fill_local_small_infos
+ 1413              	.LVL161:
+ 324:../../CM7/Core/Src/pd.c **** 
+ 1414              		.loc 1 324 5 view .LVU332
+ 324:../../CM7/Core/Src/pd.c **** 
+ 1415              		.loc 1 324 11 is_stmt 0 view .LVU333
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 38
+
+
+ 1416 067a 03A8     		add	r0, sp, #12
+ 1417 067c FFF7FEFF 		bl	pu_get_data_from_small_infos
+ 1418              	.LVL162:
+ 326:../../CM7/Core/Src/pd.c **** 		break;
+ 1419              		.loc 1 326 6 is_stmt 1 view .LVU334
+ 1420 0680 0195     		str	r5, [sp, #4]
+ 1421 0682 0090     		str	r0, [sp]
+ 1422 0684 03AB     		add	r3, sp, #12
+ 1423 0686 7922     		movs	r2, #121
+ 1424 0688 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1425 068a 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 1426              	.LVL163:
+ 326:../../CM7/Core/Src/pd.c **** 		break;
+ 1427              		.loc 1 326 6 is_stmt 0 view .LVU335
+ 1428 068c FFF7FEFF 		bl	pd_transmit_piv
+ 1429              	.LVL164:
+ 327:../../CM7/Core/Src/pd.c **** 		case PD_CMD_NET_INFO:
+ 1430              		.loc 1 327 3 is_stmt 1 view .LVU336
+ 1431 0690 01E5     		b	.L8
+ 1432              	.LVL165:
+ 1433              	.L10:
+ 329:../../CM7/Core/Src/pd.c **** 			pu_netinfo[1] = packet[6];
+ 1434              		.loc 1 329 4 view .LVU337
+ 329:../../CM7/Core/Src/pd.c **** 			pu_netinfo[1] = packet[6];
+ 1435              		.loc 1 329 18 is_stmt 0 view .LVU338
+ 1436 0692 0E4B     		ldr	r3, .L81
+ 1437 0694 4279     		ldrb	r2, [r0, #5]	@ zero_extendqisi2
+ 1438 0696 1A70     		strb	r2, [r3]
+ 330:../../CM7/Core/Src/pd.c **** 			pu_netinfo[2] = packet[7];
+ 1439              		.loc 1 330 4 is_stmt 1 view .LVU339
+ 330:../../CM7/Core/Src/pd.c **** 			pu_netinfo[2] = packet[7];
+ 1440              		.loc 1 330 18 is_stmt 0 view .LVU340
+ 1441 0698 8279     		ldrb	r2, [r0, #6]	@ zero_extendqisi2
+ 1442 069a 5A70     		strb	r2, [r3, #1]
+ 331:../../CM7/Core/Src/pd.c **** 
+ 1443              		.loc 1 331 4 is_stmt 1 view .LVU341
+ 331:../../CM7/Core/Src/pd.c **** 
+ 1444              		.loc 1 331 18 is_stmt 0 view .LVU342
+ 1445 069c C279     		ldrb	r2, [r0, #7]	@ zero_extendqisi2
+ 1446 069e 9A70     		strb	r2, [r3, #2]
+ 334:../../CM7/Core/Src/pd.c **** 
+ 1447              		.loc 1 334 5 is_stmt 1 view .LVU343
+ 1448 06a0 0195     		str	r5, [sp, #4]
+ 1449 06a2 0023     		movs	r3, #0
+ 1450 06a4 0093     		str	r3, [sp]
+ 1451 06a6 7622     		movs	r2, #118
+ 1452 06a8 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 1453              	.LVL166:
+ 334:../../CM7/Core/Src/pd.c **** 
+ 1454              		.loc 1 334 5 is_stmt 0 view .LVU344
+ 1455 06aa 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 1456              	.LVL167:
+ 334:../../CM7/Core/Src/pd.c **** 
+ 1457              		.loc 1 334 5 view .LVU345
+ 1458 06ac FFF7FEFF 		bl	pd_transmit_piv
+ 1459              	.LVL168:
+ 336:../../CM7/Core/Src/pd.c **** 				uart4_uart7_snd_piv(0xFF, setting.uart_local_addr, PU_CMD_RING_AUDIO_CHECK, pu_netinfo, sizeof(
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 39
+
+
+ 1460              		.loc 1 336 4 is_stmt 1 view .LVU346
+ 336:../../CM7/Core/Src/pd.c **** 				uart4_uart7_snd_piv(0xFF, setting.uart_local_addr, PU_CMD_RING_AUDIO_CHECK, pu_netinfo, sizeof(
+ 1461              		.loc 1 336 7 is_stmt 0 view .LVU347
+ 1462 06b0 002D     		cmp	r5, #0
+ 1463 06b2 7FF4F0AC 		bne	.L8
+ 337:../../CM7/Core/Src/pd.c **** 			}
+ 1464              		.loc 1 337 5 is_stmt 1 view .LVU348
+ 1465 06b6 0323     		movs	r3, #3
+ 1466 06b8 0093     		str	r3, [sp]
+ 1467 06ba 044B     		ldr	r3, .L81
+ 1468 06bc 3822     		movs	r2, #56
+ 1469 06be 0449     		ldr	r1, .L81+4
+ 1470 06c0 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 1471 06c2 FF20     		movs	r0, #255
+ 1472 06c4 FFF7FEFF 		bl	uart4_uart7_snd_piv
+ 1473              	.LVL169:
+ 1474 06c8 E5E4     		b	.L8
+ 1475              	.L82:
+ 1476 06ca 00BF     		.align	2
+ 1477              	.L81:
+ 1478 06cc 00000000 		.word	pu_netinfo
+ 1479 06d0 00000000 		.word	setting
+ 1480              		.cfi_endproc
+ 1481              	.LFE346:
+ 1483              		.section	.text.pd_get_audio_param_from_command,"ax",%progbits
+ 1484              		.align	1
+ 1485              		.global	pd_get_audio_param_from_command
+ 1486              		.syntax unified
+ 1487              		.thumb
+ 1488              		.thumb_func
+ 1490              	pd_get_audio_param_from_command:
+ 1491              	.LVL170:
+ 1492              	.LFB347:
+ 344:../../CM7/Core/Src/pd.c **** 
+ 345:../../CM7/Core/Src/pd.c **** 
+ 346:../../CM7/Core/Src/pd.c **** BOOL pd_get_audio_param_from_command(uint8_t cmd, uint32_t * freq, BOOL * stereo)
+ 347:../../CM7/Core/Src/pd.c **** {
+ 1493              		.loc 1 347 1 view -0
+ 1494              		.cfi_startproc
+ 1495              		@ args = 0, pretend = 0, frame = 0
+ 1496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1497              		@ link register save eliminated.
+ 348:../../CM7/Core/Src/pd.c **** 	switch (cmd) {
+ 1498              		.loc 1 348 2 view .LVU350
+ 1499 0000 7138     		subs	r0, r0, #113
+ 1500              	.LVL171:
+ 1501              		.loc 1 348 2 is_stmt 0 view .LVU351
+ 1502 0002 0328     		cmp	r0, #3
+ 1503 0004 1DD8     		bhi	.L90
+ 1504 0006 DFE800F0 		tbb	[pc, r0]
+ 1505              	.L86:
+ 1506 000a 02       		.byte	(.L89-.L86)/2
+ 1507 000b 09       		.byte	(.L88-.L86)/2
+ 1508 000c 10       		.byte	(.L87-.L86)/2
+ 1509 000d 16       		.byte	(.L85-.L86)/2
+ 1510              		.p2align 1
+ 1511              	.L89:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 40
+
+
+ 349:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS48mono:
+ 350:../../CM7/Core/Src/pd.c **** 			*freq = 48000;
+ 1512              		.loc 1 350 4 is_stmt 1 view .LVU352
+ 1513              		.loc 1 350 10 is_stmt 0 view .LVU353
+ 1514 000e 4BF68033 		movw	r3, #48000
+ 1515 0012 0B60     		str	r3, [r1]
+ 351:../../CM7/Core/Src/pd.c **** 			*stereo = FALSE;
+ 1516              		.loc 1 351 4 is_stmt 1 view .LVU354
+ 1517              		.loc 1 351 12 is_stmt 0 view .LVU355
+ 1518 0014 0023     		movs	r3, #0
+ 1519 0016 1370     		strb	r3, [r2]
+ 352:../../CM7/Core/Src/pd.c **** 			break;
+ 1520              		.loc 1 352 4 is_stmt 1 view .LVU356
+ 353:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS16mono:
+ 354:../../CM7/Core/Src/pd.c **** 			*freq = 16000;
+ 355:../../CM7/Core/Src/pd.c **** 			*stereo = FALSE;
+ 356:../../CM7/Core/Src/pd.c **** 			break;
+ 357:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS48ster:
+ 358:../../CM7/Core/Src/pd.c **** 			*freq = 48000;
+ 359:../../CM7/Core/Src/pd.c **** 			*stereo = TRUE;
+ 360:../../CM7/Core/Src/pd.c **** 			break;
+ 361:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS16ster:
+ 362:../../CM7/Core/Src/pd.c **** 			*freq = 16000;
+ 363:../../CM7/Core/Src/pd.c **** 			*stereo = TRUE;
+ 364:../../CM7/Core/Src/pd.c **** 			break;
+ 365:../../CM7/Core/Src/pd.c **** 		default: return FALSE;
+ 366:../../CM7/Core/Src/pd.c **** 	}
+ 367:../../CM7/Core/Src/pd.c **** 	return TRUE;
+ 1521              		.loc 1 367 9 is_stmt 0 view .LVU357
+ 1522 0018 0120     		movs	r0, #1
+ 1523              	.LVL172:
+ 352:../../CM7/Core/Src/pd.c **** 			break;
+ 1524              		.loc 1 352 4 view .LVU358
+ 1525 001a 7047     		bx	lr
+ 1526              	.L88:
+ 354:../../CM7/Core/Src/pd.c **** 			*stereo = FALSE;
+ 1527              		.loc 1 354 4 is_stmt 1 view .LVU359
+ 354:../../CM7/Core/Src/pd.c **** 			*stereo = FALSE;
+ 1528              		.loc 1 354 10 is_stmt 0 view .LVU360
+ 1529 001c 4FF47A53 		mov	r3, #16000
+ 1530 0020 0B60     		str	r3, [r1]
+ 355:../../CM7/Core/Src/pd.c **** 			break;
+ 1531              		.loc 1 355 4 is_stmt 1 view .LVU361
+ 355:../../CM7/Core/Src/pd.c **** 			break;
+ 1532              		.loc 1 355 12 is_stmt 0 view .LVU362
+ 1533 0022 0023     		movs	r3, #0
+ 1534 0024 1370     		strb	r3, [r2]
+ 356:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS48ster:
+ 1535              		.loc 1 356 4 is_stmt 1 view .LVU363
+ 1536              		.loc 1 367 9 is_stmt 0 view .LVU364
+ 1537 0026 0120     		movs	r0, #1
+ 356:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS48ster:
+ 1538              		.loc 1 356 4 view .LVU365
+ 1539 0028 7047     		bx	lr
+ 1540              	.L87:
+ 358:../../CM7/Core/Src/pd.c **** 			*stereo = TRUE;
+ 1541              		.loc 1 358 4 is_stmt 1 view .LVU366
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 41
+
+
+ 358:../../CM7/Core/Src/pd.c **** 			*stereo = TRUE;
+ 1542              		.loc 1 358 10 is_stmt 0 view .LVU367
+ 1543 002a 4BF68033 		movw	r3, #48000
+ 1544 002e 0B60     		str	r3, [r1]
+ 359:../../CM7/Core/Src/pd.c **** 			break;
+ 1545              		.loc 1 359 4 is_stmt 1 view .LVU368
+ 359:../../CM7/Core/Src/pd.c **** 			break;
+ 1546              		.loc 1 359 12 is_stmt 0 view .LVU369
+ 1547 0030 0120     		movs	r0, #1
+ 1548 0032 1070     		strb	r0, [r2]
+ 360:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS16ster:
+ 1549              		.loc 1 360 4 is_stmt 1 view .LVU370
+ 1550 0034 7047     		bx	lr
+ 1551              	.L85:
+ 362:../../CM7/Core/Src/pd.c **** 			*stereo = TRUE;
+ 1552              		.loc 1 362 4 view .LVU371
+ 362:../../CM7/Core/Src/pd.c **** 			*stereo = TRUE;
+ 1553              		.loc 1 362 10 is_stmt 0 view .LVU372
+ 1554 0036 4FF47A53 		mov	r3, #16000
+ 1555 003a 0B60     		str	r3, [r1]
+ 363:../../CM7/Core/Src/pd.c **** 			break;
+ 1556              		.loc 1 363 4 is_stmt 1 view .LVU373
+ 363:../../CM7/Core/Src/pd.c **** 			break;
+ 1557              		.loc 1 363 12 is_stmt 0 view .LVU374
+ 1558 003c 0120     		movs	r0, #1
+ 1559 003e 1070     		strb	r0, [r2]
+ 364:../../CM7/Core/Src/pd.c **** 		default: return FALSE;
+ 1560              		.loc 1 364 4 is_stmt 1 view .LVU375
+ 1561 0040 7047     		bx	lr
+ 1562              	.L90:
+ 348:../../CM7/Core/Src/pd.c **** 		case PD_CMD_OPUS48mono:
+ 1563              		.loc 1 348 2 is_stmt 0 view .LVU376
+ 1564 0042 0020     		movs	r0, #0
+ 368:../../CM7/Core/Src/pd.c **** }
+ 1565              		.loc 1 368 1 view .LVU377
+ 1566 0044 7047     		bx	lr
+ 1567              		.cfi_endproc
+ 1568              	.LFE347:
+ 1570              		.section	.text.pd_get_opus_cmd_from_frequency_stereo,"ax",%progbits
+ 1571              		.align	1
+ 1572              		.global	pd_get_opus_cmd_from_frequency_stereo
+ 1573              		.syntax unified
+ 1574              		.thumb
+ 1575              		.thumb_func
+ 1577              	pd_get_opus_cmd_from_frequency_stereo:
+ 1578              	.LVL173:
+ 1579              	.LFB348:
+ 369:../../CM7/Core/Src/pd.c **** 
+ 370:../../CM7/Core/Src/pd.c **** uint8_t pd_get_opus_cmd_from_frequency_stereo(uint32_t frequency, BOOL stereo)
+ 371:../../CM7/Core/Src/pd.c **** {
+ 1580              		.loc 1 371 1 is_stmt 1 view -0
+ 1581              		.cfi_startproc
+ 1582              		@ args = 0, pretend = 0, frame = 0
+ 1583              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1584              		@ link register save eliminated.
+ 372:../../CM7/Core/Src/pd.c **** 	if ((frequency == 48000) && (stereo == FALSE)) return PD_CMD_OPUS48mono;
+ 1585              		.loc 1 372 2 view .LVU379
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 42
+
+
+ 1586              		.loc 1 372 17 is_stmt 0 view .LVU380
+ 1587 0000 4BF68033 		movw	r3, #48000
+ 1588 0004 9842     		cmp	r0, r3
+ 1589 0006 14BF     		ite	ne
+ 1590 0008 0023     		movne	r3, #0
+ 1591 000a 0123     		moveq	r3, #1
+ 1592              		.loc 1 372 38 view .LVU381
+ 1593 000c 0A46     		mov	r2, r1
+ 1594 000e B1FA81F1 		clz	r1, r1
+ 1595              	.LVL174:
+ 1596              		.loc 1 372 38 view .LVU382
+ 1597 0012 4909     		lsrs	r1, r1, #5
+ 1598              		.loc 1 372 5 view .LVU383
+ 1599 0014 0B42     		tst	r3, r1
+ 1600 0016 10D1     		bne	.L93
+ 373:../../CM7/Core/Src/pd.c **** 	if ((frequency == 16000) && (stereo == FALSE)) return PD_CMD_OPUS16mono;
+ 1601              		.loc 1 373 2 is_stmt 1 view .LVU384
+ 1602              		.loc 1 373 17 is_stmt 0 view .LVU385
+ 1603 0018 B0F57A5F 		cmp	r0, #16000
+ 1604 001c 14BF     		ite	ne
+ 1605 001e 0020     		movne	r0, #0
+ 1606              	.LVL175:
+ 1607              		.loc 1 373 17 view .LVU386
+ 1608 0020 0120     		moveq	r0, #1
+ 1609              		.loc 1 373 5 view .LVU387
+ 1610 0022 0142     		tst	r1, r0
+ 1611 0024 0BD1     		bne	.L94
+ 374:../../CM7/Core/Src/pd.c **** 	if ((frequency == 48000) && (stereo == TRUE)) return PD_CMD_OPUS48ster;
+ 1612              		.loc 1 374 2 is_stmt 1 view .LVU388
+ 1613              		.loc 1 374 38 is_stmt 0 view .LVU389
+ 1614 0026 012A     		cmp	r2, #1
+ 1615 0028 14BF     		ite	ne
+ 1616 002a 0022     		movne	r2, #0
+ 1617              	.LVL176:
+ 1618              		.loc 1 374 38 view .LVU390
+ 1619 002c 0122     		moveq	r2, #1
+ 1620              		.loc 1 374 5 view .LVU391
+ 1621 002e 1342     		tst	r3, r2
+ 1622 0030 07D1     		bne	.L95
+ 375:../../CM7/Core/Src/pd.c **** 	if ((frequency == 16000) && (stereo == TRUE)) return PD_CMD_OPUS16ster;
+ 1623              		.loc 1 375 2 is_stmt 1 view .LVU392
+ 1624              		.loc 1 375 5 is_stmt 0 view .LVU393
+ 1625 0032 1042     		tst	r0, r2
+ 1626 0034 07D1     		bne	.L96
+ 376:../../CM7/Core/Src/pd.c **** 	return PD_CMD_OPUS16mono;
+ 1627              		.loc 1 376 9 view .LVU394
+ 1628 0036 7220     		movs	r0, #114
+ 1629 0038 7047     		bx	lr
+ 1630              	.LVL177:
+ 1631              	.L93:
+ 372:../../CM7/Core/Src/pd.c **** 	if ((frequency == 16000) && (stereo == FALSE)) return PD_CMD_OPUS16mono;
+ 1632              		.loc 1 372 56 discriminator 1 view .LVU395
+ 1633 003a 7120     		movs	r0, #113
+ 1634              	.LVL178:
+ 372:../../CM7/Core/Src/pd.c **** 	if ((frequency == 16000) && (stereo == FALSE)) return PD_CMD_OPUS16mono;
+ 1635              		.loc 1 372 56 discriminator 1 view .LVU396
+ 1636 003c 7047     		bx	lr
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 43
+
+
+ 1637              	.L94:
+ 373:../../CM7/Core/Src/pd.c **** 	if ((frequency == 48000) && (stereo == TRUE)) return PD_CMD_OPUS48ster;
+ 1638              		.loc 1 373 56 discriminator 1 view .LVU397
+ 1639 003e 7220     		movs	r0, #114
+ 1640 0040 7047     		bx	lr
+ 1641              	.L95:
+ 374:../../CM7/Core/Src/pd.c **** 	if ((frequency == 16000) && (stereo == TRUE)) return PD_CMD_OPUS16ster;
+ 1642              		.loc 1 374 55 discriminator 1 view .LVU398
+ 1643 0042 7320     		movs	r0, #115
+ 1644 0044 7047     		bx	lr
+ 1645              	.L96:
+ 375:../../CM7/Core/Src/pd.c **** 	return PD_CMD_OPUS16mono;
+ 1646              		.loc 1 375 55 discriminator 1 view .LVU399
+ 1647 0046 7420     		movs	r0, #116
+ 377:../../CM7/Core/Src/pd.c **** }
+ 1648              		.loc 1 377 1 view .LVU400
+ 1649 0048 7047     		bx	lr
+ 1650              		.cfi_endproc
+ 1651              	.LFE348:
+ 1653              		.global	pd_id
+ 1654              		.section	.bss.pd_id,"aw",%nobits
+ 1655              		.align	2
+ 1658              	pd_id:
+ 1659 0000 00000000 		.space	4
+ 1660              		.global	pd_translation_addr
+ 1661              		.section	.bss.pd_translation_addr,"aw",%nobits
+ 1664              	pd_translation_addr:
+ 1665 0000 00       		.space	1
+ 1666              		.text
+ 1667              	.Letext0:
+ 1668              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1669              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1670              		.file 4 "../../CM7/Core/Inc/pd.h"
+ 1671              		.file 5 "../../common/setting_data.h"
+ 1672              		.file 6 "../../common/common.h"
+ 1673              		.file 7 "../../CM7/Core/Inc/pu.h"
+ 1674              		.file 8 "../../opus/celt/celt.h"
+ 1675              		.file 9 "../../CM7/Core/Inc/cm7core.h"
+ 1676              		.file 10 "../../CM7/Core/Inc/uarts.h"
+ 1677              		.file 11 "../../CM7/Core/Inc/Screens/screens.h"
+ 1678              		.file 12 "../../util/stm_util.h"
+ 1679              		.file 13 "../../util/str_util.h"
+ 1680              		.file 14 "../../pcm1753/pcm1753.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pd.c
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:20     .text.pd_start_translation:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:26     .text.pd_start_translation:00000000 pd_start_translation
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:64     .text.pd_transmit_piv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:70     .text.pd_transmit_piv:00000000 pd_transmit_piv
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:167    .rodata.pd_rcv.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:210    .text.pd_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:216    .text.pd_rcv:00000000 pd_rcv
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:254    .text.pd_rcv:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:309    .text.pd_rcv:00000086 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:849    .text.pd_rcv:00000348 $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1664   .bss.pd_translation_addr:00000000 pd_translation_addr
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1658   .bss.pd_id:00000000 pd_id
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:865    .text.pd_rcv:00000378 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1376   .text.pd_rcv:00000620 $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1395   .text.pd_rcv:0000065c $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1478   .text.pd_rcv:000006cc $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1484   .text.pd_get_audio_param_from_command:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1490   .text.pd_get_audio_param_from_command:00000000 pd_get_audio_param_from_command
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1506   .text.pd_get_audio_param_from_command:0000000a $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1510   .text.pd_get_audio_param_from_command:0000000e $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1571   .text.pd_get_opus_cmd_from_frequency_stereo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1577   .text.pd_get_opus_cmd_from_frequency_stereo:00000000 pd_get_opus_cmd_from_frequency_stereo
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1655   .bss.pd_id:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s:1665   .bss.pd_translation_addr:00000000 $d
+
+UNDEFINED SYMBOLS
+pu_stop_translation
+pu_prepare_audio_play
+uarts_transmit_piv
+create_piv_packet_cmd
+cm7core_pd_send
+pu_get_info
+bool2str
+fulog_fmt
+pu_enable_sound_lines
+pcm1753_GetStereo
+fulog
+pu_set_mode
+ulog
+u24l2bitstr
+ulog_fmt
+pu_mode
+last_frequency
+pu_need_lines
+fire_lines_imit
+cm7core_send_one_led_color
+pu_paint_led_lines
+screen0_update
+cm7core_set_led_color
+cm7core_send_leds
+pu_option_otkluchenie_lines
+pu_option
+pu_option_avtomatika_otkluchena_lines
+pu_enable_lines
+pu_fill_local_small_infos
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTvjCuL.s 			page 45
+
+
+pu_get_data_from_small_infos
+uart4_uart7_snd_piv
+pu_netinfo
+setting

@@ -1,0 +1,789 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"biquad_alt.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/biquad_alt.c"
+  19              		.section	.text.silk_biquad_alt_stride1,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_biquad_alt_stride1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_biquad_alt_stride1:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/biquad_alt.c **** /***********************************************************************
+   2:../../opus/silk/biquad_alt.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/biquad_alt.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/biquad_alt.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/biquad_alt.c **** are met:
+   6:../../opus/silk/biquad_alt.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/biquad_alt.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/biquad_alt.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/biquad_alt.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/biquad_alt.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/biquad_alt.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/biquad_alt.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/biquad_alt.c **** products derived from this software without specific prior written
+  14:../../opus/silk/biquad_alt.c **** permission.
+  15:../../opus/silk/biquad_alt.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/biquad_alt.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/biquad_alt.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/biquad_alt.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/biquad_alt.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/biquad_alt.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/biquad_alt.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/biquad_alt.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/biquad_alt.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/biquad_alt.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/biquad_alt.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/biquad_alt.c **** ***********************************************************************/
+  27:../../opus/silk/biquad_alt.c **** 
+  28:../../opus/silk/biquad_alt.c **** /*                                                                      *
+  29:../../opus/silk/biquad_alt.c ****  * silk_biquad_alt.c                                              *
+  30:../../opus/silk/biquad_alt.c ****  *                                                                      *
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 2
+
+
+  31:../../opus/silk/biquad_alt.c ****  * Second order ARMA filter                                             *
+  32:../../opus/silk/biquad_alt.c ****  * Can handle slowly varying filter coefficients                        *
+  33:../../opus/silk/biquad_alt.c ****  *                                                                      */
+  34:../../opus/silk/biquad_alt.c **** 
+  35:../../opus/silk/biquad_alt.c **** #include "opus_config.h"
+  36:../../opus/silk/biquad_alt.c **** 
+  37:../../opus/silk/biquad_alt.c **** #include "SigProc_FIX.h"
+  38:../../opus/silk/biquad_alt.c **** 
+  39:../../opus/silk/biquad_alt.c **** /* Second order ARMA filter, alternative implementation */
+  40:../../opus/silk/biquad_alt.c **** void silk_biquad_alt_stride1(
+  41:../../opus/silk/biquad_alt.c ****     const opus_int16            *in,                /* I     input signal                          
+  42:../../opus/silk/biquad_alt.c ****     const opus_int32            *B_Q28,             /* I     MA coefficients [3]                   
+  43:../../opus/silk/biquad_alt.c ****     const opus_int32            *A_Q28,             /* I     AR coefficients [2]                   
+  44:../../opus/silk/biquad_alt.c ****     opus_int32                  *S,                 /* I/O   State vector [2]                      
+  45:../../opus/silk/biquad_alt.c ****     opus_int16                  *out,               /* O     output signal                         
+  46:../../opus/silk/biquad_alt.c ****     const opus_int32            len                 /* I     signal length (must be even)          
+  47:../../opus/silk/biquad_alt.c **** )
+  48:../../opus/silk/biquad_alt.c **** {
+  29              		.loc 1 48 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 8, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 48 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 36
+  37              		.cfi_offset 4, -36
+  38              		.cfi_offset 5, -32
+  39              		.cfi_offset 6, -28
+  40              		.cfi_offset 7, -24
+  41              		.cfi_offset 8, -20
+  42              		.cfi_offset 9, -16
+  43              		.cfi_offset 10, -12
+  44              		.cfi_offset 11, -8
+  45              		.cfi_offset 14, -4
+  46 0004 83B0     		sub	sp, sp, #12
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 48
+  49:../../opus/silk/biquad_alt.c ****     /* DIRECT FORM II TRANSPOSED (uses 2 element state vector) */
+  50:../../opus/silk/biquad_alt.c ****     opus_int   k;
+  49              		.loc 1 50 5 is_stmt 1 view .LVU2
+  51:../../opus/silk/biquad_alt.c ****     opus_int32 inval, A0_U_Q28, A0_L_Q28, A1_U_Q28, A1_L_Q28, out32_Q14;
+  50              		.loc 1 51 5 view .LVU3
+  52:../../opus/silk/biquad_alt.c **** 
+  53:../../opus/silk/biquad_alt.c ****     /* Negate A_Q28 values and split in two parts */
+  54:../../opus/silk/biquad_alt.c ****     A0_L_Q28 = ( -A_Q28[ 0 ] ) & 0x00003FFF;        /* lower part */
+  51              		.loc 1 54 5 view .LVU4
+  52              		.loc 1 54 24 is_stmt 0 view .LVU5
+  53 0006 1468     		ldr	r4, [r2]
+  54              		.loc 1 54 18 view .LVU6
+  55 0008 6442     		rsbs	r4, r4, #0
+  56              		.loc 1 54 14 view .LVU7
+  57 000a C4F30D06 		ubfx	r6, r4, #0, #14
+  58              	.LVL1:
+  55:../../opus/silk/biquad_alt.c ****     A0_U_Q28 = silk_RSHIFT( -A_Q28[ 0 ], 14 );      /* upper part */
+  59              		.loc 1 55 5 is_stmt 1 view .LVU8
+  60              		.loc 1 55 14 is_stmt 0 view .LVU9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 3
+
+
+  61 000e A413     		asrs	r4, r4, #14
+  62 0010 0094     		str	r4, [sp]
+  63              	.LVL2:
+  56:../../opus/silk/biquad_alt.c ****     A1_L_Q28 = ( -A_Q28[ 1 ] ) & 0x00003FFF;        /* lower part */
+  64              		.loc 1 56 5 is_stmt 1 view .LVU10
+  65              		.loc 1 56 24 is_stmt 0 view .LVU11
+  66 0012 5268     		ldr	r2, [r2, #4]
+  67              	.LVL3:
+  68              		.loc 1 56 18 view .LVU12
+  69 0014 5242     		rsbs	r2, r2, #0
+  70              		.loc 1 56 14 view .LVU13
+  71 0016 C2F30D05 		ubfx	r5, r2, #0, #14
+  72              	.LVL4:
+  57:../../opus/silk/biquad_alt.c ****     A1_U_Q28 = silk_RSHIFT( -A_Q28[ 1 ], 14 );      /* upper part */
+  73              		.loc 1 57 5 is_stmt 1 view .LVU14
+  74              		.loc 1 57 14 is_stmt 0 view .LVU15
+  75 001a 9213     		asrs	r2, r2, #14
+  76 001c 0192     		str	r2, [sp, #4]
+  77              	.LVL5:
+  58:../../opus/silk/biquad_alt.c **** 
+  59:../../opus/silk/biquad_alt.c ****     for( k = 0; k < len; k++ ) {
+  78              		.loc 1 59 5 is_stmt 1 view .LVU16
+  79              		.loc 1 59 12 is_stmt 0 view .LVU17
+  80 001e 4FF0000E 		mov	lr, #0
+  81              		.loc 1 59 5 view .LVU18
+  82 0022 06E0     		b	.L2
+  83              	.LVL6:
+  84              	.L5:
+  60:../../opus/silk/biquad_alt.c ****         /* S[ 0 ], S[ 1 ]: Q12 */
+  61:../../opus/silk/biquad_alt.c ****         inval = in[ k ];
+  62:../../opus/silk/biquad_alt.c ****         out32_Q14 = silk_LSHIFT( silk_SMLAWB( S[ 0 ], B_Q28[ 0 ], inval ), 2 );
+  63:../../opus/silk/biquad_alt.c **** 
+  64:../../opus/silk/biquad_alt.c ****         S[ 0 ] = S[1] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14, A0_L_Q28 ), 14 );
+  65:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14, A0_U_Q28 );
+  66:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], inval);
+  67:../../opus/silk/biquad_alt.c **** 
+  68:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14, A1_L_Q28 ), 14 );
+  69:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14, A1_U_Q28 );
+  70:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], inval );
+  71:../../opus/silk/biquad_alt.c **** 
+  72:../../opus/silk/biquad_alt.c ****         /* Scale back to Q0 and saturate */
+  73:../../opus/silk/biquad_alt.c ****         out[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14 + (1<<14) - 1, 14 ) );
+  85              		.loc 1 73 20 discriminator 2 view .LVU19
+  86 0024 47F6FF74 		movw	r4, #32767
+  87              	.L3:
+  88              		.loc 1 73 18 discriminator 8 view .LVU20
+  89 0028 0C9A     		ldr	r2, [sp, #48]
+  90 002a 22F80C40 		strh	r4, [r2, ip]	@ movhi
+  59:../../opus/silk/biquad_alt.c ****         /* S[ 0 ], S[ 1 ]: Q12 */
+  91              		.loc 1 59 27 is_stmt 1 discriminator 2 view .LVU21
+  92 002e 0EF1010E 		add	lr, lr, #1
+  93              	.LVL7:
+  94              	.L2:
+  59:../../opus/silk/biquad_alt.c ****         /* S[ 0 ], S[ 1 ]: Q12 */
+  95              		.loc 1 59 19 discriminator 1 view .LVU22
+  96 0032 0D9A     		ldr	r2, [sp, #52]
+  97 0034 9645     		cmp	lr, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 4
+
+
+  98 0036 60DA     		bge	.L8
+  61:../../opus/silk/biquad_alt.c ****         out32_Q14 = silk_LSHIFT( silk_SMLAWB( S[ 0 ], B_Q28[ 0 ], inval ), 2 );
+  99              		.loc 1 61 9 view .LVU23
+  61:../../opus/silk/biquad_alt.c ****         out32_Q14 = silk_LSHIFT( silk_SMLAWB( S[ 0 ], B_Q28[ 0 ], inval ), 2 );
+ 100              		.loc 1 61 19 is_stmt 0 view .LVU24
+ 101 0038 4FEA4E0C 		lsl	ip, lr, #1
+ 102 003c 30F91E70 		ldrsh	r7, [r0, lr, lsl #1]
+ 103              	.LVL8:
+  62:../../opus/silk/biquad_alt.c **** 
+ 104              		.loc 1 62 9 is_stmt 1 view .LVU25
+  62:../../opus/silk/biquad_alt.c **** 
+ 105              		.loc 1 62 21 is_stmt 0 view .LVU26
+ 106 0040 1C68     		ldr	r4, [r3]
+ 107 0042 0A68     		ldr	r2, [r1]
+ 108 0044 4FEA2248 		asr	r8, r2, #16
+ 109 0048 92B2     		uxth	r2, r2
+ 110 004a 07FB02F2 		mul	r2, r7, r2
+ 111 004e 1214     		asrs	r2, r2, #16
+ 112 0050 07FB0822 		mla	r2, r7, r8, r2
+ 113 0054 1444     		add	r4, r4, r2
+  62:../../opus/silk/biquad_alt.c **** 
+ 114              		.loc 1 62 19 view .LVU27
+ 115 0056 4FEA8409 		lsl	r9, r4, #2
+ 116              	.LVL9:
+  64:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14, A0_U_Q28 );
+ 117              		.loc 1 64 9 is_stmt 1 view .LVU28
+  64:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14, A0_U_Q28 );
+ 118              		.loc 1 64 25 is_stmt 0 view .LVU29
+ 119 005a 44F38F3A 		sbfx	r10, r4, #14, #16
+ 120 005e 1FFA89F8 		uxth	r8, r9
+ 121 0062 06FB08F2 		mul	r2, r6, r8
+ 122 0066 1214     		asrs	r2, r2, #16
+ 123 0068 06FB0A22 		mla	r2, r6, r10, r2
+ 124 006c 5213     		asrs	r2, r2, #13
+ 125 006e 0132     		adds	r2, r2, #1
+  64:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14, A0_U_Q28 );
+ 126              		.loc 1 64 23 view .LVU30
+ 127 0070 5C68     		ldr	r4, [r3, #4]
+ 128 0072 04EB6202 		add	r2, r4, r2, asr #1
+  64:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14, A0_U_Q28 );
+ 129              		.loc 1 64 16 view .LVU31
+ 130 0076 1A60     		str	r2, [r3]
+  65:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], inval);
+ 131              		.loc 1 65 9 is_stmt 1 view .LVU32
+  65:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], inval);
+ 132              		.loc 1 65 18 is_stmt 0 view .LVU33
+ 133 0078 BDF900B0 		ldrsh	fp, [sp]
+ 134 007c 0BFB08F4 		mul	r4, fp, r8
+ 135 0080 2414     		asrs	r4, r4, #16
+ 136 0082 0BFB0A44 		mla	r4, fp, r10, r4
+ 137 0086 2244     		add	r2, r2, r4
+  65:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], inval);
+ 138              		.loc 1 65 16 view .LVU34
+ 139 0088 1A60     		str	r2, [r3]
+  66:../../opus/silk/biquad_alt.c **** 
+ 140              		.loc 1 66 9 is_stmt 1 view .LVU35
+  66:../../opus/silk/biquad_alt.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 5
+
+
+ 141              		.loc 1 66 18 is_stmt 0 view .LVU36
+ 142 008a 4C68     		ldr	r4, [r1, #4]
+ 143 008c 4FEA244B 		asr	fp, r4, #16
+ 144 0090 A4B2     		uxth	r4, r4
+ 145 0092 07FB04F4 		mul	r4, r7, r4
+ 146 0096 2414     		asrs	r4, r4, #16
+ 147 0098 0BFB0744 		mla	r4, fp, r7, r4
+ 148 009c 2244     		add	r2, r2, r4
+  66:../../opus/silk/biquad_alt.c **** 
+ 149              		.loc 1 66 16 view .LVU37
+ 150 009e 1A60     		str	r2, [r3]
+  68:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14, A1_U_Q28 );
+ 151              		.loc 1 68 9 is_stmt 1 view .LVU38
+  68:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14, A1_U_Q28 );
+ 152              		.loc 1 68 18 is_stmt 0 view .LVU39
+ 153 00a0 05FB08F2 		mul	r2, r5, r8
+ 154 00a4 1214     		asrs	r2, r2, #16
+ 155 00a6 05FB0A22 		mla	r2, r5, r10, r2
+ 156 00aa 5213     		asrs	r2, r2, #13
+ 157 00ac 0132     		adds	r2, r2, #1
+ 158 00ae 5210     		asrs	r2, r2, #1
+  68:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14, A1_U_Q28 );
+ 159              		.loc 1 68 16 view .LVU40
+ 160 00b0 5A60     		str	r2, [r3, #4]
+  69:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], inval );
+ 161              		.loc 1 69 9 is_stmt 1 view .LVU41
+  69:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], inval );
+ 162              		.loc 1 69 18 is_stmt 0 view .LVU42
+ 163 00b2 BDF90440 		ldrsh	r4, [sp, #4]
+ 164 00b6 04FB08F8 		mul	r8, r4, r8
+ 165 00ba 4FEA2848 		asr	r8, r8, #16
+ 166 00be 04FB0A88 		mla	r8, r4, r10, r8
+ 167 00c2 02EB0804 		add	r4, r2, r8
+  69:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], inval );
+ 168              		.loc 1 69 16 view .LVU43
+ 169 00c6 5C60     		str	r4, [r3, #4]
+  70:../../opus/silk/biquad_alt.c **** 
+ 170              		.loc 1 70 9 is_stmt 1 view .LVU44
+  70:../../opus/silk/biquad_alt.c **** 
+ 171              		.loc 1 70 18 is_stmt 0 view .LVU45
+ 172 00c8 8A68     		ldr	r2, [r1, #8]
+ 173 00ca 4FEA2248 		asr	r8, r2, #16
+ 174 00ce 92B2     		uxth	r2, r2
+ 175 00d0 07FB02F2 		mul	r2, r7, r2
+ 176 00d4 1214     		asrs	r2, r2, #16
+ 177 00d6 08FB0722 		mla	r2, r8, r7, r2
+ 178 00da 1444     		add	r4, r4, r2
+  70:../../opus/silk/biquad_alt.c **** 
+ 179              		.loc 1 70 16 view .LVU46
+ 180 00dc 5C60     		str	r4, [r3, #4]
+ 181              		.loc 1 73 9 is_stmt 1 view .LVU47
+ 182              		.loc 1 73 32 is_stmt 0 view .LVU48
+ 183 00de 43F6FF72 		movw	r2, #16383
+ 184 00e2 4A44     		add	r2, r2, r9
+ 185 00e4 9413     		asrs	r4, r2, #14
+ 186              		.loc 1 73 20 view .LVU49
+ 187 00e6 B2F1005F 		cmp	r2, #536870912
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 6
+
+
+ 188 00ea 9BDA     		bge	.L5
+ 189              		.loc 1 73 20 discriminator 1 view .LVU50
+ 190 00ec 14F5004F 		cmn	r4, #32768
+ 191 00f0 01DB     		blt	.L6
+ 192              		.loc 1 73 20 discriminator 3 view .LVU51
+ 193 00f2 24B2     		sxth	r4, r4
+ 194 00f4 98E7     		b	.L3
+ 195              	.L6:
+ 196              		.loc 1 73 20 discriminator 4 view .LVU52
+ 197 00f6 024C     		ldr	r4, .L9
+ 198 00f8 96E7     		b	.L3
+ 199              	.LVL10:
+ 200              	.L8:
+  74:../../opus/silk/biquad_alt.c ****     }
+  75:../../opus/silk/biquad_alt.c **** }
+ 201              		.loc 1 75 1 view .LVU53
+ 202 00fa 03B0     		add	sp, sp, #12
+ 203              	.LCFI2:
+ 204              		.cfi_def_cfa_offset 36
+ 205              	.LVL11:
+ 206              		.loc 1 75 1 view .LVU54
+ 207              		@ sp needed
+ 208 00fc BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 209              	.LVL12:
+ 210              	.L10:
+ 211              		.loc 1 75 1 view .LVU55
+ 212              		.align	2
+ 213              	.L9:
+ 214 0100 0080FFFF 		.word	-32768
+ 215              		.cfi_endproc
+ 216              	.LFE19:
+ 218              		.section	.text.silk_biquad_alt_stride2_c,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	silk_biquad_alt_stride2_c
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	silk_biquad_alt_stride2_c:
+ 226              	.LVL13:
+ 227              	.LFB20:
+  76:../../opus/silk/biquad_alt.c **** 
+  77:../../opus/silk/biquad_alt.c **** void silk_biquad_alt_stride2_c(
+  78:../../opus/silk/biquad_alt.c ****     const opus_int16            *in,                /* I     input signal                          
+  79:../../opus/silk/biquad_alt.c ****     const opus_int32            *B_Q28,             /* I     MA coefficients [3]                   
+  80:../../opus/silk/biquad_alt.c ****     const opus_int32            *A_Q28,             /* I     AR coefficients [2]                   
+  81:../../opus/silk/biquad_alt.c ****     opus_int32                  *S,                 /* I/O   State vector [4]                      
+  82:../../opus/silk/biquad_alt.c ****     opus_int16                  *out,               /* O     output signal                         
+  83:../../opus/silk/biquad_alt.c ****     const opus_int32            len                 /* I     signal length (must be even)          
+  84:../../opus/silk/biquad_alt.c **** )
+  85:../../opus/silk/biquad_alt.c **** {
+ 228              		.loc 1 85 1 is_stmt 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 8, pretend = 0, frame = 40
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		.loc 1 85 1 is_stmt 0 view .LVU57
+ 233 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 234              	.LCFI3:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 7
+
+
+ 235              		.cfi_def_cfa_offset 36
+ 236              		.cfi_offset 4, -36
+ 237              		.cfi_offset 5, -32
+ 238              		.cfi_offset 6, -28
+ 239              		.cfi_offset 7, -24
+ 240              		.cfi_offset 8, -20
+ 241              		.cfi_offset 9, -16
+ 242              		.cfi_offset 10, -12
+ 243              		.cfi_offset 11, -8
+ 244              		.cfi_offset 14, -4
+ 245 0004 8BB0     		sub	sp, sp, #44
+ 246              	.LCFI4:
+ 247              		.cfi_def_cfa_offset 80
+ 248 0006 8646     		mov	lr, r0
+ 249 0008 8946     		mov	r9, r1
+  86:../../opus/silk/biquad_alt.c ****     /* DIRECT FORM II TRANSPOSED (uses 2 element state vector) */
+  87:../../opus/silk/biquad_alt.c ****     opus_int   k;
+ 250              		.loc 1 87 5 is_stmt 1 view .LVU58
+  88:../../opus/silk/biquad_alt.c ****     opus_int32 A0_U_Q28, A0_L_Q28, A1_U_Q28, A1_L_Q28, out32_Q14[ 2 ];
+ 251              		.loc 1 88 5 view .LVU59
+  89:../../opus/silk/biquad_alt.c **** 
+  90:../../opus/silk/biquad_alt.c ****     /* Negate A_Q28 values and split in two parts */
+  91:../../opus/silk/biquad_alt.c ****     A0_L_Q28 = ( -A_Q28[ 0 ] ) & 0x00003FFF;        /* lower part */
+ 252              		.loc 1 91 5 view .LVU60
+ 253              		.loc 1 91 24 is_stmt 0 view .LVU61
+ 254 000a 1168     		ldr	r1, [r2]
+ 255              	.LVL14:
+ 256              		.loc 1 91 18 view .LVU62
+ 257 000c 4942     		rsbs	r1, r1, #0
+ 258              		.loc 1 91 14 view .LVU63
+ 259 000e C1F30D00 		ubfx	r0, r1, #0, #14
+ 260              	.LVL15:
+ 261              		.loc 1 91 14 view .LVU64
+ 262 0012 0490     		str	r0, [sp, #16]
+ 263              	.LVL16:
+  92:../../opus/silk/biquad_alt.c ****     A0_U_Q28 = silk_RSHIFT( -A_Q28[ 0 ], 14 );      /* upper part */
+ 264              		.loc 1 92 5 is_stmt 1 view .LVU65
+ 265              		.loc 1 92 14 is_stmt 0 view .LVU66
+ 266 0014 8913     		asrs	r1, r1, #14
+ 267 0016 0591     		str	r1, [sp, #20]
+ 268              	.LVL17:
+  93:../../opus/silk/biquad_alt.c ****     A1_L_Q28 = ( -A_Q28[ 1 ] ) & 0x00003FFF;        /* lower part */
+ 269              		.loc 1 93 5 is_stmt 1 view .LVU67
+ 270              		.loc 1 93 24 is_stmt 0 view .LVU68
+ 271 0018 5268     		ldr	r2, [r2, #4]
+ 272              	.LVL18:
+ 273              		.loc 1 93 18 view .LVU69
+ 274 001a 5242     		rsbs	r2, r2, #0
+ 275              		.loc 1 93 14 view .LVU70
+ 276 001c C2F30D01 		ubfx	r1, r2, #0, #14
+ 277              	.LVL19:
+ 278              		.loc 1 93 14 view .LVU71
+ 279 0020 0691     		str	r1, [sp, #24]
+ 280              	.LVL20:
+  94:../../opus/silk/biquad_alt.c ****     A1_U_Q28 = silk_RSHIFT( -A_Q28[ 1 ], 14 );      /* upper part */
+ 281              		.loc 1 94 5 is_stmt 1 view .LVU72
+ 282              		.loc 1 94 14 is_stmt 0 view .LVU73
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 8
+
+
+ 283 0022 9213     		asrs	r2, r2, #14
+ 284 0024 0792     		str	r2, [sp, #28]
+ 285              	.LVL21:
+  95:../../opus/silk/biquad_alt.c **** 
+  96:../../opus/silk/biquad_alt.c ****     for( k = 0; k < len; k++ ) {
+ 286              		.loc 1 96 5 is_stmt 1 view .LVU74
+ 287              		.loc 1 96 12 is_stmt 0 view .LVU75
+ 288 0026 4FF0000B 		mov	fp, #0
+ 289              		.loc 1 96 5 view .LVU76
+ 290 002a 1AE0     		b	.L12
+ 291              	.LVL22:
+ 292              	.L16:
+  97:../../opus/silk/biquad_alt.c ****         /* S[ 0 ], S[ 1 ], S[ 2 ], S[ 3 ]: Q12 */
+  98:../../opus/silk/biquad_alt.c ****         out32_Q14[ 0 ] = silk_LSHIFT( silk_SMLAWB( S[ 0 ], B_Q28[ 0 ], in[ 2 * k + 0 ] ), 2 );
+  99:../../opus/silk/biquad_alt.c ****         out32_Q14[ 1 ] = silk_LSHIFT( silk_SMLAWB( S[ 2 ], B_Q28[ 0 ], in[ 2 * k + 1 ] ), 2 );
+ 100:../../opus/silk/biquad_alt.c **** 
+ 101:../../opus/silk/biquad_alt.c ****         S[ 0 ] = S[ 1 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 0 ], A0_L_Q28 ), 14 );
+ 102:../../opus/silk/biquad_alt.c ****         S[ 2 ] = S[ 3 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A0_L_Q28 ), 14 );
+ 103:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14[ 0 ], A0_U_Q28 );
+ 104:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], out32_Q14[ 1 ], A0_U_Q28 );
+ 105:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], in[ 2 * k + 0 ] );
+ 106:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], B_Q28[ 1 ], in[ 2 * k + 1 ] );
+ 107:../../opus/silk/biquad_alt.c **** 
+ 108:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 0 ], A1_L_Q28 ), 14 );
+ 109:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A1_L_Q28 ), 14 );
+ 110:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14[ 0 ], A1_U_Q28 );
+ 111:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], out32_Q14[ 1 ], A1_U_Q28 );
+ 112:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], in[ 2 * k + 0 ] );
+ 113:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], B_Q28[ 2 ], in[ 2 * k + 1 ] );
+ 114:../../opus/silk/biquad_alt.c **** 
+ 115:../../opus/silk/biquad_alt.c ****         /* Scale back to Q0 and saturate */
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 0 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 0 ] + (1<<14) - 1, 14 ) 
+ 293              		.loc 1 116 28 discriminator 2 view .LVU77
+ 294 002c 47F6FF71 		movw	r1, #32767
+ 295              	.L13:
+ 296              		.loc 1 116 26 discriminator 8 view .LVU78
+ 297 0030 149A     		ldr	r2, [sp, #80]
+ 298 0032 0398     		ldr	r0, [sp, #12]
+ 299 0034 1152     		strh	r1, [r2, r0]	@ movhi
+ 117:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 300              		.loc 1 117 9 is_stmt 1 view .LVU79
+ 301              		.loc 1 117 40 is_stmt 0 view .LVU80
+ 302 0036 43F6FF72 		movw	r2, #16383
+ 303 003a 5244     		add	r2, r2, r10
+ 304 003c 9113     		asrs	r1, r2, #14
+ 305              		.loc 1 117 28 view .LVU81
+ 306 003e B2F1005F 		cmp	r2, #536870912
+ 307 0042 07DA     		bge	.L18
+ 308              		.loc 1 117 28 discriminator 1 view .LVU82
+ 309 0044 11F5004F 		cmn	r1, #32768
+ 310 0048 C0F2CE80 		blt	.L19
+ 311              		.loc 1 117 28 discriminator 3 view .LVU83
+ 312 004c 09B2     		sxth	r1, r1
+ 313 004e 03E0     		b	.L14
+ 314              	.L17:
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 315              		.loc 1 116 28 discriminator 4 view .LVU84
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 9
+
+
+ 316 0050 6849     		ldr	r1, .L22
+ 317 0052 EDE7     		b	.L13
+ 318              	.L18:
+ 319              		.loc 1 117 28 discriminator 2 view .LVU85
+ 320 0054 47F6FF71 		movw	r1, #32767
+ 321              	.L14:
+ 322              		.loc 1 117 26 discriminator 8 view .LVU86
+ 323 0058 149A     		ldr	r2, [sp, #80]
+ 324 005a 0198     		ldr	r0, [sp, #4]
+ 325 005c 1152     		strh	r1, [r2, r0]	@ movhi
+  96:../../opus/silk/biquad_alt.c ****         /* S[ 0 ], S[ 1 ], S[ 2 ], S[ 3 ]: Q12 */
+ 326              		.loc 1 96 27 is_stmt 1 discriminator 2 view .LVU87
+ 327 005e 0BF1010B 		add	fp, fp, #1
+ 328              	.LVL23:
+ 329              	.L12:
+  96:../../opus/silk/biquad_alt.c ****         /* S[ 0 ], S[ 1 ], S[ 2 ], S[ 3 ]: Q12 */
+ 330              		.loc 1 96 19 discriminator 1 view .LVU88
+ 331 0062 159A     		ldr	r2, [sp, #84]
+ 332 0064 9345     		cmp	fp, r2
+ 333 0066 80F2C180 		bge	.L21
+  98:../../opus/silk/biquad_alt.c ****         out32_Q14[ 1 ] = silk_LSHIFT( silk_SMLAWB( S[ 2 ], B_Q28[ 0 ], in[ 2 * k + 1 ] ), 2 );
+ 334              		.loc 1 98 9 view .LVU89
+  98:../../opus/silk/biquad_alt.c ****         out32_Q14[ 1 ] = silk_LSHIFT( silk_SMLAWB( S[ 2 ], B_Q28[ 0 ], in[ 2 * k + 1 ] ), 2 );
+ 335              		.loc 1 98 26 is_stmt 0 view .LVU90
+ 336 006a 1968     		ldr	r1, [r3]
+ 337 006c D9F80020 		ldr	r2, [r9]
+ 338 0070 1014     		asrs	r0, r2, #16
+ 339 0072 4FEA8B06 		lsl	r6, fp, #2
+ 340 0076 0396     		str	r6, [sp, #12]
+ 341 0078 3EF92B50 		ldrsh	r5, [lr, fp, lsl #2]
+ 342 007c 94B2     		uxth	r4, r2
+ 343 007e 04FB05F2 		mul	r2, r4, r5
+ 344 0082 1214     		asrs	r2, r2, #16
+ 345 0084 05FB0022 		mla	r2, r5, r0, r2
+ 346 0088 1144     		add	r1, r1, r2
+ 347 008a 8D00     		lsls	r5, r1, #2
+  98:../../opus/silk/biquad_alt.c ****         out32_Q14[ 1 ] = silk_LSHIFT( silk_SMLAWB( S[ 2 ], B_Q28[ 0 ], in[ 2 * k + 1 ] ), 2 );
+ 348              		.loc 1 98 24 view .LVU91
+ 349 008c 0895     		str	r5, [sp, #32]
+  99:../../opus/silk/biquad_alt.c **** 
+ 350              		.loc 1 99 9 is_stmt 1 view .LVU92
+  99:../../opus/silk/biquad_alt.c **** 
+ 351              		.loc 1 99 26 is_stmt 0 view .LVU93
+ 352 008e 9A68     		ldr	r2, [r3, #8]
+ 353 0090 B11C     		adds	r1, r6, #2
+ 354 0092 0191     		str	r1, [sp, #4]
+ 355 0094 3EF90110 		ldrsh	r1, [lr, r1]
+ 356 0098 01FB04F4 		mul	r4, r1, r4
+ 357 009c 2414     		asrs	r4, r4, #16
+ 358 009e 01FB0044 		mla	r4, r1, r0, r4
+ 359 00a2 2244     		add	r2, r2, r4
+ 360 00a4 4FEA820A 		lsl	r10, r2, #2
+  99:../../opus/silk/biquad_alt.c **** 
+ 361              		.loc 1 99 24 view .LVU94
+ 362 00a8 CDF824A0 		str	r10, [sp, #36]
+ 101:../../opus/silk/biquad_alt.c ****         S[ 2 ] = S[ 3 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A0_L_Q28 ), 14 );
+ 363              		.loc 1 101 9 is_stmt 1 view .LVU95
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 10
+
+
+ 101:../../opus/silk/biquad_alt.c ****         S[ 2 ] = S[ 3 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A0_L_Q28 ), 14 );
+ 364              		.loc 1 101 19 is_stmt 0 view .LVU96
+ 365 00ac 5A68     		ldr	r2, [r3, #4]
+ 101:../../opus/silk/biquad_alt.c ****         S[ 2 ] = S[ 3 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A0_L_Q28 ), 14 );
+ 366              		.loc 1 101 27 view .LVU97
+ 367 00ae 4FEA254C 		asr	ip, r5, #16
+ 368 00b2 0295     		str	r5, [sp, #8]
+ 369 00b4 BDF80840 		ldrh	r4, [sp, #8]
+ 370 00b8 0498     		ldr	r0, [sp, #16]
+ 371 00ba 00FB04F1 		mul	r1, r0, r4
+ 372 00be 0914     		asrs	r1, r1, #16
+ 373 00c0 00FB0C11 		mla	r1, r0, ip, r1
+ 374 00c4 4913     		asrs	r1, r1, #13
+ 375 00c6 0131     		adds	r1, r1, #1
+ 101:../../opus/silk/biquad_alt.c ****         S[ 2 ] = S[ 3 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A0_L_Q28 ), 14 );
+ 376              		.loc 1 101 25 view .LVU98
+ 377 00c8 02EB6101 		add	r1, r2, r1, asr #1
+ 101:../../opus/silk/biquad_alt.c ****         S[ 2 ] = S[ 3 ] + silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A0_L_Q28 ), 14 );
+ 378              		.loc 1 101 16 view .LVU99
+ 379 00cc 1960     		str	r1, [r3]
+ 102:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14[ 0 ], A0_U_Q28 );
+ 380              		.loc 1 102 9 is_stmt 1 view .LVU100
+ 102:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14[ 0 ], A0_U_Q28 );
+ 381              		.loc 1 102 19 is_stmt 0 view .LVU101
+ 382 00ce DD68     		ldr	r5, [r3, #12]
+ 102:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14[ 0 ], A0_U_Q28 );
+ 383              		.loc 1 102 27 view .LVU102
+ 384 00d0 4FEA2A47 		asr	r7, r10, #16
+ 385 00d4 1FFA8AF6 		uxth	r6, r10
+ 386 00d8 0246     		mov	r2, r0
+ 387 00da 06FB02F2 		mul	r2, r6, r2
+ 388 00de 1214     		asrs	r2, r2, #16
+ 389 00e0 00FB0722 		mla	r2, r0, r7, r2
+ 390 00e4 5213     		asrs	r2, r2, #13
+ 391 00e6 0132     		adds	r2, r2, #1
+ 102:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14[ 0 ], A0_U_Q28 );
+ 392              		.loc 1 102 25 view .LVU103
+ 393 00e8 05EB6202 		add	r2, r5, r2, asr #1
+ 102:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], out32_Q14[ 0 ], A0_U_Q28 );
+ 394              		.loc 1 102 16 view .LVU104
+ 395 00ec 9A60     		str	r2, [r3, #8]
+ 103:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], out32_Q14[ 1 ], A0_U_Q28 );
+ 396              		.loc 1 103 9 is_stmt 1 view .LVU105
+ 103:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], out32_Q14[ 1 ], A0_U_Q28 );
+ 397              		.loc 1 103 18 is_stmt 0 view .LVU106
+ 398 00ee BDF91450 		ldrsh	r5, [sp, #20]
+ 399 00f2 05FB04F8 		mul	r8, r5, r4
+ 400 00f6 4FEA2848 		asr	r8, r8, #16
+ 401 00fa 05FB0C88 		mla	r8, r5, ip, r8
+ 402 00fe 4144     		add	r1, r1, r8
+ 103:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], out32_Q14[ 1 ], A0_U_Q28 );
+ 403              		.loc 1 103 16 view .LVU107
+ 404 0100 1960     		str	r1, [r3]
+ 104:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], in[ 2 * k + 0 ] );
+ 405              		.loc 1 104 9 is_stmt 1 view .LVU108
+ 104:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], in[ 2 * k + 0 ] );
+ 406              		.loc 1 104 18 is_stmt 0 view .LVU109
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 11
+
+
+ 407 0102 05FB06F8 		mul	r8, r5, r6
+ 408 0106 4FEA2848 		asr	r8, r8, #16
+ 409 010a 05FB0788 		mla	r8, r5, r7, r8
+ 410 010e 4244     		add	r2, r2, r8
+ 104:../../opus/silk/biquad_alt.c ****         S[ 0 ] = silk_SMLAWB( S[ 0 ], B_Q28[ 1 ], in[ 2 * k + 0 ] );
+ 411              		.loc 1 104 16 view .LVU110
+ 412 0110 9A60     		str	r2, [r3, #8]
+ 105:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], B_Q28[ 1 ], in[ 2 * k + 1 ] );
+ 413              		.loc 1 105 9 is_stmt 1 view .LVU111
+ 105:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], B_Q28[ 1 ], in[ 2 * k + 1 ] );
+ 414              		.loc 1 105 18 is_stmt 0 view .LVU112
+ 415 0112 D9F80450 		ldr	r5, [r9, #4]
+ 416 0116 2814     		asrs	r0, r5, #16
+ 417 0118 3EF92B80 		ldrsh	r8, [lr, fp, lsl #2]
+ 418 011c ADB2     		uxth	r5, r5
+ 419 011e 05FB08F5 		mul	r5, r5, r8
+ 420 0122 2D14     		asrs	r5, r5, #16
+ 421 0124 08FB0055 		mla	r5, r8, r0, r5
+ 422 0128 2944     		add	r1, r1, r5
+ 105:../../opus/silk/biquad_alt.c ****         S[ 2 ] = silk_SMLAWB( S[ 2 ], B_Q28[ 1 ], in[ 2 * k + 1 ] );
+ 423              		.loc 1 105 16 view .LVU113
+ 424 012a 1960     		str	r1, [r3]
+ 106:../../opus/silk/biquad_alt.c **** 
+ 425              		.loc 1 106 9 is_stmt 1 view .LVU114
+ 106:../../opus/silk/biquad_alt.c **** 
+ 426              		.loc 1 106 18 is_stmt 0 view .LVU115
+ 427 012c D9F80410 		ldr	r1, [r9, #4]
+ 428 0130 4FEA2148 		asr	r8, r1, #16
+ 429 0134 0198     		ldr	r0, [sp, #4]
+ 430 0136 3EF90050 		ldrsh	r5, [lr, r0]
+ 431 013a 89B2     		uxth	r1, r1
+ 432 013c 05FB01F1 		mul	r1, r5, r1
+ 433 0140 0914     		asrs	r1, r1, #16
+ 434 0142 05FB0811 		mla	r1, r5, r8, r1
+ 435 0146 0A44     		add	r2, r2, r1
+ 106:../../opus/silk/biquad_alt.c **** 
+ 436              		.loc 1 106 16 view .LVU116
+ 437 0148 9A60     		str	r2, [r3, #8]
+ 108:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A1_L_Q28 ), 14 );
+ 438              		.loc 1 108 9 is_stmt 1 view .LVU117
+ 108:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A1_L_Q28 ), 14 );
+ 439              		.loc 1 108 18 is_stmt 0 view .LVU118
+ 440 014a 0698     		ldr	r0, [sp, #24]
+ 441 014c 00FB04F1 		mul	r1, r0, r4
+ 442 0150 0914     		asrs	r1, r1, #16
+ 443 0152 00FB0C11 		mla	r1, r0, ip, r1
+ 444 0156 4913     		asrs	r1, r1, #13
+ 445 0158 0131     		adds	r1, r1, #1
+ 446 015a 4910     		asrs	r1, r1, #1
+ 108:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_RSHIFT_ROUND( silk_SMULWB( out32_Q14[ 1 ], A1_L_Q28 ), 14 );
+ 447              		.loc 1 108 16 view .LVU119
+ 448 015c 5960     		str	r1, [r3, #4]
+ 109:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14[ 0 ], A1_U_Q28 );
+ 449              		.loc 1 109 9 is_stmt 1 view .LVU120
+ 109:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14[ 0 ], A1_U_Q28 );
+ 450              		.loc 1 109 18 is_stmt 0 view .LVU121
+ 451 015e 3246     		mov	r2, r6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 12
+
+
+ 452 0160 00FB02F2 		mul	r2, r0, r2
+ 453 0164 1214     		asrs	r2, r2, #16
+ 454 0166 00FB0722 		mla	r2, r0, r7, r2
+ 455 016a 5213     		asrs	r2, r2, #13
+ 456 016c 0132     		adds	r2, r2, #1
+ 457 016e 5210     		asrs	r2, r2, #1
+ 109:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], out32_Q14[ 0 ], A1_U_Q28 );
+ 458              		.loc 1 109 16 view .LVU122
+ 459 0170 DA60     		str	r2, [r3, #12]
+ 110:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], out32_Q14[ 1 ], A1_U_Q28 );
+ 460              		.loc 1 110 9 is_stmt 1 view .LVU123
+ 110:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], out32_Q14[ 1 ], A1_U_Q28 );
+ 461              		.loc 1 110 18 is_stmt 0 view .LVU124
+ 462 0172 BDF91C50 		ldrsh	r5, [sp, #28]
+ 463 0176 05FB04F4 		mul	r4, r5, r4
+ 464 017a 2414     		asrs	r4, r4, #16
+ 465 017c 05FB0C44 		mla	r4, r5, ip, r4
+ 466 0180 0C44     		add	r4, r4, r1
+ 110:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], out32_Q14[ 1 ], A1_U_Q28 );
+ 467              		.loc 1 110 16 view .LVU125
+ 468 0182 5C60     		str	r4, [r3, #4]
+ 111:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], in[ 2 * k + 0 ] );
+ 469              		.loc 1 111 9 is_stmt 1 view .LVU126
+ 111:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], in[ 2 * k + 0 ] );
+ 470              		.loc 1 111 18 is_stmt 0 view .LVU127
+ 471 0184 3046     		mov	r0, r6
+ 472 0186 05FB00F0 		mul	r0, r5, r0
+ 473 018a 0014     		asrs	r0, r0, #16
+ 474 018c 05FB0700 		mla	r0, r5, r7, r0
+ 475 0190 1044     		add	r0, r0, r2
+ 111:../../opus/silk/biquad_alt.c ****         S[ 1 ] = silk_SMLAWB( S[ 1 ], B_Q28[ 2 ], in[ 2 * k + 0 ] );
+ 476              		.loc 1 111 16 view .LVU128
+ 477 0192 D860     		str	r0, [r3, #12]
+ 112:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], B_Q28[ 2 ], in[ 2 * k + 1 ] );
+ 478              		.loc 1 112 9 is_stmt 1 view .LVU129
+ 112:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], B_Q28[ 2 ], in[ 2 * k + 1 ] );
+ 479              		.loc 1 112 18 is_stmt 0 view .LVU130
+ 480 0194 D9F80820 		ldr	r2, [r9, #8]
+ 481 0198 1514     		asrs	r5, r2, #16
+ 482 019a 3EF92B10 		ldrsh	r1, [lr, fp, lsl #2]
+ 483 019e 92B2     		uxth	r2, r2
+ 484 01a0 01FB02F2 		mul	r2, r1, r2
+ 485 01a4 1214     		asrs	r2, r2, #16
+ 486 01a6 01FB0522 		mla	r2, r1, r5, r2
+ 487 01aa 1444     		add	r4, r4, r2
+ 112:../../opus/silk/biquad_alt.c ****         S[ 3 ] = silk_SMLAWB( S[ 3 ], B_Q28[ 2 ], in[ 2 * k + 1 ] );
+ 488              		.loc 1 112 16 view .LVU131
+ 489 01ac 5C60     		str	r4, [r3, #4]
+ 113:../../opus/silk/biquad_alt.c **** 
+ 490              		.loc 1 113 9 is_stmt 1 view .LVU132
+ 113:../../opus/silk/biquad_alt.c **** 
+ 491              		.loc 1 113 18 is_stmt 0 view .LVU133
+ 492 01ae D9F80820 		ldr	r2, [r9, #8]
+ 493 01b2 1414     		asrs	r4, r2, #16
+ 494 01b4 0199     		ldr	r1, [sp, #4]
+ 495 01b6 3EF90110 		ldrsh	r1, [lr, r1]
+ 496 01ba 92B2     		uxth	r2, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 13
+
+
+ 497 01bc 01FB02F2 		mul	r2, r1, r2
+ 498 01c0 1214     		asrs	r2, r2, #16
+ 499 01c2 01FB0422 		mla	r2, r1, r4, r2
+ 500 01c6 1044     		add	r0, r0, r2
+ 113:../../opus/silk/biquad_alt.c **** 
+ 501              		.loc 1 113 16 view .LVU134
+ 502 01c8 D860     		str	r0, [r3, #12]
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 503              		.loc 1 116 9 is_stmt 1 view .LVU135
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 504              		.loc 1 116 40 is_stmt 0 view .LVU136
+ 505 01ca 43F6FF72 		movw	r2, #16383
+ 506 01ce 029D     		ldr	r5, [sp, #8]
+ 507 01d0 2A44     		add	r2, r2, r5
+ 508 01d2 9113     		asrs	r1, r2, #14
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 509              		.loc 1 116 28 view .LVU137
+ 510 01d4 B2F1005F 		cmp	r2, #536870912
+ 511 01d8 BFF628AF 		bge	.L16
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 512              		.loc 1 116 28 discriminator 1 view .LVU138
+ 513 01dc 11F5004F 		cmn	r1, #32768
+ 514 01e0 FFF636AF 		blt	.L17
+ 116:../../opus/silk/biquad_alt.c ****         out[ 2 * k + 1 ] = (opus_int16)silk_SAT16( silk_RSHIFT( out32_Q14[ 1 ] + (1<<14) - 1, 14 ) 
+ 515              		.loc 1 116 28 discriminator 3 view .LVU139
+ 516 01e4 09B2     		sxth	r1, r1
+ 517 01e6 23E7     		b	.L13
+ 518              	.L19:
+ 519              		.loc 1 117 28 discriminator 4 view .LVU140
+ 520 01e8 0249     		ldr	r1, .L22
+ 521 01ea 35E7     		b	.L14
+ 522              	.L21:
+ 118:../../opus/silk/biquad_alt.c ****     }
+ 119:../../opus/silk/biquad_alt.c **** }
+ 523              		.loc 1 119 1 view .LVU141
+ 524 01ec 0BB0     		add	sp, sp, #44
+ 525              	.LCFI5:
+ 526              		.cfi_def_cfa_offset 36
+ 527              		@ sp needed
+ 528 01ee BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 529              	.LVL24:
+ 530              	.L23:
+ 531              		.loc 1 119 1 view .LVU142
+ 532 01f2 00BF     		.align	2
+ 533              	.L22:
+ 534 01f4 0080FFFF 		.word	-32768
+ 535              		.cfi_endproc
+ 536              	.LFE20:
+ 538              		.text
+ 539              	.Letext0:
+ 540              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 541              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 542              		.file 4 "../../opus/include/opus_types.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 biquad_alt.c
+C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s:20     .text.silk_biquad_alt_stride1:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s:26     .text.silk_biquad_alt_stride1:00000000 silk_biquad_alt_stride1
+C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s:214    .text.silk_biquad_alt_stride1:00000100 $d
+C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s:219    .text.silk_biquad_alt_stride2_c:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s:225    .text.silk_biquad_alt_stride2_c:00000000 silk_biquad_alt_stride2_c
+C:\Users\oleg\AppData\Local\Temp\ccbN6qvf.s:534    .text.silk_biquad_alt_stride2_c:000001f4 $d
+
+NO UNDEFINED SYMBOLS

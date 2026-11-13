@@ -1,0 +1,720 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"screen2.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/Screens/screen2.c"
+  19              		.section	.rodata.screen2_get_item.str1.4,"aMS",%progbits,1
+  20              		.align	2
+  21              	.LC0:
+  22 0000 25642920 		.ascii	"%d) %s\000"
+  22      257300
+  23 0007 00       		.align	2
+  24              	.LC1:
+  25 0008 2000     		.ascii	" \000"
+  26              		.section	.text.screen2_get_item,"ax",%progbits
+  27              		.align	1
+  28              		.global	screen2_get_item
+  29              		.syntax unified
+  30              		.thumb
+  31              		.thumb_func
+  33              	screen2_get_item:
+  34              	.LVL0:
+  35              	.LFB338:
+   1:../../CM7/Core/Src/Screens/screen2.c **** /*
+   2:../../CM7/Core/Src/Screens/screen2.c ****  * screen2.c
+   3:../../CM7/Core/Src/Screens/screen2.c ****  *
+   4:../../CM7/Core/Src/Screens/screen2.c ****  *  Created on: 11 апр. 2025 г.
+   5:../../CM7/Core/Src/Screens/screen2.c ****  *      Author: Rafael Boltachev
+   6:../../CM7/Core/Src/Screens/screen2.c ****  */
+   7:../../CM7/Core/Src/Screens/screen2.c **** 
+   8:../../CM7/Core/Src/Screens/screen2.c **** 
+   9:../../CM7/Core/Src/Screens/screen2.c **** #include "screen2.h"
+  10:../../CM7/Core/Src/Screens/screen2.c **** #include <string.h>
+  11:../../CM7/Core/Src/Screens/screen2.c **** #include <stdio.h>
+  12:../../CM7/Core/Src/Screens/screen2.c **** #include "str_util.h"
+  13:../../CM7/Core/Src/Screens/screen2.c **** #include "mki_data.h"
+  14:../../CM7/Core/Src/Screens/screen2.c **** #include "pu.h"
+  15:../../CM7/Core/Src/Screens/screen2.c **** #include "mki_data.h"
+  16:../../CM7/Core/Src/Screens/screen2.c **** #include "screens.h"
+  17:../../CM7/Core/Src/Screens/screen2.c **** #include "fault_data.h"
+  18:../../CM7/Core/Src/Screens/screen2.c **** #include "mkk_data.h"
+  19:../../CM7/Core/Src/Screens/screen2.c **** #include "display.h"
+  20:../../CM7/Core/Src/Screens/screen2.c **** #include "cm7core.h"
+  21:../../CM7/Core/Src/Screens/screen2.c **** #include "common.h"
+  22:../../CM7/Core/Src/Screens/screen2.c **** #include "stm_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 2
+
+
+  23:../../CM7/Core/Src/Screens/screen2.c **** 
+  24:../../CM7/Core/Src/Screens/screen2.c **** //--------------- НЕИСПРАВНОСТИ --------------------
+  25:../../CM7/Core/Src/Screens/screen2.c **** 
+  26:../../CM7/Core/Src/Screens/screen2.c **** 
+  27:../../CM7/Core/Src/Screens/screen2.c **** 
+  28:../../CM7/Core/Src/Screens/screen2.c **** static uint8_t screen2_index = 0;
+  29:../../CM7/Core/Src/Screens/screen2.c **** 
+  30:../../CM7/Core/Src/Screens/screen2.c **** static char screen2_str_buf[128] = {0};
+  31:../../CM7/Core/Src/Screens/screen2.c **** 
+  32:../../CM7/Core/Src/Screens/screen2.c **** 
+  33:../../CM7/Core/Src/Screens/screen2.c **** const char * screen2_get_item(uint8_t index)
+  34:../../CM7/Core/Src/Screens/screen2.c **** {
+  36              		.loc 1 34 1 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 0
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40              		.loc 1 34 1 is_stmt 0 view .LVU1
+  41 0000 70B5     		push	{r4, r5, r6, lr}
+  42              	.LCFI0:
+  43              		.cfi_def_cfa_offset 16
+  44              		.cfi_offset 4, -16
+  45              		.cfi_offset 5, -12
+  46              		.cfi_offset 6, -8
+  47              		.cfi_offset 14, -4
+  48 0002 82B0     		sub	sp, sp, #8
+  49              	.LCFI1:
+  50              		.cfi_def_cfa_offset 24
+  51 0004 0646     		mov	r6, r0
+  35:../../CM7/Core/Src/Screens/screen2.c **** 	uint8_t i, cnt;
+  52              		.loc 1 35 2 is_stmt 1 view .LVU2
+  36:../../CM7/Core/Src/Screens/screen2.c **** 
+  37:../../CM7/Core/Src/Screens/screen2.c **** 	cnt = 0;
+  53              		.loc 1 37 2 view .LVU3
+  54              	.LVL1:
+  38:../../CM7/Core/Src/Screens/screen2.c **** 	for (i = 0; i < 128; i++) {
+  55              		.loc 1 38 2 view .LVU4
+  37:../../CM7/Core/Src/Screens/screen2.c **** 	for (i = 0; i < 128; i++) {
+  56              		.loc 1 37 6 is_stmt 0 view .LVU5
+  57 0006 0025     		movs	r5, #0
+  58              		.loc 1 38 9 view .LVU6
+  59 0008 2C46     		mov	r4, r5
+  60              		.loc 1 38 2 view .LVU7
+  61 000a 49E0     		b	.L2
+  62              	.LVL2:
+  63              	.L15:
+  39:../../CM7/Core/Src/Screens/screen2.c **** 		if (fault_is_set(i)) {
+  40:../../CM7/Core/Src/Screens/screen2.c **** 			if (index == cnt) {
+  41:../../CM7/Core/Src/Screens/screen2.c **** 
+  42:../../CM7/Core/Src/Screens/screen2.c **** 				snprintf(screen2_str_buf, sizeof(screen2_str_buf), "%d) %s", index + 1, fault2str(i));
+  64              		.loc 1 42 5 is_stmt 1 view .LVU8
+  65 000c 2046     		mov	r0, r4
+  66 000e FFF7FEFF 		bl	fault2str
+  67              	.LVL3:
+  68              		.loc 1 42 5 is_stmt 0 discriminator 1 view .LVU9
+  69 0012 0090     		str	r0, [sp]
+  70 0014 731C     		adds	r3, r6, #1
+  71 0016 2A4A     		ldr	r2, .L16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 3
+
+
+  72 0018 8021     		movs	r1, #128
+  73 001a 2A48     		ldr	r0, .L16+4
+  74 001c FFF7FEFF 		bl	snprintf
+  75              	.LVL4:
+  43:../../CM7/Core/Src/Screens/screen2.c **** 
+  44:../../CM7/Core/Src/Screens/screen2.c **** 				if ((i >= FAULT_MKK_INSIG_1) && (i <= FAULT_MKK_INSIG_24)) {
+  76              		.loc 1 44 5 is_stmt 1 view .LVU10
+  77              		.loc 1 44 34 is_stmt 0 view .LVU11
+  78 0020 A4F10805 		sub	r5, r4, #8
+  79              	.LVL5:
+  80              		.loc 1 44 34 view .LVU12
+  81 0024 EDB2     		uxtb	r5, r5
+  82              		.loc 1 44 8 view .LVU13
+  83 0026 172D     		cmp	r5, #23
+  84 0028 0BD9     		bls	.L11
+  45:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), " ");
+  46:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_insig_state_str(i - FAULT_MKK_I
+  47:../../CM7/Core/Src/Screens/screen2.c **** 				}
+  48:../../CM7/Core/Src/Screens/screen2.c **** 				else if ((i >= FAULT_MKK_SOUND_1) && (i <= FAULT_MKK_SOUND_24)) {
+  85              		.loc 1 48 10 is_stmt 1 view .LVU14
+  86              		.loc 1 48 39 is_stmt 0 view .LVU15
+  87 002a A4F12005 		sub	r5, r4, #32
+  88 002e EDB2     		uxtb	r5, r5
+  89              		.loc 1 48 13 view .LVU16
+  90 0030 172D     		cmp	r5, #23
+  91 0032 15D9     		bls	.L12
+  49:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), " ");
+  50:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_lin_state_str(i - FAULT_MKK_SOU
+  51:../../CM7/Core/Src/Screens/screen2.c **** 				}
+  52:../../CM7/Core/Src/Screens/screen2.c **** 				else if ((i >= FAULT_MKK_START_1) && (i <= FAULT_MKK_START_2)) {
+  92              		.loc 1 52 10 is_stmt 1 view .LVU17
+  93              		.loc 1 52 39 is_stmt 0 view .LVU18
+  94 0034 383C     		subs	r4, r4, #56
+  95              	.LVL6:
+  96              		.loc 1 52 39 view .LVU19
+  97 0036 E4B2     		uxtb	r4, r4
+  98              	.LVL7:
+  99              		.loc 1 52 13 view .LVU20
+ 100 0038 012C     		cmp	r4, #1
+ 101 003a 20D9     		bls	.L13
+ 102              	.L6:
+  53:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), " ");
+  54:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_start_state_str(i - FAULT_MKK_S
+  55:../../CM7/Core/Src/Screens/screen2.c **** 				}
+  56:../../CM7/Core/Src/Screens/screen2.c **** 
+  57:../../CM7/Core/Src/Screens/screen2.c **** 				return screen2_str_buf;
+ 103              		.loc 1 57 5 is_stmt 1 view .LVU21
+ 104              		.loc 1 57 12 is_stmt 0 view .LVU22
+ 105 003c 2148     		ldr	r0, .L16+4
+ 106              	.L1:
+  58:../../CM7/Core/Src/Screens/screen2.c **** 
+  59:../../CM7/Core/Src/Screens/screen2.c **** 			}
+  60:../../CM7/Core/Src/Screens/screen2.c **** 
+  61:../../CM7/Core/Src/Screens/screen2.c **** 			cnt++;
+  62:../../CM7/Core/Src/Screens/screen2.c **** 		}
+  63:../../CM7/Core/Src/Screens/screen2.c **** 
+  64:../../CM7/Core/Src/Screens/screen2.c **** 	}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 4
+
+
+  65:../../CM7/Core/Src/Screens/screen2.c **** 	return NULL;
+  66:../../CM7/Core/Src/Screens/screen2.c **** }
+ 107              		.loc 1 66 1 view .LVU23
+ 108 003e 02B0     		add	sp, sp, #8
+ 109              	.LCFI2:
+ 110              		.cfi_remember_state
+ 111              		.cfi_def_cfa_offset 16
+ 112              		@ sp needed
+ 113 0040 70BD     		pop	{r4, r5, r6, pc}
+ 114              	.LVL8:
+ 115              	.L11:
+ 116              	.LCFI3:
+ 117              		.cfi_restore_state
+  45:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_insig_state_str(i - FAULT_MKK_I
+ 118              		.loc 1 45 6 is_stmt 1 view .LVU24
+ 119 0042 204C     		ldr	r4, .L16+4
+ 120              	.LVL9:
+  45:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_insig_state_str(i - FAULT_MKK_I
+ 121              		.loc 1 45 6 is_stmt 0 view .LVU25
+ 122 0044 204A     		ldr	r2, .L16+8
+ 123 0046 8021     		movs	r1, #128
+ 124 0048 2046     		mov	r0, r4
+ 125 004a FFF7FEFF 		bl	strcat_s
+ 126              	.LVL10:
+  46:../../CM7/Core/Src/Screens/screen2.c **** 				}
+ 127              		.loc 1 46 6 is_stmt 1 view .LVU26
+ 128 004e 2846     		mov	r0, r5
+ 129 0050 FFF7FEFF 		bl	cm7_mkk_get_insig_state_str
+ 130              	.LVL11:
+ 131 0054 0246     		mov	r2, r0
+  46:../../CM7/Core/Src/Screens/screen2.c **** 				}
+ 132              		.loc 1 46 6 is_stmt 0 discriminator 1 view .LVU27
+ 133 0056 8021     		movs	r1, #128
+ 134 0058 2046     		mov	r0, r4
+ 135 005a FFF7FEFF 		bl	strcat_s
+ 136              	.LVL12:
+ 137 005e EDE7     		b	.L6
+ 138              	.LVL13:
+ 139              	.L12:
+  49:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_lin_state_str(i - FAULT_MKK_SOU
+ 140              		.loc 1 49 6 is_stmt 1 view .LVU28
+ 141 0060 184C     		ldr	r4, .L16+4
+ 142              	.LVL14:
+  49:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_lin_state_str(i - FAULT_MKK_SOU
+ 143              		.loc 1 49 6 is_stmt 0 view .LVU29
+ 144 0062 194A     		ldr	r2, .L16+8
+ 145 0064 8021     		movs	r1, #128
+ 146 0066 2046     		mov	r0, r4
+ 147 0068 FFF7FEFF 		bl	strcat_s
+ 148              	.LVL15:
+  50:../../CM7/Core/Src/Screens/screen2.c **** 				}
+ 149              		.loc 1 50 6 is_stmt 1 view .LVU30
+ 150 006c 2846     		mov	r0, r5
+ 151 006e FFF7FEFF 		bl	cm7_mkk_get_lin_state_str
+ 152              	.LVL16:
+ 153 0072 0246     		mov	r2, r0
+  50:../../CM7/Core/Src/Screens/screen2.c **** 				}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 5
+
+
+ 154              		.loc 1 50 6 is_stmt 0 discriminator 1 view .LVU31
+ 155 0074 8021     		movs	r1, #128
+ 156 0076 2046     		mov	r0, r4
+ 157 0078 FFF7FEFF 		bl	strcat_s
+ 158              	.LVL17:
+ 159 007c DEE7     		b	.L6
+ 160              	.L13:
+  53:../../CM7/Core/Src/Screens/screen2.c **** 					strcat_s(screen2_str_buf, sizeof(screen2_str_buf), cm7_mkk_get_start_state_str(i - FAULT_MKK_S
+ 161              		.loc 1 53 6 is_stmt 1 view .LVU32
+ 162 007e 114D     		ldr	r5, .L16+4
+ 163 0080 114A     		ldr	r2, .L16+8
+ 164 0082 8021     		movs	r1, #128
+ 165 0084 2846     		mov	r0, r5
+ 166 0086 FFF7FEFF 		bl	strcat_s
+ 167              	.LVL18:
+  54:../../CM7/Core/Src/Screens/screen2.c **** 				}
+ 168              		.loc 1 54 6 view .LVU33
+ 169 008a 2046     		mov	r0, r4
+ 170 008c FFF7FEFF 		bl	cm7_mkk_get_start_state_str
+ 171              	.LVL19:
+ 172 0090 0246     		mov	r2, r0
+  54:../../CM7/Core/Src/Screens/screen2.c **** 				}
+ 173              		.loc 1 54 6 is_stmt 0 discriminator 1 view .LVU34
+ 174 0092 8021     		movs	r1, #128
+ 175 0094 2846     		mov	r0, r5
+ 176 0096 FFF7FEFF 		bl	strcat_s
+ 177              	.LVL20:
+ 178 009a CFE7     		b	.L6
+ 179              	.LVL21:
+ 180              	.L3:
+  38:../../CM7/Core/Src/Screens/screen2.c **** 		if (fault_is_set(i)) {
+ 181              		.loc 1 38 24 is_stmt 1 discriminator 2 view .LVU35
+ 182 009c 0134     		adds	r4, r4, #1
+ 183              	.LVL22:
+  38:../../CM7/Core/Src/Screens/screen2.c **** 		if (fault_is_set(i)) {
+ 184              		.loc 1 38 24 is_stmt 0 discriminator 2 view .LVU36
+ 185 009e E4B2     		uxtb	r4, r4
+ 186              	.LVL23:
+ 187              	.L2:
+  38:../../CM7/Core/Src/Screens/screen2.c **** 		if (fault_is_set(i)) {
+ 188              		.loc 1 38 16 is_stmt 1 discriminator 1 view .LVU37
+ 189 00a0 14F0800F 		tst	r4, #128
+ 190 00a4 09D1     		bne	.L14
+  39:../../CM7/Core/Src/Screens/screen2.c **** 			if (index == cnt) {
+ 191              		.loc 1 39 3 view .LVU38
+  39:../../CM7/Core/Src/Screens/screen2.c **** 			if (index == cnt) {
+ 192              		.loc 1 39 7 is_stmt 0 view .LVU39
+ 193 00a6 2046     		mov	r0, r4
+ 194 00a8 FFF7FEFF 		bl	fault_is_set
+ 195              	.LVL24:
+  39:../../CM7/Core/Src/Screens/screen2.c **** 			if (index == cnt) {
+ 196              		.loc 1 39 6 discriminator 1 view .LVU40
+ 197 00ac 0028     		cmp	r0, #0
+ 198 00ae F5D0     		beq	.L3
+  40:../../CM7/Core/Src/Screens/screen2.c **** 
+ 199              		.loc 1 40 4 is_stmt 1 view .LVU41
+  40:../../CM7/Core/Src/Screens/screen2.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 6
+
+
+ 200              		.loc 1 40 7 is_stmt 0 view .LVU42
+ 201 00b0 B542     		cmp	r5, r6
+ 202 00b2 ABD0     		beq	.L15
+  61:../../CM7/Core/Src/Screens/screen2.c **** 		}
+ 203              		.loc 1 61 4 is_stmt 1 view .LVU43
+  61:../../CM7/Core/Src/Screens/screen2.c **** 		}
+ 204              		.loc 1 61 7 is_stmt 0 view .LVU44
+ 205 00b4 0135     		adds	r5, r5, #1
+ 206              	.LVL25:
+  61:../../CM7/Core/Src/Screens/screen2.c **** 		}
+ 207              		.loc 1 61 7 view .LVU45
+ 208 00b6 EDB2     		uxtb	r5, r5
+ 209              	.LVL26:
+  61:../../CM7/Core/Src/Screens/screen2.c **** 		}
+ 210              		.loc 1 61 7 view .LVU46
+ 211 00b8 F0E7     		b	.L3
+ 212              	.L14:
+  65:../../CM7/Core/Src/Screens/screen2.c **** }
+ 213              		.loc 1 65 9 view .LVU47
+ 214 00ba 0020     		movs	r0, #0
+ 215 00bc BFE7     		b	.L1
+ 216              	.L17:
+ 217 00be 00BF     		.align	2
+ 218              	.L16:
+ 219 00c0 00000000 		.word	.LC0
+ 220 00c4 00000000 		.word	screen2_str_buf
+ 221 00c8 08000000 		.word	.LC1
+ 222              		.cfi_endproc
+ 223              	.LFE338:
+ 225              		.section	.rodata.screen2_paint.str1.4,"aMS",%progbits,1
+ 226              		.align	2
+ 227              	.LC2:
+ 228 0000 D09DD095 		.ascii	"\320\235\320\225\320\230\320\241\320\237\320\240\320"
+ 228      D098D0A1 
+ 228      D09FD0A0 
+ 228      D0
+ 229 000d 90D092D0 		.ascii	"\220\320\222\320\235\320\236\320\241\320\242\320\230"
+ 229      9DD09ED0 
+ 229      A1D0A2D0 
+ 229      98
+ 230 001a 00       		.ascii	"\000"
+ 231 001b 00       		.align	2
+ 232              	.LC3:
+ 233 001c D09ED0A2 		.ascii	"\320\236\320\242\320\241\320\243\320\242\320\241\320"
+ 233      D0A1D0A3 
+ 233      D0A2D0A1 
+ 233      D0
+ 234 0029 A2D092D0 		.ascii	"\242\320\222\320\243\320\256\320\242\000"
+ 234      A3D0AED0 
+ 234      A200
+ 235              		.section	.text.screen2_paint,"ax",%progbits
+ 236              		.align	1
+ 237              		.global	screen2_paint
+ 238              		.syntax unified
+ 239              		.thumb
+ 240              		.thumb_func
+ 242              	screen2_paint:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 7
+
+
+ 243              	.LFB339:
+  67:../../CM7/Core/Src/Screens/screen2.c **** 
+  68:../../CM7/Core/Src/Screens/screen2.c **** 
+  69:../../CM7/Core/Src/Screens/screen2.c **** void screen2_paint(void)
+  70:../../CM7/Core/Src/Screens/screen2.c **** {
+ 244              		.loc 1 70 1 is_stmt 1 view -0
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 0
+ 247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248 0000 08B5     		push	{r3, lr}
+ 249              	.LCFI4:
+ 250              		.cfi_def_cfa_offset 8
+ 251              		.cfi_offset 3, -8
+ 252              		.cfi_offset 14, -4
+  71:../../CM7/Core/Src/Screens/screen2.c **** 	clear_display();
+ 253              		.loc 1 71 2 view .LVU49
+ 254 0002 FFF7FEFF 		bl	clear_display
+ 255              	.LVL27:
+  72:../../CM7/Core/Src/Screens/screen2.c **** 
+  73:../../CM7/Core/Src/Screens/screen2.c **** 	if (fault_count()) {
+ 256              		.loc 1 73 2 view .LVU50
+ 257              		.loc 1 73 6 is_stmt 0 view .LVU51
+ 258 0006 FFF7FEFF 		bl	fault_count
+ 259              	.LVL28:
+ 260              		.loc 1 73 5 discriminator 1 view .LVU52
+ 261 000a 40B1     		cbz	r0, .L19
+  74:../../CM7/Core/Src/Screens/screen2.c **** 		set_display_all(screen2_get_item(screen2_index));
+ 262              		.loc 1 74 3 is_stmt 1 view .LVU53
+ 263 000c 094B     		ldr	r3, .L22
+ 264 000e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 265 0010 FFF7FEFF 		bl	screen2_get_item
+ 266              	.LVL29:
+ 267              		.loc 1 74 3 is_stmt 0 discriminator 1 view .LVU54
+ 268 0014 FFF7FEFF 		bl	set_display_all
+ 269              	.LVL30:
+ 270              	.L20:
+  75:../../CM7/Core/Src/Screens/screen2.c **** 	} else {
+  76:../../CM7/Core/Src/Screens/screen2.c **** 		set_display(0, 0, "НЕИСПРАВНОСТИ");
+  77:../../CM7/Core/Src/Screens/screen2.c **** 		set_display(1, 0, "ОТСУТСТВУЮТ");
+  78:../../CM7/Core/Src/Screens/screen2.c **** 	}
+  79:../../CM7/Core/Src/Screens/screen2.c **** 
+  80:../../CM7/Core/Src/Screens/screen2.c **** 	//ulog("300"CRLF);
+  81:../../CM7/Core/Src/Screens/screen2.c **** 	send_display();
+ 271              		.loc 1 81 2 is_stmt 1 view .LVU55
+ 272 0018 FFF7FEFF 		bl	send_display
+ 273              	.LVL31:
+  82:../../CM7/Core/Src/Screens/screen2.c **** 
+  83:../../CM7/Core/Src/Screens/screen2.c **** }
+ 274              		.loc 1 83 1 is_stmt 0 view .LVU56
+ 275 001c 08BD     		pop	{r3, pc}
+ 276              	.L19:
+  76:../../CM7/Core/Src/Screens/screen2.c **** 		set_display(1, 0, "ОТСУТСТВУЮТ");
+ 277              		.loc 1 76 3 is_stmt 1 view .LVU57
+ 278 001e 064A     		ldr	r2, .L22+4
+ 279 0020 0021     		movs	r1, #0
+ 280 0022 0846     		mov	r0, r1
+ 281 0024 FFF7FEFF 		bl	set_display
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 8
+
+
+ 282              	.LVL32:
+  77:../../CM7/Core/Src/Screens/screen2.c **** 	}
+ 283              		.loc 1 77 3 view .LVU58
+ 284 0028 044A     		ldr	r2, .L22+8
+ 285 002a 0021     		movs	r1, #0
+ 286 002c 0120     		movs	r0, #1
+ 287 002e FFF7FEFF 		bl	set_display
+ 288              	.LVL33:
+ 289 0032 F1E7     		b	.L20
+ 290              	.L23:
+ 291              		.align	2
+ 292              	.L22:
+ 293 0034 00000000 		.word	screen2_index
+ 294 0038 00000000 		.word	.LC2
+ 295 003c 1C000000 		.word	.LC3
+ 296              		.cfi_endproc
+ 297              	.LFE339:
+ 299              		.section	.text.screen2_init,"ax",%progbits
+ 300              		.align	1
+ 301              		.global	screen2_init
+ 302              		.syntax unified
+ 303              		.thumb
+ 304              		.thumb_func
+ 306              	screen2_init:
+ 307              	.LFB340:
+  84:../../CM7/Core/Src/Screens/screen2.c **** 
+  85:../../CM7/Core/Src/Screens/screen2.c **** void screen2_init(void)
+  86:../../CM7/Core/Src/Screens/screen2.c **** {
+ 308              		.loc 1 86 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		@ link register save eliminated.
+  87:../../CM7/Core/Src/Screens/screen2.c **** 	screen2_index = 0;
+ 313              		.loc 1 87 2 view .LVU60
+ 314              		.loc 1 87 16 is_stmt 0 view .LVU61
+ 315 0000 014B     		ldr	r3, .L25
+ 316 0002 0022     		movs	r2, #0
+ 317 0004 1A70     		strb	r2, [r3]
+  88:../../CM7/Core/Src/Screens/screen2.c **** }
+ 318              		.loc 1 88 1 view .LVU62
+ 319 0006 7047     		bx	lr
+ 320              	.L26:
+ 321              		.align	2
+ 322              	.L25:
+ 323 0008 00000000 		.word	screen2_index
+ 324              		.cfi_endproc
+ 325              	.LFE340:
+ 327              		.section	.rodata.screen2_button_press.str1.4,"aMS",%progbits,1
+ 328              		.align	2
+ 329              	.LC4:
+ 330 0000 434D372E 		.ascii	"CM7.screen2: menu index=%d(%s)\015\012\000"
+ 330      73637265 
+ 330      656E323A 
+ 330      206D656E 
+ 330      7520696E 
+ 331              		.section	.text.screen2_button_press,"ax",%progbits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 9
+
+
+ 332              		.align	1
+ 333              		.global	screen2_button_press
+ 334              		.syntax unified
+ 335              		.thumb
+ 336              		.thumb_func
+ 338              	screen2_button_press:
+ 339              	.LVL34:
+ 340              	.LFB341:
+  89:../../CM7/Core/Src/Screens/screen2.c **** 
+  90:../../CM7/Core/Src/Screens/screen2.c **** void screen2_button_press(uint8_t key)
+  91:../../CM7/Core/Src/Screens/screen2.c **** {
+ 341              		.loc 1 91 1 is_stmt 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              		.loc 1 91 1 is_stmt 0 view .LVU64
+ 346 0000 10B5     		push	{r4, lr}
+ 347              	.LCFI5:
+ 348              		.cfi_def_cfa_offset 8
+ 349              		.cfi_offset 4, -8
+ 350              		.cfi_offset 14, -4
+  92:../../CM7/Core/Src/Screens/screen2.c **** 	switch (key) {
+ 351              		.loc 1 92 2 is_stmt 1 view .LVU65
+ 352 0002 1B38     		subs	r0, r0, #27
+ 353              	.LVL35:
+ 354              		.loc 1 92 2 is_stmt 0 view .LVU66
+ 355 0004 0828     		cmp	r0, #8
+ 356 0006 32D8     		bhi	.L27
+ 357 0008 DFE800F0 		tbb	[pc, r0]
+ 358              	.L30:
+ 359 000c 2E       		.byte	(.L32-.L30)/2
+ 360 000d 31       		.byte	(.L27-.L30)/2
+ 361 000e 2E       		.byte	(.L32-.L30)/2
+ 362 000f 31       		.byte	(.L27-.L30)/2
+ 363 0010 05       		.byte	(.L31-.L30)/2
+ 364 0011 31       		.byte	(.L27-.L30)/2
+ 365 0012 31       		.byte	(.L27-.L30)/2
+ 366 0013 31       		.byte	(.L27-.L30)/2
+ 367 0014 17       		.byte	(.L29-.L30)/2
+ 368 0015 00       		.p2align 1
+ 369              	.L31:
+  93:../../CM7/Core/Src/Screens/screen2.c **** 		case MKI_KEY_UP:
+  94:../../CM7/Core/Src/Screens/screen2.c **** 			if (screen2_index) {
+ 370              		.loc 1 94 4 is_stmt 1 view .LVU67
+ 371              		.loc 1 94 8 is_stmt 0 view .LVU68
+ 372 0016 164B     		ldr	r3, .L35
+ 373 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 374              		.loc 1 94 7 view .LVU69
+ 375 001a 43B3     		cbz	r3, .L27
+  95:../../CM7/Core/Src/Screens/screen2.c **** 				screen2_index--;
+ 376              		.loc 1 95 5 is_stmt 1 view .LVU70
+ 377              		.loc 1 95 18 is_stmt 0 view .LVU71
+ 378 001c 144C     		ldr	r4, .L35
+ 379 001e 013B     		subs	r3, r3, #1
+ 380 0020 2370     		strb	r3, [r4]
+  96:../../CM7/Core/Src/Screens/screen2.c **** 				screen2_paint();
+ 381              		.loc 1 96 5 is_stmt 1 view .LVU72
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 10
+
+
+ 382 0022 FFF7FEFF 		bl	screen2_paint
+ 383              	.LVL36:
+  97:../../CM7/Core/Src/Screens/screen2.c **** 				ulog_fmt(CONM"screen2: menu index=%d(%s)"CRLF, screen2_index, screen2_get_item(screen2_index));
+ 384              		.loc 1 97 5 view .LVU73
+ 385 0026 2478     		ldrb	r4, [r4]	@ zero_extendqisi2
+ 386 0028 2046     		mov	r0, r4
+ 387 002a FFF7FEFF 		bl	screen2_get_item
+ 388              	.LVL37:
+ 389 002e 0246     		mov	r2, r0
+ 390              		.loc 1 97 5 is_stmt 0 discriminator 1 view .LVU74
+ 391 0030 2146     		mov	r1, r4
+ 392 0032 1048     		ldr	r0, .L35+4
+ 393 0034 FFF7FEFF 		bl	ulog_fmt
+ 394              	.LVL38:
+ 395 0038 19E0     		b	.L27
+ 396              	.L29:
+  98:../../CM7/Core/Src/Screens/screen2.c **** 			}
+  99:../../CM7/Core/Src/Screens/screen2.c **** 		break;
+ 100:../../CM7/Core/Src/Screens/screen2.c **** 		case MKI_KEY_DOWN:
+ 101:../../CM7/Core/Src/Screens/screen2.c **** 			if ((int)screen2_index < (int)fault_count() - 1) {
+ 397              		.loc 1 101 4 is_stmt 1 view .LVU75
+ 398              		.loc 1 101 8 is_stmt 0 view .LVU76
+ 399 003a 0D4B     		ldr	r3, .L35
+ 400 003c 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 401              		.loc 1 101 34 view .LVU77
+ 402 003e FFF7FEFF 		bl	fault_count
+ 403              	.LVL39:
+ 404              		.loc 1 101 48 discriminator 1 view .LVU78
+ 405 0042 0138     		subs	r0, r0, #1
+ 406              		.loc 1 101 7 discriminator 1 view .LVU79
+ 407 0044 8442     		cmp	r4, r0
+ 408 0046 12DA     		bge	.L27
+ 102:../../CM7/Core/Src/Screens/screen2.c **** 				screen2_index++;
+ 409              		.loc 1 102 5 is_stmt 1 view .LVU80
+ 410              		.loc 1 102 18 is_stmt 0 view .LVU81
+ 411 0048 094C     		ldr	r4, .L35
+ 412 004a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 413 004c 0133     		adds	r3, r3, #1
+ 414 004e 2370     		strb	r3, [r4]
+ 103:../../CM7/Core/Src/Screens/screen2.c **** 				screen2_paint();
+ 415              		.loc 1 103 5 is_stmt 1 view .LVU82
+ 416 0050 FFF7FEFF 		bl	screen2_paint
+ 417              	.LVL40:
+ 104:../../CM7/Core/Src/Screens/screen2.c **** 				ulog_fmt(CONM"screen2: menu index=%d(%s)"CRLF, screen2_index, screen2_get_item(screen2_index));
+ 418              		.loc 1 104 5 view .LVU83
+ 419 0054 2478     		ldrb	r4, [r4]	@ zero_extendqisi2
+ 420 0056 2046     		mov	r0, r4
+ 421 0058 FFF7FEFF 		bl	screen2_get_item
+ 422              	.LVL41:
+ 423 005c 0246     		mov	r2, r0
+ 424              		.loc 1 104 5 is_stmt 0 discriminator 1 view .LVU84
+ 425 005e 2146     		mov	r1, r4
+ 426 0060 0448     		ldr	r0, .L35+4
+ 427 0062 FFF7FEFF 		bl	ulog_fmt
+ 428              	.LVL42:
+ 429 0066 02E0     		b	.L27
+ 430              	.L32:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 11
+
+
+ 105:../../CM7/Core/Src/Screens/screen2.c **** 			}
+ 106:../../CM7/Core/Src/Screens/screen2.c **** 		break;
+ 107:../../CM7/Core/Src/Screens/screen2.c **** 		case MKI_KEY_RESET:
+ 108:../../CM7/Core/Src/Screens/screen2.c **** 		case MKI_KEY_MENU:
+ 109:../../CM7/Core/Src/Screens/screen2.c **** 			screens_goto(1);
+ 431              		.loc 1 109 4 is_stmt 1 view .LVU85
+ 432 0068 0120     		movs	r0, #1
+ 433 006a FFF7FEFF 		bl	screens_goto
+ 434              	.LVL43:
+ 110:../../CM7/Core/Src/Screens/screen2.c **** 		break;
+ 435              		.loc 1 110 3 view .LVU86
+ 436              	.L27:
+ 111:../../CM7/Core/Src/Screens/screen2.c **** 	}
+ 112:../../CM7/Core/Src/Screens/screen2.c **** }
+ 437              		.loc 1 112 1 is_stmt 0 view .LVU87
+ 438 006e 10BD     		pop	{r4, pc}
+ 439              	.L36:
+ 440              		.align	2
+ 441              	.L35:
+ 442 0070 00000000 		.word	screen2_index
+ 443 0074 00000000 		.word	.LC4
+ 444              		.cfi_endproc
+ 445              	.LFE341:
+ 447              		.section	.text.screen2_button_unpress,"ax",%progbits
+ 448              		.align	1
+ 449              		.global	screen2_button_unpress
+ 450              		.syntax unified
+ 451              		.thumb
+ 452              		.thumb_func
+ 454              	screen2_button_unpress:
+ 455              	.LVL44:
+ 456              	.LFB342:
+ 113:../../CM7/Core/Src/Screens/screen2.c **** 
+ 114:../../CM7/Core/Src/Screens/screen2.c **** void screen2_button_unpress(uint8_t key)
+ 115:../../CM7/Core/Src/Screens/screen2.c **** {
+ 457              		.loc 1 115 1 is_stmt 1 view -0
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 0
+ 460              		@ frame_needed = 0, uses_anonymous_args = 0
+ 461              		@ link register save eliminated.
+ 116:../../CM7/Core/Src/Screens/screen2.c **** 
+ 117:../../CM7/Core/Src/Screens/screen2.c **** }
+ 462              		.loc 1 117 1 view .LVU89
+ 463 0000 7047     		bx	lr
+ 464              		.cfi_endproc
+ 465              	.LFE342:
+ 467              		.section	.bss.screen2_str_buf,"aw",%nobits
+ 468              		.align	2
+ 471              	screen2_str_buf:
+ 472 0000 00000000 		.space	128
+ 472      00000000 
+ 472      00000000 
+ 472      00000000 
+ 472      00000000 
+ 473              		.section	.bss.screen2_index,"aw",%nobits
+ 476              	screen2_index:
+ 477 0000 00       		.space	1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 12
+
+
+ 478              		.text
+ 479              	.Letext0:
+ 480              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 481              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 482              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 483              		.file 5 "../../CM7/Core/Inc/Screens/screens.h"
+ 484              		.file 6 "../../util/stm_util.h"
+ 485              		.file 7 "../../CM7/Core/Inc/display.h"
+ 486              		.file 8 "../../CM7/Core/Inc/cm7core.h"
+ 487              		.file 9 "../../util/str_util.h"
+ 488              		.file 10 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
+ 489              		.file 11 "../../common/common.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 screen2.c
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:20     .rodata.screen2_get_item.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:27     .text.screen2_get_item:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:33     .text.screen2_get_item:00000000 screen2_get_item
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:219    .text.screen2_get_item:000000c0 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:471    .bss.screen2_str_buf:00000000 screen2_str_buf
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:226    .rodata.screen2_paint.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:236    .text.screen2_paint:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:242    .text.screen2_paint:00000000 screen2_paint
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:293    .text.screen2_paint:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:476    .bss.screen2_index:00000000 screen2_index
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:300    .text.screen2_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:306    .text.screen2_init:00000000 screen2_init
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:323    .text.screen2_init:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:328    .rodata.screen2_button_press.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:332    .text.screen2_button_press:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:338    .text.screen2_button_press:00000000 screen2_button_press
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:359    .text.screen2_button_press:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:442    .text.screen2_button_press:00000070 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:448    .text.screen2_button_unpress:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:454    .text.screen2_button_unpress:00000000 screen2_button_unpress
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:468    .bss.screen2_str_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:477    .bss.screen2_index:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:368    .text.screen2_button_press:00000015 $d
+C:\Users\oleg\AppData\Local\Temp\ccg1Gaqt.s:368    .text.screen2_button_press:00000016 $t
+
+UNDEFINED SYMBOLS
+fault2str
+snprintf
+strcat_s
+cm7_mkk_get_insig_state_str
+cm7_mkk_get_lin_state_str
+cm7_mkk_get_start_state_str
+fault_is_set
+clear_display
+fault_count
+set_display_all
+send_display
+set_display
+ulog_fmt
+screens_goto

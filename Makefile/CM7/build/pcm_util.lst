@@ -1,0 +1,2856 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"pcm_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/pcm_util.c"
+  19              		.section	.text.pcm_set_value,"ax",%progbits
+  20              		.align	1
+  21              		.global	pcm_set_value
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	pcm_set_value:
+  27              	.LVL0:
+  28              	.LFB0:
+   1:../../util/pcm_util.c **** /*
+   2:../../util/pcm_util.c ****  * pcm_util.c
+   3:../../util/pcm_util.c ****  *
+   4:../../util/pcm_util.c ****  *  Created on: 16 февр. 2024 г.
+   5:../../util/pcm_util.c ****  *      Author: Rafael Boltachev
+   6:../../util/pcm_util.c ****  */
+   7:../../util/pcm_util.c **** 
+   8:../../util/pcm_util.c **** #include "pcm_util.h"
+   9:../../util/pcm_util.c **** #include "def_util.h"
+  10:../../util/pcm_util.c **** 
+  11:../../util/pcm_util.c **** 
+  12:../../util/pcm_util.c **** void pcm_set_value(int16_t *pcm_data, uint16_t pcm_data_len, int16_t value)
+  13:../../util/pcm_util.c **** {
+  29              		.loc 1 13 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  14:../../util/pcm_util.c **** 	uint16_t i;
+  34              		.loc 1 14 2 view .LVU1
+  15:../../util/pcm_util.c **** 
+  16:../../util/pcm_util.c **** 	for (i = 0; i < pcm_data_len; ++i) {
+  35              		.loc 1 16 2 view .LVU2
+  36              		.loc 1 16 9 is_stmt 0 view .LVU3
+  37 0000 0023     		movs	r3, #0
+  38              		.loc 1 16 2 view .LVU4
+  39 0002 03E0     		b	.L2
+  40              	.LVL1:
+  41              	.L3:
+  17:../../util/pcm_util.c **** 		pcm_data[i] = value;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 2
+
+
+  42              		.loc 1 17 3 is_stmt 1 view .LVU5
+  43              		.loc 1 17 15 is_stmt 0 view .LVU6
+  44 0004 20F81320 		strh	r2, [r0, r3, lsl #1]	@ movhi
+  16:../../util/pcm_util.c **** 		pcm_data[i] = value;
+  45              		.loc 1 16 32 is_stmt 1 discriminator 3 view .LVU7
+  46 0008 0133     		adds	r3, r3, #1
+  47              	.LVL2:
+  16:../../util/pcm_util.c **** 		pcm_data[i] = value;
+  48              		.loc 1 16 32 is_stmt 0 discriminator 3 view .LVU8
+  49 000a 9BB2     		uxth	r3, r3
+  50              	.LVL3:
+  51              	.L2:
+  16:../../util/pcm_util.c **** 		pcm_data[i] = value;
+  52              		.loc 1 16 16 is_stmt 1 discriminator 1 view .LVU9
+  53 000c 8B42     		cmp	r3, r1
+  54 000e F9D3     		bcc	.L3
+  18:../../util/pcm_util.c **** 	}
+  19:../../util/pcm_util.c **** }
+  55              		.loc 1 19 1 is_stmt 0 view .LVU10
+  56 0010 7047     		bx	lr
+  57              		.cfi_endproc
+  58              	.LFE0:
+  60              		.section	.text.pcm_set_volume,"ax",%progbits
+  61              		.align	1
+  62              		.global	pcm_set_volume
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	pcm_set_volume:
+  68              	.LVL4:
+  69              	.LFB1:
+  20:../../util/pcm_util.c **** 
+  21:../../util/pcm_util.c **** 
+  22:../../util/pcm_util.c **** void pcm_set_volume(int16_t *dst_pcm_data, int16_t *src_pcm_data, uint16_t pcm_data_len, uint16_t v
+  23:../../util/pcm_util.c **** {
+  70              		.loc 1 23 1 is_stmt 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  24:../../util/pcm_util.c **** 	uint16_t i;
+  74              		.loc 1 24 2 view .LVU12
+  25:../../util/pcm_util.c **** 	int32_t data;
+  75              		.loc 1 25 2 view .LVU13
+  26:../../util/pcm_util.c **** 
+  27:../../util/pcm_util.c **** 
+  28:../../util/pcm_util.c **** 	for (i = 0; i < pcm_data_len; ++i) {
+  76              		.loc 1 28 2 view .LVU14
+  77              		.loc 1 28 9 is_stmt 0 view .LVU15
+  78 0000 4FF0000C 		mov	ip, #0
+  79              	.LVL5:
+  80              		.loc 1 28 16 is_stmt 1 discriminator 1 view .LVU16
+  81 0004 9445     		cmp	ip, r2
+  82 0006 21D2     		bcs	.L12
+  23:../../util/pcm_util.c **** 	uint16_t i;
+  83              		.loc 1 23 1 is_stmt 0 view .LVU17
+  84 0008 70B5     		push	{r4, r5, r6, lr}
+  85              	.LCFI0:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 3
+
+
+  86              		.cfi_def_cfa_offset 16
+  87              		.cfi_offset 4, -16
+  88              		.cfi_offset 5, -12
+  89              		.cfi_offset 6, -8
+  90              		.cfi_offset 14, -4
+  91 000a 07E0     		b	.L7
+  92              	.LVL6:
+  93              	.L8:
+  29:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+  30:../../util/pcm_util.c **** 		dst_pcm_data[i] = BOUNDSMALL(-32768, 32767, data);
+  94              		.loc 1 30 19 discriminator 2 view .LVU18
+  95 000c 104C     		ldr	r4, .L14
+  96              	.LVL7:
+  97              	.L6:
+  98              		.loc 1 30 19 discriminator 4 view .LVU19
+  99 000e 8453     		strh	r4, [r0, r6]	@ movhi
+  28:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 100              		.loc 1 28 32 is_stmt 1 discriminator 2 view .LVU20
+ 101 0010 0CF1010C 		add	ip, ip, #1
+ 102              	.LVL8:
+  28:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 103              		.loc 1 28 32 is_stmt 0 discriminator 2 view .LVU21
+ 104 0014 1FFA8CFC 		uxth	ip, ip
+ 105              	.LVL9:
+  28:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 106              		.loc 1 28 16 is_stmt 1 discriminator 1 view .LVU22
+ 107 0018 9445     		cmp	ip, r2
+ 108 001a 16D2     		bcs	.L13
+ 109              	.LVL10:
+ 110              	.L7:
+  29:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 111              		.loc 1 29 3 view .LVU23
+  29:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 112              		.loc 1 29 31 is_stmt 0 view .LVU24
+ 113 001c 4FEA4C06 		lsl	r6, ip, #1
+ 114 0020 31F91CE0 		ldrsh	lr, [r1, ip, lsl #1]
+  29:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 115              		.loc 1 29 35 view .LVU25
+ 116 0024 0EFB03FE 		mul	lr, lr, r3
+  29:../../util/pcm_util.c **** 		data = (int32_t)src_pcm_data[i] * volume / 100;
+ 117              		.loc 1 29 8 view .LVU26
+ 118 0028 0A4D     		ldr	r5, .L14+4
+ 119 002a 85FB0E45 		smull	r4, r5, r5, lr
+ 120 002e 4FEAEE74 		asr	r4, lr, #31
+ 121 0032 C4EB6514 		rsb	r4, r4, r5, asr #5
+ 122              	.LVL11:
+ 123              		.loc 1 30 3 is_stmt 1 view .LVU27
+ 124              		.loc 1 30 19 is_stmt 0 view .LVU28
+ 125 0036 084D     		ldr	r5, .L14+8
+ 126 0038 AE45     		cmp	lr, r5
+ 127 003a E7DB     		blt	.L8
+ 128              		.loc 1 30 21 discriminator 1 view .LVU29
+ 129 003c 47F6FF75 		movw	r5, #32767
+ 130 0040 AC42     		cmp	r4, r5
+ 131 0042 A8BF     		it	ge
+ 132 0044 2C46     		movge	r4, r5
+ 133              	.LVL12:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 4
+
+
+ 134              		.loc 1 30 19 discriminator 1 view .LVU30
+ 135 0046 24B2     		sxth	r4, r4
+ 136 0048 E1E7     		b	.L6
+ 137              	.L13:
+  31:../../util/pcm_util.c **** 	}
+  32:../../util/pcm_util.c **** 
+  33:../../util/pcm_util.c **** }
+ 138              		.loc 1 33 1 view .LVU31
+ 139 004a 70BD     		pop	{r4, r5, r6, pc}
+ 140              	.LVL13:
+ 141              	.L12:
+ 142              	.LCFI1:
+ 143              		.cfi_def_cfa_offset 0
+ 144              		.cfi_restore 4
+ 145              		.cfi_restore 5
+ 146              		.cfi_restore 6
+ 147              		.cfi_restore 14
+ 148              		.loc 1 33 1 view .LVU32
+ 149 004c 7047     		bx	lr
+ 150              	.L15:
+ 151 004e 00BF     		.align	2
+ 152              	.L14:
+ 153 0050 0080FFFF 		.word	-32768
+ 154 0054 1F85EB51 		.word	1374389535
+ 155 0058 9DFFCDFF 		.word	-3276899
+ 156              		.cfi_endproc
+ 157              	.LFE1:
+ 159              		.section	.text.pcm_set_shift_right,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	pcm_set_shift_right
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	pcm_set_shift_right:
+ 167              	.LVL14:
+ 168              	.LFB2:
+  34:../../util/pcm_util.c **** 
+  35:../../util/pcm_util.c **** void pcm_set_shift_right(int16_t *dst_pcm_data, int16_t *src_pcm_data, uint16_t pcm_data_len, uint8
+  36:../../util/pcm_util.c **** {
+ 169              		.loc 1 36 1 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+  37:../../util/pcm_util.c **** 	uint16_t i;
+ 173              		.loc 1 37 2 view .LVU34
+  38:../../util/pcm_util.c **** 
+  39:../../util/pcm_util.c **** 
+  40:../../util/pcm_util.c **** 	for (i = 0; i < pcm_data_len; ++i) {
+ 174              		.loc 1 40 2 view .LVU35
+ 175              		.loc 1 40 9 is_stmt 0 view .LVU36
+ 176 0000 4FF0000C 		mov	ip, #0
+ 177              	.LVL15:
+ 178              		.loc 1 40 16 is_stmt 1 discriminator 1 view .LVU37
+ 179 0004 9445     		cmp	ip, r2
+ 180 0006 0ED2     		bcs	.L22
+  36:../../util/pcm_util.c **** 	uint16_t i;
+ 181              		.loc 1 36 1 is_stmt 0 view .LVU38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 5
+
+
+ 182 0008 00B5     		push	{lr}
+ 183              	.LCFI2:
+ 184              		.cfi_def_cfa_offset 4
+ 185              		.cfi_offset 14, -4
+ 186              	.L18:
+  41:../../util/pcm_util.c **** 		dst_pcm_data[i] = src_pcm_data[i] >> bits;
+ 187              		.loc 1 41 3 is_stmt 1 view .LVU39
+ 188              		.loc 1 41 33 is_stmt 0 view .LVU40
+ 189 000a 31F91CE0 		ldrsh	lr, [r1, ip, lsl #1]
+ 190              		.loc 1 41 37 view .LVU41
+ 191 000e 4EFA03FE 		asr	lr, lr, r3
+ 192              		.loc 1 41 19 view .LVU42
+ 193 0012 20F81CE0 		strh	lr, [r0, ip, lsl #1]	@ movhi
+  40:../../util/pcm_util.c **** 		dst_pcm_data[i] = src_pcm_data[i] >> bits;
+ 194              		.loc 1 40 32 is_stmt 1 discriminator 3 view .LVU43
+ 195 0016 0CF1010C 		add	ip, ip, #1
+ 196              	.LVL16:
+  40:../../util/pcm_util.c **** 		dst_pcm_data[i] = src_pcm_data[i] >> bits;
+ 197              		.loc 1 40 32 is_stmt 0 discriminator 3 view .LVU44
+ 198 001a 1FFA8CFC 		uxth	ip, ip
+ 199              	.LVL17:
+  40:../../util/pcm_util.c **** 		dst_pcm_data[i] = src_pcm_data[i] >> bits;
+ 200              		.loc 1 40 16 is_stmt 1 discriminator 1 view .LVU45
+ 201 001e 9445     		cmp	ip, r2
+ 202 0020 F3D3     		bcc	.L18
+  42:../../util/pcm_util.c **** 	}
+  43:../../util/pcm_util.c **** }
+ 203              		.loc 1 43 1 is_stmt 0 view .LVU46
+ 204 0022 5DF804FB 		ldr	pc, [sp], #4
+ 205              	.L22:
+ 206              	.LCFI3:
+ 207              		.cfi_def_cfa_offset 0
+ 208              		.cfi_restore 14
+ 209              		.loc 1 43 1 view .LVU47
+ 210 0026 7047     		bx	lr
+ 211              		.cfi_endproc
+ 212              	.LFE2:
+ 214              		.section	.text.pcm_mono2dac12,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	pcm_mono2dac12
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	pcm_mono2dac12:
+ 222              	.LVL18:
+ 223              	.LFB3:
+  44:../../util/pcm_util.c **** 
+  45:../../util/pcm_util.c **** 
+  46:../../util/pcm_util.c **** void pcm_mono2dac12(int16_t * pcm_data, uint16_t * dac_data, uint16_t data_len)
+  47:../../util/pcm_util.c **** {
+ 224              		.loc 1 47 1 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		@ link register save eliminated.
+  48:../../util/pcm_util.c **** 	uint16_t i;
+ 229              		.loc 1 48 2 view .LVU49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 6
+
+
+  49:../../util/pcm_util.c **** 
+  50:../../util/pcm_util.c **** 	for (i = 0; i < data_len; ++i) {
+ 230              		.loc 1 50 2 view .LVU50
+ 231              		.loc 1 50 9 is_stmt 0 view .LVU51
+ 232 0000 0023     		movs	r3, #0
+ 233              		.loc 1 50 2 view .LVU52
+ 234 0002 09E0     		b	.L24
+ 235              	.LVL19:
+ 236              	.L25:
+  51:../../util/pcm_util.c **** 		dac_data[i] = ((int32_t)pcm_data[i] + 32768) >> 4;
+ 237              		.loc 1 51 3 is_stmt 1 view .LVU53
+ 238              		.loc 1 51 35 is_stmt 0 view .LVU54
+ 239 0004 30F913C0 		ldrsh	ip, [r0, r3, lsl #1]
+ 240              		.loc 1 51 39 view .LVU55
+ 241 0008 0CF5004C 		add	ip, ip, #32768
+ 242              		.loc 1 51 48 view .LVU56
+ 243 000c 4FEA2C1C 		asr	ip, ip, #4
+ 244              		.loc 1 51 15 view .LVU57
+ 245 0010 21F813C0 		strh	ip, [r1, r3, lsl #1]	@ movhi
+  50:../../util/pcm_util.c **** 		dac_data[i] = ((int32_t)pcm_data[i] + 32768) >> 4;
+ 246              		.loc 1 50 28 is_stmt 1 discriminator 3 view .LVU58
+ 247 0014 0133     		adds	r3, r3, #1
+ 248              	.LVL20:
+  50:../../util/pcm_util.c **** 		dac_data[i] = ((int32_t)pcm_data[i] + 32768) >> 4;
+ 249              		.loc 1 50 28 is_stmt 0 discriminator 3 view .LVU59
+ 250 0016 9BB2     		uxth	r3, r3
+ 251              	.LVL21:
+ 252              	.L24:
+  50:../../util/pcm_util.c **** 		dac_data[i] = ((int32_t)pcm_data[i] + 32768) >> 4;
+ 253              		.loc 1 50 16 is_stmt 1 discriminator 1 view .LVU60
+ 254 0018 9342     		cmp	r3, r2
+ 255 001a F3D3     		bcc	.L25
+  52:../../util/pcm_util.c **** 	}
+  53:../../util/pcm_util.c **** }
+ 256              		.loc 1 53 1 is_stmt 0 view .LVU61
+ 257 001c 7047     		bx	lr
+ 258              		.cfi_endproc
+ 259              	.LFE3:
+ 261              		.section	.text.pcm_adc12mono2pcm,"ax",%progbits
+ 262              		.align	1
+ 263              		.global	pcm_adc12mono2pcm
+ 264              		.syntax unified
+ 265              		.thumb
+ 266              		.thumb_func
+ 268              	pcm_adc12mono2pcm:
+ 269              	.LVL22:
+ 270              	.LFB4:
+  54:../../util/pcm_util.c **** 
+  55:../../util/pcm_util.c **** void pcm_adc12mono2pcm(uint16_t * adc_data, int16_t * pcm_data, uint16_t data_len)
+  56:../../util/pcm_util.c **** {
+ 271              		.loc 1 56 1 is_stmt 1 view -0
+ 272              		.cfi_startproc
+ 273              		@ args = 0, pretend = 0, frame = 0
+ 274              		@ frame_needed = 0, uses_anonymous_args = 0
+ 275              		@ link register save eliminated.
+  57:../../util/pcm_util.c **** 	uint16_t i;
+ 276              		.loc 1 57 2 view .LVU63
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 7
+
+
+  58:../../util/pcm_util.c **** 
+  59:../../util/pcm_util.c **** 	for (i = 0; i < data_len; ++i) {
+ 277              		.loc 1 59 2 view .LVU64
+ 278              		.loc 1 59 9 is_stmt 0 view .LVU65
+ 279 0000 0023     		movs	r3, #0
+ 280              		.loc 1 59 2 view .LVU66
+ 281 0002 09E0     		b	.L27
+ 282              	.LVL23:
+ 283              	.L28:
+  60:../../util/pcm_util.c **** 		pcm_data[i] = ((int16_t)adc_data[i] - 2047) << 4;
+ 284              		.loc 1 60 3 is_stmt 1 view .LVU67
+ 285              		.loc 1 60 15 is_stmt 0 view .LVU68
+ 286 0004 30F813C0 		ldrh	ip, [r0, r3, lsl #1]
+ 287 0008 ACF2FF7C 		subw	ip, ip, #2047
+ 288 000c 4FEA0C1C 		lsl	ip, ip, #4
+ 289 0010 21F813C0 		strh	ip, [r1, r3, lsl #1]	@ movhi
+  59:../../util/pcm_util.c **** 		pcm_data[i] = ((int16_t)adc_data[i] - 2047) << 4;
+ 290              		.loc 1 59 28 is_stmt 1 discriminator 3 view .LVU69
+ 291 0014 0133     		adds	r3, r3, #1
+ 292              	.LVL24:
+  59:../../util/pcm_util.c **** 		pcm_data[i] = ((int16_t)adc_data[i] - 2047) << 4;
+ 293              		.loc 1 59 28 is_stmt 0 discriminator 3 view .LVU70
+ 294 0016 9BB2     		uxth	r3, r3
+ 295              	.LVL25:
+ 296              	.L27:
+  59:../../util/pcm_util.c **** 		pcm_data[i] = ((int16_t)adc_data[i] - 2047) << 4;
+ 297              		.loc 1 59 16 is_stmt 1 discriminator 1 view .LVU71
+ 298 0018 9342     		cmp	r3, r2
+ 299 001a F3D3     		bcc	.L28
+  61:../../util/pcm_util.c **** 	}
+  62:../../util/pcm_util.c **** }
+ 300              		.loc 1 62 1 is_stmt 0 view .LVU72
+ 301 001c 7047     		bx	lr
+ 302              		.cfi_endproc
+ 303              	.LFE4:
+ 305              		.section	.text.pcm_leftright2stereo,"ax",%progbits
+ 306              		.align	1
+ 307              		.global	pcm_leftright2stereo
+ 308              		.syntax unified
+ 309              		.thumb
+ 310              		.thumb_func
+ 312              	pcm_leftright2stereo:
+ 313              	.LVL26:
+ 314              	.LFB5:
+  63:../../util/pcm_util.c **** 
+  64:../../util/pcm_util.c **** 
+  65:../../util/pcm_util.c **** uint16_t pcm_leftright2stereo(int16_t * pcm_left, uint16_t pcm_left_cnt, int16_t * pcm_right, uint1
+  66:../../util/pcm_util.c **** {
+ 315              		.loc 1 66 1 is_stmt 1 view -0
+ 316              		.cfi_startproc
+ 317              		@ args = 4, pretend = 0, frame = 0
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319              		.loc 1 66 1 is_stmt 0 view .LVU74
+ 320 0000 70B5     		push	{r4, r5, r6, lr}
+ 321              	.LCFI4:
+ 322              		.cfi_def_cfa_offset 16
+ 323              		.cfi_offset 4, -16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 8
+
+
+ 324              		.cfi_offset 5, -12
+ 325              		.cfi_offset 6, -8
+ 326              		.cfi_offset 14, -4
+ 327 0002 8446     		mov	ip, r0
+ 328 0004 049D     		ldr	r5, [sp, #16]
+  67:../../util/pcm_util.c **** 	uint16_t i, j;
+ 329              		.loc 1 67 2 is_stmt 1 view .LVU75
+  68:../../util/pcm_util.c **** 
+  69:../../util/pcm_util.c **** 	j = 0;
+ 330              		.loc 1 69 2 view .LVU76
+ 331              	.LVL27:
+  70:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 332              		.loc 1 70 2 view .LVU77
+ 333              		.loc 1 70 6 is_stmt 0 view .LVU78
+ 334 0006 0C46     		mov	r4, r1
+ 335              		.loc 1 70 19 view .LVU79
+ 336 0008 1E46     		mov	r6, r3
+ 337              		.loc 1 70 5 view .LVU80
+ 338 000a 0029     		cmp	r1, #0
+ 339 000c 18BF     		it	ne
+ 340 000e 002B     		cmpne	r3, #0
+ 341 0010 4AD0     		beq	.L30
+  71:../../util/pcm_util.c **** 
+  72:../../util/pcm_util.c **** 		if (pcm_left_cnt == pcm_right_cnt) {
+ 342              		.loc 1 72 3 is_stmt 1 view .LVU81
+ 343              		.loc 1 72 6 is_stmt 0 view .LVU82
+ 344 0012 9942     		cmp	r1, r3
+ 345 0014 15D0     		beq	.L55
+  73:../../util/pcm_util.c ****         		for (i = 0; i < pcm_left_cnt; i++) {
+  74:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+  75:../../util/pcm_util.c **** 		        	j++;
+  76:../../util/pcm_util.c **** 			        pcm_stereo[j] = pcm_right[i];
+  77:../../util/pcm_util.c ****         			j++;
+  78:../../util/pcm_util.c **** 	        	}
+  79:../../util/pcm_util.c **** 		}
+  80:../../util/pcm_util.c **** 		else if (pcm_left_cnt > pcm_right_cnt) {
+ 346              		.loc 1 80 8 is_stmt 1 view .LVU83
+ 347              		.loc 1 80 11 is_stmt 0 view .LVU84
+ 348 0016 9942     		cmp	r1, r3
+ 349 0018 2DD8     		bhi	.L49
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 350              		.loc 1 69 4 view .LVU85
+ 351 001a 0020     		movs	r0, #0
+ 352              	.LVL28:
+  81:../../util/pcm_util.c ****         		for (i = 0; i < pcm_left_cnt; i++) {
+  82:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+  83:../../util/pcm_util.c **** 		        	j++;
+  84:../../util/pcm_util.c **** 			        if (i < pcm_right_cnt) pcm_stereo[j] = pcm_right[i];
+  85:../../util/pcm_util.c **** 			        else pcm_stereo[j] = 0;
+  86:../../util/pcm_util.c ****         			j++;
+  87:../../util/pcm_util.c **** 	        	}
+  88:../../util/pcm_util.c **** 		}
+  89:../../util/pcm_util.c **** 		else {
+  90:../../util/pcm_util.c ****         		for (i = 0; i < pcm_right_cnt; i++) {
+ 353              		.loc 1 90 18 view .LVU86
+ 354 001c 0346     		mov	r3, r0
+ 355              	.LVL29:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 9
+
+
+ 356              		.loc 1 90 18 view .LVU87
+ 357 001e 3AE0     		b	.L36
+ 358              	.LVL30:
+ 359              	.L33:
+  74:../../util/pcm_util.c **** 		        	j++;
+ 360              		.loc 1 74 12 is_stmt 1 view .LVU88
+  74:../../util/pcm_util.c **** 		        	j++;
+ 361              		.loc 1 74 36 is_stmt 0 view .LVU89
+ 362 0020 3CF91310 		ldrsh	r1, [ip, r3, lsl #1]
+  74:../../util/pcm_util.c **** 		        	j++;
+ 363              		.loc 1 74 26 view .LVU90
+ 364 0024 25F81010 		strh	r1, [r5, r0, lsl #1]	@ movhi
+  75:../../util/pcm_util.c **** 			        pcm_stereo[j] = pcm_right[i];
+ 365              		.loc 1 75 12 is_stmt 1 view .LVU91
+  75:../../util/pcm_util.c **** 			        pcm_stereo[j] = pcm_right[i];
+ 366              		.loc 1 75 13 is_stmt 0 view .LVU92
+ 367 0028 411C     		adds	r1, r0, #1
+ 368 002a 89B2     		uxth	r1, r1
+ 369              	.LVL31:
+  76:../../util/pcm_util.c ****         			j++;
+ 370              		.loc 1 76 12 is_stmt 1 view .LVU93
+  76:../../util/pcm_util.c ****         			j++;
+ 371              		.loc 1 76 37 is_stmt 0 view .LVU94
+ 372 002c 32F91360 		ldrsh	r6, [r2, r3, lsl #1]
+  76:../../util/pcm_util.c ****         			j++;
+ 373              		.loc 1 76 26 view .LVU95
+ 374 0030 25F81160 		strh	r6, [r5, r1, lsl #1]	@ movhi
+  77:../../util/pcm_util.c **** 	        	}
+ 375              		.loc 1 77 12 is_stmt 1 view .LVU96
+  77:../../util/pcm_util.c **** 	        	}
+ 376              		.loc 1 77 13 is_stmt 0 view .LVU97
+ 377 0034 0230     		adds	r0, r0, #2
+ 378 0036 80B2     		uxth	r0, r0
+ 379              	.LVL32:
+  73:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 380              		.loc 1 73 42 is_stmt 1 discriminator 3 view .LVU98
+ 381 0038 0133     		adds	r3, r3, #1
+ 382              	.LVL33:
+  73:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 383              		.loc 1 73 42 is_stmt 0 discriminator 3 view .LVU99
+ 384 003a 9BB2     		uxth	r3, r3
+ 385              	.LVL34:
+ 386              	.L31:
+  73:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 387              		.loc 1 73 25 is_stmt 1 discriminator 1 view .LVU100
+ 388 003c A342     		cmp	r3, r4
+ 389 003e EFD3     		bcc	.L33
+ 390 0040 45E0     		b	.L34
+ 391              	.LVL35:
+ 392              	.L55:
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 393              		.loc 1 69 4 is_stmt 0 view .LVU101
+ 394 0042 0020     		movs	r0, #0
+ 395              	.LVL36:
+  73:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 396              		.loc 1 73 18 view .LVU102
+ 397 0044 0346     		mov	r3, r0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 10
+
+
+ 398              	.LVL37:
+  73:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 399              		.loc 1 73 18 view .LVU103
+ 400 0046 F9E7     		b	.L31
+ 401              	.LVL38:
+ 402              	.L37:
+  85:../../util/pcm_util.c ****         			j++;
+ 403              		.loc 1 85 17 is_stmt 1 view .LVU104
+  85:../../util/pcm_util.c ****         			j++;
+ 404              		.loc 1 85 31 is_stmt 0 view .LVU105
+ 405 0048 4FF0000E 		mov	lr, #0
+ 406 004c 25F811E0 		strh	lr, [r5, r1, lsl #1]	@ movhi
+ 407              	.L38:
+  86:../../util/pcm_util.c **** 	        	}
+ 408              		.loc 1 86 12 is_stmt 1 view .LVU106
+  86:../../util/pcm_util.c **** 	        	}
+ 409              		.loc 1 86 13 is_stmt 0 view .LVU107
+ 410 0050 0230     		adds	r0, r0, #2
+ 411 0052 80B2     		uxth	r0, r0
+ 412              	.LVL39:
+  81:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 413              		.loc 1 81 42 is_stmt 1 discriminator 2 view .LVU108
+ 414 0054 0133     		adds	r3, r3, #1
+ 415              	.LVL40:
+  81:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 416              		.loc 1 81 42 is_stmt 0 discriminator 2 view .LVU109
+ 417 0056 9BB2     		uxth	r3, r3
+ 418              	.LVL41:
+ 419              	.L35:
+  81:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 420              		.loc 1 81 25 is_stmt 1 discriminator 1 view .LVU110
+ 421 0058 A342     		cmp	r3, r4
+ 422 005a 38D2     		bcs	.L34
+  82:../../util/pcm_util.c **** 		        	j++;
+ 423              		.loc 1 82 12 view .LVU111
+  82:../../util/pcm_util.c **** 		        	j++;
+ 424              		.loc 1 82 36 is_stmt 0 view .LVU112
+ 425 005c 3CF91310 		ldrsh	r1, [ip, r3, lsl #1]
+  82:../../util/pcm_util.c **** 		        	j++;
+ 426              		.loc 1 82 26 view .LVU113
+ 427 0060 25F81010 		strh	r1, [r5, r0, lsl #1]	@ movhi
+  83:../../util/pcm_util.c **** 			        if (i < pcm_right_cnt) pcm_stereo[j] = pcm_right[i];
+ 428              		.loc 1 83 12 is_stmt 1 view .LVU114
+  83:../../util/pcm_util.c **** 			        if (i < pcm_right_cnt) pcm_stereo[j] = pcm_right[i];
+ 429              		.loc 1 83 13 is_stmt 0 view .LVU115
+ 430 0064 411C     		adds	r1, r0, #1
+ 431 0066 89B2     		uxth	r1, r1
+ 432              	.LVL42:
+  84:../../util/pcm_util.c **** 			        else pcm_stereo[j] = 0;
+ 433              		.loc 1 84 12 is_stmt 1 view .LVU116
+  84:../../util/pcm_util.c **** 			        else pcm_stereo[j] = 0;
+ 434              		.loc 1 84 15 is_stmt 0 view .LVU117
+ 435 0068 B342     		cmp	r3, r6
+ 436 006a EDD2     		bcs	.L37
+  84:../../util/pcm_util.c **** 			        else pcm_stereo[j] = 0;
+ 437              		.loc 1 84 35 is_stmt 1 discriminator 1 view .LVU118
+  84:../../util/pcm_util.c **** 			        else pcm_stereo[j] = 0;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 11
+
+
+ 438              		.loc 1 84 60 is_stmt 0 discriminator 1 view .LVU119
+ 439 006c 32F913E0 		ldrsh	lr, [r2, r3, lsl #1]
+  84:../../util/pcm_util.c **** 			        else pcm_stereo[j] = 0;
+ 440              		.loc 1 84 49 discriminator 1 view .LVU120
+ 441 0070 25F811E0 		strh	lr, [r5, r1, lsl #1]	@ movhi
+ 442 0074 ECE7     		b	.L38
+ 443              	.LVL43:
+ 444              	.L49:
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 445              		.loc 1 69 4 view .LVU121
+ 446 0076 0020     		movs	r0, #0
+ 447              	.LVL44:
+  81:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 448              		.loc 1 81 18 view .LVU122
+ 449 0078 0346     		mov	r3, r0
+ 450              	.LVL45:
+  81:../../util/pcm_util.c **** 	        		pcm_stereo[j] = pcm_left[i];
+ 451              		.loc 1 81 18 view .LVU123
+ 452 007a EDE7     		b	.L35
+ 453              	.LVL46:
+ 454              	.L40:
+  91:../../util/pcm_util.c **** 	        		if (i < pcm_left_cnt) pcm_stereo[j] = pcm_left[i];
+  92:../../util/pcm_util.c **** 	        		else pcm_stereo[j] = 0;
+ 455              		.loc 1 92 17 is_stmt 1 view .LVU124
+ 456              		.loc 1 92 31 is_stmt 0 view .LVU125
+ 457 007c 0021     		movs	r1, #0
+ 458 007e 25F81010 		strh	r1, [r5, r0, lsl #1]	@ movhi
+ 459              	.L41:
+  93:../../util/pcm_util.c **** 		        	j++;
+ 460              		.loc 1 93 12 is_stmt 1 view .LVU126
+ 461              		.loc 1 93 13 is_stmt 0 view .LVU127
+ 462 0082 411C     		adds	r1, r0, #1
+ 463 0084 89B2     		uxth	r1, r1
+ 464              	.LVL47:
+  94:../../util/pcm_util.c **** 			        pcm_stereo[j] = pcm_right[i];
+ 465              		.loc 1 94 12 is_stmt 1 view .LVU128
+ 466              		.loc 1 94 37 is_stmt 0 view .LVU129
+ 467 0086 32F913E0 		ldrsh	lr, [r2, r3, lsl #1]
+ 468              		.loc 1 94 26 view .LVU130
+ 469 008a 25F811E0 		strh	lr, [r5, r1, lsl #1]	@ movhi
+  95:../../util/pcm_util.c ****         			j++;
+ 470              		.loc 1 95 12 is_stmt 1 view .LVU131
+ 471              		.loc 1 95 13 is_stmt 0 view .LVU132
+ 472 008e 0230     		adds	r0, r0, #2
+ 473 0090 80B2     		uxth	r0, r0
+ 474              	.LVL48:
+  90:../../util/pcm_util.c **** 	        		if (i < pcm_left_cnt) pcm_stereo[j] = pcm_left[i];
+ 475              		.loc 1 90 43 is_stmt 1 discriminator 2 view .LVU133
+ 476 0092 0133     		adds	r3, r3, #1
+ 477              	.LVL49:
+  90:../../util/pcm_util.c **** 	        		if (i < pcm_left_cnt) pcm_stereo[j] = pcm_left[i];
+ 478              		.loc 1 90 43 is_stmt 0 discriminator 2 view .LVU134
+ 479 0094 9BB2     		uxth	r3, r3
+ 480              	.LVL50:
+ 481              	.L36:
+  90:../../util/pcm_util.c **** 	        		if (i < pcm_left_cnt) pcm_stereo[j] = pcm_left[i];
+ 482              		.loc 1 90 25 is_stmt 1 discriminator 1 view .LVU135
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 12
+
+
+ 483 0096 B342     		cmp	r3, r6
+ 484 0098 19D2     		bcs	.L34
+  91:../../util/pcm_util.c **** 	        		else pcm_stereo[j] = 0;
+ 485              		.loc 1 91 12 view .LVU136
+  91:../../util/pcm_util.c **** 	        		else pcm_stereo[j] = 0;
+ 486              		.loc 1 91 15 is_stmt 0 view .LVU137
+ 487 009a A342     		cmp	r3, r4
+ 488 009c EED2     		bcs	.L40
+  91:../../util/pcm_util.c **** 	        		else pcm_stereo[j] = 0;
+ 489              		.loc 1 91 34 is_stmt 1 discriminator 1 view .LVU138
+  91:../../util/pcm_util.c **** 	        		else pcm_stereo[j] = 0;
+ 490              		.loc 1 91 58 is_stmt 0 discriminator 1 view .LVU139
+ 491 009e 3CF91310 		ldrsh	r1, [ip, r3, lsl #1]
+  91:../../util/pcm_util.c **** 	        		else pcm_stereo[j] = 0;
+ 492              		.loc 1 91 48 discriminator 1 view .LVU140
+ 493 00a2 25F81010 		strh	r1, [r5, r0, lsl #1]	@ movhi
+ 494 00a6 ECE7     		b	.L41
+ 495              	.LVL51:
+ 496              	.L30:
+  96:../../util/pcm_util.c **** 	        	}
+  97:../../util/pcm_util.c **** 		}
+  98:../../util/pcm_util.c **** 
+  99:../../util/pcm_util.c **** 
+ 100:../../util/pcm_util.c **** 
+ 101:../../util/pcm_util.c **** 	}
+ 102:../../util/pcm_util.c **** 	else if (pcm_left_cnt) {
+ 497              		.loc 1 102 7 is_stmt 1 view .LVU141
+ 498              		.loc 1 102 10 is_stmt 0 view .LVU142
+ 499 00a8 91B9     		cbnz	r1, .L50
+ 103:../../util/pcm_util.c **** 		for (i = 0; i < pcm_left_cnt; i++) {
+ 104:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_left[i];
+ 105:../../util/pcm_util.c **** 			j++;
+ 106:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 107:../../util/pcm_util.c **** 			j++;
+ 108:../../util/pcm_util.c **** 		}
+ 109:../../util/pcm_util.c **** 	}
+ 110:../../util/pcm_util.c **** 	else if (pcm_right_cnt) {
+ 500              		.loc 1 110 7 is_stmt 1 view .LVU143
+ 501              		.loc 1 110 10 is_stmt 0 view .LVU144
+ 502 00aa A3B9     		cbnz	r3, .L51
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 503              		.loc 1 69 4 view .LVU145
+ 504 00ac 1846     		mov	r0, r3
+ 505              	.LVL52:
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 506              		.loc 1 69 4 view .LVU146
+ 507 00ae 0EE0     		b	.L34
+ 508              	.LVL53:
+ 509              	.L45:
+ 104:../../util/pcm_util.c **** 			j++;
+ 510              		.loc 1 104 4 is_stmt 1 view .LVU147
+ 104:../../util/pcm_util.c **** 			j++;
+ 511              		.loc 1 104 28 is_stmt 0 view .LVU148
+ 512 00b0 3CF91320 		ldrsh	r2, [ip, r3, lsl #1]
+ 104:../../util/pcm_util.c **** 			j++;
+ 513              		.loc 1 104 18 view .LVU149
+ 514 00b4 25F81020 		strh	r2, [r5, r0, lsl #1]	@ movhi
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 13
+
+
+ 105:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 515              		.loc 1 105 4 is_stmt 1 view .LVU150
+ 105:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 516              		.loc 1 105 5 is_stmt 0 view .LVU151
+ 517 00b8 421C     		adds	r2, r0, #1
+ 518 00ba 92B2     		uxth	r2, r2
+ 519              	.LVL54:
+ 106:../../util/pcm_util.c **** 			j++;
+ 520              		.loc 1 106 4 is_stmt 1 view .LVU152
+ 106:../../util/pcm_util.c **** 			j++;
+ 521              		.loc 1 106 18 is_stmt 0 view .LVU153
+ 522 00bc 0021     		movs	r1, #0
+ 523 00be 25F81210 		strh	r1, [r5, r2, lsl #1]	@ movhi
+ 107:../../util/pcm_util.c **** 		}
+ 524              		.loc 1 107 4 is_stmt 1 view .LVU154
+ 107:../../util/pcm_util.c **** 		}
+ 525              		.loc 1 107 5 is_stmt 0 view .LVU155
+ 526 00c2 0230     		adds	r0, r0, #2
+ 527 00c4 80B2     		uxth	r0, r0
+ 528              	.LVL55:
+ 103:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_left[i];
+ 529              		.loc 1 103 34 is_stmt 1 discriminator 3 view .LVU156
+ 530 00c6 0133     		adds	r3, r3, #1
+ 531              	.LVL56:
+ 103:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_left[i];
+ 532              		.loc 1 103 34 is_stmt 0 discriminator 3 view .LVU157
+ 533 00c8 9BB2     		uxth	r3, r3
+ 534              	.LVL57:
+ 535              	.L43:
+ 103:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_left[i];
+ 536              		.loc 1 103 17 is_stmt 1 discriminator 1 view .LVU158
+ 537 00ca A342     		cmp	r3, r4
+ 538 00cc F0D3     		bcc	.L45
+ 539              	.LVL58:
+ 540              	.L34:
+ 111:../../util/pcm_util.c **** 		for (i = 0; i < pcm_right_cnt; i++) {
+ 112:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 113:../../util/pcm_util.c **** 			j++;
+ 114:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_right[i];
+ 115:../../util/pcm_util.c **** 			j++;
+ 116:../../util/pcm_util.c **** 		}
+ 117:../../util/pcm_util.c **** 	}
+ 118:../../util/pcm_util.c **** 
+ 119:../../util/pcm_util.c **** 
+ 120:../../util/pcm_util.c **** 
+ 121:../../util/pcm_util.c **** 	return j;
+ 541              		.loc 1 121 2 view .LVU159
+ 122:../../util/pcm_util.c **** }
+ 542              		.loc 1 122 1 is_stmt 0 view .LVU160
+ 543 00ce 70BD     		pop	{r4, r5, r6, pc}
+ 544              	.LVL59:
+ 545              	.L50:
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 546              		.loc 1 69 4 view .LVU161
+ 547 00d0 0020     		movs	r0, #0
+ 548              	.LVL60:
+ 103:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_left[i];
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 14
+
+
+ 549              		.loc 1 103 10 view .LVU162
+ 550 00d2 0346     		mov	r3, r0
+ 551              	.LVL61:
+ 103:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_left[i];
+ 552              		.loc 1 103 10 view .LVU163
+ 553 00d4 F9E7     		b	.L43
+ 554              	.LVL62:
+ 555              	.L51:
+  69:../../util/pcm_util.c **** 	if (pcm_left_cnt && pcm_right_cnt) {
+ 556              		.loc 1 69 4 view .LVU164
+ 557 00d6 0846     		mov	r0, r1
+ 558              	.LVL63:
+ 559              	.L46:
+ 111:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 560              		.loc 1 111 17 is_stmt 1 discriminator 1 view .LVU165
+ 561 00d8 B442     		cmp	r4, r6
+ 562 00da F8D2     		bcs	.L34
+ 112:../../util/pcm_util.c **** 			j++;
+ 563              		.loc 1 112 4 view .LVU166
+ 112:../../util/pcm_util.c **** 			j++;
+ 564              		.loc 1 112 18 is_stmt 0 view .LVU167
+ 565 00dc 0023     		movs	r3, #0
+ 566 00de 25F81030 		strh	r3, [r5, r0, lsl #1]	@ movhi
+ 113:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_right[i];
+ 567              		.loc 1 113 4 is_stmt 1 view .LVU168
+ 113:../../util/pcm_util.c **** 			pcm_stereo[j] = pcm_right[i];
+ 568              		.loc 1 113 5 is_stmt 0 view .LVU169
+ 569 00e2 431C     		adds	r3, r0, #1
+ 570 00e4 9BB2     		uxth	r3, r3
+ 571              	.LVL64:
+ 114:../../util/pcm_util.c **** 			j++;
+ 572              		.loc 1 114 4 is_stmt 1 view .LVU170
+ 114:../../util/pcm_util.c **** 			j++;
+ 573              		.loc 1 114 29 is_stmt 0 view .LVU171
+ 574 00e6 32F91410 		ldrsh	r1, [r2, r4, lsl #1]
+ 114:../../util/pcm_util.c **** 			j++;
+ 575              		.loc 1 114 18 view .LVU172
+ 576 00ea 25F81310 		strh	r1, [r5, r3, lsl #1]	@ movhi
+ 115:../../util/pcm_util.c **** 		}
+ 577              		.loc 1 115 4 is_stmt 1 view .LVU173
+ 115:../../util/pcm_util.c **** 		}
+ 578              		.loc 1 115 5 is_stmt 0 view .LVU174
+ 579 00ee 0230     		adds	r0, r0, #2
+ 580 00f0 80B2     		uxth	r0, r0
+ 581              	.LVL65:
+ 111:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 582              		.loc 1 111 35 is_stmt 1 discriminator 3 view .LVU175
+ 583 00f2 0134     		adds	r4, r4, #1
+ 584              	.LVL66:
+ 111:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 585              		.loc 1 111 35 is_stmt 0 discriminator 3 view .LVU176
+ 586 00f4 A4B2     		uxth	r4, r4
+ 587              	.LVL67:
+ 111:../../util/pcm_util.c **** 			pcm_stereo[j] = 0;
+ 588              		.loc 1 111 35 discriminator 3 view .LVU177
+ 589 00f6 EFE7     		b	.L46
+ 590              		.cfi_endproc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 15
+
+
+ 591              	.LFE5:
+ 593              		.section	.text.pcm_stereo2leftright,"ax",%progbits
+ 594              		.align	1
+ 595              		.global	pcm_stereo2leftright
+ 596              		.syntax unified
+ 597              		.thumb
+ 598              		.thumb_func
+ 600              	pcm_stereo2leftright:
+ 601              	.LVL68:
+ 602              	.LFB6:
+ 123:../../util/pcm_util.c **** 
+ 124:../../util/pcm_util.c **** 
+ 125:../../util/pcm_util.c **** uint16_t pcm_stereo2leftright(int16_t * pcm_stereo, uint16_t pcm_stereo_cnt, int16_t * pcm_left, in
+ 126:../../util/pcm_util.c **** {
+ 603              		.loc 1 126 1 is_stmt 1 view -0
+ 604              		.cfi_startproc
+ 605              		@ args = 0, pretend = 0, frame = 0
+ 606              		@ frame_needed = 0, uses_anonymous_args = 0
+ 607              		.loc 1 126 1 is_stmt 0 view .LVU179
+ 608 0000 10B5     		push	{r4, lr}
+ 609              	.LCFI5:
+ 610              		.cfi_def_cfa_offset 8
+ 611              		.cfi_offset 4, -8
+ 612              		.cfi_offset 14, -4
+ 613 0002 0446     		mov	r4, r0
+ 127:../../util/pcm_util.c **** 	uint16_t i, j;
+ 614              		.loc 1 127 2 is_stmt 1 view .LVU180
+ 128:../../util/pcm_util.c **** 	uint16_t res;
+ 615              		.loc 1 128 2 view .LVU181
+ 129:../../util/pcm_util.c **** 
+ 130:../../util/pcm_util.c **** 
+ 131:../../util/pcm_util.c **** 	res = pcm_stereo_cnt / 2;
+ 616              		.loc 1 131 2 view .LVU182
+ 617              		.loc 1 131 6 is_stmt 0 view .LVU183
+ 618 0004 4808     		lsrs	r0, r1, #1
+ 619              	.LVL69:
+ 132:../../util/pcm_util.c **** 	j = 0;
+ 620              		.loc 1 132 2 is_stmt 1 view .LVU184
+ 133:../../util/pcm_util.c **** 
+ 134:../../util/pcm_util.c **** 	for (i = 0; i < res; i++) {
+ 621              		.loc 1 134 2 view .LVU185
+ 132:../../util/pcm_util.c **** 	j = 0;
+ 622              		.loc 1 132 4 is_stmt 0 view .LVU186
+ 623 0006 4FF0000E 		mov	lr, #0
+ 624              		.loc 1 134 9 view .LVU187
+ 625 000a F446     		mov	ip, lr
+ 626              		.loc 1 134 2 view .LVU188
+ 627 000c 12E0     		b	.L57
+ 628              	.LVL70:
+ 629              	.L58:
+ 135:../../util/pcm_util.c **** 		pcm_left[i] = pcm_stereo[j];
+ 630              		.loc 1 135 3 is_stmt 1 view .LVU189
+ 631              		.loc 1 135 27 is_stmt 0 view .LVU190
+ 632 000e 34F91E10 		ldrsh	r1, [r4, lr, lsl #1]
+ 633              		.loc 1 135 15 view .LVU191
+ 634 0012 22F81C10 		strh	r1, [r2, ip, lsl #1]	@ movhi
+ 136:../../util/pcm_util.c **** 		j++;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 16
+
+
+ 635              		.loc 1 136 3 is_stmt 1 view .LVU192
+ 636              		.loc 1 136 4 is_stmt 0 view .LVU193
+ 637 0016 0EF10101 		add	r1, lr, #1
+ 638 001a 89B2     		uxth	r1, r1
+ 639              	.LVL71:
+ 137:../../util/pcm_util.c **** 		pcm_right[i] = pcm_stereo[j];
+ 640              		.loc 1 137 3 is_stmt 1 view .LVU194
+ 641              		.loc 1 137 28 is_stmt 0 view .LVU195
+ 642 001c 34F91110 		ldrsh	r1, [r4, r1, lsl #1]
+ 643              	.LVL72:
+ 644              		.loc 1 137 16 view .LVU196
+ 645 0020 23F81C10 		strh	r1, [r3, ip, lsl #1]	@ movhi
+ 138:../../util/pcm_util.c **** 		j++;
+ 646              		.loc 1 138 3 is_stmt 1 view .LVU197
+ 647              		.loc 1 138 4 is_stmt 0 view .LVU198
+ 648 0024 0EF1020E 		add	lr, lr, #2
+ 649              	.LVL73:
+ 650              		.loc 1 138 4 view .LVU199
+ 651 0028 1FFA8EFE 		uxth	lr, lr
+ 652              	.LVL74:
+ 134:../../util/pcm_util.c **** 		pcm_left[i] = pcm_stereo[j];
+ 653              		.loc 1 134 24 is_stmt 1 discriminator 3 view .LVU200
+ 654 002c 0CF1010C 		add	ip, ip, #1
+ 655              	.LVL75:
+ 134:../../util/pcm_util.c **** 		pcm_left[i] = pcm_stereo[j];
+ 656              		.loc 1 134 24 is_stmt 0 discriminator 3 view .LVU201
+ 657 0030 1FFA8CFC 		uxth	ip, ip
+ 658              	.LVL76:
+ 659              	.L57:
+ 134:../../util/pcm_util.c **** 		pcm_left[i] = pcm_stereo[j];
+ 660              		.loc 1 134 16 is_stmt 1 discriminator 1 view .LVU202
+ 661 0034 8445     		cmp	ip, r0
+ 662 0036 EAD3     		bcc	.L58
+ 139:../../util/pcm_util.c **** 	}
+ 140:../../util/pcm_util.c **** 
+ 141:../../util/pcm_util.c **** 	return res;
+ 663              		.loc 1 141 2 view .LVU203
+ 142:../../util/pcm_util.c **** }
+ 664              		.loc 1 142 1 is_stmt 0 view .LVU204
+ 665 0038 10BD     		pop	{r4, pc}
+ 666              		.loc 1 142 1 view .LVU205
+ 667              		.cfi_endproc
+ 668              	.LFE6:
+ 670              		.section	.text.pcm_stereo2mono,"ax",%progbits
+ 671              		.align	1
+ 672              		.global	pcm_stereo2mono
+ 673              		.syntax unified
+ 674              		.thumb
+ 675              		.thumb_func
+ 677              	pcm_stereo2mono:
+ 678              	.LVL77:
+ 679              	.LFB7:
+ 143:../../util/pcm_util.c **** 
+ 144:../../util/pcm_util.c **** 
+ 145:../../util/pcm_util.c **** uint16_t pcm_stereo2mono(int16_t * pcm_stereo, uint16_t pcm_stereo_cnt, int16_t * pcm_mono)
+ 146:../../util/pcm_util.c **** {
+ 680              		.loc 1 146 1 is_stmt 1 view -0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 17
+
+
+ 681              		.cfi_startproc
+ 682              		@ args = 0, pretend = 0, frame = 0
+ 683              		@ frame_needed = 0, uses_anonymous_args = 0
+ 684              		.loc 1 146 1 is_stmt 0 view .LVU207
+ 685 0000 10B5     		push	{r4, lr}
+ 686              	.LCFI6:
+ 687              		.cfi_def_cfa_offset 8
+ 688              		.cfi_offset 4, -8
+ 689              		.cfi_offset 14, -4
+ 690 0002 0446     		mov	r4, r0
+ 147:../../util/pcm_util.c **** 	uint16_t i, j, pcm_left, pcm_right;
+ 691              		.loc 1 147 2 is_stmt 1 view .LVU208
+ 148:../../util/pcm_util.c **** 	uint16_t res;
+ 692              		.loc 1 148 2 view .LVU209
+ 149:../../util/pcm_util.c **** 
+ 150:../../util/pcm_util.c **** 
+ 151:../../util/pcm_util.c **** 	res = pcm_stereo_cnt / 2;
+ 693              		.loc 1 151 2 view .LVU210
+ 694              		.loc 1 151 6 is_stmt 0 view .LVU211
+ 695 0004 4808     		lsrs	r0, r1, #1
+ 696              	.LVL78:
+ 152:../../util/pcm_util.c **** 	j = 0;
+ 697              		.loc 1 152 2 is_stmt 1 view .LVU212
+ 153:../../util/pcm_util.c **** 
+ 154:../../util/pcm_util.c **** 	for (i = 0; i < res; i++) {
+ 698              		.loc 1 154 2 view .LVU213
+ 152:../../util/pcm_util.c **** 	j = 0;
+ 699              		.loc 1 152 4 is_stmt 0 view .LVU214
+ 700 0006 4FF0000C 		mov	ip, #0
+ 701              		.loc 1 154 9 view .LVU215
+ 702 000a 6346     		mov	r3, ip
+ 703              		.loc 1 154 2 view .LVU216
+ 704 000c 13E0     		b	.L61
+ 705              	.LVL79:
+ 706              	.L63:
+ 155:../../util/pcm_util.c **** 		pcm_left = pcm_stereo[j];
+ 707              		.loc 1 155 3 is_stmt 1 view .LVU217
+ 708              		.loc 1 155 24 is_stmt 0 view .LVU218
+ 709 000e 34F91CE0 		ldrsh	lr, [r4, ip, lsl #1]
+ 710              	.LVL80:
+ 156:../../util/pcm_util.c **** 		j++;
+ 711              		.loc 1 156 3 is_stmt 1 view .LVU219
+ 712              		.loc 1 156 4 is_stmt 0 view .LVU220
+ 713 0012 0CF10101 		add	r1, ip, #1
+ 714 0016 89B2     		uxth	r1, r1
+ 715              	.LVL81:
+ 157:../../util/pcm_util.c **** 		pcm_right = pcm_stereo[j];
+ 716              		.loc 1 157 3 is_stmt 1 view .LVU221
+ 717              		.loc 1 157 25 is_stmt 0 view .LVU222
+ 718 0018 34F91110 		ldrsh	r1, [r4, r1, lsl #1]
+ 719              	.LVL82:
+ 720              		.loc 1 157 13 view .LVU223
+ 721 001c 89B2     		uxth	r1, r1
+ 722              	.LVL83:
+ 158:../../util/pcm_util.c **** 		j++;
+ 723              		.loc 1 158 3 is_stmt 1 view .LVU224
+ 724              		.loc 1 158 4 is_stmt 0 view .LVU225
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 18
+
+
+ 725 001e 0CF1020C 		add	ip, ip, #2
+ 726              	.LVL84:
+ 727              		.loc 1 158 4 view .LVU226
+ 728 0022 1FFA8CFC 		uxth	ip, ip
+ 729              	.LVL85:
+ 159:../../util/pcm_util.c **** 		pcm_mono[i] = (pcm_left + pcm_right) / 2;
+ 730              		.loc 1 159 3 is_stmt 1 view .LVU227
+ 731              		.loc 1 159 27 is_stmt 0 view .LVU228
+ 732 0026 11FA8EFE 		uxtah	lr, r1, lr
+ 733              	.LVL86:
+ 734              		.loc 1 159 40 view .LVU229
+ 735 002a 4FEA6E0E 		asr	lr, lr, #1
+ 736              		.loc 1 159 15 view .LVU230
+ 737 002e 22F813E0 		strh	lr, [r2, r3, lsl #1]	@ movhi
+ 154:../../util/pcm_util.c **** 		pcm_left = pcm_stereo[j];
+ 738              		.loc 1 154 24 is_stmt 1 discriminator 3 view .LVU231
+ 739 0032 0133     		adds	r3, r3, #1
+ 740              	.LVL87:
+ 154:../../util/pcm_util.c **** 		pcm_left = pcm_stereo[j];
+ 741              		.loc 1 154 24 is_stmt 0 discriminator 3 view .LVU232
+ 742 0034 9BB2     		uxth	r3, r3
+ 743              	.LVL88:
+ 744              	.L61:
+ 154:../../util/pcm_util.c **** 		pcm_left = pcm_stereo[j];
+ 745              		.loc 1 154 16 is_stmt 1 discriminator 1 view .LVU233
+ 746 0036 8342     		cmp	r3, r0
+ 747 0038 E9D3     		bcc	.L63
+ 160:../../util/pcm_util.c **** 	}
+ 161:../../util/pcm_util.c **** 
+ 162:../../util/pcm_util.c **** 	return res;
+ 748              		.loc 1 162 2 view .LVU234
+ 163:../../util/pcm_util.c **** }
+ 749              		.loc 1 163 1 is_stmt 0 view .LVU235
+ 750 003a 10BD     		pop	{r4, pc}
+ 751              		.loc 1 163 1 view .LVU236
+ 752              		.cfi_endproc
+ 753              	.LFE7:
+ 755              		.section	.text.pcm_mono2stereo,"ax",%progbits
+ 756              		.align	1
+ 757              		.global	pcm_mono2stereo
+ 758              		.syntax unified
+ 759              		.thumb
+ 760              		.thumb_func
+ 762              	pcm_mono2stereo:
+ 763              	.LVL89:
+ 764              	.LFB8:
+ 164:../../util/pcm_util.c **** 
+ 165:../../util/pcm_util.c **** uint16_t pcm_mono2stereo(int16_t * pcm_mono, uint16_t pcm_mono_cnt, int16_t * pcm_stereo)
+ 166:../../util/pcm_util.c **** {
+ 765              		.loc 1 166 1 is_stmt 1 view -0
+ 766              		.cfi_startproc
+ 767              		@ args = 0, pretend = 0, frame = 0
+ 768              		@ frame_needed = 0, uses_anonymous_args = 0
+ 769              		.loc 1 166 1 is_stmt 0 view .LVU238
+ 770 0000 10B5     		push	{r4, lr}
+ 771              	.LCFI7:
+ 772              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 19
+
+
+ 773              		.cfi_offset 4, -8
+ 774              		.cfi_offset 14, -4
+ 775 0002 0446     		mov	r4, r0
+ 167:../../util/pcm_util.c ****         uint16_t i, j;
+ 776              		.loc 1 167 9 is_stmt 1 view .LVU239
+ 168:../../util/pcm_util.c **** 
+ 169:../../util/pcm_util.c ****         j = 0;
+ 777              		.loc 1 169 9 view .LVU240
+ 778              	.LVL90:
+ 170:../../util/pcm_util.c **** 	for (i = 0; i < pcm_mono_cnt; i++) {
+ 779              		.loc 1 170 2 view .LVU241
+ 169:../../util/pcm_util.c **** 	for (i = 0; i < pcm_mono_cnt; i++) {
+ 780              		.loc 1 169 11 is_stmt 0 view .LVU242
+ 781 0004 0020     		movs	r0, #0
+ 782              	.LVL91:
+ 783              		.loc 1 170 9 view .LVU243
+ 784 0006 0346     		mov	r3, r0
+ 785              		.loc 1 170 2 view .LVU244
+ 786 0008 0DE0     		b	.L66
+ 787              	.LVL92:
+ 788              	.L67:
+ 171:../../util/pcm_util.c ****             pcm_stereo[j] = pcm_mono[i];
+ 789              		.loc 1 171 13 is_stmt 1 view .LVU245
+ 790              		.loc 1 171 37 is_stmt 0 view .LVU246
+ 791 000a 34F913E0 		ldrsh	lr, [r4, r3, lsl #1]
+ 792              		.loc 1 171 27 view .LVU247
+ 793 000e 22F810E0 		strh	lr, [r2, r0, lsl #1]	@ movhi
+ 172:../../util/pcm_util.c ****             j++;
+ 794              		.loc 1 172 13 is_stmt 1 view .LVU248
+ 795              		.loc 1 172 14 is_stmt 0 view .LVU249
+ 796 0012 00F1010C 		add	ip, r0, #1
+ 797 0016 1FFA8CFC 		uxth	ip, ip
+ 798              	.LVL93:
+ 173:../../util/pcm_util.c ****             pcm_stereo[j] = pcm_mono[i];
+ 799              		.loc 1 173 13 is_stmt 1 view .LVU250
+ 800              		.loc 1 173 27 is_stmt 0 view .LVU251
+ 801 001a 22F81CE0 		strh	lr, [r2, ip, lsl #1]	@ movhi
+ 174:../../util/pcm_util.c ****             j++;
+ 802              		.loc 1 174 13 is_stmt 1 view .LVU252
+ 803              		.loc 1 174 14 is_stmt 0 view .LVU253
+ 804 001e 0230     		adds	r0, r0, #2
+ 805 0020 80B2     		uxth	r0, r0
+ 806              	.LVL94:
+ 170:../../util/pcm_util.c ****             pcm_stereo[j] = pcm_mono[i];
+ 807              		.loc 1 170 33 is_stmt 1 discriminator 3 view .LVU254
+ 808 0022 0133     		adds	r3, r3, #1
+ 809              	.LVL95:
+ 170:../../util/pcm_util.c ****             pcm_stereo[j] = pcm_mono[i];
+ 810              		.loc 1 170 33 is_stmt 0 discriminator 3 view .LVU255
+ 811 0024 9BB2     		uxth	r3, r3
+ 812              	.LVL96:
+ 813              	.L66:
+ 170:../../util/pcm_util.c ****             pcm_stereo[j] = pcm_mono[i];
+ 814              		.loc 1 170 16 is_stmt 1 discriminator 1 view .LVU256
+ 815 0026 8B42     		cmp	r3, r1
+ 816 0028 EFD3     		bcc	.L67
+ 175:../../util/pcm_util.c ****         }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 20
+
+
+ 176:../../util/pcm_util.c ****         return j;
+ 817              		.loc 1 176 9 view .LVU257
+ 177:../../util/pcm_util.c **** }
+ 818              		.loc 1 177 1 is_stmt 0 view .LVU258
+ 819 002a 10BD     		pop	{r4, pc}
+ 820              		.loc 1 177 1 view .LVU259
+ 821              		.cfi_endproc
+ 822              	.LFE8:
+ 824              		.section	.text.pcm_change_frequency,"ax",%progbits
+ 825              		.align	1
+ 826              		.global	pcm_change_frequency
+ 827              		.syntax unified
+ 828              		.thumb
+ 829              		.thumb_func
+ 831              	pcm_change_frequency:
+ 832              	.LVL97:
+ 833              	.LFB9:
+ 178:../../util/pcm_util.c **** 
+ 179:../../util/pcm_util.c **** 
+ 180:../../util/pcm_util.c **** uint16_t pcm_change_frequency(int16_t *dst, uint32_t dst_frquency, int16_t *src, uint16_t src_cnt, 
+ 181:../../util/pcm_util.c **** {
+ 834              		.loc 1 181 1 is_stmt 1 view -0
+ 835              		.cfi_startproc
+ 836              		@ args = 8, pretend = 0, frame = 0
+ 837              		@ frame_needed = 0, uses_anonymous_args = 0
+ 838              		.loc 1 181 1 is_stmt 0 view .LVU261
+ 839 0000 30B5     		push	{r4, r5, lr}
+ 840              	.LCFI8:
+ 841              		.cfi_def_cfa_offset 12
+ 842              		.cfi_offset 4, -12
+ 843              		.cfi_offset 5, -8
+ 844              		.cfi_offset 14, -4
+ 182:../../util/pcm_util.c ****   uint16_t dst_cnt, i, j;
+ 845              		.loc 1 182 3 is_stmt 1 view .LVU262
+ 183:../../util/pcm_util.c **** 
+ 184:../../util/pcm_util.c **** 
+ 185:../../util/pcm_util.c ****   if (!src_cnt) return 0;
+ 846              		.loc 1 185 3 view .LVU263
+ 847              		.loc 1 185 6 is_stmt 0 view .LVU264
+ 848 0002 1C46     		mov	r4, r3
+ 849 0004 002B     		cmp	r3, #0
+ 850 0006 3BD0     		beq	.L76
+ 851 0008 8646     		mov	lr, r0
+ 186:../../util/pcm_util.c **** 
+ 187:../../util/pcm_util.c ****   dst_cnt = src_cnt * dst_frquency / src_frquency;
+ 852              		.loc 1 187 3 is_stmt 1 view .LVU265
+ 853              		.loc 1 187 21 is_stmt 0 view .LVU266
+ 854 000a 03FB01F1 		mul	r1, r3, r1
+ 855              	.LVL98:
+ 856              		.loc 1 187 36 view .LVU267
+ 857 000e 039B     		ldr	r3, [sp, #12]
+ 858              	.LVL99:
+ 859              		.loc 1 187 36 view .LVU268
+ 860 0010 B1FBF3FC 		udiv	ip, r1, r3
+ 861              		.loc 1 187 11 view .LVU269
+ 862 0014 1FFA8CF0 		uxth	r0, ip
+ 863              	.LVL100:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 21
+
+
+ 188:../../util/pcm_util.c **** 
+ 189:../../util/pcm_util.c **** 
+ 190:../../util/pcm_util.c ****   if (channels == 2) {
+ 864              		.loc 1 190 3 is_stmt 1 view .LVU270
+ 865              		.loc 1 190 6 is_stmt 0 view .LVU271
+ 866 0018 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 867 001c 022B     		cmp	r3, #2
+ 868 001e 1DD0     		beq	.L77
+ 191:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 192:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 193:../../util/pcm_util.c **** 
+ 194:../../util/pcm_util.c ****                 if (ODD(j)) j++;
+ 195:../../util/pcm_util.c **** 
+ 196:../../util/pcm_util.c ****                 dst[i] = src[j];
+ 197:../../util/pcm_util.c ****                 dst[i + 1] = src[j + 1];
+ 198:../../util/pcm_util.c ****         }
+ 199:../../util/pcm_util.c **** 
+ 200:../../util/pcm_util.c ****   } else {
+ 201:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt; i++) {
+ 869              		.loc 1 201 16 view .LVU272
+ 870 0020 0023     		movs	r3, #0
+ 871 0022 2AE0     		b	.L72
+ 872              	.LVL101:
+ 873              	.L73:
+ 196:../../util/pcm_util.c ****                 dst[i + 1] = src[j + 1];
+ 874              		.loc 1 196 17 is_stmt 1 view .LVU273
+ 196:../../util/pcm_util.c ****                 dst[i + 1] = src[j + 1];
+ 875              		.loc 1 196 29 is_stmt 0 view .LVU274
+ 876 0024 32F91150 		ldrsh	r5, [r2, r1, lsl #1]
+ 196:../../util/pcm_util.c ****                 dst[i + 1] = src[j + 1];
+ 877              		.loc 1 196 24 view .LVU275
+ 878 0028 2EF81350 		strh	r5, [lr, r3, lsl #1]	@ movhi
+ 197:../../util/pcm_util.c ****         }
+ 879              		.loc 1 197 17 is_stmt 1 view .LVU276
+ 197:../../util/pcm_util.c ****         }
+ 880              		.loc 1 197 20 is_stmt 0 view .LVU277
+ 881 002c 5D1C     		adds	r5, r3, #1
+ 197:../../util/pcm_util.c ****         }
+ 882              		.loc 1 197 33 view .LVU278
+ 883 002e 0131     		adds	r1, r1, #1
+ 884              	.LVL102:
+ 197:../../util/pcm_util.c ****         }
+ 885              		.loc 1 197 33 view .LVU279
+ 886 0030 32F91110 		ldrsh	r1, [r2, r1, lsl #1]
+ 887              	.LVL103:
+ 197:../../util/pcm_util.c ****         }
+ 888              		.loc 1 197 28 view .LVU280
+ 889 0034 2EF81510 		strh	r1, [lr, r5, lsl #1]	@ movhi
+ 191:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 890              		.loc 1 191 40 is_stmt 1 discriminator 2 view .LVU281
+ 891 0038 0233     		adds	r3, r3, #2
+ 892              	.LVL104:
+ 191:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 893              		.loc 1 191 40 is_stmt 0 discriminator 2 view .LVU282
+ 894 003a 9BB2     		uxth	r3, r3
+ 895              	.LVL105:
+ 896              	.L71:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 22
+
+
+ 191:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 897              		.loc 1 191 23 is_stmt 1 discriminator 1 view .LVU283
+ 191:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 898              		.loc 1 191 33 is_stmt 0 discriminator 1 view .LVU284
+ 899 003c 1FFA8CF1 		uxth	r1, ip
+ 900 0040 4D1E     		subs	r5, r1, #1
+ 191:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 901              		.loc 1 191 23 discriminator 1 view .LVU285
+ 902 0042 AB42     		cmp	r3, r5
+ 903 0044 1BDA     		bge	.L70
+ 192:../../util/pcm_util.c **** 
+ 904              		.loc 1 192 17 is_stmt 1 view .LVU286
+ 192:../../util/pcm_util.c **** 
+ 905              		.loc 1 192 23 is_stmt 0 view .LVU287
+ 906 0046 03FB04F5 		mul	r5, r3, r4
+ 192:../../util/pcm_util.c **** 
+ 907              		.loc 1 192 33 view .LVU288
+ 908 004a 95FBF1F5 		sdiv	r5, r5, r1
+ 192:../../util/pcm_util.c **** 
+ 909              		.loc 1 192 19 view .LVU289
+ 910 004e A9B2     		uxth	r1, r5
+ 911              	.LVL106:
+ 194:../../util/pcm_util.c **** 
+ 912              		.loc 1 194 17 is_stmt 1 view .LVU290
+ 194:../../util/pcm_util.c **** 
+ 913              		.loc 1 194 20 is_stmt 0 view .LVU291
+ 914 0050 15F0010F 		tst	r5, #1
+ 915 0054 E6D0     		beq	.L73
+ 194:../../util/pcm_util.c **** 
+ 916              		.loc 1 194 29 is_stmt 1 discriminator 1 view .LVU292
+ 194:../../util/pcm_util.c **** 
+ 917              		.loc 1 194 30 is_stmt 0 discriminator 1 view .LVU293
+ 918 0056 0131     		adds	r1, r1, #1
+ 919              	.LVL107:
+ 194:../../util/pcm_util.c **** 
+ 920              		.loc 1 194 30 discriminator 1 view .LVU294
+ 921 0058 89B2     		uxth	r1, r1
+ 922              	.LVL108:
+ 194:../../util/pcm_util.c **** 
+ 923              		.loc 1 194 30 discriminator 1 view .LVU295
+ 924 005a E3E7     		b	.L73
+ 925              	.LVL109:
+ 926              	.L77:
+ 191:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 927              		.loc 1 191 16 view .LVU296
+ 928 005c 0023     		movs	r3, #0
+ 929 005e EDE7     		b	.L71
+ 930              	.LVL110:
+ 931              	.L75:
+ 202:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 932              		.loc 1 202 17 is_stmt 1 view .LVU297
+ 933              		.loc 1 202 23 is_stmt 0 view .LVU298
+ 934 0060 04FB03F1 		mul	r1, r4, r3
+ 935              		.loc 1 202 33 view .LVU299
+ 936 0064 1FFA8CF5 		uxth	r5, ip
+ 937 0068 91FBF5F1 		sdiv	r1, r1, r5
+ 938              	.LVL111:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 23
+
+
+ 203:../../util/pcm_util.c ****                 dst[i] = src[j];
+ 939              		.loc 1 203 17 is_stmt 1 view .LVU300
+ 940              		.loc 1 203 29 is_stmt 0 view .LVU301
+ 941 006c 89B2     		uxth	r1, r1
+ 942              		.loc 1 203 29 view .LVU302
+ 943 006e 32F91110 		ldrsh	r1, [r2, r1, lsl #1]
+ 944              	.LVL112:
+ 945              		.loc 1 203 24 view .LVU303
+ 946 0072 2EF81310 		strh	r1, [lr, r3, lsl #1]	@ movhi
+ 201:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 947              		.loc 1 201 35 is_stmt 1 discriminator 3 view .LVU304
+ 948 0076 0133     		adds	r3, r3, #1
+ 949              	.LVL113:
+ 201:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 950              		.loc 1 201 35 is_stmt 0 discriminator 3 view .LVU305
+ 951 0078 9BB2     		uxth	r3, r3
+ 952              	.LVL114:
+ 953              	.L72:
+ 201:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 954              		.loc 1 201 23 is_stmt 1 discriminator 1 view .LVU306
+ 955 007a 8342     		cmp	r3, r0
+ 956 007c F0D3     		bcc	.L75
+ 957              	.LVL115:
+ 958              	.L70:
+ 204:../../util/pcm_util.c ****         }
+ 205:../../util/pcm_util.c ****   }
+ 206:../../util/pcm_util.c **** 
+ 207:../../util/pcm_util.c ****   return dst_cnt;
+ 208:../../util/pcm_util.c **** }
+ 959              		.loc 1 208 1 is_stmt 0 view .LVU307
+ 960 007e 30BD     		pop	{r4, r5, pc}
+ 961              	.LVL116:
+ 962              	.L76:
+ 185:../../util/pcm_util.c **** 
+ 963              		.loc 1 185 24 discriminator 1 view .LVU308
+ 964 0080 1846     		mov	r0, r3
+ 965              	.LVL117:
+ 185:../../util/pcm_util.c **** 
+ 966              		.loc 1 185 24 discriminator 1 view .LVU309
+ 967 0082 FCE7     		b	.L70
+ 968              		.cfi_endproc
+ 969              	.LFE9:
+ 971              		.section	.text.pcm_change_frequency2,"ax",%progbits
+ 972              		.align	1
+ 973              		.global	pcm_change_frequency2
+ 974              		.syntax unified
+ 975              		.thumb
+ 976              		.thumb_func
+ 978              	pcm_change_frequency2:
+ 979              	.LVL118:
+ 980              	.LFB10:
+ 209:../../util/pcm_util.c **** 
+ 210:../../util/pcm_util.c **** uint16_t pcm_change_frequency2(int16_t *dst, uint32_t dst_frquency, int16_t *src, uint16_t src_cnt,
+ 211:../../util/pcm_util.c **** {
+ 981              		.loc 1 211 1 is_stmt 1 view -0
+ 982              		.cfi_startproc
+ 983              		@ args = 8, pretend = 0, frame = 0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 24
+
+
+ 984              		@ frame_needed = 0, uses_anonymous_args = 0
+ 985              		.loc 1 211 1 is_stmt 0 view .LVU311
+ 986 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 987              	.LCFI9:
+ 988              		.cfi_def_cfa_offset 24
+ 989              		.cfi_offset 4, -24
+ 990              		.cfi_offset 5, -20
+ 991              		.cfi_offset 6, -16
+ 992              		.cfi_offset 7, -12
+ 993              		.cfi_offset 8, -8
+ 994              		.cfi_offset 14, -4
+ 212:../../util/pcm_util.c ****   uint16_t dst_cnt, i, j, maxj;
+ 995              		.loc 1 212 3 is_stmt 1 view .LVU312
+ 213:../../util/pcm_util.c ****   //int c, m;
+ 214:../../util/pcm_util.c **** 
+ 215:../../util/pcm_util.c **** 
+ 216:../../util/pcm_util.c ****   if (!src_cnt) return 0;
+ 996              		.loc 1 216 3 view .LVU313
+ 997              		.loc 1 216 6 is_stmt 0 view .LVU314
+ 998 0004 1C46     		mov	r4, r3
+ 999 0006 002B     		cmp	r3, #0
+ 1000 0008 78D0     		beq	.L95
+ 1001 000a 8446     		mov	ip, r0
+ 217:../../util/pcm_util.c **** 
+ 218:../../util/pcm_util.c ****   dst_cnt = src_cnt * dst_frquency / src_frquency;
+ 1002              		.loc 1 218 3 is_stmt 1 view .LVU315
+ 1003              		.loc 1 218 21 is_stmt 0 view .LVU316
+ 1004 000c 03FB01F1 		mul	r1, r3, r1
+ 1005              	.LVL119:
+ 1006              		.loc 1 218 36 view .LVU317
+ 1007 0010 069B     		ldr	r3, [sp, #24]
+ 1008              	.LVL120:
+ 1009              		.loc 1 218 36 view .LVU318
+ 1010 0012 B1FBF3FE 		udiv	lr, r1, r3
+ 1011              		.loc 1 218 11 view .LVU319
+ 1012 0016 1FFA8EF0 		uxth	r0, lr
+ 1013              	.LVL121:
+ 219:../../util/pcm_util.c **** 
+ 220:../../util/pcm_util.c **** 
+ 221:../../util/pcm_util.c ****   if (channels == 2) {
+ 1014              		.loc 1 221 3 is_stmt 1 view .LVU320
+ 1015              		.loc 1 221 6 is_stmt 0 view .LVU321
+ 1016 001a 9DF81C30 		ldrb	r3, [sp, #28]	@ zero_extendqisi2
+ 1017 001e 022B     		cmp	r3, #2
+ 1018 0020 03D0     		beq	.L97
+ 222:../../util/pcm_util.c **** 
+ 223:../../util/pcm_util.c ****         maxj = src_cnt - 3;
+ 224:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 225:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 226:../../util/pcm_util.c **** 
+ 227:../../util/pcm_util.c ****                 if (ODD(j)) j++;
+ 228:../../util/pcm_util.c **** 
+ 229:../../util/pcm_util.c ****                 if (j < maxj) {
+ 230:../../util/pcm_util.c ****                   dst[i] = (src[j] + src[j + 2]) / 2;  //left
+ 231:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 232:../../util/pcm_util.c **** 
+ 233:../../util/pcm_util.c ****                 } else {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 25
+
+
+ 234:../../util/pcm_util.c ****                   dst[i] = src[j];  //left
+ 235:../../util/pcm_util.c ****                   dst[i + 1] = src[j + 1]; //right
+ 236:../../util/pcm_util.c ****                 }
+ 237:../../util/pcm_util.c ****         }
+ 238:../../util/pcm_util.c **** 
+ 239:../../util/pcm_util.c ****   } else {
+ 240:../../util/pcm_util.c ****         maxj = src_cnt - 1;
+ 1019              		.loc 1 240 9 is_stmt 1 view .LVU322
+ 1020              		.loc 1 240 14 is_stmt 0 view .LVU323
+ 1021 0022 661E     		subs	r6, r4, #1
+ 1022 0024 B6B2     		uxth	r6, r6
+ 1023              	.LVL122:
+ 241:../../util/pcm_util.c **** 
+ 242:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt; i++) {
+ 1024              		.loc 1 242 9 is_stmt 1 view .LVU324
+ 1025              		.loc 1 242 16 is_stmt 0 view .LVU325
+ 1026 0026 0021     		movs	r1, #0
+ 1027              		.loc 1 242 9 view .LVU326
+ 1028 0028 43E0     		b	.L89
+ 1029              	.LVL123:
+ 1030              	.L97:
+ 223:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1031              		.loc 1 223 9 is_stmt 1 view .LVU327
+ 223:../../util/pcm_util.c ****         for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1032              		.loc 1 223 14 is_stmt 0 view .LVU328
+ 1033 002a E61E     		subs	r6, r4, #3
+ 1034 002c B6B2     		uxth	r6, r6
+ 1035              	.LVL124:
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1036              		.loc 1 224 9 is_stmt 1 view .LVU329
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1037              		.loc 1 224 16 is_stmt 0 view .LVU330
+ 1038 002e 0021     		movs	r1, #0
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1039              		.loc 1 224 9 view .LVU331
+ 1040 0030 08E0     		b	.L82
+ 1041              	.LVL125:
+ 1042              	.L98:
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1043              		.loc 1 230 50 view .LVU332
+ 1044 0032 0135     		adds	r5, r5, #1
+ 1045 0034 1FE0     		b	.L85
+ 1046              	.LVL126:
+ 1047              	.L86:
+ 231:../../util/pcm_util.c **** 
+ 1048              		.loc 1 231 58 view .LVU333
+ 1049 0036 5B10     		asrs	r3, r3, #1
+ 231:../../util/pcm_util.c **** 
+ 1050              		.loc 1 231 22 view .LVU334
+ 1051 0038 08F10105 		add	r5, r8, #1
+ 231:../../util/pcm_util.c **** 
+ 1052              		.loc 1 231 30 view .LVU335
+ 1053 003c 2CF81530 		strh	r3, [ip, r5, lsl #1]	@ movhi
+ 1054              	.LVL127:
+ 1055              	.L87:
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1056              		.loc 1 224 40 is_stmt 1 discriminator 2 view .LVU336
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 26
+
+
+ 1057 0040 0231     		adds	r1, r1, #2
+ 1058              	.LVL128:
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1059              		.loc 1 224 40 is_stmt 0 discriminator 2 view .LVU337
+ 1060 0042 89B2     		uxth	r1, r1
+ 1061              	.LVL129:
+ 1062              	.L82:
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1063              		.loc 1 224 23 is_stmt 1 discriminator 1 view .LVU338
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1064              		.loc 1 224 33 is_stmt 0 discriminator 1 view .LVU339
+ 1065 0044 1FFA8EF3 		uxth	r3, lr
+ 1066 0048 5D1E     		subs	r5, r3, #1
+ 224:../../util/pcm_util.c ****                 j = i * src_cnt / dst_cnt;
+ 1067              		.loc 1 224 23 discriminator 1 view .LVU340
+ 1068 004a A942     		cmp	r1, r5
+ 1069 004c 57DA     		bge	.L80
+ 225:../../util/pcm_util.c **** 
+ 1070              		.loc 1 225 17 is_stmt 1 view .LVU341
+ 225:../../util/pcm_util.c **** 
+ 1071              		.loc 1 225 23 is_stmt 0 view .LVU342
+ 1072 004e 01FB04F5 		mul	r5, r1, r4
+ 225:../../util/pcm_util.c **** 
+ 1073              		.loc 1 225 33 view .LVU343
+ 1074 0052 95FBF3F5 		sdiv	r5, r5, r3
+ 225:../../util/pcm_util.c **** 
+ 1075              		.loc 1 225 19 view .LVU344
+ 1076 0056 ABB2     		uxth	r3, r5
+ 1077              	.LVL130:
+ 227:../../util/pcm_util.c **** 
+ 1078              		.loc 1 227 17 is_stmt 1 view .LVU345
+ 227:../../util/pcm_util.c **** 
+ 1079              		.loc 1 227 20 is_stmt 0 view .LVU346
+ 1080 0058 15F0010F 		tst	r5, #1
+ 1081 005c 01D0     		beq	.L83
+ 227:../../util/pcm_util.c **** 
+ 1082              		.loc 1 227 29 is_stmt 1 discriminator 1 view .LVU347
+ 227:../../util/pcm_util.c **** 
+ 1083              		.loc 1 227 30 is_stmt 0 discriminator 1 view .LVU348
+ 1084 005e 0133     		adds	r3, r3, #1
+ 1085              	.LVL131:
+ 227:../../util/pcm_util.c **** 
+ 1086              		.loc 1 227 30 discriminator 1 view .LVU349
+ 1087 0060 9BB2     		uxth	r3, r3
+ 1088              	.LVL132:
+ 1089              	.L83:
+ 229:../../util/pcm_util.c ****                   dst[i] = (src[j] + src[j + 2]) / 2;  //left
+ 1090              		.loc 1 229 17 is_stmt 1 view .LVU350
+ 229:../../util/pcm_util.c ****                   dst[i] = (src[j] + src[j + 2]) / 2;  //left
+ 1091              		.loc 1 229 20 is_stmt 0 view .LVU351
+ 1092 0062 B342     		cmp	r3, r6
+ 1093 0064 15D2     		bcs	.L84
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1094              		.loc 1 230 19 is_stmt 1 view .LVU352
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1095              		.loc 1 230 32 is_stmt 0 view .LVU353
+ 1096 0066 1F46     		mov	r7, r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 27
+
+
+ 1097 0068 32F91350 		ldrsh	r5, [r2, r3, lsl #1]
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1098              		.loc 1 230 41 view .LVU354
+ 1099 006c 0233     		adds	r3, r3, #2
+ 1100              	.LVL133:
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1101              		.loc 1 230 41 view .LVU355
+ 1102 006e 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1103              		.loc 1 230 50 view .LVU356
+ 1104 0072 ED18     		adds	r5, r5, r3
+ 1105 0074 DDD4     		bmi	.L98
+ 1106              	.L85:
+ 1107 0076 6D10     		asrs	r5, r5, #1
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1108              		.loc 1 230 22 view .LVU357
+ 1109 0078 8846     		mov	r8, r1
+ 230:../../util/pcm_util.c ****                   dst[i + 1] = (src[j + 1] + src[j + 3]) / 2; //right
+ 1110              		.loc 1 230 26 view .LVU358
+ 1111 007a 2CF81150 		strh	r5, [ip, r1, lsl #1]	@ movhi
+ 231:../../util/pcm_util.c **** 
+ 1112              		.loc 1 231 19 is_stmt 1 view .LVU359
+ 231:../../util/pcm_util.c **** 
+ 1113              		.loc 1 231 36 is_stmt 0 view .LVU360
+ 1114 007e 7B1C     		adds	r3, r7, #1
+ 1115 0080 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 231:../../util/pcm_util.c **** 
+ 1116              		.loc 1 231 49 view .LVU361
+ 1117 0084 0337     		adds	r7, r7, #3
+ 1118              	.LVL134:
+ 231:../../util/pcm_util.c **** 
+ 1119              		.loc 1 231 49 view .LVU362
+ 1120 0086 32F91750 		ldrsh	r5, [r2, r7, lsl #1]
+ 231:../../util/pcm_util.c **** 
+ 1121              		.loc 1 231 58 view .LVU363
+ 1122 008a 5B19     		adds	r3, r3, r5
+ 1123 008c D3D5     		bpl	.L86
+ 1124 008e 0133     		adds	r3, r3, #1
+ 1125 0090 D1E7     		b	.L86
+ 1126              	.LVL135:
+ 1127              	.L84:
+ 234:../../util/pcm_util.c ****                   dst[i + 1] = src[j + 1]; //right
+ 1128              		.loc 1 234 19 is_stmt 1 view .LVU364
+ 234:../../util/pcm_util.c ****                   dst[i + 1] = src[j + 1]; //right
+ 1129              		.loc 1 234 31 is_stmt 0 view .LVU365
+ 1130 0092 32F91350 		ldrsh	r5, [r2, r3, lsl #1]
+ 234:../../util/pcm_util.c ****                   dst[i + 1] = src[j + 1]; //right
+ 1131              		.loc 1 234 26 view .LVU366
+ 1132 0096 2CF81150 		strh	r5, [ip, r1, lsl #1]	@ movhi
+ 235:../../util/pcm_util.c ****                 }
+ 1133              		.loc 1 235 19 is_stmt 1 view .LVU367
+ 235:../../util/pcm_util.c ****                 }
+ 1134              		.loc 1 235 22 is_stmt 0 view .LVU368
+ 1135 009a 4D1C     		adds	r5, r1, #1
+ 235:../../util/pcm_util.c ****                 }
+ 1136              		.loc 1 235 35 view .LVU369
+ 1137 009c 0133     		adds	r3, r3, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 28
+
+
+ 1138              	.LVL136:
+ 235:../../util/pcm_util.c ****                 }
+ 1139              		.loc 1 235 35 view .LVU370
+ 1140 009e 32F91370 		ldrsh	r7, [r2, r3, lsl #1]
+ 235:../../util/pcm_util.c ****                 }
+ 1141              		.loc 1 235 30 view .LVU371
+ 1142 00a2 2CF81570 		strh	r7, [ip, r5, lsl #1]	@ movhi
+ 1143 00a6 CBE7     		b	.L87
+ 1144              	.LVL137:
+ 1145              	.L91:
+ 243:../../util/pcm_util.c **** 
+ 244:../../util/pcm_util.c ****         	j = i * src_cnt / dst_cnt;
+ 245:../../util/pcm_util.c **** 
+ 246:../../util/pcm_util.c ****                 if (j < maxj) {
+ 247:../../util/pcm_util.c ****                 	//dst[i] = (src[j] + src[j + 1]) >> 1;
+ 248:../../util/pcm_util.c ****                         dst[i] = (src[j] + src[j + 1]) / 2;
+ 1146              		.loc 1 248 56 view .LVU372
+ 1147 00a8 6D10     		asrs	r5, r5, #1
+ 1148              		.loc 1 248 32 view .LVU373
+ 1149 00aa 2CF81150 		strh	r5, [ip, r1, lsl #1]	@ movhi
+ 1150              	.L92:
+ 242:../../util/pcm_util.c **** 
+ 1151              		.loc 1 242 35 is_stmt 1 discriminator 2 view .LVU374
+ 1152 00ae 0131     		adds	r1, r1, #1
+ 1153              	.LVL138:
+ 242:../../util/pcm_util.c **** 
+ 1154              		.loc 1 242 35 is_stmt 0 discriminator 2 view .LVU375
+ 1155 00b0 89B2     		uxth	r1, r1
+ 1156              	.LVL139:
+ 1157              	.L89:
+ 242:../../util/pcm_util.c **** 
+ 1158              		.loc 1 242 23 is_stmt 1 discriminator 1 view .LVU376
+ 1159 00b2 8142     		cmp	r1, r0
+ 1160 00b4 23D2     		bcs	.L80
+ 244:../../util/pcm_util.c **** 
+ 1161              		.loc 1 244 10 view .LVU377
+ 244:../../util/pcm_util.c **** 
+ 1162              		.loc 1 244 16 is_stmt 0 view .LVU378
+ 1163 00b6 04FB01F3 		mul	r3, r4, r1
+ 244:../../util/pcm_util.c **** 
+ 1164              		.loc 1 244 26 view .LVU379
+ 1165 00ba 1FFA8EF5 		uxth	r5, lr
+ 1166 00be 93FBF5F3 		sdiv	r3, r3, r5
+ 244:../../util/pcm_util.c **** 
+ 1167              		.loc 1 244 12 view .LVU380
+ 1168 00c2 9DB2     		uxth	r5, r3
+ 1169              	.LVL140:
+ 246:../../util/pcm_util.c ****                 	//dst[i] = (src[j] + src[j + 1]) >> 1;
+ 1170              		.loc 1 246 17 is_stmt 1 view .LVU381
+ 246:../../util/pcm_util.c ****                 	//dst[i] = (src[j] + src[j + 1]) >> 1;
+ 1171              		.loc 1 246 20 is_stmt 0 view .LVU382
+ 1172 00c4 AE42     		cmp	r6, r5
+ 1173 00c6 09D9     		bls	.L90
+ 1174              		.loc 1 248 25 is_stmt 1 view .LVU383
+ 1175              		.loc 1 248 38 is_stmt 0 view .LVU384
+ 1176 00c8 2B46     		mov	r3, r5
+ 1177 00ca 32F91550 		ldrsh	r5, [r2, r5, lsl #1]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 29
+
+
+ 1178              	.LVL141:
+ 1179              		.loc 1 248 47 view .LVU385
+ 1180 00ce 0133     		adds	r3, r3, #1
+ 1181              	.LVL142:
+ 1182              		.loc 1 248 47 view .LVU386
+ 1183 00d0 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 1184              	.LVL143:
+ 1185              		.loc 1 248 56 view .LVU387
+ 1186 00d4 ED18     		adds	r5, r5, r3
+ 1187 00d6 E7D5     		bpl	.L91
+ 1188 00d8 0135     		adds	r5, r5, #1
+ 1189 00da E5E7     		b	.L91
+ 1190              	.LVL144:
+ 1191              	.L90:
+ 249:../../util/pcm_util.c ****                 }
+ 250:../../util/pcm_util.c ****                 else {
+ 251:../../util/pcm_util.c ****                   dst[i] = (src[j] + src[j - 1]) / 2;
+ 1192              		.loc 1 251 19 is_stmt 1 view .LVU388
+ 1193              		.loc 1 251 32 is_stmt 0 view .LVU389
+ 1194 00dc 9BB2     		uxth	r3, r3
+ 1195 00de 32F91350 		ldrsh	r5, [r2, r3, lsl #1]
+ 1196              	.LVL145:
+ 1197              		.loc 1 251 41 view .LVU390
+ 1198 00e2 6FF00047 		mvn	r7, #-2147483648
+ 1199 00e6 1F44     		add	r7, r7, r3
+ 1200 00e8 32F91730 		ldrsh	r3, [r2, r7, lsl #1]
+ 1201              	.LVL146:
+ 1202              		.loc 1 251 50 view .LVU391
+ 1203 00ec ED18     		adds	r5, r5, r3
+ 1204 00ee 03D4     		bmi	.L99
+ 1205              	.L93:
+ 1206 00f0 6D10     		asrs	r5, r5, #1
+ 1207              		.loc 1 251 26 view .LVU392
+ 1208 00f2 2CF81150 		strh	r5, [ip, r1, lsl #1]	@ movhi
+ 1209 00f6 DAE7     		b	.L92
+ 1210              	.L99:
+ 1211              		.loc 1 251 50 view .LVU393
+ 1212 00f8 0135     		adds	r5, r5, #1
+ 1213 00fa F9E7     		b	.L93
+ 1214              	.LVL147:
+ 1215              	.L95:
+ 216:../../util/pcm_util.c **** 
+ 1216              		.loc 1 216 24 discriminator 1 view .LVU394
+ 1217 00fc 1846     		mov	r0, r3
+ 1218              	.LVL148:
+ 1219              	.L80:
+ 252:../../util/pcm_util.c ****                 }
+ 253:../../util/pcm_util.c **** /*
+ 254:../../util/pcm_util.c ****                 c = i * src_cnt  * 100 / dst_cnt;
+ 255:../../util/pcm_util.c ****                 j = c  / 100;
+ 256:../../util/pcm_util.c ****                 m = c - j * 100;
+ 257:../../util/pcm_util.c **** 
+ 258:../../util/pcm_util.c ****                 if (j < maxj) {
+ 259:../../util/pcm_util.c ****                 	dst[i] = src[j] + m * (src[j + 1] - src[j]) / 99;
+ 260:../../util/pcm_util.c ****                 }
+ 261:../../util/pcm_util.c ****                 else dst[i] = src[j];
+ 262:../../util/pcm_util.c **** */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 30
+
+
+ 263:../../util/pcm_util.c ****         }
+ 264:../../util/pcm_util.c ****   }
+ 265:../../util/pcm_util.c **** 
+ 266:../../util/pcm_util.c ****   return dst_cnt;
+ 267:../../util/pcm_util.c **** }
+ 1220              		.loc 1 267 1 view .LVU395
+ 1221 00fe BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1222              		.loc 1 267 1 view .LVU396
+ 1223              		.cfi_endproc
+ 1224              	.LFE10:
+ 1226              		.section	.text.pcm_change_frequency_low_mono,"ax",%progbits
+ 1227              		.align	1
+ 1228              		.global	pcm_change_frequency_low_mono
+ 1229              		.syntax unified
+ 1230              		.thumb
+ 1231              		.thumb_func
+ 1233              	pcm_change_frequency_low_mono:
+ 1234              	.LVL149:
+ 1235              	.LFB11:
+ 268:../../util/pcm_util.c **** 
+ 269:../../util/pcm_util.c **** 
+ 270:../../util/pcm_util.c **** 
+ 271:../../util/pcm_util.c **** 
+ 272:../../util/pcm_util.c **** uint16_t pcm_change_frequency_low_mono(int16_t *dst, uint32_t dst_frquency, int16_t *src, uint16_t 
+ 273:../../util/pcm_util.c **** {
+ 1236              		.loc 1 273 1 is_stmt 1 view -0
+ 1237              		.cfi_startproc
+ 1238              		@ args = 8, pretend = 0, frame = 0
+ 1239              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1240              		.loc 1 273 1 is_stmt 0 view .LVU398
+ 1241 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1242              	.LCFI10:
+ 1243              		.cfi_def_cfa_offset 28
+ 1244              		.cfi_offset 4, -28
+ 1245              		.cfi_offset 5, -24
+ 1246              		.cfi_offset 6, -20
+ 1247              		.cfi_offset 7, -16
+ 1248              		.cfi_offset 8, -12
+ 1249              		.cfi_offset 9, -8
+ 1250              		.cfi_offset 14, -4
+ 1251 0004 83B0     		sub	sp, sp, #12
+ 1252              	.LCFI11:
+ 1253              		.cfi_def_cfa_offset 40
+ 1254 0006 DDF82890 		ldr	r9, [sp, #40]
+ 274:../../util/pcm_util.c ****   uint16_t i, j, k, n;
+ 1255              		.loc 1 274 3 is_stmt 1 view .LVU399
+ 275:../../util/pcm_util.c ****   int32_t sum;
+ 1256              		.loc 1 275 3 view .LVU400
+ 276:../../util/pcm_util.c ****   uint32_t new_frquency;
+ 1257              		.loc 1 276 3 view .LVU401
+ 277:../../util/pcm_util.c **** 
+ 278:../../util/pcm_util.c ****   if (!src_cnt) return 0;
+ 1258              		.loc 1 278 3 view .LVU402
+ 1259              		.loc 1 278 6 is_stmt 0 view .LVU403
+ 1260 000a 9846     		mov	r8, r3
+ 1261 000c 002B     		cmp	r3, #0
+ 1262 000e 3BD0     		beq	.L106
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 31
+
+
+ 1263 0010 0746     		mov	r7, r0
+ 279:../../util/pcm_util.c **** 
+ 280:../../util/pcm_util.c ****   n = src_frquency / dst_frquency;
+ 1264              		.loc 1 280 3 is_stmt 1 view .LVU404
+ 1265              		.loc 1 280 20 is_stmt 0 view .LVU405
+ 1266 0012 B9FBF1F3 		udiv	r3, r9, r1
+ 1267              	.LVL150:
+ 1268              		.loc 1 280 5 view .LVU406
+ 1269 0016 9EB2     		uxth	r6, r3
+ 1270              	.LVL151:
+ 281:../../util/pcm_util.c **** 
+ 282:../../util/pcm_util.c ****   if (n < 2) return pcm_change_frequency(dst, dst_frquency, src, src_cnt, src_frquency, 1);
+ 1271              		.loc 1 282 3 is_stmt 1 view .LVU407
+ 1272              		.loc 1 282 6 is_stmt 0 view .LVU408
+ 1273 0018 012E     		cmp	r6, #1
+ 1274 001a 02D9     		bls	.L109
+ 283:../../util/pcm_util.c **** 
+ 284:../../util/pcm_util.c ****   j = 0;
+ 285:../../util/pcm_util.c ****   k = 0;
+ 1275              		.loc 1 285 5 view .LVU409
+ 1276 001c 0020     		movs	r0, #0
+ 1277              	.LVL152:
+ 286:../../util/pcm_util.c ****   sum = 0;
+ 287:../../util/pcm_util.c ****   for (i = 0; i < src_cnt; i += n) {
+ 1278              		.loc 1 287 10 view .LVU410
+ 1279 001e 0546     		mov	r5, r0
+ 1280 0020 1BE0     		b	.L102
+ 1281              	.LVL153:
+ 1282              	.L109:
+ 282:../../util/pcm_util.c **** 
+ 1283              		.loc 1 282 14 is_stmt 1 discriminator 1 view .LVU411
+ 282:../../util/pcm_util.c **** 
+ 1284              		.loc 1 282 21 is_stmt 0 discriminator 1 view .LVU412
+ 1285 0022 0123     		movs	r3, #1
+ 1286 0024 0193     		str	r3, [sp, #4]
+ 1287 0026 CDF80090 		str	r9, [sp]
+ 1288 002a 4346     		mov	r3, r8
+ 1289 002c FFF7FEFF 		bl	pcm_change_frequency
+ 1290              	.LVL154:
+ 282:../../util/pcm_util.c **** 
+ 1291              		.loc 1 282 21 view .LVU413
+ 1292 0030 27E0     		b	.L101
+ 1293              	.LVL155:
+ 1294              	.L104:
+ 288:../../util/pcm_util.c ****     sum = src[i];
+ 289:../../util/pcm_util.c ****     for (j = 1; j < n; j++) {
+ 290:../../util/pcm_util.c ****        sum += src[i + j];
+ 1295              		.loc 1 290 8 is_stmt 1 view .LVU414
+ 1296              		.loc 1 290 21 is_stmt 0 view .LVU415
+ 1297 0032 05EB0C04 		add	r4, r5, ip
+ 1298              		.loc 1 290 18 view .LVU416
+ 1299 0036 32F91440 		ldrsh	r4, [r2, r4, lsl #1]
+ 1300              		.loc 1 290 12 view .LVU417
+ 1301 003a A644     		add	lr, lr, r4
+ 1302              	.LVL156:
+ 289:../../util/pcm_util.c ****        sum += src[i + j];
+ 1303              		.loc 1 289 25 is_stmt 1 discriminator 3 view .LVU418
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 32
+
+
+ 1304 003c 0CF1010C 		add	ip, ip, #1
+ 1305              	.LVL157:
+ 289:../../util/pcm_util.c ****        sum += src[i + j];
+ 1306              		.loc 1 289 25 is_stmt 0 discriminator 3 view .LVU419
+ 1307 0040 1FFA8CFC 		uxth	ip, ip
+ 1308              	.LVL158:
+ 1309              	.L103:
+ 289:../../util/pcm_util.c ****        sum += src[i + j];
+ 1310              		.loc 1 289 19 is_stmt 1 discriminator 1 view .LVU420
+ 1311 0044 B445     		cmp	ip, r6
+ 1312 0046 F4D3     		bcc	.L104
+ 291:../../util/pcm_util.c ****     }
+ 292:../../util/pcm_util.c ****     dst[k] = sum / n;
+ 1313              		.loc 1 292 5 view .LVU421
+ 1314              		.loc 1 292 18 is_stmt 0 view .LVU422
+ 1315 0048 9CB2     		uxth	r4, r3
+ 1316 004a 9EFBF4FE 		sdiv	lr, lr, r4
+ 1317              	.LVL159:
+ 1318              		.loc 1 292 12 view .LVU423
+ 1319 004e 27F810E0 		strh	lr, [r7, r0, lsl #1]	@ movhi
+ 293:../../util/pcm_util.c ****     k++;
+ 1320              		.loc 1 293 5 is_stmt 1 view .LVU424
+ 1321              		.loc 1 293 6 is_stmt 0 view .LVU425
+ 1322 0052 0130     		adds	r0, r0, #1
+ 1323              	.LVL160:
+ 1324              		.loc 1 293 6 view .LVU426
+ 1325 0054 80B2     		uxth	r0, r0
+ 1326              	.LVL161:
+ 287:../../util/pcm_util.c ****     sum = src[i];
+ 1327              		.loc 1 287 30 is_stmt 1 discriminator 2 view .LVU427
+ 1328 0056 3544     		add	r5, r5, r6
+ 1329              	.LVL162:
+ 287:../../util/pcm_util.c ****     sum = src[i];
+ 1330              		.loc 1 287 30 is_stmt 0 discriminator 2 view .LVU428
+ 1331 0058 ADB2     		uxth	r5, r5
+ 1332              	.LVL163:
+ 1333              	.L102:
+ 287:../../util/pcm_util.c ****     sum = src[i];
+ 1334              		.loc 1 287 17 is_stmt 1 discriminator 1 view .LVU429
+ 1335 005a 4545     		cmp	r5, r8
+ 1336 005c 04D2     		bcs	.L110
+ 288:../../util/pcm_util.c ****     for (j = 1; j < n; j++) {
+ 1337              		.loc 1 288 5 view .LVU430
+ 288:../../util/pcm_util.c ****     for (j = 1; j < n; j++) {
+ 1338              		.loc 1 288 14 is_stmt 0 view .LVU431
+ 1339 005e 32F915E0 		ldrsh	lr, [r2, r5, lsl #1]
+ 1340              	.LVL164:
+ 289:../../util/pcm_util.c ****        sum += src[i + j];
+ 1341              		.loc 1 289 5 is_stmt 1 view .LVU432
+ 289:../../util/pcm_util.c ****        sum += src[i + j];
+ 1342              		.loc 1 289 12 is_stmt 0 view .LVU433
+ 1343 0062 4FF0010C 		mov	ip, #1
+ 289:../../util/pcm_util.c ****        sum += src[i + j];
+ 1344              		.loc 1 289 5 view .LVU434
+ 1345 0066 EDE7     		b	.L103
+ 1346              	.LVL165:
+ 1347              	.L110:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 33
+
+
+ 294:../../util/pcm_util.c ****   }
+ 295:../../util/pcm_util.c **** 
+ 296:../../util/pcm_util.c **** 
+ 297:../../util/pcm_util.c ****   new_frquency = src_frquency / n ;
+ 1348              		.loc 1 297 3 is_stmt 1 view .LVU435
+ 1349              		.loc 1 297 16 is_stmt 0 view .LVU436
+ 1350 0068 9BB2     		uxth	r3, r3
+ 1351 006a B9FBF3F3 		udiv	r3, r9, r3
+ 1352              	.LVL166:
+ 298:../../util/pcm_util.c **** 
+ 299:../../util/pcm_util.c ****   if (dst_frquency ==  new_frquency) return k;
+ 1353              		.loc 1 299 3 is_stmt 1 view .LVU437
+ 1354              		.loc 1 299 6 is_stmt 0 view .LVU438
+ 1355 006e 9942     		cmp	r1, r3
+ 1356 0070 07D0     		beq	.L101
+ 300:../../util/pcm_util.c **** 
+ 301:../../util/pcm_util.c **** 
+ 302:../../util/pcm_util.c **** 
+ 303:../../util/pcm_util.c **** 
+ 304:../../util/pcm_util.c ****   return pcm_change_frequency(dst, dst_frquency, dst, k, new_frquency, 1);
+ 1357              		.loc 1 304 3 is_stmt 1 view .LVU439
+ 1358              		.loc 1 304 10 is_stmt 0 view .LVU440
+ 1359 0072 0122     		movs	r2, #1
+ 1360              	.LVL167:
+ 1361              		.loc 1 304 10 view .LVU441
+ 1362 0074 0192     		str	r2, [sp, #4]
+ 1363 0076 0093     		str	r3, [sp]
+ 1364 0078 0346     		mov	r3, r0
+ 1365              	.LVL168:
+ 1366              		.loc 1 304 10 view .LVU442
+ 1367 007a 3A46     		mov	r2, r7
+ 1368 007c 3846     		mov	r0, r7
+ 1369              	.LVL169:
+ 1370              		.loc 1 304 10 view .LVU443
+ 1371 007e FFF7FEFF 		bl	pcm_change_frequency
+ 1372              	.LVL170:
+ 1373              	.L101:
+ 305:../../util/pcm_util.c **** }
+ 1374              		.loc 1 305 1 view .LVU444
+ 1375 0082 03B0     		add	sp, sp, #12
+ 1376              	.LCFI12:
+ 1377              		.cfi_remember_state
+ 1378              		.cfi_def_cfa_offset 28
+ 1379              		@ sp needed
+ 1380 0084 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1381              	.LVL171:
+ 1382              	.L106:
+ 1383              	.LCFI13:
+ 1384              		.cfi_restore_state
+ 278:../../util/pcm_util.c **** 
+ 1385              		.loc 1 278 24 discriminator 1 view .LVU445
+ 1386 0088 1846     		mov	r0, r3
+ 1387              	.LVL172:
+ 278:../../util/pcm_util.c **** 
+ 1388              		.loc 1 278 24 discriminator 1 view .LVU446
+ 1389 008a FAE7     		b	.L101
+ 1390              		.cfi_endproc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 34
+
+
+ 1391              	.LFE11:
+ 1393              		.section	.text.pcm_change_frequency_mono,"ax",%progbits
+ 1394              		.align	1
+ 1395              		.global	pcm_change_frequency_mono
+ 1396              		.syntax unified
+ 1397              		.thumb
+ 1398              		.thumb_func
+ 1400              	pcm_change_frequency_mono:
+ 1401              	.LVL173:
+ 1402              	.LFB12:
+ 306:../../util/pcm_util.c **** 
+ 307:../../util/pcm_util.c **** 
+ 308:../../util/pcm_util.c **** uint16_t pcm_change_frequency_mono(int16_t *dst_mono, uint32_t dst_frquency, int16_t *src_mono, uin
+ 309:../../util/pcm_util.c **** {
+ 1403              		.loc 1 309 1 is_stmt 1 view -0
+ 1404              		.cfi_startproc
+ 1405              		@ args = 4, pretend = 0, frame = 0
+ 1406              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1407              		.loc 1 309 1 is_stmt 0 view .LVU448
+ 1408 0000 30B5     		push	{r4, r5, lr}
+ 1409              	.LCFI14:
+ 1410              		.cfi_def_cfa_offset 12
+ 1411              		.cfi_offset 4, -12
+ 1412              		.cfi_offset 5, -8
+ 1413              		.cfi_offset 14, -4
+ 1414 0002 0446     		mov	r4, r0
+ 310:../../util/pcm_util.c ****   uint16_t dst_cnt, i, j;
+ 1415              		.loc 1 310 3 is_stmt 1 view .LVU449
+ 311:../../util/pcm_util.c ****   float v, mul;
+ 1416              		.loc 1 311 3 view .LVU450
+ 312:../../util/pcm_util.c **** 
+ 313:../../util/pcm_util.c ****   dst_cnt = src_cnt * dst_frquency / src_frquency;
+ 1417              		.loc 1 313 3 view .LVU451
+ 1418              		.loc 1 313 21 is_stmt 0 view .LVU452
+ 1419 0004 03FB01F1 		mul	r1, r3, r1
+ 1420              	.LVL174:
+ 1421              		.loc 1 313 36 view .LVU453
+ 1422 0008 0398     		ldr	r0, [sp, #12]
+ 1423              	.LVL175:
+ 1424              		.loc 1 313 36 view .LVU454
+ 1425 000a B1FBF0F5 		udiv	r5, r1, r0
+ 1426              		.loc 1 313 11 view .LVU455
+ 1427 000e A8B2     		uxth	r0, r5
+ 1428              	.LVL176:
+ 314:../../util/pcm_util.c **** 
+ 315:../../util/pcm_util.c ****   for (i = 0; i < dst_cnt; i++) {
+ 1429              		.loc 1 315 3 is_stmt 1 view .LVU456
+ 1430              		.loc 1 315 10 is_stmt 0 view .LVU457
+ 1431 0010 4FF0000C 		mov	ip, #0
+ 1432              		.loc 1 315 3 view .LVU458
+ 1433 0014 07E0     		b	.L112
+ 1434              	.LVL177:
+ 1435              	.L113:
+ 316:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 317:../../util/pcm_util.c ****     j = (uint16_t)v;
+ 318:../../util/pcm_util.c ****     mul = v - (float)j;
+ 319:../../util/pcm_util.c ****     if (j < src_cnt - 1) {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 35
+
+
+ 320:../../util/pcm_util.c ****       dst_mono[i] = src_mono[j] + (src_mono[j + 1] - src_mono[j]) * mul;
+ 321:../../util/pcm_util.c ****     }
+ 322:../../util/pcm_util.c ****     else {
+ 323:../../util/pcm_util.c ****       dst_mono[i] = src_mono[j];
+ 1436              		.loc 1 323 7 is_stmt 1 view .LVU459
+ 1437              		.loc 1 323 29 is_stmt 0 view .LVU460
+ 1438 0016 32F91110 		ldrsh	r1, [r2, r1, lsl #1]
+ 1439              	.LVL178:
+ 1440              		.loc 1 323 19 view .LVU461
+ 1441 001a 24F81C10 		strh	r1, [r4, ip, lsl #1]	@ movhi
+ 1442              	.LVL179:
+ 1443              	.L114:
+ 315:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1444              		.loc 1 315 29 is_stmt 1 discriminator 2 view .LVU462
+ 1445 001e 0CF1010C 		add	ip, ip, #1
+ 1446              	.LVL180:
+ 315:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1447              		.loc 1 315 29 is_stmt 0 discriminator 2 view .LVU463
+ 1448 0022 1FFA8CFC 		uxth	ip, ip
+ 1449              	.LVL181:
+ 1450              	.L112:
+ 315:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1451              		.loc 1 315 17 is_stmt 1 discriminator 1 view .LVU464
+ 1452 0026 8445     		cmp	ip, r0
+ 1453 0028 35D2     		bcs	.L117
+ 316:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1454              		.loc 1 316 5 view .LVU465
+ 316:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1455              		.loc 1 316 19 is_stmt 0 view .LVU466
+ 1456 002a 03FB0CF1 		mul	r1, r3, ip
+ 1457 002e 06EE901A 		vmov	s13, r1	@ int
+ 316:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1458              		.loc 1 316 9 view .LVU467
+ 1459 0032 F8EEE66A 		vcvt.f32.s32	s13, s13
+ 316:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1460              		.loc 1 316 30 view .LVU468
+ 1461 0036 A9B2     		uxth	r1, r5
+ 1462 0038 07EE901A 		vmov	s15, r1	@ int
+ 1463 003c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 316:../../util/pcm_util.c ****     v = (float)(i * src_cnt) / dst_cnt;
+ 1464              		.loc 1 316 7 view .LVU469
+ 1465 0040 86EEA77A 		vdiv.f32	s14, s13, s15
+ 1466              	.LVL182:
+ 317:../../util/pcm_util.c ****     mul = v - (float)j;
+ 1467              		.loc 1 317 5 is_stmt 1 view .LVU470
+ 317:../../util/pcm_util.c ****     mul = v - (float)j;
+ 1468              		.loc 1 317 7 is_stmt 0 view .LVU471
+ 1469 0044 FCEEC77A 		vcvt.u32.f32	s15, s14
+ 1470 0048 17EE901A 		vmov	r1, s15	@ int
+ 1471 004c 89B2     		uxth	r1, r1
+ 1472              	.LVL183:
+ 318:../../util/pcm_util.c ****     if (j < src_cnt - 1) {
+ 1473              		.loc 1 318 5 is_stmt 1 view .LVU472
+ 318:../../util/pcm_util.c ****     if (j < src_cnt - 1) {
+ 1474              		.loc 1 318 15 is_stmt 0 view .LVU473
+ 1475 004e 07EE901A 		vmov	s15, r1	@ int
+ 1476 0052 F8EE677A 		vcvt.f32.u32	s15, s15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 36
+
+
+ 318:../../util/pcm_util.c ****     if (j < src_cnt - 1) {
+ 1477              		.loc 1 318 9 view .LVU474
+ 1478 0056 37EE677A 		vsub.f32	s14, s14, s15
+ 1479              	.LVL184:
+ 319:../../util/pcm_util.c ****       dst_mono[i] = src_mono[j] + (src_mono[j + 1] - src_mono[j]) * mul;
+ 1480              		.loc 1 319 5 is_stmt 1 view .LVU475
+ 319:../../util/pcm_util.c ****       dst_mono[i] = src_mono[j] + (src_mono[j + 1] - src_mono[j]) * mul;
+ 1481              		.loc 1 319 21 is_stmt 0 view .LVU476
+ 1482 005a 03F1FF3E 		add	lr, r3, #-1
+ 319:../../util/pcm_util.c ****       dst_mono[i] = src_mono[j] + (src_mono[j + 1] - src_mono[j]) * mul;
+ 1483              		.loc 1 319 8 view .LVU477
+ 1484 005e 7145     		cmp	r1, lr
+ 1485 0060 D9DA     		bge	.L113
+ 320:../../util/pcm_util.c ****     }
+ 1486              		.loc 1 320 7 is_stmt 1 view .LVU478
+ 320:../../util/pcm_util.c ****     }
+ 1487              		.loc 1 320 29 is_stmt 0 view .LVU479
+ 1488 0062 32F911E0 		ldrsh	lr, [r2, r1, lsl #1]
+ 320:../../util/pcm_util.c ****     }
+ 1489              		.loc 1 320 44 view .LVU480
+ 1490 0066 0131     		adds	r1, r1, #1
+ 1491              	.LVL185:
+ 320:../../util/pcm_util.c ****     }
+ 1492              		.loc 1 320 44 view .LVU481
+ 1493 0068 32F91110 		ldrsh	r1, [r2, r1, lsl #1]
+ 1494              	.LVL186:
+ 320:../../util/pcm_util.c ****     }
+ 1495              		.loc 1 320 52 view .LVU482
+ 1496 006c A1EB0E01 		sub	r1, r1, lr
+ 320:../../util/pcm_util.c ****     }
+ 1497              		.loc 1 320 67 view .LVU483
+ 1498 0070 07EE901A 		vmov	s15, r1	@ int
+ 1499 0074 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1500 0078 27EE877A 		vmul.f32	s14, s15, s14
+ 1501              	.LVL187:
+ 320:../../util/pcm_util.c ****     }
+ 1502              		.loc 1 320 33 view .LVU484
+ 1503 007c 07EE90EA 		vmov	s15, lr	@ int
+ 1504 0080 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1505 0084 77EE877A 		vadd.f32	s15, s15, s14
+ 320:../../util/pcm_util.c ****     }
+ 1506              		.loc 1 320 19 view .LVU485
+ 1507 0088 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 1508 008c 17EE901A 		vmov	r1, s15	@ int
+ 1509 0090 24F81C10 		strh	r1, [r4, ip, lsl #1]	@ movhi
+ 1510 0094 C3E7     		b	.L114
+ 1511              	.LVL188:
+ 1512              	.L117:
+ 324:../../util/pcm_util.c ****     }
+ 325:../../util/pcm_util.c **** 
+ 326:../../util/pcm_util.c ****   }
+ 327:../../util/pcm_util.c **** 
+ 328:../../util/pcm_util.c ****   return dst_cnt;
+ 1513              		.loc 1 328 3 is_stmt 1 view .LVU486
+ 329:../../util/pcm_util.c **** }
+ 1514              		.loc 1 329 1 is_stmt 0 view .LVU487
+ 1515 0096 30BD     		pop	{r4, r5, pc}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 37
+
+
+ 1516              		.loc 1 329 1 view .LVU488
+ 1517              		.cfi_endproc
+ 1518              	.LFE12:
+ 1520              		.section	.text.pcm_change_frequency3,"ax",%progbits
+ 1521              		.align	1
+ 1522              		.global	pcm_change_frequency3
+ 1523              		.syntax unified
+ 1524              		.thumb
+ 1525              		.thumb_func
+ 1527              	pcm_change_frequency3:
+ 1528              	.LVL189:
+ 1529              	.LFB13:
+ 330:../../util/pcm_util.c **** 
+ 331:../../util/pcm_util.c **** 
+ 332:../../util/pcm_util.c **** uint16_t pcm_change_frequency3(int16_t *dst, uint32_t dst_frquency, int16_t *src, uint16_t src_cnt,
+ 333:../../util/pcm_util.c **** {
+ 1530              		.loc 1 333 1 is_stmt 1 view -0
+ 1531              		.cfi_startproc
+ 1532              		@ args = 8, pretend = 0, frame = 0
+ 1533              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1534              		.loc 1 333 1 is_stmt 0 view .LVU490
+ 1535 0000 70B5     		push	{r4, r5, r6, lr}
+ 1536              	.LCFI15:
+ 1537              		.cfi_def_cfa_offset 16
+ 1538              		.cfi_offset 4, -16
+ 1539              		.cfi_offset 5, -12
+ 1540              		.cfi_offset 6, -8
+ 1541              		.cfi_offset 14, -4
+ 334:../../util/pcm_util.c **** 	 uint16_t dst_cnt, i, j;
+ 1542              		.loc 1 334 3 is_stmt 1 view .LVU491
+ 335:../../util/pcm_util.c **** 	 float v, mul;
+ 1543              		.loc 1 335 3 view .LVU492
+ 336:../../util/pcm_util.c **** 
+ 337:../../util/pcm_util.c **** 	 if (!src_cnt) return 0;
+ 1544              		.loc 1 337 3 view .LVU493
+ 1545              		.loc 1 337 6 is_stmt 0 view .LVU494
+ 1546 0002 1C46     		mov	r4, r3
+ 1547 0004 002B     		cmp	r3, #0
+ 1548 0006 00F0A380 		beq	.L127
+ 1549 000a 8446     		mov	ip, r0
+ 338:../../util/pcm_util.c **** 
+ 339:../../util/pcm_util.c **** 	 dst_cnt = src_cnt * dst_frquency / src_frquency;
+ 1550              		.loc 1 339 3 is_stmt 1 view .LVU495
+ 1551              		.loc 1 339 21 is_stmt 0 view .LVU496
+ 1552 000c 03FB01F1 		mul	r1, r3, r1
+ 1553              	.LVL190:
+ 1554              		.loc 1 339 36 view .LVU497
+ 1555 0010 049B     		ldr	r3, [sp, #16]
+ 1556              	.LVL191:
+ 1557              		.loc 1 339 36 view .LVU498
+ 1558 0012 B1FBF3FE 		udiv	lr, r1, r3
+ 1559              		.loc 1 339 11 view .LVU499
+ 1560 0016 1FFA8EF0 		uxth	r0, lr
+ 1561              	.LVL192:
+ 340:../../util/pcm_util.c **** 
+ 341:../../util/pcm_util.c **** 
+ 342:../../util/pcm_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 38
+
+
+ 343:../../util/pcm_util.c **** 	  if (channels == 2) {
+ 1562              		.loc 1 343 4 is_stmt 1 view .LVU500
+ 1563              		.loc 1 343 7 is_stmt 0 view .LVU501
+ 1564 001a 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 1565 001e 022B     		cmp	r3, #2
+ 1566 0020 57D0     		beq	.L128
+ 344:../../util/pcm_util.c **** 	        for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 345:../../util/pcm_util.c **** 
+ 346:../../util/pcm_util.c **** 
+ 347:../../util/pcm_util.c **** 	                v = (float)(i * src_cnt) / dst_cnt;
+ 348:../../util/pcm_util.c **** 	    		    j = (uint16_t)v;
+ 349:../../util/pcm_util.c **** 	    		    mul = v - (float)j;
+ 350:../../util/pcm_util.c **** 
+ 351:../../util/pcm_util.c ****                     if (ODD(j)) {
+ 352:../../util/pcm_util.c ****                     	 j++;
+ 353:../../util/pcm_util.c ****                     }
+ 354:../../util/pcm_util.c **** 
+ 355:../../util/pcm_util.c **** 
+ 356:../../util/pcm_util.c ****   	  		        dst[i] = src[j] + (src[j + 2] - src[j]) * mul;
+ 357:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 358:../../util/pcm_util.c **** 	        }
+ 359:../../util/pcm_util.c **** 
+ 360:../../util/pcm_util.c **** 	  } else {
+ 361:../../util/pcm_util.c **** 		  for (i = 0; i < dst_cnt; i++) {
+ 1567              		.loc 1 361 12 view .LVU502
+ 1568 0022 0021     		movs	r1, #0
+ 1569 0024 5DE0     		b	.L121
+ 1570              	.LVL193:
+ 1571              	.L122:
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1572              		.loc 1 356 16 is_stmt 1 view .LVU503
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1573              		.loc 1 356 28 is_stmt 0 view .LVU504
+ 1574 0026 32F91310 		ldrsh	r1, [r2, r3, lsl #1]
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1575              		.loc 1 356 38 view .LVU505
+ 1576 002a 9E1C     		adds	r6, r3, #2
+ 1577 002c 32F91660 		ldrsh	r6, [r2, r6, lsl #1]
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1578              		.loc 1 356 46 view .LVU506
+ 1579 0030 761A     		subs	r6, r6, r1
+ 1580 0032 07EE106A 		vmov	s14, r6	@ int
+ 1581              	.LVL194:
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1582              		.loc 1 356 56 view .LVU507
+ 1583 0036 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1584 003a 27EE267A 		vmul.f32	s14, s14, s13
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1585              		.loc 1 356 32 view .LVU508
+ 1586 003e 07EE901A 		vmov	s15, r1	@ int
+ 1587 0042 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1588 0046 77EE877A 		vadd.f32	s15, s15, s14
+ 356:../../util/pcm_util.c ****   	  		        dst[i + 1] = src[j + 1] + (src[j + 3] - src[j + 1]) * mul;
+ 1589              		.loc 1 356 23 view .LVU509
+ 1590 004a FDEEE77A 		vcvt.s32.f32	s15, s15
+ 1591 004e 17EE901A 		vmov	r1, s15	@ int
+ 1592 0052 2CF81510 		strh	r1, [ip, r5, lsl #1]	@ movhi
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 39
+
+
+ 357:../../util/pcm_util.c **** 	        }
+ 1593              		.loc 1 357 16 is_stmt 1 view .LVU510
+ 357:../../util/pcm_util.c **** 	        }
+ 1594              		.loc 1 357 32 is_stmt 0 view .LVU511
+ 1595 0056 591C     		adds	r1, r3, #1
+ 1596 0058 32F91110 		ldrsh	r1, [r2, r1, lsl #1]
+ 357:../../util/pcm_util.c **** 	        }
+ 1597              		.loc 1 357 46 view .LVU512
+ 1598 005c 0333     		adds	r3, r3, #3
+ 1599              	.LVL195:
+ 357:../../util/pcm_util.c **** 	        }
+ 1600              		.loc 1 357 46 view .LVU513
+ 1601 005e 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 1602              	.LVL196:
+ 357:../../util/pcm_util.c **** 	        }
+ 1603              		.loc 1 357 54 view .LVU514
+ 1604 0062 5B1A     		subs	r3, r3, r1
+ 1605 0064 07EE103A 		vmov	s14, r3	@ int
+ 357:../../util/pcm_util.c **** 	        }
+ 1606              		.loc 1 357 68 view .LVU515
+ 1607 0068 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1608 006c 27EE267A 		vmul.f32	s14, s14, s13
+ 357:../../util/pcm_util.c **** 	        }
+ 1609              		.loc 1 357 40 view .LVU516
+ 1610 0070 07EE901A 		vmov	s15, r1	@ int
+ 1611 0074 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1612 0078 77EE877A 		vadd.f32	s15, s15, s14
+ 357:../../util/pcm_util.c **** 	        }
+ 1613              		.loc 1 357 19 view .LVU517
+ 1614 007c 6B1C     		adds	r3, r5, #1
+ 357:../../util/pcm_util.c **** 	        }
+ 1615              		.loc 1 357 27 view .LVU518
+ 1616 007e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 1617 0082 17EE901A 		vmov	r1, s15	@ int
+ 1618 0086 2CF81310 		strh	r1, [ip, r3, lsl #1]	@ movhi
+ 344:../../util/pcm_util.c **** 	        for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1619              		.loc 1 344 41 is_stmt 1 discriminator 2 view .LVU519
+ 1620 008a 0235     		adds	r5, r5, #2
+ 1621              	.LVL197:
+ 344:../../util/pcm_util.c **** 	        for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1622              		.loc 1 344 41 is_stmt 0 discriminator 2 view .LVU520
+ 1623 008c ADB2     		uxth	r5, r5
+ 1624              	.LVL198:
+ 1625              	.L120:
+ 344:../../util/pcm_util.c **** 	        for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1626              		.loc 1 344 24 is_stmt 1 discriminator 1 view .LVU521
+ 344:../../util/pcm_util.c **** 	        for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1627              		.loc 1 344 34 is_stmt 0 discriminator 1 view .LVU522
+ 1628 008e 1FFA8EF3 		uxth	r3, lr
+ 1629 0092 591E     		subs	r1, r3, #1
+ 344:../../util/pcm_util.c **** 	        for (i = 0; i < dst_cnt - 1; i += 2 ) {
+ 1630              		.loc 1 344 24 discriminator 1 view .LVU523
+ 1631 0094 8D42     		cmp	r5, r1
+ 1632 0096 5CDA     		bge	.L119
+ 347:../../util/pcm_util.c **** 	    		    j = (uint16_t)v;
+ 1633              		.loc 1 347 18 is_stmt 1 view .LVU524
+ 347:../../util/pcm_util.c **** 	    		    j = (uint16_t)v;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 40
+
+
+ 1634              		.loc 1 347 32 is_stmt 0 view .LVU525
+ 1635 0098 05FB04F1 		mul	r1, r5, r4
+ 1636 009c 07EE101A 		vmov	s14, r1	@ int
+ 347:../../util/pcm_util.c **** 	    		    j = (uint16_t)v;
+ 1637              		.loc 1 347 22 view .LVU526
+ 1638 00a0 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 347:../../util/pcm_util.c **** 	    		    j = (uint16_t)v;
+ 1639              		.loc 1 347 43 view .LVU527
+ 1640 00a4 07EE903A 		vmov	s15, r3	@ int
+ 1641 00a8 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 347:../../util/pcm_util.c **** 	    		    j = (uint16_t)v;
+ 1642              		.loc 1 347 20 view .LVU528
+ 1643 00ac C7EE276A 		vdiv.f32	s13, s14, s15
+ 1644              	.LVL199:
+ 348:../../util/pcm_util.c **** 	    		    mul = v - (float)j;
+ 1645              		.loc 1 348 12 is_stmt 1 view .LVU529
+ 348:../../util/pcm_util.c **** 	    		    mul = v - (float)j;
+ 1646              		.loc 1 348 14 is_stmt 0 view .LVU530
+ 1647 00b0 FCEEE67A 		vcvt.u32.f32	s15, s13
+ 1648 00b4 17EE903A 		vmov	r3, s15	@ int
+ 1649 00b8 9BB2     		uxth	r3, r3
+ 1650              	.LVL200:
+ 349:../../util/pcm_util.c **** 
+ 1651              		.loc 1 349 12 is_stmt 1 view .LVU531
+ 349:../../util/pcm_util.c **** 
+ 1652              		.loc 1 349 22 is_stmt 0 view .LVU532
+ 1653 00ba 07EE903A 		vmov	s15, r3	@ int
+ 1654 00be F8EE677A 		vcvt.f32.u32	s15, s15
+ 349:../../util/pcm_util.c **** 
+ 1655              		.loc 1 349 16 view .LVU533
+ 1656 00c2 76EEE76A 		vsub.f32	s13, s13, s15
+ 1657              	.LVL201:
+ 351:../../util/pcm_util.c ****                     	 j++;
+ 1658              		.loc 1 351 21 is_stmt 1 view .LVU534
+ 351:../../util/pcm_util.c ****                     	 j++;
+ 1659              		.loc 1 351 24 is_stmt 0 view .LVU535
+ 1660 00c6 13F0010F 		tst	r3, #1
+ 1661 00ca ACD0     		beq	.L122
+ 352:../../util/pcm_util.c ****                     }
+ 1662              		.loc 1 352 23 is_stmt 1 view .LVU536
+ 352:../../util/pcm_util.c ****                     }
+ 1663              		.loc 1 352 24 is_stmt 0 view .LVU537
+ 1664 00cc 0133     		adds	r3, r3, #1
+ 1665              	.LVL202:
+ 352:../../util/pcm_util.c ****                     }
+ 1666              		.loc 1 352 24 view .LVU538
+ 1667 00ce 9BB2     		uxth	r3, r3
+ 1668              	.LVL203:
+ 352:../../util/pcm_util.c ****                     }
+ 1669              		.loc 1 352 24 view .LVU539
+ 1670 00d0 A9E7     		b	.L122
+ 1671              	.LVL204:
+ 1672              	.L128:
+ 344:../../util/pcm_util.c **** 
+ 1673              		.loc 1 344 17 view .LVU540
+ 1674 00d2 0025     		movs	r5, #0
+ 1675 00d4 DBE7     		b	.L120
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 41
+
+
+ 1676              	.LVL205:
+ 1677              	.L124:
+ 362:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 363:../../util/pcm_util.c **** 		    j = (uint16_t)v;
+ 364:../../util/pcm_util.c **** 		    mul = v - (float)j;
+ 365:../../util/pcm_util.c **** 		    if (j < src_cnt - 1) {
+ 366:../../util/pcm_util.c **** 		      dst[i] = src[j] + (src[j + 1] - src[j]) * mul;
+ 367:../../util/pcm_util.c **** 		    }
+ 368:../../util/pcm_util.c **** 		    else {
+ 369:../../util/pcm_util.c **** 		      dst[i] = src[j];
+ 1678              		.loc 1 369 9 is_stmt 1 view .LVU541
+ 1679              		.loc 1 369 21 is_stmt 0 view .LVU542
+ 1680 00d6 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 1681              	.LVL206:
+ 1682              		.loc 1 369 16 view .LVU543
+ 1683 00da 2CF81130 		strh	r3, [ip, r1, lsl #1]	@ movhi
+ 1684              	.LVL207:
+ 1685              	.L125:
+ 361:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1686              		.loc 1 361 31 is_stmt 1 discriminator 2 view .LVU544
+ 1687 00de 0131     		adds	r1, r1, #1
+ 1688              	.LVL208:
+ 361:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1689              		.loc 1 361 31 is_stmt 0 discriminator 2 view .LVU545
+ 1690 00e0 89B2     		uxth	r1, r1
+ 1691              	.LVL209:
+ 1692              	.L121:
+ 361:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1693              		.loc 1 361 19 is_stmt 1 discriminator 1 view .LVU546
+ 1694 00e2 8142     		cmp	r1, r0
+ 1695 00e4 35D2     		bcs	.L119
+ 362:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1696              		.loc 1 362 7 view .LVU547
+ 362:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1697              		.loc 1 362 21 is_stmt 0 view .LVU548
+ 1698 00e6 04FB01F3 		mul	r3, r4, r1
+ 1699 00ea 06EE903A 		vmov	s13, r3	@ int
+ 362:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1700              		.loc 1 362 11 view .LVU549
+ 1701 00ee F8EEE66A 		vcvt.f32.s32	s13, s13
+ 362:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1702              		.loc 1 362 32 view .LVU550
+ 1703 00f2 1FFA8EF3 		uxth	r3, lr
+ 1704 00f6 07EE903A 		vmov	s15, r3	@ int
+ 1705 00fa F8EEE77A 		vcvt.f32.s32	s15, s15
+ 362:../../util/pcm_util.c **** 		    v = (float)(i * src_cnt) / dst_cnt;
+ 1706              		.loc 1 362 9 view .LVU551
+ 1707 00fe 86EEA77A 		vdiv.f32	s14, s13, s15
+ 1708              	.LVL210:
+ 363:../../util/pcm_util.c **** 		    mul = v - (float)j;
+ 1709              		.loc 1 363 7 is_stmt 1 view .LVU552
+ 363:../../util/pcm_util.c **** 		    mul = v - (float)j;
+ 1710              		.loc 1 363 9 is_stmt 0 view .LVU553
+ 1711 0102 FCEEC77A 		vcvt.u32.f32	s15, s14
+ 1712 0106 17EE903A 		vmov	r3, s15	@ int
+ 1713 010a 9BB2     		uxth	r3, r3
+ 1714              	.LVL211:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 42
+
+
+ 364:../../util/pcm_util.c **** 		    if (j < src_cnt - 1) {
+ 1715              		.loc 1 364 7 is_stmt 1 view .LVU554
+ 364:../../util/pcm_util.c **** 		    if (j < src_cnt - 1) {
+ 1716              		.loc 1 364 17 is_stmt 0 view .LVU555
+ 1717 010c 07EE903A 		vmov	s15, r3	@ int
+ 1718 0110 F8EE677A 		vcvt.f32.u32	s15, s15
+ 364:../../util/pcm_util.c **** 		    if (j < src_cnt - 1) {
+ 1719              		.loc 1 364 11 view .LVU556
+ 1720 0114 37EE677A 		vsub.f32	s14, s14, s15
+ 1721              	.LVL212:
+ 365:../../util/pcm_util.c **** 		      dst[i] = src[j] + (src[j + 1] - src[j]) * mul;
+ 1722              		.loc 1 365 7 is_stmt 1 view .LVU557
+ 365:../../util/pcm_util.c **** 		      dst[i] = src[j] + (src[j + 1] - src[j]) * mul;
+ 1723              		.loc 1 365 23 is_stmt 0 view .LVU558
+ 1724 0118 651E     		subs	r5, r4, #1
+ 365:../../util/pcm_util.c **** 		      dst[i] = src[j] + (src[j + 1] - src[j]) * mul;
+ 1725              		.loc 1 365 10 view .LVU559
+ 1726 011a AB42     		cmp	r3, r5
+ 1727 011c DBDA     		bge	.L124
+ 366:../../util/pcm_util.c **** 		    }
+ 1728              		.loc 1 366 9 is_stmt 1 view .LVU560
+ 366:../../util/pcm_util.c **** 		    }
+ 1729              		.loc 1 366 21 is_stmt 0 view .LVU561
+ 1730 011e 32F91350 		ldrsh	r5, [r2, r3, lsl #1]
+ 366:../../util/pcm_util.c **** 		    }
+ 1731              		.loc 1 366 31 view .LVU562
+ 1732 0122 0133     		adds	r3, r3, #1
+ 1733              	.LVL213:
+ 366:../../util/pcm_util.c **** 		    }
+ 1734              		.loc 1 366 31 view .LVU563
+ 1735 0124 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 1736              	.LVL214:
+ 366:../../util/pcm_util.c **** 		    }
+ 1737              		.loc 1 366 39 view .LVU564
+ 1738 0128 5B1B     		subs	r3, r3, r5
+ 366:../../util/pcm_util.c **** 		    }
+ 1739              		.loc 1 366 49 view .LVU565
+ 1740 012a 07EE903A 		vmov	s15, r3	@ int
+ 1741 012e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1742 0132 27EE877A 		vmul.f32	s14, s15, s14
+ 1743              	.LVL215:
+ 366:../../util/pcm_util.c **** 		    }
+ 1744              		.loc 1 366 25 view .LVU566
+ 1745 0136 07EE905A 		vmov	s15, r5	@ int
+ 1746 013a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1747 013e 77EE877A 		vadd.f32	s15, s15, s14
+ 366:../../util/pcm_util.c **** 		    }
+ 1748              		.loc 1 366 16 view .LVU567
+ 1749 0142 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 1750 0146 17EE903A 		vmov	r3, s15	@ int
+ 1751 014a 2CF81130 		strh	r3, [ip, r1, lsl #1]	@ movhi
+ 1752 014e C6E7     		b	.L125
+ 1753              	.LVL216:
+ 1754              	.L127:
+ 337:../../util/pcm_util.c **** 
+ 1755              		.loc 1 337 24 discriminator 1 view .LVU568
+ 1756 0150 1846     		mov	r0, r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 43
+
+
+ 1757              	.LVL217:
+ 1758              	.L119:
+ 370:../../util/pcm_util.c **** 		    }
+ 371:../../util/pcm_util.c **** 		  }
+ 372:../../util/pcm_util.c **** 	  }
+ 373:../../util/pcm_util.c **** 
+ 374:../../util/pcm_util.c **** 	  return dst_cnt;
+ 375:../../util/pcm_util.c **** 
+ 376:../../util/pcm_util.c **** }
+ 1759              		.loc 1 376 1 view .LVU569
+ 1760 0152 70BD     		pop	{r4, r5, r6, pc}
+ 1761              		.loc 1 376 1 view .LVU570
+ 1762              		.cfi_endproc
+ 1763              	.LFE13:
+ 1765              		.section	.text.pcm_change_frequency_stereo,"ax",%progbits
+ 1766              		.align	1
+ 1767              		.global	pcm_change_frequency_stereo
+ 1768              		.syntax unified
+ 1769              		.thumb
+ 1770              		.thumb_func
+ 1772              	pcm_change_frequency_stereo:
+ 1773              	.LVL218:
+ 1774              	.LFB14:
+ 377:../../util/pcm_util.c **** 
+ 378:../../util/pcm_util.c **** 
+ 379:../../util/pcm_util.c **** uint16_t pcm_change_frequency_stereo(int16_t *dst, uint32_t dst_frquency, int16_t *src, uint16_t sr
+ 380:../../util/pcm_util.c **** {
+ 1775              		.loc 1 380 1 is_stmt 1 view -0
+ 1776              		.cfi_startproc
+ 1777              		@ args = 4, pretend = 0, frame = 24008
+ 1778              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1779              		.loc 1 380 1 is_stmt 0 view .LVU572
+ 1780 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1781              	.LCFI16:
+ 1782              		.cfi_def_cfa_offset 28
+ 1783              		.cfi_offset 4, -28
+ 1784              		.cfi_offset 5, -24
+ 1785              		.cfi_offset 6, -20
+ 1786              		.cfi_offset 7, -16
+ 1787              		.cfi_offset 8, -12
+ 1788              		.cfi_offset 9, -8
+ 1789              		.cfi_offset 14, -4
+ 1790 0004 ADF5BB4D 		sub	sp, sp, #23936
+ 1791              	.LCFI17:
+ 1792              		.cfi_def_cfa_offset 23964
+ 1793 0008 95B0     		sub	sp, sp, #84
+ 1794              	.LCFI18:
+ 1795              		.cfi_def_cfa_offset 24048
+ 1796 000a 0746     		mov	r7, r0
+ 1797 000c 0D46     		mov	r5, r1
+ 1798 000e 1646     		mov	r6, r2
+ 1799 0010 9946     		mov	r9, r3
+ 1800 0012 45F6F053 		movw	r3, #24048
+ 1801              	.LVL219:
+ 1802              		.loc 1 380 1 view .LVU573
+ 1803 0016 6B44     		add	r3, sp, r3
+ 1804 0018 D3F80080 		ldr	r8, [r3]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 44
+
+
+ 381:../../util/pcm_util.c ****   int16_t pcm16_left_1[3000] = {0}, pcm16_left_2[3000] = {0};
+ 1805              		.loc 1 381 3 is_stmt 1 view .LVU574
+ 1806              		.loc 1 381 11 is_stmt 0 view .LVU575
+ 1807 001c 41F27074 		movw	r4, #6000
+ 1808 0020 2246     		mov	r2, r4
+ 1809              	.LVL220:
+ 1810              		.loc 1 381 11 view .LVU576
+ 1811 0022 0021     		movs	r1, #0
+ 1812              	.LVL221:
+ 1813              		.loc 1 381 11 view .LVU577
+ 1814 0024 44F26060 		movw	r0, #18016
+ 1815              	.LVL222:
+ 1816              		.loc 1 381 11 view .LVU578
+ 1817 0028 6844     		add	r0, sp, r0
+ 1818 002a FFF7FEFF 		bl	memset
+ 1819              	.LVL223:
+ 1820              		.loc 1 381 37 view .LVU579
+ 1821 002e 2246     		mov	r2, r4
+ 1822 0030 0021     		movs	r1, #0
+ 1823 0032 42F6F060 		movw	r0, #12016
+ 1824 0036 6844     		add	r0, sp, r0
+ 1825 0038 FFF7FEFF 		bl	memset
+ 1826              	.LVL224:
+ 382:../../util/pcm_util.c ****   int16_t pcm16_right_1[3000] = {0}, pcm16_right_2[3000] = {0};
+ 1827              		.loc 1 382 3 is_stmt 1 view .LVU580
+ 1828              		.loc 1 382 11 is_stmt 0 view .LVU581
+ 1829 003c 2246     		mov	r2, r4
+ 1830 003e 0021     		movs	r1, #0
+ 1831 0040 0DF5BC50 		add	r0, sp, #6016
+ 1832 0044 FFF7FEFF 		bl	memset
+ 1833              	.LVL225:
+ 1834              		.loc 1 382 38 view .LVU582
+ 1835 0048 2246     		mov	r2, r4
+ 1836 004a 0021     		movs	r1, #0
+ 1837 004c 04A8     		add	r0, sp, #16
+ 1838 004e FFF7FEFF 		bl	memset
+ 1839              	.LVL226:
+ 383:../../util/pcm_util.c ****   uint16_t rc, rc_left, rc_right;
+ 1840              		.loc 1 383 3 is_stmt 1 view .LVU583
+ 384:../../util/pcm_util.c **** 
+ 385:../../util/pcm_util.c ****   rc = pcm_stereo2leftright(src, src_cnt, pcm16_left_1, pcm16_right_1);
+ 1841              		.loc 1 385 3 view .LVU584
+ 1842              		.loc 1 385 8 is_stmt 0 view .LVU585
+ 1843 0052 45F6D053 		movw	r3, #24016
+ 1844 0056 6B44     		add	r3, sp, r3
+ 1845 0058 1B1B     		subs	r3, r3, r4
+ 1846 005a 0393     		str	r3, [sp, #12]
+ 1847 005c 0DF5BC53 		add	r3, sp, #6016
+ 1848 0060 039A     		ldr	r2, [sp, #12]
+ 1849 0062 4946     		mov	r1, r9
+ 1850 0064 3046     		mov	r0, r6
+ 1851 0066 FFF7FEFF 		bl	pcm_stereo2leftright
+ 1852              	.LVL227:
+ 1853 006a 0446     		mov	r4, r0
+ 1854              	.LVL228:
+ 386:../../util/pcm_util.c **** 
+ 387:../../util/pcm_util.c ****   rc_left = pcm_change_frequency_mono(pcm16_left_2, dst_frquency, pcm16_left_1, rc, src_frquency);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 45
+
+
+ 1855              		.loc 1 387 3 is_stmt 1 view .LVU586
+ 1856              		.loc 1 387 13 is_stmt 0 view .LVU587
+ 1857 006c CDF80080 		str	r8, [sp]
+ 1858 0070 0346     		mov	r3, r0
+ 1859 0072 039A     		ldr	r2, [sp, #12]
+ 1860 0074 2946     		mov	r1, r5
+ 1861 0076 42F6F060 		movw	r0, #12016
+ 1862              	.LVL229:
+ 1863              		.loc 1 387 13 view .LVU588
+ 1864 007a 6844     		add	r0, sp, r0
+ 1865 007c FFF7FEFF 		bl	pcm_change_frequency_mono
+ 1866              	.LVL230:
+ 1867 0080 0646     		mov	r6, r0
+ 1868              	.LVL231:
+ 388:../../util/pcm_util.c ****   rc_right = pcm_change_frequency_mono(pcm16_right_2, dst_frquency, pcm16_right_1, rc, src_frquency
+ 1869              		.loc 1 388 3 is_stmt 1 view .LVU589
+ 1870              		.loc 1 388 14 is_stmt 0 view .LVU590
+ 1871 0082 CDF80080 		str	r8, [sp]
+ 1872 0086 2346     		mov	r3, r4
+ 1873 0088 0DF5BC52 		add	r2, sp, #6016
+ 1874 008c 2946     		mov	r1, r5
+ 1875 008e 04A8     		add	r0, sp, #16
+ 1876 0090 FFF7FEFF 		bl	pcm_change_frequency_mono
+ 1877              	.LVL232:
+ 1878 0094 0346     		mov	r3, r0
+ 1879              	.LVL233:
+ 389:../../util/pcm_util.c **** 
+ 390:../../util/pcm_util.c ****   rc = pcm_leftright2stereo(pcm16_left_2, rc_left, pcm16_right_2, rc_right, dst);
+ 1880              		.loc 1 390 3 is_stmt 1 view .LVU591
+ 1881              		.loc 1 390 8 is_stmt 0 view .LVU592
+ 1882 0096 0097     		str	r7, [sp]
+ 1883 0098 04AA     		add	r2, sp, #16
+ 1884 009a 3146     		mov	r1, r6
+ 1885 009c 42F6F060 		movw	r0, #12016
+ 1886 00a0 6844     		add	r0, sp, r0
+ 1887 00a2 FFF7FEFF 		bl	pcm_leftright2stereo
+ 1888              	.LVL234:
+ 391:../../util/pcm_util.c **** 
+ 392:../../util/pcm_util.c ****   return rc;
+ 1889              		.loc 1 392 3 is_stmt 1 view .LVU593
+ 393:../../util/pcm_util.c **** }
+ 1890              		.loc 1 393 1 is_stmt 0 view .LVU594
+ 1891 00a6 0DF5BB4D 		add	sp, sp, #23936
+ 1892 00aa 15B0     		add	sp, sp, #84
+ 1893              	.LCFI19:
+ 1894              		.cfi_def_cfa_offset 28
+ 1895              		@ sp needed
+ 1896 00ac BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1897              		.loc 1 393 1 view .LVU595
+ 1898              		.cfi_endproc
+ 1899              	.LFE14:
+ 1901              		.section	.text.pcm_mono_calc_power,"ax",%progbits
+ 1902              		.align	1
+ 1903              		.global	pcm_mono_calc_power
+ 1904              		.syntax unified
+ 1905              		.thumb
+ 1906              		.thumb_func
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 46
+
+
+ 1908              	pcm_mono_calc_power:
+ 1909              	.LVL235:
+ 1910              	.LFB15:
+ 394:../../util/pcm_util.c **** 
+ 395:../../util/pcm_util.c **** 
+ 396:../../util/pcm_util.c **** uint16_t pcm_mono_calc_power(int16_t *src, uint16_t src_cnt)
+ 397:../../util/pcm_util.c **** {
+ 1911              		.loc 1 397 1 is_stmt 1 view -0
+ 1912              		.cfi_startproc
+ 1913              		@ args = 0, pretend = 0, frame = 0
+ 1914              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1915              		.loc 1 397 1 is_stmt 0 view .LVU597
+ 1916 0000 00B5     		push	{lr}
+ 1917              	.LCFI20:
+ 1918              		.cfi_def_cfa_offset 4
+ 1919              		.cfi_offset 14, -4
+ 398:../../util/pcm_util.c **** 	uint16_t i, cnt;
+ 1920              		.loc 1 398 2 is_stmt 1 view .LVU598
+ 399:../../util/pcm_util.c **** 	uint32_t power_sum;
+ 1921              		.loc 1 399 2 view .LVU599
+ 400:../../util/pcm_util.c **** 
+ 401:../../util/pcm_util.c **** 	power_sum = 0;
+ 1922              		.loc 1 401 2 view .LVU600
+ 1923              	.LVL236:
+ 402:../../util/pcm_util.c **** 
+ 403:../../util/pcm_util.c **** 	cnt = src_cnt - 1;
+ 1924              		.loc 1 403 2 view .LVU601
+ 1925              		.loc 1 403 6 is_stmt 0 view .LVU602
+ 1926 0002 0139     		subs	r1, r1, #1
+ 1927              	.LVL237:
+ 1928              		.loc 1 403 6 view .LVU603
+ 1929 0004 89B2     		uxth	r1, r1
+ 1930              	.LVL238:
+ 404:../../util/pcm_util.c **** 	for (i = 0; i < cnt; ++i) {
+ 1931              		.loc 1 404 2 is_stmt 1 view .LVU604
+ 401:../../util/pcm_util.c **** 
+ 1932              		.loc 1 401 12 is_stmt 0 view .LVU605
+ 1933 0006 4FF0000E 		mov	lr, #0
+ 1934              		.loc 1 404 9 view .LVU606
+ 1935 000a 7346     		mov	r3, lr
+ 1936              		.loc 1 404 2 view .LVU607
+ 1937 000c 04E0     		b	.L133
+ 1938              	.LVL239:
+ 1939              	.L134:
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 406:../../util/pcm_util.c **** 		else power_sum += src[i + 1] - src[i];
+ 1940              		.loc 1 406 8 is_stmt 1 view .LVU608
+ 1941              		.loc 1 406 32 is_stmt 0 view .LVU609
+ 1942 000e A2EB0C02 		sub	r2, r2, ip
+ 1943              		.loc 1 406 18 view .LVU610
+ 1944 0012 9644     		add	lr, lr, r2
+ 1945              	.LVL240:
+ 1946              	.L135:
+ 404:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1947              		.loc 1 404 23 is_stmt 1 discriminator 2 view .LVU611
+ 1948 0014 0133     		adds	r3, r3, #1
+ 1949              	.LVL241:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 47
+
+
+ 404:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1950              		.loc 1 404 23 is_stmt 0 discriminator 2 view .LVU612
+ 1951 0016 9BB2     		uxth	r3, r3
+ 1952              	.LVL242:
+ 1953              	.L133:
+ 404:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1954              		.loc 1 404 16 is_stmt 1 discriminator 1 view .LVU613
+ 1955 0018 8B42     		cmp	r3, r1
+ 1956 001a 0AD2     		bcs	.L138
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1957              		.loc 1 405 3 view .LVU614
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1958              		.loc 1 405 10 is_stmt 0 view .LVU615
+ 1959 001c 30F913C0 		ldrsh	ip, [r0, r3, lsl #1]
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1960              		.loc 1 405 19 view .LVU616
+ 1961 0020 5A1C     		adds	r2, r3, #1
+ 1962 0022 30F91220 		ldrsh	r2, [r0, r2, lsl #1]
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1963              		.loc 1 405 6 view .LVU617
+ 1964 0026 9445     		cmp	ip, r2
+ 1965 0028 F1DD     		ble	.L134
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1966              		.loc 1 405 28 is_stmt 1 discriminator 1 view .LVU618
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1967              		.loc 1 405 48 is_stmt 0 discriminator 1 view .LVU619
+ 1968 002a ACEB020C 		sub	ip, ip, r2
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1969              		.loc 1 405 38 discriminator 1 view .LVU620
+ 1970 002e E644     		add	lr, lr, ip
+ 1971              	.LVL243:
+ 405:../../util/pcm_util.c **** 		if (src[i] > src[i + 1]) power_sum += src[i] - src[i + 1];
+ 1972              		.loc 1 405 38 discriminator 1 view .LVU621
+ 1973 0030 F0E7     		b	.L135
+ 1974              	.L138:
+ 407:../../util/pcm_util.c **** 	}
+ 408:../../util/pcm_util.c **** 	return power_sum /  cnt;
+ 1975              		.loc 1 408 2 is_stmt 1 view .LVU622
+ 1976              		.loc 1 408 19 is_stmt 0 view .LVU623
+ 1977 0032 BEFBF1F0 		udiv	r0, lr, r1
+ 1978              	.LVL244:
+ 409:../../util/pcm_util.c **** }
+ 1979              		.loc 1 409 1 view .LVU624
+ 1980 0036 80B2     		uxth	r0, r0
+ 1981 0038 5DF804FB 		ldr	pc, [sp], #4
+ 1982              		.cfi_endproc
+ 1983              	.LFE15:
+ 1985              		.text
+ 1986              	.Letext0:
+ 1987              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1988              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1989              		.file 4 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pcm_util.c
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:20     .text.pcm_set_value:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:26     .text.pcm_set_value:00000000 pcm_set_value
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:61     .text.pcm_set_volume:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:67     .text.pcm_set_volume:00000000 pcm_set_volume
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:153    .text.pcm_set_volume:00000050 $d
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:160    .text.pcm_set_shift_right:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:166    .text.pcm_set_shift_right:00000000 pcm_set_shift_right
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:215    .text.pcm_mono2dac12:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:221    .text.pcm_mono2dac12:00000000 pcm_mono2dac12
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:262    .text.pcm_adc12mono2pcm:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:268    .text.pcm_adc12mono2pcm:00000000 pcm_adc12mono2pcm
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:306    .text.pcm_leftright2stereo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:312    .text.pcm_leftright2stereo:00000000 pcm_leftright2stereo
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:594    .text.pcm_stereo2leftright:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:600    .text.pcm_stereo2leftright:00000000 pcm_stereo2leftright
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:671    .text.pcm_stereo2mono:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:677    .text.pcm_stereo2mono:00000000 pcm_stereo2mono
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:756    .text.pcm_mono2stereo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:762    .text.pcm_mono2stereo:00000000 pcm_mono2stereo
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:825    .text.pcm_change_frequency:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:831    .text.pcm_change_frequency:00000000 pcm_change_frequency
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:972    .text.pcm_change_frequency2:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:978    .text.pcm_change_frequency2:00000000 pcm_change_frequency2
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1227   .text.pcm_change_frequency_low_mono:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1233   .text.pcm_change_frequency_low_mono:00000000 pcm_change_frequency_low_mono
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1394   .text.pcm_change_frequency_mono:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1400   .text.pcm_change_frequency_mono:00000000 pcm_change_frequency_mono
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1521   .text.pcm_change_frequency3:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1527   .text.pcm_change_frequency3:00000000 pcm_change_frequency3
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1766   .text.pcm_change_frequency_stereo:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1772   .text.pcm_change_frequency_stereo:00000000 pcm_change_frequency_stereo
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1902   .text.pcm_mono_calc_power:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccrdFdb5.s:1908   .text.pcm_mono_calc_power:00000000 pcm_mono_calc_power
+
+UNDEFINED SYMBOLS
+memset

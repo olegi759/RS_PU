@@ -1,0 +1,2649 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"timer.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../libmad/timer.c"
+  19              		.section	.text.reduce_timer,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	reduce_timer:
+  26              	.LVL0:
+  27              	.LFB6:
+   1:../../libmad/timer.c **** /*
+   2:../../libmad/timer.c ****  * libmad - MPEG audio decoder library
+   3:../../libmad/timer.c ****  * Copyright (C) 2000-2004 Underbit Technologies, Inc.
+   4:../../libmad/timer.c ****  *
+   5:../../libmad/timer.c ****  * This program is free software; you can redistribute it and/or modify
+   6:../../libmad/timer.c ****  * it under the terms of the GNU General Public License as published by
+   7:../../libmad/timer.c ****  * the Free Software Foundation; either version 2 of the License, or
+   8:../../libmad/timer.c ****  * (at your option) any later version.
+   9:../../libmad/timer.c ****  *
+  10:../../libmad/timer.c ****  * This program is distributed in the hope that it will be useful,
+  11:../../libmad/timer.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  12:../../libmad/timer.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  13:../../libmad/timer.c ****  * GNU General Public License for more details.
+  14:../../libmad/timer.c ****  *
+  15:../../libmad/timer.c ****  * You should have received a copy of the GNU General Public License
+  16:../../libmad/timer.c ****  * along with this program; if not, write to the Free Software
+  17:../../libmad/timer.c ****  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  18:../../libmad/timer.c ****  *
+  19:../../libmad/timer.c ****  * $Id: timer.c,v 1.18 2004/01/23 09:41:33 rob Exp $
+  20:../../libmad/timer.c ****  */
+  21:../../libmad/timer.c **** 
+  22:../../libmad/timer.c **** # ifdef HAVE_CONFIG_H
+  23:../../libmad/timer.c **** #  include "config.h"
+  24:../../libmad/timer.c **** # endif
+  25:../../libmad/timer.c **** 
+  26:../../libmad/timer.c **** # include "global.h"
+  27:../../libmad/timer.c **** 
+  28:../../libmad/timer.c **** # include <stdio.h>
+  29:../../libmad/timer.c **** 
+  30:../../libmad/timer.c **** # ifdef HAVE_ASSERT_H
+  31:../../libmad/timer.c **** #  include <assert.h>
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 2
+
+
+  32:../../libmad/timer.c **** # endif
+  33:../../libmad/timer.c **** 
+  34:../../libmad/timer.c **** # include "timer.h"
+  35:../../libmad/timer.c **** 
+  36:../../libmad/timer.c **** mad_timer_t const mad_timer_zero = { 0, 0 };
+  37:../../libmad/timer.c **** 
+  38:../../libmad/timer.c **** /*
+  39:../../libmad/timer.c ****  * NAME:	timer->compare()
+  40:../../libmad/timer.c ****  * DESCRIPTION:	indicate relative order of two timers
+  41:../../libmad/timer.c ****  */
+  42:../../libmad/timer.c **** int mad_timer_compare(mad_timer_t timer1, mad_timer_t timer2)
+  43:../../libmad/timer.c **** {
+  44:../../libmad/timer.c ****   signed long diff;
+  45:../../libmad/timer.c **** 
+  46:../../libmad/timer.c ****   diff = timer1.seconds - timer2.seconds;
+  47:../../libmad/timer.c ****   if (diff < 0)
+  48:../../libmad/timer.c ****     return -1;
+  49:../../libmad/timer.c ****   else if (diff > 0)
+  50:../../libmad/timer.c ****     return +1;
+  51:../../libmad/timer.c **** 
+  52:../../libmad/timer.c ****   diff = timer1.fraction - timer2.fraction;
+  53:../../libmad/timer.c ****   if (diff < 0)
+  54:../../libmad/timer.c ****     return -1;
+  55:../../libmad/timer.c ****   else if (diff > 0)
+  56:../../libmad/timer.c ****     return +1;
+  57:../../libmad/timer.c **** 
+  58:../../libmad/timer.c ****   return 0;
+  59:../../libmad/timer.c **** }
+  60:../../libmad/timer.c **** 
+  61:../../libmad/timer.c **** /*
+  62:../../libmad/timer.c ****  * NAME:	timer->negate()
+  63:../../libmad/timer.c ****  * DESCRIPTION:	invert the sign of a timer
+  64:../../libmad/timer.c ****  */
+  65:../../libmad/timer.c **** void mad_timer_negate(mad_timer_t *timer)
+  66:../../libmad/timer.c **** {
+  67:../../libmad/timer.c ****   timer->seconds = -timer->seconds;
+  68:../../libmad/timer.c **** 
+  69:../../libmad/timer.c ****   if (timer->fraction) {
+  70:../../libmad/timer.c ****     timer->seconds -= 1;
+  71:../../libmad/timer.c ****     timer->fraction = MAD_TIMER_RESOLUTION - timer->fraction;
+  72:../../libmad/timer.c ****   }
+  73:../../libmad/timer.c **** }
+  74:../../libmad/timer.c **** 
+  75:../../libmad/timer.c **** /*
+  76:../../libmad/timer.c ****  * NAME:	timer->abs()
+  77:../../libmad/timer.c ****  * DESCRIPTION:	return the absolute value of a timer
+  78:../../libmad/timer.c ****  */
+  79:../../libmad/timer.c **** mad_timer_t mad_timer_abs(mad_timer_t timer)
+  80:../../libmad/timer.c **** {
+  81:../../libmad/timer.c ****   if (timer.seconds < 0)
+  82:../../libmad/timer.c ****     mad_timer_negate(&timer);
+  83:../../libmad/timer.c **** 
+  84:../../libmad/timer.c ****   return timer;
+  85:../../libmad/timer.c **** }
+  86:../../libmad/timer.c **** 
+  87:../../libmad/timer.c **** /*
+  88:../../libmad/timer.c ****  * NAME:	reduce_timer()
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 3
+
+
+  89:../../libmad/timer.c ****  * DESCRIPTION:	carry timer fraction into seconds
+  90:../../libmad/timer.c ****  */
+  91:../../libmad/timer.c **** static
+  92:../../libmad/timer.c **** void reduce_timer(mad_timer_t *timer)
+  93:../../libmad/timer.c **** {
+  28              		.loc 1 93 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  94:../../libmad/timer.c ****   timer->seconds  += timer->fraction / MAD_TIMER_RESOLUTION;
+  33              		.loc 1 94 3 view .LVU1
+  34              		.loc 1 94 8 is_stmt 0 view .LVU2
+  35 0000 0168     		ldr	r1, [r0]
+  36              		.loc 1 94 27 view .LVU3
+  37 0002 4368     		ldr	r3, [r0, #4]
+  38              		.loc 1 94 38 view .LVU4
+  39 0004 064A     		ldr	r2, .L2
+  40 0006 A2FB03C2 		umull	ip, r2, r2, r3
+  41 000a 4FEA127C 		lsr	ip, r2, #28
+  42              		.loc 1 94 19 view .LVU5
+  43 000e 01EB1271 		add	r1, r1, r2, lsr #28
+  44 0012 0160     		str	r1, [r0]
+  95:../../libmad/timer.c ****   timer->fraction %= MAD_TIMER_RESOLUTION;
+  45              		.loc 1 95 3 is_stmt 1 view .LVU6
+  46              		.loc 1 95 19 is_stmt 0 view .LVU7
+  47 0014 034A     		ldr	r2, .L2+4
+  48 0016 02FB1C33 		mls	r3, r2, ip, r3
+  49 001a 4360     		str	r3, [r0, #4]
+  96:../../libmad/timer.c **** }
+  50              		.loc 1 96 1 view .LVU8
+  51 001c 7047     		bx	lr
+  52              	.L3:
+  53 001e 00BF     		.align	2
+  54              	.L2:
+  55 0020 1179C8C2 		.word	-1027049199
+  56 0024 004D0715 		.word	352800000
+  57              		.cfi_endproc
+  58              	.LFE6:
+  60              		.section	.text.gcd,"ax",%progbits
+  61              		.align	1
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  66              	gcd:
+  67              	.LVL1:
+  68              	.LFB7:
+  97:../../libmad/timer.c **** 
+  98:../../libmad/timer.c **** /*
+  99:../../libmad/timer.c ****  * NAME:	gcd()
+ 100:../../libmad/timer.c ****  * DESCRIPTION:	compute greatest common denominator
+ 101:../../libmad/timer.c ****  */
+ 102:../../libmad/timer.c **** static
+ 103:../../libmad/timer.c **** unsigned long gcd(unsigned long num1, unsigned long num2)
+ 104:../../libmad/timer.c **** {
+  69              		.loc 1 104 1 is_stmt 1 view -0
+  70              		.cfi_startproc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 4
+
+
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+ 105:../../libmad/timer.c ****   unsigned long tmp;
+  74              		.loc 1 105 3 view .LVU10
+ 106:../../libmad/timer.c **** 
+ 107:../../libmad/timer.c ****   while (num2) {
+  75              		.loc 1 107 3 view .LVU11
+  76              		.loc 1 107 9 is_stmt 0 view .LVU12
+  77 0000 05E0     		b	.L5
+  78              	.L6:
+ 108:../../libmad/timer.c ****     tmp  = num2;
+  79              		.loc 1 108 5 is_stmt 1 view .LVU13
+  80              	.LVL2:
+ 109:../../libmad/timer.c ****     num2 = num1 % num2;
+  81              		.loc 1 109 5 view .LVU14
+  82              		.loc 1 109 10 is_stmt 0 view .LVU15
+  83 0002 B0FBF1F3 		udiv	r3, r0, r1
+  84 0006 01FB1303 		mls	r3, r1, r3, r0
+  85              	.LVL3:
+ 110:../../libmad/timer.c ****     num1 = tmp;
+  86              		.loc 1 110 5 is_stmt 1 view .LVU16
+  87              		.loc 1 110 10 is_stmt 0 view .LVU17
+  88 000a 0846     		mov	r0, r1
+ 109:../../libmad/timer.c ****     num2 = num1 % num2;
+  89              		.loc 1 109 10 view .LVU18
+  90 000c 1946     		mov	r1, r3
+  91              	.LVL4:
+  92              	.L5:
+ 107:../../libmad/timer.c ****     tmp  = num2;
+  93              		.loc 1 107 10 is_stmt 1 view .LVU19
+  94 000e 0029     		cmp	r1, #0
+  95 0010 F7D1     		bne	.L6
+ 111:../../libmad/timer.c ****   }
+ 112:../../libmad/timer.c **** 
+ 113:../../libmad/timer.c ****   return num1;
+  96              		.loc 1 113 3 view .LVU20
+ 114:../../libmad/timer.c **** }
+  97              		.loc 1 114 1 is_stmt 0 view .LVU21
+  98 0012 7047     		bx	lr
+  99              		.cfi_endproc
+ 100              	.LFE7:
+ 102              		.section	.rodata.reduce_rational.str1.4,"aMS",%progbits,1
+ 103              		.align	2
+ 104              	.LC0:
+ 105 0000 66616374 		.ascii	"factor != 0\000"
+ 105      6F722021 
+ 105      3D203000 
+ 106              		.align	2
+ 107              	.LC1:
+ 108 000c 2E2E2F2E 		.ascii	"../../libmad/timer.c\000"
+ 108      2E2F6C69 
+ 108      626D6164 
+ 108      2F74696D 
+ 108      65722E63 
+ 109              		.section	.text.reduce_rational,"ax",%progbits
+ 110              		.align	1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 5
+
+
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	reduce_rational:
+ 116              	.LVL5:
+ 117              	.LFB8:
+ 115:../../libmad/timer.c **** 
+ 116:../../libmad/timer.c **** /*
+ 117:../../libmad/timer.c ****  * NAME:	reduce_rational()
+ 118:../../libmad/timer.c ****  * DESCRIPTION:	convert rational expression to lowest terms
+ 119:../../libmad/timer.c ****  */
+ 120:../../libmad/timer.c **** static
+ 121:../../libmad/timer.c **** void reduce_rational(unsigned long *numer, unsigned long *denom)
+ 122:../../libmad/timer.c **** {
+ 118              		.loc 1 122 1 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		.loc 1 122 1 is_stmt 0 view .LVU23
+ 123 0000 70B5     		push	{r4, r5, r6, lr}
+ 124              	.LCFI0:
+ 125              		.cfi_def_cfa_offset 16
+ 126              		.cfi_offset 4, -16
+ 127              		.cfi_offset 5, -12
+ 128              		.cfi_offset 6, -8
+ 129              		.cfi_offset 14, -4
+ 130 0002 0546     		mov	r5, r0
+ 131 0004 0C46     		mov	r4, r1
+ 123:../../libmad/timer.c ****   unsigned long factor;
+ 132              		.loc 1 123 3 is_stmt 1 view .LVU24
+ 124:../../libmad/timer.c **** 
+ 125:../../libmad/timer.c ****   factor = gcd(*numer, *denom);
+ 133              		.loc 1 125 3 view .LVU25
+ 134              		.loc 1 125 12 is_stmt 0 view .LVU26
+ 135 0006 0668     		ldr	r6, [r0]
+ 136 0008 0968     		ldr	r1, [r1]
+ 137              	.LVL6:
+ 138              		.loc 1 125 12 view .LVU27
+ 139 000a 3046     		mov	r0, r6
+ 140              	.LVL7:
+ 141              		.loc 1 125 12 view .LVU28
+ 142 000c FFF7FEFF 		bl	gcd
+ 143              	.LVL8:
+ 126:../../libmad/timer.c **** 
+ 127:../../libmad/timer.c ****   assert(factor != 0);
+ 144              		.loc 1 127 3 is_stmt 1 view .LVU29
+ 145 0010 38B1     		cbz	r0, .L10
+ 128:../../libmad/timer.c **** 
+ 129:../../libmad/timer.c ****   *numer /= factor;
+ 146              		.loc 1 129 3 view .LVU30
+ 147              		.loc 1 129 10 is_stmt 0 view .LVU31
+ 148 0012 B6FBF0F6 		udiv	r6, r6, r0
+ 149 0016 2E60     		str	r6, [r5]
+ 130:../../libmad/timer.c ****   *denom /= factor;
+ 150              		.loc 1 130 3 is_stmt 1 view .LVU32
+ 151 0018 2368     		ldr	r3, [r4]
+ 152              		.loc 1 130 10 is_stmt 0 view .LVU33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 6
+
+
+ 153 001a B3FBF0F3 		udiv	r3, r3, r0
+ 154 001e 2360     		str	r3, [r4]
+ 131:../../libmad/timer.c **** }
+ 155              		.loc 1 131 1 view .LVU34
+ 156 0020 70BD     		pop	{r4, r5, r6, pc}
+ 157              	.LVL9:
+ 158              	.L10:
+ 127:../../libmad/timer.c **** 
+ 159              		.loc 1 127 3 discriminator 1 view .LVU35
+ 160 0022 034B     		ldr	r3, .L11
+ 161 0024 034A     		ldr	r2, .L11+4
+ 162 0026 7F21     		movs	r1, #127
+ 163 0028 0348     		ldr	r0, .L11+8
+ 164              	.LVL10:
+ 127:../../libmad/timer.c **** 
+ 165              		.loc 1 127 3 discriminator 1 view .LVU36
+ 166 002a FFF7FEFF 		bl	__assert_func
+ 167              	.LVL11:
+ 168              	.L12:
+ 169 002e 00BF     		.align	2
+ 170              	.L11:
+ 171 0030 00000000 		.word	.LC0
+ 172 0034 00000000 		.word	__func__.0
+ 173 0038 0C000000 		.word	.LC1
+ 174              		.cfi_endproc
+ 175              	.LFE8:
+ 177              		.section	.rodata.scale_rational.str1.4,"aMS",%progbits,1
+ 178              		.align	2
+ 179              	.LC2:
+ 180 0000 64656E6F 		.ascii	"denom != 0\000"
+ 180      6D20213D 
+ 180      203000
+ 181              		.section	.text.scale_rational,"ax",%progbits
+ 182              		.align	1
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	scale_rational:
+ 188              	.LVL12:
+ 189              	.LFB9:
+ 132:../../libmad/timer.c **** 
+ 133:../../libmad/timer.c **** /*
+ 134:../../libmad/timer.c ****  * NAME:	scale_rational()
+ 135:../../libmad/timer.c ****  * DESCRIPTION:	solve numer/denom == ?/scale avoiding overflowing
+ 136:../../libmad/timer.c ****  */
+ 137:../../libmad/timer.c **** static
+ 138:../../libmad/timer.c **** unsigned long scale_rational(unsigned long numer, unsigned long denom,
+ 139:../../libmad/timer.c **** 			     unsigned long scale)
+ 140:../../libmad/timer.c **** {
+ 190              		.loc 1 140 1 is_stmt 1 view -0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 16
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194              		.loc 1 140 1 is_stmt 0 view .LVU38
+ 195 0000 00B5     		push	{lr}
+ 196              	.LCFI1:
+ 197              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 7
+
+
+ 198              		.cfi_offset 14, -4
+ 199 0002 85B0     		sub	sp, sp, #20
+ 200              	.LCFI2:
+ 201              		.cfi_def_cfa_offset 24
+ 202 0004 0390     		str	r0, [sp, #12]
+ 203 0006 0291     		str	r1, [sp, #8]
+ 204 0008 0192     		str	r2, [sp, #4]
+ 141:../../libmad/timer.c ****   reduce_rational(&numer, &denom);
+ 205              		.loc 1 141 3 is_stmt 1 view .LVU39
+ 206 000a 02A9     		add	r1, sp, #8
+ 207              	.LVL13:
+ 208              		.loc 1 141 3 is_stmt 0 view .LVU40
+ 209 000c 03A8     		add	r0, sp, #12
+ 210              	.LVL14:
+ 211              		.loc 1 141 3 view .LVU41
+ 212 000e FFF7FEFF 		bl	reduce_rational
+ 213              	.LVL15:
+ 142:../../libmad/timer.c ****   reduce_rational(&scale, &denom);
+ 214              		.loc 1 142 3 is_stmt 1 view .LVU42
+ 215 0012 02A9     		add	r1, sp, #8
+ 216 0014 01A8     		add	r0, sp, #4
+ 217 0016 FFF7FEFF 		bl	reduce_rational
+ 218              	.LVL16:
+ 143:../../libmad/timer.c **** 
+ 144:../../libmad/timer.c ****   assert(denom != 0);
+ 219              		.loc 1 144 3 view .LVU43
+ 220 001a 029A     		ldr	r2, [sp, #8]
+ 221 001c 62B1     		cbz	r2, .L19
+ 145:../../libmad/timer.c **** 
+ 146:../../libmad/timer.c ****   if (denom < scale)
+ 222              		.loc 1 146 3 view .LVU44
+ 223              		.loc 1 146 13 is_stmt 0 view .LVU45
+ 224 001e 019B     		ldr	r3, [sp, #4]
+ 225              		.loc 1 146 6 view .LVU46
+ 226 0020 9A42     		cmp	r2, r3
+ 227 0022 0FD3     		bcc	.L20
+ 147:../../libmad/timer.c ****     return numer * (scale / denom) + numer * (scale % denom) / denom;
+ 148:../../libmad/timer.c ****   if (denom < numer)
+ 228              		.loc 1 148 3 is_stmt 1 view .LVU47
+ 229              		.loc 1 148 13 is_stmt 0 view .LVU48
+ 230 0024 0399     		ldr	r1, [sp, #12]
+ 231              		.loc 1 148 6 view .LVU49
+ 232 0026 8A42     		cmp	r2, r1
+ 233 0028 18D3     		bcc	.L21
+ 149:../../libmad/timer.c ****     return scale * (numer / denom) + scale * (numer % denom) / denom;
+ 150:../../libmad/timer.c **** 
+ 151:../../libmad/timer.c ****   return numer * scale / denom;
+ 234              		.loc 1 151 3 is_stmt 1 view .LVU50
+ 235              		.loc 1 151 16 is_stmt 0 view .LVU51
+ 236 002a 01FB03F3 		mul	r3, r1, r3
+ 237              		.loc 1 151 24 view .LVU52
+ 238 002e B3FBF2F0 		udiv	r0, r3, r2
+ 239              	.L13:
+ 152:../../libmad/timer.c **** }
+ 240              		.loc 1 152 1 view .LVU53
+ 241 0032 05B0     		add	sp, sp, #20
+ 242              	.LCFI3:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 8
+
+
+ 243              		.cfi_remember_state
+ 244              		.cfi_def_cfa_offset 4
+ 245              		@ sp needed
+ 246 0034 5DF804FB 		ldr	pc, [sp], #4
+ 247              	.L19:
+ 248              	.LCFI4:
+ 249              		.cfi_restore_state
+ 144:../../libmad/timer.c **** 
+ 250              		.loc 1 144 3 discriminator 1 view .LVU54
+ 251 0038 0E4B     		ldr	r3, .L22
+ 252 003a 0F4A     		ldr	r2, .L22+4
+ 253 003c 9021     		movs	r1, #144
+ 254 003e 0F48     		ldr	r0, .L22+8
+ 255 0040 FFF7FEFF 		bl	__assert_func
+ 256              	.LVL17:
+ 257              	.L20:
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 258              		.loc 1 147 5 is_stmt 1 view .LVU55
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 259              		.loc 1 147 27 is_stmt 0 view .LVU56
+ 260 0044 B3FBF2F1 		udiv	r1, r3, r2
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 261              		.loc 1 147 18 view .LVU57
+ 262 0048 0398     		ldr	r0, [sp, #12]
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 263              		.loc 1 147 53 view .LVU58
+ 264 004a 02FB1133 		mls	r3, r2, r1, r3
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 265              		.loc 1 147 44 view .LVU59
+ 266 004e 00FB03F3 		mul	r3, r0, r3
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 267              		.loc 1 147 62 view .LVU60
+ 268 0052 B3FBF2F3 		udiv	r3, r3, r2
+ 147:../../libmad/timer.c ****   if (denom < numer)
+ 269              		.loc 1 147 36 view .LVU61
+ 270 0056 00FB0130 		mla	r0, r0, r1, r3
+ 271 005a EAE7     		b	.L13
+ 272              	.L21:
+ 149:../../libmad/timer.c **** 
+ 273              		.loc 1 149 5 is_stmt 1 view .LVU62
+ 149:../../libmad/timer.c **** 
+ 274              		.loc 1 149 27 is_stmt 0 view .LVU63
+ 275 005c B1FBF2F0 		udiv	r0, r1, r2
+ 149:../../libmad/timer.c **** 
+ 276              		.loc 1 149 53 view .LVU64
+ 277 0060 02FB1011 		mls	r1, r2, r0, r1
+ 149:../../libmad/timer.c **** 
+ 278              		.loc 1 149 44 view .LVU65
+ 279 0064 03FB01F1 		mul	r1, r3, r1
+ 149:../../libmad/timer.c **** 
+ 280              		.loc 1 149 62 view .LVU66
+ 281 0068 B1FBF2F1 		udiv	r1, r1, r2
+ 149:../../libmad/timer.c **** 
+ 282              		.loc 1 149 36 view .LVU67
+ 283 006c 00FB0310 		mla	r0, r0, r3, r1
+ 284 0070 DFE7     		b	.L13
+ 285              	.L23:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 9
+
+
+ 286 0072 00BF     		.align	2
+ 287              	.L22:
+ 288 0074 00000000 		.word	.LC2
+ 289 0078 00000000 		.word	__func__.1
+ 290 007c 0C000000 		.word	.LC1
+ 291              		.cfi_endproc
+ 292              	.LFE9:
+ 294              		.section	.text.mad_timer_compare,"ax",%progbits
+ 295              		.align	1
+ 296              		.global	mad_timer_compare
+ 297              		.syntax unified
+ 298              		.thumb
+ 299              		.thumb_func
+ 301              	mad_timer_compare:
+ 302              	.LFB3:
+  43:../../libmad/timer.c ****   signed long diff;
+ 303              		.loc 1 43 1 is_stmt 1 view -0
+ 304              		.cfi_startproc
+ 305              		@ args = 0, pretend = 0, frame = 16
+ 306              		@ frame_needed = 0, uses_anonymous_args = 0
+ 307              		@ link register save eliminated.
+ 308 0000 84B0     		sub	sp, sp, #16
+ 309              	.LCFI5:
+ 310              		.cfi_def_cfa_offset 16
+ 311 0002 0DF1100C 		add	ip, sp, #16
+ 312 0006 0CE90300 		stmdb	ip, {r0, r1}
+ 313 000a 6946     		mov	r1, sp
+ 314 000c 81E80C00 		stm	r1, {r2, r3}
+  44:../../libmad/timer.c **** 
+ 315              		.loc 1 44 3 view .LVU69
+  46:../../libmad/timer.c ****   if (diff < 0)
+ 316              		.loc 1 46 3 view .LVU70
+ 317              	.LVL18:
+  47:../../libmad/timer.c ****     return -1;
+ 318              		.loc 1 47 3 view .LVU71
+  47:../../libmad/timer.c ****     return -1;
+ 319              		.loc 1 47 6 is_stmt 0 view .LVU72
+ 320 0010 831A     		subs	r3, r0, r2
+ 321              	.LVL19:
+  47:../../libmad/timer.c ****     return -1;
+ 322              		.loc 1 47 6 view .LVU73
+ 323 0012 09D4     		bmi	.L26
+  49:../../libmad/timer.c ****     return +1;
+ 324              		.loc 1 49 8 is_stmt 1 view .LVU74
+  49:../../libmad/timer.c ****     return +1;
+ 325              		.loc 1 49 11 is_stmt 0 view .LVU75
+ 326 0014 002B     		cmp	r3, #0
+ 327 0016 0ADC     		bgt	.L27
+  52:../../libmad/timer.c ****   if (diff < 0)
+ 328              		.loc 1 52 3 is_stmt 1 view .LVU76
+  52:../../libmad/timer.c ****   if (diff < 0)
+ 329              		.loc 1 52 16 is_stmt 0 view .LVU77
+ 330 0018 039B     		ldr	r3, [sp, #12]
+  52:../../libmad/timer.c ****   if (diff < 0)
+ 331              		.loc 1 52 34 view .LVU78
+ 332 001a 019A     		ldr	r2, [sp, #4]
+ 333              	.LVL20:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 10
+
+
+  53:../../libmad/timer.c ****     return -1;
+ 334              		.loc 1 53 3 is_stmt 1 view .LVU79
+  53:../../libmad/timer.c ****     return -1;
+ 335              		.loc 1 53 6 is_stmt 0 view .LVU80
+ 336 001c 9B1A     		subs	r3, r3, r2
+ 337              	.LVL21:
+  53:../../libmad/timer.c ****     return -1;
+ 338              		.loc 1 53 6 view .LVU81
+ 339 001e 09D4     		bmi	.L28
+  55:../../libmad/timer.c ****     return +1;
+ 340              		.loc 1 55 8 is_stmt 1 view .LVU82
+  55:../../libmad/timer.c ****     return +1;
+ 341              		.loc 1 55 11 is_stmt 0 view .LVU83
+ 342 0020 002B     		cmp	r3, #0
+ 343 0022 0ADC     		bgt	.L29
+  58:../../libmad/timer.c **** }
+ 344              		.loc 1 58 10 view .LVU84
+ 345 0024 0020     		movs	r0, #0
+ 346 0026 03E0     		b	.L24
+ 347              	.LVL22:
+ 348              	.L26:
+  48:../../libmad/timer.c ****   else if (diff > 0)
+ 349              		.loc 1 48 12 view .LVU85
+ 350 0028 4FF0FF30 		mov	r0, #-1
+ 351 002c 00E0     		b	.L24
+ 352              	.L27:
+  50:../../libmad/timer.c **** 
+ 353              		.loc 1 50 12 view .LVU86
+ 354 002e 0120     		movs	r0, #1
+ 355              	.LVL23:
+ 356              	.L24:
+  59:../../libmad/timer.c **** 
+ 357              		.loc 1 59 1 view .LVU87
+ 358 0030 04B0     		add	sp, sp, #16
+ 359              	.LCFI6:
+ 360              		.cfi_remember_state
+ 361              		.cfi_def_cfa_offset 0
+ 362              		@ sp needed
+ 363 0032 7047     		bx	lr
+ 364              	.LVL24:
+ 365              	.L28:
+ 366              	.LCFI7:
+ 367              		.cfi_restore_state
+  54:../../libmad/timer.c ****   else if (diff > 0)
+ 368              		.loc 1 54 12 view .LVU88
+ 369 0034 4FF0FF30 		mov	r0, #-1
+ 370 0038 FAE7     		b	.L24
+ 371              	.L29:
+  56:../../libmad/timer.c **** 
+ 372              		.loc 1 56 12 view .LVU89
+ 373 003a 0120     		movs	r0, #1
+ 374 003c F8E7     		b	.L24
+ 375              		.cfi_endproc
+ 376              	.LFE3:
+ 378              		.section	.text.mad_timer_negate,"ax",%progbits
+ 379              		.align	1
+ 380              		.global	mad_timer_negate
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 11
+
+
+ 381              		.syntax unified
+ 382              		.thumb
+ 383              		.thumb_func
+ 385              	mad_timer_negate:
+ 386              	.LVL25:
+ 387              	.LFB4:
+  66:../../libmad/timer.c ****   timer->seconds = -timer->seconds;
+ 388              		.loc 1 66 1 is_stmt 1 view -0
+ 389              		.cfi_startproc
+ 390              		@ args = 0, pretend = 0, frame = 0
+ 391              		@ frame_needed = 0, uses_anonymous_args = 0
+ 392              		@ link register save eliminated.
+  67:../../libmad/timer.c **** 
+ 393              		.loc 1 67 3 view .LVU91
+  67:../../libmad/timer.c **** 
+ 394              		.loc 1 67 26 is_stmt 0 view .LVU92
+ 395 0000 0368     		ldr	r3, [r0]
+  67:../../libmad/timer.c **** 
+ 396              		.loc 1 67 20 view .LVU93
+ 397 0002 5A42     		rsbs	r2, r3, #0
+  67:../../libmad/timer.c **** 
+ 398              		.loc 1 67 18 view .LVU94
+ 399 0004 0260     		str	r2, [r0]
+  69:../../libmad/timer.c ****     timer->seconds -= 1;
+ 400              		.loc 1 69 3 is_stmt 1 view .LVU95
+  69:../../libmad/timer.c ****     timer->seconds -= 1;
+ 401              		.loc 1 69 12 is_stmt 0 view .LVU96
+ 402 0006 4268     		ldr	r2, [r0, #4]
+  69:../../libmad/timer.c ****     timer->seconds -= 1;
+ 403              		.loc 1 69 6 view .LVU97
+ 404 0008 22B1     		cbz	r2, .L31
+  70:../../libmad/timer.c ****     timer->fraction = MAD_TIMER_RESOLUTION - timer->fraction;
+ 405              		.loc 1 70 5 is_stmt 1 view .LVU98
+  70:../../libmad/timer.c ****     timer->fraction = MAD_TIMER_RESOLUTION - timer->fraction;
+ 406              		.loc 1 70 20 is_stmt 0 view .LVU99
+ 407 000a DB43     		mvns	r3, r3
+ 408 000c 0360     		str	r3, [r0]
+  71:../../libmad/timer.c ****   }
+ 409              		.loc 1 71 5 is_stmt 1 view .LVU100
+  71:../../libmad/timer.c ****   }
+ 410              		.loc 1 71 44 is_stmt 0 view .LVU101
+ 411 000e 024B     		ldr	r3, .L33
+ 412 0010 9B1A     		subs	r3, r3, r2
+  71:../../libmad/timer.c ****   }
+ 413              		.loc 1 71 21 view .LVU102
+ 414 0012 4360     		str	r3, [r0, #4]
+ 415              	.L31:
+  73:../../libmad/timer.c **** 
+ 416              		.loc 1 73 1 view .LVU103
+ 417 0014 7047     		bx	lr
+ 418              	.L34:
+ 419 0016 00BF     		.align	2
+ 420              	.L33:
+ 421 0018 004D0715 		.word	352800000
+ 422              		.cfi_endproc
+ 423              	.LFE4:
+ 425              		.section	.text.mad_timer_abs,"ax",%progbits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 12
+
+
+ 426              		.align	1
+ 427              		.global	mad_timer_abs
+ 428              		.syntax unified
+ 429              		.thumb
+ 430              		.thumb_func
+ 432              	mad_timer_abs:
+ 433              	.LVL26:
+ 434              	.LFB5:
+  80:../../libmad/timer.c ****   if (timer.seconds < 0)
+ 435              		.loc 1 80 1 is_stmt 1 view -0
+ 436              		.cfi_startproc
+ 437              		@ args = 0, pretend = 0, frame = 8
+ 438              		@ frame_needed = 0, uses_anonymous_args = 0
+  80:../../libmad/timer.c ****   if (timer.seconds < 0)
+ 439              		.loc 1 80 1 is_stmt 0 view .LVU105
+ 440 0000 10B5     		push	{r4, lr}
+ 441              	.LCFI8:
+ 442              		.cfi_def_cfa_offset 8
+ 443              		.cfi_offset 4, -8
+ 444              		.cfi_offset 14, -4
+ 445 0002 82B0     		sub	sp, sp, #8
+ 446              	.LCFI9:
+ 447              		.cfi_def_cfa_offset 16
+ 448 0004 0446     		mov	r4, r0
+ 449 0006 02AB     		add	r3, sp, #8
+ 450 0008 03E90600 		stmdb	r3, {r1, r2}
+  81:../../libmad/timer.c ****     mad_timer_negate(&timer);
+ 451              		.loc 1 81 3 is_stmt 1 view .LVU106
+  81:../../libmad/timer.c ****     mad_timer_negate(&timer);
+ 452              		.loc 1 81 6 is_stmt 0 view .LVU107
+ 453 000c 0029     		cmp	r1, #0
+ 454 000e 07DB     		blt	.L38
+ 455              	.LVL27:
+ 456              	.L36:
+  84:../../libmad/timer.c **** }
+ 457              		.loc 1 84 3 is_stmt 1 view .LVU108
+  84:../../libmad/timer.c **** }
+ 458              		.loc 1 84 10 is_stmt 0 view .LVU109
+ 459 0010 02AB     		add	r3, sp, #8
+ 460 0012 13E90300 		ldmdb	r3, {r0, r1}
+ 461 0016 84E80300 		stm	r4, {r0, r1}
+  85:../../libmad/timer.c **** 
+ 462              		.loc 1 85 1 view .LVU110
+ 463 001a 2046     		mov	r0, r4
+ 464 001c 02B0     		add	sp, sp, #8
+ 465              	.LCFI10:
+ 466              		.cfi_remember_state
+ 467              		.cfi_def_cfa_offset 8
+ 468              		@ sp needed
+ 469 001e 10BD     		pop	{r4, pc}
+ 470              	.LVL28:
+ 471              	.L38:
+ 472              	.LCFI11:
+ 473              		.cfi_restore_state
+  82:../../libmad/timer.c **** 
+ 474              		.loc 1 82 5 is_stmt 1 view .LVU111
+ 475 0020 6846     		mov	r0, sp
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 13
+
+
+ 476              	.LVL29:
+  82:../../libmad/timer.c **** 
+ 477              		.loc 1 82 5 is_stmt 0 view .LVU112
+ 478 0022 FFF7FEFF 		bl	mad_timer_negate
+ 479              	.LVL30:
+ 480 0026 F3E7     		b	.L36
+ 481              		.cfi_endproc
+ 482              	.LFE5:
+ 484              		.section	.text.mad_timer_set,"ax",%progbits
+ 485              		.align	1
+ 486              		.global	mad_timer_set
+ 487              		.syntax unified
+ 488              		.thumb
+ 489              		.thumb_func
+ 491              	mad_timer_set:
+ 492              	.LVL31:
+ 493              	.LFB10:
+ 153:../../libmad/timer.c **** 
+ 154:../../libmad/timer.c **** /*
+ 155:../../libmad/timer.c ****  * NAME:	timer->set()
+ 156:../../libmad/timer.c ****  * DESCRIPTION:	set timer to specific (positive) value
+ 157:../../libmad/timer.c ****  */
+ 158:../../libmad/timer.c **** void mad_timer_set(mad_timer_t *timer, unsigned long seconds,
+ 159:../../libmad/timer.c **** 		   unsigned long numer, unsigned long denom)
+ 160:../../libmad/timer.c **** {
+ 494              		.loc 1 160 1 is_stmt 1 view -0
+ 495              		.cfi_startproc
+ 496              		@ args = 0, pretend = 0, frame = 0
+ 497              		@ frame_needed = 0, uses_anonymous_args = 0
+ 498              		.loc 1 160 1 is_stmt 0 view .LVU114
+ 499 0000 10B5     		push	{r4, lr}
+ 500              	.LCFI12:
+ 501              		.cfi_def_cfa_offset 8
+ 502              		.cfi_offset 4, -8
+ 503              		.cfi_offset 14, -4
+ 504 0002 0446     		mov	r4, r0
+ 505 0004 1046     		mov	r0, r2
+ 506              	.LVL32:
+ 161:../../libmad/timer.c ****   timer->seconds = seconds;
+ 507              		.loc 1 161 3 is_stmt 1 view .LVU115
+ 508              		.loc 1 161 18 is_stmt 0 view .LVU116
+ 509 0006 2160     		str	r1, [r4]
+ 162:../../libmad/timer.c ****   if (numer >= denom && denom > 0) {
+ 510              		.loc 1 162 3 is_stmt 1 view .LVU117
+ 511              		.loc 1 162 6 is_stmt 0 view .LVU118
+ 512 0008 03F1FF3C 		add	ip, r3, #-1
+ 513 000c 6245     		cmp	r2, ip
+ 514 000e 05D9     		bls	.L40
+ 163:../../libmad/timer.c ****     timer->seconds += numer / denom;
+ 515              		.loc 1 163 5 is_stmt 1 view .LVU119
+ 516              		.loc 1 163 29 is_stmt 0 view .LVU120
+ 517 0010 B2FBF3F2 		udiv	r2, r2, r3
+ 518              	.LVL33:
+ 519              		.loc 1 163 20 view .LVU121
+ 520 0014 1144     		add	r1, r1, r2
+ 521              	.LVL34:
+ 522              		.loc 1 163 20 view .LVU122
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 14
+
+
+ 523 0016 2160     		str	r1, [r4]
+ 524              	.LVL35:
+ 164:../../libmad/timer.c ****     numer %= denom;
+ 525              		.loc 1 164 5 is_stmt 1 view .LVU123
+ 526              		.loc 1 164 11 is_stmt 0 view .LVU124
+ 527 0018 03FB1200 		mls	r0, r3, r2, r0
+ 528              	.LVL36:
+ 529              	.L40:
+ 165:../../libmad/timer.c ****   }
+ 166:../../libmad/timer.c **** 
+ 167:../../libmad/timer.c ****   switch (denom) {
+ 530              		.loc 1 167 3 is_stmt 1 view .LVU125
+ 531 001c 45F22261 		movw	r1, #22050
+ 532 0020 8B42     		cmp	r3, r1
+ 533 0022 54D0     		beq	.L41
+ 534              		.loc 1 167 3 is_stmt 0 view .LVU126
+ 535 0024 27D8     		bhi	.L42
+ 536 0026 42F61132 		movw	r2, #11025
+ 537 002a 9342     		cmp	r3, r2
+ 538 002c 43D0     		beq	.L43
+ 539 002e 15D8     		bhi	.L44
+ 540 0030 B3F57A7F 		cmp	r3, #1000
+ 541 0034 3AD0     		beq	.L45
+ 542 0036 08D9     		bls	.L62
+ 543 0038 B3F5FA5F 		cmp	r3, #8000
+ 544 003c 5FD1     		bne	.L47
+ 168:../../libmad/timer.c ****   case 0:
+ 169:../../libmad/timer.c ****   case 1:
+ 170:../../libmad/timer.c ****     timer->fraction = 0;
+ 171:../../libmad/timer.c ****     break;
+ 172:../../libmad/timer.c **** 
+ 173:../../libmad/timer.c ****   case MAD_TIMER_RESOLUTION:
+ 174:../../libmad/timer.c ****     timer->fraction = numer;
+ 175:../../libmad/timer.c ****     break;
+ 176:../../libmad/timer.c **** 
+ 177:../../libmad/timer.c ****   case 1000:
+ 178:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION /  1000);
+ 179:../../libmad/timer.c ****     break;
+ 180:../../libmad/timer.c **** 
+ 181:../../libmad/timer.c ****   case 8000:
+ 182:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION /  8000);
+ 545              		.loc 1 182 5 is_stmt 1 view .LVU127
+ 546              		.loc 1 182 29 is_stmt 0 view .LVU128
+ 547 003e 4AF64443 		movw	r3, #44100
+ 548              	.LVL37:
+ 549              		.loc 1 182 29 view .LVU129
+ 550 0042 00FB03F3 		mul	r3, r0, r3
+ 551              		.loc 1 182 21 view .LVU130
+ 552 0046 6360     		str	r3, [r4, #4]
+ 183:../../libmad/timer.c ****     break;
+ 553              		.loc 1 183 5 is_stmt 1 view .LVU131
+ 554 0048 03E0     		b	.L58
+ 555              	.LVL38:
+ 556              	.L62:
+ 167:../../libmad/timer.c ****   case 0:
+ 557              		.loc 1 167 3 is_stmt 0 view .LVU132
+ 558 004a 012B     		cmp	r3, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 15
+
+
+ 559 004c 57D8     		bhi	.L47
+ 170:../../libmad/timer.c ****     break;
+ 560              		.loc 1 170 5 is_stmt 1 view .LVU133
+ 170:../../libmad/timer.c ****     break;
+ 561              		.loc 1 170 21 is_stmt 0 view .LVU134
+ 562 004e 0023     		movs	r3, #0
+ 563              	.LVL39:
+ 170:../../libmad/timer.c ****     break;
+ 564              		.loc 1 170 21 view .LVU135
+ 565 0050 6360     		str	r3, [r4, #4]
+ 171:../../libmad/timer.c **** 
+ 566              		.loc 1 171 5 is_stmt 1 view .LVU136
+ 567              	.LVL40:
+ 568              	.L58:
+ 184:../../libmad/timer.c **** 
+ 185:../../libmad/timer.c ****   case 11025:
+ 186:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 11025);
+ 187:../../libmad/timer.c ****     break;
+ 188:../../libmad/timer.c **** 
+ 189:../../libmad/timer.c ****   case 12000:
+ 190:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 12000);
+ 191:../../libmad/timer.c ****     break;
+ 192:../../libmad/timer.c **** 
+ 193:../../libmad/timer.c ****   case 16000:
+ 194:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 16000);
+ 195:../../libmad/timer.c ****     break;
+ 196:../../libmad/timer.c **** 
+ 197:../../libmad/timer.c ****   case 22050:
+ 198:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 22050);
+ 199:../../libmad/timer.c ****     break;
+ 200:../../libmad/timer.c **** 
+ 201:../../libmad/timer.c ****   case 24000:
+ 202:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 24000);
+ 203:../../libmad/timer.c ****     break;
+ 204:../../libmad/timer.c **** 
+ 205:../../libmad/timer.c ****   case 32000:
+ 206:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 32000);
+ 207:../../libmad/timer.c ****     break;
+ 208:../../libmad/timer.c **** 
+ 209:../../libmad/timer.c ****   case 44100:
+ 210:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 44100);
+ 211:../../libmad/timer.c ****     break;
+ 212:../../libmad/timer.c **** 
+ 213:../../libmad/timer.c ****   case 48000:
+ 214:../../libmad/timer.c ****     timer->fraction = numer * (MAD_TIMER_RESOLUTION / 48000);
+ 215:../../libmad/timer.c ****     break;
+ 216:../../libmad/timer.c **** 
+ 217:../../libmad/timer.c ****   default:
+ 218:../../libmad/timer.c ****     timer->fraction = scale_rational(numer, denom, MAD_TIMER_RESOLUTION);
+ 219:../../libmad/timer.c ****     break;
+ 220:../../libmad/timer.c ****   }
+ 221:../../libmad/timer.c **** 
+ 222:../../libmad/timer.c ****   if (timer->fraction >= MAD_TIMER_RESOLUTION)
+ 569              		.loc 1 222 3 view .LVU137
+ 570              		.loc 1 222 12 is_stmt 0 view .LVU138
+ 571 0052 6268     		ldr	r2, [r4, #4]
+ 572              		.loc 1 222 6 view .LVU139
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 16
+
+
+ 573 0054 2F4B     		ldr	r3, .L65
+ 574 0056 9A42     		cmp	r2, r3
+ 575 0058 57D8     		bhi	.L63
+ 576              	.L39:
+ 223:../../libmad/timer.c ****     reduce_timer(timer);
+ 224:../../libmad/timer.c **** }
+ 577              		.loc 1 224 1 view .LVU140
+ 578 005a 10BD     		pop	{r4, pc}
+ 579              	.LVL41:
+ 580              	.L44:
+ 167:../../libmad/timer.c ****   case 0:
+ 581              		.loc 1 167 3 view .LVU141
+ 582 005c 42F6E062 		movw	r2, #12000
+ 583 0060 9342     		cmp	r3, r2
+ 584 0062 2ED0     		beq	.L50
+ 585 0064 B3F57A5F 		cmp	r3, #16000
+ 586 0068 49D1     		bne	.L47
+ 194:../../libmad/timer.c ****     break;
+ 587              		.loc 1 194 5 is_stmt 1 view .LVU142
+ 194:../../libmad/timer.c ****     break;
+ 588              		.loc 1 194 29 is_stmt 0 view .LVU143
+ 589 006a 45F22263 		movw	r3, #22050
+ 590              	.LVL42:
+ 194:../../libmad/timer.c ****     break;
+ 591              		.loc 1 194 29 view .LVU144
+ 592 006e 00FB03F3 		mul	r3, r0, r3
+ 194:../../libmad/timer.c ****     break;
+ 593              		.loc 1 194 21 view .LVU145
+ 594 0072 6360     		str	r3, [r4, #4]
+ 195:../../libmad/timer.c **** 
+ 595              		.loc 1 195 5 is_stmt 1 view .LVU146
+ 596 0074 EDE7     		b	.L58
+ 597              	.LVL43:
+ 598              	.L42:
+ 167:../../libmad/timer.c ****   case 0:
+ 599              		.loc 1 167 3 is_stmt 0 view .LVU147
+ 600 0076 4AF64442 		movw	r2, #44100
+ 601 007a 9342     		cmp	r3, r2
+ 602 007c 33D0     		beq	.L52
+ 603 007e 08D9     		bls	.L64
+ 604 0080 4BF68032 		movw	r2, #48000
+ 605 0084 9342     		cmp	r3, r2
+ 606 0086 34D0     		beq	.L56
+ 607 0088 234A     		ldr	r2, .L65+4
+ 608 008a 9342     		cmp	r3, r2
+ 609 008c 37D1     		bne	.L47
+ 174:../../libmad/timer.c ****     break;
+ 610              		.loc 1 174 5 is_stmt 1 view .LVU148
+ 174:../../libmad/timer.c ****     break;
+ 611              		.loc 1 174 21 is_stmt 0 view .LVU149
+ 612 008e 6060     		str	r0, [r4, #4]
+ 175:../../libmad/timer.c **** 
+ 613              		.loc 1 175 5 is_stmt 1 view .LVU150
+ 614 0090 DFE7     		b	.L58
+ 615              	.L64:
+ 167:../../libmad/timer.c ****   case 0:
+ 616              		.loc 1 167 3 is_stmt 0 view .LVU151
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 17
+
+
+ 617 0092 45F6C052 		movw	r2, #24000
+ 618 0096 9342     		cmp	r3, r2
+ 619 0098 1FD0     		beq	.L54
+ 620 009a B3F5FA4F 		cmp	r3, #32000
+ 621 009e 2ED1     		bne	.L47
+ 206:../../libmad/timer.c ****     break;
+ 622              		.loc 1 206 5 is_stmt 1 view .LVU152
+ 206:../../libmad/timer.c ****     break;
+ 623              		.loc 1 206 29 is_stmt 0 view .LVU153
+ 624 00a0 42F61133 		movw	r3, #11025
+ 625              	.LVL44:
+ 206:../../libmad/timer.c ****     break;
+ 626              		.loc 1 206 29 view .LVU154
+ 627 00a4 00FB03F3 		mul	r3, r0, r3
+ 206:../../libmad/timer.c ****     break;
+ 628              		.loc 1 206 21 view .LVU155
+ 629 00a8 6360     		str	r3, [r4, #4]
+ 207:../../libmad/timer.c **** 
+ 630              		.loc 1 207 5 is_stmt 1 view .LVU156
+ 631 00aa D2E7     		b	.L58
+ 632              	.LVL45:
+ 633              	.L45:
+ 178:../../libmad/timer.c ****     break;
+ 634              		.loc 1 178 5 view .LVU157
+ 178:../../libmad/timer.c ****     break;
+ 635              		.loc 1 178 29 is_stmt 0 view .LVU158
+ 636 00ac 1B4B     		ldr	r3, .L65+8
+ 637              	.LVL46:
+ 178:../../libmad/timer.c ****     break;
+ 638              		.loc 1 178 29 view .LVU159
+ 639 00ae 00FB03F3 		mul	r3, r0, r3
+ 178:../../libmad/timer.c ****     break;
+ 640              		.loc 1 178 21 view .LVU160
+ 641 00b2 6360     		str	r3, [r4, #4]
+ 179:../../libmad/timer.c **** 
+ 642              		.loc 1 179 5 is_stmt 1 view .LVU161
+ 643 00b4 CDE7     		b	.L58
+ 644              	.LVL47:
+ 645              	.L43:
+ 186:../../libmad/timer.c ****     break;
+ 646              		.loc 1 186 5 view .LVU162
+ 186:../../libmad/timer.c ****     break;
+ 647              		.loc 1 186 29 is_stmt 0 view .LVU163
+ 648 00b6 4FF4FA43 		mov	r3, #32000
+ 649              	.LVL48:
+ 186:../../libmad/timer.c ****     break;
+ 650              		.loc 1 186 29 view .LVU164
+ 651 00ba 00FB03F3 		mul	r3, r0, r3
+ 186:../../libmad/timer.c ****     break;
+ 652              		.loc 1 186 21 view .LVU165
+ 653 00be 6360     		str	r3, [r4, #4]
+ 187:../../libmad/timer.c **** 
+ 654              		.loc 1 187 5 is_stmt 1 view .LVU166
+ 655 00c0 C7E7     		b	.L58
+ 656              	.LVL49:
+ 657              	.L50:
+ 190:../../libmad/timer.c ****     break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 18
+
+
+ 658              		.loc 1 190 5 view .LVU167
+ 190:../../libmad/timer.c ****     break;
+ 659              		.loc 1 190 29 is_stmt 0 view .LVU168
+ 660 00c2 47F2D823 		movw	r3, #29400
+ 661              	.LVL50:
+ 190:../../libmad/timer.c ****     break;
+ 662              		.loc 1 190 29 view .LVU169
+ 663 00c6 00FB03F3 		mul	r3, r0, r3
+ 190:../../libmad/timer.c ****     break;
+ 664              		.loc 1 190 21 view .LVU170
+ 665 00ca 6360     		str	r3, [r4, #4]
+ 191:../../libmad/timer.c **** 
+ 666              		.loc 1 191 5 is_stmt 1 view .LVU171
+ 667 00cc C1E7     		b	.L58
+ 668              	.LVL51:
+ 669              	.L41:
+ 198:../../libmad/timer.c ****     break;
+ 670              		.loc 1 198 5 view .LVU172
+ 198:../../libmad/timer.c ****     break;
+ 671              		.loc 1 198 29 is_stmt 0 view .LVU173
+ 672 00ce 4FF47A53 		mov	r3, #16000
+ 673              	.LVL52:
+ 198:../../libmad/timer.c ****     break;
+ 674              		.loc 1 198 29 view .LVU174
+ 675 00d2 00FB03F3 		mul	r3, r0, r3
+ 198:../../libmad/timer.c ****     break;
+ 676              		.loc 1 198 21 view .LVU175
+ 677 00d6 6360     		str	r3, [r4, #4]
+ 199:../../libmad/timer.c **** 
+ 678              		.loc 1 199 5 is_stmt 1 view .LVU176
+ 679 00d8 BBE7     		b	.L58
+ 680              	.LVL53:
+ 681              	.L54:
+ 202:../../libmad/timer.c ****     break;
+ 682              		.loc 1 202 5 view .LVU177
+ 202:../../libmad/timer.c ****     break;
+ 683              		.loc 1 202 29 is_stmt 0 view .LVU178
+ 684 00da 43F66C13 		movw	r3, #14700
+ 685              	.LVL54:
+ 202:../../libmad/timer.c ****     break;
+ 686              		.loc 1 202 29 view .LVU179
+ 687 00de 00FB03F3 		mul	r3, r0, r3
+ 202:../../libmad/timer.c ****     break;
+ 688              		.loc 1 202 21 view .LVU180
+ 689 00e2 6360     		str	r3, [r4, #4]
+ 203:../../libmad/timer.c **** 
+ 690              		.loc 1 203 5 is_stmt 1 view .LVU181
+ 691 00e4 B5E7     		b	.L58
+ 692              	.LVL55:
+ 693              	.L52:
+ 210:../../libmad/timer.c ****     break;
+ 694              		.loc 1 210 5 view .LVU182
+ 210:../../libmad/timer.c ****     break;
+ 695              		.loc 1 210 29 is_stmt 0 view .LVU183
+ 696 00e6 4FF4FA53 		mov	r3, #8000
+ 697              	.LVL56:
+ 210:../../libmad/timer.c ****     break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 19
+
+
+ 698              		.loc 1 210 29 view .LVU184
+ 699 00ea 00FB03F3 		mul	r3, r0, r3
+ 210:../../libmad/timer.c ****     break;
+ 700              		.loc 1 210 21 view .LVU185
+ 701 00ee 6360     		str	r3, [r4, #4]
+ 211:../../libmad/timer.c **** 
+ 702              		.loc 1 211 5 is_stmt 1 view .LVU186
+ 703 00f0 AFE7     		b	.L58
+ 704              	.LVL57:
+ 705              	.L56:
+ 214:../../libmad/timer.c ****     break;
+ 706              		.loc 1 214 5 view .LVU187
+ 214:../../libmad/timer.c ****     break;
+ 707              		.loc 1 214 29 is_stmt 0 view .LVU188
+ 708 00f2 41F6B643 		movw	r3, #7350
+ 709              	.LVL58:
+ 214:../../libmad/timer.c ****     break;
+ 710              		.loc 1 214 29 view .LVU189
+ 711 00f6 00FB03F3 		mul	r3, r0, r3
+ 214:../../libmad/timer.c ****     break;
+ 712              		.loc 1 214 21 view .LVU190
+ 713 00fa 6360     		str	r3, [r4, #4]
+ 215:../../libmad/timer.c **** 
+ 714              		.loc 1 215 5 is_stmt 1 view .LVU191
+ 715 00fc A9E7     		b	.L58
+ 716              	.LVL59:
+ 717              	.L47:
+ 218:../../libmad/timer.c ****     break;
+ 718              		.loc 1 218 5 view .LVU192
+ 218:../../libmad/timer.c ****     break;
+ 719              		.loc 1 218 23 is_stmt 0 view .LVU193
+ 720 00fe 064A     		ldr	r2, .L65+4
+ 721 0100 1946     		mov	r1, r3
+ 722 0102 FFF7FEFF 		bl	scale_rational
+ 723              	.LVL60:
+ 218:../../libmad/timer.c ****     break;
+ 724              		.loc 1 218 21 discriminator 1 view .LVU194
+ 725 0106 6060     		str	r0, [r4, #4]
+ 219:../../libmad/timer.c ****   }
+ 726              		.loc 1 219 5 is_stmt 1 view .LVU195
+ 727 0108 A3E7     		b	.L58
+ 728              	.L63:
+ 223:../../libmad/timer.c **** }
+ 729              		.loc 1 223 5 view .LVU196
+ 730 010a 2046     		mov	r0, r4
+ 731 010c FFF7FEFF 		bl	reduce_timer
+ 732              	.LVL61:
+ 733              		.loc 1 224 1 is_stmt 0 view .LVU197
+ 734 0110 A3E7     		b	.L39
+ 735              	.L66:
+ 736 0112 00BF     		.align	2
+ 737              	.L65:
+ 738 0114 FF4C0715 		.word	352799999
+ 739 0118 004D0715 		.word	352800000
+ 740 011c 20620500 		.word	352800
+ 741              		.cfi_endproc
+ 742              	.LFE10:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 20
+
+
+ 744              		.section	.text.mad_timer_add,"ax",%progbits
+ 745              		.align	1
+ 746              		.global	mad_timer_add
+ 747              		.syntax unified
+ 748              		.thumb
+ 749              		.thumb_func
+ 751              	mad_timer_add:
+ 752              	.LVL62:
+ 753              	.LFB11:
+ 225:../../libmad/timer.c **** 
+ 226:../../libmad/timer.c **** /*
+ 227:../../libmad/timer.c ****  * NAME:	timer->add()
+ 228:../../libmad/timer.c ****  * DESCRIPTION:	add one timer to another
+ 229:../../libmad/timer.c ****  */
+ 230:../../libmad/timer.c **** void mad_timer_add(mad_timer_t *timer, mad_timer_t incr)
+ 231:../../libmad/timer.c **** {
+ 754              		.loc 1 231 1 is_stmt 1 view -0
+ 755              		.cfi_startproc
+ 756              		@ args = 0, pretend = 0, frame = 8
+ 757              		@ frame_needed = 0, uses_anonymous_args = 0
+ 758              		.loc 1 231 1 is_stmt 0 view .LVU199
+ 759 0000 00B5     		push	{lr}
+ 760              	.LCFI13:
+ 761              		.cfi_def_cfa_offset 4
+ 762              		.cfi_offset 14, -4
+ 763 0002 83B0     		sub	sp, sp, #12
+ 764              	.LCFI14:
+ 765              		.cfi_def_cfa_offset 16
+ 766 0004 02AB     		add	r3, sp, #8
+ 767 0006 03E90600 		stmdb	r3, {r1, r2}
+ 232:../../libmad/timer.c ****   timer->seconds  += incr.seconds;
+ 768              		.loc 1 232 3 is_stmt 1 view .LVU200
+ 769              		.loc 1 232 8 is_stmt 0 view .LVU201
+ 770 000a 0368     		ldr	r3, [r0]
+ 771              		.loc 1 232 19 view .LVU202
+ 772 000c 0B44     		add	r3, r3, r1
+ 773 000e 0360     		str	r3, [r0]
+ 233:../../libmad/timer.c ****   timer->fraction += incr.fraction;
+ 774              		.loc 1 233 3 is_stmt 1 view .LVU203
+ 775              		.loc 1 233 8 is_stmt 0 view .LVU204
+ 776 0010 4368     		ldr	r3, [r0, #4]
+ 777              		.loc 1 233 26 view .LVU205
+ 778 0012 019A     		ldr	r2, [sp, #4]
+ 779              		.loc 1 233 19 view .LVU206
+ 780 0014 1344     		add	r3, r3, r2
+ 781 0016 4360     		str	r3, [r0, #4]
+ 234:../../libmad/timer.c **** 
+ 235:../../libmad/timer.c ****   if (timer->fraction >= MAD_TIMER_RESOLUTION)
+ 782              		.loc 1 235 3 is_stmt 1 view .LVU207
+ 783              		.loc 1 235 6 is_stmt 0 view .LVU208
+ 784 0018 044A     		ldr	r2, .L71
+ 785 001a 9342     		cmp	r3, r2
+ 786 001c 02D8     		bhi	.L70
+ 787              	.LVL63:
+ 788              	.L67:
+ 236:../../libmad/timer.c ****     reduce_timer(timer);
+ 237:../../libmad/timer.c **** }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 21
+
+
+ 789              		.loc 1 237 1 view .LVU209
+ 790 001e 03B0     		add	sp, sp, #12
+ 791              	.LCFI15:
+ 792              		.cfi_remember_state
+ 793              		.cfi_def_cfa_offset 4
+ 794              		@ sp needed
+ 795 0020 5DF804FB 		ldr	pc, [sp], #4
+ 796              	.LVL64:
+ 797              	.L70:
+ 798              	.LCFI16:
+ 799              		.cfi_restore_state
+ 236:../../libmad/timer.c ****     reduce_timer(timer);
+ 800              		.loc 1 236 5 is_stmt 1 view .LVU210
+ 801 0024 FFF7FEFF 		bl	reduce_timer
+ 802              	.LVL65:
+ 803              		.loc 1 237 1 is_stmt 0 view .LVU211
+ 804 0028 F9E7     		b	.L67
+ 805              	.L72:
+ 806 002a 00BF     		.align	2
+ 807              	.L71:
+ 808 002c FF4C0715 		.word	352799999
+ 809              		.cfi_endproc
+ 810              	.LFE11:
+ 812              		.section	.text.mad_timer_multiply,"ax",%progbits
+ 813              		.align	1
+ 814              		.global	mad_timer_multiply
+ 815              		.syntax unified
+ 816              		.thumb
+ 817              		.thumb_func
+ 819              	mad_timer_multiply:
+ 820              	.LVL66:
+ 821              	.LFB12:
+ 238:../../libmad/timer.c **** 
+ 239:../../libmad/timer.c **** /*
+ 240:../../libmad/timer.c ****  * NAME:	timer->multiply()
+ 241:../../libmad/timer.c ****  * DESCRIPTION:	multiply a timer by a scalar value
+ 242:../../libmad/timer.c ****  */
+ 243:../../libmad/timer.c **** void mad_timer_multiply(mad_timer_t *timer, signed long scalar)
+ 244:../../libmad/timer.c **** {
+ 822              		.loc 1 244 1 is_stmt 1 view -0
+ 823              		.cfi_startproc
+ 824              		@ args = 0, pretend = 0, frame = 8
+ 825              		@ frame_needed = 0, uses_anonymous_args = 0
+ 826              		.loc 1 244 1 is_stmt 0 view .LVU213
+ 827 0000 30B5     		push	{r4, r5, lr}
+ 828              	.LCFI17:
+ 829              		.cfi_def_cfa_offset 12
+ 830              		.cfi_offset 4, -12
+ 831              		.cfi_offset 5, -8
+ 832              		.cfi_offset 14, -4
+ 833 0002 83B0     		sub	sp, sp, #12
+ 834              	.LCFI18:
+ 835              		.cfi_def_cfa_offset 24
+ 836 0004 0546     		mov	r5, r0
+ 245:../../libmad/timer.c ****   mad_timer_t addend;
+ 837              		.loc 1 245 3 is_stmt 1 view .LVU214
+ 246:../../libmad/timer.c ****   unsigned long factor;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 22
+
+
+ 838              		.loc 1 246 3 view .LVU215
+ 247:../../libmad/timer.c **** 
+ 248:../../libmad/timer.c ****   factor = scalar;
+ 839              		.loc 1 248 3 view .LVU216
+ 840              		.loc 1 248 10 is_stmt 0 view .LVU217
+ 841 0006 0C46     		mov	r4, r1
+ 842              	.LVL67:
+ 249:../../libmad/timer.c ****   if (scalar < 0) {
+ 843              		.loc 1 249 3 is_stmt 1 view .LVU218
+ 844              		.loc 1 249 6 is_stmt 0 view .LVU219
+ 845 0008 0029     		cmp	r1, #0
+ 846 000a 08DB     		blt	.L79
+ 847              	.LVL68:
+ 848              	.L74:
+ 250:../../libmad/timer.c ****     factor = -scalar;
+ 251:../../libmad/timer.c ****     mad_timer_negate(timer);
+ 252:../../libmad/timer.c ****   }
+ 253:../../libmad/timer.c **** 
+ 254:../../libmad/timer.c ****   addend = *timer;
+ 849              		.loc 1 254 3 is_stmt 1 view .LVU220
+ 850              		.loc 1 254 10 is_stmt 0 view .LVU221
+ 851 000c 95E80300 		ldm	r5, {r0, r1}
+ 852 0010 02AB     		add	r3, sp, #8
+ 853 0012 03E90300 		stmdb	r3, {r0, r1}
+ 255:../../libmad/timer.c ****   *timer = mad_timer_zero;
+ 854              		.loc 1 255 3 is_stmt 1 view .LVU222
+ 855              		.loc 1 255 10 is_stmt 0 view .LVU223
+ 856 0016 0023     		movs	r3, #0
+ 857 0018 2B60     		str	r3, [r5]
+ 858 001a 6B60     		str	r3, [r5, #4]
+ 256:../../libmad/timer.c **** 
+ 257:../../libmad/timer.c ****   while (factor) {
+ 859              		.loc 1 257 3 is_stmt 1 view .LVU224
+ 860              		.loc 1 257 9 is_stmt 0 view .LVU225
+ 861 001c 09E0     		b	.L75
+ 862              	.LVL69:
+ 863              	.L79:
+ 250:../../libmad/timer.c ****     mad_timer_negate(timer);
+ 864              		.loc 1 250 5 is_stmt 1 view .LVU226
+ 250:../../libmad/timer.c ****     mad_timer_negate(timer);
+ 865              		.loc 1 250 14 is_stmt 0 view .LVU227
+ 866 001e 4C42     		rsbs	r4, r1, #0
+ 867              	.LVL70:
+ 251:../../libmad/timer.c ****   }
+ 868              		.loc 1 251 5 is_stmt 1 view .LVU228
+ 869 0020 FFF7FEFF 		bl	mad_timer_negate
+ 870              	.LVL71:
+ 251:../../libmad/timer.c ****   }
+ 871              		.loc 1 251 5 is_stmt 0 view .LVU229
+ 872 0024 F2E7     		b	.L74
+ 873              	.LVL72:
+ 874              	.L76:
+ 258:../../libmad/timer.c ****     if (factor & 1)
+ 259:../../libmad/timer.c ****       mad_timer_add(timer, addend);
+ 260:../../libmad/timer.c **** 
+ 261:../../libmad/timer.c ****     mad_timer_add(&addend, addend);
+ 875              		.loc 1 261 5 is_stmt 1 view .LVU230
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 23
+
+
+ 876 0026 6846     		mov	r0, sp
+ 877 0028 90E80600 		ldm	r0, {r1, r2}
+ 878 002c FFF7FEFF 		bl	mad_timer_add
+ 879              	.LVL73:
+ 262:../../libmad/timer.c ****     factor >>= 1;
+ 880              		.loc 1 262 5 view .LVU231
+ 881              		.loc 1 262 12 is_stmt 0 view .LVU232
+ 882 0030 6408     		lsrs	r4, r4, #1
+ 883              	.LVL74:
+ 884              	.L75:
+ 257:../../libmad/timer.c ****     if (factor & 1)
+ 885              		.loc 1 257 10 is_stmt 1 view .LVU233
+ 886 0032 4CB1     		cbz	r4, .L80
+ 258:../../libmad/timer.c ****     if (factor & 1)
+ 887              		.loc 1 258 5 view .LVU234
+ 258:../../libmad/timer.c ****     if (factor & 1)
+ 888              		.loc 1 258 8 is_stmt 0 view .LVU235
+ 889 0034 14F0010F 		tst	r4, #1
+ 890 0038 F5D0     		beq	.L76
+ 259:../../libmad/timer.c **** 
+ 891              		.loc 1 259 7 is_stmt 1 view .LVU236
+ 892 003a 02AB     		add	r3, sp, #8
+ 893 003c 13E90600 		ldmdb	r3, {r1, r2}
+ 894 0040 2846     		mov	r0, r5
+ 895 0042 FFF7FEFF 		bl	mad_timer_add
+ 896              	.LVL75:
+ 897 0046 EEE7     		b	.L76
+ 898              	.L80:
+ 263:../../libmad/timer.c ****   }
+ 264:../../libmad/timer.c **** }
+ 899              		.loc 1 264 1 is_stmt 0 view .LVU237
+ 900 0048 03B0     		add	sp, sp, #12
+ 901              	.LCFI19:
+ 902              		.cfi_def_cfa_offset 12
+ 903              		@ sp needed
+ 904 004a 30BD     		pop	{r4, r5, pc}
+ 905              		.loc 1 264 1 view .LVU238
+ 906              		.cfi_endproc
+ 907              	.LFE12:
+ 909              		.section	.text.mad_timer_count,"ax",%progbits
+ 910              		.align	1
+ 911              		.global	mad_timer_count
+ 912              		.syntax unified
+ 913              		.thumb
+ 914              		.thumb_func
+ 916              	mad_timer_count:
+ 917              	.LVL76:
+ 918              	.LFB13:
+ 265:../../libmad/timer.c **** 
+ 266:../../libmad/timer.c **** /*
+ 267:../../libmad/timer.c ****  * NAME:	timer->count()
+ 268:../../libmad/timer.c ****  * DESCRIPTION:	return timer value in selected units
+ 269:../../libmad/timer.c ****  */
+ 270:../../libmad/timer.c **** signed long mad_timer_count(mad_timer_t timer, enum mad_units units)
+ 271:../../libmad/timer.c **** {
+ 919              		.loc 1 271 1 is_stmt 1 view -0
+ 920              		.cfi_startproc
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 24
+
+
+ 921              		@ args = 0, pretend = 0, frame = 8
+ 922              		@ frame_needed = 0, uses_anonymous_args = 0
+ 923              		.loc 1 271 1 is_stmt 0 view .LVU240
+ 924 0000 10B5     		push	{r4, lr}
+ 925              	.LCFI20:
+ 926              		.cfi_def_cfa_offset 8
+ 927              		.cfi_offset 4, -8
+ 928              		.cfi_offset 14, -4
+ 929 0002 82B0     		sub	sp, sp, #8
+ 930              	.LCFI21:
+ 931              		.cfi_def_cfa_offset 16
+ 932 0004 02AB     		add	r3, sp, #8
+ 933 0006 03E90300 		stmdb	r3, {r0, r1}
+ 272:../../libmad/timer.c ****   switch (units) {
+ 934              		.loc 1 272 3 is_stmt 1 view .LVU241
+ 935 000a 192A     		cmp	r2, #25
+ 936 000c 4ADC     		bgt	.L82
+ 937 000e 12F11E0F 		cmn	r2, #30
+ 938 0012 22DB     		blt	.L102
+ 939 0014 02F11E03 		add	r3, r2, #30
+ 940 0018 372B     		cmp	r3, #55
+ 941 001a 00F2A080 		bhi	.L97
+ 942 001e DFE803F0 		tbb	[pc, r3]
+ 943              	.L87:
+ 944 0022 2A       		.byte	(.L91-.L87)/2
+ 945 0023 9E       		.byte	(.L97-.L87)/2
+ 946 0024 9E       		.byte	(.L97-.L87)/2
+ 947 0025 9E       		.byte	(.L97-.L87)/2
+ 948 0026 9E       		.byte	(.L97-.L87)/2
+ 949 0027 2A       		.byte	(.L91-.L87)/2
+ 950 0028 2A       		.byte	(.L91-.L87)/2
+ 951 0029 9E       		.byte	(.L97-.L87)/2
+ 952 002a 9E       		.byte	(.L97-.L87)/2
+ 953 002b 9E       		.byte	(.L97-.L87)/2
+ 954 002c 9E       		.byte	(.L97-.L87)/2
+ 955 002d 9E       		.byte	(.L97-.L87)/2
+ 956 002e 9E       		.byte	(.L97-.L87)/2
+ 957 002f 9E       		.byte	(.L97-.L87)/2
+ 958 0030 9E       		.byte	(.L97-.L87)/2
+ 959 0031 9E       		.byte	(.L97-.L87)/2
+ 960 0032 9E       		.byte	(.L97-.L87)/2
+ 961 0033 9E       		.byte	(.L97-.L87)/2
+ 962 0034 9E       		.byte	(.L97-.L87)/2
+ 963 0035 9E       		.byte	(.L97-.L87)/2
+ 964 0036 9E       		.byte	(.L97-.L87)/2
+ 965 0037 9E       		.byte	(.L97-.L87)/2
+ 966 0038 9E       		.byte	(.L97-.L87)/2
+ 967 0039 9E       		.byte	(.L97-.L87)/2
+ 968 003a 9E       		.byte	(.L97-.L87)/2
+ 969 003b 9E       		.byte	(.L97-.L87)/2
+ 970 003c 9E       		.byte	(.L97-.L87)/2
+ 971 003d 9E       		.byte	(.L97-.L87)/2
+ 972 003e 88       		.byte	(.L90-.L87)/2
+ 973 003f 91       		.byte	(.L89-.L87)/2
+ 974 0040 9A       		.byte	(.L88-.L87)/2
+ 975 0041 9E       		.byte	(.L97-.L87)/2
+ 976 0042 9E       		.byte	(.L97-.L87)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 25
+
+
+ 977 0043 9E       		.byte	(.L97-.L87)/2
+ 978 0044 9E       		.byte	(.L97-.L87)/2
+ 979 0045 9E       		.byte	(.L97-.L87)/2
+ 980 0046 9E       		.byte	(.L97-.L87)/2
+ 981 0047 9E       		.byte	(.L97-.L87)/2
+ 982 0048 9E       		.byte	(.L97-.L87)/2
+ 983 0049 9E       		.byte	(.L97-.L87)/2
+ 984 004a 54       		.byte	(.L86-.L87)/2
+ 985 004b 9E       		.byte	(.L97-.L87)/2
+ 986 004c 9E       		.byte	(.L97-.L87)/2
+ 987 004d 9E       		.byte	(.L97-.L87)/2
+ 988 004e 9E       		.byte	(.L97-.L87)/2
+ 989 004f 9E       		.byte	(.L97-.L87)/2
+ 990 0050 9E       		.byte	(.L97-.L87)/2
+ 991 0051 9E       		.byte	(.L97-.L87)/2
+ 992 0052 9E       		.byte	(.L97-.L87)/2
+ 993 0053 9E       		.byte	(.L97-.L87)/2
+ 994 0054 9E       		.byte	(.L97-.L87)/2
+ 995 0055 9E       		.byte	(.L97-.L87)/2
+ 996 0056 9E       		.byte	(.L97-.L87)/2
+ 997 0057 9E       		.byte	(.L97-.L87)/2
+ 998 0058 54       		.byte	(.L86-.L87)/2
+ 999 0059 54       		.byte	(.L86-.L87)/2
+ 1000              		.p2align 1
+ 1001              	.L102:
+ 1002 005a 12F1300F 		cmn	r2, #48
+ 1003 005e 7CDC     		bgt	.L96
+ 1004 0060 12F13C0F 		cmn	r2, #60
+ 1005 0064 18DB     		blt	.L103
+ 1006 0066 02F13C01 		add	r1, r2, #60
+ 1007 006a 41F20143 		movw	r3, #5121
+ 1008 006e CB40     		lsrs	r3, r3, r1
+ 1009 0070 13F0010F 		tst	r3, #1
+ 1010 0074 14D0     		beq	.L104
+ 1011              	.L91:
+ 273:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 274:../../libmad/timer.c ****     return timer.seconds / 60 / 60;
+ 275:../../libmad/timer.c **** 
+ 276:../../libmad/timer.c ****   case MAD_UNITS_MINUTES:
+ 277:../../libmad/timer.c ****     return timer.seconds / 60;
+ 278:../../libmad/timer.c **** 
+ 279:../../libmad/timer.c ****   case MAD_UNITS_SECONDS:
+ 280:../../libmad/timer.c ****     return timer.seconds;
+ 281:../../libmad/timer.c **** 
+ 282:../../libmad/timer.c ****   case MAD_UNITS_DECISECONDS:
+ 283:../../libmad/timer.c ****   case MAD_UNITS_CENTISECONDS:
+ 284:../../libmad/timer.c ****   case MAD_UNITS_MILLISECONDS:
+ 285:../../libmad/timer.c **** 
+ 286:../../libmad/timer.c ****   case MAD_UNITS_8000_HZ:
+ 287:../../libmad/timer.c ****   case MAD_UNITS_11025_HZ:
+ 288:../../libmad/timer.c ****   case MAD_UNITS_12000_HZ:
+ 289:../../libmad/timer.c ****   case MAD_UNITS_16000_HZ:
+ 290:../../libmad/timer.c ****   case MAD_UNITS_22050_HZ:
+ 291:../../libmad/timer.c ****   case MAD_UNITS_24000_HZ:
+ 292:../../libmad/timer.c ****   case MAD_UNITS_32000_HZ:
+ 293:../../libmad/timer.c ****   case MAD_UNITS_44100_HZ:
+ 294:../../libmad/timer.c ****   case MAD_UNITS_48000_HZ:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 26
+
+
+ 295:../../libmad/timer.c **** 
+ 296:../../libmad/timer.c ****   case MAD_UNITS_24_FPS:
+ 297:../../libmad/timer.c ****   case MAD_UNITS_25_FPS:
+ 298:../../libmad/timer.c ****   case MAD_UNITS_30_FPS:
+ 299:../../libmad/timer.c ****   case MAD_UNITS_48_FPS:
+ 300:../../libmad/timer.c ****   case MAD_UNITS_50_FPS:
+ 301:../../libmad/timer.c ****   case MAD_UNITS_60_FPS:
+ 302:../../libmad/timer.c ****   case MAD_UNITS_75_FPS:
+ 303:../../libmad/timer.c ****     return timer.seconds * (signed long) units +
+ 304:../../libmad/timer.c ****       (signed long) scale_rational(timer.fraction, MAD_TIMER_RESOLUTION,
+ 305:../../libmad/timer.c **** 				   units);
+ 306:../../libmad/timer.c **** 
+ 307:../../libmad/timer.c ****   case MAD_UNITS_23_976_FPS:
+ 308:../../libmad/timer.c ****   case MAD_UNITS_24_975_FPS:
+ 309:../../libmad/timer.c ****   case MAD_UNITS_29_97_FPS:
+ 310:../../libmad/timer.c ****   case MAD_UNITS_47_952_FPS:
+ 311:../../libmad/timer.c ****   case MAD_UNITS_49_95_FPS:
+ 312:../../libmad/timer.c ****   case MAD_UNITS_59_94_FPS:
+ 313:../../libmad/timer.c ****     return (mad_timer_count(timer, -units) + 1) * 1000 / 1001;
+ 1012              		.loc 1 313 5 view .LVU242
+ 1013              		.loc 1 313 13 is_stmt 0 view .LVU243
+ 1014 0076 5242     		rsbs	r2, r2, #0
+ 1015              	.LVL77:
+ 1016              		.loc 1 313 13 view .LVU244
+ 1017 0078 02AB     		add	r3, sp, #8
+ 1018 007a 13E90300 		ldmdb	r3, {r0, r1}
+ 1019 007e FFF7FEFF 		bl	mad_timer_count
+ 1020              	.LVL78:
+ 1021              		.loc 1 313 49 discriminator 1 view .LVU245
+ 1022 0082 4FF47A73 		mov	r3, #1000
+ 1023 0086 00FB0333 		mla	r3, r0, r3, r3
+ 1024              		.loc 1 313 56 discriminator 1 view .LVU246
+ 1025 008a 374A     		ldr	r2, .L107
+ 1026 008c 82FB0312 		smull	r1, r2, r2, r3
+ 1027 0090 DB17     		asrs	r3, r3, #31
+ 1028 0092 C3EB2220 		rsb	r0, r3, r2, asr #8
+ 1029              		.loc 1 313 56 view .LVU247
+ 1030 0096 63E0     		b	.L81
+ 1031              	.LVL79:
+ 1032              	.L103:
+ 272:../../libmad/timer.c ****   switch (units) {
+ 1033              		.loc 1 272 3 view .LVU248
+ 1034 0098 0020     		movs	r0, #0
+ 1035 009a 61E0     		b	.L81
+ 1036              	.L106:
+ 272:../../libmad/timer.c ****   switch (units) {
+ 1037              		.loc 1 272 3 view .LVU249
+ 1038 009c 0020     		movs	r0, #0
+ 1039 009e 5FE0     		b	.L81
+ 1040              	.L104:
+ 272:../../libmad/timer.c ****   switch (units) {
+ 1041              		.loc 1 272 3 view .LVU250
+ 1042 00a0 0020     		movs	r0, #0
+ 1043 00a2 5DE0     		b	.L81
+ 1044              	.L82:
+ 272:../../libmad/timer.c ****   switch (units) {
+ 1045              		.loc 1 272 3 view .LVU251
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 27
+
+
+ 1046 00a4 42F61133 		movw	r3, #11025
+ 1047 00a8 9A42     		cmp	r2, r3
+ 1048 00aa 0ED0     		beq	.L86
+ 1049 00ac 22DC     		bgt	.L92
+ 1050 00ae 4B2A     		cmp	r2, #75
+ 1051 00b0 0BD0     		beq	.L86
+ 1052 00b2 15DC     		bgt	.L93
+ 1053 00b4 3C2A     		cmp	r2, #60
+ 1054 00b6 55DC     		bgt	.L98
+ 1055 00b8 1E2A     		cmp	r2, #30
+ 1056 00ba 0FDB     		blt	.L105
+ 1057 00bc A2F11E01 		sub	r1, r2, #30
+ 1058 00c0 2A4B     		ldr	r3, .L107+4
+ 1059 00c2 CB40     		lsrs	r3, r3, r1
+ 1060 00c4 13F0010F 		tst	r3, #1
+ 1061 00c8 E8D0     		beq	.L106
+ 1062              	.L86:
+ 303:../../libmad/timer.c ****       (signed long) scale_rational(timer.fraction, MAD_TIMER_RESOLUTION,
+ 1063              		.loc 1 303 5 is_stmt 1 view .LVU252
+ 303:../../libmad/timer.c ****       (signed long) scale_rational(timer.fraction, MAD_TIMER_RESOLUTION,
+ 1064              		.loc 1 303 17 is_stmt 0 view .LVU253
+ 1065 00ca 0098     		ldr	r0, [sp]
+ 303:../../libmad/timer.c ****       (signed long) scale_rational(timer.fraction, MAD_TIMER_RESOLUTION,
+ 1066              		.loc 1 303 26 view .LVU254
+ 1067 00cc 02FB00F4 		mul	r4, r2, r0
+ 304:../../libmad/timer.c **** 				   units);
+ 1068              		.loc 1 304 21 view .LVU255
+ 1069 00d0 2749     		ldr	r1, .L107+8
+ 1070 00d2 0198     		ldr	r0, [sp, #4]
+ 1071 00d4 FFF7FEFF 		bl	scale_rational
+ 1072              	.LVL80:
+ 303:../../libmad/timer.c ****       (signed long) scale_rational(timer.fraction, MAD_TIMER_RESOLUTION,
+ 1073              		.loc 1 303 48 view .LVU256
+ 1074 00d8 2044     		add	r0, r0, r4
+ 1075 00da 41E0     		b	.L81
+ 1076              	.LVL81:
+ 1077              	.L105:
+ 272:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1078              		.loc 1 272 3 view .LVU257
+ 1079 00dc 0020     		movs	r0, #0
+ 1080 00de 3FE0     		b	.L81
+ 1081              	.L93:
+ 1082 00e0 B2F57A7F 		cmp	r2, #1000
+ 1083 00e4 F1D0     		beq	.L86
+ 1084 00e6 B2F5FA5F 		cmp	r2, #8000
+ 1085 00ea EED0     		beq	.L86
+ 1086 00ec 642A     		cmp	r2, #100
+ 1087 00ee ECD0     		beq	.L86
+ 1088 00f0 0020     		movs	r0, #0
+ 1089 00f2 35E0     		b	.L81
+ 1090              	.L92:
+ 272:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1091              		.loc 1 272 3 view .LVU258
+ 1092 00f4 45F6C053 		movw	r3, #24000
+ 1093 00f8 9A42     		cmp	r2, r3
+ 1094 00fa E6D0     		beq	.L86
+ 1095 00fc 0CDC     		bgt	.L95
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 28
+
+
+ 1096 00fe B2F57A5F 		cmp	r2, #16000
+ 1097 0102 E2D0     		beq	.L86
+ 1098 0104 45F22263 		movw	r3, #22050
+ 1099 0108 9A42     		cmp	r2, r3
+ 1100 010a DED0     		beq	.L86
+ 1101 010c 42F6E063 		movw	r3, #12000
+ 1102 0110 9A42     		cmp	r2, r3
+ 1103 0112 DAD0     		beq	.L86
+ 1104 0114 0020     		movs	r0, #0
+ 1105 0116 23E0     		b	.L81
+ 1106              	.L95:
+ 1107 0118 4AF64443 		movw	r3, #44100
+ 1108 011c 9A42     		cmp	r2, r3
+ 1109 011e D4D0     		beq	.L86
+ 1110 0120 4BF68033 		movw	r3, #48000
+ 1111 0124 9A42     		cmp	r2, r3
+ 1112 0126 D0D0     		beq	.L86
+ 1113 0128 B2F5FA4F 		cmp	r2, #32000
+ 1114 012c CDD0     		beq	.L86
+ 1115 012e 0020     		movs	r0, #0
+ 1116 0130 16E0     		b	.L81
+ 1117              	.L90:
+ 274:../../libmad/timer.c **** 
+ 1118              		.loc 1 274 5 is_stmt 1 view .LVU259
+ 274:../../libmad/timer.c **** 
+ 1119              		.loc 1 274 17 is_stmt 0 view .LVU260
+ 1120 0132 0098     		ldr	r0, [sp]
+ 274:../../libmad/timer.c **** 
+ 1121              		.loc 1 274 31 view .LVU261
+ 1122 0134 0F4B     		ldr	r3, .L107+12
+ 1123 0136 83FB0023 		smull	r2, r3, r3, r0
+ 1124              	.LVL82:
+ 274:../../libmad/timer.c **** 
+ 1125              		.loc 1 274 31 view .LVU262
+ 1126 013a 0344     		add	r3, r3, r0
+ 1127 013c C017     		asrs	r0, r0, #31
+ 1128 013e C0EBE320 		rsb	r0, r0, r3, asr #11
+ 1129 0142 0DE0     		b	.L81
+ 1130              	.LVL83:
+ 1131              	.L89:
+ 277:../../libmad/timer.c **** 
+ 1132              		.loc 1 277 5 is_stmt 1 view .LVU263
+ 277:../../libmad/timer.c **** 
+ 1133              		.loc 1 277 17 is_stmt 0 view .LVU264
+ 1134 0144 0098     		ldr	r0, [sp]
+ 277:../../libmad/timer.c **** 
+ 1135              		.loc 1 277 26 view .LVU265
+ 1136 0146 0C4B     		ldr	r3, .L107+16
+ 1137 0148 83FB0023 		smull	r2, r3, r3, r0
+ 1138              	.LVL84:
+ 277:../../libmad/timer.c **** 
+ 1139              		.loc 1 277 26 view .LVU266
+ 1140 014c 0344     		add	r3, r3, r0
+ 1141 014e C017     		asrs	r0, r0, #31
+ 1142 0150 C0EB6310 		rsb	r0, r0, r3, asr #5
+ 1143 0154 04E0     		b	.L81
+ 1144              	.LVL85:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 29
+
+
+ 1145              	.L88:
+ 280:../../libmad/timer.c **** 
+ 1146              		.loc 1 280 5 is_stmt 1 view .LVU267
+ 280:../../libmad/timer.c **** 
+ 1147              		.loc 1 280 17 is_stmt 0 view .LVU268
+ 1148 0156 0098     		ldr	r0, [sp]
+ 1149 0158 02E0     		b	.L81
+ 1150              	.L96:
+ 272:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1151              		.loc 1 272 3 view .LVU269
+ 1152 015a 0020     		movs	r0, #0
+ 1153 015c 00E0     		b	.L81
+ 1154              	.L97:
+ 272:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1155              		.loc 1 272 3 view .LVU270
+ 1156 015e 0020     		movs	r0, #0
+ 1157              	.LVL86:
+ 1158              	.L81:
+ 314:../../libmad/timer.c ****   }
+ 315:../../libmad/timer.c **** 
+ 316:../../libmad/timer.c ****   /* unsupported units */
+ 317:../../libmad/timer.c ****   return 0;
+ 318:../../libmad/timer.c **** }
+ 1159              		.loc 1 318 1 view .LVU271
+ 1160 0160 02B0     		add	sp, sp, #8
+ 1161              	.LCFI22:
+ 1162              		.cfi_remember_state
+ 1163              		.cfi_def_cfa_offset 8
+ 1164              		@ sp needed
+ 1165 0162 10BD     		pop	{r4, pc}
+ 1166              	.LVL87:
+ 1167              	.L98:
+ 1168              	.LCFI23:
+ 1169              		.cfi_restore_state
+ 272:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1170              		.loc 1 272 3 view .LVU272
+ 1171 0164 0020     		movs	r0, #0
+ 1172 0166 FBE7     		b	.L81
+ 1173              	.L108:
+ 1174              		.align	2
+ 1175              	.L107:
+ 1176 0168 9F747841 		.word	1098413215
+ 1177 016c 01001440 		.word	1075052545
+ 1178 0170 004D0715 		.word	352800000
+ 1179 0174 C5B3A291 		.word	-1851608123
+ 1180 0178 89888888 		.word	-2004318071
+ 1181              		.cfi_endproc
+ 1182              	.LFE13:
+ 1184              		.section	.text.mad_timer_fraction,"ax",%progbits
+ 1185              		.align	1
+ 1186              		.global	mad_timer_fraction
+ 1187              		.syntax unified
+ 1188              		.thumb
+ 1189              		.thumb_func
+ 1191              	mad_timer_fraction:
+ 1192              	.LVL88:
+ 1193              	.LFB14:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 30
+
+
+ 319:../../libmad/timer.c **** 
+ 320:../../libmad/timer.c **** /*
+ 321:../../libmad/timer.c ****  * NAME:	timer->fraction()
+ 322:../../libmad/timer.c ****  * DESCRIPTION:	return fractional part of timer in arbitrary terms
+ 323:../../libmad/timer.c ****  */
+ 324:../../libmad/timer.c **** unsigned long mad_timer_fraction(mad_timer_t timer, unsigned long denom)
+ 325:../../libmad/timer.c **** {
+ 1194              		.loc 1 325 1 is_stmt 1 view -0
+ 1195              		.cfi_startproc
+ 1196              		@ args = 0, pretend = 0, frame = 8
+ 1197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1198              		.loc 1 325 1 is_stmt 0 view .LVU274
+ 1199 0000 10B5     		push	{r4, lr}
+ 1200              	.LCFI24:
+ 1201              		.cfi_def_cfa_offset 8
+ 1202              		.cfi_offset 4, -8
+ 1203              		.cfi_offset 14, -4
+ 1204 0002 82B0     		sub	sp, sp, #8
+ 1205              	.LCFI25:
+ 1206              		.cfi_def_cfa_offset 16
+ 1207 0004 6B46     		mov	r3, sp
+ 1208 0006 83E80300 		stm	r3, {r0, r1}
+ 1209 000a 1446     		mov	r4, r2
+ 326:../../libmad/timer.c ****   timer = mad_timer_abs(timer);
+ 1210              		.loc 1 326 3 is_stmt 1 view .LVU275
+ 1211              		.loc 1 326 11 is_stmt 0 view .LVU276
+ 1212 000c 93E80600 		ldm	r3, {r1, r2}
+ 1213              	.LVL89:
+ 1214              		.loc 1 326 11 view .LVU277
+ 1215 0010 1846     		mov	r0, r3
+ 1216 0012 FFF7FEFF 		bl	mad_timer_abs
+ 1217              	.LVL90:
+ 327:../../libmad/timer.c **** 
+ 328:../../libmad/timer.c ****   switch (denom) {
+ 1218              		.loc 1 328 3 is_stmt 1 view .LVU278
+ 1219 0016 44B1     		cbz	r4, .L110
+ 1220 0018 094B     		ldr	r3, .L117
+ 1221 001a 9C42     		cmp	r4, r3
+ 1222 001c 0BD0     		beq	.L111
+ 329:../../libmad/timer.c ****   case 0:
+ 330:../../libmad/timer.c ****     return timer.fraction ?
+ 331:../../libmad/timer.c ****       MAD_TIMER_RESOLUTION / timer.fraction : MAD_TIMER_RESOLUTION + 1;
+ 332:../../libmad/timer.c **** 
+ 333:../../libmad/timer.c ****   case MAD_TIMER_RESOLUTION:
+ 334:../../libmad/timer.c ****     return timer.fraction;
+ 335:../../libmad/timer.c **** 
+ 336:../../libmad/timer.c ****   default:
+ 337:../../libmad/timer.c ****     return scale_rational(timer.fraction, MAD_TIMER_RESOLUTION, denom);
+ 1223              		.loc 1 337 5 view .LVU279
+ 1224              		.loc 1 337 12 is_stmt 0 view .LVU280
+ 1225 001e 2246     		mov	r2, r4
+ 1226 0020 0749     		ldr	r1, .L117
+ 1227 0022 0198     		ldr	r0, [sp, #4]
+ 1228 0024 FFF7FEFF 		bl	scale_rational
+ 1229              	.LVL91:
+ 1230 0028 06E0     		b	.L109
+ 1231              	.L110:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 31
+
+
+ 330:../../libmad/timer.c ****       MAD_TIMER_RESOLUTION / timer.fraction : MAD_TIMER_RESOLUTION + 1;
+ 1232              		.loc 1 330 5 is_stmt 1 view .LVU281
+ 330:../../libmad/timer.c ****       MAD_TIMER_RESOLUTION / timer.fraction : MAD_TIMER_RESOLUTION + 1;
+ 1233              		.loc 1 330 17 is_stmt 0 view .LVU282
+ 1234 002a 019B     		ldr	r3, [sp, #4]
+ 331:../../libmad/timer.c **** 
+ 1235              		.loc 1 331 45 view .LVU283
+ 1236 002c 33B1     		cbz	r3, .L114
+ 331:../../libmad/timer.c **** 
+ 1237              		.loc 1 331 45 discriminator 1 view .LVU284
+ 1238 002e 0448     		ldr	r0, .L117
+ 1239 0030 B0FBF3F0 		udiv	r0, r0, r3
+ 1240 0034 00E0     		b	.L109
+ 1241              	.L111:
+ 334:../../libmad/timer.c **** 
+ 1242              		.loc 1 334 5 is_stmt 1 view .LVU285
+ 334:../../libmad/timer.c **** 
+ 1243              		.loc 1 334 17 is_stmt 0 view .LVU286
+ 1244 0036 0198     		ldr	r0, [sp, #4]
+ 1245              	.L109:
+ 338:../../libmad/timer.c ****   }
+ 339:../../libmad/timer.c **** }
+ 1246              		.loc 1 339 1 view .LVU287
+ 1247 0038 02B0     		add	sp, sp, #8
+ 1248              	.LCFI26:
+ 1249              		.cfi_remember_state
+ 1250              		.cfi_def_cfa_offset 8
+ 1251              		@ sp needed
+ 1252 003a 10BD     		pop	{r4, pc}
+ 1253              	.LVL92:
+ 1254              	.L114:
+ 1255              	.LCFI27:
+ 1256              		.cfi_restore_state
+ 331:../../libmad/timer.c **** 
+ 1257              		.loc 1 331 45 discriminator 2 view .LVU288
+ 1258 003c 0148     		ldr	r0, .L117+4
+ 1259 003e FBE7     		b	.L109
+ 1260              	.L118:
+ 1261              		.align	2
+ 1262              	.L117:
+ 1263 0040 004D0715 		.word	352800000
+ 1264 0044 014D0715 		.word	352800001
+ 1265              		.cfi_endproc
+ 1266              	.LFE14:
+ 1268              		.section	.text.mad_timer_string,"ax",%progbits
+ 1269              		.align	1
+ 1270              		.global	mad_timer_string
+ 1271              		.syntax unified
+ 1272              		.thumb
+ 1273              		.thumb_func
+ 1275              	mad_timer_string:
+ 1276              	.LVL93:
+ 1277              	.LFB15:
+ 340:../../libmad/timer.c **** 
+ 341:../../libmad/timer.c **** /*
+ 342:../../libmad/timer.c ****  * NAME:	timer->string()
+ 343:../../libmad/timer.c ****  * DESCRIPTION:	write a string representation of a timer using a template
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 32
+
+
+ 344:../../libmad/timer.c ****  */
+ 345:../../libmad/timer.c **** void mad_timer_string(mad_timer_t timer,
+ 346:../../libmad/timer.c **** 		      char *dest, char const *format, enum mad_units units,
+ 347:../../libmad/timer.c **** 		      enum mad_units fracunits, unsigned long subparts)
+ 348:../../libmad/timer.c **** {
+ 1278              		.loc 1 348 1 is_stmt 1 view -0
+ 1279              		.cfi_startproc
+ 1280              		@ args = 12, pretend = 0, frame = 8
+ 1281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1282              		.loc 1 348 1 is_stmt 0 view .LVU290
+ 1283 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1284              	.LCFI28:
+ 1285              		.cfi_def_cfa_offset 32
+ 1286              		.cfi_offset 4, -32
+ 1287              		.cfi_offset 5, -28
+ 1288              		.cfi_offset 6, -24
+ 1289              		.cfi_offset 7, -20
+ 1290              		.cfi_offset 8, -16
+ 1291              		.cfi_offset 9, -12
+ 1292              		.cfi_offset 10, -8
+ 1293              		.cfi_offset 14, -4
+ 1294 0004 86B0     		sub	sp, sp, #24
+ 1295              	.LCFI29:
+ 1296              		.cfi_def_cfa_offset 56
+ 1297 0006 0DF1100C 		add	ip, sp, #16
+ 1298 000a 8CE80300 		stm	ip, {r0, r1}
+ 1299 000e 1746     		mov	r7, r2
+ 1300 0010 9846     		mov	r8, r3
+ 1301 0012 0E9D     		ldr	r5, [sp, #56]
+ 1302 0014 0F9C     		ldr	r4, [sp, #60]
+ 349:../../libmad/timer.c ****   unsigned long hours, minutes, seconds, sub;
+ 1303              		.loc 1 349 3 is_stmt 1 view .LVU291
+ 350:../../libmad/timer.c ****   unsigned int frac;
+ 1304              		.loc 1 350 3 view .LVU292
+ 351:../../libmad/timer.c **** 
+ 352:../../libmad/timer.c ****   timer = mad_timer_abs(timer);
+ 1305              		.loc 1 352 3 view .LVU293
+ 1306              		.loc 1 352 11 is_stmt 0 view .LVU294
+ 1307 0016 9CE80600 		ldm	ip, {r1, r2}
+ 1308              	.LVL94:
+ 1309              		.loc 1 352 11 view .LVU295
+ 1310 001a 6046     		mov	r0, ip
+ 1311 001c FFF7FEFF 		bl	mad_timer_abs
+ 1312              	.LVL95:
+ 353:../../libmad/timer.c **** 
+ 354:../../libmad/timer.c ****   seconds = timer.seconds;
+ 1313              		.loc 1 354 3 is_stmt 1 view .LVU296
+ 1314              		.loc 1 354 18 is_stmt 0 view .LVU297
+ 1315 0020 DDF81090 		ldr	r9, [sp, #16]
+ 1316              	.LVL96:
+ 355:../../libmad/timer.c ****   frac = sub = 0;
+ 1317              		.loc 1 355 3 is_stmt 1 view .LVU298
+ 356:../../libmad/timer.c **** 
+ 357:../../libmad/timer.c ****   switch (fracunits) {
+ 1318              		.loc 1 357 3 view .LVU299
+ 1319 0024 0A2C     		cmp	r4, #10
+ 1320 0026 50D0     		beq	.L120
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 33
+
+
+ 1321 0028 40DC     		bgt	.L121
+ 1322 002a 14F13C0F 		cmn	r4, #60
+ 1323 002e 0FD0     		beq	.L122
+ 1324 0030 C0F2B980 		blt	.L145
+ 1325 0034 14F1180F 		cmn	r4, #24
+ 1326 0038 00F3B880 		bgt	.L146
+ 1327 003c 14F1320F 		cmn	r4, #50
+ 1328 0040 2BDB     		blt	.L154
+ 1329 0042 04F13202 		add	r2, r4, #50
+ 1330 0046 944B     		ldr	r3, .L160
+ 1331 0048 D340     		lsrs	r3, r3, r2
+ 1332 004a 13F0010F 		tst	r3, #1
+ 1333 004e 2AD0     		beq	.L155
+ 1334              	.L122:
+ 1335              	.LBB2:
+ 358:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 359:../../libmad/timer.c ****   case MAD_UNITS_MINUTES:
+ 360:../../libmad/timer.c ****   case MAD_UNITS_SECONDS:
+ 361:../../libmad/timer.c ****     break;
+ 362:../../libmad/timer.c **** 
+ 363:../../libmad/timer.c ****   case MAD_UNITS_DECISECONDS:
+ 364:../../libmad/timer.c ****   case MAD_UNITS_CENTISECONDS:
+ 365:../../libmad/timer.c ****   case MAD_UNITS_MILLISECONDS:
+ 366:../../libmad/timer.c **** 
+ 367:../../libmad/timer.c ****   case MAD_UNITS_8000_HZ:
+ 368:../../libmad/timer.c ****   case MAD_UNITS_11025_HZ:
+ 369:../../libmad/timer.c ****   case MAD_UNITS_12000_HZ:
+ 370:../../libmad/timer.c ****   case MAD_UNITS_16000_HZ:
+ 371:../../libmad/timer.c ****   case MAD_UNITS_22050_HZ:
+ 372:../../libmad/timer.c ****   case MAD_UNITS_24000_HZ:
+ 373:../../libmad/timer.c ****   case MAD_UNITS_32000_HZ:
+ 374:../../libmad/timer.c ****   case MAD_UNITS_44100_HZ:
+ 375:../../libmad/timer.c ****   case MAD_UNITS_48000_HZ:
+ 376:../../libmad/timer.c **** 
+ 377:../../libmad/timer.c ****   case MAD_UNITS_24_FPS:
+ 378:../../libmad/timer.c ****   case MAD_UNITS_25_FPS:
+ 379:../../libmad/timer.c ****   case MAD_UNITS_30_FPS:
+ 380:../../libmad/timer.c ****   case MAD_UNITS_48_FPS:
+ 381:../../libmad/timer.c ****   case MAD_UNITS_50_FPS:
+ 382:../../libmad/timer.c ****   case MAD_UNITS_60_FPS:
+ 383:../../libmad/timer.c ****   case MAD_UNITS_75_FPS:
+ 384:../../libmad/timer.c ****     {
+ 385:../../libmad/timer.c ****       unsigned long denom;
+ 386:../../libmad/timer.c **** 
+ 387:../../libmad/timer.c ****       denom = MAD_TIMER_RESOLUTION / fracunits;
+ 388:../../libmad/timer.c **** 
+ 389:../../libmad/timer.c ****       frac = timer.fraction / denom;
+ 390:../../libmad/timer.c ****       sub  = scale_rational(timer.fraction % denom, denom, subparts);
+ 391:../../libmad/timer.c ****     }
+ 392:../../libmad/timer.c ****     break;
+ 393:../../libmad/timer.c **** 
+ 394:../../libmad/timer.c ****   case MAD_UNITS_23_976_FPS:
+ 395:../../libmad/timer.c ****   case MAD_UNITS_24_975_FPS:
+ 396:../../libmad/timer.c ****   case MAD_UNITS_29_97_FPS:
+ 397:../../libmad/timer.c ****   case MAD_UNITS_47_952_FPS:
+ 398:../../libmad/timer.c ****   case MAD_UNITS_49_95_FPS:
+ 399:../../libmad/timer.c ****   case MAD_UNITS_59_94_FPS:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 34
+
+
+ 400:../../libmad/timer.c ****     /* drop-frame encoding */
+ 401:../../libmad/timer.c ****     /* N.B. this is only well-defined for MAD_UNITS_29_97_FPS */
+ 402:../../libmad/timer.c ****     {
+ 403:../../libmad/timer.c ****       unsigned long frame, cycle, d, m;
+ 1336              		.loc 1 403 7 view .LVU300
+ 404:../../libmad/timer.c **** 
+ 405:../../libmad/timer.c ****       frame = mad_timer_count(timer, fracunits);
+ 1337              		.loc 1 405 7 view .LVU301
+ 1338              		.loc 1 405 15 is_stmt 0 view .LVU302
+ 1339 0050 2246     		mov	r2, r4
+ 1340 0052 06AB     		add	r3, sp, #24
+ 1341 0054 13E90300 		ldmdb	r3, {r0, r1}
+ 1342 0058 FFF7FEFF 		bl	mad_timer_count
+ 1343              	.LVL97:
+ 406:../../libmad/timer.c **** 
+ 407:../../libmad/timer.c ****       cycle = -fracunits * 60 * 10 - (10 - 1) * 2;
+ 1344              		.loc 1 407 7 is_stmt 1 view .LVU303
+ 1345              		.loc 1 407 31 is_stmt 0 view .LVU304
+ 1346 005c 8F4B     		ldr	r3, .L160+4
+ 1347 005e 04FB03F3 		mul	r3, r4, r3
+ 1348              		.loc 1 407 36 view .LVU305
+ 1349 0062 123B     		subs	r3, r3, #18
+ 1350              	.LVL98:
+ 408:../../libmad/timer.c **** 
+ 409:../../libmad/timer.c ****       d = frame / cycle;
+ 1351              		.loc 1 409 7 is_stmt 1 view .LVU306
+ 1352              		.loc 1 409 9 is_stmt 0 view .LVU307
+ 1353 0064 B0FBF3F2 		udiv	r2, r0, r3
+ 1354              	.LVL99:
+ 410:../../libmad/timer.c ****       m = frame % cycle;
+ 1355              		.loc 1 410 7 is_stmt 1 view .LVU308
+ 1356              		.loc 1 410 9 is_stmt 0 view .LVU309
+ 1357 0068 03FB1201 		mls	r1, r3, r2, r0
+ 1358              	.LVL100:
+ 411:../../libmad/timer.c ****       frame += (10 - 1) * 2 * d;
+ 1359              		.loc 1 411 7 is_stmt 1 view .LVU310
+ 1360              		.loc 1 411 29 is_stmt 0 view .LVU311
+ 1361 006c 02EBC202 		add	r2, r2, r2, lsl #3
+ 1362              	.LVL101:
+ 1363              		.loc 1 411 13 view .LVU312
+ 1364 0070 00EB4200 		add	r0, r0, r2, lsl #1
+ 1365              	.LVL102:
+ 412:../../libmad/timer.c ****       if (m > 2)
+ 1366              		.loc 1 412 7 is_stmt 1 view .LVU313
+ 1367              		.loc 1 412 10 is_stmt 0 view .LVU314
+ 1368 0074 0229     		cmp	r1, #2
+ 1369 0076 08D9     		bls	.L130
+ 413:../../libmad/timer.c **** 	frame += 2 * ((m - 2) / (cycle / 10));
+ 1370              		.loc 1 413 2 is_stmt 1 view .LVU315
+ 1371              		.loc 1 413 19 is_stmt 0 view .LVU316
+ 1372 0078 0239     		subs	r1, r1, #2
+ 1373              	.LVL103:
+ 1374              		.loc 1 413 33 view .LVU317
+ 1375 007a 894A     		ldr	r2, .L160+8
+ 1376 007c A2FB0323 		umull	r2, r3, r2, r3
+ 1377              	.LVL104:
+ 1378              		.loc 1 413 33 view .LVU318
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 35
+
+
+ 1379 0080 DB08     		lsrs	r3, r3, #3
+ 1380              		.loc 1 413 24 view .LVU319
+ 1381 0082 B1FBF3F1 		udiv	r1, r1, r3
+ 1382              	.LVL105:
+ 1383              		.loc 1 413 8 view .LVU320
+ 1384 0086 00EB4100 		add	r0, r0, r1, lsl #1
+ 1385              	.LVL106:
+ 1386              	.L130:
+ 414:../../libmad/timer.c **** 
+ 415:../../libmad/timer.c ****       frac    = frame % -fracunits;
+ 1387              		.loc 1 415 7 is_stmt 1 view .LVU321
+ 1388              		.loc 1 415 25 is_stmt 0 view .LVU322
+ 1389 008a 6342     		rsbs	r3, r4, #0
+ 1390              		.loc 1 415 15 view .LVU323
+ 1391 008c B0FBF3F9 		udiv	r9, r0, r3
+ 1392              	.LVL107:
+ 1393              		.loc 1 415 15 view .LVU324
+ 1394 0090 03FB1906 		mls	r6, r3, r9, r0
+ 1395              	.LVL108:
+ 416:../../libmad/timer.c ****       seconds = frame / -fracunits;
+ 1396              		.loc 1 416 7 is_stmt 1 view .LVU325
+ 1397              		.loc 1 416 7 is_stmt 0 view .LVU326
+ 1398              	.LBE2:
+ 417:../../libmad/timer.c ****     }
+ 418:../../libmad/timer.c ****     break;
+ 1399              		.loc 1 418 5 is_stmt 1 view .LVU327
+ 355:../../libmad/timer.c **** 
+ 1400              		.loc 1 355 14 is_stmt 0 view .LVU328
+ 1401 0094 4FF0000A 		mov	r10, #0
+ 1402              		.loc 1 418 5 view .LVU329
+ 1403 0098 23E0     		b	.L123
+ 1404              	.LVL109:
+ 1405              	.L154:
+ 357:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1406              		.loc 1 357 3 view .LVU330
+ 1407 009a 0026     		movs	r6, #0
+ 1408 009c B246     		mov	r10, r6
+ 1409 009e 20E0     		b	.L123
+ 1410              	.L157:
+ 1411 00a0 0026     		movs	r6, #0
+ 1412 00a2 B246     		mov	r10, r6
+ 1413 00a4 1DE0     		b	.L123
+ 1414              	.L155:
+ 1415 00a6 0026     		movs	r6, #0
+ 1416 00a8 B246     		mov	r10, r6
+ 1417 00aa 1AE0     		b	.L123
+ 1418              	.L121:
+ 1419 00ac B4F5FA5F 		cmp	r4, #8000
+ 1420 00b0 0BD0     		beq	.L120
+ 1421 00b2 4FDC     		bgt	.L125
+ 1422 00b4 3C2C     		cmp	r4, #60
+ 1423 00b6 43DC     		bgt	.L126
+ 1424 00b8 1E2C     		cmp	r4, #30
+ 1425 00ba 3ADB     		blt	.L156
+ 1426 00bc A4F11E02 		sub	r2, r4, #30
+ 1427 00c0 784B     		ldr	r3, .L160+12
+ 1428 00c2 D340     		lsrs	r3, r3, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 36
+
+
+ 1429 00c4 13F0010F 		tst	r3, #1
+ 1430 00c8 EAD0     		beq	.L157
+ 1431              	.L120:
+ 1432              	.LBB3:
+ 385:../../libmad/timer.c **** 
+ 1433              		.loc 1 385 7 is_stmt 1 view .LVU331
+ 387:../../libmad/timer.c **** 
+ 1434              		.loc 1 387 7 view .LVU332
+ 387:../../libmad/timer.c **** 
+ 1435              		.loc 1 387 13 is_stmt 0 view .LVU333
+ 1436 00ca 7749     		ldr	r1, .L160+16
+ 1437 00cc B1FBF4F1 		udiv	r1, r1, r4
+ 1438              	.LVL110:
+ 389:../../libmad/timer.c ****       sub  = scale_rational(timer.fraction % denom, denom, subparts);
+ 1439              		.loc 1 389 7 is_stmt 1 view .LVU334
+ 389:../../libmad/timer.c ****       sub  = scale_rational(timer.fraction % denom, denom, subparts);
+ 1440              		.loc 1 389 19 is_stmt 0 view .LVU335
+ 1441 00d0 0598     		ldr	r0, [sp, #20]
+ 389:../../libmad/timer.c ****       sub  = scale_rational(timer.fraction % denom, denom, subparts);
+ 1442              		.loc 1 389 12 view .LVU336
+ 1443 00d2 B0FBF1F6 		udiv	r6, r0, r1
+ 1444              	.LVL111:
+ 390:../../libmad/timer.c ****     }
+ 1445              		.loc 1 390 7 is_stmt 1 view .LVU337
+ 390:../../libmad/timer.c ****     }
+ 1446              		.loc 1 390 14 is_stmt 0 view .LVU338
+ 1447 00d6 109A     		ldr	r2, [sp, #64]
+ 1448 00d8 01FB1600 		mls	r0, r1, r6, r0
+ 1449 00dc FFF7FEFF 		bl	scale_rational
+ 1450              	.LVL112:
+ 390:../../libmad/timer.c ****     }
+ 1451              		.loc 1 390 14 view .LVU339
+ 1452 00e0 8246     		mov	r10, r0
+ 1453              	.LVL113:
+ 390:../../libmad/timer.c ****     }
+ 1454              		.loc 1 390 14 view .LVU340
+ 1455              	.LBE3:
+ 392:../../libmad/timer.c **** 
+ 1456              		.loc 1 392 5 is_stmt 1 view .LVU341
+ 1457              	.L123:
+ 419:../../libmad/timer.c ****   }
+ 420:../../libmad/timer.c **** 
+ 421:../../libmad/timer.c ****   switch (units) {
+ 1458              		.loc 1 421 3 view .LVU342
+ 1459 00e2 192D     		cmp	r5, #25
+ 1460 00e4 00F38580 		bgt	.L131
+ 1461 00e8 15F11E0F 		cmn	r5, #30
+ 1462 00ec 61DB     		blt	.L158
+ 1463 00ee 05F11E03 		add	r3, r5, #30
+ 1464 00f2 372B     		cmp	r3, #55
+ 1465 00f4 7AD8     		bhi	.L119
+ 1466 00f6 DFE803F0 		tbb	[pc, r3]
+ 1467              	.L136:
+ 1468 00fa 6A       		.byte	(.L140-.L136)/2
+ 1469 00fb 79       		.byte	(.L119-.L136)/2
+ 1470 00fc 79       		.byte	(.L119-.L136)/2
+ 1471 00fd 79       		.byte	(.L119-.L136)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 37
+
+
+ 1472 00fe 79       		.byte	(.L119-.L136)/2
+ 1473 00ff 6A       		.byte	(.L140-.L136)/2
+ 1474 0100 6A       		.byte	(.L140-.L136)/2
+ 1475 0101 79       		.byte	(.L119-.L136)/2
+ 1476 0102 79       		.byte	(.L119-.L136)/2
+ 1477 0103 79       		.byte	(.L119-.L136)/2
+ 1478 0104 79       		.byte	(.L119-.L136)/2
+ 1479 0105 79       		.byte	(.L119-.L136)/2
+ 1480 0106 79       		.byte	(.L119-.L136)/2
+ 1481 0107 79       		.byte	(.L119-.L136)/2
+ 1482 0108 79       		.byte	(.L119-.L136)/2
+ 1483 0109 79       		.byte	(.L119-.L136)/2
+ 1484 010a 79       		.byte	(.L119-.L136)/2
+ 1485 010b 79       		.byte	(.L119-.L136)/2
+ 1486 010c 79       		.byte	(.L119-.L136)/2
+ 1487 010d 79       		.byte	(.L119-.L136)/2
+ 1488 010e 79       		.byte	(.L119-.L136)/2
+ 1489 010f 79       		.byte	(.L119-.L136)/2
+ 1490 0110 79       		.byte	(.L119-.L136)/2
+ 1491 0111 79       		.byte	(.L119-.L136)/2
+ 1492 0112 79       		.byte	(.L119-.L136)/2
+ 1493 0113 79       		.byte	(.L119-.L136)/2
+ 1494 0114 79       		.byte	(.L119-.L136)/2
+ 1495 0115 79       		.byte	(.L119-.L136)/2
+ 1496 0116 B6       		.byte	(.L139-.L136)/2
+ 1497 0117 DB       		.byte	(.L138-.L136)/2
+ 1498 0118 EB       		.byte	(.L137-.L136)/2
+ 1499 0119 79       		.byte	(.L119-.L136)/2
+ 1500 011a 79       		.byte	(.L119-.L136)/2
+ 1501 011b 79       		.byte	(.L119-.L136)/2
+ 1502 011c 79       		.byte	(.L119-.L136)/2
+ 1503 011d 79       		.byte	(.L119-.L136)/2
+ 1504 011e 79       		.byte	(.L119-.L136)/2
+ 1505 011f 79       		.byte	(.L119-.L136)/2
+ 1506 0120 79       		.byte	(.L119-.L136)/2
+ 1507 0121 79       		.byte	(.L119-.L136)/2
+ 1508 0122 6D       		.byte	(.L135-.L136)/2
+ 1509 0123 79       		.byte	(.L119-.L136)/2
+ 1510 0124 79       		.byte	(.L119-.L136)/2
+ 1511 0125 79       		.byte	(.L119-.L136)/2
+ 1512 0126 79       		.byte	(.L119-.L136)/2
+ 1513 0127 79       		.byte	(.L119-.L136)/2
+ 1514 0128 79       		.byte	(.L119-.L136)/2
+ 1515 0129 79       		.byte	(.L119-.L136)/2
+ 1516 012a 79       		.byte	(.L119-.L136)/2
+ 1517 012b 79       		.byte	(.L119-.L136)/2
+ 1518 012c 79       		.byte	(.L119-.L136)/2
+ 1519 012d 79       		.byte	(.L119-.L136)/2
+ 1520 012e 79       		.byte	(.L119-.L136)/2
+ 1521 012f 79       		.byte	(.L119-.L136)/2
+ 1522 0130 6D       		.byte	(.L135-.L136)/2
+ 1523 0131 6D       		.byte	(.L135-.L136)/2
+ 1524              	.LVL114:
+ 1525              		.p2align 1
+ 1526              	.L156:
+ 357:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1527              		.loc 1 357 3 is_stmt 0 view .LVU343
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 38
+
+
+ 1528 0132 A4F11803 		sub	r3, r4, #24
+ 1529 0136 012B     		cmp	r3, #1
+ 1530 0138 C7D9     		bls	.L120
+ 1531 013a 0026     		movs	r6, #0
+ 1532 013c B246     		mov	r10, r6
+ 1533 013e D0E7     		b	.L123
+ 1534              	.L126:
+ 1535 0140 642C     		cmp	r4, #100
+ 1536 0142 C2D0     		beq	.L120
+ 1537 0144 B4F57A7F 		cmp	r4, #1000
+ 1538 0148 BFD0     		beq	.L120
+ 1539 014a 4B2C     		cmp	r4, #75
+ 1540 014c BDD0     		beq	.L120
+ 1541 014e 0026     		movs	r6, #0
+ 1542 0150 B246     		mov	r10, r6
+ 1543 0152 C6E7     		b	.L123
+ 1544              	.L125:
+ 1545 0154 45F6C053 		movw	r3, #24000
+ 1546 0158 9C42     		cmp	r4, r3
+ 1547 015a B6D0     		beq	.L120
+ 1548 015c 15DC     		bgt	.L128
+ 1549 015e B4F57A5F 		cmp	r4, #16000
+ 1550 0162 B2D0     		beq	.L120
+ 1551 0164 0ADC     		bgt	.L129
+ 1552 0166 42F61133 		movw	r3, #11025
+ 1553 016a 9C42     		cmp	r4, r3
+ 1554 016c ADD0     		beq	.L120
+ 1555 016e 42F6E063 		movw	r3, #12000
+ 1556 0172 9C42     		cmp	r4, r3
+ 1557 0174 A9D0     		beq	.L120
+ 1558 0176 0026     		movs	r6, #0
+ 1559 0178 B246     		mov	r10, r6
+ 1560 017a B2E7     		b	.L123
+ 1561              	.L129:
+ 1562 017c 45F22263 		movw	r3, #22050
+ 1563 0180 9C42     		cmp	r4, r3
+ 1564 0182 A2D0     		beq	.L120
+ 1565 0184 0026     		movs	r6, #0
+ 1566 0186 B246     		mov	r10, r6
+ 1567 0188 ABE7     		b	.L123
+ 1568              	.L128:
+ 1569 018a 4AF64443 		movw	r3, #44100
+ 1570 018e 9C42     		cmp	r4, r3
+ 1571 0190 9BD0     		beq	.L120
+ 1572 0192 4BF68033 		movw	r3, #48000
+ 1573 0196 9C42     		cmp	r4, r3
+ 1574 0198 97D0     		beq	.L120
+ 1575 019a B4F5FA4F 		cmp	r4, #32000
+ 1576 019e 94D0     		beq	.L120
+ 1577 01a0 0026     		movs	r6, #0
+ 1578 01a2 B246     		mov	r10, r6
+ 1579 01a4 9DE7     		b	.L123
+ 1580              	.L145:
+ 1581 01a6 0026     		movs	r6, #0
+ 1582 01a8 B246     		mov	r10, r6
+ 1583 01aa 9AE7     		b	.L123
+ 1584              	.L146:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 39
+
+
+ 1585 01ac 0026     		movs	r6, #0
+ 1586 01ae B246     		mov	r10, r6
+ 1587 01b0 97E7     		b	.L123
+ 1588              	.LVL115:
+ 1589              	.L158:
+ 1590              		.loc 1 421 3 view .LVU344
+ 1591 01b2 15F1300F 		cmn	r5, #48
+ 1592 01b6 19DC     		bgt	.L119
+ 1593 01b8 15F13C0F 		cmn	r5, #60
+ 1594 01bc 16DB     		blt	.L119
+ 1595 01be 05F13C02 		add	r2, r5, #60
+ 1596 01c2 41F20143 		movw	r3, #5121
+ 1597 01c6 D340     		lsrs	r3, r3, r2
+ 1598 01c8 13F0010F 		tst	r3, #1
+ 1599 01cc 0ED0     		beq	.L119
+ 1600              	.L140:
+ 422:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 423:../../libmad/timer.c ****     minutes = seconds / 60;
+ 424:../../libmad/timer.c ****     hours   = minutes / 60;
+ 425:../../libmad/timer.c **** 
+ 426:../../libmad/timer.c ****     sprintf(dest, format,
+ 427:../../libmad/timer.c **** 	    hours,
+ 428:../../libmad/timer.c **** 	    (unsigned int) (minutes % 60),
+ 429:../../libmad/timer.c **** 	    (unsigned int) (seconds % 60),
+ 430:../../libmad/timer.c **** 	    frac, sub);
+ 431:../../libmad/timer.c ****     break;
+ 432:../../libmad/timer.c **** 
+ 433:../../libmad/timer.c ****   case MAD_UNITS_MINUTES:
+ 434:../../libmad/timer.c ****     minutes = seconds / 60;
+ 435:../../libmad/timer.c **** 
+ 436:../../libmad/timer.c ****     sprintf(dest, format,
+ 437:../../libmad/timer.c **** 	    minutes,
+ 438:../../libmad/timer.c **** 	    (unsigned int) (seconds % 60),
+ 439:../../libmad/timer.c **** 	    frac, sub);
+ 440:../../libmad/timer.c ****     break;
+ 441:../../libmad/timer.c **** 
+ 442:../../libmad/timer.c ****   case MAD_UNITS_SECONDS:
+ 443:../../libmad/timer.c ****     sprintf(dest, format,
+ 444:../../libmad/timer.c **** 	    seconds,
+ 445:../../libmad/timer.c **** 	    frac, sub);
+ 446:../../libmad/timer.c ****     break;
+ 447:../../libmad/timer.c **** 
+ 448:../../libmad/timer.c ****   case MAD_UNITS_23_976_FPS:
+ 449:../../libmad/timer.c ****   case MAD_UNITS_24_975_FPS:
+ 450:../../libmad/timer.c ****   case MAD_UNITS_29_97_FPS:
+ 451:../../libmad/timer.c ****   case MAD_UNITS_47_952_FPS:
+ 452:../../libmad/timer.c ****   case MAD_UNITS_49_95_FPS:
+ 453:../../libmad/timer.c ****   case MAD_UNITS_59_94_FPS:
+ 454:../../libmad/timer.c ****     if (fracunits < 0) {
+ 1601              		.loc 1 454 5 is_stmt 1 view .LVU345
+ 1602              		.loc 1 454 8 is_stmt 0 view .LVU346
+ 1603 01ce 002C     		cmp	r4, #0
+ 1604 01d0 C0F28780 		blt	.L159
+ 1605              	.LVL116:
+ 1606              	.L135:
+ 455:../../libmad/timer.c ****       /* not yet implemented */
+ 456:../../libmad/timer.c ****       sub = 0;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 40
+
+
+ 457:../../libmad/timer.c ****     }
+ 458:../../libmad/timer.c **** 
+ 459:../../libmad/timer.c ****     /* fall through */
+ 460:../../libmad/timer.c **** 
+ 461:../../libmad/timer.c ****   case MAD_UNITS_DECISECONDS:
+ 462:../../libmad/timer.c ****   case MAD_UNITS_CENTISECONDS:
+ 463:../../libmad/timer.c ****   case MAD_UNITS_MILLISECONDS:
+ 464:../../libmad/timer.c **** 
+ 465:../../libmad/timer.c ****   case MAD_UNITS_8000_HZ:
+ 466:../../libmad/timer.c ****   case MAD_UNITS_11025_HZ:
+ 467:../../libmad/timer.c ****   case MAD_UNITS_12000_HZ:
+ 468:../../libmad/timer.c ****   case MAD_UNITS_16000_HZ:
+ 469:../../libmad/timer.c ****   case MAD_UNITS_22050_HZ:
+ 470:../../libmad/timer.c ****   case MAD_UNITS_24000_HZ:
+ 471:../../libmad/timer.c ****   case MAD_UNITS_32000_HZ:
+ 472:../../libmad/timer.c ****   case MAD_UNITS_44100_HZ:
+ 473:../../libmad/timer.c ****   case MAD_UNITS_48000_HZ:
+ 474:../../libmad/timer.c **** 
+ 475:../../libmad/timer.c ****   case MAD_UNITS_24_FPS:
+ 476:../../libmad/timer.c ****   case MAD_UNITS_25_FPS:
+ 477:../../libmad/timer.c ****   case MAD_UNITS_30_FPS:
+ 478:../../libmad/timer.c ****   case MAD_UNITS_48_FPS:
+ 479:../../libmad/timer.c ****   case MAD_UNITS_50_FPS:
+ 480:../../libmad/timer.c ****   case MAD_UNITS_60_FPS:
+ 481:../../libmad/timer.c ****   case MAD_UNITS_75_FPS:
+ 482:../../libmad/timer.c ****     sprintf(dest, format, mad_timer_count(timer, units), sub);
+ 1607              		.loc 1 482 5 is_stmt 1 view .LVU347
+ 1608 01d4 2A46     		mov	r2, r5
+ 1609 01d6 06AB     		add	r3, sp, #24
+ 1610 01d8 13E90300 		ldmdb	r3, {r0, r1}
+ 1611 01dc FFF7FEFF 		bl	mad_timer_count
+ 1612              	.LVL117:
+ 1613 01e0 0246     		mov	r2, r0
+ 1614              		.loc 1 482 5 is_stmt 0 discriminator 1 view .LVU348
+ 1615 01e2 5346     		mov	r3, r10
+ 1616 01e4 4146     		mov	r1, r8
+ 1617 01e6 3846     		mov	r0, r7
+ 1618 01e8 FFF7FEFF 		bl	sprintf
+ 1619              	.LVL118:
+ 483:../../libmad/timer.c ****     break;
+ 1620              		.loc 1 483 5 is_stmt 1 view .LVU349
+ 1621              	.L119:
+ 484:../../libmad/timer.c ****   }
+ 485:../../libmad/timer.c **** }
+ 1622              		.loc 1 485 1 is_stmt 0 view .LVU350
+ 1623 01ec 06B0     		add	sp, sp, #24
+ 1624              	.LCFI30:
+ 1625              		.cfi_remember_state
+ 1626              		.cfi_def_cfa_offset 32
+ 1627              		@ sp needed
+ 1628 01ee BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1629              	.LVL119:
+ 1630              	.L131:
+ 1631              	.LCFI31:
+ 1632              		.cfi_restore_state
+ 421:../../libmad/timer.c ****   case MAD_UNITS_HOURS:
+ 1633              		.loc 1 421 3 view .LVU351
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 41
+
+
+ 1634 01f2 42F61133 		movw	r3, #11025
+ 1635 01f6 9D42     		cmp	r5, r3
+ 1636 01f8 ECD0     		beq	.L135
+ 1637 01fa 17DC     		bgt	.L141
+ 1638 01fc 4B2D     		cmp	r5, #75
+ 1639 01fe E9D0     		beq	.L135
+ 1640 0200 0BDC     		bgt	.L142
+ 1641 0202 3C2D     		cmp	r5, #60
+ 1642 0204 F2DC     		bgt	.L119
+ 1643 0206 1E2D     		cmp	r5, #30
+ 1644 0208 F0DB     		blt	.L119
+ 1645 020a A5F11E02 		sub	r2, r5, #30
+ 1646 020e 254B     		ldr	r3, .L160+12
+ 1647 0210 D340     		lsrs	r3, r3, r2
+ 1648 0212 13F0010F 		tst	r3, #1
+ 1649 0216 DDD1     		bne	.L135
+ 1650 0218 E8E7     		b	.L119
+ 1651              	.L142:
+ 1652 021a B5F57A7F 		cmp	r5, #1000
+ 1653 021e D9D0     		beq	.L135
+ 1654 0220 B5F5FA5F 		cmp	r5, #8000
+ 1655 0224 D6D0     		beq	.L135
+ 1656 0226 642D     		cmp	r5, #100
+ 1657 0228 E0D1     		bne	.L119
+ 1658 022a D3E7     		b	.L135
+ 1659              	.L141:
+ 1660 022c 45F6C053 		movw	r3, #24000
+ 1661 0230 9D42     		cmp	r5, r3
+ 1662 0232 CFD0     		beq	.L135
+ 1663 0234 0BDC     		bgt	.L144
+ 1664 0236 B5F57A5F 		cmp	r5, #16000
+ 1665 023a CBD0     		beq	.L135
+ 1666 023c 45F22263 		movw	r3, #22050
+ 1667 0240 9D42     		cmp	r5, r3
+ 1668 0242 C7D0     		beq	.L135
+ 1669 0244 42F6E063 		movw	r3, #12000
+ 1670 0248 9D42     		cmp	r5, r3
+ 1671 024a CFD1     		bne	.L119
+ 1672 024c C2E7     		b	.L135
+ 1673              	.L144:
+ 1674 024e 4AF64443 		movw	r3, #44100
+ 1675 0252 9D42     		cmp	r5, r3
+ 1676 0254 BED0     		beq	.L135
+ 1677 0256 4BF68033 		movw	r3, #48000
+ 1678 025a 9D42     		cmp	r5, r3
+ 1679 025c BAD0     		beq	.L135
+ 1680 025e B5F5FA4F 		cmp	r5, #32000
+ 1681 0262 C3D1     		bne	.L119
+ 1682 0264 B6E7     		b	.L135
+ 1683              	.L139:
+ 423:../../libmad/timer.c ****     hours   = minutes / 60;
+ 1684              		.loc 1 423 5 is_stmt 1 view .LVU352
+ 423:../../libmad/timer.c ****     hours   = minutes / 60;
+ 1685              		.loc 1 423 13 is_stmt 0 view .LVU353
+ 1686 0266 114A     		ldr	r2, .L160+20
+ 1687 0268 A2FB0913 		umull	r1, r3, r2, r9
+ 1688 026c 5B09     		lsrs	r3, r3, #5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 42
+
+
+ 1689              	.LVL120:
+ 424:../../libmad/timer.c **** 
+ 1690              		.loc 1 424 5 is_stmt 1 view .LVU354
+ 424:../../libmad/timer.c **** 
+ 1691              		.loc 1 424 13 is_stmt 0 view .LVU355
+ 1692 026e A2FB0312 		umull	r1, r2, r2, r3
+ 1693 0272 5209     		lsrs	r2, r2, #5
+ 1694              	.LVL121:
+ 426:../../libmad/timer.c **** 	    hours,
+ 1695              		.loc 1 426 5 is_stmt 1 view .LVU356
+ 428:../../libmad/timer.c **** 	    (unsigned int) (seconds % 60),
+ 1696              		.loc 1 428 30 is_stmt 0 view .LVU357
+ 1697 0274 C2EB0210 		rsb	r0, r2, r2, lsl #4
+ 429:../../libmad/timer.c **** 	    frac, sub);
+ 1698              		.loc 1 429 30 view .LVU358
+ 1699 0278 C3EB0311 		rsb	r1, r3, r3, lsl #4
+ 1700 027c A9EB8101 		sub	r1, r9, r1, lsl #2
+ 426:../../libmad/timer.c **** 	    hours,
+ 1701              		.loc 1 426 5 view .LVU359
+ 1702 0280 CDF808A0 		str	r10, [sp, #8]
+ 1703 0284 0196     		str	r6, [sp, #4]
+ 1704 0286 0091     		str	r1, [sp]
+ 1705 0288 A3EB8003 		sub	r3, r3, r0, lsl #2
+ 1706              	.LVL122:
+ 426:../../libmad/timer.c **** 	    hours,
+ 1707              		.loc 1 426 5 view .LVU360
+ 1708 028c 4146     		mov	r1, r8
+ 1709 028e 3846     		mov	r0, r7
+ 1710 0290 FFF7FEFF 		bl	sprintf
+ 1711              	.LVL123:
+ 431:../../libmad/timer.c **** 
+ 1712              		.loc 1 431 5 is_stmt 1 view .LVU361
+ 1713 0294 AAE7     		b	.L119
+ 1714              	.L161:
+ 1715 0296 00BF     		.align	2
+ 1716              	.L160:
+ 1717 0298 05001006 		.word	101711877
+ 1718 029c A8FDFFFF 		.word	-600
+ 1719 02a0 CDCCCCCC 		.word	-858993459
+ 1720 02a4 01001440 		.word	1075052545
+ 1721 02a8 004D0715 		.word	352800000
+ 1722 02ac 89888888 		.word	-2004318071
+ 1723              	.LVL124:
+ 1724              	.L138:
+ 434:../../libmad/timer.c **** 
+ 1725              		.loc 1 434 5 view .LVU362
+ 434:../../libmad/timer.c **** 
+ 1726              		.loc 1 434 13 is_stmt 0 view .LVU363
+ 1727 02b0 0D4A     		ldr	r2, .L162
+ 1728 02b2 A2FB0932 		umull	r3, r2, r2, r9
+ 1729 02b6 5209     		lsrs	r2, r2, #5
+ 1730              	.LVL125:
+ 436:../../libmad/timer.c **** 	    minutes,
+ 1731              		.loc 1 436 5 is_stmt 1 view .LVU364
+ 438:../../libmad/timer.c **** 	    frac, sub);
+ 1732              		.loc 1 438 30 is_stmt 0 view .LVU365
+ 1733 02b8 C2EB0213 		rsb	r3, r2, r2, lsl #4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 43
+
+
+ 436:../../libmad/timer.c **** 	    minutes,
+ 1734              		.loc 1 436 5 view .LVU366
+ 1735 02bc CDF804A0 		str	r10, [sp, #4]
+ 1736 02c0 0096     		str	r6, [sp]
+ 1737 02c2 A9EB8303 		sub	r3, r9, r3, lsl #2
+ 1738 02c6 4146     		mov	r1, r8
+ 1739 02c8 3846     		mov	r0, r7
+ 1740 02ca FFF7FEFF 		bl	sprintf
+ 1741              	.LVL126:
+ 440:../../libmad/timer.c **** 
+ 1742              		.loc 1 440 5 is_stmt 1 view .LVU367
+ 1743 02ce 8DE7     		b	.L119
+ 1744              	.LVL127:
+ 1745              	.L137:
+ 443:../../libmad/timer.c **** 	    seconds,
+ 1746              		.loc 1 443 5 view .LVU368
+ 1747 02d0 CDF800A0 		str	r10, [sp]
+ 1748 02d4 3346     		mov	r3, r6
+ 1749 02d6 4A46     		mov	r2, r9
+ 1750 02d8 4146     		mov	r1, r8
+ 1751 02da 3846     		mov	r0, r7
+ 1752 02dc FFF7FEFF 		bl	sprintf
+ 1753              	.LVL128:
+ 446:../../libmad/timer.c **** 
+ 1754              		.loc 1 446 5 view .LVU369
+ 1755 02e0 84E7     		b	.L119
+ 1756              	.L159:
+ 456:../../libmad/timer.c ****     }
+ 1757              		.loc 1 456 11 is_stmt 0 view .LVU370
+ 1758 02e2 4FF0000A 		mov	r10, #0
+ 1759              	.LVL129:
+ 456:../../libmad/timer.c ****     }
+ 1760              		.loc 1 456 11 view .LVU371
+ 1761 02e6 75E7     		b	.L135
+ 1762              	.L163:
+ 1763              		.align	2
+ 1764              	.L162:
+ 1765 02e8 89888888 		.word	-2004318071
+ 1766              		.cfi_endproc
+ 1767              	.LFE15:
+ 1769              		.section	.rodata.__func__.0,"a"
+ 1770              		.align	2
+ 1773              	__func__.0:
+ 1774 0000 72656475 		.ascii	"reduce_rational\000"
+ 1774      63655F72 
+ 1774      6174696F 
+ 1774      6E616C00 
+ 1775              		.section	.rodata.__func__.1,"a"
+ 1776              		.align	2
+ 1779              	__func__.1:
+ 1780 0000 7363616C 		.ascii	"scale_rational\000"
+ 1780      655F7261 
+ 1780      74696F6E 
+ 1780      616C00
+ 1781              		.global	mad_timer_zero
+ 1782              		.section	.rodata.mad_timer_zero,"a"
+ 1783              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 44
+
+
+ 1786              	mad_timer_zero:
+ 1787 0000 00000000 		.space	8
+ 1787      00000000 
+ 1788              		.text
+ 1789              	.Letext0:
+ 1790              		.file 2 "../../libmad/timer.h"
+ 1791              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
+ 1792              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/assert.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s 			page 45
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 timer.c
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:20     .text.reduce_timer:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:25     .text.reduce_timer:00000000 reduce_timer
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:55     .text.reduce_timer:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:61     .text.gcd:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:66     .text.gcd:00000000 gcd
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:103    .rodata.reduce_rational.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:110    .text.reduce_rational:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:115    .text.reduce_rational:00000000 reduce_rational
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:171    .text.reduce_rational:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1773   .rodata.__func__.0:00000000 __func__.0
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:178    .rodata.scale_rational.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:182    .text.scale_rational:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:187    .text.scale_rational:00000000 scale_rational
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:288    .text.scale_rational:00000074 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1779   .rodata.__func__.1:00000000 __func__.1
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:295    .text.mad_timer_compare:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:301    .text.mad_timer_compare:00000000 mad_timer_compare
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:379    .text.mad_timer_negate:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:385    .text.mad_timer_negate:00000000 mad_timer_negate
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:421    .text.mad_timer_negate:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:426    .text.mad_timer_abs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:432    .text.mad_timer_abs:00000000 mad_timer_abs
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:485    .text.mad_timer_set:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:491    .text.mad_timer_set:00000000 mad_timer_set
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:738    .text.mad_timer_set:00000114 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:745    .text.mad_timer_add:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:751    .text.mad_timer_add:00000000 mad_timer_add
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:808    .text.mad_timer_add:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:813    .text.mad_timer_multiply:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:819    .text.mad_timer_multiply:00000000 mad_timer_multiply
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:910    .text.mad_timer_count:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:916    .text.mad_timer_count:00000000 mad_timer_count
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:944    .text.mad_timer_count:00000022 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1000   .text.mad_timer_count:0000005a $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1176   .text.mad_timer_count:00000168 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1185   .text.mad_timer_fraction:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1191   .text.mad_timer_fraction:00000000 mad_timer_fraction
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1263   .text.mad_timer_fraction:00000040 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1269   .text.mad_timer_string:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1275   .text.mad_timer_string:00000000 mad_timer_string
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1468   .text.mad_timer_string:000000fa $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1525   .text.mad_timer_string:00000132 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1717   .text.mad_timer_string:00000298 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1727   .text.mad_timer_string:000002b0 $t
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1765   .text.mad_timer_string:000002e8 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1770   .rodata.__func__.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1776   .rodata.__func__.1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1786   .rodata.mad_timer_zero:00000000 mad_timer_zero
+C:\Users\oleg\AppData\Local\Temp\ccO3iFne.s:1783   .rodata.mad_timer_zero:00000000 $d
+
+UNDEFINED SYMBOLS
+__assert_func
+sprintf

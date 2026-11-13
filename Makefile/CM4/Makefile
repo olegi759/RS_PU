@@ -122,7 +122,8 @@ C_SOURCES =  \
 ../../ws_rubetec/ws_crypto.c \
 ../../ws_rubetec/ws_rubetec.c \
 ../../ws_server.c \
-../../ws_rubetec/user_timer.c 
+../../ws_rubetec/user_timer.c \
+../../ws_rubetec/web_keep_alive.c
 
 
 # ASM sources

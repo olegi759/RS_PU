@@ -1,0 +1,370 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"LPC_analysis_filter.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/LPC_analysis_filter.c"
+  19              		.section	.text.silk_LPC_analysis_filter,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_LPC_analysis_filter
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_LPC_analysis_filter:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/LPC_analysis_filter.c **** /***********************************************************************
+   2:../../opus/silk/LPC_analysis_filter.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/LPC_analysis_filter.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/LPC_analysis_filter.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/LPC_analysis_filter.c **** are met:
+   6:../../opus/silk/LPC_analysis_filter.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/LPC_analysis_filter.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/LPC_analysis_filter.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/LPC_analysis_filter.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/LPC_analysis_filter.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/LPC_analysis_filter.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/LPC_analysis_filter.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/LPC_analysis_filter.c **** products derived from this software without specific prior written
+  14:../../opus/silk/LPC_analysis_filter.c **** permission.
+  15:../../opus/silk/LPC_analysis_filter.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/LPC_analysis_filter.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/LPC_analysis_filter.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/LPC_analysis_filter.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/LPC_analysis_filter.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/LPC_analysis_filter.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/LPC_analysis_filter.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/LPC_analysis_filter.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/LPC_analysis_filter.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/LPC_analysis_filter.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/LPC_analysis_filter.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/LPC_analysis_filter.c **** ***********************************************************************/
+  27:../../opus/silk/LPC_analysis_filter.c **** 
+  28:../../opus/silk/LPC_analysis_filter.c **** #include "opus_config.h"
+  29:../../opus/silk/LPC_analysis_filter.c **** 
+  30:../../opus/silk/LPC_analysis_filter.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 2
+
+
+  31:../../opus/silk/LPC_analysis_filter.c **** #include "celt_lpc.h"
+  32:../../opus/silk/LPC_analysis_filter.c **** 
+  33:../../opus/silk/LPC_analysis_filter.c **** /*******************************************/
+  34:../../opus/silk/LPC_analysis_filter.c **** /* LPC analysis filter                     */
+  35:../../opus/silk/LPC_analysis_filter.c **** /* NB! State is kept internally and the    */
+  36:../../opus/silk/LPC_analysis_filter.c **** /* filter always starts with zero state    */
+  37:../../opus/silk/LPC_analysis_filter.c **** /* first d output samples are set to zero  */
+  38:../../opus/silk/LPC_analysis_filter.c **** /*******************************************/
+  39:../../opus/silk/LPC_analysis_filter.c **** 
+  40:../../opus/silk/LPC_analysis_filter.c **** /* OPT: Using celt_fir() for this function should be faster, but it may cause
+  41:../../opus/silk/LPC_analysis_filter.c ****    integer overflows in intermediate values (not final results), which the
+  42:../../opus/silk/LPC_analysis_filter.c ****    current implementation silences by casting to unsigned. Enabling
+  43:../../opus/silk/LPC_analysis_filter.c ****    this should be safe in pretty much all cases, even though it is not technically
+  44:../../opus/silk/LPC_analysis_filter.c ****    C89-compliant. */
+  45:../../opus/silk/LPC_analysis_filter.c **** #define USE_CELT_FIR 0
+  46:../../opus/silk/LPC_analysis_filter.c **** 
+  47:../../opus/silk/LPC_analysis_filter.c **** void silk_LPC_analysis_filter(
+  48:../../opus/silk/LPC_analysis_filter.c ****     opus_int16                  *out,               /* O    Output signal                          
+  49:../../opus/silk/LPC_analysis_filter.c ****     const opus_int16            *in,                /* I    Input signal                           
+  50:../../opus/silk/LPC_analysis_filter.c ****     const opus_int16            *B,                 /* I    MA prediction coefficients, Q12 [order]
+  51:../../opus/silk/LPC_analysis_filter.c ****     const opus_int32            len,                /* I    Signal length                          
+  52:../../opus/silk/LPC_analysis_filter.c ****     const opus_int32            d,                  /* I    Filter order                           
+  53:../../opus/silk/LPC_analysis_filter.c ****     int                         arch                /* I    Run-time architecture                  
+  54:../../opus/silk/LPC_analysis_filter.c **** )
+  55:../../opus/silk/LPC_analysis_filter.c **** {
+  29              		.loc 1 55 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 8, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 55 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 3, -32
+  38              		.cfi_offset 4, -28
+  39              		.cfi_offset 5, -24
+  40              		.cfi_offset 6, -20
+  41              		.cfi_offset 7, -16
+  42              		.cfi_offset 8, -12
+  43              		.cfi_offset 9, -8
+  44              		.cfi_offset 14, -4
+  45 0004 0E46     		mov	r6, r1
+  46 0006 9846     		mov	r8, r3
+  47 0008 089C     		ldr	r4, [sp, #32]
+  56:../../opus/silk/LPC_analysis_filter.c ****     opus_int   j;
+  48              		.loc 1 56 5 is_stmt 1 view .LVU2
+  57:../../opus/silk/LPC_analysis_filter.c **** #if defined(FIXED_POINT) && USE_CELT_FIR
+  58:../../opus/silk/LPC_analysis_filter.c ****     opus_int16 num[SILK_MAX_ORDER_LPC];
+  59:../../opus/silk/LPC_analysis_filter.c **** #else
+  60:../../opus/silk/LPC_analysis_filter.c ****     int ix;
+  49              		.loc 1 60 5 view .LVU3
+  61:../../opus/silk/LPC_analysis_filter.c ****     opus_int32       out32_Q12, out32;
+  50              		.loc 1 61 5 view .LVU4
+  62:../../opus/silk/LPC_analysis_filter.c ****     const opus_int16 *in_ptr;
+  51              		.loc 1 62 5 view .LVU5
+  63:../../opus/silk/LPC_analysis_filter.c **** #endif
+  64:../../opus/silk/LPC_analysis_filter.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 3
+
+
+  65:../../opus/silk/LPC_analysis_filter.c ****     celt_assert( d >= 6 );
+  52              		.loc 1 65 26 view .LVU6
+  66:../../opus/silk/LPC_analysis_filter.c ****     celt_assert( (d & 1) == 0 );
+  53              		.loc 1 66 32 view .LVU7
+  67:../../opus/silk/LPC_analysis_filter.c ****     celt_assert( d <= len );
+  54              		.loc 1 67 28 view .LVU8
+  68:../../opus/silk/LPC_analysis_filter.c **** 
+  69:../../opus/silk/LPC_analysis_filter.c **** #if defined(FIXED_POINT) && USE_CELT_FIR
+  70:../../opus/silk/LPC_analysis_filter.c ****     celt_assert( d <= SILK_MAX_ORDER_LPC );
+  71:../../opus/silk/LPC_analysis_filter.c ****     for ( j = 0; j < d; j++ ) {
+  72:../../opus/silk/LPC_analysis_filter.c ****         num[ j ] = -B[ j ];
+  73:../../opus/silk/LPC_analysis_filter.c ****     }
+  74:../../opus/silk/LPC_analysis_filter.c ****     celt_fir( in + d, num, out + d, len - d, d, arch );
+  75:../../opus/silk/LPC_analysis_filter.c ****     for ( j = 0; j < d; j++ ) {
+  76:../../opus/silk/LPC_analysis_filter.c ****         out[ j ] = 0;
+  77:../../opus/silk/LPC_analysis_filter.c ****     }
+  78:../../opus/silk/LPC_analysis_filter.c **** #else
+  79:../../opus/silk/LPC_analysis_filter.c ****     (void)arch;
+  55              		.loc 1 79 5 view .LVU9
+  80:../../opus/silk/LPC_analysis_filter.c ****     for( ix = d; ix < len; ix++ ) {
+  56              		.loc 1 80 5 view .LVU10
+  57              	.LVL1:
+  58              		.loc 1 80 13 is_stmt 0 view .LVU11
+  59 000a 2546     		mov	r5, r4
+  60              		.loc 1 80 5 view .LVU12
+  61 000c 30E0     		b	.L2
+  62              	.LVL2:
+  63              	.L4:
+  81:../../opus/silk/LPC_analysis_filter.c ****         in_ptr = &in[ ix - 1 ];
+  82:../../opus/silk/LPC_analysis_filter.c **** 
+  83:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMULBB( in_ptr[  0 ], B[ 0 ] );
+  84:../../opus/silk/LPC_analysis_filter.c ****         /* Allowing wrap around so that two wraps can cancel each other. The rare
+  85:../../opus/silk/LPC_analysis_filter.c ****            cases where the result wraps around can only be triggered by invalid streams*/
+  86:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -1 ], B[ 1 ] );
+  87:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -2 ], B[ 2 ] );
+  88:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -3 ], B[ 3 ] );
+  89:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -4 ], B[ 4 ] );
+  90:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -5 ], B[ 5 ] );
+  91:../../opus/silk/LPC_analysis_filter.c ****         for( j = 6; j < d; j += 2 ) {
+  92:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j     ], B[ j     ] );
+  64              		.loc 1 92 13 is_stmt 1 view .LVU13
+  65              		.loc 1 92 25 is_stmt 0 view .LVU14
+  66 000e CEEBCE73 		rsb	r3, lr, lr, lsl #31
+  67 0012 31F91390 		ldrsh	r9, [r1, r3, lsl #1]
+  68 0016 A2EB4303 		sub	r3, r2, r3, lsl #1
+  69 001a B3F90030 		ldrsh	r3, [r3]
+  70 001e 03FB09C9 		mla	r9, r3, r9, ip
+  71              	.LVL3:
+  93:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j - 1 ], B[ j + 1 ] );
+  72              		.loc 1 93 13 is_stmt 1 view .LVU15
+  73              		.loc 1 93 25 is_stmt 0 view .LVU16
+  74 0022 0EF1010C 		add	ip, lr, #1
+  75 0026 CCEBCC7C 		rsb	ip, ip, ip, lsl #31
+  76 002a 31F91C30 		ldrsh	r3, [r1, ip, lsl #1]
+  77 002e A2EB4C0C 		sub	ip, r2, ip, lsl #1
+  78 0032 BCF900C0 		ldrsh	ip, [ip]
+  79 0036 0CFB039C 		mla	ip, ip, r3, r9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 4
+
+
+  80              	.LVL4:
+  91:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j     ], B[ j     ] );
+  81              		.loc 1 91 30 is_stmt 1 discriminator 3 view .LVU17
+  82 003a 0EF1020E 		add	lr, lr, #2
+  83              	.LVL5:
+  84              	.L3:
+  91:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j     ], B[ j     ] );
+  85              		.loc 1 91 23 discriminator 1 view .LVU18
+  86 003e A645     		cmp	lr, r4
+  87 0040 E5DB     		blt	.L4
+  94:../../opus/silk/LPC_analysis_filter.c ****         }
+  95:../../opus/silk/LPC_analysis_filter.c **** 
+  96:../../opus/silk/LPC_analysis_filter.c ****         /* Subtract prediction */
+  97:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SUB32_ovflw( silk_LSHIFT( (opus_int32)in_ptr[ 1 ], 12 ), out32_Q12 );
+  88              		.loc 1 97 9 view .LVU19
+  89              		.loc 1 97 21 is_stmt 0 view .LVU20
+  90 0042 B1F90230 		ldrsh	r3, [r1, #2]
+  91 0046 CCEB033C 		rsb	ip, ip, r3, lsl #12
+  92              	.LVL6:
+  98:../../opus/silk/LPC_analysis_filter.c **** 
+  99:../../opus/silk/LPC_analysis_filter.c ****         /* Scale to Q0 */
+ 100:../../opus/silk/LPC_analysis_filter.c ****         out32 = silk_RSHIFT_ROUND( out32_Q12, 12 );
+  93              		.loc 1 100 9 is_stmt 1 view .LVU21
+  94              		.loc 1 100 17 is_stmt 0 view .LVU22
+  95 004a 4FEAEC2C 		asr	ip, ip, #11
+  96              	.LVL7:
+  97              		.loc 1 100 17 view .LVU23
+  98 004e 0CF1010C 		add	ip, ip, #1
+  99              		.loc 1 100 15 view .LVU24
+ 100 0052 4FEA6C03 		asr	r3, ip, #1
+ 101              	.LVL8:
+ 101:../../opus/silk/LPC_analysis_filter.c **** 
+ 102:../../opus/silk/LPC_analysis_filter.c ****         /* Saturate output */
+ 103:../../opus/silk/LPC_analysis_filter.c ****         out[ ix ] = (opus_int16)silk_SAT16( out32 );
+ 102              		.loc 1 103 9 is_stmt 1 view .LVU25
+ 103              		.loc 1 103 21 is_stmt 0 view .LVU26
+ 104 0056 BCF5803F 		cmp	ip, #65536
+ 105 005a 04DA     		bge	.L7
+ 106              		.loc 1 103 21 discriminator 1 view .LVU27
+ 107 005c 13F5004F 		cmn	r3, #32768
+ 108 0060 35DB     		blt	.L8
+ 109              		.loc 1 103 21 discriminator 3 view .LVU28
+ 110 0062 1BB2     		sxth	r3, r3
+ 111              	.LVL9:
+ 112              		.loc 1 103 21 discriminator 3 view .LVU29
+ 113 0064 01E0     		b	.L5
+ 114              	.LVL10:
+ 115              	.L7:
+ 116              		.loc 1 103 21 discriminator 2 view .LVU30
+ 117 0066 47F6FF73 		movw	r3, #32767
+ 118              	.LVL11:
+ 119              	.L5:
+ 120              		.loc 1 103 19 discriminator 8 view .LVU31
+ 121 006a 20F81730 		strh	r3, [r0, r7, lsl #1]	@ movhi
+  80:../../opus/silk/LPC_analysis_filter.c ****         in_ptr = &in[ ix - 1 ];
+ 122              		.loc 1 80 30 is_stmt 1 discriminator 2 view .LVU32
+ 123 006e 0135     		adds	r5, r5, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 5
+
+
+ 124              	.LVL12:
+ 125              	.L2:
+  80:../../opus/silk/LPC_analysis_filter.c ****         in_ptr = &in[ ix - 1 ];
+ 126              		.loc 1 80 21 discriminator 1 view .LVU33
+ 127 0070 4545     		cmp	r5, r8
+ 128 0072 2EDA     		bge	.L10
+  81:../../opus/silk/LPC_analysis_filter.c **** 
+ 129              		.loc 1 81 9 view .LVU34
+  81:../../opus/silk/LPC_analysis_filter.c **** 
+ 130              		.loc 1 81 21 is_stmt 0 view .LVU35
+ 131 0074 2F46     		mov	r7, r5
+ 132 0076 6FF00043 		mvn	r3, #-2147483648
+ 133 007a 2B44     		add	r3, r3, r5
+  81:../../opus/silk/LPC_analysis_filter.c **** 
+ 134              		.loc 1 81 16 view .LVU36
+ 135 007c 06EB4301 		add	r1, r6, r3, lsl #1
+ 136              	.LVL13:
+  83:../../opus/silk/LPC_analysis_filter.c ****         /* Allowing wrap around so that two wraps can cancel each other. The rare
+ 137              		.loc 1 83 9 is_stmt 1 view .LVU37
+  83:../../opus/silk/LPC_analysis_filter.c ****         /* Allowing wrap around so that two wraps can cancel each other. The rare
+ 138              		.loc 1 83 21 is_stmt 0 view .LVU38
+ 139 0080 36F91330 		ldrsh	r3, [r6, r3, lsl #1]
+ 140 0084 B2F900E0 		ldrsh	lr, [r2]
+ 141              	.LVL14:
+  86:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -2 ], B[ 2 ] );
+ 142              		.loc 1 86 9 is_stmt 1 view .LVU39
+  86:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -2 ], B[ 2 ] );
+ 143              		.loc 1 86 21 is_stmt 0 view .LVU40
+ 144 0088 31F902CC 		ldrsh	ip, [r1, #-2]
+ 145 008c B2F90290 		ldrsh	r9, [r2, #2]
+ 146 0090 09FB0CFC 		mul	ip, r9, ip
+ 147 0094 0EFB03CC 		mla	ip, lr, r3, ip
+ 148              	.LVL15:
+  87:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -3 ], B[ 3 ] );
+ 149              		.loc 1 87 9 is_stmt 1 view .LVU41
+  87:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -3 ], B[ 3 ] );
+ 150              		.loc 1 87 21 is_stmt 0 view .LVU42
+ 151 0098 31F9043C 		ldrsh	r3, [r1, #-4]
+ 152 009c B2F904E0 		ldrsh	lr, [r2, #4]
+ 153 00a0 0EFB03CC 		mla	ip, lr, r3, ip
+ 154              	.LVL16:
+  88:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -4 ], B[ 4 ] );
+ 155              		.loc 1 88 9 is_stmt 1 view .LVU43
+  88:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -4 ], B[ 4 ] );
+ 156              		.loc 1 88 21 is_stmt 0 view .LVU44
+ 157 00a4 31F9063C 		ldrsh	r3, [r1, #-6]
+ 158 00a8 B2F906E0 		ldrsh	lr, [r2, #6]
+ 159 00ac 0EFB03CC 		mla	ip, lr, r3, ip
+ 160              	.LVL17:
+  89:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -5 ], B[ 5 ] );
+ 161              		.loc 1 89 9 is_stmt 1 view .LVU45
+  89:../../opus/silk/LPC_analysis_filter.c ****         out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -5 ], B[ 5 ] );
+ 162              		.loc 1 89 21 is_stmt 0 view .LVU46
+ 163 00b0 31F9083C 		ldrsh	r3, [r1, #-8]
+ 164 00b4 B2F908E0 		ldrsh	lr, [r2, #8]
+ 165 00b8 0EFB03CC 		mla	ip, lr, r3, ip
+ 166              	.LVL18:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 6
+
+
+  90:../../opus/silk/LPC_analysis_filter.c ****         for( j = 6; j < d; j += 2 ) {
+ 167              		.loc 1 90 9 is_stmt 1 view .LVU47
+  90:../../opus/silk/LPC_analysis_filter.c ****         for( j = 6; j < d; j += 2 ) {
+ 168              		.loc 1 90 21 is_stmt 0 view .LVU48
+ 169 00bc 31F90A3C 		ldrsh	r3, [r1, #-10]
+ 170 00c0 B2F90AE0 		ldrsh	lr, [r2, #10]
+ 171 00c4 0EFB03CC 		mla	ip, lr, r3, ip
+ 172              	.LVL19:
+  91:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j     ], B[ j     ] );
+ 173              		.loc 1 91 9 is_stmt 1 view .LVU49
+  91:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j     ], B[ j     ] );
+ 174              		.loc 1 91 16 is_stmt 0 view .LVU50
+ 175 00c8 4FF0060E 		mov	lr, #6
+  91:../../opus/silk/LPC_analysis_filter.c ****             out32_Q12 = silk_SMLABB_ovflw( out32_Q12, in_ptr[ -j     ], B[ j     ] );
+ 176              		.loc 1 91 9 view .LVU51
+ 177 00cc B7E7     		b	.L3
+ 178              	.LVL20:
+ 179              	.L8:
+ 180              		.loc 1 103 21 discriminator 4 view .LVU52
+ 181 00ce 044B     		ldr	r3, .L11
+ 182              	.LVL21:
+ 183              		.loc 1 103 21 discriminator 4 view .LVU53
+ 184 00d0 CBE7     		b	.L5
+ 185              	.LVL22:
+ 186              	.L10:
+ 104:../../opus/silk/LPC_analysis_filter.c ****     }
+ 105:../../opus/silk/LPC_analysis_filter.c **** 
+ 106:../../opus/silk/LPC_analysis_filter.c ****     /* Set first d output samples to zero */
+ 107:../../opus/silk/LPC_analysis_filter.c ****     silk_memset( out, 0, d * sizeof( opus_int16 ) );
+ 187              		.loc 1 107 5 is_stmt 1 view .LVU54
+ 188 00d2 6200     		lsls	r2, r4, #1
+ 189              	.LVL23:
+ 190              		.loc 1 107 5 is_stmt 0 view .LVU55
+ 191 00d4 0021     		movs	r1, #0
+ 192 00d6 FFF7FEFF 		bl	memset
+ 193              	.LVL24:
+ 108:../../opus/silk/LPC_analysis_filter.c **** #endif
+ 109:../../opus/silk/LPC_analysis_filter.c **** }
+ 194              		.loc 1 109 1 view .LVU56
+ 195 00da BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 196              	.LVL25:
+ 197              	.L12:
+ 198              		.loc 1 109 1 view .LVU57
+ 199 00de 00BF     		.align	2
+ 200              	.L11:
+ 201 00e0 0080FFFF 		.word	-32768
+ 202              		.cfi_endproc
+ 203              	.LFE19:
+ 205              		.text
+ 206              	.Letext0:
+ 207              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 208              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 209              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 210              		.file 5 "../../opus/include/opus_types.h"
+ 211              		.file 6 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 212              		.file 7 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 LPC_analysis_filter.c
+C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s:20     .text.silk_LPC_analysis_filter:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s:26     .text.silk_LPC_analysis_filter:00000000 silk_LPC_analysis_filter
+C:\Users\oleg\AppData\Local\Temp\ccnQy5Ay.s:201    .text.silk_LPC_analysis_filter:000000e0 $d
+
+UNDEFINED SYMBOLS
+memset

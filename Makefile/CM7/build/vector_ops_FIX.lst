@@ -1,0 +1,578 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"vector_ops_FIX.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/fixed/vector_ops_FIX.c"
+  19              		.section	.text.silk_scale_copy_vector16,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_scale_copy_vector16
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_scale_copy_vector16:
+  27              	.LVL0:
+  28              	.LFB28:
+   1:../../opus/silk/fixed/vector_ops_FIX.c **** /***********************************************************************
+   2:../../opus/silk/fixed/vector_ops_FIX.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/fixed/vector_ops_FIX.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/fixed/vector_ops_FIX.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/fixed/vector_ops_FIX.c **** are met:
+   6:../../opus/silk/fixed/vector_ops_FIX.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/fixed/vector_ops_FIX.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/fixed/vector_ops_FIX.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/fixed/vector_ops_FIX.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/fixed/vector_ops_FIX.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/fixed/vector_ops_FIX.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/fixed/vector_ops_FIX.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/fixed/vector_ops_FIX.c **** products derived from this software without specific prior written
+  14:../../opus/silk/fixed/vector_ops_FIX.c **** permission.
+  15:../../opus/silk/fixed/vector_ops_FIX.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/fixed/vector_ops_FIX.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/fixed/vector_ops_FIX.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/fixed/vector_ops_FIX.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/fixed/vector_ops_FIX.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/fixed/vector_ops_FIX.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/fixed/vector_ops_FIX.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/fixed/vector_ops_FIX.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/fixed/vector_ops_FIX.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/fixed/vector_ops_FIX.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/fixed/vector_ops_FIX.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/fixed/vector_ops_FIX.c **** ***********************************************************************/
+  27:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  28:../../opus/silk/fixed/vector_ops_FIX.c **** #include "opus_config.h"
+  29:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  30:../../opus/silk/fixed/vector_ops_FIX.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 2
+
+
+  31:../../opus/silk/fixed/vector_ops_FIX.c **** #include "pitch.h"
+  32:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  33:../../opus/silk/fixed/vector_ops_FIX.c **** /* Copy and multiply a vector by a constant */
+  34:../../opus/silk/fixed/vector_ops_FIX.c **** void silk_scale_copy_vector16(
+  35:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int16                  *data_out,
+  36:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int16            *data_in,
+  37:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int32                  gain_Q16,           /* I    Gain in Q16                            
+  38:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int              dataSize            /* I    Length                                 
+  39:../../opus/silk/fixed/vector_ops_FIX.c **** )
+  40:../../opus/silk/fixed/vector_ops_FIX.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 40 1 is_stmt 0 view .LVU1
+  34 0000 30B5     		push	{r4, r5, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 12
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+  41:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int  i;
+  40              		.loc 1 41 5 is_stmt 1 view .LVU2
+  42:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int32 tmp32;
+  41              		.loc 1 42 5 view .LVU3
+  43:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  44:../../opus/silk/fixed/vector_ops_FIX.c ****     for( i = 0; i < dataSize; i++ ) {
+  42              		.loc 1 44 5 view .LVU4
+  43              	.LVL1:
+  44              		.loc 1 44 12 is_stmt 0 view .LVU5
+  45 0002 4FF0000E 		mov	lr, #0
+  46              		.loc 1 44 5 view .LVU6
+  47 0006 0EE0     		b	.L2
+  48              	.LVL2:
+  49              	.L3:
+  45:../../opus/silk/fixed/vector_ops_FIX.c ****         tmp32 = silk_SMULWB( gain_Q16, data_in[ i ] );
+  50              		.loc 1 45 9 is_stmt 1 view .LVU7
+  51              		.loc 1 45 17 is_stmt 0 view .LVU8
+  52 0008 1414     		asrs	r4, r2, #16
+  53 000a 31F91E50 		ldrsh	r5, [r1, lr, lsl #1]
+  54 000e 1FFA82FC 		uxth	ip, r2
+  55 0012 0CFB05FC 		mul	ip, ip, r5
+  56 0016 4FEA2C4C 		asr	ip, ip, #16
+  57              		.loc 1 45 15 view .LVU9
+  58 001a 05FB04CC 		mla	ip, r5, r4, ip
+  59              	.LVL3:
+  46:../../opus/silk/fixed/vector_ops_FIX.c ****         data_out[ i ] = (opus_int16)silk_CHECK_FIT16( tmp32 );
+  60              		.loc 1 46 9 is_stmt 1 view .LVU10
+  61              		.loc 1 46 23 is_stmt 0 view .LVU11
+  62 001e 20F81EC0 		strh	ip, [r0, lr, lsl #1]	@ movhi
+  44:../../opus/silk/fixed/vector_ops_FIX.c ****         tmp32 = silk_SMULWB( gain_Q16, data_in[ i ] );
+  63              		.loc 1 44 32 is_stmt 1 discriminator 3 view .LVU12
+  64 0022 0EF1010E 		add	lr, lr, #1
+  65              	.LVL4:
+  66              	.L2:
+  44:../../opus/silk/fixed/vector_ops_FIX.c ****         tmp32 = silk_SMULWB( gain_Q16, data_in[ i ] );
+  67              		.loc 1 44 19 discriminator 1 view .LVU13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 3
+
+
+  68 0026 9E45     		cmp	lr, r3
+  69 0028 EEDB     		blt	.L3
+  47:../../opus/silk/fixed/vector_ops_FIX.c ****     }
+  48:../../opus/silk/fixed/vector_ops_FIX.c **** }
+  70              		.loc 1 48 1 is_stmt 0 view .LVU14
+  71 002a 30BD     		pop	{r4, r5, pc}
+  72              		.cfi_endproc
+  73              	.LFE28:
+  75              		.section	.text.silk_scale_vector32_Q26_lshift_18,"ax",%progbits
+  76              		.align	1
+  77              		.global	silk_scale_vector32_Q26_lshift_18
+  78              		.syntax unified
+  79              		.thumb
+  80              		.thumb_func
+  82              	silk_scale_vector32_Q26_lshift_18:
+  83              	.LVL5:
+  84              	.LFB29:
+  49:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  50:../../opus/silk/fixed/vector_ops_FIX.c **** /* Multiply a vector by a constant */
+  51:../../opus/silk/fixed/vector_ops_FIX.c **** void silk_scale_vector32_Q26_lshift_18(
+  52:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int32                  *data1,             /* I/O  Q0/Q18                                 
+  53:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int32                  gain_Q26,           /* I    Q26                                    
+  54:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int                    dataSize            /* I    length                                 
+  55:../../opus/silk/fixed/vector_ops_FIX.c **** )
+  56:../../opus/silk/fixed/vector_ops_FIX.c **** {
+  85              		.loc 1 56 1 is_stmt 1 view -0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              		.loc 1 56 1 is_stmt 0 view .LVU16
+  90 0000 10B5     		push	{r4, lr}
+  91              	.LCFI1:
+  92              		.cfi_def_cfa_offset 8
+  93              		.cfi_offset 4, -8
+  94              		.cfi_offset 14, -4
+  57:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int  i;
+  95              		.loc 1 57 5 is_stmt 1 view .LVU17
+  58:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  59:../../opus/silk/fixed/vector_ops_FIX.c ****     for( i = 0; i < dataSize; i++ ) {
+  96              		.loc 1 59 5 view .LVU18
+  97              	.LVL6:
+  98              		.loc 1 59 12 is_stmt 0 view .LVU19
+  99 0002 4FF0000E 		mov	lr, #0
+ 100              		.loc 1 59 5 view .LVU20
+ 101 0006 12E0     		b	.L6
+ 102              	.LVL7:
+ 103              	.L7:
+  60:../../opus/silk/fixed/vector_ops_FIX.c ****         data1[ i ] = (opus_int32)silk_CHECK_FIT32( silk_RSHIFT64( silk_SMULL( data1[ i ], gain_Q26 
+ 104              		.loc 1 60 9 is_stmt 1 view .LVU21
+ 105              		.loc 1 60 34 is_stmt 0 view .LVU22
+ 106 0008 50F82E30 		ldr	r3, [r0, lr, lsl #2]
+ 107 000c 4FEAE37C 		asr	ip, r3, #31
+ 108 0010 CC17     		asrs	r4, r1, #31
+ 109 0012 01FB0CFC 		mul	ip, r1, ip
+ 110 0016 03FB04CC 		mla	ip, r3, r4, ip
+ 111 001a A1FB0334 		umull	r3, r4, r1, r3
+ 112 001e A444     		add	ip, ip, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 4
+
+
+ 113 0020 1B0A     		lsrs	r3, r3, #8
+ 114 0022 43EA0C63 		orr	r3, r3, ip, lsl #24
+ 115              		.loc 1 60 20 view .LVU23
+ 116 0026 40F82E30 		str	r3, [r0, lr, lsl #2]
+  59:../../opus/silk/fixed/vector_ops_FIX.c ****         data1[ i ] = (opus_int32)silk_CHECK_FIT32( silk_RSHIFT64( silk_SMULL( data1[ i ], gain_Q26 
+ 117              		.loc 1 59 32 is_stmt 1 discriminator 3 view .LVU24
+ 118 002a 0EF1010E 		add	lr, lr, #1
+ 119              	.LVL8:
+ 120              	.L6:
+  59:../../opus/silk/fixed/vector_ops_FIX.c ****         data1[ i ] = (opus_int32)silk_CHECK_FIT32( silk_RSHIFT64( silk_SMULL( data1[ i ], gain_Q26 
+ 121              		.loc 1 59 19 discriminator 1 view .LVU25
+ 122 002e 9645     		cmp	lr, r2
+ 123 0030 EADB     		blt	.L7
+  61:../../opus/silk/fixed/vector_ops_FIX.c ****     }
+  62:../../opus/silk/fixed/vector_ops_FIX.c **** }
+ 124              		.loc 1 62 1 is_stmt 0 view .LVU26
+ 125 0032 10BD     		pop	{r4, pc}
+ 126              		.cfi_endproc
+ 127              	.LFE29:
+ 129              		.section	.text.silk_inner_prod_aligned,"ax",%progbits
+ 130              		.align	1
+ 131              		.global	silk_inner_prod_aligned
+ 132              		.syntax unified
+ 133              		.thumb
+ 134              		.thumb_func
+ 136              	silk_inner_prod_aligned:
+ 137              	.LVL9:
+ 138              	.LFB30:
+  63:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  64:../../opus/silk/fixed/vector_ops_FIX.c **** /* sum = for(i=0;i<len;i++)inVec1[i]*inVec2[i];      ---        inner product   */
+  65:../../opus/silk/fixed/vector_ops_FIX.c **** /* Note for ARM asm:                                                            */
+  66:../../opus/silk/fixed/vector_ops_FIX.c **** /*        * inVec1 and inVec2 should be at least 2 byte aligned.                */
+  67:../../opus/silk/fixed/vector_ops_FIX.c **** /*        * len should be positive 16bit integer.                               */
+  68:../../opus/silk/fixed/vector_ops_FIX.c **** /*        * only when len>6, memory access can be reduced by half.              */
+  69:../../opus/silk/fixed/vector_ops_FIX.c **** opus_int32 silk_inner_prod_aligned(
+  70:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int16 *const     inVec1,             /*    I input vector 1                         
+  71:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int16 *const     inVec2,             /*    I input vector 2                         
+  72:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int              len,                /*    I vector lengths                         
+  73:../../opus/silk/fixed/vector_ops_FIX.c ****     int                         arch                /*    I Run-time architecture                  
+  74:../../opus/silk/fixed/vector_ops_FIX.c **** )
+  75:../../opus/silk/fixed/vector_ops_FIX.c **** {
+ 139              		.loc 1 75 1 is_stmt 1 view -0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143              		.loc 1 75 1 is_stmt 0 view .LVU28
+ 144 0000 10B5     		push	{r4, lr}
+ 145              	.LCFI2:
+ 146              		.cfi_def_cfa_offset 8
+ 147              		.cfi_offset 4, -8
+ 148              		.cfi_offset 14, -4
+ 149 0002 0446     		mov	r4, r0
+  76:../../opus/silk/fixed/vector_ops_FIX.c **** #ifdef FIXED_POINT
+  77:../../opus/silk/fixed/vector_ops_FIX.c ****    return celt_inner_prod(inVec1, inVec2, len, arch);
+ 150              		.loc 1 77 4 is_stmt 1 view .LVU29
+ 151              	.LVL10:
+ 152              	.LBB4:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 5
+
+
+ 153              	.LBI4:
+ 154              		.file 2 "../../opus/celt/pitch.h"
+   1:../../opus/celt/pitch.h **** /* Copyright (c) 2007-2008 CSIRO
+   2:../../opus/celt/pitch.h ****    Copyright (c) 2007-2009 Xiph.Org Foundation
+   3:../../opus/celt/pitch.h ****    Written by Jean-Marc Valin */
+   4:../../opus/celt/pitch.h **** /**
+   5:../../opus/celt/pitch.h ****    @file pitch.h
+   6:../../opus/celt/pitch.h ****    @brief Pitch analysis
+   7:../../opus/celt/pitch.h ****  */
+   8:../../opus/celt/pitch.h **** 
+   9:../../opus/celt/pitch.h **** /*
+  10:../../opus/celt/pitch.h ****    Redistribution and use in source and binary forms, with or without
+  11:../../opus/celt/pitch.h ****    modification, are permitted provided that the following conditions
+  12:../../opus/celt/pitch.h ****    are met:
+  13:../../opus/celt/pitch.h **** 
+  14:../../opus/celt/pitch.h ****    - Redistributions of source code must retain the above copyright
+  15:../../opus/celt/pitch.h ****    notice, this list of conditions and the following disclaimer.
+  16:../../opus/celt/pitch.h **** 
+  17:../../opus/celt/pitch.h ****    - Redistributions in binary form must reproduce the above copyright
+  18:../../opus/celt/pitch.h ****    notice, this list of conditions and the following disclaimer in the
+  19:../../opus/celt/pitch.h ****    documentation and/or other materials provided with the distribution.
+  20:../../opus/celt/pitch.h **** 
+  21:../../opus/celt/pitch.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  22:../../opus/celt/pitch.h ****    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  23:../../opus/celt/pitch.h ****    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  24:../../opus/celt/pitch.h ****    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  25:../../opus/celt/pitch.h ****    OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  26:../../opus/celt/pitch.h ****    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  27:../../opus/celt/pitch.h ****    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  28:../../opus/celt/pitch.h ****    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  29:../../opus/celt/pitch.h ****    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  30:../../opus/celt/pitch.h ****    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  31:../../opus/celt/pitch.h ****    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  32:../../opus/celt/pitch.h **** */
+  33:../../opus/celt/pitch.h **** 
+  34:../../opus/celt/pitch.h **** #ifndef PITCH_H
+  35:../../opus/celt/pitch.h **** #define PITCH_H
+  36:../../opus/celt/pitch.h **** 
+  37:../../opus/celt/pitch.h **** #include "modes.h"
+  38:../../opus/celt/pitch.h **** #include "cpu_support.h"
+  39:../../opus/celt/pitch.h **** 
+  40:../../opus/celt/pitch.h **** #if (defined(OPUS_X86_MAY_HAVE_SSE) && !defined(FIXED_POINT)) \
+  41:../../opus/celt/pitch.h ****   || ((defined(OPUS_X86_MAY_HAVE_SSE4_1) || defined(OPUS_X86_MAY_HAVE_SSE2)) && defined(FIXED_POINT
+  42:../../opus/celt/pitch.h **** #include "x86/pitch_sse.h"
+  43:../../opus/celt/pitch.h **** #endif
+  44:../../opus/celt/pitch.h **** 
+  45:../../opus/celt/pitch.h **** #if defined(MIPSr1_ASM)
+  46:../../opus/celt/pitch.h **** #include "mips/pitch_mipsr1.h"
+  47:../../opus/celt/pitch.h **** #endif
+  48:../../opus/celt/pitch.h **** 
+  49:../../opus/celt/pitch.h **** #if (defined(OPUS_ARM_ASM) || defined(OPUS_ARM_MAY_HAVE_NEON_INTR))
+  50:../../opus/celt/pitch.h **** # include "arm/pitch_arm.h"
+  51:../../opus/celt/pitch.h **** #endif
+  52:../../opus/celt/pitch.h **** 
+  53:../../opus/celt/pitch.h **** void pitch_downsample(celt_sig * OPUS_RESTRICT x[], opus_val16 * OPUS_RESTRICT x_lp,
+  54:../../opus/celt/pitch.h ****       int len, int C, int arch);
+  55:../../opus/celt/pitch.h **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 6
+
+
+  56:../../opus/celt/pitch.h **** void pitch_search(const opus_val16 * OPUS_RESTRICT x_lp, opus_val16 * OPUS_RESTRICT y,
+  57:../../opus/celt/pitch.h ****                   int len, int max_pitch, int *pitch, int arch);
+  58:../../opus/celt/pitch.h **** 
+  59:../../opus/celt/pitch.h **** opus_val16 remove_doubling(opus_val16 *x, int maxperiod, int minperiod,
+  60:../../opus/celt/pitch.h ****       int N, int *T0, int prev_period, opus_val16 prev_gain, int arch);
+  61:../../opus/celt/pitch.h **** 
+  62:../../opus/celt/pitch.h **** 
+  63:../../opus/celt/pitch.h **** /* OPT: This is the kernel you really want to optimize. It gets used a lot
+  64:../../opus/celt/pitch.h ****    by the prefilter and by the PLC. */
+  65:../../opus/celt/pitch.h **** static OPUS_INLINE void xcorr_kernel_c(const opus_val16 * x, const opus_val16 * y, opus_val32 sum[4
+  66:../../opus/celt/pitch.h **** {
+  67:../../opus/celt/pitch.h ****    int j;
+  68:../../opus/celt/pitch.h ****    opus_val16 y_0, y_1, y_2, y_3;
+  69:../../opus/celt/pitch.h ****    celt_assert(len>=3);
+  70:../../opus/celt/pitch.h ****    y_3=0; /* gcc doesn't realize that y_3 can't be used uninitialized */
+  71:../../opus/celt/pitch.h ****    y_0=*y++;
+  72:../../opus/celt/pitch.h ****    y_1=*y++;
+  73:../../opus/celt/pitch.h ****    y_2=*y++;
+  74:../../opus/celt/pitch.h ****    for (j=0;j<len-3;j+=4)
+  75:../../opus/celt/pitch.h ****    {
+  76:../../opus/celt/pitch.h ****       opus_val16 tmp;
+  77:../../opus/celt/pitch.h ****       tmp = *x++;
+  78:../../opus/celt/pitch.h ****       y_3=*y++;
+  79:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_0);
+  80:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_1);
+  81:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_2);
+  82:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_3);
+  83:../../opus/celt/pitch.h ****       tmp=*x++;
+  84:../../opus/celt/pitch.h ****       y_0=*y++;
+  85:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_1);
+  86:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_2);
+  87:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_3);
+  88:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_0);
+  89:../../opus/celt/pitch.h ****       tmp=*x++;
+  90:../../opus/celt/pitch.h ****       y_1=*y++;
+  91:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_2);
+  92:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_3);
+  93:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_0);
+  94:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_1);
+  95:../../opus/celt/pitch.h ****       tmp=*x++;
+  96:../../opus/celt/pitch.h ****       y_2=*y++;
+  97:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_3);
+  98:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_0);
+  99:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_1);
+ 100:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_2);
+ 101:../../opus/celt/pitch.h ****    }
+ 102:../../opus/celt/pitch.h ****    if (j++<len)
+ 103:../../opus/celt/pitch.h ****    {
+ 104:../../opus/celt/pitch.h ****       opus_val16 tmp = *x++;
+ 105:../../opus/celt/pitch.h ****       y_3=*y++;
+ 106:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_0);
+ 107:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_1);
+ 108:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_2);
+ 109:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_3);
+ 110:../../opus/celt/pitch.h ****    }
+ 111:../../opus/celt/pitch.h ****    if (j++<len)
+ 112:../../opus/celt/pitch.h ****    {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 7
+
+
+ 113:../../opus/celt/pitch.h ****       opus_val16 tmp=*x++;
+ 114:../../opus/celt/pitch.h ****       y_0=*y++;
+ 115:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_1);
+ 116:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_2);
+ 117:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_3);
+ 118:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_0);
+ 119:../../opus/celt/pitch.h ****    }
+ 120:../../opus/celt/pitch.h ****    if (j<len)
+ 121:../../opus/celt/pitch.h ****    {
+ 122:../../opus/celt/pitch.h ****       opus_val16 tmp=*x++;
+ 123:../../opus/celt/pitch.h ****       y_1=*y++;
+ 124:../../opus/celt/pitch.h ****       sum[0] = MAC16_16(sum[0],tmp,y_2);
+ 125:../../opus/celt/pitch.h ****       sum[1] = MAC16_16(sum[1],tmp,y_3);
+ 126:../../opus/celt/pitch.h ****       sum[2] = MAC16_16(sum[2],tmp,y_0);
+ 127:../../opus/celt/pitch.h ****       sum[3] = MAC16_16(sum[3],tmp,y_1);
+ 128:../../opus/celt/pitch.h ****    }
+ 129:../../opus/celt/pitch.h **** }
+ 130:../../opus/celt/pitch.h **** 
+ 131:../../opus/celt/pitch.h **** #ifndef OVERRIDE_XCORR_KERNEL
+ 132:../../opus/celt/pitch.h **** #define xcorr_kernel(x, y, sum, len, arch) \
+ 133:../../opus/celt/pitch.h ****     ((void)(arch),xcorr_kernel_c(x, y, sum, len))
+ 134:../../opus/celt/pitch.h **** #endif /* OVERRIDE_XCORR_KERNEL */
+ 135:../../opus/celt/pitch.h **** 
+ 136:../../opus/celt/pitch.h **** 
+ 137:../../opus/celt/pitch.h **** static OPUS_INLINE void dual_inner_prod_c(const opus_val16 *x, const opus_val16 *y01, const opus_va
+ 138:../../opus/celt/pitch.h ****       int N, opus_val32 *xy1, opus_val32 *xy2)
+ 139:../../opus/celt/pitch.h **** {
+ 140:../../opus/celt/pitch.h ****    int i;
+ 141:../../opus/celt/pitch.h ****    opus_val32 xy01=0;
+ 142:../../opus/celt/pitch.h ****    opus_val32 xy02=0;
+ 143:../../opus/celt/pitch.h ****    for (i=0;i<N;i++)
+ 144:../../opus/celt/pitch.h ****    {
+ 145:../../opus/celt/pitch.h ****       xy01 = MAC16_16(xy01, x[i], y01[i]);
+ 146:../../opus/celt/pitch.h ****       xy02 = MAC16_16(xy02, x[i], y02[i]);
+ 147:../../opus/celt/pitch.h ****    }
+ 148:../../opus/celt/pitch.h ****    *xy1 = xy01;
+ 149:../../opus/celt/pitch.h ****    *xy2 = xy02;
+ 150:../../opus/celt/pitch.h **** }
+ 151:../../opus/celt/pitch.h **** 
+ 152:../../opus/celt/pitch.h **** #ifndef OVERRIDE_DUAL_INNER_PROD
+ 153:../../opus/celt/pitch.h **** # define dual_inner_prod(x, y01, y02, N, xy1, xy2, arch) \
+ 154:../../opus/celt/pitch.h ****     ((void)(arch),dual_inner_prod_c(x, y01, y02, N, xy1, xy2))
+ 155:../../opus/celt/pitch.h **** #endif
+ 156:../../opus/celt/pitch.h **** 
+ 157:../../opus/celt/pitch.h **** /*We make sure a C version is always available for cases where the overhead of
+ 158:../../opus/celt/pitch.h ****   vectorization and passing around an arch flag aren't worth it.*/
+ 159:../../opus/celt/pitch.h **** static OPUS_INLINE opus_val32 celt_inner_prod_c(const opus_val16 *x,
+ 155              		.loc 2 159 31 view .LVU30
+ 156              	.LBB5:
+ 160:../../opus/celt/pitch.h ****       const opus_val16 *y, int N)
+ 161:../../opus/celt/pitch.h **** {
+ 162:../../opus/celt/pitch.h ****    int i;
+ 157              		.loc 2 162 4 view .LVU31
+ 163:../../opus/celt/pitch.h ****    opus_val32 xy=0;
+ 158              		.loc 2 163 4 view .LVU32
+ 164:../../opus/celt/pitch.h ****    for (i=0;i<N;i++)
+ 159              		.loc 2 164 4 view .LVU33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 8
+
+
+ 163:../../opus/celt/pitch.h ****    opus_val32 xy=0;
+ 160              		.loc 2 163 15 is_stmt 0 view .LVU34
+ 161 0004 0020     		movs	r0, #0
+ 162              	.LVL11:
+ 163              		.loc 2 164 10 view .LVU35
+ 164 0006 0346     		mov	r3, r0
+ 165              	.LVL12:
+ 166              		.loc 2 164 4 view .LVU36
+ 167 0008 06E0     		b	.L10
+ 168              	.LVL13:
+ 169              	.L11:
+ 165:../../opus/celt/pitch.h ****       xy = MAC16_16(xy, x[i], y[i]);
+ 170              		.loc 2 165 7 is_stmt 1 view .LVU37
+ 171              		.loc 2 165 12 is_stmt 0 view .LVU38
+ 172 000a 34F913C0 		ldrsh	ip, [r4, r3, lsl #1]
+ 173 000e 31F913E0 		ldrsh	lr, [r1, r3, lsl #1]
+ 174              		.loc 2 165 10 view .LVU39
+ 175 0012 0EFB0C00 		mla	r0, lr, ip, r0
+ 176              	.LVL14:
+ 164:../../opus/celt/pitch.h ****    for (i=0;i<N;i++)
+ 177              		.loc 2 164 18 is_stmt 1 discriminator 3 view .LVU40
+ 178 0016 0133     		adds	r3, r3, #1
+ 179              	.LVL15:
+ 180              	.L10:
+ 164:../../opus/celt/pitch.h ****    for (i=0;i<N;i++)
+ 181              		.loc 2 164 14 discriminator 1 view .LVU41
+ 182 0018 9A42     		cmp	r2, r3
+ 183 001a F6DC     		bgt	.L11
+ 166:../../opus/celt/pitch.h ****    return xy;
+ 184              		.loc 2 166 4 view .LVU42
+ 185              	.LVL16:
+ 186              		.loc 2 166 4 is_stmt 0 view .LVU43
+ 187              	.LBE5:
+ 188              	.LBE4:
+  78:../../opus/silk/fixed/vector_ops_FIX.c **** #else
+  79:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int   i;
+  80:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int32 sum = 0;
+  81:../../opus/silk/fixed/vector_ops_FIX.c ****     for( i = 0; i < len; i++ ) {
+  82:../../opus/silk/fixed/vector_ops_FIX.c ****         sum = silk_SMLABB( sum, inVec1[ i ], inVec2[ i ] );
+  83:../../opus/silk/fixed/vector_ops_FIX.c ****     }
+  84:../../opus/silk/fixed/vector_ops_FIX.c ****     return sum;
+  85:../../opus/silk/fixed/vector_ops_FIX.c **** #endif
+  86:../../opus/silk/fixed/vector_ops_FIX.c **** }
+ 189              		.loc 1 86 1 view .LVU44
+ 190 001c 10BD     		pop	{r4, pc}
+ 191              		.loc 1 86 1 view .LVU45
+ 192              		.cfi_endproc
+ 193              	.LFE30:
+ 195              		.section	.text.silk_inner_prod16_c,"ax",%progbits
+ 196              		.align	1
+ 197              		.global	silk_inner_prod16_c
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 202              	silk_inner_prod16_c:
+ 203              	.LVL17:
+ 204              	.LFB31:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 9
+
+
+  87:../../opus/silk/fixed/vector_ops_FIX.c **** 
+  88:../../opus/silk/fixed/vector_ops_FIX.c **** opus_int64 silk_inner_prod16_c(
+  89:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int16            *inVec1,            /*    I input vector 1                         
+  90:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int16            *inVec2,            /*    I input vector 2                         
+  91:../../opus/silk/fixed/vector_ops_FIX.c ****     const opus_int              len                 /*    I vector lengths                         
+  92:../../opus/silk/fixed/vector_ops_FIX.c **** )
+  93:../../opus/silk/fixed/vector_ops_FIX.c **** {
+ 205              		.loc 1 93 1 is_stmt 1 view -0
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209              		.loc 1 93 1 is_stmt 0 view .LVU47
+ 210 0000 30B5     		push	{r4, r5, lr}
+ 211              	.LCFI3:
+ 212              		.cfi_def_cfa_offset 12
+ 213              		.cfi_offset 4, -12
+ 214              		.cfi_offset 5, -8
+ 215              		.cfi_offset 14, -4
+ 216 0002 0546     		mov	r5, r0
+ 217 0004 0C46     		mov	r4, r1
+  94:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int   i;
+ 218              		.loc 1 94 5 is_stmt 1 view .LVU48
+  95:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int64 sum = 0;
+ 219              		.loc 1 95 5 view .LVU49
+ 220              	.LVL18:
+  96:../../opus/silk/fixed/vector_ops_FIX.c ****     for( i = 0; i < len; i++ ) {
+ 221              		.loc 1 96 5 view .LVU50
+  95:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int64 sum = 0;
+ 222              		.loc 1 95 16 is_stmt 0 view .LVU51
+ 223 0006 0020     		movs	r0, #0
+ 224              	.LVL19:
+  95:../../opus/silk/fixed/vector_ops_FIX.c ****     opus_int64 sum = 0;
+ 225              		.loc 1 95 16 view .LVU52
+ 226 0008 0146     		mov	r1, r0
+ 227              	.LVL20:
+ 228              		.loc 1 96 12 view .LVU53
+ 229 000a 8446     		mov	ip, r0
+ 230              		.loc 1 96 5 view .LVU54
+ 231 000c 0AE0     		b	.L14
+ 232              	.LVL21:
+ 233              	.L15:
+  97:../../opus/silk/fixed/vector_ops_FIX.c ****         sum = silk_SMLALBB( sum, inVec1[ i ], inVec2[ i ] );
+ 234              		.loc 1 97 9 is_stmt 1 view .LVU55
+ 235              		.loc 1 97 15 is_stmt 0 view .LVU56
+ 236 000e 35F91C30 		ldrsh	r3, [r5, ip, lsl #1]
+ 237 0012 34F91CE0 		ldrsh	lr, [r4, ip, lsl #1]
+ 238 0016 0EFB03F3 		mul	r3, lr, r3
+ 239              		.loc 1 97 13 view .LVU57
+ 240 001a 1818     		adds	r0, r3, r0
+ 241              	.LVL22:
+ 242              		.loc 1 97 13 view .LVU58
+ 243 001c 41EBE371 		adc	r1, r1, r3, asr #31
+ 244              	.LVL23:
+  96:../../opus/silk/fixed/vector_ops_FIX.c ****     for( i = 0; i < len; i++ ) {
+ 245              		.loc 1 96 27 is_stmt 1 discriminator 3 view .LVU59
+ 246 0020 0CF1010C 		add	ip, ip, #1
+ 247              	.LVL24:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 10
+
+
+ 248              	.L14:
+  96:../../opus/silk/fixed/vector_ops_FIX.c ****     for( i = 0; i < len; i++ ) {
+ 249              		.loc 1 96 19 discriminator 1 view .LVU60
+ 250 0024 9445     		cmp	ip, r2
+ 251 0026 F2DB     		blt	.L15
+  98:../../opus/silk/fixed/vector_ops_FIX.c ****     }
+  99:../../opus/silk/fixed/vector_ops_FIX.c ****     return sum;
+ 252              		.loc 1 99 5 view .LVU61
+ 100:../../opus/silk/fixed/vector_ops_FIX.c **** }
+ 253              		.loc 1 100 1 is_stmt 0 view .LVU62
+ 254 0028 30BD     		pop	{r4, r5, pc}
+ 255              		.loc 1 100 1 view .LVU63
+ 256              		.cfi_endproc
+ 257              	.LFE31:
+ 259              		.text
+ 260              	.Letext0:
+ 261              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 262              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 263              		.file 5 "../../opus/include/opus_types.h"
+ 264              		.file 6 "../../opus/celt/celt.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 vector_ops_FIX.c
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:20     .text.silk_scale_copy_vector16:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:26     .text.silk_scale_copy_vector16:00000000 silk_scale_copy_vector16
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:76     .text.silk_scale_vector32_Q26_lshift_18:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:82     .text.silk_scale_vector32_Q26_lshift_18:00000000 silk_scale_vector32_Q26_lshift_18
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:130    .text.silk_inner_prod_aligned:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:136    .text.silk_inner_prod_aligned:00000000 silk_inner_prod_aligned
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:196    .text.silk_inner_prod16_c:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccj1XVLk.s:202    .text.silk_inner_prod16_c:00000000 silk_inner_prod16_c
+
+NO UNDEFINED SYMBOLS

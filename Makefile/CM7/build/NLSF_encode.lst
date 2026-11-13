@@ -1,0 +1,1117 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"NLSF_encode.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/NLSF_encode.c"
+  19              		.section	.text.silk_DIV32_varQ,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	silk_DIV32_varQ:
+  26              	.LVL0:
+  27              	.LFB17:
+  28              		.file 2 "../../opus/silk/Inlines.h"
+   1:../../opus/silk/Inlines.h **** /***********************************************************************
+   2:../../opus/silk/Inlines.h **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/Inlines.h **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/Inlines.h **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/Inlines.h **** are met:
+   6:../../opus/silk/Inlines.h **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/Inlines.h **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/Inlines.h **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/Inlines.h **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/Inlines.h **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/Inlines.h **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/Inlines.h **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/Inlines.h **** products derived from this software without specific prior written
+  14:../../opus/silk/Inlines.h **** permission.
+  15:../../opus/silk/Inlines.h **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/Inlines.h **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/Inlines.h **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/Inlines.h **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/Inlines.h **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/Inlines.h **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/Inlines.h **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/Inlines.h **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/Inlines.h **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/Inlines.h **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/Inlines.h **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/Inlines.h **** ***********************************************************************/
+  27:../../opus/silk/Inlines.h **** 
+  28:../../opus/silk/Inlines.h **** /*! \file silk_Inlines.h
+  29:../../opus/silk/Inlines.h ****  *  \brief silk_Inlines.h defines OPUS_INLINE signal processing functions.
+  30:../../opus/silk/Inlines.h ****  */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 2
+
+
+  31:../../opus/silk/Inlines.h **** 
+  32:../../opus/silk/Inlines.h **** #ifndef SILK_FIX_INLINES_H
+  33:../../opus/silk/Inlines.h **** #define SILK_FIX_INLINES_H
+  34:../../opus/silk/Inlines.h **** 
+  35:../../opus/silk/Inlines.h **** #ifdef  __cplusplus
+  36:../../opus/silk/Inlines.h **** extern "C"
+  37:../../opus/silk/Inlines.h **** {
+  38:../../opus/silk/Inlines.h **** #endif
+  39:../../opus/silk/Inlines.h **** 
+  40:../../opus/silk/Inlines.h **** /* count leading zeros of opus_int64 */
+  41:../../opus/silk/Inlines.h **** static OPUS_INLINE opus_int32 silk_CLZ64( opus_int64 in )
+  42:../../opus/silk/Inlines.h **** {
+  43:../../opus/silk/Inlines.h ****     opus_int32 in_upper;
+  44:../../opus/silk/Inlines.h **** 
+  45:../../opus/silk/Inlines.h ****     in_upper = (opus_int32)silk_RSHIFT64(in, 32);
+  46:../../opus/silk/Inlines.h ****     if (in_upper == 0) {
+  47:../../opus/silk/Inlines.h ****         /* Search in the lower 32 bits */
+  48:../../opus/silk/Inlines.h ****         return 32 + silk_CLZ32( (opus_int32) in );
+  49:../../opus/silk/Inlines.h ****     } else {
+  50:../../opus/silk/Inlines.h ****         /* Search in the upper 32 bits */
+  51:../../opus/silk/Inlines.h ****         return silk_CLZ32( in_upper );
+  52:../../opus/silk/Inlines.h ****     }
+  53:../../opus/silk/Inlines.h **** }
+  54:../../opus/silk/Inlines.h **** 
+  55:../../opus/silk/Inlines.h **** /* get number of leading zeros and fractional part (the bits right after the leading one */
+  56:../../opus/silk/Inlines.h **** static OPUS_INLINE void silk_CLZ_FRAC(
+  57:../../opus/silk/Inlines.h ****     opus_int32 in,            /* I  input                               */
+  58:../../opus/silk/Inlines.h ****     opus_int32 *lz,           /* O  number of leading zeros             */
+  59:../../opus/silk/Inlines.h ****     opus_int32 *frac_Q7       /* O  the 7 bits right after the leading one */
+  60:../../opus/silk/Inlines.h **** )
+  61:../../opus/silk/Inlines.h **** {
+  62:../../opus/silk/Inlines.h ****     opus_int32 lzeros = silk_CLZ32(in);
+  63:../../opus/silk/Inlines.h **** 
+  64:../../opus/silk/Inlines.h ****     * lz = lzeros;
+  65:../../opus/silk/Inlines.h ****     * frac_Q7 = silk_ROR32(in, 24 - lzeros) & 0x7f;
+  66:../../opus/silk/Inlines.h **** }
+  67:../../opus/silk/Inlines.h **** 
+  68:../../opus/silk/Inlines.h **** /* Approximation of square root                                          */
+  69:../../opus/silk/Inlines.h **** /* Accuracy: < +/- 10%  for output values > 15                           */
+  70:../../opus/silk/Inlines.h **** /*           < +/- 2.5% for output values > 120                          */
+  71:../../opus/silk/Inlines.h **** static OPUS_INLINE opus_int32 silk_SQRT_APPROX( opus_int32 x )
+  72:../../opus/silk/Inlines.h **** {
+  73:../../opus/silk/Inlines.h ****     opus_int32 y, lz, frac_Q7;
+  74:../../opus/silk/Inlines.h **** 
+  75:../../opus/silk/Inlines.h ****     if( x <= 0 ) {
+  76:../../opus/silk/Inlines.h ****         return 0;
+  77:../../opus/silk/Inlines.h ****     }
+  78:../../opus/silk/Inlines.h **** 
+  79:../../opus/silk/Inlines.h ****     silk_CLZ_FRAC(x, &lz, &frac_Q7);
+  80:../../opus/silk/Inlines.h **** 
+  81:../../opus/silk/Inlines.h ****     if( lz & 1 ) {
+  82:../../opus/silk/Inlines.h ****         y = 32768;
+  83:../../opus/silk/Inlines.h ****     } else {
+  84:../../opus/silk/Inlines.h ****         y = 46214;        /* 46214 = sqrt(2) * 32768 */
+  85:../../opus/silk/Inlines.h ****     }
+  86:../../opus/silk/Inlines.h **** 
+  87:../../opus/silk/Inlines.h ****     /* get scaling right */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 3
+
+
+  88:../../opus/silk/Inlines.h ****     y >>= silk_RSHIFT(lz, 1);
+  89:../../opus/silk/Inlines.h **** 
+  90:../../opus/silk/Inlines.h ****     /* increment using fractional part of input */
+  91:../../opus/silk/Inlines.h ****     y = silk_SMLAWB(y, y, silk_SMULBB(213, frac_Q7));
+  92:../../opus/silk/Inlines.h **** 
+  93:../../opus/silk/Inlines.h ****     return y;
+  94:../../opus/silk/Inlines.h **** }
+  95:../../opus/silk/Inlines.h **** 
+  96:../../opus/silk/Inlines.h **** /* Divide two int32 values and return result as int32 in a given Q-domain */
+  97:../../opus/silk/Inlines.h **** static OPUS_INLINE opus_int32 silk_DIV32_varQ(   /* O    returns a good approximation of "(a32 << Q
+  98:../../opus/silk/Inlines.h ****     const opus_int32     a32,               /* I    numerator (Q0)                  */
+  99:../../opus/silk/Inlines.h ****     const opus_int32     b32,               /* I    denominator (Q0)                */
+ 100:../../opus/silk/Inlines.h ****     const opus_int       Qres               /* I    Q-domain of result (>= 0)       */
+ 101:../../opus/silk/Inlines.h **** )
+ 102:../../opus/silk/Inlines.h **** {
+  29              		.loc 2 102 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 2 102 1 is_stmt 0 view .LVU1
+  34 0000 70B5     		push	{r4, r5, r6, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+ 103:../../opus/silk/Inlines.h ****     opus_int   a_headrm, b_headrm, lshift;
+  41              		.loc 2 103 5 is_stmt 1 view .LVU2
+ 104:../../opus/silk/Inlines.h ****     opus_int32 b32_inv, a32_nrm, b32_nrm, result;
+  42              		.loc 2 104 5 view .LVU3
+ 105:../../opus/silk/Inlines.h **** 
+ 106:../../opus/silk/Inlines.h ****     silk_assert( b32 != 0 );
+  43              		.loc 2 106 28 view .LVU4
+ 107:../../opus/silk/Inlines.h ****     silk_assert( Qres >= 0 );
+  44              		.loc 2 107 29 view .LVU5
+ 108:../../opus/silk/Inlines.h **** 
+ 109:../../opus/silk/Inlines.h ****     /* Compute number of bits head room and normalize inputs */
+ 110:../../opus/silk/Inlines.h ****     a_headrm = silk_CLZ32( silk_abs(a32) ) - 1;
+  45              		.loc 2 110 5 view .LVU6
+  46              		.loc 2 110 16 is_stmt 0 view .LVU7
+  47 0002 80EAE07E 		eor	lr, r0, r0, asr #31
+  48 0006 AEEBE07E 		sub	lr, lr, r0, asr #31
+  49              	.LVL1:
+  50              	.LBB6:
+  51              	.LBI6:
+  52              		.file 3 "../../opus/silk/macros.h"
+   1:../../opus/silk/macros.h **** /***********************************************************************
+   2:../../opus/silk/macros.h **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/macros.h **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/macros.h **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/macros.h **** are met:
+   6:../../opus/silk/macros.h **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/macros.h **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/macros.h **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/macros.h **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/macros.h **** documentation and/or other materials provided with the distribution.
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 4
+
+
+  11:../../opus/silk/macros.h **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/macros.h **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/macros.h **** products derived from this software without specific prior written
+  14:../../opus/silk/macros.h **** permission.
+  15:../../opus/silk/macros.h **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/macros.h **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/macros.h **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/macros.h **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/macros.h **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/macros.h **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/macros.h **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/macros.h **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/macros.h **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/macros.h **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/macros.h **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/macros.h **** ***********************************************************************/
+  27:../../opus/silk/macros.h **** 
+  28:../../opus/silk/macros.h **** #ifndef SILK_MACROS_H
+  29:../../opus/silk/macros.h **** #define SILK_MACROS_H
+  30:../../opus/silk/macros.h **** 
+  31:../../opus/silk/macros.h **** #include "opus_config.h"
+  32:../../opus/silk/macros.h **** 
+  33:../../opus/silk/macros.h **** #include "opus_types.h"
+  34:../../opus/silk/macros.h **** #include "opus_defines.h"
+  35:../../opus/silk/macros.h **** #include "arch.h"
+  36:../../opus/silk/macros.h **** 
+  37:../../opus/silk/macros.h **** /* This is an OPUS_INLINE header file for general platform. */
+  38:../../opus/silk/macros.h **** 
+  39:../../opus/silk/macros.h **** /* (a32 * (opus_int32)((opus_int16)(b32))) >> 16 output have to be 32bit int */
+  40:../../opus/silk/macros.h **** #if OPUS_FAST_INT64
+  41:../../opus/silk/macros.h **** #define silk_SMULWB(a32, b32)            ((opus_int32)(((a32) * (opus_int64)((opus_int16)(b32))) >>
+  42:../../opus/silk/macros.h **** #else
+  43:../../opus/silk/macros.h **** #define silk_SMULWB(a32, b32)            ((((a32) >> 16) * (opus_int32)((opus_int16)(b32))) + ((((a
+  44:../../opus/silk/macros.h **** #endif
+  45:../../opus/silk/macros.h **** 
+  46:../../opus/silk/macros.h **** /* a32 + (b32 * (opus_int32)((opus_int16)(c32))) >> 16 output have to be 32bit int */
+  47:../../opus/silk/macros.h **** #if OPUS_FAST_INT64
+  48:../../opus/silk/macros.h **** #define silk_SMLAWB(a32, b32, c32)       ((opus_int32)((a32) + (((b32) * (opus_int64)((opus_int16)(
+  49:../../opus/silk/macros.h **** #else
+  50:../../opus/silk/macros.h **** #define silk_SMLAWB(a32, b32, c32)       ((a32) + ((((b32) >> 16) * (opus_int32)((opus_int16)(c32))
+  51:../../opus/silk/macros.h **** #endif
+  52:../../opus/silk/macros.h **** 
+  53:../../opus/silk/macros.h **** /* (a32 * (b32 >> 16)) >> 16 */
+  54:../../opus/silk/macros.h **** #if OPUS_FAST_INT64
+  55:../../opus/silk/macros.h **** #define silk_SMULWT(a32, b32)            ((opus_int32)(((a32) * (opus_int64)((b32) >> 16)) >> 16))
+  56:../../opus/silk/macros.h **** #else
+  57:../../opus/silk/macros.h **** #define silk_SMULWT(a32, b32)            (((a32) >> 16) * ((b32) >> 16) + ((((a32) & 0x0000FFFF) * 
+  58:../../opus/silk/macros.h **** #endif
+  59:../../opus/silk/macros.h **** 
+  60:../../opus/silk/macros.h **** /* a32 + (b32 * (c32 >> 16)) >> 16 */
+  61:../../opus/silk/macros.h **** #if OPUS_FAST_INT64
+  62:../../opus/silk/macros.h **** #define silk_SMLAWT(a32, b32, c32)       ((opus_int32)((a32) + (((b32) * ((opus_int64)(c32) >> 16))
+  63:../../opus/silk/macros.h **** #else
+  64:../../opus/silk/macros.h **** #define silk_SMLAWT(a32, b32, c32)       ((a32) + (((b32) >> 16) * ((c32) >> 16)) + ((((b32) & 0x00
+  65:../../opus/silk/macros.h **** #endif
+  66:../../opus/silk/macros.h **** 
+  67:../../opus/silk/macros.h **** /* (opus_int32)((opus_int16)(a3))) * (opus_int32)((opus_int16)(b32)) output have to be 32bit int */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 5
+
+
+  68:../../opus/silk/macros.h **** #define silk_SMULBB(a32, b32)            ((opus_int32)((opus_int16)(a32)) * (opus_int32)((opus_int1
+  69:../../opus/silk/macros.h **** 
+  70:../../opus/silk/macros.h **** /* a32 + (opus_int32)((opus_int16)(b32)) * (opus_int32)((opus_int16)(c32)) output have to be 32bit 
+  71:../../opus/silk/macros.h **** #define silk_SMLABB(a32, b32, c32)       ((a32) + ((opus_int32)((opus_int16)(b32))) * (opus_int32)(
+  72:../../opus/silk/macros.h **** 
+  73:../../opus/silk/macros.h **** /* (opus_int32)((opus_int16)(a32)) * (b32 >> 16) */
+  74:../../opus/silk/macros.h **** #define silk_SMULBT(a32, b32)            ((opus_int32)((opus_int16)(a32)) * ((b32) >> 16))
+  75:../../opus/silk/macros.h **** 
+  76:../../opus/silk/macros.h **** /* a32 + (opus_int32)((opus_int16)(b32)) * (c32 >> 16) */
+  77:../../opus/silk/macros.h **** #define silk_SMLABT(a32, b32, c32)       ((a32) + ((opus_int32)((opus_int16)(b32))) * ((c32) >> 16)
+  78:../../opus/silk/macros.h **** 
+  79:../../opus/silk/macros.h **** /* a64 + (b32 * c32) */
+  80:../../opus/silk/macros.h **** #define silk_SMLAL(a64, b32, c32)        (silk_ADD64((a64), ((opus_int64)(b32) * (opus_int64)(c32))
+  81:../../opus/silk/macros.h **** 
+  82:../../opus/silk/macros.h **** /* (a32 * b32) >> 16 */
+  83:../../opus/silk/macros.h **** #if OPUS_FAST_INT64
+  84:../../opus/silk/macros.h **** #define silk_SMULWW(a32, b32)            ((opus_int32)(((opus_int64)(a32) * (b32)) >> 16))
+  85:../../opus/silk/macros.h **** #else
+  86:../../opus/silk/macros.h **** #define silk_SMULWW(a32, b32)            silk_MLA(silk_SMULWB((a32), (b32)), (a32), silk_RSHIFT_ROU
+  87:../../opus/silk/macros.h **** #endif
+  88:../../opus/silk/macros.h **** 
+  89:../../opus/silk/macros.h **** /* a32 + ((b32 * c32) >> 16) */
+  90:../../opus/silk/macros.h **** #if OPUS_FAST_INT64
+  91:../../opus/silk/macros.h **** #define silk_SMLAWW(a32, b32, c32)       ((opus_int32)((a32) + (((opus_int64)(b32) * (c32)) >> 16))
+  92:../../opus/silk/macros.h **** #else
+  93:../../opus/silk/macros.h **** #define silk_SMLAWW(a32, b32, c32)       silk_MLA(silk_SMLAWB((a32), (b32), (c32)), (b32), silk_RSH
+  94:../../opus/silk/macros.h **** #endif
+  95:../../opus/silk/macros.h **** 
+  96:../../opus/silk/macros.h **** /* add/subtract with output saturated */
+  97:../../opus/silk/macros.h **** #define silk_ADD_SAT32(a, b)             ((((opus_uint32)(a) + (opus_uint32)(b)) & 0x80000000) == 0
+  98:../../opus/silk/macros.h ****                                         ((((a) & (b)) & 0x80000000) != 0 ? silk_int32_MIN : (a)+(b)
+  99:../../opus/silk/macros.h ****                                         ((((a) | (b)) & 0x80000000) == 0 ? silk_int32_MAX : (a)+(b)
+ 100:../../opus/silk/macros.h **** 
+ 101:../../opus/silk/macros.h **** #define silk_SUB_SAT32(a, b)             ((((opus_uint32)(a)-(opus_uint32)(b)) & 0x80000000) == 0 ?
+ 102:../../opus/silk/macros.h ****                                         (( (a) & ((b)^0x80000000) & 0x80000000) ? silk_int32_MIN : 
+ 103:../../opus/silk/macros.h ****                                         ((((a)^0x80000000) & (b)  & 0x80000000) ? silk_int32_MAX : 
+ 104:../../opus/silk/macros.h **** 
+ 105:../../opus/silk/macros.h **** #if defined(MIPSr1_ASM)
+ 106:../../opus/silk/macros.h **** #include "mips/macros_mipsr1.h"
+ 107:../../opus/silk/macros.h **** #endif
+ 108:../../opus/silk/macros.h **** 
+ 109:../../opus/silk/macros.h **** #include "ecintrin.h"
+ 110:../../opus/silk/macros.h **** #ifndef OVERRIDE_silk_CLZ16
+ 111:../../opus/silk/macros.h **** static OPUS_INLINE opus_int32 silk_CLZ16(opus_int16 in16)
+ 112:../../opus/silk/macros.h **** {
+ 113:../../opus/silk/macros.h ****     return 32 - EC_ILOG(in16<<16|0x8000);
+ 114:../../opus/silk/macros.h **** }
+ 115:../../opus/silk/macros.h **** #endif
+ 116:../../opus/silk/macros.h **** 
+ 117:../../opus/silk/macros.h **** #ifndef OVERRIDE_silk_CLZ32
+ 118:../../opus/silk/macros.h **** static OPUS_INLINE opus_int32 silk_CLZ32(opus_int32 in32)
+  53              		.loc 3 118 31 is_stmt 1 view .LVU8
+  54              	.LBB7:
+ 119:../../opus/silk/macros.h **** {
+ 120:../../opus/silk/macros.h ****     return in32 ? 32 - EC_ILOG(in32) : 32;
+  55              		.loc 3 120 5 view .LVU9
+  56              		.loc 3 120 38 is_stmt 0 view .LVU10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 6
+
+
+  57 000a B8B3     		cbz	r0, .L10
+  58              		.loc 3 120 22 discriminator 1 view .LVU11
+  59 000c BEFA8EFE 		clz	lr, lr
+  60              	.LVL2:
+  61              	.L2:
+  62              		.loc 3 120 22 discriminator 1 view .LVU12
+  63              	.LBE7:
+  64              	.LBE6:
+  65              		.loc 2 110 14 discriminator 1 view .LVU13
+  66 0010 0EF1FF33 		add	r3, lr, #-1
+  67              	.LVL3:
+ 111:../../opus/silk/Inlines.h ****     a32_nrm = silk_LSHIFT(a32, a_headrm);                                       /* Q: a_headrm     
+  68              		.loc 2 111 5 is_stmt 1 view .LVU14
+  69              		.loc 2 111 15 is_stmt 0 view .LVU15
+  70 0014 9840     		lsls	r0, r0, r3
+  71              	.LVL4:
+ 112:../../opus/silk/Inlines.h ****     b_headrm = silk_CLZ32( silk_abs(b32) ) - 1;
+  72              		.loc 2 112 5 is_stmt 1 view .LVU16
+  73              		.loc 2 112 16 is_stmt 0 view .LVU17
+  74 0016 81EAE174 		eor	r4, r1, r1, asr #31
+  75 001a A4EBE174 		sub	r4, r4, r1, asr #31
+  76              	.LVL5:
+  77              	.LBB9:
+  78              	.LBI9:
+ 118:../../opus/silk/macros.h **** {
+  79              		.loc 3 118 31 is_stmt 1 view .LVU18
+  80              	.LBB10:
+  81              		.loc 3 120 5 view .LVU19
+  82              		.loc 3 120 38 is_stmt 0 view .LVU20
+  83 001e 81B3     		cbz	r1, .L11
+  84              		.loc 3 120 22 discriminator 1 view .LVU21
+  85 0020 B4FA84F4 		clz	r4, r4
+  86              	.LVL6:
+  87              	.L3:
+  88              		.loc 3 120 22 discriminator 1 view .LVU22
+  89              	.LBE10:
+  90              	.LBE9:
+  91              		.loc 2 112 14 discriminator 1 view .LVU23
+  92 0024 013C     		subs	r4, r4, #1
+  93              	.LVL7:
+ 113:../../opus/silk/Inlines.h ****     b32_nrm = silk_LSHIFT(b32, b_headrm);                                       /* Q: b_headrm     
+  94              		.loc 2 113 5 is_stmt 1 view .LVU24
+  95              		.loc 2 113 15 is_stmt 0 view .LVU25
+  96 0026 A140     		lsls	r1, r1, r4
+  97              	.LVL8:
+ 114:../../opus/silk/Inlines.h **** 
+ 115:../../opus/silk/Inlines.h ****     /* Inverse of b32, with 14 bits of precision */
+ 116:../../opus/silk/Inlines.h ****     b32_inv = silk_DIV32_16( silk_int32_MAX >> 2, silk_RSHIFT(b32_nrm, 16) );   /* Q: 29 + 16 - b_h
+  98              		.loc 2 116 5 is_stmt 1 view .LVU26
+  99              		.loc 2 116 15 is_stmt 0 view .LVU27
+ 100 0028 0B14     		asrs	r3, r1, #16
+ 101              	.LVL9:
+ 102              		.loc 2 116 13 view .LVU28
+ 103 002a 6FF0604C 		mvn	ip, #-536870912
+ 104 002e 9CFBF3FC 		sdiv	ip, ip, r3
+ 105              	.LVL10:
+ 117:../../opus/silk/Inlines.h **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 7
+
+
+ 118:../../opus/silk/Inlines.h ****     /* First approximation */
+ 119:../../opus/silk/Inlines.h ****     result = silk_SMULWB(a32_nrm, b32_inv);                                     /* Q: 29 + a_headrm
+ 106              		.loc 2 119 5 is_stmt 1 view .LVU29
+ 107              		.loc 2 119 14 is_stmt 0 view .LVU30
+ 108 0032 0514     		asrs	r5, r0, #16
+ 109 0034 0FFA8CFC 		sxth	ip, ip
+ 110              	.LVL11:
+ 111              		.loc 2 119 14 view .LVU31
+ 112 0038 83B2     		uxth	r3, r0
+ 113              	.LVL12:
+ 114              		.loc 2 119 14 view .LVU32
+ 115 003a 03FB0CF3 		mul	r3, r3, ip
+ 116 003e 1B14     		asrs	r3, r3, #16
+ 117              		.loc 2 119 12 view .LVU33
+ 118 0040 0CFB0533 		mla	r3, ip, r5, r3
+ 119              	.LVL13:
+ 120:../../opus/silk/Inlines.h **** 
+ 121:../../opus/silk/Inlines.h ****     /* Compute residual by subtracting product of denominator and first approximation */
+ 122:../../opus/silk/Inlines.h ****     /* It's OK to overflow because the final value of a32_nrm should always be small */
+ 123:../../opus/silk/Inlines.h ****     a32_nrm = silk_SUB32_ovflw(a32_nrm, silk_LSHIFT_ovflw( silk_SMMUL(b32_nrm, result), 3 ));  /* Q
+ 120              		.loc 2 123 5 is_stmt 1 view .LVU34
+ 121              		.loc 2 123 15 is_stmt 0 view .LVU35
+ 122 0044 CD17     		asrs	r5, r1, #31
+ 123 0046 DE17     		asrs	r6, r3, #31
+ 124 0048 03FB05F5 		mul	r5, r3, r5
+ 125 004c 01FB0655 		mla	r5, r1, r6, r5
+ 126 0050 A3FB0116 		umull	r1, r6, r3, r1
+ 127              	.LVL14:
+ 128              		.loc 2 123 15 view .LVU36
+ 129 0054 A919     		adds	r1, r5, r6
+ 130 0056 A0EBC100 		sub	r0, r0, r1, lsl #3
+ 131              	.LVL15:
+ 124:../../opus/silk/Inlines.h **** 
+ 125:../../opus/silk/Inlines.h ****     /* Refinement */
+ 126:../../opus/silk/Inlines.h ****     result = silk_SMLAWB(result, a32_nrm, b32_inv);                             /* Q: 29 + a_headrm
+ 132              		.loc 2 126 5 is_stmt 1 view .LVU37
+ 133              		.loc 2 126 14 is_stmt 0 view .LVU38
+ 134 005a 0114     		asrs	r1, r0, #16
+ 135 005c 80B2     		uxth	r0, r0
+ 136              	.LVL16:
+ 137              		.loc 2 126 14 view .LVU39
+ 138 005e 00FB0CF0 		mul	r0, r0, ip
+ 139 0062 0014     		asrs	r0, r0, #16
+ 140 0064 01FB0C00 		mla	r0, r1, ip, r0
+ 141              		.loc 2 126 12 view .LVU40
+ 142 0068 1844     		add	r0, r0, r3
+ 143              	.LVL17:
+ 127:../../opus/silk/Inlines.h **** 
+ 128:../../opus/silk/Inlines.h ****     /* Convert to Qres domain */
+ 129:../../opus/silk/Inlines.h ****     lshift = 29 + a_headrm - b_headrm - Qres;
+ 144              		.loc 2 129 5 is_stmt 1 view .LVU41
+ 145              		.loc 2 129 17 is_stmt 0 view .LVU42
+ 146 006a 0EF11C03 		add	r3, lr, #28
+ 147              		.loc 2 129 28 view .LVU43
+ 148 006e 1B1B     		subs	r3, r3, r4
+ 149              	.LVL18:
+ 130:../../opus/silk/Inlines.h ****     if( lshift < 0 ) {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 8
+
+
+ 150              		.loc 2 130 5 is_stmt 1 view .LVU44
+ 151              		.loc 2 130 7 is_stmt 0 view .LVU45
+ 152 0070 991A     		subs	r1, r3, r2
+ 153              	.LVL19:
+ 154              		.loc 2 130 7 view .LVU46
+ 155 0072 08D4     		bmi	.L14
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 132:../../opus/silk/Inlines.h ****     } else {
+ 133:../../opus/silk/Inlines.h ****         if( lshift < 32){
+ 156              		.loc 2 133 9 is_stmt 1 view .LVU47
+ 157              		.loc 2 133 11 is_stmt 0 view .LVU48
+ 158 0074 1F29     		cmp	r1, #31
+ 159 0076 20DC     		bgt	.L12
+ 134:../../opus/silk/Inlines.h ****             return silk_RSHIFT(result, lshift);
+ 160              		.loc 2 134 13 is_stmt 1 view .LVU49
+ 161              		.loc 2 134 20 is_stmt 0 view .LVU50
+ 162 0078 0841     		asrs	r0, r0, r1
+ 163              	.LVL20:
+ 164              		.loc 2 134 20 view .LVU51
+ 165 007a 1FE0     		b	.L1
+ 166              	.LVL21:
+ 167              	.L10:
+ 168              	.LBB12:
+ 169              	.LBB8:
+ 170              		.loc 3 120 38 discriminator 2 view .LVU52
+ 171 007c 4FF0200E 		mov	lr, #32
+ 172              	.LVL22:
+ 173              		.loc 3 120 38 discriminator 2 view .LVU53
+ 174 0080 C6E7     		b	.L2
+ 175              	.LVL23:
+ 176              	.L11:
+ 177              		.loc 3 120 38 discriminator 2 view .LVU54
+ 178              	.LBE8:
+ 179              	.LBE12:
+ 180              	.LBB13:
+ 181              	.LBB11:
+ 182 0082 2024     		movs	r4, #32
+ 183              	.LVL24:
+ 184              		.loc 3 120 38 discriminator 2 view .LVU55
+ 185 0084 CEE7     		b	.L3
+ 186              	.LVL25:
+ 187              	.L14:
+ 188              		.loc 3 120 38 discriminator 2 view .LVU56
+ 189              	.LBE11:
+ 190              	.LBE13:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 191              		.loc 2 131 9 is_stmt 1 view .LVU57
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 192              		.loc 2 131 16 is_stmt 0 view .LVU58
+ 193 0086 D21A     		subs	r2, r2, r3
+ 194              	.LVL26:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 195              		.loc 2 131 16 view .LVU59
+ 196 0088 4FF00043 		mov	r3, #-2147483648
+ 197 008c 1341     		asrs	r3, r3, r2
+ 198 008e 6FF00041 		mvn	r1, #-2147483648
+ 199              	.LVL27:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 9
+
+
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 200              		.loc 2 131 16 view .LVU60
+ 201 0092 1141     		asrs	r1, r1, r2
+ 202 0094 8B42     		cmp	r3, r1
+ 203 0096 08DD     		ble	.L5
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 204              		.loc 2 131 16 discriminator 1 view .LVU61
+ 205 0098 8342     		cmp	r3, r0
+ 206 009a 02DA     		bge	.L6
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 207              		.loc 2 131 16 discriminator 3 view .LVU62
+ 208 009c 1846     		mov	r0, r3
+ 209              	.LVL28:
+ 210              	.L7:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 211              		.loc 2 131 16 discriminator 12 view .LVU63
+ 212 009e 9040     		lsls	r0, r0, r2
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 213              		.loc 2 131 16 view .LVU64
+ 214 00a0 0CE0     		b	.L1
+ 215              	.LVL29:
+ 216              	.L6:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 217              		.loc 2 131 16 discriminator 4 view .LVU65
+ 218 00a2 8842     		cmp	r0, r1
+ 219 00a4 B8BF     		it	lt
+ 220 00a6 0846     		movlt	r0, r1
+ 221              	.LVL30:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 222              		.loc 2 131 16 discriminator 4 view .LVU66
+ 223 00a8 F9E7     		b	.L7
+ 224              	.LVL31:
+ 225              	.L5:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 226              		.loc 2 131 16 discriminator 2 view .LVU67
+ 227 00aa 8142     		cmp	r1, r0
+ 228 00ac 01DA     		bge	.L8
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 229              		.loc 2 131 16 discriminator 8 view .LVU68
+ 230 00ae 0846     		mov	r0, r1
+ 231              	.LVL32:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 232              		.loc 2 131 16 discriminator 8 view .LVU69
+ 233 00b0 F5E7     		b	.L7
+ 234              	.LVL33:
+ 235              	.L8:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 236              		.loc 2 131 16 discriminator 9 view .LVU70
+ 237 00b2 9842     		cmp	r0, r3
+ 238 00b4 B8BF     		it	lt
+ 239 00b6 1846     		movlt	r0, r3
+ 240              	.LVL34:
+ 131:../../opus/silk/Inlines.h ****         return silk_LSHIFT_SAT32(result, -lshift);
+ 241              		.loc 2 131 16 discriminator 9 view .LVU71
+ 242 00b8 F1E7     		b	.L7
+ 243              	.LVL35:
+ 244              	.L12:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 10
+
+
+ 135:../../opus/silk/Inlines.h ****         } else {
+ 136:../../opus/silk/Inlines.h ****             /* Avoid undefined result */
+ 137:../../opus/silk/Inlines.h ****             return 0;
+ 245              		.loc 2 137 20 view .LVU72
+ 246 00ba 0020     		movs	r0, #0
+ 247              	.LVL36:
+ 248              	.L1:
+ 138:../../opus/silk/Inlines.h ****         }
+ 139:../../opus/silk/Inlines.h ****     }
+ 140:../../opus/silk/Inlines.h **** }
+ 249              		.loc 2 140 1 view .LVU73
+ 250 00bc 70BD     		pop	{r4, r5, r6, pc}
+ 251              		.loc 2 140 1 view .LVU74
+ 252              		.cfi_endproc
+ 253              	.LFE17:
+ 255              		.section	.text.silk_NLSF_encode,"ax",%progbits
+ 256              		.align	1
+ 257              		.global	silk_NLSF_encode
+ 258              		.syntax unified
+ 259              		.thumb
+ 260              		.thumb_func
+ 262              	silk_NLSF_encode:
+ 263              	.LVL37:
+ 264              	.LFB26:
+   1:../../opus/silk/NLSF_encode.c **** /***********************************************************************
+   2:../../opus/silk/NLSF_encode.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/NLSF_encode.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/NLSF_encode.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/NLSF_encode.c **** are met:
+   6:../../opus/silk/NLSF_encode.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/NLSF_encode.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/NLSF_encode.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/NLSF_encode.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/NLSF_encode.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/NLSF_encode.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/NLSF_encode.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/NLSF_encode.c **** products derived from this software without specific prior written
+  14:../../opus/silk/NLSF_encode.c **** permission.
+  15:../../opus/silk/NLSF_encode.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/NLSF_encode.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/NLSF_encode.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/NLSF_encode.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/NLSF_encode.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/NLSF_encode.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/NLSF_encode.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/NLSF_encode.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/NLSF_encode.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/NLSF_encode.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/NLSF_encode.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/NLSF_encode.c **** ***********************************************************************/
+  27:../../opus/silk/NLSF_encode.c **** 
+  28:../../opus/silk/NLSF_encode.c **** #include "opus_config.h"
+  29:../../opus/silk/NLSF_encode.c **** 
+  30:../../opus/silk/NLSF_encode.c **** #include "main.h"
+  31:../../opus/silk/NLSF_encode.c **** #include "stack_alloc.h"
+  32:../../opus/silk/NLSF_encode.c **** 
+  33:../../opus/silk/NLSF_encode.c **** /***********************/
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 11
+
+
+  34:../../opus/silk/NLSF_encode.c **** /* NLSF vector encoder */
+  35:../../opus/silk/NLSF_encode.c **** /***********************/
+  36:../../opus/silk/NLSF_encode.c **** opus_int32 silk_NLSF_encode(                                    /* O    Returns RD value in Q25    
+  37:../../opus/silk/NLSF_encode.c ****           opus_int8             *NLSFIndices,                   /* I    Codebook path vector [ LPC_
+  38:../../opus/silk/NLSF_encode.c ****           opus_int16            *pNLSF_Q15,                     /* I/O  (Un)quantized NLSF vector [
+  39:../../opus/silk/NLSF_encode.c ****     const silk_NLSF_CB_struct   *psNLSF_CB,                     /* I    Codebook object            
+  40:../../opus/silk/NLSF_encode.c ****     const opus_int16            *pW_Q2,                         /* I    NLSF weight vector [ LPC_OR
+  41:../../opus/silk/NLSF_encode.c ****     const opus_int              NLSF_mu_Q20,                    /* I    Rate weight for the RD opti
+  42:../../opus/silk/NLSF_encode.c ****     const opus_int              nSurvivors,                     /* I    Max survivors after first s
+  43:../../opus/silk/NLSF_encode.c ****     const opus_int              signalType                      /* I    Signal type: 0/1/2         
+  44:../../opus/silk/NLSF_encode.c **** )
+  45:../../opus/silk/NLSF_encode.c **** {
+ 265              		.loc 1 45 1 is_stmt 1 view -0
+ 266              		.cfi_startproc
+ 267              		@ args = 12, pretend = 0, frame = 184
+ 268              		@ frame_needed = 1, uses_anonymous_args = 0
+ 269              		.loc 1 45 1 is_stmt 0 view .LVU76
+ 270 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 271              	.LCFI1:
+ 272              		.cfi_def_cfa_offset 36
+ 273              		.cfi_offset 4, -36
+ 274              		.cfi_offset 5, -32
+ 275              		.cfi_offset 6, -28
+ 276              		.cfi_offset 7, -24
+ 277              		.cfi_offset 8, -20
+ 278              		.cfi_offset 9, -16
+ 279              		.cfi_offset 10, -12
+ 280              		.cfi_offset 11, -8
+ 281              		.cfi_offset 14, -4
+ 282 0004 B5B0     		sub	sp, sp, #212
+ 283              	.LCFI2:
+ 284              		.cfi_def_cfa_offset 248
+ 285 0006 06AF     		add	r7, sp, #24
+ 286              	.LCFI3:
+ 287              		.cfi_def_cfa 7, 224
+ 288 0008 8046     		mov	r8, r0
+ 289 000a 8A46     		mov	r10, r1
+ 290 000c 9346     		mov	fp, r2
+ 291 000e FB61     		str	r3, [r7, #28]
+  46:../../opus/silk/NLSF_encode.c ****     opus_int         i, s, ind1, bestIndex, prob_Q8, bits_q7;
+ 292              		.loc 1 46 5 is_stmt 1 view .LVU77
+  47:../../opus/silk/NLSF_encode.c ****     opus_int32       W_tmp_Q9, ret;
+ 293              		.loc 1 47 5 view .LVU78
+  48:../../opus/silk/NLSF_encode.c ****     VARDECL( opus_int32, err_Q24 );
+ 294              		.loc 1 48 5 view .LVU79
+  49:../../opus/silk/NLSF_encode.c ****     VARDECL( opus_int32, RD_Q25 );
+ 295              		.loc 1 49 5 view .LVU80
+  50:../../opus/silk/NLSF_encode.c ****     VARDECL( opus_int, tempIndices1 );
+ 296              		.loc 1 50 5 view .LVU81
+  51:../../opus/silk/NLSF_encode.c ****     VARDECL( opus_int8, tempIndices2 );
+ 297              		.loc 1 51 5 view .LVU82
+  52:../../opus/silk/NLSF_encode.c ****     opus_int16       res_Q10[      MAX_LPC_ORDER ];
+ 298              		.loc 1 52 5 view .LVU83
+  53:../../opus/silk/NLSF_encode.c ****     opus_int16       NLSF_tmp_Q15[ MAX_LPC_ORDER ];
+ 299              		.loc 1 53 5 view .LVU84
+  54:../../opus/silk/NLSF_encode.c ****     opus_int16       W_adj_Q5[     MAX_LPC_ORDER ];
+ 300              		.loc 1 54 5 view .LVU85
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 12
+
+
+  55:../../opus/silk/NLSF_encode.c ****     opus_uint8       pred_Q8[      MAX_LPC_ORDER ];
+ 301              		.loc 1 55 5 view .LVU86
+  56:../../opus/silk/NLSF_encode.c ****     opus_int16       ec_ix[        MAX_LPC_ORDER ];
+ 302              		.loc 1 56 5 view .LVU87
+  57:../../opus/silk/NLSF_encode.c ****     const opus_uint8 *pCB_element, *iCDF_ptr;
+ 303              		.loc 1 57 5 view .LVU88
+  58:../../opus/silk/NLSF_encode.c ****     const opus_int16 *pCB_Wght_Q9;
+ 304              		.loc 1 58 5 view .LVU89
+  59:../../opus/silk/NLSF_encode.c ****     SAVE_STACK;
+ 305              		.loc 1 59 15 view .LVU90
+  60:../../opus/silk/NLSF_encode.c **** 
+  61:../../opus/silk/NLSF_encode.c ****     celt_assert( signalType >= 0 && signalType <= 2 );
+ 306              		.loc 1 61 54 view .LVU91
+  62:../../opus/silk/NLSF_encode.c ****     silk_assert( NLSF_mu_Q20 <= 32767 && NLSF_mu_Q20 >= 0 );
+ 307              		.loc 1 62 60 view .LVU92
+  63:../../opus/silk/NLSF_encode.c **** 
+  64:../../opus/silk/NLSF_encode.c ****     /* NLSF stabilization */
+  65:../../opus/silk/NLSF_encode.c ****     silk_NLSF_stabilize( pNLSF_Q15, psNLSF_CB->deltaMin_Q15, psNLSF_CB->order );
+ 308              		.loc 1 65 5 view .LVU93
+ 309 0010 B2F90220 		ldrsh	r2, [r2, #2]
+ 310              	.LVL38:
+ 311              		.loc 1 65 5 is_stmt 0 view .LVU94
+ 312 0014 DBF82410 		ldr	r1, [fp, #36]
+ 313              	.LVL39:
+ 314              		.loc 1 65 5 view .LVU95
+ 315 0018 5046     		mov	r0, r10
+ 316              	.LVL40:
+ 317              		.loc 1 65 5 view .LVU96
+ 318 001a FFF7FEFF 		bl	silk_NLSF_stabilize
+ 319              	.LVL41:
+  66:../../opus/silk/NLSF_encode.c **** 
+  67:../../opus/silk/NLSF_encode.c ****     /* First stage: VQ */
+  68:../../opus/silk/NLSF_encode.c ****     ALLOC( err_Q24, psNLSF_CB->nVectors, opus_int32 );
+ 320              		.loc 1 68 5 is_stmt 1 view .LVU97
+ 321 001e BBF90020 		ldrsh	r2, [fp]
+ 322 0022 9300     		lsls	r3, r2, #2
+ 323 0024 0733     		adds	r3, r3, #7
+ 324 0026 23F00703 		bic	r3, r3, #7
+ 325 002a ADEB030D 		sub	sp, sp, r3
+ 326 002e 06AD     		add	r5, sp, #24
+ 327              	.LVL42:
+  69:../../opus/silk/NLSF_encode.c ****     silk_NLSF_VQ( err_Q24, pNLSF_Q15, psNLSF_CB->CB1_NLSF_Q8, psNLSF_CB->CB1_Wght_Q9, psNLSF_CB->nV
+ 328              		.loc 1 69 5 view .LVU98
+ 329              		.loc 1 69 117 is_stmt 0 view .LVU99
+ 330 0030 BBF90230 		ldrsh	r3, [fp, #2]
+ 331              		.loc 1 69 5 view .LVU100
+ 332 0034 0193     		str	r3, [sp, #4]
+ 333 0036 0092     		str	r2, [sp]
+ 334 0038 DBF80C30 		ldr	r3, [fp, #12]
+ 335 003c DBF80820 		ldr	r2, [fp, #8]
+ 336 0040 5146     		mov	r1, r10
+ 337 0042 2846     		mov	r0, r5
+ 338 0044 FFF7FEFF 		bl	silk_NLSF_VQ
+ 339              	.LVL43:
+  70:../../opus/silk/NLSF_encode.c **** 
+  71:../../opus/silk/NLSF_encode.c ****     /* Sort the quantization errors */
+  72:../../opus/silk/NLSF_encode.c ****     ALLOC( tempIndices1, nSurvivors, opus_int );
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 13
+
+
+ 340              		.loc 1 72 5 is_stmt 1 view .LVU101
+ 341 0048 D7F8E430 		ldr	r3, [r7, #228]
+ 342 004c 9C00     		lsls	r4, r3, #2
+ 343 004e 0734     		adds	r4, r4, #7
+ 344 0050 24F00704 		bic	r4, r4, #7
+ 345 0054 ADEB040D 		sub	sp, sp, r4
+ 346 0058 06AB     		add	r3, sp, #24
+ 347 005a 1946     		mov	r1, r3
+ 348 005c BB60     		str	r3, [r7, #8]
+ 349              	.LVL44:
+  73:../../opus/silk/NLSF_encode.c ****     silk_insertion_sort_increasing( err_Q24, tempIndices1, psNLSF_CB->nVectors, nSurvivors );
+ 350              		.loc 1 73 5 view .LVU102
+ 351 005e D7F8E430 		ldr	r3, [r7, #228]
+ 352 0062 BBF90020 		ldrsh	r2, [fp]
+ 353 0066 2846     		mov	r0, r5
+ 354 0068 FFF7FEFF 		bl	silk_insertion_sort_increasing
+ 355              	.LVL45:
+  74:../../opus/silk/NLSF_encode.c **** 
+  75:../../opus/silk/NLSF_encode.c ****     ALLOC( RD_Q25, nSurvivors, opus_int32 );
+ 356              		.loc 1 75 5 view .LVU103
+ 357 006c ADEB040D 		sub	sp, sp, r4
+ 358 0070 06AB     		add	r3, sp, #24
+ 359 0072 3B61     		str	r3, [r7, #16]
+ 360              	.LVL46:
+  76:../../opus/silk/NLSF_encode.c ****     ALLOC( tempIndices2, nSurvivors * MAX_LPC_ORDER, opus_int8 );
+ 361              		.loc 1 76 5 view .LVU104
+ 362 0074 6A46     		mov	r2, sp
+ 363 0076 D7F8E430 		ldr	r3, [r7, #228]
+ 364              	.LVL47:
+ 365              		.loc 1 76 5 is_stmt 0 view .LVU105
+ 366 007a A2EB0313 		sub	r3, r2, r3, lsl #4
+ 367 007e 9D46     		mov	sp, r3
+ 368 0080 06AB     		add	r3, sp, #24
+ 369 0082 7B60     		str	r3, [r7, #4]
+ 370              	.LVL48:
+  77:../../opus/silk/NLSF_encode.c **** 
+  78:../../opus/silk/NLSF_encode.c ****     /* Loop over survivors */
+  79:../../opus/silk/NLSF_encode.c ****     for( s = 0; s < nSurvivors; s++ ) {
+ 371              		.loc 1 79 5 is_stmt 1 view .LVU106
+ 372              		.loc 1 79 12 is_stmt 0 view .LVU107
+ 373 0084 0025     		movs	r5, #0
+ 374              	.LVL49:
+ 375              		.loc 1 79 12 view .LVU108
+ 376 0086 C7F80080 		str	r8, [r7]
+ 377              		.loc 1 79 5 view .LVU109
+ 378 008a 6AE0     		b	.L16
+ 379              	.LVL50:
+ 380              	.L18:
+  80:../../opus/silk/NLSF_encode.c ****         ind1 = tempIndices1[ s ];
+  81:../../opus/silk/NLSF_encode.c **** 
+  82:../../opus/silk/NLSF_encode.c ****         /* Residual after first stage */
+  83:../../opus/silk/NLSF_encode.c ****         pCB_element = &psNLSF_CB->CB1_NLSF_Q8[ ind1 * psNLSF_CB->order ];
+  84:../../opus/silk/NLSF_encode.c ****         pCB_Wght_Q9 = &psNLSF_CB->CB1_Wght_Q9[ ind1 * psNLSF_CB->order ];
+  85:../../opus/silk/NLSF_encode.c ****         for( i = 0; i < psNLSF_CB->order; i++ ) {
+  86:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 381              		.loc 1 86 13 is_stmt 1 view .LVU110
+ 382 008c 3319     		adds	r3, r6, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 14
+
+
+ 383              		.loc 1 86 33 is_stmt 0 view .LVU111
+ 384 008e 19F80320 		ldrb	r2, [r9, r3]	@ zero_extendqisi2
+ 385 0092 D201     		lsls	r2, r2, #7
+ 386              		.loc 1 86 31 view .LVU112
+ 387 0094 07F1B801 		add	r1, r7, #184
+ 388 0098 01EB4405 		add	r5, r1, r4, lsl #1
+ 389 009c 25F8442C 		strh	r2, [r5, #-68]	@ movhi
+  87:../../opus/silk/NLSF_encode.c ****             W_tmp_Q9 = pCB_Wght_Q9[ i ];
+ 390              		.loc 1 87 13 is_stmt 1 view .LVU113
+ 391              		.loc 1 87 35 is_stmt 0 view .LVU114
+ 392 00a0 38F91310 		ldrsh	r1, [r8, r3, lsl #1]
+ 393              	.LVL51:
+  88:../../opus/silk/NLSF_encode.c ****             res_Q10[ i ] = (opus_int16)silk_RSHIFT( silk_SMULBB( pNLSF_Q15[ i ] - NLSF_tmp_Q15[ i ]
+ 394              		.loc 1 88 13 is_stmt 1 view .LVU115
+ 395              		.loc 1 88 40 is_stmt 0 view .LVU116
+ 396 00a4 3AF81430 		ldrh	r3, [r10, r4, lsl #1]
+ 397 00a8 9B1A     		subs	r3, r3, r2
+ 398 00aa 1BB2     		sxth	r3, r3
+ 399 00ac 01FB03F3 		mul	r3, r1, r3
+ 400              		.loc 1 88 28 view .LVU117
+ 401 00b0 43F38F33 		sbfx	r3, r3, #14, #16
+ 402              		.loc 1 88 26 view .LVU118
+ 403 00b4 25F8243C 		strh	r3, [r5, #-36]	@ movhi
+  89:../../opus/silk/NLSF_encode.c ****             W_adj_Q5[ i ] = silk_DIV32_varQ( (opus_int32)pW_Q2[ i ], silk_SMULBB( W_tmp_Q9, W_tmp_Q
+ 404              		.loc 1 89 13 is_stmt 1 view .LVU119
+ 405              		.loc 1 89 29 is_stmt 0 view .LVU120
+ 406 00b8 1522     		movs	r2, #21
+ 407 00ba 01FB01F1 		mul	r1, r1, r1
+ 408              	.LVL52:
+ 409              		.loc 1 89 29 view .LVU121
+ 410 00be FB69     		ldr	r3, [r7, #28]
+ 411 00c0 33F91400 		ldrsh	r0, [r3, r4, lsl #1]
+ 412 00c4 FFF7FEFF 		bl	silk_DIV32_varQ
+ 413              	.LVL53:
+ 414              		.loc 1 89 27 discriminator 1 view .LVU122
+ 415 00c8 25F8640C 		strh	r0, [r5, #-100]	@ movhi
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 416              		.loc 1 85 44 is_stmt 1 discriminator 3 view .LVU123
+ 417 00cc 0134     		adds	r4, r4, #1
+ 418              	.LVL54:
+ 419              	.L17:
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 420              		.loc 1 85 23 discriminator 1 view .LVU124
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 421              		.loc 1 85 34 is_stmt 0 discriminator 1 view .LVU125
+ 422 00ce BBF90230 		ldrsh	r3, [fp, #2]
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 423              		.loc 1 85 23 discriminator 1 view .LVU126
+ 424 00d2 A342     		cmp	r3, r4
+ 425 00d4 DADC     		bgt	.L18
+  90:../../opus/silk/NLSF_encode.c ****         }
+  91:../../opus/silk/NLSF_encode.c **** 
+  92:../../opus/silk/NLSF_encode.c ****         /* Unpack entropy table indices and predictor for current CB1 index */
+  93:../../opus/silk/NLSF_encode.c ****         silk_NLSF_unpack( ec_ix, pred_Q8, psNLSF_CB, ind1 );
+ 426              		.loc 1 93 9 view .LVU127
+ 427 00d6 FD68     		ldr	r5, [r7, #12]
+ 428              		.loc 1 93 9 is_stmt 1 view .LVU128
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 15
+
+
+ 429 00d8 07F12404 		add	r4, r7, #36
+ 430              	.LVL55:
+ 431              		.loc 1 93 9 is_stmt 0 view .LVU129
+ 432 00dc 7E69     		ldr	r6, [r7, #20]
+ 433              	.LVL56:
+ 434              		.loc 1 93 9 view .LVU130
+ 435 00de 3346     		mov	r3, r6
+ 436 00e0 5A46     		mov	r2, fp
+ 437 00e2 07F14401 		add	r1, r7, #68
+ 438 00e6 2046     		mov	r0, r4
+ 439 00e8 FFF7FEFF 		bl	silk_NLSF_unpack
+ 440              	.LVL57:
+  94:../../opus/silk/NLSF_encode.c **** 
+  95:../../opus/silk/NLSF_encode.c ****         /* Trellis quantizer */
+  96:../../opus/silk/NLSF_encode.c ****         RD_Q25[ s ] = silk_NLSF_del_dec_quant( &tempIndices2[ s * MAX_LPC_ORDER ], res_Q10, W_adj_Q
+ 441              		.loc 1 96 9 is_stmt 1 view .LVU131
+  97:../../opus/silk/NLSF_encode.c ****             psNLSF_CB->ec_Rates_Q5, psNLSF_CB->quantStepSize_Q16, psNLSF_CB->invQuantStepSize_Q6, N
+ 442              		.loc 1 97 22 is_stmt 0 view .LVU132
+ 443 00ec DBF82030 		ldr	r3, [fp, #32]
+ 444              		.loc 1 97 46 view .LVU133
+ 445 00f0 BBF90420 		ldrsh	r2, [fp, #4]
+ 446              		.loc 1 97 76 view .LVU134
+ 447 00f4 BBF90610 		ldrsh	r1, [fp, #6]
+ 448              		.loc 1 97 121 view .LVU135
+ 449 00f8 BBF90200 		ldrsh	r0, [fp, #2]
+  96:../../opus/silk/NLSF_encode.c ****             psNLSF_CB->ec_Rates_Q5, psNLSF_CB->quantStepSize_Q16, psNLSF_CB->invQuantStepSize_Q6, N
+ 450              		.loc 1 96 23 view .LVU136
+ 451 00fc 0590     		str	r0, [sp, #20]
+ 452 00fe D7F8E000 		ldr	r0, [r7, #224]
+ 453 0102 0490     		str	r0, [sp, #16]
+ 454 0104 0391     		str	r1, [sp, #12]
+ 455 0106 0292     		str	r2, [sp, #8]
+ 456 0108 0193     		str	r3, [sp, #4]
+ 457 010a 0094     		str	r4, [sp]
+ 458 010c 07F14403 		add	r3, r7, #68
+ 459 0110 07F15402 		add	r2, r7, #84
+ 460 0114 07F19401 		add	r1, r7, #148
+ 461 0118 7868     		ldr	r0, [r7, #4]
+ 462 011a 00EB0510 		add	r0, r0, r5, lsl #4
+ 463 011e FFF7FEFF 		bl	silk_NLSF_del_dec_quant
+ 464              	.LVL58:
+  96:../../opus/silk/NLSF_encode.c ****             psNLSF_CB->ec_Rates_Q5, psNLSF_CB->quantStepSize_Q16, psNLSF_CB->invQuantStepSize_Q6, N
+ 465              		.loc 1 96 21 discriminator 1 view .LVU137
+ 466 0122 3969     		ldr	r1, [r7, #16]
+ 467 0124 BC69     		ldr	r4, [r7, #24]
+ 468 0126 0851     		str	r0, [r1, r4]
+  98:../../opus/silk/NLSF_encode.c **** 
+  99:../../opus/silk/NLSF_encode.c ****         /* Add rate for first stage */
+ 100:../../opus/silk/NLSF_encode.c ****         iCDF_ptr = &psNLSF_CB->CB1_iCDF[ ( signalType >> 1 ) * psNLSF_CB->nVectors ];
+ 469              		.loc 1 100 9 is_stmt 1 view .LVU138
+ 470              		.loc 1 100 30 is_stmt 0 view .LVU139
+ 471 0128 DBF81030 		ldr	r3, [fp, #16]
+ 472              		.loc 1 100 55 view .LVU140
+ 473 012c D7F8E810 		ldr	r1, [r7, #232]
+ 474 0130 4A10     		asrs	r2, r1, #1
+ 475              		.loc 1 100 73 view .LVU141
+ 476 0132 BBF90010 		ldrsh	r1, [fp]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 16
+
+
+ 477              		.loc 1 100 18 view .LVU142
+ 478 0136 01FB0233 		mla	r3, r1, r2, r3
+ 479              	.LVL59:
+ 101:../../opus/silk/NLSF_encode.c ****         if( ind1 == 0 ) {
+ 480              		.loc 1 101 9 is_stmt 1 view .LVU143
+ 481              		.loc 1 101 11 is_stmt 0 view .LVU144
+ 482 013a 3EBB     		cbnz	r6, .L19
+ 102:../../opus/silk/NLSF_encode.c ****             prob_Q8 = 256 - iCDF_ptr[ ind1 ];
+ 483              		.loc 1 102 13 is_stmt 1 view .LVU145
+ 484              		.loc 1 102 37 is_stmt 0 view .LVU146
+ 485 013c 985D     		ldrb	r0, [r3, r6]	@ zero_extendqisi2
+ 486              		.loc 1 102 21 view .LVU147
+ 487 013e C0F58070 		rsb	r0, r0, #256
+ 488              	.LVL60:
+ 489              	.L20:
+ 103:../../opus/silk/NLSF_encode.c ****         } else {
+ 104:../../opus/silk/NLSF_encode.c ****             prob_Q8 = iCDF_ptr[ ind1 - 1 ] - iCDF_ptr[ ind1 ];
+ 105:../../opus/silk/NLSF_encode.c ****         }
+ 106:../../opus/silk/NLSF_encode.c ****         bits_q7 = ( 8 << 7 ) - silk_lin2log( prob_Q8 );
+ 490              		.loc 1 106 9 is_stmt 1 view .LVU148
+ 491              		.loc 1 106 32 is_stmt 0 view .LVU149
+ 492 0142 FFF7FEFF 		bl	silk_lin2log
+ 493              	.LVL61:
+ 494              		.loc 1 106 17 discriminator 1 view .LVU150
+ 495 0146 C0F58060 		rsb	r0, r0, #1024
+ 496              	.LVL62:
+ 107:../../opus/silk/NLSF_encode.c ****         RD_Q25[ s ] = silk_SMLABB( RD_Q25[ s ], bits_q7, silk_RSHIFT( NLSF_mu_Q20, 2 ) );
+ 497              		.loc 1 107 9 is_stmt 1 view .LVU151
+ 498              		.loc 1 107 23 is_stmt 0 view .LVU152
+ 499 014a 3969     		ldr	r1, [r7, #16]
+ 500 014c BC69     		ldr	r4, [r7, #24]
+ 501 014e 0B59     		ldr	r3, [r1, r4]
+ 502 0150 00B2     		sxth	r0, r0
+ 503              	.LVL63:
+ 504              		.loc 1 107 23 view .LVU153
+ 505 0152 D7F8E020 		ldr	r2, [r7, #224]
+ 506 0156 42F38F02 		sbfx	r2, r2, #2, #16
+ 507 015a 02FB0033 		mla	r3, r2, r0, r3
+ 508              		.loc 1 107 21 view .LVU154
+ 509 015e 0B51     		str	r3, [r1, r4]
+  79:../../opus/silk/NLSF_encode.c ****         ind1 = tempIndices1[ s ];
+ 510              		.loc 1 79 34 is_stmt 1 discriminator 2 view .LVU155
+ 511 0160 0135     		adds	r5, r5, #1
+ 512              	.LVL64:
+ 513              	.L16:
+  79:../../opus/silk/NLSF_encode.c ****         ind1 = tempIndices1[ s ];
+ 514              		.loc 1 79 19 discriminator 1 view .LVU156
+ 515 0162 D7F8E430 		ldr	r3, [r7, #228]
+ 516 0166 9D42     		cmp	r5, r3
+ 517 0168 17DA     		bge	.L23
+  80:../../opus/silk/NLSF_encode.c **** 
+ 518              		.loc 1 80 9 view .LVU157
+  80:../../opus/silk/NLSF_encode.c **** 
+ 519              		.loc 1 80 28 is_stmt 0 view .LVU158
+ 520 016a AB00     		lsls	r3, r5, #2
+ 521 016c BB61     		str	r3, [r7, #24]
+  80:../../opus/silk/NLSF_encode.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 17
+
+
+ 522              		.loc 1 80 14 view .LVU159
+ 523 016e BB68     		ldr	r3, [r7, #8]
+ 524 0170 53F82530 		ldr	r3, [r3, r5, lsl #2]
+ 525 0174 7B61     		str	r3, [r7, #20]
+ 526              	.LVL65:
+  83:../../opus/silk/NLSF_encode.c ****         pCB_Wght_Q9 = &psNLSF_CB->CB1_Wght_Q9[ ind1 * psNLSF_CB->order ];
+ 527              		.loc 1 83 9 is_stmt 1 view .LVU160
+  83:../../opus/silk/NLSF_encode.c ****         pCB_Wght_Q9 = &psNLSF_CB->CB1_Wght_Q9[ ind1 * psNLSF_CB->order ];
+ 528              		.loc 1 83 33 is_stmt 0 view .LVU161
+ 529 0176 DBF80890 		ldr	r9, [fp, #8]
+  83:../../opus/silk/NLSF_encode.c ****         pCB_Wght_Q9 = &psNLSF_CB->CB1_Wght_Q9[ ind1 * psNLSF_CB->order ];
+ 530              		.loc 1 83 64 view .LVU162
+ 531 017a BBF90260 		ldrsh	r6, [fp, #2]
+  83:../../opus/silk/NLSF_encode.c ****         pCB_Wght_Q9 = &psNLSF_CB->CB1_Wght_Q9[ ind1 * psNLSF_CB->order ];
+ 532              		.loc 1 83 53 view .LVU163
+ 533 017e 03FB06F6 		mul	r6, r3, r6
+ 534              	.LVL66:
+  84:../../opus/silk/NLSF_encode.c ****         for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 535              		.loc 1 84 9 is_stmt 1 view .LVU164
+  84:../../opus/silk/NLSF_encode.c ****         for( i = 0; i < psNLSF_CB->order; i++ ) {
+ 536              		.loc 1 84 33 is_stmt 0 view .LVU165
+ 537 0182 DBF80C80 		ldr	r8, [fp, #12]
+ 538              	.LVL67:
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 539              		.loc 1 85 9 is_stmt 1 view .LVU166
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 540              		.loc 1 85 16 is_stmt 0 view .LVU167
+ 541 0186 0024     		movs	r4, #0
+ 542 0188 FD60     		str	r5, [r7, #12]
+  85:../../opus/silk/NLSF_encode.c ****             NLSF_tmp_Q15[ i ] = silk_LSHIFT16( (opus_int16)pCB_element[ i ], 7 );
+ 543              		.loc 1 85 9 view .LVU168
+ 544 018a A0E7     		b	.L17
+ 545              	.LVL68:
+ 546              	.L19:
+ 104:../../opus/silk/NLSF_encode.c ****         }
+ 547              		.loc 1 104 13 is_stmt 1 view .LVU169
+ 104:../../opus/silk/NLSF_encode.c ****         }
+ 548              		.loc 1 104 31 is_stmt 0 view .LVU170
+ 549 018c 7969     		ldr	r1, [r7, #20]
+ 550 018e 5A18     		adds	r2, r3, r1
+ 551 0190 12F8010C 		ldrb	r0, [r2, #-1]	@ zero_extendqisi2
+ 104:../../opus/silk/NLSF_encode.c ****         }
+ 552              		.loc 1 104 54 view .LVU171
+ 553 0194 5B5C     		ldrb	r3, [r3, r1]	@ zero_extendqisi2
+ 554              	.LVL69:
+ 104:../../opus/silk/NLSF_encode.c ****         }
+ 555              		.loc 1 104 21 view .LVU172
+ 556 0196 C01A     		subs	r0, r0, r3
+ 557              	.LVL70:
+ 104:../../opus/silk/NLSF_encode.c ****         }
+ 558              		.loc 1 104 21 view .LVU173
+ 559 0198 D3E7     		b	.L20
+ 560              	.LVL71:
+ 561              	.L23:
+ 108:../../opus/silk/NLSF_encode.c ****     }
+ 109:../../opus/silk/NLSF_encode.c **** 
+ 110:../../opus/silk/NLSF_encode.c ****     /* Find the lowest rate-distortion error */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 18
+
+
+ 111:../../opus/silk/NLSF_encode.c ****     silk_insertion_sort_increasing( RD_Q25, &bestIndex, nSurvivors, 1 );
+ 562              		.loc 1 111 5 view .LVU174
+ 563 019a D7F80080 		ldr	r8, [r7]
+ 564              		.loc 1 111 5 is_stmt 1 view .LVU175
+ 565 019e 0123     		movs	r3, #1
+ 566 01a0 D7F8E420 		ldr	r2, [r7, #228]
+ 567 01a4 07F1B401 		add	r1, r7, #180
+ 568 01a8 3C69     		ldr	r4, [r7, #16]
+ 569 01aa 2046     		mov	r0, r4
+ 570 01ac FFF7FEFF 		bl	silk_insertion_sort_increasing
+ 571              	.LVL72:
+ 112:../../opus/silk/NLSF_encode.c **** 
+ 113:../../opus/silk/NLSF_encode.c ****     NLSFIndices[ 0 ] = (opus_int8)tempIndices1[ bestIndex ];
+ 572              		.loc 1 113 5 view .LVU176
+ 573              		.loc 1 113 47 is_stmt 0 view .LVU177
+ 574 01b0 D7F8B410 		ldr	r1, [r7, #180]
+ 575              		.loc 1 113 24 view .LVU178
+ 576 01b4 BB68     		ldr	r3, [r7, #8]
+ 577 01b6 13F92130 		ldrsb	r3, [r3, r1, lsl #2]
+ 578              		.loc 1 113 22 view .LVU179
+ 579 01ba 4046     		mov	r0, r8
+ 580 01bc 00F8013B 		strb	r3, [r0], #1
+ 114:../../opus/silk/NLSF_encode.c ****     silk_memcpy( &NLSFIndices[ 1 ], &tempIndices2[ bestIndex * MAX_LPC_ORDER ], psNLSF_CB->order * 
+ 581              		.loc 1 114 5 is_stmt 1 view .LVU180
+ 582 01c0 BBF90220 		ldrsh	r2, [fp, #2]
+ 583 01c4 7B68     		ldr	r3, [r7, #4]
+ 584 01c6 03EB0111 		add	r1, r3, r1, lsl #4
+ 585 01ca FFF7FEFF 		bl	memcpy
+ 586              	.LVL73:
+ 115:../../opus/silk/NLSF_encode.c **** 
+ 116:../../opus/silk/NLSF_encode.c ****     /* Decode */
+ 117:../../opus/silk/NLSF_encode.c ****     silk_NLSF_decode( pNLSF_Q15, NLSFIndices, psNLSF_CB );
+ 587              		.loc 1 117 5 view .LVU181
+ 588 01ce 5A46     		mov	r2, fp
+ 589 01d0 4146     		mov	r1, r8
+ 590 01d2 5046     		mov	r0, r10
+ 591 01d4 FFF7FEFF 		bl	silk_NLSF_decode
+ 592              	.LVL74:
+ 118:../../opus/silk/NLSF_encode.c **** 
+ 119:../../opus/silk/NLSF_encode.c ****     ret = RD_Q25[ 0 ];
+ 593              		.loc 1 119 5 view .LVU182
+ 120:../../opus/silk/NLSF_encode.c ****     RESTORE_STACK;
+ 594              		.loc 1 120 18 view .LVU183
+ 121:../../opus/silk/NLSF_encode.c ****     return ret;
+ 595              		.loc 1 121 5 view .LVU184
+ 122:../../opus/silk/NLSF_encode.c **** }
+ 596              		.loc 1 122 1 is_stmt 0 view .LVU185
+ 597 01d8 2068     		ldr	r0, [r4]
+ 598 01da BC37     		adds	r7, r7, #188
+ 599              	.LCFI4:
+ 600              		.cfi_def_cfa_offset 36
+ 601 01dc BD46     		mov	sp, r7
+ 602              	.LCFI5:
+ 603              		.cfi_def_cfa_register 13
+ 604              	.LVL75:
+ 605              		.loc 1 122 1 view .LVU186
+ 606              		@ sp needed
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 19
+
+
+ 607 01de BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 608              		.loc 1 122 1 view .LVU187
+ 609              		.cfi_endproc
+ 610              	.LFE26:
+ 612              		.text
+ 613              	.Letext0:
+ 614              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 615              		.file 5 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 616              		.file 6 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 617              		.file 7 "../../opus/include/opus_types.h"
+ 618              		.file 8 "../../opus/silk/structs.h"
+ 619              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 620              		.file 10 "../../opus/silk/SigProc_FIX.h"
+ 621              		.file 11 "../../opus/silk/main.h"
+ 622              		.file 12 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NLSF_encode.c
+C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s:20     .text.silk_DIV32_varQ:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s:25     .text.silk_DIV32_varQ:00000000 silk_DIV32_varQ
+C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s:256    .text.silk_NLSF_encode:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccO5SwKc.s:262    .text.silk_NLSF_encode:00000000 silk_NLSF_encode
+
+UNDEFINED SYMBOLS
+silk_NLSF_stabilize
+silk_NLSF_VQ
+silk_insertion_sort_increasing
+silk_NLSF_unpack
+silk_NLSF_del_dec_quant
+silk_lin2log
+memcpy
+silk_NLSF_decode

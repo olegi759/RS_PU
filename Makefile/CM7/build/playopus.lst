@@ -1,0 +1,736 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"playopus.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/playopus.c"
+  19              		.section	.text.playopus_read_file,"ax",%progbits
+  20              		.align	1
+  21              		.global	playopus_read_file
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	playopus_read_file:
+  27              	.LVL0:
+  28              	.LFB348:
+   1:../../CM7/Core/Src/playopus.c **** /*
+   2:../../CM7/Core/Src/playopus.c ****  * playopus.c
+   3:../../CM7/Core/Src/playopus.c ****  *
+   4:../../CM7/Core/Src/playopus.c ****  *  Created on: 30 сент. 2024 г.
+   5:../../CM7/Core/Src/playopus.c ****  *      Author: Rafael Boltachev
+   6:../../CM7/Core/Src/playopus.c ****  */
+   7:../../CM7/Core/Src/playopus.c **** 
+   8:../../CM7/Core/Src/playopus.c **** 
+   9:../../CM7/Core/Src/playopus.c **** 
+  10:../../CM7/Core/Src/playopus.c **** #include "playopus.h"
+  11:../../CM7/Core/Src/playopus.c **** #include <string.h>
+  12:../../CM7/Core/Src/playopus.c **** #include "ogg_util.h"
+  13:../../CM7/Core/Src/playopus.c **** #include "fatfs_util.h"
+  14:../../CM7/Core/Src/playopus.c **** #include "stm_util.h"
+  15:../../CM7/Core/Src/playopus.c **** #include "opus_util.h"
+  16:../../CM7/Core/Src/playopus.c **** #include "dynbuf_util.h"
+  17:../../CM7/Core/Src/playopus.c **** #include "uarts.h"
+  18:../../CM7/Core/Src/playopus.c **** #include "str_util.h"
+  19:../../CM7/Core/Src/playopus.c **** #include "pcm1753.h"
+  20:../../CM7/Core/Src/playopus.c **** #include "mux_sound.h"
+  21:../../CM7/Core/Src/playopus.c **** #include "playopus.h"
+  22:../../CM7/Core/Src/playopus.c **** #include "oggopus_util.h"
+  23:../../CM7/Core/Src/playopus.c **** #include "pu.h"
+  24:../../CM7/Core/Src/playopus.c **** #include "cm7core.h"
+  25:../../CM7/Core/Src/playopus.c **** 
+  26:../../CM7/Core/Src/playopus.c **** 
+  27:../../CM7/Core/Src/playopus.c **** 
+  28:../../CM7/Core/Src/playopus.c **** //#define PLAYOPUS_FILE 			f_global_file
+  29:../../CM7/Core/Src/playopus.c **** //static FIL playopus_file = {0};
+  30:../../CM7/Core/Src/playopus.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 2
+
+
+  31:../../CM7/Core/Src/playopus.c **** #define PLAYOPUS_OGG_DECODER 	global_ogg_decoder
+  32:../../CM7/Core/Src/playopus.c **** //static ogg_decoder_t ogg_decoder = {0};
+  33:../../CM7/Core/Src/playopus.c **** 
+  34:../../CM7/Core/Src/playopus.c **** 
+  35:../../CM7/Core/Src/playopus.c **** static BOOL playopus_execute = FALSE;
+  36:../../CM7/Core/Src/playopus.c **** uint8_t playopus_channels = 0;
+  37:../../CM7/Core/Src/playopus.c **** uint32_t playopus_sample_rate = 0;
+  38:../../CM7/Core/Src/playopus.c **** 
+  39:../../CM7/Core/Src/playopus.c **** 
+  40:../../CM7/Core/Src/playopus.c **** BOOL playopus_is_execute(void)
+  41:../../CM7/Core/Src/playopus.c **** {
+  42:../../CM7/Core/Src/playopus.c **** 	return playopus_execute;
+  43:../../CM7/Core/Src/playopus.c **** }
+  44:../../CM7/Core/Src/playopus.c **** 
+  45:../../CM7/Core/Src/playopus.c **** void playopus_stop(void)
+  46:../../CM7/Core/Src/playopus.c **** {
+  47:../../CM7/Core/Src/playopus.c **** 
+  48:../../CM7/Core/Src/playopus.c **** 	if (playopus_execute) {
+  49:../../CM7/Core/Src/playopus.c **** 		playopus_execute = FALSE;
+  50:../../CM7/Core/Src/playopus.c **** 		cm7core_close_file();
+  51:../../CM7/Core/Src/playopus.c **** 		decoder_opus_destroy();
+  52:../../CM7/Core/Src/playopus.c **** 		pcm1753_DataFinish();
+  53:../../CM7/Core/Src/playopus.c **** 		playopus_sample_rate = 0;
+  54:../../CM7/Core/Src/playopus.c **** 		playopus_channels = 0;
+  55:../../CM7/Core/Src/playopus.c **** 		ulog_fmt(CONM"playopus: stop tick:%lu"CRLF, HAL_GetTick());
+  56:../../CM7/Core/Src/playopus.c **** 	}
+  57:../../CM7/Core/Src/playopus.c **** 
+  58:../../CM7/Core/Src/playopus.c **** }
+  59:../../CM7/Core/Src/playopus.c **** 
+  60:../../CM7/Core/Src/playopus.c **** 
+  61:../../CM7/Core/Src/playopus.c **** 
+  62:../../CM7/Core/Src/playopus.c **** void playopus_task_data(void)
+  63:../../CM7/Core/Src/playopus.c **** {
+  64:../../CM7/Core/Src/playopus.c **** 	uint8_t segment[OPUS_MAX_ENCODE_SIZE];
+  65:../../CM7/Core/Src/playopus.c **** 	int rc;
+  66:../../CM7/Core/Src/playopus.c **** 
+  67:../../CM7/Core/Src/playopus.c **** 
+  68:../../CM7/Core/Src/playopus.c **** 
+  69:../../CM7/Core/Src/playopus.c **** 	rc = oggopus_read_segment(&PLAYOPUS_OGG_DECODER, segment);
+  70:../../CM7/Core/Src/playopus.c ****     if (!rc) {
+  71:../../CM7/Core/Src/playopus.c **** 		playopus_stop();
+  72:../../CM7/Core/Src/playopus.c **** 		return;
+  73:../../CM7/Core/Src/playopus.c ****     }
+  74:../../CM7/Core/Src/playopus.c **** 
+  75:../../CM7/Core/Src/playopus.c ****     pu_put_opus_in_pcm1753_now(segment, rc);
+  76:../../CM7/Core/Src/playopus.c **** }
+  77:../../CM7/Core/Src/playopus.c **** 
+  78:../../CM7/Core/Src/playopus.c **** 
+  79:../../CM7/Core/Src/playopus.c **** void playopus_task(void)
+  80:../../CM7/Core/Src/playopus.c **** {
+  81:../../CM7/Core/Src/playopus.c **** 	if (playopus_execute) {
+  82:../../CM7/Core/Src/playopus.c **** 		if (pcm1753_AudioBufferGetFree() > pcm1753_AudioBufferGetFull()) {
+  83:../../CM7/Core/Src/playopus.c **** 			playopus_task_data();
+  84:../../CM7/Core/Src/playopus.c **** 		}
+  85:../../CM7/Core/Src/playopus.c **** 	}
+  86:../../CM7/Core/Src/playopus.c **** 
+  87:../../CM7/Core/Src/playopus.c **** }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 3
+
+
+  88:../../CM7/Core/Src/playopus.c **** 
+  89:../../CM7/Core/Src/playopus.c **** 
+  90:../../CM7/Core/Src/playopus.c **** unsigned int playopus_read_file(void * afile, void * data, unsigned int data_len)
+  91:../../CM7/Core/Src/playopus.c **** {
+  29              		.loc 1 91 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 91 1 is_stmt 0 view .LVU1
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0846     		mov	r0, r1
+  40              	.LVL1:
+  92:../../CM7/Core/Src/playopus.c **** 	return cm7core_read_file(data, data_len);
+  41              		.loc 1 92 2 is_stmt 1 view .LVU2
+  42              		.loc 1 92 9 is_stmt 0 view .LVU3
+  43 0004 91B2     		uxth	r1, r2
+  44              	.LVL2:
+  45              		.loc 1 92 9 view .LVU4
+  46 0006 FFF7FEFF 		bl	cm7core_read_file
+  47              	.LVL3:
+  93:../../CM7/Core/Src/playopus.c **** }
+  48              		.loc 1 93 1 view .LVU5
+  49 000a 08BD     		pop	{r3, pc}
+  50              		.cfi_endproc
+  51              	.LFE348:
+  53              		.section	.text.playopus_is_execute,"ax",%progbits
+  54              		.align	1
+  55              		.global	playopus_is_execute
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	playopus_is_execute:
+  61              	.LFB344:
+  41:../../CM7/Core/Src/playopus.c **** 	return playopus_execute;
+  62              		.loc 1 41 1 is_stmt 1 view -0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66              		@ link register save eliminated.
+  42:../../CM7/Core/Src/playopus.c **** }
+  67              		.loc 1 42 2 view .LVU7
+  43:../../CM7/Core/Src/playopus.c **** 
+  68              		.loc 1 43 1 is_stmt 0 view .LVU8
+  69 0000 014B     		ldr	r3, .L4
+  70 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  71 0004 7047     		bx	lr
+  72              	.L5:
+  73 0006 00BF     		.align	2
+  74              	.L4:
+  75 0008 00000000 		.word	playopus_execute
+  76              		.cfi_endproc
+  77              	.LFE344:
+  79              		.section	.rodata.playopus_stop.str1.4,"aMS",%progbits,1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 4
+
+
+  80              		.align	2
+  81              	.LC0:
+  82 0000 434D372E 		.ascii	"CM7.playopus: stop tick:%lu\015\012\000"
+  82      706C6179 
+  82      6F707573 
+  82      3A207374 
+  82      6F702074 
+  83              		.section	.text.playopus_stop,"ax",%progbits
+  84              		.align	1
+  85              		.global	playopus_stop
+  86              		.syntax unified
+  87              		.thumb
+  88              		.thumb_func
+  90              	playopus_stop:
+  91              	.LFB345:
+  46:../../CM7/Core/Src/playopus.c **** 
+  92              		.loc 1 46 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  48:../../CM7/Core/Src/playopus.c **** 		playopus_execute = FALSE;
+  96              		.loc 1 48 2 view .LVU10
+  48:../../CM7/Core/Src/playopus.c **** 		playopus_execute = FALSE;
+  97              		.loc 1 48 6 is_stmt 0 view .LVU11
+  98 0000 0C4B     		ldr	r3, .L13
+  99 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  48:../../CM7/Core/Src/playopus.c **** 		playopus_execute = FALSE;
+ 100              		.loc 1 48 5 view .LVU12
+ 101 0004 03B9     		cbnz	r3, .L12
+ 102 0006 7047     		bx	lr
+ 103              	.L12:
+  46:../../CM7/Core/Src/playopus.c **** 
+ 104              		.loc 1 46 1 view .LVU13
+ 105 0008 10B5     		push	{r4, lr}
+ 106              	.LCFI1:
+ 107              		.cfi_def_cfa_offset 8
+ 108              		.cfi_offset 4, -8
+ 109              		.cfi_offset 14, -4
+  49:../../CM7/Core/Src/playopus.c **** 		cm7core_close_file();
+ 110              		.loc 1 49 3 is_stmt 1 view .LVU14
+  49:../../CM7/Core/Src/playopus.c **** 		cm7core_close_file();
+ 111              		.loc 1 49 20 is_stmt 0 view .LVU15
+ 112 000a 0024     		movs	r4, #0
+ 113 000c 094B     		ldr	r3, .L13
+ 114 000e 1C70     		strb	r4, [r3]
+  50:../../CM7/Core/Src/playopus.c **** 		decoder_opus_destroy();
+ 115              		.loc 1 50 3 is_stmt 1 view .LVU16
+ 116 0010 FFF7FEFF 		bl	cm7core_close_file
+ 117              	.LVL4:
+  51:../../CM7/Core/Src/playopus.c **** 		pcm1753_DataFinish();
+ 118              		.loc 1 51 3 view .LVU17
+ 119 0014 FFF7FEFF 		bl	decoder_opus_destroy
+ 120              	.LVL5:
+  52:../../CM7/Core/Src/playopus.c **** 		playopus_sample_rate = 0;
+ 121              		.loc 1 52 3 view .LVU18
+ 122 0018 FFF7FEFF 		bl	pcm1753_DataFinish
+ 123              	.LVL6:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 5
+
+
+  53:../../CM7/Core/Src/playopus.c **** 		playopus_channels = 0;
+ 124              		.loc 1 53 3 view .LVU19
+  53:../../CM7/Core/Src/playopus.c **** 		playopus_channels = 0;
+ 125              		.loc 1 53 24 is_stmt 0 view .LVU20
+ 126 001c 064B     		ldr	r3, .L13+4
+ 127 001e 1C60     		str	r4, [r3]
+  54:../../CM7/Core/Src/playopus.c **** 		ulog_fmt(CONM"playopus: stop tick:%lu"CRLF, HAL_GetTick());
+ 128              		.loc 1 54 3 is_stmt 1 view .LVU21
+  54:../../CM7/Core/Src/playopus.c **** 		ulog_fmt(CONM"playopus: stop tick:%lu"CRLF, HAL_GetTick());
+ 129              		.loc 1 54 21 is_stmt 0 view .LVU22
+ 130 0020 064B     		ldr	r3, .L13+8
+ 131 0022 1C70     		strb	r4, [r3]
+  55:../../CM7/Core/Src/playopus.c **** 	}
+ 132              		.loc 1 55 3 is_stmt 1 view .LVU23
+ 133 0024 FFF7FEFF 		bl	HAL_GetTick
+ 134              	.LVL7:
+ 135 0028 0146     		mov	r1, r0
+  55:../../CM7/Core/Src/playopus.c **** 	}
+ 136              		.loc 1 55 3 is_stmt 0 discriminator 1 view .LVU24
+ 137 002a 0548     		ldr	r0, .L13+12
+ 138 002c FFF7FEFF 		bl	ulog_fmt
+ 139              	.LVL8:
+  58:../../CM7/Core/Src/playopus.c **** 
+ 140              		.loc 1 58 1 view .LVU25
+ 141 0030 10BD     		pop	{r4, pc}
+ 142              	.L14:
+ 143 0032 00BF     		.align	2
+ 144              	.L13:
+ 145 0034 00000000 		.word	playopus_execute
+ 146 0038 00000000 		.word	playopus_sample_rate
+ 147 003c 00000000 		.word	playopus_channels
+ 148 0040 00000000 		.word	.LC0
+ 149              		.cfi_endproc
+ 150              	.LFE345:
+ 152              		.section	.text.playopus_task_data,"ax",%progbits
+ 153              		.align	1
+ 154              		.global	playopus_task_data
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 159              	playopus_task_data:
+ 160              	.LFB346:
+  63:../../CM7/Core/Src/playopus.c **** 	uint8_t segment[OPUS_MAX_ENCODE_SIZE];
+ 161              		.loc 1 63 1 is_stmt 1 view -0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 1280
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165 0000 00B5     		push	{lr}
+ 166              	.LCFI2:
+ 167              		.cfi_def_cfa_offset 4
+ 168              		.cfi_offset 14, -4
+ 169 0002 ADF2045D 		subw	sp, sp, #1284
+ 170              	.LCFI3:
+ 171              		.cfi_def_cfa_offset 1288
+  64:../../CM7/Core/Src/playopus.c **** 	int rc;
+ 172              		.loc 1 64 2 view .LVU27
+  65:../../CM7/Core/Src/playopus.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 6
+
+
+ 173              		.loc 1 65 2 view .LVU28
+  69:../../CM7/Core/Src/playopus.c ****     if (!rc) {
+ 174              		.loc 1 69 2 view .LVU29
+  69:../../CM7/Core/Src/playopus.c ****     if (!rc) {
+ 175              		.loc 1 69 7 is_stmt 0 view .LVU30
+ 176 0006 01A9     		add	r1, sp, #4
+ 177 0008 0748     		ldr	r0, .L20
+ 178 000a FFF7FEFF 		bl	oggopus_read_segment
+ 179              	.LVL9:
+  70:../../CM7/Core/Src/playopus.c **** 		playopus_stop();
+ 180              		.loc 1 70 5 is_stmt 1 view .LVU31
+  70:../../CM7/Core/Src/playopus.c **** 		playopus_stop();
+ 181              		.loc 1 70 8 is_stmt 0 view .LVU32
+ 182 000e 38B1     		cbz	r0, .L19
+ 183 0010 0146     		mov	r1, r0
+  75:../../CM7/Core/Src/playopus.c **** }
+ 184              		.loc 1 75 5 is_stmt 1 view .LVU33
+ 185 0012 01A8     		add	r0, sp, #4
+ 186              	.LVL10:
+  75:../../CM7/Core/Src/playopus.c **** }
+ 187              		.loc 1 75 5 is_stmt 0 view .LVU34
+ 188 0014 FFF7FEFF 		bl	pu_put_opus_in_pcm1753_now
+ 189              	.LVL11:
+ 190              	.L15:
+  76:../../CM7/Core/Src/playopus.c **** 
+ 191              		.loc 1 76 1 view .LVU35
+ 192 0018 0DF2045D 		addw	sp, sp, #1284
+ 193              	.LCFI4:
+ 194              		.cfi_remember_state
+ 195              		.cfi_def_cfa_offset 4
+ 196              		@ sp needed
+ 197 001c 5DF804FB 		ldr	pc, [sp], #4
+ 198              	.LVL12:
+ 199              	.L19:
+ 200              	.LCFI5:
+ 201              		.cfi_restore_state
+  71:../../CM7/Core/Src/playopus.c **** 		return;
+ 202              		.loc 1 71 3 is_stmt 1 view .LVU36
+ 203 0020 FFF7FEFF 		bl	playopus_stop
+ 204              	.LVL13:
+  72:../../CM7/Core/Src/playopus.c ****     }
+ 205              		.loc 1 72 3 view .LVU37
+ 206 0024 F8E7     		b	.L15
+ 207              	.L21:
+ 208 0026 00BF     		.align	2
+ 209              	.L20:
+ 210 0028 00000000 		.word	global_ogg_decoder
+ 211              		.cfi_endproc
+ 212              	.LFE346:
+ 214              		.section	.text.playopus_task,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	playopus_task
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	playopus_task:
+ 222              	.LFB347:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 7
+
+
+  80:../../CM7/Core/Src/playopus.c **** 	if (playopus_execute) {
+ 223              		.loc 1 80 1 view -0
+ 224              		.cfi_startproc
+ 225              		@ args = 0, pretend = 0, frame = 0
+ 226              		@ frame_needed = 0, uses_anonymous_args = 0
+  81:../../CM7/Core/Src/playopus.c **** 		if (pcm1753_AudioBufferGetFree() > pcm1753_AudioBufferGetFull()) {
+ 227              		.loc 1 81 2 view .LVU39
+  81:../../CM7/Core/Src/playopus.c **** 		if (pcm1753_AudioBufferGetFree() > pcm1753_AudioBufferGetFull()) {
+ 228              		.loc 1 81 6 is_stmt 0 view .LVU40
+ 229 0000 074B     		ldr	r3, .L30
+ 230 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  81:../../CM7/Core/Src/playopus.c **** 		if (pcm1753_AudioBufferGetFree() > pcm1753_AudioBufferGetFull()) {
+ 231              		.loc 1 81 5 view .LVU41
+ 232 0004 03B9     		cbnz	r3, .L28
+ 233 0006 7047     		bx	lr
+ 234              	.L28:
+  80:../../CM7/Core/Src/playopus.c **** 	if (playopus_execute) {
+ 235              		.loc 1 80 1 view .LVU42
+ 236 0008 10B5     		push	{r4, lr}
+ 237              	.LCFI6:
+ 238              		.cfi_def_cfa_offset 8
+ 239              		.cfi_offset 4, -8
+ 240              		.cfi_offset 14, -4
+  82:../../CM7/Core/Src/playopus.c **** 			playopus_task_data();
+ 241              		.loc 1 82 3 is_stmt 1 view .LVU43
+  82:../../CM7/Core/Src/playopus.c **** 			playopus_task_data();
+ 242              		.loc 1 82 7 is_stmt 0 view .LVU44
+ 243 000a FFF7FEFF 		bl	pcm1753_AudioBufferGetFree
+ 244              	.LVL14:
+ 245 000e 0446     		mov	r4, r0
+  82:../../CM7/Core/Src/playopus.c **** 			playopus_task_data();
+ 246              		.loc 1 82 38 discriminator 1 view .LVU45
+ 247 0010 FFF7FEFF 		bl	pcm1753_AudioBufferGetFull
+ 248              	.LVL15:
+  82:../../CM7/Core/Src/playopus.c **** 			playopus_task_data();
+ 249              		.loc 1 82 6 discriminator 2 view .LVU46
+ 250 0014 8442     		cmp	r4, r0
+ 251 0016 00D8     		bhi	.L29
+ 252              	.L22:
+  87:../../CM7/Core/Src/playopus.c **** 
+ 253              		.loc 1 87 1 view .LVU47
+ 254 0018 10BD     		pop	{r4, pc}
+ 255              	.L29:
+  83:../../CM7/Core/Src/playopus.c **** 		}
+ 256              		.loc 1 83 4 is_stmt 1 view .LVU48
+ 257 001a FFF7FEFF 		bl	playopus_task_data
+ 258              	.LVL16:
+  87:../../CM7/Core/Src/playopus.c **** 
+ 259              		.loc 1 87 1 is_stmt 0 view .LVU49
+ 260 001e FBE7     		b	.L22
+ 261              	.L31:
+ 262              		.align	2
+ 263              	.L30:
+ 264 0020 00000000 		.word	playopus_execute
+ 265              		.cfi_endproc
+ 266              	.LFE347:
+ 268              		.section	.rodata.playopus_start.str1.4,"aMS",%progbits,1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 8
+
+
+ 269              		.align	2
+ 270              	.LC1:
+ 271 0000 434D372E 		.ascii	"CM7.playopus: start error open file: %s\015\012\000"
+ 271      706C6179 
+ 271      6F707573 
+ 271      3A207374 
+ 271      61727420 
+ 272 002a 0000     		.align	2
+ 273              	.LC2:
+ 274 002c 434D372E 		.ascii	"CM7.playopus: open ogg: %s OK\015\012\000"
+ 274      706C6179 
+ 274      6F707573 
+ 274      3A206F70 
+ 274      656E206F 
+ 275              		.align	2
+ 276              	.LC3:
+ 277 004c 434D372E 		.ascii	"CM7.playopus: start error open ogg: %s\015\012\000"
+ 277      706C6179 
+ 277      6F707573 
+ 277      3A207374 
+ 277      61727420 
+ 278 0075 000000   		.align	2
+ 279              	.LC4:
+ 280 0078 434D372E 		.ascii	"CM7.playopus: file:%s, frequency:%lu, channels:%d t"
+ 280      706C6179 
+ 280      6F707573 
+ 280      3A206669 
+ 280      6C653A25 
+ 281 00ab 69636B3A 		.ascii	"ick:%lu\015\012\000"
+ 281      256C750D 
+ 281      0A00
+ 282              		.section	.text.playopus_start,"ax",%progbits
+ 283              		.align	1
+ 284              		.global	playopus_start
+ 285              		.syntax unified
+ 286              		.thumb
+ 287              		.thumb_func
+ 289              	playopus_start:
+ 290              	.LVL17:
+ 291              	.LFB349:
+  94:../../CM7/Core/Src/playopus.c **** 
+  95:../../CM7/Core/Src/playopus.c **** BOOL playopus_start(const char * file_name)
+  96:../../CM7/Core/Src/playopus.c **** {
+ 292              		.loc 1 96 1 is_stmt 1 view -0
+ 293              		.cfi_startproc
+ 294              		@ args = 0, pretend = 0, frame = 0
+ 295              		@ frame_needed = 0, uses_anonymous_args = 0
+ 296              		.loc 1 96 1 is_stmt 0 view .LVU51
+ 297 0000 70B5     		push	{r4, r5, r6, lr}
+ 298              	.LCFI7:
+ 299              		.cfi_def_cfa_offset 16
+ 300              		.cfi_offset 4, -16
+ 301              		.cfi_offset 5, -12
+ 302              		.cfi_offset 6, -8
+ 303              		.cfi_offset 14, -4
+ 304 0002 82B0     		sub	sp, sp, #8
+ 305              	.LCFI8:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 9
+
+
+ 306              		.cfi_def_cfa_offset 24
+ 307 0004 0446     		mov	r4, r0
+  97:../../CM7/Core/Src/playopus.c **** 
+  98:../../CM7/Core/Src/playopus.c **** 	//ulog_fmt("playopus_start(%s, %d, %s)"CRLF, file_name, volume, bool2str(external_flash));
+  99:../../CM7/Core/Src/playopus.c **** 
+ 100:../../CM7/Core/Src/playopus.c **** 
+ 101:../../CM7/Core/Src/playopus.c **** 	if (!cm7core_open_file(file_name)) {
+ 308              		.loc 1 101 2 is_stmt 1 view .LVU52
+ 309              		.loc 1 101 7 is_stmt 0 view .LVU53
+ 310 0006 FFF7FEFF 		bl	cm7core_open_file
+ 311              	.LVL18:
+ 312              		.loc 1 101 5 discriminator 1 view .LVU54
+ 313 000a 0028     		cmp	r0, #0
+ 314 000c 2DD0     		beq	.L38
+ 102:../../CM7/Core/Src/playopus.c **** 		ulog_fmt(CONM"playopus: start error open file: %s"CRLF, file_name);
+ 103:../../CM7/Core/Src/playopus.c **** 		return FALSE;
+ 104:../../CM7/Core/Src/playopus.c **** 	}
+ 105:../../CM7/Core/Src/playopus.c **** 
+ 106:../../CM7/Core/Src/playopus.c **** 	ulog_fmt(CONM"playopus: open ogg: %s OK"CRLF, file_name);
+ 315              		.loc 1 106 2 is_stmt 1 view .LVU55
+ 316 000e 2146     		mov	r1, r4
+ 317 0010 1F48     		ldr	r0, .L41
+ 318 0012 FFF7FEFF 		bl	ulog_fmt
+ 319              	.LVL19:
+ 107:../../CM7/Core/Src/playopus.c ****     ogg_decoder_init(&PLAYOPUS_OGG_DECODER, NULL,  playopus_read_file);
+ 320              		.loc 1 107 5 view .LVU56
+ 321 0016 1F4D     		ldr	r5, .L41+4
+ 322 0018 1F4A     		ldr	r2, .L41+8
+ 323 001a 0021     		movs	r1, #0
+ 324 001c 2846     		mov	r0, r5
+ 325 001e FFF7FEFF 		bl	ogg_decoder_init
+ 326              	.LVL20:
+ 108:../../CM7/Core/Src/playopus.c **** 
+ 109:../../CM7/Core/Src/playopus.c **** 
+ 110:../../CM7/Core/Src/playopus.c ****     if (!oggopus_open(&PLAYOPUS_OGG_DECODER, &playopus_sample_rate, &playopus_channels)) {
+ 327              		.loc 1 110 5 view .LVU57
+ 328              		.loc 1 110 10 is_stmt 0 view .LVU58
+ 329 0022 1E4A     		ldr	r2, .L41+12
+ 330 0024 1E49     		ldr	r1, .L41+16
+ 331 0026 2846     		mov	r0, r5
+ 332 0028 FFF7FEFF 		bl	oggopus_open
+ 333              	.LVL21:
+ 334              		.loc 1 110 8 discriminator 1 view .LVU59
+ 335 002c 0546     		mov	r5, r0
+ 336 002e 20B3     		cbz	r0, .L39
+ 111:../../CM7/Core/Src/playopus.c **** 		ulog_fmt(CONM"playopus: start error open ogg: %s"CRLF, file_name);
+ 112:../../CM7/Core/Src/playopus.c **** 		cm7core_close_file();
+ 113:../../CM7/Core/Src/playopus.c **** 		return FALSE;
+ 114:../../CM7/Core/Src/playopus.c ****     }
+ 115:../../CM7/Core/Src/playopus.c **** 
+ 116:../../CM7/Core/Src/playopus.c ****     //ulog("playopus: call to find header"CRLF);
+ 117:../../CM7/Core/Src/playopus.c **** 
+ 118:../../CM7/Core/Src/playopus.c **** 
+ 119:../../CM7/Core/Src/playopus.c **** 
+ 120:../../CM7/Core/Src/playopus.c ****     if (!pu_prepare_audio_play(playopus_sample_rate, playopus_channels == 2)) {
+ 337              		.loc 1 120 5 is_stmt 1 view .LVU60
+ 338              		.loc 1 120 10 is_stmt 0 view .LVU61
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 10
+
+
+ 339 0030 1A4B     		ldr	r3, .L41+12
+ 340 0032 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 341 0034 0229     		cmp	r1, #2
+ 342 0036 14BF     		ite	ne
+ 343 0038 0021     		movne	r1, #0
+ 344 003a 0121     		moveq	r1, #1
+ 345 003c 184B     		ldr	r3, .L41+16
+ 346 003e 1868     		ldr	r0, [r3]
+ 347 0040 FFF7FEFF 		bl	pu_prepare_audio_play
+ 348              	.LVL22:
+ 349              		.loc 1 120 8 discriminator 1 view .LVU62
+ 350 0044 0546     		mov	r5, r0
+ 351 0046 F8B1     		cbz	r0, .L40
+ 121:../../CM7/Core/Src/playopus.c **** 		cm7core_close_file();
+ 122:../../CM7/Core/Src/playopus.c **** 		return FALSE;
+ 123:../../CM7/Core/Src/playopus.c ****     }
+ 124:../../CM7/Core/Src/playopus.c **** 
+ 125:../../CM7/Core/Src/playopus.c **** 
+ 126:../../CM7/Core/Src/playopus.c **** 	ulog_fmt(CONM"playopus: file:%s, frequency:%lu, channels:%d tick:%lu"CRLF, file_name, playopus_sam
+ 352              		.loc 1 126 2 is_stmt 1 view .LVU63
+ 353 0048 154B     		ldr	r3, .L41+16
+ 354 004a 1D68     		ldr	r5, [r3]
+ 355 004c 134B     		ldr	r3, .L41+12
+ 356 004e 1E78     		ldrb	r6, [r3]	@ zero_extendqisi2
+ 357 0050 FFF7FEFF 		bl	HAL_GetTick
+ 358              	.LVL23:
+ 359              		.loc 1 126 2 is_stmt 0 discriminator 1 view .LVU64
+ 360 0054 0090     		str	r0, [sp]
+ 361 0056 3346     		mov	r3, r6
+ 362 0058 2A46     		mov	r2, r5
+ 363 005a 2146     		mov	r1, r4
+ 364 005c 1148     		ldr	r0, .L41+20
+ 365 005e FFF7FEFF 		bl	ulog_fmt
+ 366              	.LVL24:
+ 127:../../CM7/Core/Src/playopus.c **** 
+ 128:../../CM7/Core/Src/playopus.c ****     playopus_execute = TRUE;
+ 367              		.loc 1 128 5 is_stmt 1 view .LVU65
+ 368              		.loc 1 128 22 is_stmt 0 view .LVU66
+ 369 0062 0125     		movs	r5, #1
+ 370 0064 104B     		ldr	r3, .L41+24
+ 371 0066 1D70     		strb	r5, [r3]
+ 129:../../CM7/Core/Src/playopus.c **** 
+ 130:../../CM7/Core/Src/playopus.c ****     //set_mux_sound_left_right_enable(TRUE);
+ 131:../../CM7/Core/Src/playopus.c **** 
+ 132:../../CM7/Core/Src/playopus.c **** 	return TRUE;
+ 372              		.loc 1 132 2 is_stmt 1 view .LVU67
+ 373              		.loc 1 132 9 is_stmt 0 view .LVU68
+ 374 0068 04E0     		b	.L34
+ 375              	.L38:
+ 376 006a 0546     		mov	r5, r0
+ 102:../../CM7/Core/Src/playopus.c **** 		return FALSE;
+ 377              		.loc 1 102 3 is_stmt 1 view .LVU69
+ 378 006c 2146     		mov	r1, r4
+ 379 006e 0F48     		ldr	r0, .L41+28
+ 380 0070 FFF7FEFF 		bl	ulog_fmt
+ 381              	.LVL25:
+ 103:../../CM7/Core/Src/playopus.c **** 	}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 11
+
+
+ 382              		.loc 1 103 3 view .LVU70
+ 383              	.L34:
+ 133:../../CM7/Core/Src/playopus.c **** 
+ 134:../../CM7/Core/Src/playopus.c **** }
+ 384              		.loc 1 134 1 is_stmt 0 view .LVU71
+ 385 0074 2846     		mov	r0, r5
+ 386 0076 02B0     		add	sp, sp, #8
+ 387              	.LCFI9:
+ 388              		.cfi_remember_state
+ 389              		.cfi_def_cfa_offset 16
+ 390              		@ sp needed
+ 391 0078 70BD     		pop	{r4, r5, r6, pc}
+ 392              	.LVL26:
+ 393              	.L39:
+ 394              	.LCFI10:
+ 395              		.cfi_restore_state
+ 111:../../CM7/Core/Src/playopus.c **** 		cm7core_close_file();
+ 396              		.loc 1 111 3 is_stmt 1 view .LVU72
+ 397 007a 2146     		mov	r1, r4
+ 398 007c 0C48     		ldr	r0, .L41+32
+ 399 007e FFF7FEFF 		bl	ulog_fmt
+ 400              	.LVL27:
+ 112:../../CM7/Core/Src/playopus.c **** 		return FALSE;
+ 401              		.loc 1 112 3 view .LVU73
+ 402 0082 FFF7FEFF 		bl	cm7core_close_file
+ 403              	.LVL28:
+ 113:../../CM7/Core/Src/playopus.c ****     }
+ 404              		.loc 1 113 3 view .LVU74
+ 113:../../CM7/Core/Src/playopus.c ****     }
+ 405              		.loc 1 113 10 is_stmt 0 view .LVU75
+ 406 0086 F5E7     		b	.L34
+ 407              	.L40:
+ 121:../../CM7/Core/Src/playopus.c **** 		return FALSE;
+ 408              		.loc 1 121 3 is_stmt 1 view .LVU76
+ 409 0088 FFF7FEFF 		bl	cm7core_close_file
+ 410              	.LVL29:
+ 122:../../CM7/Core/Src/playopus.c ****     }
+ 411              		.loc 1 122 3 view .LVU77
+ 122:../../CM7/Core/Src/playopus.c ****     }
+ 412              		.loc 1 122 10 is_stmt 0 view .LVU78
+ 413 008c F2E7     		b	.L34
+ 414              	.L42:
+ 415 008e 00BF     		.align	2
+ 416              	.L41:
+ 417 0090 2C000000 		.word	.LC2
+ 418 0094 00000000 		.word	global_ogg_decoder
+ 419 0098 00000000 		.word	playopus_read_file
+ 420 009c 00000000 		.word	playopus_channels
+ 421 00a0 00000000 		.word	playopus_sample_rate
+ 422 00a4 78000000 		.word	.LC4
+ 423 00a8 00000000 		.word	playopus_execute
+ 424 00ac 00000000 		.word	.LC1
+ 425 00b0 4C000000 		.word	.LC3
+ 426              		.cfi_endproc
+ 427              	.LFE349:
+ 429              		.global	playopus_sample_rate
+ 430              		.section	.bss.playopus_sample_rate,"aw",%nobits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 12
+
+
+ 431              		.align	2
+ 434              	playopus_sample_rate:
+ 435 0000 00000000 		.space	4
+ 436              		.global	playopus_channels
+ 437              		.section	.bss.playopus_channels,"aw",%nobits
+ 440              	playopus_channels:
+ 441 0000 00       		.space	1
+ 442              		.section	.bss.playopus_execute,"aw",%nobits
+ 445              	playopus_execute:
+ 446 0000 00       		.space	1
+ 447              		.text
+ 448              	.Letext0:
+ 449              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 450              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 451              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 452              		.file 5 "../../util/def_util.h"
+ 453              		.file 6 "../../CM7/Core/Inc/playopus.h"
+ 454              		.file 7 "../../util/ogg_util.h"
+ 455              		.file 8 "../../opus/celt/celt.h"
+ 456              		.file 9 "../../CM7/Core/Inc/pu.h"
+ 457              		.file 10 "../../util/oggopus_util.h"
+ 458              		.file 11 "../../CM7/Core/Inc/cm7core.h"
+ 459              		.file 12 "../../pcm1753/pcm1753.h"
+ 460              		.file 13 "../../util/stm_util.h"
+ 461              		.file 14 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ 462              		.file 15 "../../util/opus_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc676jWM.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 playopus.c
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:20     .text.playopus_read_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:26     .text.playopus_read_file:00000000 playopus_read_file
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:54     .text.playopus_is_execute:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:60     .text.playopus_is_execute:00000000 playopus_is_execute
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:75     .text.playopus_is_execute:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:445    .bss.playopus_execute:00000000 playopus_execute
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:80     .rodata.playopus_stop.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:84     .text.playopus_stop:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:90     .text.playopus_stop:00000000 playopus_stop
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:145    .text.playopus_stop:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:434    .bss.playopus_sample_rate:00000000 playopus_sample_rate
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:440    .bss.playopus_channels:00000000 playopus_channels
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:153    .text.playopus_task_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:159    .text.playopus_task_data:00000000 playopus_task_data
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:210    .text.playopus_task_data:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:215    .text.playopus_task:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:221    .text.playopus_task:00000000 playopus_task
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:264    .text.playopus_task:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:269    .rodata.playopus_start.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:283    .text.playopus_start:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:289    .text.playopus_start:00000000 playopus_start
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:417    .text.playopus_start:00000090 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:431    .bss.playopus_sample_rate:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:441    .bss.playopus_channels:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc676jWM.s:446    .bss.playopus_execute:00000000 $d
+
+UNDEFINED SYMBOLS
+cm7core_read_file
+cm7core_close_file
+decoder_opus_destroy
+pcm1753_DataFinish
+HAL_GetTick
+ulog_fmt
+oggopus_read_segment
+pu_put_opus_in_pcm1753_now
+global_ogg_decoder
+pcm1753_AudioBufferGetFree
+pcm1753_AudioBufferGetFull
+cm7core_open_file
+ogg_decoder_init
+oggopus_open
+pu_prepare_audio_play

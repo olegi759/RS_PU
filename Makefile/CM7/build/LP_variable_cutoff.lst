@@ -1,0 +1,559 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"LP_variable_cutoff.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/LP_variable_cutoff.c"
+  19              		.section	.text.silk_LP_interpolate_filter_taps,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	silk_LP_interpolate_filter_taps:
+  26              	.LVL0:
+  27              	.LFB25:
+   1:../../opus/silk/LP_variable_cutoff.c **** /***********************************************************************
+   2:../../opus/silk/LP_variable_cutoff.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/LP_variable_cutoff.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/LP_variable_cutoff.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/LP_variable_cutoff.c **** are met:
+   6:../../opus/silk/LP_variable_cutoff.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/LP_variable_cutoff.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/LP_variable_cutoff.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/LP_variable_cutoff.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/LP_variable_cutoff.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/LP_variable_cutoff.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/LP_variable_cutoff.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/LP_variable_cutoff.c **** products derived from this software without specific prior written
+  14:../../opus/silk/LP_variable_cutoff.c **** permission.
+  15:../../opus/silk/LP_variable_cutoff.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/LP_variable_cutoff.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/LP_variable_cutoff.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/LP_variable_cutoff.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/LP_variable_cutoff.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/LP_variable_cutoff.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/LP_variable_cutoff.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/LP_variable_cutoff.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/LP_variable_cutoff.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/LP_variable_cutoff.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/LP_variable_cutoff.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/LP_variable_cutoff.c **** ***********************************************************************/
+  27:../../opus/silk/LP_variable_cutoff.c **** 
+  28:../../opus/silk/LP_variable_cutoff.c **** #include "opus_config.h"
+  29:../../opus/silk/LP_variable_cutoff.c **** 
+  30:../../opus/silk/LP_variable_cutoff.c **** /*
+  31:../../opus/silk/LP_variable_cutoff.c ****     Elliptic/Cauer filters designed with 0.1 dB passband ripple,
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 2
+
+
+  32:../../opus/silk/LP_variable_cutoff.c ****     80 dB minimum stopband attenuation, and
+  33:../../opus/silk/LP_variable_cutoff.c ****     [0.95 : 0.15 : 0.35] normalized cut off frequencies.
+  34:../../opus/silk/LP_variable_cutoff.c **** */
+  35:../../opus/silk/LP_variable_cutoff.c **** 
+  36:../../opus/silk/LP_variable_cutoff.c **** #include "main.h"
+  37:../../opus/silk/LP_variable_cutoff.c **** 
+  38:../../opus/silk/LP_variable_cutoff.c **** /* Helper function, interpolates the filter taps */
+  39:../../opus/silk/LP_variable_cutoff.c **** static OPUS_INLINE void silk_LP_interpolate_filter_taps(
+  40:../../opus/silk/LP_variable_cutoff.c ****     opus_int32           B_Q28[ TRANSITION_NB ],
+  41:../../opus/silk/LP_variable_cutoff.c ****     opus_int32           A_Q28[ TRANSITION_NA ],
+  42:../../opus/silk/LP_variable_cutoff.c ****     const opus_int       ind,
+  43:../../opus/silk/LP_variable_cutoff.c ****     const opus_int32     fac_Q16
+  44:../../opus/silk/LP_variable_cutoff.c **** )
+  45:../../opus/silk/LP_variable_cutoff.c **** {
+  28              		.loc 1 45 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 45 1 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 8646     		mov	lr, r0
+  41 0004 0D46     		mov	r5, r1
+  46:../../opus/silk/LP_variable_cutoff.c ****     opus_int nb, na;
+  42              		.loc 1 46 5 is_stmt 1 view .LVU2
+  47:../../opus/silk/LP_variable_cutoff.c **** 
+  48:../../opus/silk/LP_variable_cutoff.c ****     if( ind < TRANSITION_INT_NUM - 1 ) {
+  43              		.loc 1 48 5 view .LVU3
+  44              		.loc 1 48 7 is_stmt 0 view .LVU4
+  45 0006 032A     		cmp	r2, #3
+  46 0008 00F39680 		bgt	.L2
+  49:../../opus/silk/LP_variable_cutoff.c ****         if( fac_Q16 > 0 ) {
+  47              		.loc 1 49 9 is_stmt 1 view .LVU5
+  48              		.loc 1 49 11 is_stmt 0 view .LVU6
+  49 000c 002B     		cmp	r3, #0
+  50 000e 7BDD     		ble	.L3
+  50:../../opus/silk/LP_variable_cutoff.c ****             if( fac_Q16 < 32768 ) { /* fac_Q16 is in range of a 16-bit int */
+  51              		.loc 1 50 13 is_stmt 1 view .LVU7
+  52              		.loc 1 50 15 is_stmt 0 view .LVU8
+  53 0010 B3F5004F 		cmp	r3, #32768
+  54 0014 1FDB     		blt	.L13
+  51:../../opus/silk/LP_variable_cutoff.c ****                 /* Piece-wise linear interpolation of B and A */
+  52:../../opus/silk/LP_variable_cutoff.c ****                 for( nb = 0; nb < TRANSITION_NB; nb++ ) {
+  53:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+  54:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind     ][ nb ],
+  55:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind + 1 ][ nb ] -
+  56:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind     ][ nb ],
+  57:../../opus/silk/LP_variable_cutoff.c ****                         fac_Q16 );
+  58:../../opus/silk/LP_variable_cutoff.c ****                 }
+  59:../../opus/silk/LP_variable_cutoff.c ****                 for( na = 0; na < TRANSITION_NA; na++ ) {
+  60:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+  61:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind     ][ na ],
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 3
+
+
+  62:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind + 1 ][ na ] -
+  63:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind     ][ na ],
+  64:../../opus/silk/LP_variable_cutoff.c ****                         fac_Q16 );
+  65:../../opus/silk/LP_variable_cutoff.c ****                 }
+  66:../../opus/silk/LP_variable_cutoff.c ****             } else { /* ( fac_Q16 - ( 1 << 16 ) ) is in range of a 16-bit int */
+  67:../../opus/silk/LP_variable_cutoff.c ****                 silk_assert( fac_Q16 - ( 1 << 16 ) == silk_SAT16( fac_Q16 - ( 1 << 16 ) ) );
+  68:../../opus/silk/LP_variable_cutoff.c ****                 /* Piece-wise linear interpolation of B and A */
+  69:../../opus/silk/LP_variable_cutoff.c ****                 for( nb = 0; nb < TRANSITION_NB; nb++ ) {
+  55              		.loc 1 69 25 view .LVU9
+  56 0016 0020     		movs	r0, #0
+  57              	.LVL1:
+  58              		.loc 1 69 25 view .LVU10
+  59 0018 57E0     		b	.L5
+  60              	.LVL2:
+  61              	.L6:
+  53:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind     ][ nb ],
+  62              		.loc 1 53 21 is_stmt 1 view .LVU11
+  53:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind     ][ nb ],
+  63              		.loc 1 53 35 is_stmt 0 view .LVU12
+  64 001a 4E4C     		ldr	r4, .L15
+  65 001c 02EB4201 		add	r1, r2, r2, lsl #1
+  66 0020 0144     		add	r1, r1, r0
+  67 0022 54F82160 		ldr	r6, [r4, r1, lsl #2]
+  68 0026 511C     		adds	r1, r2, #1
+  69 0028 01EB4101 		add	r1, r1, r1, lsl #1
+  70 002c 0144     		add	r1, r1, r0
+  71 002e 54F82140 		ldr	r4, [r4, r1, lsl #2]
+  72 0032 A41B     		subs	r4, r4, r6
+  73 0034 4FEA244C 		asr	ip, r4, #16
+  74 0038 19B2     		sxth	r1, r3
+  75 003a A4B2     		uxth	r4, r4
+  76 003c 01FB04F4 		mul	r4, r1, r4
+  77 0040 2414     		asrs	r4, r4, #16
+  78 0042 01FB0C44 		mla	r4, r1, ip, r4
+  79 0046 2644     		add	r6, r6, r4
+  53:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind     ][ nb ],
+  80              		.loc 1 53 33 view .LVU13
+  81 0048 4EF82060 		str	r6, [lr, r0, lsl #2]
+  52:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+  82              		.loc 1 52 52 is_stmt 1 discriminator 3 view .LVU14
+  83 004c 0130     		adds	r0, r0, #1
+  84              	.LVL3:
+  85              	.L4:
+  52:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+  86              		.loc 1 52 33 discriminator 1 view .LVU15
+  87 004e 0228     		cmp	r0, #2
+  88 0050 E3DD     		ble	.L6
+  59:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+  89              		.loc 1 59 25 is_stmt 0 view .LVU16
+  90 0052 0020     		movs	r0, #0
+  91              	.LVL4:
+  59:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+  92              		.loc 1 59 25 view .LVU17
+  93 0054 19E0     		b	.L7
+  94              	.LVL5:
+  95              	.L13:
+  52:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 4
+
+
+  96              		.loc 1 52 25 view .LVU18
+  97 0056 0020     		movs	r0, #0
+  98              	.LVL6:
+  52:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+  99              		.loc 1 52 25 view .LVU19
+ 100 0058 F9E7     		b	.L4
+ 101              	.LVL7:
+ 102              	.L8:
+  60:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind     ][ na ],
+ 103              		.loc 1 60 21 is_stmt 1 view .LVU20
+  60:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind     ][ na ],
+ 104              		.loc 1 60 35 is_stmt 0 view .LVU21
+ 105 005a 3F4E     		ldr	r6, .L15+4
+ 106 005c 00EB4201 		add	r1, r0, r2, lsl #1
+ 107 0060 56F82140 		ldr	r4, [r6, r1, lsl #2]
+ 108 0064 511C     		adds	r1, r2, #1
+ 109 0066 00EB4101 		add	r1, r0, r1, lsl #1
+ 110 006a 56F82110 		ldr	r1, [r6, r1, lsl #2]
+ 111 006e 091B     		subs	r1, r1, r4
+ 112 0070 4FEA214C 		asr	ip, r1, #16
+ 113 0074 1EB2     		sxth	r6, r3
+ 114 0076 89B2     		uxth	r1, r1
+ 115 0078 06FB01F1 		mul	r1, r6, r1
+ 116 007c 0914     		asrs	r1, r1, #16
+ 117 007e 06FB0C11 		mla	r1, r6, ip, r1
+ 118 0082 0C44     		add	r4, r4, r1
+  60:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind     ][ na ],
+ 119              		.loc 1 60 33 view .LVU22
+ 120 0084 45F82040 		str	r4, [r5, r0, lsl #2]
+  59:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+ 121              		.loc 1 59 52 is_stmt 1 discriminator 3 view .LVU23
+ 122 0088 0130     		adds	r0, r0, #1
+ 123              	.LVL8:
+ 124              	.L7:
+  59:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+ 125              		.loc 1 59 33 discriminator 1 view .LVU24
+ 126 008a 0128     		cmp	r0, #1
+ 127 008c E5DD     		ble	.L8
+ 128 008e 5FE0     		b	.L1
+ 129              	.LVL9:
+ 130              	.L10:
+  70:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+ 131              		.loc 1 70 21 view .LVU25
+ 132              		.loc 1 70 35 is_stmt 0 view .LVU26
+ 133 0090 511C     		adds	r1, r2, #1
+ 134 0092 304E     		ldr	r6, .L15
+ 135 0094 01EB4101 		add	r1, r1, r1, lsl #1
+ 136 0098 0144     		add	r1, r1, r0
+ 137 009a 56F82110 		ldr	r1, [r6, r1, lsl #2]
+ 138 009e 02EB4204 		add	r4, r2, r2, lsl #1
+ 139 00a2 0444     		add	r4, r4, r0
+ 140 00a4 56F82440 		ldr	r4, [r6, r4, lsl #2]
+ 141 00a8 A1EB040C 		sub	ip, r1, r4
+ 142 00ac 4FEA2C46 		asr	r6, ip, #16
+ 143 00b0 1CB2     		sxth	r4, r3
+ 144 00b2 1FFA8CFC 		uxth	ip, ip
+ 145 00b6 0CFB04FC 		mul	ip, ip, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 5
+
+
+ 146 00ba 4FEA2C4C 		asr	ip, ip, #16
+ 147 00be 04FB06CC 		mla	ip, r4, r6, ip
+ 148 00c2 6144     		add	r1, r1, ip
+ 149              		.loc 1 70 33 view .LVU27
+ 150 00c4 4EF82010 		str	r1, [lr, r0, lsl #2]
+  69:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+ 151              		.loc 1 69 52 is_stmt 1 discriminator 3 view .LVU28
+ 152 00c8 0130     		adds	r0, r0, #1
+ 153              	.LVL10:
+ 154              	.L5:
+  69:../../opus/silk/LP_variable_cutoff.c ****                     B_Q28[ nb ] = silk_SMLAWB(
+ 155              		.loc 1 69 33 discriminator 1 view .LVU29
+ 156 00ca 0228     		cmp	r0, #2
+ 157 00cc E0DD     		ble	.L10
+  71:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind + 1 ][ nb ],
+  72:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind + 1 ][ nb ] -
+  73:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_B_Q28[ ind     ][ nb ],
+  74:../../opus/silk/LP_variable_cutoff.c ****                         fac_Q16 - ( (opus_int32)1 << 16 ) );
+  75:../../opus/silk/LP_variable_cutoff.c ****                 }
+  76:../../opus/silk/LP_variable_cutoff.c ****                 for( na = 0; na < TRANSITION_NA; na++ ) {
+ 158              		.loc 1 76 25 is_stmt 0 view .LVU30
+ 159 00ce 0020     		movs	r0, #0
+ 160              	.LVL11:
+ 161              		.loc 1 76 25 view .LVU31
+ 162 00d0 17E0     		b	.L11
+ 163              	.LVL12:
+ 164              	.L12:
+  77:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+ 165              		.loc 1 77 21 is_stmt 1 view .LVU32
+ 166              		.loc 1 77 35 is_stmt 0 view .LVU33
+ 167 00d2 511C     		adds	r1, r2, #1
+ 168 00d4 204E     		ldr	r6, .L15+4
+ 169 00d6 00EB4101 		add	r1, r0, r1, lsl #1
+ 170 00da 56F82140 		ldr	r4, [r6, r1, lsl #2]
+ 171 00de 00EB4201 		add	r1, r0, r2, lsl #1
+ 172 00e2 56F82110 		ldr	r1, [r6, r1, lsl #2]
+ 173 00e6 611A     		subs	r1, r4, r1
+ 174 00e8 4FEA214C 		asr	ip, r1, #16
+ 175 00ec 1EB2     		sxth	r6, r3
+ 176 00ee 89B2     		uxth	r1, r1
+ 177 00f0 06FB01F1 		mul	r1, r6, r1
+ 178 00f4 0914     		asrs	r1, r1, #16
+ 179 00f6 06FB0C11 		mla	r1, r6, ip, r1
+ 180 00fa 0C44     		add	r4, r4, r1
+ 181              		.loc 1 77 33 view .LVU34
+ 182 00fc 45F82040 		str	r4, [r5, r0, lsl #2]
+  76:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+ 183              		.loc 1 76 52 is_stmt 1 discriminator 3 view .LVU35
+ 184 0100 0130     		adds	r0, r0, #1
+ 185              	.LVL13:
+ 186              	.L11:
+  76:../../opus/silk/LP_variable_cutoff.c ****                     A_Q28[ na ] = silk_SMLAWB(
+ 187              		.loc 1 76 33 discriminator 1 view .LVU36
+ 188 0102 0128     		cmp	r0, #1
+ 189 0104 E5DD     		ble	.L12
+ 190 0106 23E0     		b	.L1
+ 191              	.LVL14:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 6
+
+
+ 192              	.L3:
+  78:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind + 1 ][ na ],
+  79:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind + 1 ][ na ] -
+  80:../../opus/silk/LP_variable_cutoff.c ****                         silk_Transition_LP_A_Q28[ ind     ][ na ],
+  81:../../opus/silk/LP_variable_cutoff.c ****                         fac_Q16 - ( (opus_int32)1 << 16 ) );
+  82:../../opus/silk/LP_variable_cutoff.c ****                 }
+  83:../../opus/silk/LP_variable_cutoff.c ****             }
+  84:../../opus/silk/LP_variable_cutoff.c ****         } else {
+  85:../../opus/silk/LP_variable_cutoff.c ****             silk_memcpy( B_Q28, silk_Transition_LP_B_Q28[ ind ], TRANSITION_NB * sizeof( opus_int32
+ 193              		.loc 1 85 13 view .LVU37
+ 194 0108 02EB4200 		add	r0, r2, r2, lsl #1
+ 195              	.LVL15:
+ 196              		.loc 1 85 13 is_stmt 0 view .LVU38
+ 197 010c 1149     		ldr	r1, .L15
+ 198              	.LVL16:
+ 199              		.loc 1 85 13 view .LVU39
+ 200 010e 01EB8003 		add	r3, r1, r0, lsl #2
+ 201              	.LVL17:
+ 202              		.loc 1 85 13 view .LVU40
+ 203 0112 51F82000 		ldr	r0, [r1, r0, lsl #2]	@ unaligned
+ 204 0116 5968     		ldr	r1, [r3, #4]	@ unaligned
+ 205 0118 9B68     		ldr	r3, [r3, #8]	@ unaligned
+ 206 011a CEF80000 		str	r0, [lr]	@ unaligned
+ 207 011e CEF80410 		str	r1, [lr, #4]	@ unaligned
+ 208 0122 CEF80830 		str	r3, [lr, #8]	@ unaligned
+  86:../../opus/silk/LP_variable_cutoff.c ****             silk_memcpy( A_Q28, silk_Transition_LP_A_Q28[ ind ], TRANSITION_NA * sizeof( opus_int32
+ 209              		.loc 1 86 13 is_stmt 1 view .LVU41
+ 210 0126 0C4B     		ldr	r3, .L15+4
+ 211 0128 03EBC201 		add	r1, r3, r2, lsl #3
+ 212 012c 53F83220 		ldr	r2, [r3, r2, lsl #3]	@ unaligned
+ 213              	.LVL18:
+ 214              		.loc 1 86 13 is_stmt 0 view .LVU42
+ 215 0130 4B68     		ldr	r3, [r1, #4]	@ unaligned
+ 216 0132 2A60     		str	r2, [r5]	@ unaligned
+ 217 0134 6B60     		str	r3, [r5, #4]	@ unaligned
+ 218 0136 0BE0     		b	.L1
+ 219              	.LVL19:
+ 220              	.L2:
+  87:../../opus/silk/LP_variable_cutoff.c ****         }
+  88:../../opus/silk/LP_variable_cutoff.c ****     } else {
+  89:../../opus/silk/LP_variable_cutoff.c ****         silk_memcpy( B_Q28, silk_Transition_LP_B_Q28[ TRANSITION_INT_NUM - 1 ], TRANSITION_NB * siz
+ 221              		.loc 1 89 9 is_stmt 1 view .LVU43
+ 222 0138 084B     		ldr	r3, .L15+8
+ 223              	.LVL20:
+ 224              		.loc 1 89 9 is_stmt 0 view .LVU44
+ 225 013a 07CB     		ldmia	r3!, {r0, r1, r2}
+ 226              	.LVL21:
+ 227              		.loc 1 89 9 view .LVU45
+ 228 013c CEF80000 		str	r0, [lr]	@ unaligned
+ 229 0140 CEF80410 		str	r1, [lr, #4]	@ unaligned
+ 230 0144 CEF80820 		str	r2, [lr, #8]	@ unaligned
+  90:../../opus/silk/LP_variable_cutoff.c ****         silk_memcpy( A_Q28, silk_Transition_LP_A_Q28[ TRANSITION_INT_NUM - 1 ], TRANSITION_NA * siz
+ 231              		.loc 1 90 9 is_stmt 1 view .LVU46
+ 232 0148 054B     		ldr	r3, .L15+12
+ 233 014a 03CB     		ldmia	r3!, {r0, r1}
+ 234 014c 2860     		str	r0, [r5]	@ unaligned
+ 235 014e 6960     		str	r1, [r5, #4]	@ unaligned
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 7
+
+
+ 236              	.L1:
+  91:../../opus/silk/LP_variable_cutoff.c ****     }
+  92:../../opus/silk/LP_variable_cutoff.c **** }
+ 237              		.loc 1 92 1 is_stmt 0 view .LVU47
+ 238 0150 70BD     		pop	{r4, r5, r6, pc}
+ 239              	.LVL22:
+ 240              	.L16:
+ 241              		.loc 1 92 1 view .LVU48
+ 242 0152 00BF     		.align	2
+ 243              	.L15:
+ 244 0154 00000000 		.word	silk_Transition_LP_B_Q28
+ 245 0158 00000000 		.word	silk_Transition_LP_A_Q28
+ 246 015c 30000000 		.word	silk_Transition_LP_B_Q28+48
+ 247 0160 20000000 		.word	silk_Transition_LP_A_Q28+32
+ 248              		.cfi_endproc
+ 249              	.LFE25:
+ 251              		.section	.text.silk_LP_variable_cutoff,"ax",%progbits
+ 252              		.align	1
+ 253              		.global	silk_LP_variable_cutoff
+ 254              		.syntax unified
+ 255              		.thumb
+ 256              		.thumb_func
+ 258              	silk_LP_variable_cutoff:
+ 259              	.LVL23:
+ 260              	.LFB26:
+  93:../../opus/silk/LP_variable_cutoff.c **** 
+  94:../../opus/silk/LP_variable_cutoff.c **** /* Low-pass filter with variable cutoff frequency based on  */
+  95:../../opus/silk/LP_variable_cutoff.c **** /* piece-wise linear interpolation between elliptic filters */
+  96:../../opus/silk/LP_variable_cutoff.c **** /* Start by setting psEncC->mode <> 0;                      */
+  97:../../opus/silk/LP_variable_cutoff.c **** /* Deactivate by setting psEncC->mode = 0;                  */
+  98:../../opus/silk/LP_variable_cutoff.c **** void silk_LP_variable_cutoff(
+  99:../../opus/silk/LP_variable_cutoff.c ****     silk_LP_state               *psLP,                          /* I/O  LP filter state            
+ 100:../../opus/silk/LP_variable_cutoff.c ****     opus_int16                  *frame,                         /* I/O  Low-pass filtered output si
+ 101:../../opus/silk/LP_variable_cutoff.c ****     const opus_int              frame_length                    /* I    Frame length               
+ 102:../../opus/silk/LP_variable_cutoff.c **** )
+ 103:../../opus/silk/LP_variable_cutoff.c **** {
+ 261              		.loc 1 103 1 is_stmt 1 view -0
+ 262              		.cfi_startproc
+ 263              		@ args = 0, pretend = 0, frame = 24
+ 264              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104:../../opus/silk/LP_variable_cutoff.c ****     opus_int32   B_Q28[ TRANSITION_NB ], A_Q28[ TRANSITION_NA ], fac_Q16 = 0;
+ 265              		.loc 1 104 5 view .LVU50
+ 105:../../opus/silk/LP_variable_cutoff.c ****     opus_int     ind = 0;
+ 266              		.loc 1 105 5 view .LVU51
+ 106:../../opus/silk/LP_variable_cutoff.c **** 
+ 107:../../opus/silk/LP_variable_cutoff.c ****     silk_assert( psLP->transition_frame_no >= 0 && psLP->transition_frame_no <= TRANSITION_FRAMES )
+ 267              		.loc 1 107 100 view .LVU52
+ 108:../../opus/silk/LP_variable_cutoff.c **** 
+ 109:../../opus/silk/LP_variable_cutoff.c ****     /* Run filter if needed */
+ 110:../../opus/silk/LP_variable_cutoff.c ****     if( psLP->mode != 0 ) {
+ 268              		.loc 1 110 5 view .LVU53
+ 269              		.loc 1 110 13 is_stmt 0 view .LVU54
+ 270 0000 C368     		ldr	r3, [r0, #12]
+ 271              		.loc 1 110 7 view .LVU55
+ 272 0002 03B9     		cbnz	r3, .L25
+ 273 0004 7047     		bx	lr
+ 274              	.L25:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 8
+
+
+ 103:../../opus/silk/LP_variable_cutoff.c ****     opus_int32   B_Q28[ TRANSITION_NB ], A_Q28[ TRANSITION_NA ], fac_Q16 = 0;
+ 275              		.loc 1 103 1 view .LVU56
+ 276 0006 70B5     		push	{r4, r5, r6, lr}
+ 277              	.LCFI1:
+ 278              		.cfi_def_cfa_offset 16
+ 279              		.cfi_offset 4, -16
+ 280              		.cfi_offset 5, -12
+ 281              		.cfi_offset 6, -8
+ 282              		.cfi_offset 14, -4
+ 283 0008 88B0     		sub	sp, sp, #32
+ 284              	.LCFI2:
+ 285              		.cfi_def_cfa_offset 48
+ 286 000a 0446     		mov	r4, r0
+ 287 000c 0E46     		mov	r6, r1
+ 288 000e 1546     		mov	r5, r2
+ 111:../../opus/silk/LP_variable_cutoff.c ****         /* Calculate index and interpolation factor for interpolation */
+ 112:../../opus/silk/LP_variable_cutoff.c **** #if( TRANSITION_INT_STEPS == 64 )
+ 113:../../opus/silk/LP_variable_cutoff.c ****         fac_Q16 = silk_LSHIFT( TRANSITION_FRAMES - psLP->transition_frame_no, 16 - 6 );
+ 289              		.loc 1 113 9 is_stmt 1 view .LVU57
+ 290              		.loc 1 113 19 is_stmt 0 view .LVU58
+ 291 0010 8268     		ldr	r2, [r0, #8]
+ 292              	.LVL24:
+ 293              		.loc 1 113 19 view .LVU59
+ 294 0012 C2F58072 		rsb	r2, r2, #256
+ 295              		.loc 1 113 17 view .LVU60
+ 296 0016 9302     		lsls	r3, r2, #10
+ 297              	.LVL25:
+ 114:../../opus/silk/LP_variable_cutoff.c **** #else
+ 115:../../opus/silk/LP_variable_cutoff.c ****         fac_Q16 = silk_DIV32_16( silk_LSHIFT( TRANSITION_FRAMES - psLP->transition_frame_no, 16 ), 
+ 116:../../opus/silk/LP_variable_cutoff.c **** #endif
+ 117:../../opus/silk/LP_variable_cutoff.c ****         ind      = silk_RSHIFT( fac_Q16, 16 );
+ 298              		.loc 1 117 9 is_stmt 1 view .LVU61
+ 118:../../opus/silk/LP_variable_cutoff.c ****         fac_Q16 -= silk_LSHIFT( ind, 16 );
+ 299              		.loc 1 118 9 view .LVU62
+ 119:../../opus/silk/LP_variable_cutoff.c **** 
+ 120:../../opus/silk/LP_variable_cutoff.c ****         silk_assert( ind >= 0 );
+ 300              		.loc 1 120 32 view .LVU63
+ 121:../../opus/silk/LP_variable_cutoff.c ****         silk_assert( ind < TRANSITION_INT_NUM );
+ 301              		.loc 1 121 48 view .LVU64
+ 122:../../opus/silk/LP_variable_cutoff.c **** 
+ 123:../../opus/silk/LP_variable_cutoff.c ****         /* Interpolate filter coefficients */
+ 124:../../opus/silk/LP_variable_cutoff.c ****         silk_LP_interpolate_filter_taps( B_Q28, A_Q28, ind, fac_Q16 );
+ 302              		.loc 1 124 9 view .LVU65
+ 303 0018 03F47C43 		and	r3, r3, #64512
+ 304              	.LVL26:
+ 305              		.loc 1 124 9 is_stmt 0 view .LVU66
+ 306 001c 42F38F12 		sbfx	r2, r2, #6, #16
+ 307              	.LVL27:
+ 308              		.loc 1 124 9 view .LVU67
+ 309 0020 03A9     		add	r1, sp, #12
+ 310              	.LVL28:
+ 311              		.loc 1 124 9 view .LVU68
+ 312 0022 05A8     		add	r0, sp, #20
+ 313              	.LVL29:
+ 314              		.loc 1 124 9 view .LVU69
+ 315 0024 FFF7FEFF 		bl	silk_LP_interpolate_filter_taps
+ 316              	.LVL30:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 9
+
+
+ 125:../../opus/silk/LP_variable_cutoff.c **** 
+ 126:../../opus/silk/LP_variable_cutoff.c ****         /* Update transition frame number for next frame */
+ 127:../../opus/silk/LP_variable_cutoff.c ****         psLP->transition_frame_no = silk_LIMIT( psLP->transition_frame_no + psLP->mode, 0, TRANSITI
+ 317              		.loc 1 127 9 is_stmt 1 view .LVU70
+ 318              		.loc 1 127 37 is_stmt 0 view .LVU71
+ 319 0028 A368     		ldr	r3, [r4, #8]
+ 320 002a E268     		ldr	r2, [r4, #12]
+ 321 002c 1344     		add	r3, r3, r2
+ 322 002e B3F5807F 		cmp	r3, #256
+ 323 0032 0CDC     		bgt	.L20
+ 324              		.loc 1 127 37 discriminator 1 view .LVU72
+ 325 0034 23EAE373 		bic	r3, r3, r3, asr #31
+ 326              	.L19:
+ 327              		.loc 1 127 35 discriminator 4 view .LVU73
+ 328 0038 A360     		str	r3, [r4, #8]
+ 128:../../opus/silk/LP_variable_cutoff.c **** 
+ 129:../../opus/silk/LP_variable_cutoff.c ****         /* ARMA low-pass filtering */
+ 130:../../opus/silk/LP_variable_cutoff.c ****         silk_assert( TRANSITION_NB == 3 && TRANSITION_NA == 2 );
+ 329              		.loc 1 130 64 is_stmt 1 view .LVU74
+ 131:../../opus/silk/LP_variable_cutoff.c ****         silk_biquad_alt_stride1( frame, B_Q28, A_Q28, psLP->In_LP_State, frame, frame_length);
+ 330              		.loc 1 131 9 view .LVU75
+ 331 003a 0195     		str	r5, [sp, #4]
+ 332 003c 0096     		str	r6, [sp]
+ 333 003e 2346     		mov	r3, r4
+ 334 0040 03AA     		add	r2, sp, #12
+ 335 0042 05A9     		add	r1, sp, #20
+ 336 0044 3046     		mov	r0, r6
+ 337 0046 FFF7FEFF 		bl	silk_biquad_alt_stride1
+ 338              	.LVL31:
+ 132:../../opus/silk/LP_variable_cutoff.c ****     }
+ 133:../../opus/silk/LP_variable_cutoff.c **** }
+ 339              		.loc 1 133 1 is_stmt 0 view .LVU76
+ 340 004a 08B0     		add	sp, sp, #32
+ 341              	.LCFI3:
+ 342              		.cfi_remember_state
+ 343              		.cfi_def_cfa_offset 16
+ 344              		@ sp needed
+ 345 004c 70BD     		pop	{r4, r5, r6, pc}
+ 346              	.LVL32:
+ 347              	.L20:
+ 348              	.LCFI4:
+ 349              		.cfi_restore_state
+ 127:../../opus/silk/LP_variable_cutoff.c **** 
+ 350              		.loc 1 127 37 discriminator 2 view .LVU77
+ 351 004e 4FF48073 		mov	r3, #256
+ 352 0052 F1E7     		b	.L19
+ 353              		.cfi_endproc
+ 354              	.LFE26:
+ 356              		.text
+ 357              	.Letext0:
+ 358              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 359              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 360              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 361              		.file 5 "../../opus/include/opus_types.h"
+ 362              		.file 6 "../../opus/silk/structs.h"
+ 363              		.file 7 "../../opus/silk/tables.h"
+ 364              		.file 8 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 10
+
+
+ 365              		.file 9 "../../opus/silk/SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 LP_variable_cutoff.c
+C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s:20     .text.silk_LP_interpolate_filter_taps:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s:25     .text.silk_LP_interpolate_filter_taps:00000000 silk_LP_interpolate_filter_taps
+C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s:244    .text.silk_LP_interpolate_filter_taps:00000154 $d
+C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s:252    .text.silk_LP_variable_cutoff:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccTBqxOS.s:258    .text.silk_LP_variable_cutoff:00000000 silk_LP_variable_cutoff
+
+UNDEFINED SYMBOLS
+silk_Transition_LP_B_Q28
+silk_Transition_LP_A_Q28
+silk_biquad_alt_stride1

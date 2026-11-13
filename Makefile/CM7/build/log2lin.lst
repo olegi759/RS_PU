@@ -1,0 +1,212 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"log2lin.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/log2lin.c"
+  19              		.section	.text.silk_log2lin,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_log2lin
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_log2lin:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/log2lin.c **** /***********************************************************************
+   2:../../opus/silk/log2lin.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/log2lin.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/log2lin.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/log2lin.c **** are met:
+   6:../../opus/silk/log2lin.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/log2lin.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/log2lin.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/log2lin.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/log2lin.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/log2lin.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/log2lin.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/log2lin.c **** products derived from this software without specific prior written
+  14:../../opus/silk/log2lin.c **** permission.
+  15:../../opus/silk/log2lin.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/log2lin.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/log2lin.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/log2lin.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/log2lin.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/log2lin.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/log2lin.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/log2lin.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/log2lin.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/log2lin.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/log2lin.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/log2lin.c **** ***********************************************************************/
+  27:../../opus/silk/log2lin.c **** 
+  28:../../opus/silk/log2lin.c **** #include "opus_config.h"
+  29:../../opus/silk/log2lin.c **** 
+  30:../../opus/silk/log2lin.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s 			page 2
+
+
+  31:../../opus/silk/log2lin.c **** 
+  32:../../opus/silk/log2lin.c **** /* Approximation of 2^() (very close inverse of silk_lin2log()) */
+  33:../../opus/silk/log2lin.c **** /* Convert input to a linear scale    */
+  34:../../opus/silk/log2lin.c **** opus_int32 silk_log2lin(
+  35:../../opus/silk/log2lin.c ****     const opus_int32            inLog_Q7            /* I  input on log scale                       
+  36:../../opus/silk/log2lin.c **** )
+  37:../../opus/silk/log2lin.c **** {
+  29              		.loc 1 37 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  38:../../opus/silk/log2lin.c ****     opus_int32 out, frac_Q7;
+  33              		.loc 1 38 5 view .LVU1
+  39:../../opus/silk/log2lin.c **** 
+  40:../../opus/silk/log2lin.c ****     if( inLog_Q7 < 0 ) {
+  34              		.loc 1 40 5 view .LVU2
+  35              		.loc 1 40 7 is_stmt 0 view .LVU3
+  36 0000 0028     		cmp	r0, #0
+  37              		.loc 1 40 7 view .LVU4
+  38 0002 37DB     		blt	.L4
+  41:../../opus/silk/log2lin.c ****         return 0;
+  42:../../opus/silk/log2lin.c ****     } else if ( inLog_Q7 >= 3967 ) {
+  39              		.loc 1 42 12 is_stmt 1 view .LVU5
+  40              		.loc 1 42 15 is_stmt 0 view .LVU6
+  41 0004 40F67E73 		movw	r3, #3966
+  42 0008 9842     		cmp	r0, r3
+  43 000a 35DC     		bgt	.L5
+  37:../../opus/silk/log2lin.c ****     opus_int32 out, frac_Q7;
+  44              		.loc 1 37 1 view .LVU7
+  45 000c 00B5     		push	{lr}
+  46              	.LCFI0:
+  47              		.cfi_def_cfa_offset 4
+  48              		.cfi_offset 14, -4
+  43:../../opus/silk/log2lin.c ****         return silk_int32_MAX;
+  44:../../opus/silk/log2lin.c ****     }
+  45:../../opus/silk/log2lin.c **** 
+  46:../../opus/silk/log2lin.c ****     out = silk_LSHIFT( 1, silk_RSHIFT( inLog_Q7, 7 ) );
+  49              		.loc 1 46 5 is_stmt 1 view .LVU8
+  50              		.loc 1 46 11 is_stmt 0 view .LVU9
+  51 000e 4FEAE01C 		asr	ip, r0, #7
+  52 0012 0122     		movs	r2, #1
+  53 0014 02FA0CF2 		lsl	r2, r2, ip
+  54              	.LVL1:
+  47:../../opus/silk/log2lin.c ****     frac_Q7 = inLog_Q7 & 0x7F;
+  55              		.loc 1 47 5 is_stmt 1 view .LVU10
+  56              		.loc 1 47 13 is_stmt 0 view .LVU11
+  57 0018 00F07F01 		and	r1, r0, #127
+  58              	.LVL2:
+  48:../../opus/silk/log2lin.c ****     if( inLog_Q7 < 2048 ) {
+  59              		.loc 1 48 5 is_stmt 1 view .LVU12
+  60              		.loc 1 48 7 is_stmt 0 view .LVU13
+  61 001c B0F5006F 		cmp	r0, #2048
+  62 0020 14DA     		bge	.L3
+  49:../../opus/silk/log2lin.c ****         /* Piece-wise parabolic approximation */
+  50:../../opus/silk/log2lin.c ****         out = silk_ADD_RSHIFT32( out, silk_MUL( out, silk_SMLAWB( frac_Q7, silk_SMULBB( frac_Q7, 12
+  63              		.loc 1 50 9 is_stmt 1 view .LVU14
+  64              		.loc 1 50 15 is_stmt 0 view .LVU15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s 			page 3
+
+
+  65 0022 C1F18003 		rsb	r3, r1, #128
+  66 0026 01FB03F3 		mul	r3, r1, r3
+  67 002a 4FEA234E 		asr	lr, r3, #16
+  68 002e 6FF0AD00 		mvn	r0, #173
+  69              	.LVL3:
+  70              		.loc 1 50 15 view .LVU16
+  71 0032 9BB2     		uxth	r3, r3
+  72 0034 00FB03F3 		mul	r3, r0, r3
+  73 0038 1B14     		asrs	r3, r3, #16
+  74 003a 00FB0E33 		mla	r3, r0, lr, r3
+  75 003e 0B44     		add	r3, r3, r1
+  76 0040 03FA0CF3 		lsl	r3, r3, ip
+  77              		.loc 1 50 13 view .LVU17
+  78 0044 02EBE310 		add	r0, r2, r3, asr #7
+  79              	.LVL4:
+  80              	.L1:
+  51:../../opus/silk/log2lin.c ****     } else {
+  52:../../opus/silk/log2lin.c ****         /* Piece-wise parabolic approximation */
+  53:../../opus/silk/log2lin.c ****         out = silk_MLA( out, silk_RSHIFT( out, 7 ), silk_SMLAWB( frac_Q7, silk_SMULBB( frac_Q7, 128
+  54:../../opus/silk/log2lin.c ****     }
+  55:../../opus/silk/log2lin.c ****     return out;
+  56:../../opus/silk/log2lin.c **** }
+  81              		.loc 1 56 1 view .LVU18
+  82 0048 5DF804FB 		ldr	pc, [sp], #4
+  83              	.LVL5:
+  84              	.L3:
+  53:../../opus/silk/log2lin.c ****     }
+  85              		.loc 1 53 9 is_stmt 1 view .LVU19
+  53:../../opus/silk/log2lin.c ****     }
+  86              		.loc 1 53 15 is_stmt 0 view .LVU20
+  87 004c 4FEAE21C 		asr	ip, r2, #7
+  88 0050 C1F18003 		rsb	r3, r1, #128
+  89 0054 01FB03F3 		mul	r3, r1, r3
+  90 0058 4FEA234E 		asr	lr, r3, #16
+  91 005c 6FF0AD00 		mvn	r0, #173
+  92              	.LVL6:
+  53:../../opus/silk/log2lin.c ****     }
+  93              		.loc 1 53 15 view .LVU21
+  94 0060 9BB2     		uxth	r3, r3
+  95 0062 00FB03F3 		mul	r3, r0, r3
+  96 0066 1B14     		asrs	r3, r3, #16
+  97 0068 00FB0E33 		mla	r3, r0, lr, r3
+  98 006c 0B44     		add	r3, r3, r1
+  53:../../opus/silk/log2lin.c ****     }
+  99              		.loc 1 53 13 view .LVU22
+ 100 006e 03FB0C20 		mla	r0, r3, ip, r2
+ 101              	.LVL7:
+  53:../../opus/silk/log2lin.c ****     }
+ 102              		.loc 1 53 13 view .LVU23
+ 103 0072 E9E7     		b	.L1
+ 104              	.LVL8:
+ 105              	.L4:
+ 106              	.LCFI1:
+ 107              		.cfi_def_cfa_offset 0
+ 108              		.cfi_restore 14
+  41:../../opus/silk/log2lin.c ****     } else if ( inLog_Q7 >= 3967 ) {
+ 109              		.loc 1 41 16 view .LVU24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s 			page 4
+
+
+ 110 0074 0020     		movs	r0, #0
+ 111              	.LVL9:
+  41:../../opus/silk/log2lin.c ****     } else if ( inLog_Q7 >= 3967 ) {
+ 112              		.loc 1 41 16 view .LVU25
+ 113 0076 7047     		bx	lr
+ 114              	.LVL10:
+ 115              	.L5:
+  43:../../opus/silk/log2lin.c ****     }
+ 116              		.loc 1 43 16 view .LVU26
+ 117 0078 6FF00040 		mvn	r0, #-2147483648
+ 118              	.LVL11:
+ 119              		.loc 1 56 1 view .LVU27
+ 120 007c 7047     		bx	lr
+ 121              		.cfi_endproc
+ 122              	.LFE19:
+ 124              		.text
+ 125              	.Letext0:
+ 126              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 127              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 128              		.file 4 "../../opus/include/opus_types.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 log2lin.c
+C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s:20     .text.silk_log2lin:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccojgjvy.s:26     .text.silk_log2lin:00000000 silk_log2lin
+
+NO UNDEFINED SYMBOLS

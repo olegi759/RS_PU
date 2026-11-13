@@ -1,0 +1,178 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccSyRq5f.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"resampler_private_AR2.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/resampler_private_AR2.c"
+  19              		.section	.text.silk_resampler_private_AR2,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_resampler_private_AR2
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_resampler_private_AR2:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/resampler_private_AR2.c **** /***********************************************************************
+   2:../../opus/silk/resampler_private_AR2.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/resampler_private_AR2.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/resampler_private_AR2.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/resampler_private_AR2.c **** are met:
+   6:../../opus/silk/resampler_private_AR2.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/resampler_private_AR2.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/resampler_private_AR2.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/resampler_private_AR2.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/resampler_private_AR2.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/resampler_private_AR2.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/resampler_private_AR2.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/resampler_private_AR2.c **** products derived from this software without specific prior written
+  14:../../opus/silk/resampler_private_AR2.c **** permission.
+  15:../../opus/silk/resampler_private_AR2.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/resampler_private_AR2.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/resampler_private_AR2.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/resampler_private_AR2.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/resampler_private_AR2.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/resampler_private_AR2.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/resampler_private_AR2.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/resampler_private_AR2.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/resampler_private_AR2.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/resampler_private_AR2.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/resampler_private_AR2.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/resampler_private_AR2.c **** ***********************************************************************/
+  27:../../opus/silk/resampler_private_AR2.c **** 
+  28:../../opus/silk/resampler_private_AR2.c **** #include "opus_config.h"
+  29:../../opus/silk/resampler_private_AR2.c **** 
+  30:../../opus/silk/resampler_private_AR2.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccSyRq5f.s 			page 2
+
+
+  31:../../opus/silk/resampler_private_AR2.c **** #include "resampler_private.h"
+  32:../../opus/silk/resampler_private_AR2.c **** 
+  33:../../opus/silk/resampler_private_AR2.c **** /* Second order AR filter with single delay elements */
+  34:../../opus/silk/resampler_private_AR2.c **** void silk_resampler_private_AR2(
+  35:../../opus/silk/resampler_private_AR2.c ****     opus_int32                      S[],            /* I/O  State vector [ 2 ]          */
+  36:../../opus/silk/resampler_private_AR2.c ****     opus_int32                      out_Q8[],       /* O    Output signal               */
+  37:../../opus/silk/resampler_private_AR2.c ****     const opus_int16                in[],           /* I    Input signal                */
+  38:../../opus/silk/resampler_private_AR2.c ****     const opus_int16                A_Q14[],        /* I    AR coefficients, Q14        */
+  39:../../opus/silk/resampler_private_AR2.c ****     opus_int32                      len             /* I    Signal length               */
+  40:../../opus/silk/resampler_private_AR2.c **** )
+  41:../../opus/silk/resampler_private_AR2.c **** {
+  29              		.loc 1 41 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 41 1 is_stmt 0 view .LVU1
+  34 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 20
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 059D     		ldr	r5, [sp, #20]
+  42:../../opus/silk/resampler_private_AR2.c ****     opus_int32    k;
+  43              		.loc 1 42 5 is_stmt 1 view .LVU2
+  43:../../opus/silk/resampler_private_AR2.c ****     opus_int32    out32;
+  44              		.loc 1 43 5 view .LVU3
+  44:../../opus/silk/resampler_private_AR2.c **** 
+  45:../../opus/silk/resampler_private_AR2.c ****     for( k = 0; k < len; k++ ) {
+  45              		.loc 1 45 5 view .LVU4
+  46              	.LVL1:
+  47              		.loc 1 45 12 is_stmt 0 view .LVU5
+  48 0004 4FF0000E 		mov	lr, #0
+  49              		.loc 1 45 5 view .LVU6
+  50 0008 20E0     		b	.L2
+  51              	.LVL2:
+  52              	.L3:
+  46:../../opus/silk/resampler_private_AR2.c ****         out32       = silk_ADD_LSHIFT32( S[ 0 ], (opus_int32)in[ k ], 8 );
+  53              		.loc 1 46 9 is_stmt 1 view .LVU7
+  54              		.loc 1 46 23 is_stmt 0 view .LVU8
+  55 000a 0468     		ldr	r4, [r0]
+  56 000c 32F91E60 		ldrsh	r6, [r2, lr, lsl #1]
+  57              		.loc 1 46 21 view .LVU9
+  58 0010 04EB0626 		add	r6, r4, r6, lsl #8
+  59              	.LVL3:
+  47:../../opus/silk/resampler_private_AR2.c ****         out_Q8[ k ] = out32;
+  60              		.loc 1 47 9 is_stmt 1 view .LVU10
+  61              		.loc 1 47 21 is_stmt 0 view .LVU11
+  62 0014 41F82E60 		str	r6, [r1, lr, lsl #2]
+  48:../../opus/silk/resampler_private_AR2.c ****         out32       = silk_LSHIFT( out32, 2 );
+  63              		.loc 1 48 9 is_stmt 1 view .LVU12
+  64              		.loc 1 48 21 is_stmt 0 view .LVU13
+  65 0018 4FEA860C 		lsl	ip, r6, #2
+  66              	.LVL4:
+  49:../../opus/silk/resampler_private_AR2.c ****         S[ 0 ]      = silk_SMLAWB( S[ 1 ], out32, A_Q14[ 0 ] );
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccSyRq5f.s 			page 3
+
+
+  67              		.loc 1 49 9 is_stmt 1 view .LVU14
+  68              		.loc 1 49 23 is_stmt 0 view .LVU15
+  69 001c 46F38F36 		sbfx	r6, r6, #14, #16
+  70 0020 B3F90070 		ldrsh	r7, [r3]
+  71 0024 1FFA8CFC 		uxth	ip, ip
+  72              	.LVL5:
+  73              		.loc 1 49 23 view .LVU16
+  74 0028 0CFB07F4 		mul	r4, ip, r7
+  75 002c 2414     		asrs	r4, r4, #16
+  76 002e 07FB0644 		mla	r4, r7, r6, r4
+  77 0032 4768     		ldr	r7, [r0, #4]
+  78 0034 3C44     		add	r4, r4, r7
+  79              		.loc 1 49 21 view .LVU17
+  80 0036 0460     		str	r4, [r0]
+  81              	.LVL6:
+  50:../../opus/silk/resampler_private_AR2.c ****         S[ 1 ]      = silk_SMULWB( out32, A_Q14[ 1 ] );
+  82              		.loc 1 50 9 is_stmt 1 view .LVU18
+  83              		.loc 1 50 23 is_stmt 0 view .LVU19
+  84 0038 B3F90270 		ldrsh	r7, [r3, #2]
+  85 003c 07FB0CF4 		mul	r4, r7, ip
+  86 0040 2414     		asrs	r4, r4, #16
+  87 0042 07FB0644 		mla	r4, r7, r6, r4
+  88              		.loc 1 50 21 view .LVU20
+  89 0046 4460     		str	r4, [r0, #4]
+  45:../../opus/silk/resampler_private_AR2.c ****         out32       = silk_ADD_LSHIFT32( S[ 0 ], (opus_int32)in[ k ], 8 );
+  90              		.loc 1 45 27 is_stmt 1 discriminator 3 view .LVU21
+  91 0048 0EF1010E 		add	lr, lr, #1
+  92              	.LVL7:
+  93              	.L2:
+  45:../../opus/silk/resampler_private_AR2.c ****         out32       = silk_ADD_LSHIFT32( S[ 0 ], (opus_int32)in[ k ], 8 );
+  94              		.loc 1 45 19 discriminator 1 view .LVU22
+  95 004c AE45     		cmp	lr, r5
+  96 004e DCDB     		blt	.L3
+  51:../../opus/silk/resampler_private_AR2.c ****     }
+  52:../../opus/silk/resampler_private_AR2.c **** }
+  97              		.loc 1 52 1 is_stmt 0 view .LVU23
+  98 0050 F0BD     		pop	{r4, r5, r6, r7, pc}
+  99              		.loc 1 52 1 view .LVU24
+ 100              		.cfi_endproc
+ 101              	.LFE19:
+ 103              		.text
+ 104              	.Letext0:
+ 105              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 106              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 107              		.file 4 "../../opus/include/opus_types.h"
+ 108              		.file 5 "../../opus/silk/resampler_rom.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccSyRq5f.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 resampler_private_AR2.c
+C:\Users\oleg\AppData\Local\Temp\ccSyRq5f.s:20     .text.silk_resampler_private_AR2:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccSyRq5f.s:26     .text.silk_resampler_private_AR2:00000000 silk_resampler_private_AR2
+
+NO UNDEFINED SYMBOLS

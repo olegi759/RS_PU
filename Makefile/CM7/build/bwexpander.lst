@@ -1,0 +1,170 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0adJhd.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"bwexpander.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/bwexpander.c"
+  19              		.section	.text.silk_bwexpander,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_bwexpander
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_bwexpander:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/bwexpander.c **** /***********************************************************************
+   2:../../opus/silk/bwexpander.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/bwexpander.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/bwexpander.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/bwexpander.c **** are met:
+   6:../../opus/silk/bwexpander.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/bwexpander.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/bwexpander.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/bwexpander.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/bwexpander.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/bwexpander.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/bwexpander.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/bwexpander.c **** products derived from this software without specific prior written
+  14:../../opus/silk/bwexpander.c **** permission.
+  15:../../opus/silk/bwexpander.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/bwexpander.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/bwexpander.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/bwexpander.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/bwexpander.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/bwexpander.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/bwexpander.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/bwexpander.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/bwexpander.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/bwexpander.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/bwexpander.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/bwexpander.c **** ***********************************************************************/
+  27:../../opus/silk/bwexpander.c **** 
+  28:../../opus/silk/bwexpander.c **** #include "opus_config.h"
+  29:../../opus/silk/bwexpander.c **** 
+  30:../../opus/silk/bwexpander.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0adJhd.s 			page 2
+
+
+  31:../../opus/silk/bwexpander.c **** 
+  32:../../opus/silk/bwexpander.c **** /* Chirp (bandwidth expand) LP AR filter */
+  33:../../opus/silk/bwexpander.c **** void silk_bwexpander(
+  34:../../opus/silk/bwexpander.c ****     opus_int16                  *ar,                /* I/O  AR filter to be expanded (without leadi
+  35:../../opus/silk/bwexpander.c ****     const opus_int              d,                  /* I    Length of ar                           
+  36:../../opus/silk/bwexpander.c ****     opus_int32                  chirp_Q16           /* I    Chirp factor (typically in the range 0 
+  37:../../opus/silk/bwexpander.c **** )
+  38:../../opus/silk/bwexpander.c **** {
+  29              		.loc 1 38 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 38 1 is_stmt 0 view .LVU1
+  34 0000 00B5     		push	{lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  39:../../opus/silk/bwexpander.c ****     opus_int   i;
+  38              		.loc 1 39 5 is_stmt 1 view .LVU2
+  40:../../opus/silk/bwexpander.c ****     opus_int32 chirp_minus_one_Q16 = chirp_Q16 - 65536;
+  39              		.loc 1 40 5 view .LVU3
+  40              		.loc 1 40 16 is_stmt 0 view .LVU4
+  41 0002 A2F5803E 		sub	lr, r2, #65536
+  42              	.LVL1:
+  41:../../opus/silk/bwexpander.c **** 
+  42:../../opus/silk/bwexpander.c ****     /* NB: Dont use silk_SMULWB, instead of silk_RSHIFT_ROUND( silk_MUL(), 16 ), below.  */
+  43:../../opus/silk/bwexpander.c ****     /* Bias in silk_SMULWB can lead to unstable filters                                */
+  44:../../opus/silk/bwexpander.c ****     for( i = 0; i < d - 1; i++ ) {
+  43              		.loc 1 44 5 is_stmt 1 view .LVU5
+  44              		.loc 1 44 12 is_stmt 0 view .LVU6
+  45 0006 4FF0000C 		mov	ip, #0
+  46              		.loc 1 44 5 view .LVU7
+  47 000a 11E0     		b	.L2
+  48              	.LVL2:
+  49              	.L3:
+  45:../../opus/silk/bwexpander.c ****         ar[ i ]    = (opus_int16)silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, ar[ i ]             ), 16 
+  50              		.loc 1 45 9 is_stmt 1 view .LVU8
+  51              		.loc 1 45 34 is_stmt 0 view .LVU9
+  52 000c 30F91C30 		ldrsh	r3, [r0, ip, lsl #1]
+  53 0010 02FB03F3 		mul	r3, r2, r3
+  54 0014 DB13     		asrs	r3, r3, #15
+  55 0016 0133     		adds	r3, r3, #1
+  56              		.loc 1 45 22 view .LVU10
+  57 0018 43F34F03 		sbfx	r3, r3, #1, #16
+  58              		.loc 1 45 20 view .LVU11
+  59 001c 20F81C30 		strh	r3, [r0, ip, lsl #1]	@ movhi
+  46:../../opus/silk/bwexpander.c ****         chirp_Q16 +=             silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, chirp_minus_one_Q16 ), 16 
+  60              		.loc 1 46 9 is_stmt 1 view .LVU12
+  61              		.loc 1 46 34 is_stmt 0 view .LVU13
+  62 0020 0EFB02F3 		mul	r3, lr, r2
+  63 0024 DB13     		asrs	r3, r3, #15
+  64 0026 0133     		adds	r3, r3, #1
+  65              		.loc 1 46 19 view .LVU14
+  66 0028 02EB6302 		add	r2, r2, r3, asr #1
+  67              	.LVL3:
+  44:../../opus/silk/bwexpander.c ****         ar[ i ]    = (opus_int16)silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, ar[ i ]             ), 16 
+  68              		.loc 1 44 29 is_stmt 1 discriminator 3 view .LVU15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0adJhd.s 			page 3
+
+
+  69 002c 0CF1010C 		add	ip, ip, #1
+  70              	.LVL4:
+  71              	.L2:
+  44:../../opus/silk/bwexpander.c ****         ar[ i ]    = (opus_int16)silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, ar[ i ]             ), 16 
+  72              		.loc 1 44 19 discriminator 1 view .LVU16
+  44:../../opus/silk/bwexpander.c ****         ar[ i ]    = (opus_int16)silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, ar[ i ]             ), 16 
+  73              		.loc 1 44 23 is_stmt 0 discriminator 1 view .LVU17
+  74 0030 4B1E     		subs	r3, r1, #1
+  44:../../opus/silk/bwexpander.c ****         ar[ i ]    = (opus_int16)silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, ar[ i ]             ), 16 
+  75              		.loc 1 44 19 discriminator 1 view .LVU18
+  76 0032 6345     		cmp	r3, ip
+  77 0034 EADC     		bgt	.L3
+  47:../../opus/silk/bwexpander.c ****     }
+  48:../../opus/silk/bwexpander.c ****     ar[ d - 1 ] = (opus_int16)silk_RSHIFT_ROUND( silk_MUL( chirp_Q16, ar[ d - 1 ] ), 16 );
+  78              		.loc 1 48 5 is_stmt 1 view .LVU19
+  79              		.loc 1 48 31 is_stmt 0 view .LVU20
+  80 0036 6FF0004C 		mvn	ip, #-2147483648
+  81              	.LVL5:
+  82              		.loc 1 48 31 view .LVU21
+  83 003a 8C44     		add	ip, ip, r1
+  84 003c 30F91C30 		ldrsh	r3, [r0, ip, lsl #1]
+  85 0040 02FB03F3 		mul	r3, r2, r3
+  86 0044 DB13     		asrs	r3, r3, #15
+  87 0046 0133     		adds	r3, r3, #1
+  88              		.loc 1 48 19 view .LVU22
+  89 0048 43F34F03 		sbfx	r3, r3, #1, #16
+  90              		.loc 1 48 17 view .LVU23
+  91 004c 20F81C30 		strh	r3, [r0, ip, lsl #1]	@ movhi
+  49:../../opus/silk/bwexpander.c **** }
+  92              		.loc 1 49 1 view .LVU24
+  93 0050 5DF804FB 		ldr	pc, [sp], #4
+  94              		.cfi_endproc
+  95              	.LFE19:
+  97              		.text
+  98              	.Letext0:
+  99              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 100              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 101              		.file 4 "../../opus/include/opus_types.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0adJhd.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bwexpander.c
+C:\Users\oleg\AppData\Local\Temp\cc0adJhd.s:20     .text.silk_bwexpander:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc0adJhd.s:26     .text.silk_bwexpander:00000000 silk_bwexpander
+
+NO UNDEFINED SYMBOLS

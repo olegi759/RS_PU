@@ -1,0 +1,3224 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"rate.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/celt/rate.c"
+  19              		.section	.text.interp_bits2pulses,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	interp_bits2pulses:
+  26              	.LVL0:
+  27              	.LFB16:
+   1:../../opus/celt/rate.c **** /* Copyright (c) 2007-2008 CSIRO
+   2:../../opus/celt/rate.c ****    Copyright (c) 2007-2009 Xiph.Org Foundation
+   3:../../opus/celt/rate.c ****    Written by Jean-Marc Valin */
+   4:../../opus/celt/rate.c **** /*
+   5:../../opus/celt/rate.c ****    Redistribution and use in source and binary forms, with or without
+   6:../../opus/celt/rate.c ****    modification, are permitted provided that the following conditions
+   7:../../opus/celt/rate.c ****    are met:
+   8:../../opus/celt/rate.c **** 
+   9:../../opus/celt/rate.c ****    - Redistributions of source code must retain the above copyright
+  10:../../opus/celt/rate.c ****    notice, this list of conditions and the following disclaimer.
+  11:../../opus/celt/rate.c **** 
+  12:../../opus/celt/rate.c ****    - Redistributions in binary form must reproduce the above copyright
+  13:../../opus/celt/rate.c ****    notice, this list of conditions and the following disclaimer in the
+  14:../../opus/celt/rate.c ****    documentation and/or other materials provided with the distribution.
+  15:../../opus/celt/rate.c **** 
+  16:../../opus/celt/rate.c ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  17:../../opus/celt/rate.c ****    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  18:../../opus/celt/rate.c ****    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  19:../../opus/celt/rate.c ****    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  20:../../opus/celt/rate.c ****    OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  21:../../opus/celt/rate.c ****    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  22:../../opus/celt/rate.c ****    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  23:../../opus/celt/rate.c ****    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  24:../../opus/celt/rate.c ****    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  25:../../opus/celt/rate.c ****    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  26:../../opus/celt/rate.c ****    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  27:../../opus/celt/rate.c **** */
+  28:../../opus/celt/rate.c **** 
+  29:../../opus/celt/rate.c **** #include "opus_config.h"
+  30:../../opus/celt/rate.c **** 
+  31:../../opus/celt/rate.c **** #include <math.h>
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 2
+
+
+  32:../../opus/celt/rate.c **** #include "modes.h"
+  33:../../opus/celt/rate.c **** #include "cwrs.h"
+  34:../../opus/celt/rate.c **** #include "arch.h"
+  35:../../opus/celt/rate.c **** #include "os_support.h"
+  36:../../opus/celt/rate.c **** 
+  37:../../opus/celt/rate.c **** #include "entcode.h"
+  38:../../opus/celt/rate.c **** #include "rate.h"
+  39:../../opus/celt/rate.c **** 
+  40:../../opus/celt/rate.c **** static const unsigned char LOG2_FRAC_TABLE[24]={
+  41:../../opus/celt/rate.c ****    0,
+  42:../../opus/celt/rate.c ****    8,13,
+  43:../../opus/celt/rate.c ****   16,19,21,23,
+  44:../../opus/celt/rate.c ****   24,26,27,28,29,30,31,32,
+  45:../../opus/celt/rate.c ****   32,33,34,34,35,36,36,37,37
+  46:../../opus/celt/rate.c **** };
+  47:../../opus/celt/rate.c **** 
+  48:../../opus/celt/rate.c **** #ifdef CUSTOM_MODES
+  49:../../opus/celt/rate.c **** 
+  50:../../opus/celt/rate.c **** /*Determines if V(N,K) fits in a 32-bit unsigned integer.
+  51:../../opus/celt/rate.c ****   N and K are themselves limited to 15 bits.*/
+  52:../../opus/celt/rate.c **** static int fits_in32(int _n, int _k)
+  53:../../opus/celt/rate.c **** {
+  54:../../opus/celt/rate.c ****    static const opus_int16 maxN[15] = {
+  55:../../opus/celt/rate.c ****       32767, 32767, 32767, 1476, 283, 109,  60,  40,
+  56:../../opus/celt/rate.c ****        29,  24,  20,  18,  16,  14,  13};
+  57:../../opus/celt/rate.c ****    static const opus_int16 maxK[15] = {
+  58:../../opus/celt/rate.c ****       32767, 32767, 32767, 32767, 1172, 238,  95,  53,
+  59:../../opus/celt/rate.c ****        36,  27,  22,  18,  16,  15,  13};
+  60:../../opus/celt/rate.c ****    if (_n>=14)
+  61:../../opus/celt/rate.c ****    {
+  62:../../opus/celt/rate.c ****       if (_k>=14)
+  63:../../opus/celt/rate.c ****          return 0;
+  64:../../opus/celt/rate.c ****       else
+  65:../../opus/celt/rate.c ****          return _n <= maxN[_k];
+  66:../../opus/celt/rate.c ****    } else {
+  67:../../opus/celt/rate.c ****       return _k <= maxK[_n];
+  68:../../opus/celt/rate.c ****    }
+  69:../../opus/celt/rate.c **** }
+  70:../../opus/celt/rate.c **** 
+  71:../../opus/celt/rate.c **** void compute_pulse_cache(CELTMode *m, int LM)
+  72:../../opus/celt/rate.c **** {
+  73:../../opus/celt/rate.c ****    int C;
+  74:../../opus/celt/rate.c ****    int i;
+  75:../../opus/celt/rate.c ****    int j;
+  76:../../opus/celt/rate.c ****    int curr=0;
+  77:../../opus/celt/rate.c ****    int nbEntries=0;
+  78:../../opus/celt/rate.c ****    int entryN[100], entryK[100], entryI[100];
+  79:../../opus/celt/rate.c ****    const opus_int16 *eBands = m->eBands;
+  80:../../opus/celt/rate.c ****    PulseCache *cache = &m->cache;
+  81:../../opus/celt/rate.c ****    opus_int16 *cindex;
+  82:../../opus/celt/rate.c ****    unsigned char *bits;
+  83:../../opus/celt/rate.c ****    unsigned char *cap;
+  84:../../opus/celt/rate.c **** 
+  85:../../opus/celt/rate.c ****    cindex = (opus_int16 *)opus_alloc(sizeof(cache->index[0])*m->nbEBands*(LM+2));
+  86:../../opus/celt/rate.c ****    cache->index = cindex;
+  87:../../opus/celt/rate.c **** 
+  88:../../opus/celt/rate.c ****    /* Scan for all unique band sizes */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 3
+
+
+  89:../../opus/celt/rate.c ****    for (i=0;i<=LM+1;i++)
+  90:../../opus/celt/rate.c ****    {
+  91:../../opus/celt/rate.c ****       for (j=0;j<m->nbEBands;j++)
+  92:../../opus/celt/rate.c ****       {
+  93:../../opus/celt/rate.c ****          int k;
+  94:../../opus/celt/rate.c ****          int N = (eBands[j+1]-eBands[j])<<i>>1;
+  95:../../opus/celt/rate.c ****          cindex[i*m->nbEBands+j] = -1;
+  96:../../opus/celt/rate.c ****          /* Find other bands that have the same size */
+  97:../../opus/celt/rate.c ****          for (k=0;k<=i;k++)
+  98:../../opus/celt/rate.c ****          {
+  99:../../opus/celt/rate.c ****             int n;
+ 100:../../opus/celt/rate.c ****             for (n=0;n<m->nbEBands && (k!=i || n<j);n++)
+ 101:../../opus/celt/rate.c ****             {
+ 102:../../opus/celt/rate.c ****                if (N == (eBands[n+1]-eBands[n])<<k>>1)
+ 103:../../opus/celt/rate.c ****                {
+ 104:../../opus/celt/rate.c ****                   cindex[i*m->nbEBands+j] = cindex[k*m->nbEBands+n];
+ 105:../../opus/celt/rate.c ****                   break;
+ 106:../../opus/celt/rate.c ****                }
+ 107:../../opus/celt/rate.c ****             }
+ 108:../../opus/celt/rate.c ****          }
+ 109:../../opus/celt/rate.c ****          if (cache->index[i*m->nbEBands+j] == -1 && N!=0)
+ 110:../../opus/celt/rate.c ****          {
+ 111:../../opus/celt/rate.c ****             int K;
+ 112:../../opus/celt/rate.c ****             entryN[nbEntries] = N;
+ 113:../../opus/celt/rate.c ****             K = 0;
+ 114:../../opus/celt/rate.c ****             while (fits_in32(N,get_pulses(K+1)) && K<MAX_PSEUDO)
+ 115:../../opus/celt/rate.c ****                K++;
+ 116:../../opus/celt/rate.c ****             entryK[nbEntries] = K;
+ 117:../../opus/celt/rate.c ****             cindex[i*m->nbEBands+j] = curr;
+ 118:../../opus/celt/rate.c ****             entryI[nbEntries] = curr;
+ 119:../../opus/celt/rate.c **** 
+ 120:../../opus/celt/rate.c ****             curr += K+1;
+ 121:../../opus/celt/rate.c ****             nbEntries++;
+ 122:../../opus/celt/rate.c ****          }
+ 123:../../opus/celt/rate.c ****       }
+ 124:../../opus/celt/rate.c ****    }
+ 125:../../opus/celt/rate.c ****    bits = (unsigned char *)opus_alloc(sizeof(unsigned char)*curr);
+ 126:../../opus/celt/rate.c ****    cache->bits = bits;
+ 127:../../opus/celt/rate.c ****    cache->size = curr;
+ 128:../../opus/celt/rate.c ****    /* Compute the cache for all unique sizes */
+ 129:../../opus/celt/rate.c ****    for (i=0;i<nbEntries;i++)
+ 130:../../opus/celt/rate.c ****    {
+ 131:../../opus/celt/rate.c ****       unsigned char *ptr = bits+entryI[i];
+ 132:../../opus/celt/rate.c ****       opus_int16 tmp[CELT_MAX_PULSES+1];
+ 133:../../opus/celt/rate.c ****       get_required_bits(tmp, entryN[i], get_pulses(entryK[i]), BITRES);
+ 134:../../opus/celt/rate.c ****       for (j=1;j<=entryK[i];j++)
+ 135:../../opus/celt/rate.c ****          ptr[j] = tmp[get_pulses(j)]-1;
+ 136:../../opus/celt/rate.c ****       ptr[0] = entryK[i];
+ 137:../../opus/celt/rate.c ****    }
+ 138:../../opus/celt/rate.c **** 
+ 139:../../opus/celt/rate.c ****    /* Compute the maximum rate for each band at which we'll reliably use as
+ 140:../../opus/celt/rate.c ****        many bits as we ask for. */
+ 141:../../opus/celt/rate.c ****    cache->caps = cap = (unsigned char *)opus_alloc(sizeof(cache->caps[0])*(LM+1)*2*m->nbEBands);
+ 142:../../opus/celt/rate.c ****    for (i=0;i<=LM;i++)
+ 143:../../opus/celt/rate.c ****    {
+ 144:../../opus/celt/rate.c ****       for (C=1;C<=2;C++)
+ 145:../../opus/celt/rate.c ****       {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 4
+
+
+ 146:../../opus/celt/rate.c ****          for (j=0;j<m->nbEBands;j++)
+ 147:../../opus/celt/rate.c ****          {
+ 148:../../opus/celt/rate.c ****             int N0;
+ 149:../../opus/celt/rate.c ****             int max_bits;
+ 150:../../opus/celt/rate.c ****             N0 = m->eBands[j+1]-m->eBands[j];
+ 151:../../opus/celt/rate.c ****             /* N=1 bands only have a sign bit and fine bits. */
+ 152:../../opus/celt/rate.c ****             if (N0<<i == 1)
+ 153:../../opus/celt/rate.c ****                max_bits = C*(1+MAX_FINE_BITS)<<BITRES;
+ 154:../../opus/celt/rate.c ****             else
+ 155:../../opus/celt/rate.c ****             {
+ 156:../../opus/celt/rate.c ****                const unsigned char *pcache;
+ 157:../../opus/celt/rate.c ****                opus_int32           num;
+ 158:../../opus/celt/rate.c ****                opus_int32           den;
+ 159:../../opus/celt/rate.c ****                int                  LM0;
+ 160:../../opus/celt/rate.c ****                int                  N;
+ 161:../../opus/celt/rate.c ****                int                  offset;
+ 162:../../opus/celt/rate.c ****                int                  ndof;
+ 163:../../opus/celt/rate.c ****                int                  qb;
+ 164:../../opus/celt/rate.c ****                int                  k;
+ 165:../../opus/celt/rate.c ****                LM0 = 0;
+ 166:../../opus/celt/rate.c ****                /* Even-sized bands bigger than N=2 can be split one more time.
+ 167:../../opus/celt/rate.c ****                   As of commit 44203907 all bands >1 are even, including custom modes.*/
+ 168:../../opus/celt/rate.c ****                if (N0 > 2)
+ 169:../../opus/celt/rate.c ****                {
+ 170:../../opus/celt/rate.c ****                   N0>>=1;
+ 171:../../opus/celt/rate.c ****                   LM0--;
+ 172:../../opus/celt/rate.c ****                }
+ 173:../../opus/celt/rate.c ****                /* N0=1 bands can't be split down to N<2. */
+ 174:../../opus/celt/rate.c ****                else if (N0 <= 1)
+ 175:../../opus/celt/rate.c ****                {
+ 176:../../opus/celt/rate.c ****                   LM0=IMIN(i,1);
+ 177:../../opus/celt/rate.c ****                   N0<<=LM0;
+ 178:../../opus/celt/rate.c ****                }
+ 179:../../opus/celt/rate.c ****                /* Compute the cost for the lowest-level PVQ of a fully split
+ 180:../../opus/celt/rate.c ****                    band. */
+ 181:../../opus/celt/rate.c ****                pcache = bits + cindex[(LM0+1)*m->nbEBands+j];
+ 182:../../opus/celt/rate.c ****                max_bits = pcache[pcache[0]]+1;
+ 183:../../opus/celt/rate.c ****                /* Add in the cost of coding regular splits. */
+ 184:../../opus/celt/rate.c ****                N = N0;
+ 185:../../opus/celt/rate.c ****                for(k=0;k<i-LM0;k++){
+ 186:../../opus/celt/rate.c ****                   max_bits <<= 1;
+ 187:../../opus/celt/rate.c ****                   /* Offset the number of qtheta bits by log2(N)/2
+ 188:../../opus/celt/rate.c ****                       + QTHETA_OFFSET compared to their "fair share" of
+ 189:../../opus/celt/rate.c ****                       total/N */
+ 190:../../opus/celt/rate.c ****                   offset = ((m->logN[j]+((LM0+k)<<BITRES))>>1)-QTHETA_OFFSET;
+ 191:../../opus/celt/rate.c ****                   /* The number of qtheta bits we'll allocate if the remainder
+ 192:../../opus/celt/rate.c ****                       is to be max_bits.
+ 193:../../opus/celt/rate.c ****                      The average measured cost for theta is 0.89701 times qb,
+ 194:../../opus/celt/rate.c ****                       approximated here as 459/512. */
+ 195:../../opus/celt/rate.c ****                   num=459*(opus_int32)((2*N-1)*offset+max_bits);
+ 196:../../opus/celt/rate.c ****                   den=((opus_int32)(2*N-1)<<9)-459;
+ 197:../../opus/celt/rate.c ****                   qb = IMIN((num+(den>>1))/den, 57);
+ 198:../../opus/celt/rate.c ****                   celt_assert(qb >= 0);
+ 199:../../opus/celt/rate.c ****                   max_bits += qb;
+ 200:../../opus/celt/rate.c ****                   N <<= 1;
+ 201:../../opus/celt/rate.c ****                }
+ 202:../../opus/celt/rate.c ****                /* Add in the cost of a stereo split, if necessary. */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 5
+
+
+ 203:../../opus/celt/rate.c ****                if (C==2)
+ 204:../../opus/celt/rate.c ****                {
+ 205:../../opus/celt/rate.c ****                   max_bits <<= 1;
+ 206:../../opus/celt/rate.c ****                   offset = ((m->logN[j]+(i<<BITRES))>>1)-(N==2?QTHETA_OFFSET_TWOPHASE:QTHETA_OFFSET
+ 207:../../opus/celt/rate.c ****                   ndof = 2*N-1-(N==2);
+ 208:../../opus/celt/rate.c ****                   /* The average measured cost for theta with the step PDF is
+ 209:../../opus/celt/rate.c ****                       0.95164 times qb, approximated here as 487/512. */
+ 210:../../opus/celt/rate.c ****                   num = (N==2?512:487)*(opus_int32)(max_bits+ndof*offset);
+ 211:../../opus/celt/rate.c ****                   den = ((opus_int32)ndof<<9)-(N==2?512:487);
+ 212:../../opus/celt/rate.c ****                   qb = IMIN((num+(den>>1))/den, (N==2?64:61));
+ 213:../../opus/celt/rate.c ****                   celt_assert(qb >= 0);
+ 214:../../opus/celt/rate.c ****                   max_bits += qb;
+ 215:../../opus/celt/rate.c ****                }
+ 216:../../opus/celt/rate.c ****                /* Add the fine bits we'll use. */
+ 217:../../opus/celt/rate.c ****                /* Compensate for the extra DoF in stereo */
+ 218:../../opus/celt/rate.c ****                ndof = C*N + ((C==2 && N>2) ? 1 : 0);
+ 219:../../opus/celt/rate.c ****                /* Offset the number of fine bits by log2(N)/2 + FINE_OFFSET
+ 220:../../opus/celt/rate.c ****                    compared to their "fair share" of total/N */
+ 221:../../opus/celt/rate.c ****                offset = ((m->logN[j] + (i<<BITRES))>>1)-FINE_OFFSET;
+ 222:../../opus/celt/rate.c ****                /* N=2 is the only point that doesn't match the curve */
+ 223:../../opus/celt/rate.c ****                if (N==2)
+ 224:../../opus/celt/rate.c ****                   offset += 1<<BITRES>>2;
+ 225:../../opus/celt/rate.c ****                /* The number of fine bits we'll allocate if the remainder is
+ 226:../../opus/celt/rate.c ****                    to be max_bits. */
+ 227:../../opus/celt/rate.c ****                num = max_bits+ndof*offset;
+ 228:../../opus/celt/rate.c ****                den = (ndof-1)<<BITRES;
+ 229:../../opus/celt/rate.c ****                qb = IMIN((num+(den>>1))/den, MAX_FINE_BITS);
+ 230:../../opus/celt/rate.c ****                celt_assert(qb >= 0);
+ 231:../../opus/celt/rate.c ****                max_bits += C*qb<<BITRES;
+ 232:../../opus/celt/rate.c ****             }
+ 233:../../opus/celt/rate.c ****             max_bits = (4*max_bits/(C*((m->eBands[j+1]-m->eBands[j])<<i)))-64;
+ 234:../../opus/celt/rate.c ****             celt_assert(max_bits >= 0);
+ 235:../../opus/celt/rate.c ****             celt_assert(max_bits < 256);
+ 236:../../opus/celt/rate.c ****             *cap++ = (unsigned char)max_bits;
+ 237:../../opus/celt/rate.c ****          }
+ 238:../../opus/celt/rate.c ****       }
+ 239:../../opus/celt/rate.c ****    }
+ 240:../../opus/celt/rate.c **** }
+ 241:../../opus/celt/rate.c **** 
+ 242:../../opus/celt/rate.c **** #endif /* CUSTOM_MODES */
+ 243:../../opus/celt/rate.c **** 
+ 244:../../opus/celt/rate.c **** #define ALLOC_STEPS 6
+ 245:../../opus/celt/rate.c **** 
+ 246:../../opus/celt/rate.c **** static OPUS_INLINE int interp_bits2pulses(const CELTMode *m, int start, int end, int skip_start,
+ 247:../../opus/celt/rate.c ****       const int *bits1, const int *bits2, const int *thresh, const int *cap, opus_int32 total, opus
+ 248:../../opus/celt/rate.c ****       int skip_rsv, int *intensity, int intensity_rsv, int *dual_stereo, int dual_stereo_rsv, int *
+ 249:../../opus/celt/rate.c ****       int *ebits, int *fine_priority, int C, int LM, ec_ctx *ec, int encode, int prev, int signalBa
+ 250:../../opus/celt/rate.c **** {
+  28              		.loc 1 250 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 80, pretend = 0, frame = 32
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 250 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 36
+  36              		.cfi_offset 4, -36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 6
+
+
+  37              		.cfi_offset 5, -32
+  38              		.cfi_offset 6, -28
+  39              		.cfi_offset 7, -24
+  40              		.cfi_offset 8, -20
+  41              		.cfi_offset 9, -16
+  42              		.cfi_offset 10, -12
+  43              		.cfi_offset 11, -8
+  44              		.cfi_offset 14, -4
+  45 0004 89B0     		sub	sp, sp, #36
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 72
+  48 0006 0190     		str	r0, [sp, #4]
+  49 0008 0C46     		mov	r4, r1
+  50 000a 0492     		str	r2, [sp, #16]
+  51 000c 0293     		str	r3, [sp, #8]
+  52 000e DDF848E0 		ldr	lr, [sp, #72]
+  53 0012 DDF84C80 		ldr	r8, [sp, #76]
+  54 0016 149E     		ldr	r6, [sp, #80]
+  55 0018 DDF854A0 		ldr	r10, [sp, #84]
+  56 001c 1D9D     		ldr	r5, [sp, #116]
+ 251:../../opus/celt/rate.c ****    opus_int32 psum;
+  57              		.loc 1 251 4 is_stmt 1 view .LVU2
+ 252:../../opus/celt/rate.c ****    int lo, hi;
+  58              		.loc 1 252 4 view .LVU3
+ 253:../../opus/celt/rate.c ****    int i, j;
+  59              		.loc 1 253 4 view .LVU4
+ 254:../../opus/celt/rate.c ****    int logM;
+  60              		.loc 1 254 4 view .LVU5
+ 255:../../opus/celt/rate.c ****    int stereo;
+  61              		.loc 1 255 4 view .LVU6
+ 256:../../opus/celt/rate.c ****    int codedBands=-1;
+  62              		.loc 1 256 4 view .LVU7
+  63              	.LVL1:
+ 257:../../opus/celt/rate.c ****    int alloc_floor;
+  64              		.loc 1 257 4 view .LVU8
+ 258:../../opus/celt/rate.c ****    opus_int32 left, percoeff;
+  65              		.loc 1 258 4 view .LVU9
+ 259:../../opus/celt/rate.c ****    int done;
+  66              		.loc 1 259 4 view .LVU10
+ 260:../../opus/celt/rate.c ****    opus_int32 balance;
+  67              		.loc 1 260 4 view .LVU11
+ 261:../../opus/celt/rate.c ****    SAVE_STACK;
+  68              		.loc 1 261 14 view .LVU12
+ 262:../../opus/celt/rate.c **** 
+ 263:../../opus/celt/rate.c ****    alloc_floor = C<<BITRES;
+  69              		.loc 1 263 4 view .LVU13
+  70              		.loc 1 263 16 is_stmt 0 view .LVU14
+  71 001e 209B     		ldr	r3, [sp, #128]
+  72              	.LVL2:
+  73              		.loc 1 263 16 view .LVU15
+  74 0020 DB00     		lsls	r3, r3, #3
+  75 0022 0693     		str	r3, [sp, #24]
+  76              	.LVL3:
+ 264:../../opus/celt/rate.c ****    stereo = C>1;
+  77              		.loc 1 264 4 is_stmt 1 view .LVU16
+  78              		.loc 1 264 14 is_stmt 0 view .LVU17
+  79 0024 209A     		ldr	r2, [sp, #128]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 7
+
+
+  80              	.LVL4:
+  81              		.loc 1 264 14 view .LVU18
+  82 0026 012A     		cmp	r2, #1
+  83 0028 D4BF     		ite	le
+  84 002a 0022     		movle	r2, #0
+  85 002c 0122     		movgt	r2, #1
+  86 002e 0592     		str	r2, [sp, #20]
+  87              	.LVL5:
+ 265:../../opus/celt/rate.c **** 
+ 266:../../opus/celt/rate.c ****    logM = LM<<BITRES;
+  88              		.loc 1 266 4 is_stmt 1 view .LVU19
+  89              		.loc 1 266 9 is_stmt 0 view .LVU20
+  90 0030 219A     		ldr	r2, [sp, #132]
+  91              	.LVL6:
+  92              		.loc 1 266 9 view .LVU21
+  93 0032 D200     		lsls	r2, r2, #3
+  94 0034 0792     		str	r2, [sp, #28]
+  95              	.LVL7:
+ 267:../../opus/celt/rate.c ****    lo = 0;
+  96              		.loc 1 267 4 is_stmt 1 view .LVU22
+ 268:../../opus/celt/rate.c ****    hi = 1<<ALLOC_STEPS;
+  97              		.loc 1 268 4 view .LVU23
+ 269:../../opus/celt/rate.c ****    for (i=0;i<ALLOC_STEPS;i++)
+  98              		.loc 1 269 4 view .LVU24
+  99              		.loc 1 269 10 is_stmt 0 view .LVU25
+ 100 0036 0022     		movs	r2, #0
+ 101              	.LVL8:
+ 268:../../opus/celt/rate.c ****    hi = 1<<ALLOC_STEPS;
+ 102              		.loc 1 268 7 view .LVU26
+ 103 0038 4FF04009 		mov	r9, #64
+ 104 003c 0092     		str	r2, [sp]
+ 105 003e CDF80C90 		str	r9, [sp, #12]
+ 106 0042 9C46     		mov	ip, r3
+ 107 0044 A946     		mov	r9, r5
+ 108              		.loc 1 269 4 view .LVU27
+ 109 0046 22E0     		b	.L2
+ 110              	.LVL9:
+ 111              	.L4:
+ 112              	.LBB16:
+ 113              	.LBB17:
+ 270:../../opus/celt/rate.c ****    {
+ 271:../../opus/celt/rate.c ****       int mid = (lo+hi)>>1;
+ 272:../../opus/celt/rate.c ****       psum = 0;
+ 273:../../opus/celt/rate.c ****       done = 0;
+ 274:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 275:../../opus/celt/rate.c ****       {
+ 276:../../opus/celt/rate.c ****          int tmp = bits1[j] + (mid*(opus_int32)bits2[j]>>ALLOC_STEPS);
+ 277:../../opus/celt/rate.c ****          if (tmp >= thresh[j] || done)
+ 278:../../opus/celt/rate.c ****          {
+ 279:../../opus/celt/rate.c ****             done = 1;
+ 114              		.loc 1 279 13 is_stmt 1 view .LVU28
+ 280:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 281:../../opus/celt/rate.c ****             psum += IMIN(tmp, cap[j]);
+ 115              		.loc 1 281 13 view .LVU29
+ 116              		.loc 1 281 21 is_stmt 0 view .LVU30
+ 117 0048 5AF82210 		ldr	r1, [r10, r2, lsl #2]
+ 118              		.loc 1 281 18 view .LVU31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 8
+
+
+ 119 004c 9942     		cmp	r1, r3
+ 120 004e D4BF     		ite	le
+ 121 0050 6D18     		addle	r5, r5, r1
+ 122 0052 ED18     		addgt	r5, r5, r3
+ 123              	.LVL10:
+ 279:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 124              		.loc 1 279 18 view .LVU32
+ 125 0054 0121     		movs	r1, #1
+ 126              	.LVL11:
+ 127              	.L6:
+ 279:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 128              		.loc 1 279 18 view .LVU33
+ 129 0056 1046     		mov	r0, r2
+ 130              	.LVL12:
+ 131              	.L3:
+ 279:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 132              		.loc 1 279 18 view .LVU34
+ 133              	.LBE17:
+ 274:../../opus/celt/rate.c ****       {
+ 134              		.loc 1 274 21 is_stmt 1 discriminator 1 view .LVU35
+ 274:../../opus/celt/rate.c ****       {
+ 135              		.loc 1 274 19 is_stmt 0 discriminator 1 view .LVU36
+ 136 0058 421E     		subs	r2, r0, #1
+ 137              	.LVL13:
+ 274:../../opus/celt/rate.c ****       {
+ 138              		.loc 1 274 21 discriminator 1 view .LVU37
+ 139 005a A042     		cmp	r0, r4
+ 140 005c 11DD     		ble	.L59
+ 141              	.LBB18:
+ 276:../../opus/celt/rate.c ****          if (tmp >= thresh[j] || done)
+ 142              		.loc 1 276 10 is_stmt 1 view .LVU38
+ 276:../../opus/celt/rate.c ****          if (tmp >= thresh[j] || done)
+ 143              		.loc 1 276 25 is_stmt 0 view .LVU39
+ 144 005e 5EF82200 		ldr	r0, [lr, r2, lsl #2]
+ 276:../../opus/celt/rate.c ****          if (tmp >= thresh[j] || done)
+ 145              		.loc 1 276 36 view .LVU40
+ 146 0062 58F82230 		ldr	r3, [r8, r2, lsl #2]
+ 276:../../opus/celt/rate.c ****          if (tmp >= thresh[j] || done)
+ 147              		.loc 1 276 35 view .LVU41
+ 148 0066 07FB03F3 		mul	r3, r7, r3
+ 276:../../opus/celt/rate.c ****          if (tmp >= thresh[j] || done)
+ 149              		.loc 1 276 14 view .LVU42
+ 150 006a 00EBA313 		add	r3, r0, r3, asr #6
+ 151              	.LVL14:
+ 277:../../opus/celt/rate.c ****          {
+ 152              		.loc 1 277 10 is_stmt 1 view .LVU43
+ 277:../../opus/celt/rate.c ****          {
+ 153              		.loc 1 277 27 is_stmt 0 view .LVU44
+ 154 006e 56F82200 		ldr	r0, [r6, r2, lsl #2]
+ 277:../../opus/celt/rate.c ****          {
+ 155              		.loc 1 277 13 view .LVU45
+ 156 0072 9842     		cmp	r0, r3
+ 157 0074 E8DD     		ble	.L4
+ 277:../../opus/celt/rate.c ****          {
+ 158              		.loc 1 277 31 discriminator 1 view .LVU46
+ 159 0076 0029     		cmp	r1, #0
+ 160 0078 E6D1     		bne	.L4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 9
+
+
+ 282:../../opus/celt/rate.c ****          } else {
+ 283:../../opus/celt/rate.c ****             if (tmp >= alloc_floor)
+ 161              		.loc 1 283 13 is_stmt 1 view .LVU47
+ 162              		.loc 1 283 16 is_stmt 0 view .LVU48
+ 163 007a 9C45     		cmp	ip, r3
+ 164 007c EBDC     		bgt	.L6
+ 284:../../opus/celt/rate.c ****                psum += alloc_floor;
+ 165              		.loc 1 284 16 is_stmt 1 view .LVU49
+ 166              		.loc 1 284 21 is_stmt 0 view .LVU50
+ 167 007e 6544     		add	r5, r5, ip
+ 168              	.LVL15:
+ 169              		.loc 1 284 21 view .LVU51
+ 170 0080 E9E7     		b	.L6
+ 171              	.LVL16:
+ 172              	.L59:
+ 173              		.loc 1 284 21 view .LVU52
+ 174              	.LBE18:
+ 285:../../opus/celt/rate.c ****          }
+ 286:../../opus/celt/rate.c ****       }
+ 287:../../opus/celt/rate.c ****       if (psum > total)
+ 175              		.loc 1 287 10 view .LVU53
+ 176 0082 5A46     		mov	r2, fp
+ 177              	.LVL17:
+ 178              		.loc 1 287 7 is_stmt 1 view .LVU54
+ 179              		.loc 1 287 10 is_stmt 0 view .LVU55
+ 180 0084 169B     		ldr	r3, [sp, #88]
+ 181 0086 9D42     		cmp	r5, r3
+ 182 0088 0CDD     		ble	.L48
+ 183              	.LVL18:
+ 288:../../opus/celt/rate.c ****          hi = mid;
+ 184              		.loc 1 288 13 view .LVU56
+ 185 008a 0397     		str	r7, [sp, #12]
+ 186              	.LVL19:
+ 187              	.L8:
+ 188              		.loc 1 288 13 view .LVU57
+ 189              	.LBE16:
+ 269:../../opus/celt/rate.c ****    {
+ 190              		.loc 1 269 28 is_stmt 1 discriminator 2 view .LVU58
+ 191 008c 0132     		adds	r2, r2, #1
+ 192              	.LVL20:
+ 193              	.L2:
+ 269:../../opus/celt/rate.c ****    {
+ 194              		.loc 1 269 14 discriminator 1 view .LVU59
+ 195 008e 052A     		cmp	r2, #5
+ 196 0090 0ADC     		bgt	.L60
+ 197              	.LBB19:
+ 271:../../opus/celt/rate.c ****       psum = 0;
+ 198              		.loc 1 271 7 view .LVU60
+ 271:../../opus/celt/rate.c ****       psum = 0;
+ 199              		.loc 1 271 20 is_stmt 0 view .LVU61
+ 200 0092 009B     		ldr	r3, [sp]
+ 201 0094 0399     		ldr	r1, [sp, #12]
+ 202 0096 5F18     		adds	r7, r3, r1
+ 271:../../opus/celt/rate.c ****       psum = 0;
+ 203              		.loc 1 271 11 view .LVU62
+ 204 0098 7F10     		asrs	r7, r7, #1
+ 205              	.LVL21:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 10
+
+
+ 272:../../opus/celt/rate.c ****       done = 0;
+ 206              		.loc 1 272 7 is_stmt 1 view .LVU63
+ 273:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 207              		.loc 1 273 7 view .LVU64
+ 274:../../opus/celt/rate.c ****       {
+ 208              		.loc 1 274 7 view .LVU65
+ 274:../../opus/celt/rate.c ****       {
+ 209              		.loc 1 274 13 is_stmt 0 view .LVU66
+ 210 009a 0498     		ldr	r0, [sp, #16]
+ 273:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 211              		.loc 1 273 12 view .LVU67
+ 212 009c 0021     		movs	r1, #0
+ 272:../../opus/celt/rate.c ****       done = 0;
+ 213              		.loc 1 272 12 view .LVU68
+ 214 009e 0D46     		mov	r5, r1
+ 215 00a0 9346     		mov	fp, r2
+ 274:../../opus/celt/rate.c ****       {
+ 216              		.loc 1 274 7 view .LVU69
+ 217 00a2 D9E7     		b	.L3
+ 218              	.LVL22:
+ 219              	.L48:
+ 289:../../opus/celt/rate.c ****       else
+ 290:../../opus/celt/rate.c ****          lo = mid;
+ 220              		.loc 1 290 13 view .LVU70
+ 221 00a4 0097     		str	r7, [sp]
+ 222              	.LVL23:
+ 223              		.loc 1 290 13 view .LVU71
+ 224 00a6 F1E7     		b	.L8
+ 225              	.LVL24:
+ 226              	.L60:
+ 227              		.loc 1 290 13 view .LVU72
+ 228              	.LBE19:
+ 291:../../opus/celt/rate.c ****    }
+ 292:../../opus/celt/rate.c ****    psum = 0;
+ 293:../../opus/celt/rate.c ****    /*printf ("interp bisection gave %d\n", lo);*/
+ 294:../../opus/celt/rate.c ****    done = 0;
+ 295:../../opus/celt/rate.c ****    for (j=end;j-->start;)
+ 229              		.loc 1 295 10 view .LVU73
+ 230 00a8 DDF800B0 		ldr	fp, [sp]
+ 231 00ac 1A9F     		ldr	r7, [sp, #104]
+ 232 00ae 4D46     		mov	r5, r9
+ 233 00b0 049B     		ldr	r3, [sp, #16]
+ 294:../../opus/celt/rate.c ****    for (j=end;j-->start;)
+ 234              		.loc 1 294 9 view .LVU74
+ 235 00b2 0020     		movs	r0, #0
+ 292:../../opus/celt/rate.c ****    /*printf ("interp bisection gave %d\n", lo);*/
+ 236              		.loc 1 292 9 view .LVU75
+ 237 00b4 8146     		mov	r9, r0
+ 238 00b6 DDF818C0 		ldr	ip, [sp, #24]
+ 239              	.LVL25:
+ 292:../../opus/celt/rate.c ****    /*printf ("interp bisection gave %d\n", lo);*/
+ 240              		.loc 1 292 9 view .LVU76
+ 241 00ba 09E0     		b	.L10
+ 242              	.LVL26:
+ 243              	.L49:
+ 244              	.LBB20:
+ 296:../../opus/celt/rate.c ****    {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 11
+
+
+ 297:../../opus/celt/rate.c ****       int tmp = bits1[j] + ((opus_int32)lo*bits2[j]>>ALLOC_STEPS);
+ 298:../../opus/celt/rate.c ****       if (tmp < thresh[j] && !done)
+ 299:../../opus/celt/rate.c ****       {
+ 300:../../opus/celt/rate.c ****          if (tmp >= alloc_floor)
+ 301:../../opus/celt/rate.c ****             tmp = alloc_floor;
+ 302:../../opus/celt/rate.c ****          else
+ 303:../../opus/celt/rate.c ****             tmp = 0;
+ 304:../../opus/celt/rate.c ****       } else
+ 305:../../opus/celt/rate.c ****          done = 1;
+ 245              		.loc 1 305 15 view .LVU77
+ 246 00bc 0120     		movs	r0, #1
+ 247              	.LVL27:
+ 248              	.L11:
+ 306:../../opus/celt/rate.c ****       /* Don't allocate more than we can actually use */
+ 307:../../opus/celt/rate.c ****       tmp = IMIN(tmp, cap[j]);
+ 249              		.loc 1 307 7 is_stmt 1 view .LVU78
+ 250              		.loc 1 307 13 is_stmt 0 view .LVU79
+ 251 00be 5AF82210 		ldr	r1, [r10, r2, lsl #2]
+ 252              		.loc 1 307 11 view .LVU80
+ 253 00c2 8B42     		cmp	r3, r1
+ 254 00c4 A8BF     		it	ge
+ 255 00c6 0B46     		movge	r3, r1
+ 256              	.LVL28:
+ 308:../../opus/celt/rate.c ****       bits[j] = tmp;
+ 257              		.loc 1 308 7 is_stmt 1 view .LVU81
+ 258              		.loc 1 308 15 is_stmt 0 view .LVU82
+ 259 00c8 45F82230 		str	r3, [r5, r2, lsl #2]
+ 309:../../opus/celt/rate.c ****       psum += tmp;
+ 260              		.loc 1 309 7 is_stmt 1 view .LVU83
+ 261              		.loc 1 309 12 is_stmt 0 view .LVU84
+ 262 00cc 9944     		add	r9, r9, r3
+ 263              	.LVL29:
+ 264              		.loc 1 309 12 view .LVU85
+ 265              	.LBE20:
+ 295:../../opus/celt/rate.c ****    {
+ 266              		.loc 1 295 16 discriminator 1 view .LVU86
+ 267 00ce 1346     		mov	r3, r2
+ 268              	.LVL30:
+ 269              	.L10:
+ 295:../../opus/celt/rate.c ****    {
+ 270              		.loc 1 295 18 is_stmt 1 discriminator 1 view .LVU87
+ 295:../../opus/celt/rate.c ****    {
+ 271              		.loc 1 295 16 is_stmt 0 discriminator 1 view .LVU88
+ 272 00d0 5A1E     		subs	r2, r3, #1
+ 273              	.LVL31:
+ 295:../../opus/celt/rate.c ****    {
+ 274              		.loc 1 295 18 discriminator 1 view .LVU89
+ 275 00d2 A342     		cmp	r3, r4
+ 276 00d4 13DD     		ble	.L61
+ 277              	.LBB21:
+ 297:../../opus/celt/rate.c ****       if (tmp < thresh[j] && !done)
+ 278              		.loc 1 297 7 is_stmt 1 view .LVU90
+ 297:../../opus/celt/rate.c ****       if (tmp < thresh[j] && !done)
+ 279              		.loc 1 297 22 is_stmt 0 view .LVU91
+ 280 00d6 5EF82210 		ldr	r1, [lr, r2, lsl #2]
+ 297:../../opus/celt/rate.c ****       if (tmp < thresh[j] && !done)
+ 281              		.loc 1 297 49 view .LVU92
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 12
+
+
+ 282 00da 58F82230 		ldr	r3, [r8, r2, lsl #2]
+ 297:../../opus/celt/rate.c ****       if (tmp < thresh[j] && !done)
+ 283              		.loc 1 297 43 view .LVU93
+ 284 00de 0BFB03F3 		mul	r3, fp, r3
+ 297:../../opus/celt/rate.c ****       if (tmp < thresh[j] && !done)
+ 285              		.loc 1 297 11 view .LVU94
+ 286 00e2 01EBA313 		add	r3, r1, r3, asr #6
+ 287              	.LVL32:
+ 298:../../opus/celt/rate.c ****       {
+ 288              		.loc 1 298 7 is_stmt 1 view .LVU95
+ 298:../../opus/celt/rate.c ****       {
+ 289              		.loc 1 298 23 is_stmt 0 view .LVU96
+ 290 00e6 56F82210 		ldr	r1, [r6, r2, lsl #2]
+ 298:../../opus/celt/rate.c ****       {
+ 291              		.loc 1 298 10 view .LVU97
+ 292 00ea 9942     		cmp	r1, r3
+ 293 00ec E6DD     		ble	.L49
+ 298:../../opus/celt/rate.c ****       {
+ 294              		.loc 1 298 27 discriminator 1 view .LVU98
+ 295 00ee 0028     		cmp	r0, #0
+ 296 00f0 E5D1     		bne	.L11
+ 300:../../opus/celt/rate.c ****             tmp = alloc_floor;
+ 297              		.loc 1 300 10 is_stmt 1 view .LVU99
+ 300:../../opus/celt/rate.c ****             tmp = alloc_floor;
+ 298              		.loc 1 300 13 is_stmt 0 view .LVU100
+ 299 00f2 9C45     		cmp	ip, r3
+ 300 00f4 01DC     		bgt	.L50
+ 301:../../opus/celt/rate.c ****          else
+ 301              		.loc 1 301 17 view .LVU101
+ 302 00f6 6346     		mov	r3, ip
+ 303              	.LVL33:
+ 301:../../opus/celt/rate.c ****          else
+ 304              		.loc 1 301 17 view .LVU102
+ 305 00f8 E1E7     		b	.L11
+ 306              	.LVL34:
+ 307              	.L50:
+ 303:../../opus/celt/rate.c ****       } else
+ 308              		.loc 1 303 17 view .LVU103
+ 309 00fa 0346     		mov	r3, r0
+ 310              	.LVL35:
+ 303:../../opus/celt/rate.c ****       } else
+ 311              		.loc 1 303 17 view .LVU104
+ 312 00fc DFE7     		b	.L11
+ 313              	.LVL36:
+ 314              	.L61:
+ 303:../../opus/celt/rate.c ****       } else
+ 315              		.loc 1 303 17 view .LVU105
+ 316              	.LBE21:
+ 310:../../opus/celt/rate.c ****    }
+ 311:../../opus/celt/rate.c **** 
+ 312:../../opus/celt/rate.c ****    /* Decide which bands to skip, working backwards from the end. */
+ 313:../../opus/celt/rate.c ****    for (codedBands=end;;codedBands--)
+ 317              		.loc 1 313 19 view .LVU106
+ 318 00fe DDF810B0 		ldr	fp, [sp, #16]
+ 319 0102 0094     		str	r4, [sp]
+ 320              	.LVL37:
+ 321              		.loc 1 313 19 view .LVU107
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 13
+
+
+ 322 0104 CDF854A0 		str	r10, [sp, #84]
+ 323              	.LVL38:
+ 324              		.loc 1 313 19 view .LVU108
+ 325 0108 B246     		mov	r10, r6
+ 326 010a 069E     		ldr	r6, [sp, #24]
+ 327 010c 49E0     		b	.L13
+ 328              	.LVL39:
+ 329              	.L62:
+ 330              	.LBB22:
+ 314:../../opus/celt/rate.c ****    {
+ 315:../../opus/celt/rate.c ****       int band_width;
+ 316:../../opus/celt/rate.c ****       int band_bits;
+ 317:../../opus/celt/rate.c ****       int rem;
+ 318:../../opus/celt/rate.c ****       j = codedBands-1;
+ 319:../../opus/celt/rate.c ****       /* Never skip the first band, nor a band that has been boosted by
+ 320:../../opus/celt/rate.c ****           dynalloc.
+ 321:../../opus/celt/rate.c ****          In the first case, we'd be coding a bit to signal we're going to waste
+ 322:../../opus/celt/rate.c ****           all the other bits.
+ 323:../../opus/celt/rate.c ****          In the second case, we'd be coding a bit to redistribute all the bits
+ 324:../../opus/celt/rate.c ****           we just signaled should be cocentrated in this band. */
+ 325:../../opus/celt/rate.c ****       if (j<=skip_start)
+ 326:../../opus/celt/rate.c ****       {
+ 327:../../opus/celt/rate.c ****          /* Give the bit we reserved to end skipping back. */
+ 328:../../opus/celt/rate.c ****          total += skip_rsv;
+ 331              		.loc 1 328 16 view .LVU109
+ 332 010e 009C     		ldr	r4, [sp]
+ 333              	.LVL40:
+ 334              		.loc 1 328 16 view .LVU110
+ 335 0110 DDF854A0 		ldr	r10, [sp, #84]
+ 336              		.loc 1 328 10 is_stmt 1 view .LVU111
+ 337              		.loc 1 328 16 is_stmt 0 view .LVU112
+ 338 0114 189B     		ldr	r3, [sp, #96]
+ 339 0116 169A     		ldr	r2, [sp, #88]
+ 340 0118 1A44     		add	r2, r2, r3
+ 341 011a 1692     		str	r2, [sp, #88]
+ 342              	.LVL41:
+ 329:../../opus/celt/rate.c ****          break;
+ 343              		.loc 1 329 10 is_stmt 1 view .LVU113
+ 344              	.L15:
+ 345              		.loc 1 329 10 is_stmt 0 view .LVU114
+ 346              	.LBE22:
+ 330:../../opus/celt/rate.c ****       }
+ 331:../../opus/celt/rate.c ****       /*Figure out how many left-over bits we would be adding to this band.
+ 332:../../opus/celt/rate.c ****         This can include bits we've stolen back from higher, skipped bands.*/
+ 333:../../opus/celt/rate.c ****       left = total-psum;
+ 334:../../opus/celt/rate.c ****       percoeff = celt_udiv(left, m->eBands[codedBands]-m->eBands[start]);
+ 335:../../opus/celt/rate.c ****       left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 336:../../opus/celt/rate.c ****       rem = IMAX(left-(m->eBands[j]-m->eBands[start]),0);
+ 337:../../opus/celt/rate.c ****       band_width = m->eBands[codedBands]-m->eBands[j];
+ 338:../../opus/celt/rate.c ****       band_bits = (int)(bits[j] + percoeff*band_width + rem);
+ 339:../../opus/celt/rate.c ****       /*Only code a skip decision if we're above the threshold for this band.
+ 340:../../opus/celt/rate.c ****         Otherwise it is force-skipped.
+ 341:../../opus/celt/rate.c ****         This ensures that we have enough bits to code the skip flag.*/
+ 342:../../opus/celt/rate.c ****       if (band_bits >= IMAX(thresh[j], alloc_floor+(1<<BITRES)))
+ 343:../../opus/celt/rate.c ****       {
+ 344:../../opus/celt/rate.c ****          if (encode)
+ 345:../../opus/celt/rate.c ****          {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 14
+
+
+ 346:../../opus/celt/rate.c ****             /*This if() block is the only part of the allocation function that
+ 347:../../opus/celt/rate.c ****                is not a mandatory part of the bitstream: any bands we choose to
+ 348:../../opus/celt/rate.c ****                skip here must be explicitly signaled.*/
+ 349:../../opus/celt/rate.c ****             int depth_threshold;
+ 350:../../opus/celt/rate.c ****             /*We choose a threshold with some hysteresis to keep bands from
+ 351:../../opus/celt/rate.c ****                fluctuating in and out, but we try not to fold below a certain point. */
+ 352:../../opus/celt/rate.c ****             if (codedBands > 17)
+ 353:../../opus/celt/rate.c ****                depth_threshold = j<prev ? 7 : 9;
+ 354:../../opus/celt/rate.c ****             else
+ 355:../../opus/celt/rate.c ****                depth_threshold = 0;
+ 356:../../opus/celt/rate.c **** #ifdef FUZZING
+ 357:../../opus/celt/rate.c ****             (void)signalBandwidth;
+ 358:../../opus/celt/rate.c ****             (void)depth_threshold;
+ 359:../../opus/celt/rate.c ****             if ((rand()&0x1) == 0)
+ 360:../../opus/celt/rate.c **** #else
+ 361:../../opus/celt/rate.c ****             if (codedBands<=start+2 || (band_bits > (depth_threshold*band_width<<LM<<BITRES)>>4 && 
+ 362:../../opus/celt/rate.c **** #endif
+ 363:../../opus/celt/rate.c ****             {
+ 364:../../opus/celt/rate.c ****                ec_enc_bit_logp(ec, 1, 1);
+ 365:../../opus/celt/rate.c ****                break;
+ 366:../../opus/celt/rate.c ****             }
+ 367:../../opus/celt/rate.c ****             ec_enc_bit_logp(ec, 0, 1);
+ 368:../../opus/celt/rate.c ****          } else if (ec_dec_bit_logp(ec, 1)) {
+ 369:../../opus/celt/rate.c ****             break;
+ 370:../../opus/celt/rate.c ****          }
+ 371:../../opus/celt/rate.c ****          /*We used a bit to skip this band.*/
+ 372:../../opus/celt/rate.c ****          psum += 1<<BITRES;
+ 373:../../opus/celt/rate.c ****          band_bits -= 1<<BITRES;
+ 374:../../opus/celt/rate.c ****       }
+ 375:../../opus/celt/rate.c ****       /*Reclaim the bits originally allocated to this band.*/
+ 376:../../opus/celt/rate.c ****       psum -= bits[j]+intensity_rsv;
+ 377:../../opus/celt/rate.c ****       if (intensity_rsv > 0)
+ 378:../../opus/celt/rate.c ****          intensity_rsv = LOG2_FRAC_TABLE[j-start];
+ 379:../../opus/celt/rate.c ****       psum += intensity_rsv;
+ 380:../../opus/celt/rate.c ****       if (band_bits >= alloc_floor)
+ 381:../../opus/celt/rate.c ****       {
+ 382:../../opus/celt/rate.c ****          /*If we have enough for a fine energy bit per channel, use it.*/
+ 383:../../opus/celt/rate.c ****          psum += alloc_floor;
+ 384:../../opus/celt/rate.c ****          bits[j] = alloc_floor;
+ 385:../../opus/celt/rate.c ****       } else {
+ 386:../../opus/celt/rate.c ****          /*Otherwise this band gets nothing at all.*/
+ 387:../../opus/celt/rate.c ****          bits[j] = 0;
+ 388:../../opus/celt/rate.c ****       }
+ 389:../../opus/celt/rate.c ****    }
+ 390:../../opus/celt/rate.c **** 
+ 391:../../opus/celt/rate.c ****    celt_assert(codedBands > start);
+ 347              		.loc 1 391 35 is_stmt 1 view .LVU115
+ 392:../../opus/celt/rate.c ****    /* Code the intensity and dual stereo parameters. */
+ 393:../../opus/celt/rate.c ****    if (intensity_rsv > 0)
+ 348              		.loc 1 393 4 view .LVU116
+ 349              		.loc 1 393 7 is_stmt 0 view .LVU117
+ 350 011c 002F     		cmp	r7, #0
+ 351 011e 40F39A80 		ble	.L25
+ 394:../../opus/celt/rate.c ****    {
+ 395:../../opus/celt/rate.c ****       if (encode)
+ 352              		.loc 1 395 7 is_stmt 1 view .LVU118
+ 353              		.loc 1 395 10 is_stmt 0 view .LVU119
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 15
+
+
+ 354 0122 239B     		ldr	r3, [sp, #140]
+ 355 0124 002B     		cmp	r3, #0
+ 356 0126 00F08C80 		beq	.L26
+ 396:../../opus/celt/rate.c ****       {
+ 397:../../opus/celt/rate.c ****          *intensity = IMIN(*intensity, codedBands);
+ 357              		.loc 1 397 10 is_stmt 1 view .LVU120
+ 358              		.loc 1 397 23 is_stmt 0 view .LVU121
+ 359 012a 199B     		ldr	r3, [sp, #100]
+ 360 012c 1B68     		ldr	r3, [r3]
+ 361 012e 5B45     		cmp	r3, fp
+ 362 0130 A8BF     		it	ge
+ 363 0132 5B46     		movge	r3, fp
+ 364 0134 1946     		mov	r1, r3
+ 365              		.loc 1 397 21 view .LVU122
+ 366 0136 199B     		ldr	r3, [sp, #100]
+ 367 0138 1960     		str	r1, [r3]
+ 398:../../opus/celt/rate.c ****          ec_enc_uint(ec, *intensity-start, codedBands+1-start);
+ 368              		.loc 1 398 10 is_stmt 1 view .LVU123
+ 369              		.loc 1 398 54 is_stmt 0 view .LVU124
+ 370 013a 0BF10102 		add	r2, fp, #1
+ 371              		.loc 1 398 10 view .LVU125
+ 372 013e 121B     		subs	r2, r2, r4
+ 373 0140 091B     		subs	r1, r1, r4
+ 374 0142 2298     		ldr	r0, [sp, #136]
+ 375 0144 FFF7FEFF 		bl	ec_enc_uint
+ 376              	.LVL42:
+ 377 0148 88E0     		b	.L27
+ 378              	.LVL43:
+ 379              	.L51:
+ 380              	.LBB27:
+ 381              	.LBB23:
+ 355:../../opus/celt/rate.c **** #ifdef FUZZING
+ 382              		.loc 1 355 32 view .LVU126
+ 383 014a 0023     		movs	r3, #0
+ 384              	.L18:
+ 385              	.LVL44:
+ 361:../../opus/celt/rate.c **** #endif
+ 386              		.loc 1 361 13 is_stmt 1 view .LVU127
+ 361:../../opus/celt/rate.c **** #endif
+ 387              		.loc 1 361 34 is_stmt 0 view .LVU128
+ 388 014c 009A     		ldr	r2, [sp]
+ 389 014e 0232     		adds	r2, r2, #2
+ 361:../../opus/celt/rate.c **** #endif
+ 390              		.loc 1 361 16 view .LVU129
+ 391 0150 5A45     		cmp	r2, fp
+ 392 0152 5FDA     		bge	.L19
+ 361:../../opus/celt/rate.c **** #endif
+ 393              		.loc 1 361 69 discriminator 1 view .LVU130
+ 394 0154 0CFB03F3 		mul	r3, ip, r3
+ 395              	.LVL45:
+ 361:../../opus/celt/rate.c **** #endif
+ 396              		.loc 1 361 80 discriminator 1 view .LVU131
+ 397 0158 219A     		ldr	r2, [sp, #132]
+ 398 015a 9340     		lsls	r3, r3, r2
+ 361:../../opus/celt/rate.c **** #endif
+ 399              		.loc 1 361 93 discriminator 1 view .LVU132
+ 400 015c 43F35B03 		sbfx	r3, r3, #1, #28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 16
+
+
+ 361:../../opus/celt/rate.c **** #endif
+ 401              		.loc 1 361 37 discriminator 1 view .LVU133
+ 402 0160 4345     		cmp	r3, r8
+ 403 0162 02DA     		bge	.L20
+ 361:../../opus/celt/rate.c **** #endif
+ 404              		.loc 1 361 97 discriminator 2 view .LVU134
+ 405 0164 259B     		ldr	r3, [sp, #148]
+ 406 0166 9C42     		cmp	r4, r3
+ 407 0168 54DD     		ble	.L19
+ 408              	.L20:
+ 367:../../opus/celt/rate.c ****          } else if (ec_dec_bit_logp(ec, 1)) {
+ 409              		.loc 1 367 13 is_stmt 1 view .LVU135
+ 410 016a 0122     		movs	r2, #1
+ 411 016c 0021     		movs	r1, #0
+ 412              	.LVL46:
+ 367:../../opus/celt/rate.c ****          } else if (ec_dec_bit_logp(ec, 1)) {
+ 413              		.loc 1 367 13 is_stmt 0 view .LVU136
+ 414 016e 2298     		ldr	r0, [sp, #136]
+ 415 0170 FFF7FEFF 		bl	ec_enc_bit_logp
+ 416              	.LVL47:
+ 417              	.L21:
+ 367:../../opus/celt/rate.c ****          } else if (ec_dec_bit_logp(ec, 1)) {
+ 418              		.loc 1 367 13 view .LVU137
+ 419              	.LBE23:
+ 372:../../opus/celt/rate.c ****          band_bits -= 1<<BITRES;
+ 420              		.loc 1 372 10 is_stmt 1 view .LVU138
+ 372:../../opus/celt/rate.c ****          band_bits -= 1<<BITRES;
+ 421              		.loc 1 372 15 is_stmt 0 view .LVU139
+ 422 0174 09F10809 		add	r9, r9, #8
+ 423              	.LVL48:
+ 373:../../opus/celt/rate.c ****       }
+ 424              		.loc 1 373 10 is_stmt 1 view .LVU140
+ 373:../../opus/celt/rate.c ****       }
+ 425              		.loc 1 373 20 is_stmt 0 view .LVU141
+ 426 0178 A8F10808 		sub	r8, r8, #8
+ 427              	.LVL49:
+ 428              	.L16:
+ 376:../../opus/celt/rate.c ****       if (intensity_rsv > 0)
+ 429              		.loc 1 376 7 is_stmt 1 view .LVU142
+ 376:../../opus/celt/rate.c ****       if (intensity_rsv > 0)
+ 430              		.loc 1 376 19 is_stmt 0 view .LVU143
+ 431 017c 55F82430 		ldr	r3, [r5, r4, lsl #2]
+ 376:../../opus/celt/rate.c ****       if (intensity_rsv > 0)
+ 432              		.loc 1 376 22 view .LVU144
+ 433 0180 3B44     		add	r3, r3, r7
+ 376:../../opus/celt/rate.c ****       if (intensity_rsv > 0)
+ 434              		.loc 1 376 12 view .LVU145
+ 435 0182 A9EB0303 		sub	r3, r9, r3
+ 436              	.LVL50:
+ 377:../../opus/celt/rate.c ****          intensity_rsv = LOG2_FRAC_TABLE[j-start];
+ 437              		.loc 1 377 7 is_stmt 1 view .LVU146
+ 377:../../opus/celt/rate.c ****          intensity_rsv = LOG2_FRAC_TABLE[j-start];
+ 438              		.loc 1 377 10 is_stmt 0 view .LVU147
+ 439 0186 002F     		cmp	r7, #0
+ 440 0188 03DD     		ble	.L22
+ 378:../../opus/celt/rate.c ****       psum += intensity_rsv;
+ 441              		.loc 1 378 10 is_stmt 1 view .LVU148
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 17
+
+
+ 378:../../opus/celt/rate.c ****       psum += intensity_rsv;
+ 442              		.loc 1 378 43 is_stmt 0 view .LVU149
+ 443 018a 009A     		ldr	r2, [sp]
+ 444 018c A21A     		subs	r2, r4, r2
+ 378:../../opus/celt/rate.c ****       psum += intensity_rsv;
+ 445              		.loc 1 378 41 view .LVU150
+ 446 018e B449     		ldr	r1, .L65
+ 447 0190 8F5C     		ldrb	r7, [r1, r2]	@ zero_extendqisi2
+ 448              	.LVL51:
+ 449              	.L22:
+ 379:../../opus/celt/rate.c ****       if (band_bits >= alloc_floor)
+ 450              		.loc 1 379 7 is_stmt 1 view .LVU151
+ 379:../../opus/celt/rate.c ****       if (band_bits >= alloc_floor)
+ 451              		.loc 1 379 12 is_stmt 0 view .LVU152
+ 452 0192 07EB0309 		add	r9, r7, r3
+ 453              	.LVL52:
+ 380:../../opus/celt/rate.c ****       {
+ 454              		.loc 1 380 7 is_stmt 1 view .LVU153
+ 380:../../opus/celt/rate.c ****       {
+ 455              		.loc 1 380 10 is_stmt 0 view .LVU154
+ 456 0196 B045     		cmp	r8, r6
+ 457 0198 4FDB     		blt	.L23
+ 383:../../opus/celt/rate.c ****          bits[j] = alloc_floor;
+ 458              		.loc 1 383 10 is_stmt 1 view .LVU155
+ 383:../../opus/celt/rate.c ****          bits[j] = alloc_floor;
+ 459              		.loc 1 383 15 is_stmt 0 view .LVU156
+ 460 019a B144     		add	r9, r9, r6
+ 461              	.LVL53:
+ 384:../../opus/celt/rate.c ****       } else {
+ 462              		.loc 1 384 10 is_stmt 1 view .LVU157
+ 384:../../opus/celt/rate.c ****       } else {
+ 463              		.loc 1 384 18 is_stmt 0 view .LVU158
+ 464 019c 45F82460 		str	r6, [r5, r4, lsl #2]
+ 465              	.L24:
+ 384:../../opus/celt/rate.c ****       } else {
+ 466              		.loc 1 384 18 view .LVU159
+ 467              	.LBE27:
+ 295:../../opus/celt/rate.c ****    {
+ 468              		.loc 1 295 16 discriminator 1 view .LVU160
+ 469 01a0 A346     		mov	fp, r4
+ 470              	.LVL54:
+ 471              	.L13:
+ 472              	.LBB28:
+ 315:../../opus/celt/rate.c ****       int band_bits;
+ 473              		.loc 1 315 7 is_stmt 1 view .LVU161
+ 316:../../opus/celt/rate.c ****       int rem;
+ 474              		.loc 1 316 7 view .LVU162
+ 317:../../opus/celt/rate.c ****       j = codedBands-1;
+ 475              		.loc 1 317 7 view .LVU163
+ 318:../../opus/celt/rate.c ****       /* Never skip the first band, nor a band that has been boosted by
+ 476              		.loc 1 318 7 view .LVU164
+ 318:../../opus/celt/rate.c ****       /* Never skip the first band, nor a band that has been boosted by
+ 477              		.loc 1 318 9 is_stmt 0 view .LVU165
+ 478 01a2 0BF1FF34 		add	r4, fp, #-1
+ 479              	.LVL55:
+ 325:../../opus/celt/rate.c ****       {
+ 480              		.loc 1 325 7 is_stmt 1 view .LVU166
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 18
+
+
+ 325:../../opus/celt/rate.c ****       {
+ 481              		.loc 1 325 10 is_stmt 0 view .LVU167
+ 482 01a6 029B     		ldr	r3, [sp, #8]
+ 483 01a8 9C42     		cmp	r4, r3
+ 484 01aa B0DD     		ble	.L62
+ 333:../../opus/celt/rate.c ****       percoeff = celt_udiv(left, m->eBands[codedBands]-m->eBands[start]);
+ 485              		.loc 1 333 7 is_stmt 1 view .LVU168
+ 333:../../opus/celt/rate.c ****       percoeff = celt_udiv(left, m->eBands[codedBands]-m->eBands[start]);
+ 486              		.loc 1 333 12 is_stmt 0 view .LVU169
+ 487 01ac 169B     		ldr	r3, [sp, #88]
+ 488 01ae A3EB0902 		sub	r2, r3, r9
+ 334:../../opus/celt/rate.c ****       left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 489              		.loc 1 334 7 is_stmt 1 view .LVU170
+ 334:../../opus/celt/rate.c ****       left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 490              		.loc 1 334 35 is_stmt 0 view .LVU171
+ 491 01b2 019B     		ldr	r3, [sp, #4]
+ 492 01b4 D3F818C0 		ldr	ip, [r3, #24]
+ 334:../../opus/celt/rate.c ****       left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 493              		.loc 1 334 43 view .LVU172
+ 494 01b8 3CF91B00 		ldrsh	r0, [ip, fp, lsl #1]
+ 334:../../opus/celt/rate.c ****       left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 495              		.loc 1 334 65 view .LVU173
+ 496 01bc 009B     		ldr	r3, [sp]
+ 497 01be 3CF91330 		ldrsh	r3, [ip, r3, lsl #1]
+ 334:../../opus/celt/rate.c ****       left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 498              		.loc 1 334 55 view .LVU174
+ 499 01c2 A0EB030E 		sub	lr, r0, r3
+ 500              	.LVL56:
+ 501              	.LBB24:
+ 502              	.LBI24:
+ 503              		.file 2 "../../opus/celt/entcode.h"
+   1:../../opus/celt/entcode.h **** /* Copyright (c) 2001-2011 Timothy B. Terriberry
+   2:../../opus/celt/entcode.h ****    Copyright (c) 2008-2009 Xiph.Org Foundation */
+   3:../../opus/celt/entcode.h **** /*
+   4:../../opus/celt/entcode.h ****    Redistribution and use in source and binary forms, with or without
+   5:../../opus/celt/entcode.h ****    modification, are permitted provided that the following conditions
+   6:../../opus/celt/entcode.h ****    are met:
+   7:../../opus/celt/entcode.h **** 
+   8:../../opus/celt/entcode.h ****    - Redistributions of source code must retain the above copyright
+   9:../../opus/celt/entcode.h ****    notice, this list of conditions and the following disclaimer.
+  10:../../opus/celt/entcode.h **** 
+  11:../../opus/celt/entcode.h ****    - Redistributions in binary form must reproduce the above copyright
+  12:../../opus/celt/entcode.h ****    notice, this list of conditions and the following disclaimer in the
+  13:../../opus/celt/entcode.h ****    documentation and/or other materials provided with the distribution.
+  14:../../opus/celt/entcode.h **** 
+  15:../../opus/celt/entcode.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  16:../../opus/celt/entcode.h ****    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  17:../../opus/celt/entcode.h ****    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  18:../../opus/celt/entcode.h ****    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  19:../../opus/celt/entcode.h ****    OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  20:../../opus/celt/entcode.h ****    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  21:../../opus/celt/entcode.h ****    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  22:../../opus/celt/entcode.h ****    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  23:../../opus/celt/entcode.h ****    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  24:../../opus/celt/entcode.h ****    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  25:../../opus/celt/entcode.h ****    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/celt/entcode.h **** */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 19
+
+
+  27:../../opus/celt/entcode.h **** 
+  28:../../opus/celt/entcode.h **** #include "arch.h"
+  29:../../opus/celt/entcode.h **** #include "opus_types.h"
+  30:../../opus/celt/entcode.h **** #include "opus_defines.h"
+  31:../../opus/celt/entcode.h **** 
+  32:../../opus/celt/entcode.h **** #if !defined(_entcode_H)
+  33:../../opus/celt/entcode.h **** # define _entcode_H (1)
+  34:../../opus/celt/entcode.h **** # include <limits.h>
+  35:../../opus/celt/entcode.h **** # include <stddef.h>
+  36:../../opus/celt/entcode.h **** # include "ecintrin.h"
+  37:../../opus/celt/entcode.h **** 
+  38:../../opus/celt/entcode.h **** extern const opus_uint32 SMALL_DIV_TABLE[129];
+  39:../../opus/celt/entcode.h **** 
+  40:../../opus/celt/entcode.h **** #ifdef OPUS_ARM_ASM
+  41:../../opus/celt/entcode.h **** #define USE_SMALL_DIV_TABLE
+  42:../../opus/celt/entcode.h **** #endif
+  43:../../opus/celt/entcode.h **** 
+  44:../../opus/celt/entcode.h **** /*OPT: ec_window must be at least 32 bits, but if you have fast arithmetic on a
+  45:../../opus/celt/entcode.h ****    larger type, you can speed up the decoder by using it here.*/
+  46:../../opus/celt/entcode.h **** typedef opus_uint32           ec_window;
+  47:../../opus/celt/entcode.h **** typedef struct ec_ctx         ec_ctx;
+  48:../../opus/celt/entcode.h **** typedef struct ec_ctx         ec_enc;
+  49:../../opus/celt/entcode.h **** typedef struct ec_ctx         ec_dec;
+  50:../../opus/celt/entcode.h **** 
+  51:../../opus/celt/entcode.h **** # define EC_WINDOW_SIZE ((int)sizeof(ec_window)*CHAR_BIT)
+  52:../../opus/celt/entcode.h **** 
+  53:../../opus/celt/entcode.h **** /*The number of bits to use for the range-coded part of unsigned integers.*/
+  54:../../opus/celt/entcode.h **** # define EC_UINT_BITS   (8)
+  55:../../opus/celt/entcode.h **** 
+  56:../../opus/celt/entcode.h **** /*The resolution of fractional-precision bit usage measurements, i.e.,
+  57:../../opus/celt/entcode.h ****    3 => 1/8th bits.*/
+  58:../../opus/celt/entcode.h **** # define BITRES 3
+  59:../../opus/celt/entcode.h **** 
+  60:../../opus/celt/entcode.h **** /*The entropy encoder/decoder context.
+  61:../../opus/celt/entcode.h ****   We use the same structure for both, so that common functions like ec_tell()
+  62:../../opus/celt/entcode.h ****    can be used on either one.*/
+  63:../../opus/celt/entcode.h **** struct ec_ctx{
+  64:../../opus/celt/entcode.h ****    /*Buffered input/output.*/
+  65:../../opus/celt/entcode.h ****    unsigned char *buf;
+  66:../../opus/celt/entcode.h ****    /*The size of the buffer.*/
+  67:../../opus/celt/entcode.h ****    opus_uint32    storage;
+  68:../../opus/celt/entcode.h ****    /*The offset at which the last byte containing raw bits was read/written.*/
+  69:../../opus/celt/entcode.h ****    opus_uint32    end_offs;
+  70:../../opus/celt/entcode.h ****    /*Bits that will be read from/written at the end.*/
+  71:../../opus/celt/entcode.h ****    ec_window      end_window;
+  72:../../opus/celt/entcode.h ****    /*Number of valid bits in end_window.*/
+  73:../../opus/celt/entcode.h ****    int            nend_bits;
+  74:../../opus/celt/entcode.h ****    /*The total number of whole bits read/written.
+  75:../../opus/celt/entcode.h ****      This does not include partial bits currently in the range coder.*/
+  76:../../opus/celt/entcode.h ****    int            nbits_total;
+  77:../../opus/celt/entcode.h ****    /*The offset at which the next range coder byte will be read/written.*/
+  78:../../opus/celt/entcode.h ****    opus_uint32    offs;
+  79:../../opus/celt/entcode.h ****    /*The number of values in the current range.*/
+  80:../../opus/celt/entcode.h ****    opus_uint32    rng;
+  81:../../opus/celt/entcode.h ****    /*In the decoder: the difference between the top of the current range and
+  82:../../opus/celt/entcode.h ****       the input value, minus one.
+  83:../../opus/celt/entcode.h ****      In the encoder: the low end of the current range.*/
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 20
+
+
+  84:../../opus/celt/entcode.h ****    opus_uint32    val;
+  85:../../opus/celt/entcode.h ****    /*In the decoder: the saved normalization factor from ec_decode().
+  86:../../opus/celt/entcode.h ****      In the encoder: the number of oustanding carry propagating symbols.*/
+  87:../../opus/celt/entcode.h ****    opus_uint32    ext;
+  88:../../opus/celt/entcode.h ****    /*A buffered input/output symbol, awaiting carry propagation.*/
+  89:../../opus/celt/entcode.h ****    int            rem;
+  90:../../opus/celt/entcode.h ****    /*Nonzero if an error occurred.*/
+  91:../../opus/celt/entcode.h ****    int            error;
+  92:../../opus/celt/entcode.h **** };
+  93:../../opus/celt/entcode.h **** 
+  94:../../opus/celt/entcode.h **** static OPUS_INLINE opus_uint32 ec_range_bytes(ec_ctx *_this){
+  95:../../opus/celt/entcode.h ****   return _this->offs;
+  96:../../opus/celt/entcode.h **** }
+  97:../../opus/celt/entcode.h **** 
+  98:../../opus/celt/entcode.h **** static OPUS_INLINE unsigned char *ec_get_buffer(ec_ctx *_this){
+  99:../../opus/celt/entcode.h ****   return _this->buf;
+ 100:../../opus/celt/entcode.h **** }
+ 101:../../opus/celt/entcode.h **** 
+ 102:../../opus/celt/entcode.h **** static OPUS_INLINE int ec_get_error(ec_ctx *_this){
+ 103:../../opus/celt/entcode.h ****   return _this->error;
+ 104:../../opus/celt/entcode.h **** }
+ 105:../../opus/celt/entcode.h **** 
+ 106:../../opus/celt/entcode.h **** /*Returns the number of bits "used" by the encoded or decoded symbols so far.
+ 107:../../opus/celt/entcode.h ****   This same number can be computed in either the encoder or the decoder, and is
+ 108:../../opus/celt/entcode.h ****    suitable for making coding decisions.
+ 109:../../opus/celt/entcode.h ****   Return: The number of bits.
+ 110:../../opus/celt/entcode.h ****           This will always be slightly larger than the exact value (e.g., all
+ 111:../../opus/celt/entcode.h ****            rounding error is in the positive direction).*/
+ 112:../../opus/celt/entcode.h **** static OPUS_INLINE int ec_tell(ec_ctx *_this){
+ 113:../../opus/celt/entcode.h ****   return _this->nbits_total-EC_ILOG(_this->rng);
+ 114:../../opus/celt/entcode.h **** }
+ 115:../../opus/celt/entcode.h **** 
+ 116:../../opus/celt/entcode.h **** /*Returns the number of bits "used" by the encoded or decoded symbols so far.
+ 117:../../opus/celt/entcode.h ****   This same number can be computed in either the encoder or the decoder, and is
+ 118:../../opus/celt/entcode.h ****    suitable for making coding decisions.
+ 119:../../opus/celt/entcode.h ****   Return: The number of bits scaled by 2**BITRES.
+ 120:../../opus/celt/entcode.h ****           This will always be slightly larger than the exact value (e.g., all
+ 121:../../opus/celt/entcode.h ****            rounding error is in the positive direction).*/
+ 122:../../opus/celt/entcode.h **** opus_uint32 ec_tell_frac(ec_ctx *_this);
+ 123:../../opus/celt/entcode.h **** 
+ 124:../../opus/celt/entcode.h **** /* Tested exhaustively for all n and for 1<=d<=256 */
+ 125:../../opus/celt/entcode.h **** static OPUS_INLINE opus_uint32 celt_udiv(opus_uint32 n, opus_uint32 d) {
+ 504              		.loc 2 125 32 is_stmt 1 view .LVU175
+ 505              	.LBB25:
+ 126:../../opus/celt/entcode.h ****    celt_sig_assert(d>0);
+ 506              		.loc 2 126 24 view .LVU176
+ 127:../../opus/celt/entcode.h **** #ifdef USE_SMALL_DIV_TABLE
+ 128:../../opus/celt/entcode.h ****    if (d>256)
+ 129:../../opus/celt/entcode.h ****       return n/d;
+ 130:../../opus/celt/entcode.h ****    else {
+ 131:../../opus/celt/entcode.h ****       opus_uint32 t, q;
+ 132:../../opus/celt/entcode.h ****       t = EC_ILOG(d&-d);
+ 133:../../opus/celt/entcode.h ****       q = (opus_uint64)SMALL_DIV_TABLE[d>>t]*(n>>(t-1))>>32;
+ 134:../../opus/celt/entcode.h ****       return q+(n-q*d >= d);
+ 135:../../opus/celt/entcode.h ****    }
+ 136:../../opus/celt/entcode.h **** #else
+ 137:../../opus/celt/entcode.h ****    return n/d;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 21
+
+
+ 507              		.loc 2 137 4 view .LVU177
+ 508              		.loc 2 137 12 is_stmt 0 view .LVU178
+ 509 01c6 B2FBFEF1 		udiv	r1, r2, lr
+ 510              	.LVL57:
+ 511              		.loc 2 137 12 view .LVU179
+ 512              	.LBE25:
+ 513              	.LBE24:
+ 335:../../opus/celt/rate.c ****       rem = IMAX(left-(m->eBands[j]-m->eBands[start]),0);
+ 514              		.loc 1 335 7 is_stmt 1 view .LVU180
+ 335:../../opus/celt/rate.c ****       rem = IMAX(left-(m->eBands[j]-m->eBands[start]),0);
+ 515              		.loc 1 335 12 is_stmt 0 view .LVU181
+ 516 01ca 01FB1E22 		mls	r2, r1, lr, r2
+ 517              	.LVL58:
+ 336:../../opus/celt/rate.c ****       band_width = m->eBands[codedBands]-m->eBands[j];
+ 518              		.loc 1 336 7 is_stmt 1 view .LVU182
+ 336:../../opus/celt/rate.c ****       band_width = m->eBands[codedBands]-m->eBands[j];
+ 519              		.loc 1 336 13 is_stmt 0 view .LVU183
+ 520 01ce 3CF914C0 		ldrsh	ip, [ip, r4, lsl #1]
+ 521 01d2 ACEB0303 		sub	r3, ip, r3
+ 522 01d6 D31A     		subs	r3, r2, r3
+ 523              	.LVL59:
+ 337:../../opus/celt/rate.c ****       band_bits = (int)(bits[j] + percoeff*band_width + rem);
+ 524              		.loc 1 337 7 is_stmt 1 view .LVU184
+ 337:../../opus/celt/rate.c ****       band_bits = (int)(bits[j] + percoeff*band_width + rem);
+ 525              		.loc 1 337 18 is_stmt 0 view .LVU185
+ 526 01d8 A0EB0C0C 		sub	ip, r0, ip
+ 527              	.LVL60:
+ 338:../../opus/celt/rate.c ****       /*Only code a skip decision if we're above the threshold for this band.
+ 528              		.loc 1 338 7 is_stmt 1 view .LVU186
+ 338:../../opus/celt/rate.c ****       /*Only code a skip decision if we're above the threshold for this band.
+ 529              		.loc 1 338 29 is_stmt 0 view .LVU187
+ 530 01dc 55F82420 		ldr	r2, [r5, r4, lsl #2]
+ 531              	.LVL61:
+ 338:../../opus/celt/rate.c ****       /*Only code a skip decision if we're above the threshold for this band.
+ 532              		.loc 1 338 33 view .LVU188
+ 533 01e0 0CFB0128 		mla	r8, ip, r1, r2
+ 338:../../opus/celt/rate.c ****       /*Only code a skip decision if we're above the threshold for this band.
+ 534              		.loc 1 338 17 view .LVU189
+ 535 01e4 002B     		cmp	r3, #0
+ 536 01e6 A8BF     		it	ge
+ 537 01e8 9844     		addge	r8, r8, r3
+ 538              	.LVL62:
+ 342:../../opus/celt/rate.c ****       {
+ 539              		.loc 1 342 7 is_stmt 1 view .LVU190
+ 342:../../opus/celt/rate.c ****       {
+ 540              		.loc 1 342 24 is_stmt 0 view .LVU191
+ 541 01ea 06F10803 		add	r3, r6, #8
+ 542              	.LVL63:
+ 342:../../opus/celt/rate.c ****       {
+ 543              		.loc 1 342 24 view .LVU192
+ 544 01ee 5AF82420 		ldr	r2, [r10, r4, lsl #2]
+ 545 01f2 9342     		cmp	r3, r2
+ 546 01f4 B8BF     		it	lt
+ 547 01f6 1346     		movlt	r3, r2
+ 342:../../opus/celt/rate.c ****       {
+ 548              		.loc 1 342 10 view .LVU193
+ 549 01f8 4345     		cmp	r3, r8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 22
+
+
+ 550 01fa BFDC     		bgt	.L16
+ 344:../../opus/celt/rate.c ****          {
+ 551              		.loc 1 344 10 is_stmt 1 view .LVU194
+ 344:../../opus/celt/rate.c ****          {
+ 552              		.loc 1 344 13 is_stmt 0 view .LVU195
+ 553 01fc 239B     		ldr	r3, [sp, #140]
+ 554 01fe 93B1     		cbz	r3, .L17
+ 555              	.LBB26:
+ 349:../../opus/celt/rate.c ****             /*We choose a threshold with some hysteresis to keep bands from
+ 556              		.loc 1 349 13 is_stmt 1 view .LVU196
+ 352:../../opus/celt/rate.c ****                depth_threshold = j<prev ? 7 : 9;
+ 557              		.loc 1 352 13 view .LVU197
+ 352:../../opus/celt/rate.c ****                depth_threshold = j<prev ? 7 : 9;
+ 558              		.loc 1 352 16 is_stmt 0 view .LVU198
+ 559 0200 BBF1110F 		cmp	fp, #17
+ 560 0204 A1DD     		ble	.L51
+ 353:../../opus/celt/rate.c ****             else
+ 561              		.loc 1 353 16 is_stmt 1 view .LVU199
+ 353:../../opus/celt/rate.c ****             else
+ 562              		.loc 1 353 45 is_stmt 0 view .LVU200
+ 563 0206 249B     		ldr	r3, [sp, #144]
+ 564 0208 9C42     		cmp	r4, r3
+ 565 020a 01DA     		bge	.L52
+ 353:../../opus/celt/rate.c ****             else
+ 566              		.loc 1 353 45 discriminator 1 view .LVU201
+ 567 020c 0723     		movs	r3, #7
+ 568 020e 9DE7     		b	.L18
+ 569              	.L52:
+ 353:../../opus/celt/rate.c ****             else
+ 570              		.loc 1 353 45 discriminator 2 view .LVU202
+ 571 0210 0923     		movs	r3, #9
+ 572 0212 9BE7     		b	.L18
+ 573              	.LVL64:
+ 574              	.L19:
+ 364:../../opus/celt/rate.c ****                break;
+ 575              		.loc 1 364 16 view .LVU203
+ 576 0214 009C     		ldr	r4, [sp]
+ 577              	.LVL65:
+ 364:../../opus/celt/rate.c ****                break;
+ 578              		.loc 1 364 16 view .LVU204
+ 579 0216 DDF854A0 		ldr	r10, [sp, #84]
+ 364:../../opus/celt/rate.c ****                break;
+ 580              		.loc 1 364 16 is_stmt 1 view .LVU205
+ 581 021a 0122     		movs	r2, #1
+ 582 021c 1146     		mov	r1, r2
+ 583              	.LVL66:
+ 364:../../opus/celt/rate.c ****                break;
+ 584              		.loc 1 364 16 is_stmt 0 view .LVU206
+ 585 021e 2298     		ldr	r0, [sp, #136]
+ 586 0220 FFF7FEFF 		bl	ec_enc_bit_logp
+ 587              	.LVL67:
+ 365:../../opus/celt/rate.c ****             }
+ 588              		.loc 1 365 16 is_stmt 1 view .LVU207
+ 589 0224 7AE7     		b	.L15
+ 590              	.LVL68:
+ 591              	.L17:
+ 365:../../opus/celt/rate.c ****             }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 23
+
+
+ 592              		.loc 1 365 16 is_stmt 0 view .LVU208
+ 593              	.LBE26:
+ 368:../../opus/celt/rate.c ****             break;
+ 594              		.loc 1 368 17 is_stmt 1 view .LVU209
+ 368:../../opus/celt/rate.c ****             break;
+ 595              		.loc 1 368 21 is_stmt 0 view .LVU210
+ 596 0226 0121     		movs	r1, #1
+ 597              	.LVL69:
+ 368:../../opus/celt/rate.c ****             break;
+ 598              		.loc 1 368 21 view .LVU211
+ 599 0228 2298     		ldr	r0, [sp, #136]
+ 600 022a FFF7FEFF 		bl	ec_dec_bit_logp
+ 601              	.LVL70:
+ 368:../../opus/celt/rate.c ****             break;
+ 602              		.loc 1 368 20 discriminator 1 view .LVU212
+ 603 022e 0028     		cmp	r0, #0
+ 604 0230 A0D0     		beq	.L21
+ 605 0232 009C     		ldr	r4, [sp]
+ 606              	.LVL71:
+ 368:../../opus/celt/rate.c ****             break;
+ 607              		.loc 1 368 20 discriminator 1 view .LVU213
+ 608 0234 DDF854A0 		ldr	r10, [sp, #84]
+ 609 0238 70E7     		b	.L15
+ 610              	.LVL72:
+ 611              	.L23:
+ 387:../../opus/celt/rate.c ****       }
+ 612              		.loc 1 387 10 is_stmt 1 view .LVU214
+ 387:../../opus/celt/rate.c ****       }
+ 613              		.loc 1 387 18 is_stmt 0 view .LVU215
+ 614 023a 0023     		movs	r3, #0
+ 615 023c 45F82430 		str	r3, [r5, r4, lsl #2]
+ 616 0240 AEE7     		b	.L24
+ 617              	.LVL73:
+ 618              	.L26:
+ 387:../../opus/celt/rate.c ****       }
+ 619              		.loc 1 387 18 view .LVU216
+ 620              	.LBE28:
+ 399:../../opus/celt/rate.c ****       }
+ 400:../../opus/celt/rate.c ****       else
+ 401:../../opus/celt/rate.c ****          *intensity = start+ec_dec_uint(ec, codedBands+1-start);
+ 621              		.loc 1 401 10 is_stmt 1 view .LVU217
+ 622              		.loc 1 401 55 is_stmt 0 view .LVU218
+ 623 0242 0BF10101 		add	r1, fp, #1
+ 624              		.loc 1 401 29 view .LVU219
+ 625 0246 091B     		subs	r1, r1, r4
+ 626 0248 2298     		ldr	r0, [sp, #136]
+ 627 024a FFF7FEFF 		bl	ec_dec_uint
+ 628              	.LVL74:
+ 629              		.loc 1 401 28 discriminator 1 view .LVU220
+ 630 024e 2044     		add	r0, r0, r4
+ 631              		.loc 1 401 21 discriminator 1 view .LVU221
+ 632 0250 199B     		ldr	r3, [sp, #100]
+ 633 0252 1860     		str	r0, [r3]
+ 634 0254 02E0     		b	.L27
+ 635              	.L25:
+ 402:../../opus/celt/rate.c ****    }
+ 403:../../opus/celt/rate.c ****    else
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 24
+
+
+ 404:../../opus/celt/rate.c ****       *intensity = 0;
+ 636              		.loc 1 404 7 is_stmt 1 view .LVU222
+ 637              		.loc 1 404 18 is_stmt 0 view .LVU223
+ 638 0256 0023     		movs	r3, #0
+ 639 0258 199A     		ldr	r2, [sp, #100]
+ 640 025a 1360     		str	r3, [r2]
+ 641              	.L27:
+ 405:../../opus/celt/rate.c ****    if (*intensity <= start)
+ 642              		.loc 1 405 4 is_stmt 1 view .LVU224
+ 643              		.loc 1 405 8 is_stmt 0 view .LVU225
+ 644 025c 199B     		ldr	r3, [sp, #100]
+ 645 025e 1B68     		ldr	r3, [r3]
+ 646              		.loc 1 405 7 view .LVU226
+ 647 0260 A342     		cmp	r3, r4
+ 648 0262 17DC     		bgt	.L28
+ 406:../../opus/celt/rate.c ****    {
+ 407:../../opus/celt/rate.c ****       total += dual_stereo_rsv;
+ 649              		.loc 1 407 7 is_stmt 1 view .LVU227
+ 650              		.loc 1 407 13 is_stmt 0 view .LVU228
+ 651 0264 169B     		ldr	r3, [sp, #88]
+ 652 0266 1C9A     		ldr	r2, [sp, #112]
+ 653 0268 1344     		add	r3, r3, r2
+ 654 026a 1693     		str	r3, [sp, #88]
+ 655              	.LVL75:
+ 408:../../opus/celt/rate.c ****       dual_stereo_rsv = 0;
+ 656              		.loc 1 408 7 is_stmt 1 view .LVU229
+ 409:../../opus/celt/rate.c ****    }
+ 410:../../opus/celt/rate.c ****    if (dual_stereo_rsv > 0)
+ 657              		.loc 1 410 4 view .LVU230
+ 658              	.L29:
+ 411:../../opus/celt/rate.c ****    {
+ 412:../../opus/celt/rate.c ****       if (encode)
+ 413:../../opus/celt/rate.c ****          ec_enc_bit_logp(ec, *dual_stereo, 1);
+ 414:../../opus/celt/rate.c ****       else
+ 415:../../opus/celt/rate.c ****          *dual_stereo = ec_dec_bit_logp(ec, 1);
+ 416:../../opus/celt/rate.c ****    }
+ 417:../../opus/celt/rate.c ****    else
+ 418:../../opus/celt/rate.c ****       *dual_stereo = 0;
+ 659              		.loc 1 418 7 view .LVU231
+ 660              		.loc 1 418 20 is_stmt 0 view .LVU232
+ 661 026c 0023     		movs	r3, #0
+ 662 026e 1B9A     		ldr	r2, [sp, #108]
+ 663 0270 1360     		str	r3, [r2]
+ 664              	.L31:
+ 419:../../opus/celt/rate.c **** 
+ 420:../../opus/celt/rate.c ****    /* Allocate the remaining bits */
+ 421:../../opus/celt/rate.c ****    left = total-psum;
+ 665              		.loc 1 421 4 is_stmt 1 view .LVU233
+ 666              		.loc 1 421 9 is_stmt 0 view .LVU234
+ 667 0272 169B     		ldr	r3, [sp, #88]
+ 668 0274 A3EB0903 		sub	r3, r3, r9
+ 669              	.LVL76:
+ 422:../../opus/celt/rate.c ****    percoeff = celt_udiv(left, m->eBands[codedBands]-m->eBands[start]);
+ 670              		.loc 1 422 4 is_stmt 1 view .LVU235
+ 671              		.loc 1 422 32 is_stmt 0 view .LVU236
+ 672 0278 0198     		ldr	r0, [sp, #4]
+ 673 027a 8169     		ldr	r1, [r0, #24]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 25
+
+
+ 674              		.loc 1 422 40 view .LVU237
+ 675 027c 31F91B20 		ldrsh	r2, [r1, fp, lsl #1]
+ 676              		.loc 1 422 62 view .LVU238
+ 677 0280 31F91410 		ldrsh	r1, [r1, r4, lsl #1]
+ 678              		.loc 1 422 52 view .LVU239
+ 679 0284 521A     		subs	r2, r2, r1
+ 680              	.LVL77:
+ 681              	.LBB29:
+ 682              	.LBI29:
+ 125:../../opus/celt/entcode.h ****    celt_sig_assert(d>0);
+ 683              		.loc 2 125 32 is_stmt 1 view .LVU240
+ 684              	.LBB30:
+ 126:../../opus/celt/entcode.h **** #ifdef USE_SMALL_DIV_TABLE
+ 685              		.loc 2 126 24 view .LVU241
+ 686              		.loc 2 137 4 view .LVU242
+ 687              		.loc 2 137 12 is_stmt 0 view .LVU243
+ 688 0286 B3FBF2FC 		udiv	ip, r3, r2
+ 689              	.LVL78:
+ 690              		.loc 2 137 12 view .LVU244
+ 691              	.LBE30:
+ 692              	.LBE29:
+ 423:../../opus/celt/rate.c ****    left -= (m->eBands[codedBands]-m->eBands[start])*percoeff;
+ 693              		.loc 1 423 4 is_stmt 1 view .LVU245
+ 694              		.loc 1 423 9 is_stmt 0 view .LVU246
+ 695 028a 0CFB1233 		mls	r3, ip, r2, r3
+ 696              	.LVL79:
+ 424:../../opus/celt/rate.c ****    for (j=start;j<codedBands;j++)
+ 697              		.loc 1 424 4 is_stmt 1 view .LVU247
+ 698              		.loc 1 424 10 is_stmt 0 view .LVU248
+ 699 028e 2246     		mov	r2, r4
+ 700 0290 8646     		mov	lr, r0
+ 701              		.loc 1 424 4 view .LVU249
+ 702 0292 21E0     		b	.L32
+ 703              	.LVL80:
+ 704              	.L28:
+ 410:../../opus/celt/rate.c ****    {
+ 705              		.loc 1 410 4 is_stmt 1 view .LVU250
+ 410:../../opus/celt/rate.c ****    {
+ 706              		.loc 1 410 7 is_stmt 0 view .LVU251
+ 707 0294 1C9B     		ldr	r3, [sp, #112]
+ 708 0296 002B     		cmp	r3, #0
+ 709 0298 E8DD     		ble	.L29
+ 412:../../opus/celt/rate.c ****          ec_enc_bit_logp(ec, *dual_stereo, 1);
+ 710              		.loc 1 412 7 is_stmt 1 view .LVU252
+ 412:../../opus/celt/rate.c ****          ec_enc_bit_logp(ec, *dual_stereo, 1);
+ 711              		.loc 1 412 10 is_stmt 0 view .LVU253
+ 712 029a 239B     		ldr	r3, [sp, #140]
+ 713 029c 33B1     		cbz	r3, .L30
+ 413:../../opus/celt/rate.c ****       else
+ 714              		.loc 1 413 10 is_stmt 1 view .LVU254
+ 715 029e 0122     		movs	r2, #1
+ 716 02a0 1B9B     		ldr	r3, [sp, #108]
+ 717 02a2 1968     		ldr	r1, [r3]
+ 718 02a4 2298     		ldr	r0, [sp, #136]
+ 719 02a6 FFF7FEFF 		bl	ec_enc_bit_logp
+ 720              	.LVL81:
+ 721 02aa E2E7     		b	.L31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 26
+
+
+ 722              	.L30:
+ 415:../../opus/celt/rate.c ****    }
+ 723              		.loc 1 415 10 view .LVU255
+ 415:../../opus/celt/rate.c ****    }
+ 724              		.loc 1 415 25 is_stmt 0 view .LVU256
+ 725 02ac 0121     		movs	r1, #1
+ 726 02ae 2298     		ldr	r0, [sp, #136]
+ 727 02b0 FFF7FEFF 		bl	ec_dec_bit_logp
+ 728              	.LVL82:
+ 415:../../opus/celt/rate.c ****    }
+ 729              		.loc 1 415 23 discriminator 1 view .LVU257
+ 730 02b4 1B9B     		ldr	r3, [sp, #108]
+ 731 02b6 1860     		str	r0, [r3]
+ 732 02b8 DBE7     		b	.L31
+ 733              	.LVL83:
+ 734              	.L33:
+ 425:../../opus/celt/rate.c ****       bits[j] += ((int)percoeff*(m->eBands[j+1]-m->eBands[j]));
+ 735              		.loc 1 425 7 is_stmt 1 view .LVU258
+ 736              		.loc 1 425 11 is_stmt 0 view .LVU259
+ 737 02ba 55F82210 		ldr	r1, [r5, r2, lsl #2]
+ 738              		.loc 1 425 35 view .LVU260
+ 739 02be DEF81870 		ldr	r7, [lr, #24]
+ 740              		.loc 1 425 43 view .LVU261
+ 741 02c2 561C     		adds	r6, r2, #1
+ 742 02c4 37F91600 		ldrsh	r0, [r7, r6, lsl #1]
+ 743              		.loc 1 425 58 view .LVU262
+ 744 02c8 37F91270 		ldrsh	r7, [r7, r2, lsl #1]
+ 745              		.loc 1 425 48 view .LVU263
+ 746 02cc C01B     		subs	r0, r0, r7
+ 747              		.loc 1 425 15 view .LVU264
+ 748 02ce 0CFB0011 		mla	r1, ip, r0, r1
+ 749 02d2 45F82210 		str	r1, [r5, r2, lsl #2]
+ 424:../../opus/celt/rate.c ****       bits[j] += ((int)percoeff*(m->eBands[j+1]-m->eBands[j]));
+ 750              		.loc 1 424 31 is_stmt 1 discriminator 3 view .LVU265
+ 751 02d6 3246     		mov	r2, r6
+ 752              	.LVL84:
+ 753              	.L32:
+ 424:../../opus/celt/rate.c ****       bits[j] += ((int)percoeff*(m->eBands[j+1]-m->eBands[j]));
+ 754              		.loc 1 424 18 discriminator 1 view .LVU266
+ 755 02d8 5A45     		cmp	r2, fp
+ 756 02da EEDB     		blt	.L33
+ 426:../../opus/celt/rate.c ****    for (j=start;j<codedBands;j++)
+ 757              		.loc 1 426 10 is_stmt 0 view .LVU267
+ 758 02dc 2146     		mov	r1, r4
+ 759 02de 019F     		ldr	r7, [sp, #4]
+ 760 02e0 10E0     		b	.L34
+ 761              	.LVL85:
+ 762              	.L35:
+ 763              	.LBB31:
+ 427:../../opus/celt/rate.c ****    {
+ 428:../../opus/celt/rate.c ****       int tmp = (int)IMIN(left, m->eBands[j+1]-m->eBands[j]);
+ 764              		.loc 1 428 7 is_stmt 1 view .LVU268
+ 765              		.loc 1 428 22 is_stmt 0 view .LVU269
+ 766 02e2 B869     		ldr	r0, [r7, #24]
+ 767 02e4 4E1C     		adds	r6, r1, #1
+ 768 02e6 30F91620 		ldrsh	r2, [r0, r6, lsl #1]
+ 769 02ea 30F91100 		ldrsh	r0, [r0, r1, lsl #1]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 27
+
+
+ 770 02ee 121A     		subs	r2, r2, r0
+ 771              		.loc 1 428 11 view .LVU270
+ 772 02f0 9A42     		cmp	r2, r3
+ 773 02f2 A8BF     		it	ge
+ 774 02f4 1A46     		movge	r2, r3
+ 775              	.LVL86:
+ 429:../../opus/celt/rate.c ****       bits[j] += tmp;
+ 776              		.loc 1 429 7 is_stmt 1 view .LVU271
+ 777              		.loc 1 429 11 is_stmt 0 view .LVU272
+ 778 02f6 55F82100 		ldr	r0, [r5, r1, lsl #2]
+ 779              		.loc 1 429 15 view .LVU273
+ 780 02fa 1044     		add	r0, r0, r2
+ 781 02fc 45F82100 		str	r0, [r5, r1, lsl #2]
+ 430:../../opus/celt/rate.c ****       left -= tmp;
+ 782              		.loc 1 430 7 is_stmt 1 view .LVU274
+ 783              		.loc 1 430 12 is_stmt 0 view .LVU275
+ 784 0300 9B1A     		subs	r3, r3, r2
+ 785              	.LVL87:
+ 786              		.loc 1 430 12 view .LVU276
+ 787              	.LBE31:
+ 426:../../opus/celt/rate.c ****    {
+ 788              		.loc 1 426 31 is_stmt 1 discriminator 3 view .LVU277
+ 789 0302 3146     		mov	r1, r6
+ 790              	.LVL88:
+ 791              	.L34:
+ 426:../../opus/celt/rate.c ****    {
+ 792              		.loc 1 426 18 discriminator 1 view .LVU278
+ 793 0304 5945     		cmp	r1, fp
+ 794 0306 ECDB     		blt	.L35
+ 431:../../opus/celt/rate.c ****    }
+ 432:../../opus/celt/rate.c ****    /*for (j=0;j<end;j++)printf("%d ", bits[j]);printf("\n");*/
+ 433:../../opus/celt/rate.c **** 
+ 434:../../opus/celt/rate.c ****    balance = 0;
+ 795              		.loc 1 434 12 is_stmt 0 view .LVU279
+ 796 0308 4FF00008 		mov	r8, #0
+ 797 030c DDF804C0 		ldr	ip, [sp, #4]
+ 798              	.LVL89:
+ 799              		.loc 1 434 12 view .LVU280
+ 800 0310 CDF854A0 		str	r10, [sp, #84]
+ 801 0314 1E9E     		ldr	r6, [sp, #120]
+ 802 0316 DDF88090 		ldr	r9, [sp, #128]
+ 803              	.LVL90:
+ 804              		.loc 1 434 12 view .LVU281
+ 805 031a 64E0     		b	.L36
+ 806              	.LVL91:
+ 807              	.L53:
+ 808              	.LBB32:
+ 435:../../opus/celt/rate.c ****    for (j=start;j<codedBands;j++)
+ 436:../../opus/celt/rate.c ****    {
+ 437:../../opus/celt/rate.c ****       int N0, N, den;
+ 438:../../opus/celt/rate.c ****       int offset;
+ 439:../../opus/celt/rate.c ****       int NClogN;
+ 440:../../opus/celt/rate.c ****       opus_int32 excess, bit;
+ 441:../../opus/celt/rate.c **** 
+ 442:../../opus/celt/rate.c ****       celt_assert(bits[j] >= 0);
+ 443:../../opus/celt/rate.c ****       N0 = m->eBands[j+1]-m->eBands[j];
+ 444:../../opus/celt/rate.c ****       N=N0<<LM;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 28
+
+
+ 445:../../opus/celt/rate.c ****       bit = (opus_int32)bits[j]+balance;
+ 446:../../opus/celt/rate.c **** 
+ 447:../../opus/celt/rate.c ****       if (N>1)
+ 448:../../opus/celt/rate.c ****       {
+ 449:../../opus/celt/rate.c ****          excess = MAX32(bit-cap[j],0);
+ 450:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 451:../../opus/celt/rate.c **** 
+ 452:../../opus/celt/rate.c ****          /* Compensate for the extra DoF in stereo */
+ 453:../../opus/celt/rate.c ****          den=(C*N+ ((C==2 && N>2 && !*dual_stereo && j<*intensity) ? 1 : 0));
+ 809              		.loc 1 453 72 discriminator 6 view .LVU282
+ 810 031c 0027     		movs	r7, #0
+ 811              	.L38:
+ 812              		.loc 1 453 13 discriminator 8 view .LVU283
+ 813 031e BA44     		add	r10, r10, r7
+ 814              	.LVL92:
+ 454:../../opus/celt/rate.c **** 
+ 455:../../opus/celt/rate.c ****          NClogN = den*(m->logN[j] + logM);
+ 815              		.loc 1 455 10 is_stmt 1 view .LVU284
+ 816              		.loc 1 455 25 is_stmt 0 view .LVU285
+ 817 0320 DCF83070 		ldr	r7, [ip, #48]
+ 818              		.loc 1 455 31 view .LVU286
+ 819 0324 37F90EE0 		ldrsh	lr, [r7, lr]
+ 820              		.loc 1 455 35 view .LVU287
+ 821 0328 079F     		ldr	r7, [sp, #28]
+ 822 032a BE44     		add	lr, lr, r7
+ 823              		.loc 1 455 17 view .LVU288
+ 824 032c 0AFB0EFE 		mul	lr, r10, lr
+ 825              	.LVL93:
+ 456:../../opus/celt/rate.c **** 
+ 457:../../opus/celt/rate.c ****          /* Offset for the number of fine bits by log2(N)/2 + FINE_OFFSET
+ 458:../../opus/celt/rate.c ****             compared to their "fair share" of total/N */
+ 459:../../opus/celt/rate.c ****          offset = (NClogN>>1)-den*FINE_OFFSET;
+ 826              		.loc 1 459 10 is_stmt 1 view .LVU289
+ 827              		.loc 1 459 34 is_stmt 0 view .LVU290
+ 828 0330 6FF01407 		mvn	r7, #20
+ 829 0334 07FB0AF7 		mul	r7, r7, r10
+ 830              		.loc 1 459 17 view .LVU291
+ 831 0338 07EB6E07 		add	r7, r7, lr, asr #1
+ 832              	.LVL94:
+ 460:../../opus/celt/rate.c **** 
+ 461:../../opus/celt/rate.c ****          /* N=2 is the only point that doesn't match the curve */
+ 462:../../opus/celt/rate.c ****          if (N==2)
+ 833              		.loc 1 462 10 is_stmt 1 view .LVU292
+ 834              		.loc 1 462 13 is_stmt 0 view .LVU293
+ 835 033c 0228     		cmp	r0, #2
+ 836 033e 00F08A80 		beq	.L63
+ 837              	.LVL95:
+ 838              	.L39:
+ 463:../../opus/celt/rate.c ****             offset += den<<BITRES>>2;
+ 464:../../opus/celt/rate.c **** 
+ 465:../../opus/celt/rate.c ****          /* Changing the offset for allocating the second and third
+ 466:../../opus/celt/rate.c ****              fine energy bit */
+ 467:../../opus/celt/rate.c ****          if (bits[j] + offset < den*2<<BITRES)
+ 839              		.loc 1 467 10 is_stmt 1 view .LVU294
+ 840              		.loc 1 467 22 is_stmt 0 view .LVU295
+ 841 0342 009B     		ldr	r3, [sp]
+ 842 0344 D819     		adds	r0, r3, r7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 29
+
+
+ 843 0346 0346     		mov	r3, r0
+ 844              		.loc 1 467 13 view .LVU296
+ 845 0348 B0EB0A1F 		cmp	r0, r10, lsl #4
+ 846 034c 80F28A80 		bge	.L40
+ 468:../../opus/celt/rate.c ****             offset += NClogN>>2;
+ 847              		.loc 1 468 13 is_stmt 1 view .LVU297
+ 848              		.loc 1 468 20 is_stmt 0 view .LVU298
+ 849 0350 07EBAE07 		add	r7, r7, lr, asr #2
+ 850              	.LVL96:
+ 851              	.L41:
+ 469:../../opus/celt/rate.c ****          else if (bits[j] + offset < den*3<<BITRES)
+ 470:../../opus/celt/rate.c ****             offset += NClogN>>3;
+ 471:../../opus/celt/rate.c **** 
+ 472:../../opus/celt/rate.c ****          /* Divide with rounding */
+ 473:../../opus/celt/rate.c ****          ebits[j] = IMAX(0, (bits[j] + offset + (den<<(BITRES-1))));
+ 852              		.loc 1 473 10 is_stmt 1 view .LVU299
+ 853              		.loc 1 473 21 is_stmt 0 view .LVU300
+ 854 0354 009B     		ldr	r3, [sp]
+ 855 0356 3B44     		add	r3, r3, r7
+ 856 0358 03EB8A03 		add	r3, r3, r10, lsl #2
+ 857 035c 23EAE373 		bic	r3, r3, r3, asr #31
+ 858              		.loc 1 473 19 view .LVU301
+ 859 0360 B350     		str	r3, [r6, r2]
+ 474:../../opus/celt/rate.c ****          ebits[j] = celt_udiv(ebits[j], den)>>BITRES;
+ 860              		.loc 1 474 10 is_stmt 1 view .LVU302
+ 861              	.LVL97:
+ 862              	.LBB33:
+ 863              	.LBI33:
+ 125:../../opus/celt/entcode.h ****    celt_sig_assert(d>0);
+ 864              		.loc 2 125 32 view .LVU303
+ 865              	.LBB34:
+ 126:../../opus/celt/entcode.h **** #ifdef USE_SMALL_DIV_TABLE
+ 866              		.loc 2 126 24 view .LVU304
+ 867              		.loc 2 137 4 view .LVU305
+ 868              		.loc 2 137 12 is_stmt 0 view .LVU306
+ 869 0362 B3FBFAF3 		udiv	r3, r3, r10
+ 870              	.LVL98:
+ 871              		.loc 2 137 12 view .LVU307
+ 872              	.LBE34:
+ 873              	.LBE33:
+ 874              		.loc 1 474 45 discriminator 1 view .LVU308
+ 875 0366 DB08     		lsrs	r3, r3, #3
+ 876              		.loc 1 474 19 discriminator 1 view .LVU309
+ 877 0368 B350     		str	r3, [r6, r2]
+ 475:../../opus/celt/rate.c **** 
+ 476:../../opus/celt/rate.c ****          /* Make sure not to bust */
+ 477:../../opus/celt/rate.c ****          if (C*ebits[j] > (bits[j]>>BITRES))
+ 878              		.loc 1 477 10 is_stmt 1 view .LVU310
+ 879              		.loc 1 477 15 is_stmt 0 view .LVU311
+ 880 036a 09FB03F3 		mul	r3, r9, r3
+ 881              		.loc 1 477 32 view .LVU312
+ 882 036e A858     		ldr	r0, [r5, r2]
+ 883              		.loc 1 477 13 view .LVU313
+ 884 0370 B3EBE00F 		cmp	r3, r0, asr #3
+ 885 0374 03DD     		ble	.L42
+ 478:../../opus/celt/rate.c ****             ebits[j] = bits[j] >> stereo >> BITRES;
+ 886              		.loc 1 478 13 is_stmt 1 view .LVU314
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 30
+
+
+ 887              		.loc 1 478 32 is_stmt 0 view .LVU315
+ 888 0376 059B     		ldr	r3, [sp, #20]
+ 889 0378 1841     		asrs	r0, r0, r3
+ 890              		.loc 1 478 42 view .LVU316
+ 891 037a C010     		asrs	r0, r0, #3
+ 892              		.loc 1 478 22 view .LVU317
+ 893 037c B050     		str	r0, [r6, r2]
+ 894              	.L42:
+ 479:../../opus/celt/rate.c **** 
+ 480:../../opus/celt/rate.c ****          /* More than that is useless because that's about as far as PVQ can go */
+ 481:../../opus/celt/rate.c ****          ebits[j] = IMIN(ebits[j], MAX_FINE_BITS);
+ 895              		.loc 1 481 10 is_stmt 1 view .LVU318
+ 896              		.loc 1 481 21 is_stmt 0 view .LVU319
+ 897 037e B358     		ldr	r3, [r6, r2]
+ 898 0380 082B     		cmp	r3, #8
+ 899 0382 A8BF     		it	ge
+ 900 0384 0823     		movge	r3, #8
+ 901              		.loc 1 481 19 view .LVU320
+ 902 0386 B350     		str	r3, [r6, r2]
+ 482:../../opus/celt/rate.c **** 
+ 483:../../opus/celt/rate.c ****          /* If we rounded down or capped this band, make it a candidate for the
+ 484:../../opus/celt/rate.c ****              final fine energy pass */
+ 485:../../opus/celt/rate.c ****          fine_priority[j] = ebits[j]*(den<<BITRES) >= bits[j]+offset;
+ 903              		.loc 1 485 10 is_stmt 1 view .LVU321
+ 904              		.loc 1 485 42 is_stmt 0 view .LVU322
+ 905 0388 4FEACA0A 		lsl	r10, r10, #3
+ 906              	.LVL99:
+ 907              		.loc 1 485 37 view .LVU323
+ 908 038c 0AFB03FA 		mul	r10, r10, r3
+ 909              		.loc 1 485 59 view .LVU324
+ 910 0390 A858     		ldr	r0, [r5, r2]
+ 911              		.loc 1 485 62 view .LVU325
+ 912 0392 3844     		add	r0, r0, r7
+ 913              		.loc 1 485 52 view .LVU326
+ 914 0394 8245     		cmp	r10, r0
+ 915 0396 B4BF     		ite	lt
+ 916 0398 0020     		movlt	r0, #0
+ 917 039a 0120     		movge	r0, #1
+ 918              		.loc 1 485 27 view .LVU327
+ 919 039c 1F9B     		ldr	r3, [sp, #124]
+ 920 039e 9850     		str	r0, [r3, r2]
+ 486:../../opus/celt/rate.c **** 
+ 487:../../opus/celt/rate.c ****          /* Remove the allocated fine bits; the rest are assigned to PVQ */
+ 488:../../opus/celt/rate.c ****          bits[j] -= C*ebits[j]<<BITRES;
+ 921              		.loc 1 488 10 is_stmt 1 view .LVU328
+ 922              		.loc 1 488 14 is_stmt 0 view .LVU329
+ 923 03a0 AB58     		ldr	r3, [r5, r2]
+ 924              		.loc 1 488 28 view .LVU330
+ 925 03a2 B058     		ldr	r0, [r6, r2]
+ 926              		.loc 1 488 22 view .LVU331
+ 927 03a4 09FB00F0 		mul	r0, r9, r0
+ 928              		.loc 1 488 18 view .LVU332
+ 929 03a8 A3EBC003 		sub	r3, r3, r0, lsl #3
+ 930 03ac AB50     		str	r3, [r5, r2]
+ 931              	.LVL100:
+ 932              	.L43:
+ 489:../../opus/celt/rate.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 31
+
+
+ 490:../../opus/celt/rate.c ****       } else {
+ 491:../../opus/celt/rate.c ****          /* For N=1, all bits go to fine energy except for a single sign bit */
+ 492:../../opus/celt/rate.c ****          excess = MAX32(0,bit-(C<<BITRES));
+ 493:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 494:../../opus/celt/rate.c ****          ebits[j] = 0;
+ 495:../../opus/celt/rate.c ****          fine_priority[j] = 1;
+ 496:../../opus/celt/rate.c ****       }
+ 497:../../opus/celt/rate.c **** 
+ 498:../../opus/celt/rate.c ****       /* Fine energy can't take advantage of the re-balancing in
+ 499:../../opus/celt/rate.c ****           quant_all_bands().
+ 500:../../opus/celt/rate.c ****          Instead, do the re-balancing here.*/
+ 501:../../opus/celt/rate.c ****       if(excess > 0)
+ 933              		.loc 1 501 7 is_stmt 1 view .LVU333
+ 934              		.loc 1 501 9 is_stmt 0 view .LVU334
+ 935 03ae 0029     		cmp	r1, #0
+ 936 03b0 70DD     		ble	.L56
+ 937              	.LBB35:
+ 502:../../opus/celt/rate.c ****       {
+ 503:../../opus/celt/rate.c ****          int extra_fine;
+ 938              		.loc 1 503 10 is_stmt 1 view .LVU335
+ 504:../../opus/celt/rate.c ****          int extra_bits;
+ 939              		.loc 1 504 10 view .LVU336
+ 505:../../opus/celt/rate.c ****          extra_fine = IMIN(excess>>(stereo+BITRES),MAX_FINE_BITS-ebits[j]);
+ 940              		.loc 1 505 10 view .LVU337
+ 941              		.loc 1 505 23 is_stmt 0 view .LVU338
+ 942 03b2 B058     		ldr	r0, [r6, r2]
+ 943 03b4 C0F10807 		rsb	r7, r0, #8
+ 944 03b8 059B     		ldr	r3, [sp, #20]
+ 945 03ba 0333     		adds	r3, r3, #3
+ 946 03bc 41FA03F3 		asr	r3, r1, r3
+ 947              		.loc 1 505 21 view .LVU339
+ 948 03c0 BB42     		cmp	r3, r7
+ 949 03c2 A8BF     		it	ge
+ 950 03c4 3B46     		movge	r3, r7
+ 951              	.LVL101:
+ 506:../../opus/celt/rate.c ****          ebits[j] += extra_fine;
+ 952              		.loc 1 506 10 is_stmt 1 view .LVU340
+ 953              		.loc 1 506 19 is_stmt 0 view .LVU341
+ 954 03c6 1844     		add	r0, r0, r3
+ 955 03c8 B050     		str	r0, [r6, r2]
+ 507:../../opus/celt/rate.c ****          extra_bits = extra_fine*C<<BITRES;
+ 956              		.loc 1 507 10 is_stmt 1 view .LVU342
+ 957              		.loc 1 507 33 is_stmt 0 view .LVU343
+ 958 03ca 03FB09F3 		mul	r3, r3, r9
+ 959              	.LVL102:
+ 508:../../opus/celt/rate.c ****          fine_priority[j] = extra_bits >= excess-balance;
+ 960              		.loc 1 508 10 is_stmt 1 view .LVU344
+ 961              		.loc 1 508 49 is_stmt 0 view .LVU345
+ 962 03ce A1EB0808 		sub	r8, r1, r8
+ 963              	.LVL103:
+ 964              		.loc 1 508 40 view .LVU346
+ 965 03d2 B8EBC30F 		cmp	r8, r3, lsl #3
+ 966              	.LVL104:
+ 967              		.loc 1 508 40 view .LVU347
+ 968 03d6 D4BF     		ite	le
+ 969 03d8 0120     		movle	r0, #1
+ 970 03da 0020     		movgt	r0, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 32
+
+
+ 971              		.loc 1 508 27 view .LVU348
+ 972 03dc 1F9F     		ldr	r7, [sp, #124]
+ 973              	.LVL105:
+ 974              		.loc 1 508 27 view .LVU349
+ 975 03de B850     		str	r0, [r7, r2]
+ 509:../../opus/celt/rate.c ****          excess -= extra_bits;
+ 976              		.loc 1 509 10 is_stmt 1 view .LVU350
+ 977              		.loc 1 509 17 is_stmt 0 view .LVU351
+ 978 03e0 A1EBC308 		sub	r8, r1, r3, lsl #3
+ 979              	.LVL106:
+ 980              	.L44:
+ 981              		.loc 1 509 17 view .LVU352
+ 982              	.LBE35:
+ 510:../../opus/celt/rate.c ****       }
+ 511:../../opus/celt/rate.c ****       balance = excess;
+ 983              		.loc 1 511 7 is_stmt 1 view .LVU353
+ 512:../../opus/celt/rate.c **** 
+ 513:../../opus/celt/rate.c ****       celt_assert(bits[j] >= 0);
+ 984              		.loc 1 513 32 view .LVU354
+ 514:../../opus/celt/rate.c ****       celt_assert(ebits[j] >= 0);
+ 985              		.loc 1 514 33 view .LVU355
+ 986              	.LBE32:
+ 435:../../opus/celt/rate.c ****    {
+ 987              		.loc 1 435 31 discriminator 2 view .LVU356
+ 988 03e4 0134     		adds	r4, r4, #1
+ 989              	.LVL107:
+ 990              	.L36:
+ 435:../../opus/celt/rate.c ****    {
+ 991              		.loc 1 435 18 discriminator 1 view .LVU357
+ 992 03e6 5C45     		cmp	r4, fp
+ 993 03e8 56DA     		bge	.L64
+ 994              	.LBB36:
+ 437:../../opus/celt/rate.c ****       int offset;
+ 995              		.loc 1 437 7 view .LVU358
+ 438:../../opus/celt/rate.c ****       int NClogN;
+ 996              		.loc 1 438 7 view .LVU359
+ 439:../../opus/celt/rate.c ****       opus_int32 excess, bit;
+ 997              		.loc 1 439 7 view .LVU360
+ 440:../../opus/celt/rate.c **** 
+ 998              		.loc 1 440 7 view .LVU361
+ 442:../../opus/celt/rate.c ****       N0 = m->eBands[j+1]-m->eBands[j];
+ 999              		.loc 1 442 32 view .LVU362
+ 443:../../opus/celt/rate.c ****       N=N0<<LM;
+ 1000              		.loc 1 443 7 view .LVU363
+ 443:../../opus/celt/rate.c ****       N=N0<<LM;
+ 1001              		.loc 1 443 13 is_stmt 0 view .LVU364
+ 1002 03ea DCF81830 		ldr	r3, [ip, #24]
+ 443:../../opus/celt/rate.c ****       N=N0<<LM;
+ 1003              		.loc 1 443 21 view .LVU365
+ 1004 03ee 621C     		adds	r2, r4, #1
+ 1005 03f0 33F91200 		ldrsh	r0, [r3, r2, lsl #1]
+ 443:../../opus/celt/rate.c ****       N=N0<<LM;
+ 1006              		.loc 1 443 36 view .LVU366
+ 1007 03f4 4FEA440E 		lsl	lr, r4, #1
+ 1008 03f8 33F91430 		ldrsh	r3, [r3, r4, lsl #1]
+ 443:../../opus/celt/rate.c ****       N=N0<<LM;
+ 1009              		.loc 1 443 10 view .LVU367
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 33
+
+
+ 1010 03fc C01A     		subs	r0, r0, r3
+ 1011              	.LVL108:
+ 444:../../opus/celt/rate.c ****       bit = (opus_int32)bits[j]+balance;
+ 1012              		.loc 1 444 7 is_stmt 1 view .LVU368
+ 444:../../opus/celt/rate.c ****       bit = (opus_int32)bits[j]+balance;
+ 1013              		.loc 1 444 8 is_stmt 0 view .LVU369
+ 1014 03fe 219B     		ldr	r3, [sp, #132]
+ 1015 0400 9840     		lsls	r0, r0, r3
+ 1016              	.LVL109:
+ 445:../../opus/celt/rate.c **** 
+ 1017              		.loc 1 445 7 is_stmt 1 view .LVU370
+ 445:../../opus/celt/rate.c **** 
+ 1018              		.loc 1 445 29 is_stmt 0 view .LVU371
+ 1019 0402 A200     		lsls	r2, r4, #2
+ 1020              	.LVL110:
+ 445:../../opus/celt/rate.c **** 
+ 1021              		.loc 1 445 13 view .LVU372
+ 1022 0404 55F82430 		ldr	r3, [r5, r4, lsl #2]
+ 445:../../opus/celt/rate.c **** 
+ 1023              		.loc 1 445 11 view .LVU373
+ 1024 0408 4344     		add	r3, r3, r8
+ 1025              	.LVL111:
+ 447:../../opus/celt/rate.c ****       {
+ 1026              		.loc 1 447 7 is_stmt 1 view .LVU374
+ 447:../../opus/celt/rate.c ****       {
+ 1027              		.loc 1 447 10 is_stmt 0 view .LVU375
+ 1028 040a 0128     		cmp	r0, #1
+ 1029 040c 33DD     		ble	.L37
+ 449:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 1030              		.loc 1 449 10 is_stmt 1 view .LVU376
+ 449:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 1031              		.loc 1 449 19 is_stmt 0 view .LVU377
+ 1032 040e 1599     		ldr	r1, [sp, #84]
+ 1033 0410 51F82410 		ldr	r1, [r1, r4, lsl #2]
+ 1034 0414 591A     		subs	r1, r3, r1
+ 449:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 1035              		.loc 1 449 17 view .LVU378
+ 1036 0416 21EAE171 		bic	r1, r1, r1, asr #31
+ 1037              	.LVL112:
+ 450:../../opus/celt/rate.c **** 
+ 1038              		.loc 1 450 10 is_stmt 1 view .LVU379
+ 450:../../opus/celt/rate.c **** 
+ 1039              		.loc 1 450 23 is_stmt 0 view .LVU380
+ 1040 041a 5B1A     		subs	r3, r3, r1
+ 1041              	.LVL113:
+ 450:../../opus/celt/rate.c **** 
+ 1042              		.loc 1 450 23 view .LVU381
+ 1043 041c 0093     		str	r3, [sp]
+ 450:../../opus/celt/rate.c **** 
+ 1044              		.loc 1 450 18 view .LVU382
+ 1045 041e 45F82430 		str	r3, [r5, r4, lsl #2]
+ 1046              	.LVL114:
+ 453:../../opus/celt/rate.c **** 
+ 1047              		.loc 1 453 10 is_stmt 1 view .LVU383
+ 453:../../opus/celt/rate.c **** 
+ 1048              		.loc 1 453 16 is_stmt 0 view .LVU384
+ 1049 0422 00FB09FA 		mul	r10, r0, r9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 34
+
+
+ 453:../../opus/celt/rate.c **** 
+ 1050              		.loc 1 453 27 view .LVU385
+ 1051 0426 B9F1020F 		cmp	r9, #2
+ 1052 042a 14BF     		ite	ne
+ 1053 042c 0027     		movne	r7, #0
+ 1054 042e 0127     		moveq	r7, #1
+ 1055 0430 0228     		cmp	r0, #2
+ 1056 0432 D8BF     		it	le
+ 1057 0434 0027     		movle	r7, #0
+ 453:../../opus/celt/rate.c **** 
+ 1058              		.loc 1 453 72 view .LVU386
+ 1059 0436 002F     		cmp	r7, #0
+ 1060 0438 3FF470AF 		beq	.L53
+ 453:../../opus/celt/rate.c **** 
+ 1061              		.loc 1 453 38 discriminator 1 view .LVU387
+ 1062 043c 1B9F     		ldr	r7, [sp, #108]
+ 1063 043e 3F68     		ldr	r7, [r7]
+ 453:../../opus/celt/rate.c **** 
+ 1064              		.loc 1 453 34 discriminator 1 view .LVU388
+ 1065 0440 2FB9     		cbnz	r7, .L54
+ 453:../../opus/celt/rate.c **** 
+ 1066              		.loc 1 453 56 discriminator 3 view .LVU389
+ 1067 0442 199F     		ldr	r7, [sp, #100]
+ 1068 0444 3F68     		ldr	r7, [r7]
+ 453:../../opus/celt/rate.c **** 
+ 1069              		.loc 1 453 72 discriminator 3 view .LVU390
+ 1070 0446 A742     		cmp	r7, r4
+ 1071 0448 03DC     		bgt	.L55
+ 453:../../opus/celt/rate.c **** 
+ 1072              		.loc 1 453 72 discriminator 6 view .LVU391
+ 1073 044a 0027     		movs	r7, #0
+ 1074 044c 67E7     		b	.L38
+ 1075              	.L54:
+ 1076 044e 0027     		movs	r7, #0
+ 1077 0450 65E7     		b	.L38
+ 1078              	.L55:
+ 453:../../opus/celt/rate.c **** 
+ 1079              		.loc 1 453 72 discriminator 5 view .LVU392
+ 1080 0452 0127     		movs	r7, #1
+ 1081 0454 63E7     		b	.L38
+ 1082              	.LVL115:
+ 1083              	.L63:
+ 463:../../opus/celt/rate.c **** 
+ 1084              		.loc 1 463 13 is_stmt 1 view .LVU393
+ 463:../../opus/celt/rate.c **** 
+ 1085              		.loc 1 463 26 is_stmt 0 view .LVU394
+ 1086 0456 4FEACA00 		lsl	r0, r10, #3
+ 1087              	.LVL116:
+ 463:../../opus/celt/rate.c **** 
+ 1088              		.loc 1 463 20 view .LVU395
+ 1089 045a 07EBA007 		add	r7, r7, r0, asr #2
+ 1090              	.LVL117:
+ 463:../../opus/celt/rate.c **** 
+ 1091              		.loc 1 463 20 view .LVU396
+ 1092 045e 70E7     		b	.L39
+ 1093              	.L66:
+ 1094              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 35
+
+
+ 1095              	.L65:
+ 1096 0460 00000000 		.word	LOG2_FRAC_TABLE
+ 1097              	.L40:
+ 469:../../opus/celt/rate.c ****             offset += NClogN>>3;
+ 1098              		.loc 1 469 15 is_stmt 1 view .LVU397
+ 469:../../opus/celt/rate.c ****             offset += NClogN>>3;
+ 1099              		.loc 1 469 41 is_stmt 0 view .LVU398
+ 1100 0464 0AEB4A00 		add	r0, r10, r10, lsl #1
+ 469:../../opus/celt/rate.c ****             offset += NClogN>>3;
+ 1101              		.loc 1 469 18 view .LVU399
+ 1102 0468 B3EBC00F 		cmp	r3, r0, lsl #3
+ 1103 046c BFF672AF 		bge	.L41
+ 470:../../opus/celt/rate.c **** 
+ 1104              		.loc 1 470 13 is_stmt 1 view .LVU400
+ 470:../../opus/celt/rate.c **** 
+ 1105              		.loc 1 470 20 is_stmt 0 view .LVU401
+ 1106 0470 07EBEE07 		add	r7, r7, lr, asr #3
+ 1107              	.LVL118:
+ 470:../../opus/celt/rate.c **** 
+ 1108              		.loc 1 470 20 view .LVU402
+ 1109 0474 6EE7     		b	.L41
+ 1110              	.LVL119:
+ 1111              	.L37:
+ 492:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 1112              		.loc 1 492 10 is_stmt 1 view .LVU403
+ 492:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 1113              		.loc 1 492 19 is_stmt 0 view .LVU404
+ 1114 0476 0699     		ldr	r1, [sp, #24]
+ 1115 0478 591A     		subs	r1, r3, r1
+ 492:../../opus/celt/rate.c ****          bits[j] = bit-excess;
+ 1116              		.loc 1 492 17 view .LVU405
+ 1117 047a 21EAE171 		bic	r1, r1, r1, asr #31
+ 1118              	.LVL120:
+ 493:../../opus/celt/rate.c ****          ebits[j] = 0;
+ 1119              		.loc 1 493 10 is_stmt 1 view .LVU406
+ 493:../../opus/celt/rate.c ****          ebits[j] = 0;
+ 1120              		.loc 1 493 23 is_stmt 0 view .LVU407
+ 1121 047e 5B1A     		subs	r3, r3, r1
+ 1122              	.LVL121:
+ 493:../../opus/celt/rate.c ****          ebits[j] = 0;
+ 1123              		.loc 1 493 18 view .LVU408
+ 1124 0480 45F82430 		str	r3, [r5, r4, lsl #2]
+ 1125              	.LVL122:
+ 494:../../opus/celt/rate.c ****          fine_priority[j] = 1;
+ 1126              		.loc 1 494 10 is_stmt 1 view .LVU409
+ 494:../../opus/celt/rate.c ****          fine_priority[j] = 1;
+ 1127              		.loc 1 494 19 is_stmt 0 view .LVU410
+ 1128 0484 0023     		movs	r3, #0
+ 1129 0486 46F82430 		str	r3, [r6, r4, lsl #2]
+ 495:../../opus/celt/rate.c ****       }
+ 1130              		.loc 1 495 10 is_stmt 1 view .LVU411
+ 495:../../opus/celt/rate.c ****       }
+ 1131              		.loc 1 495 27 is_stmt 0 view .LVU412
+ 1132 048a 0123     		movs	r3, #1
+ 1133 048c 1F98     		ldr	r0, [sp, #124]
+ 1134              	.LVL123:
+ 495:../../opus/celt/rate.c ****       }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 36
+
+
+ 1135              		.loc 1 495 27 view .LVU413
+ 1136 048e 40F82430 		str	r3, [r0, r4, lsl #2]
+ 1137 0492 8CE7     		b	.L43
+ 1138              	.L56:
+ 495:../../opus/celt/rate.c ****       }
+ 1139              		.loc 1 495 27 view .LVU414
+ 1140 0494 8846     		mov	r8, r1
+ 1141              	.LVL124:
+ 495:../../opus/celt/rate.c ****       }
+ 1142              		.loc 1 495 27 view .LVU415
+ 1143 0496 A5E7     		b	.L44
+ 1144              	.LVL125:
+ 1145              	.L64:
+ 495:../../opus/celt/rate.c ****       }
+ 1146              		.loc 1 495 27 view .LVU416
+ 1147              	.LBE36:
+ 515:../../opus/celt/rate.c ****    }
+ 516:../../opus/celt/rate.c ****    /* Save any remaining bits over the cap for the rebalancing in
+ 517:../../opus/celt/rate.c ****        quant_all_bands(). */
+ 518:../../opus/celt/rate.c ****    *_balance = balance;
+ 1148              		.loc 1 518 4 is_stmt 1 view .LVU417
+ 1149              		.loc 1 518 14 is_stmt 0 view .LVU418
+ 1150 0498 179B     		ldr	r3, [sp, #92]
+ 1151 049a C3F80080 		str	r8, [r3]
+ 519:../../opus/celt/rate.c **** 
+ 520:../../opus/celt/rate.c ****    /* The skipped bands use all their bits for fine energy. */
+ 521:../../opus/celt/rate.c ****    for (;j<end;j++)
+ 1152              		.loc 1 521 4 is_stmt 1 view .LVU419
+ 1153 049e 0598     		ldr	r0, [sp, #20]
+ 1154 04a0 0499     		ldr	r1, [sp, #16]
+ 1155 04a2 1E9A     		ldr	r2, [sp, #120]
+ 1156 04a4 1F9E     		ldr	r6, [sp, #124]
+ 1157 04a6 11E0     		b	.L46
+ 1158              	.L47:
+ 522:../../opus/celt/rate.c ****    {
+ 523:../../opus/celt/rate.c ****       ebits[j] = bits[j] >> stereo >> BITRES;
+ 1159              		.loc 1 523 7 view .LVU420
+ 1160              		.loc 1 523 22 is_stmt 0 view .LVU421
+ 1161 04a8 55F82430 		ldr	r3, [r5, r4, lsl #2]
+ 1162              		.loc 1 523 26 view .LVU422
+ 1163 04ac 0341     		asrs	r3, r3, r0
+ 1164              		.loc 1 523 36 view .LVU423
+ 1165 04ae DB10     		asrs	r3, r3, #3
+ 1166              		.loc 1 523 16 view .LVU424
+ 1167 04b0 42F82430 		str	r3, [r2, r4, lsl #2]
+ 524:../../opus/celt/rate.c ****       celt_assert(C*ebits[j]<<BITRES == bits[j]);
+ 1168              		.loc 1 524 49 is_stmt 1 view .LVU425
+ 525:../../opus/celt/rate.c ****       bits[j] = 0;
+ 1169              		.loc 1 525 7 view .LVU426
+ 1170              		.loc 1 525 15 is_stmt 0 view .LVU427
+ 1171 04b4 0023     		movs	r3, #0
+ 1172 04b6 45F82430 		str	r3, [r5, r4, lsl #2]
+ 526:../../opus/celt/rate.c ****       fine_priority[j] = ebits[j]<1;
+ 1173              		.loc 1 526 7 is_stmt 1 view .LVU428
+ 1174              		.loc 1 526 31 is_stmt 0 view .LVU429
+ 1175 04ba 52F82430 		ldr	r3, [r2, r4, lsl #2]
+ 1176              		.loc 1 526 34 view .LVU430
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 37
+
+
+ 1177 04be 002B     		cmp	r3, #0
+ 1178 04c0 CCBF     		ite	gt
+ 1179 04c2 0023     		movgt	r3, #0
+ 1180 04c4 0123     		movle	r3, #1
+ 1181              		.loc 1 526 24 view .LVU431
+ 1182 04c6 46F82430 		str	r3, [r6, r4, lsl #2]
+ 521:../../opus/celt/rate.c ****    {
+ 1183              		.loc 1 521 17 is_stmt 1 discriminator 2 view .LVU432
+ 1184 04ca 0134     		adds	r4, r4, #1
+ 1185              	.LVL126:
+ 1186              	.L46:
+ 521:../../opus/celt/rate.c ****    {
+ 1187              		.loc 1 521 11 discriminator 1 view .LVU433
+ 1188 04cc 8C42     		cmp	r4, r1
+ 1189 04ce EBDB     		blt	.L47
+ 527:../../opus/celt/rate.c ****    }
+ 528:../../opus/celt/rate.c ****    RESTORE_STACK;
+ 1190              		.loc 1 528 17 view .LVU434
+ 529:../../opus/celt/rate.c ****    return codedBands;
+ 1191              		.loc 1 529 4 view .LVU435
+ 530:../../opus/celt/rate.c **** }
+ 1192              		.loc 1 530 1 is_stmt 0 view .LVU436
+ 1193 04d0 5846     		mov	r0, fp
+ 1194 04d2 09B0     		add	sp, sp, #36
+ 1195              	.LCFI2:
+ 1196              		.cfi_def_cfa_offset 36
+ 1197              		@ sp needed
+ 1198 04d4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1199              		.loc 1 530 1 view .LVU437
+ 1200              		.cfi_endproc
+ 1201              	.LFE16:
+ 1203              		.section	.text.clt_compute_allocation,"ax",%progbits
+ 1204              		.align	1
+ 1205              		.global	clt_compute_allocation
+ 1206              		.syntax unified
+ 1207              		.thumb
+ 1208              		.thumb_func
+ 1210              	clt_compute_allocation:
+ 1211              	.LVL127:
+ 1212              	.LFB17:
+ 531:../../opus/celt/rate.c **** 
+ 532:../../opus/celt/rate.c **** int clt_compute_allocation(const CELTMode *m, int start, int end, const int *offsets, const int *ca
+ 533:../../opus/celt/rate.c ****       opus_int32 total, opus_int32 *balance, int *pulses, int *ebits, int *fine_priority, int C, in
+ 534:../../opus/celt/rate.c **** {
+ 1213              		.loc 1 534 1 is_stmt 1 view -0
+ 1214              		.cfi_startproc
+ 1215              		@ args = 60, pretend = 0, frame = 56
+ 1216              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1217              		.loc 1 534 1 is_stmt 0 view .LVU439
+ 1218 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1219              	.LCFI3:
+ 1220              		.cfi_def_cfa_offset 36
+ 1221              		.cfi_offset 4, -36
+ 1222              		.cfi_offset 5, -32
+ 1223              		.cfi_offset 6, -28
+ 1224              		.cfi_offset 7, -24
+ 1225              		.cfi_offset 8, -20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 38
+
+
+ 1226              		.cfi_offset 9, -16
+ 1227              		.cfi_offset 10, -12
+ 1228              		.cfi_offset 11, -8
+ 1229              		.cfi_offset 14, -4
+ 1230 0004 A3B0     		sub	sp, sp, #140
+ 1231              	.LCFI4:
+ 1232              		.cfi_def_cfa_offset 176
+ 1233 0006 14AF     		add	r7, sp, #80
+ 1234              	.LCFI5:
+ 1235              		.cfi_def_cfa 7, 96
+ 1236 0008 7961     		str	r1, [r7, #20]
+ 1237              	.LVL128:
+ 1238              		.loc 1 534 1 view .LVU440
+ 1239 000a FA62     		str	r2, [r7, #44]
+ 1240              	.LVL129:
+ 1241              		.loc 1 534 1 view .LVU441
+ 1242 000c 1C46     		mov	r4, r3
+ 1243 000e D7F86080 		ldr	r8, [r7, #96]
+ 1244 0012 D7F864A0 		ldr	r10, [r7, #100]
+ 1245 0016 3A6F     		ldr	r2, [r7, #112]
+ 1246              	.LVL130:
+ 1247              		.loc 1 534 1 view .LVU442
+ 1248 0018 D7F88430 		ldr	r3, [r7, #132]
+ 1249              	.LVL131:
+ 1250              		.loc 1 534 1 view .LVU443
+ 1251 001c D7F88890 		ldr	r9, [r7, #136]
+ 535:../../opus/celt/rate.c ****    int lo, hi, len, j;
+ 1252              		.loc 1 535 4 is_stmt 1 view .LVU444
+ 536:../../opus/celt/rate.c ****    int codedBands;
+ 1253              		.loc 1 536 4 view .LVU445
+ 537:../../opus/celt/rate.c ****    int skip_start;
+ 1254              		.loc 1 537 4 view .LVU446
+ 538:../../opus/celt/rate.c ****    int skip_rsv;
+ 1255              		.loc 1 538 4 view .LVU447
+ 539:../../opus/celt/rate.c ****    int intensity_rsv;
+ 1256              		.loc 1 539 4 view .LVU448
+ 540:../../opus/celt/rate.c ****    int dual_stereo_rsv;
+ 1257              		.loc 1 540 4 view .LVU449
+ 541:../../opus/celt/rate.c ****    VARDECL(int, bits1);
+ 1258              		.loc 1 541 4 view .LVU450
+ 542:../../opus/celt/rate.c ****    VARDECL(int, bits2);
+ 1259              		.loc 1 542 4 view .LVU451
+ 543:../../opus/celt/rate.c ****    VARDECL(int, thresh);
+ 1260              		.loc 1 543 4 view .LVU452
+ 544:../../opus/celt/rate.c ****    VARDECL(int, trim_offset);
+ 1261              		.loc 1 544 4 view .LVU453
+ 545:../../opus/celt/rate.c ****    SAVE_STACK;
+ 1262              		.loc 1 545 14 view .LVU454
+ 546:../../opus/celt/rate.c **** 
+ 547:../../opus/celt/rate.c ****    total = IMAX(total, 0);
+ 1263              		.loc 1 547 4 view .LVU455
+ 1264              		.loc 1 547 10 is_stmt 0 view .LVU456
+ 1265 0020 22EAE271 		bic	r1, r2, r2, asr #31
+ 1266              	.LVL132:
+ 548:../../opus/celt/rate.c ****    len = m->nbEBands;
+ 1267              		.loc 1 548 4 is_stmt 1 view .LVU457
+ 1268              		.loc 1 548 8 is_stmt 0 view .LVU458
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 39
+
+
+ 1269 0024 8568     		ldr	r5, [r0, #8]
+ 1270 0026 3D63     		str	r5, [r7, #48]
+ 1271              	.LVL133:
+ 549:../../opus/celt/rate.c ****    skip_start = start;
+ 1272              		.loc 1 549 4 is_stmt 1 view .LVU459
+ 550:../../opus/celt/rate.c ****    /* Reserve a bit to signal the end of manually skipped bands. */
+ 551:../../opus/celt/rate.c ****    skip_rsv = total >= 1<<BITRES ? 1<<BITRES : 0;
+ 1273              		.loc 1 551 4 view .LVU460
+ 1274              		.loc 1 551 46 is_stmt 0 view .LVU461
+ 1275 0028 072A     		cmp	r2, #7
+ 1276 002a 27DD     		ble	.L91
+ 1277              		.loc 1 551 46 discriminator 1 view .LVU462
+ 1278 002c 4FF0080E 		mov	lr, #8
+ 1279              	.L68:
+ 1280              	.LVL134:
+ 552:../../opus/celt/rate.c ****    total -= skip_rsv;
+ 1281              		.loc 1 552 4 is_stmt 1 view .LVU463
+ 1282              		.loc 1 552 10 is_stmt 0 view .LVU464
+ 1283 0030 A1EB0E02 		sub	r2, r1, lr
+ 1284 0034 3A62     		str	r2, [r7, #32]
+ 1285              	.LVL135:
+ 553:../../opus/celt/rate.c ****    /* Reserve bits for the intensity and dual stereo parameters. */
+ 554:../../opus/celt/rate.c ****    intensity_rsv = dual_stereo_rsv = 0;
+ 1286              		.loc 1 554 4 is_stmt 1 view .LVU465
+ 555:../../opus/celt/rate.c ****    if (C==2)
+ 1287              		.loc 1 555 4 view .LVU466
+ 1288              		.loc 1 555 7 is_stmt 0 view .LVU467
+ 1289 0036 022B     		cmp	r3, #2
+ 1290 0038 23D0     		beq	.L97
+ 554:../../opus/celt/rate.c ****    if (C==2)
+ 1291              		.loc 1 554 36 view .LVU468
+ 1292 003a 0022     		movs	r2, #0
+ 1293              	.LVL136:
+ 554:../../opus/celt/rate.c ****    if (C==2)
+ 1294              		.loc 1 554 36 view .LVU469
+ 1295 003c FA60     		str	r2, [r7, #12]
+ 1296              	.LVL137:
+ 554:../../opus/celt/rate.c ****    if (C==2)
+ 1297              		.loc 1 554 18 view .LVU470
+ 1298 003e 1546     		mov	r5, r2
+ 1299              	.LVL138:
+ 1300              	.L69:
+ 556:../../opus/celt/rate.c ****    {
+ 557:../../opus/celt/rate.c ****       intensity_rsv = LOG2_FRAC_TABLE[end-start];
+ 558:../../opus/celt/rate.c ****       if (intensity_rsv>total)
+ 559:../../opus/celt/rate.c ****          intensity_rsv = 0;
+ 560:../../opus/celt/rate.c ****       else
+ 561:../../opus/celt/rate.c ****       {
+ 562:../../opus/celt/rate.c ****          total -= intensity_rsv;
+ 563:../../opus/celt/rate.c ****          dual_stereo_rsv = total>=1<<BITRES ? 1<<BITRES : 0;
+ 564:../../opus/celt/rate.c ****          total -= dual_stereo_rsv;
+ 565:../../opus/celt/rate.c ****       }
+ 566:../../opus/celt/rate.c ****    }
+ 567:../../opus/celt/rate.c ****    ALLOC(bits1, len, int);
+ 1301              		.loc 1 567 4 is_stmt 1 view .LVU471
+ 1302 0040 3A6B     		ldr	r2, [r7, #48]
+ 1303 0042 9200     		lsls	r2, r2, #2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 40
+
+
+ 1304 0044 0732     		adds	r2, r2, #7
+ 1305 0046 22F00702 		bic	r2, r2, #7
+ 1306 004a ADEB020D 		sub	sp, sp, r2
+ 1307 004e 14A9     		add	r1, sp, #80
+ 1308 0050 F961     		str	r1, [r7, #28]
+ 1309              	.LVL139:
+ 568:../../opus/celt/rate.c ****    ALLOC(bits2, len, int);
+ 1310              		.loc 1 568 4 view .LVU472
+ 1311 0052 ADEB020D 		sub	sp, sp, r2
+ 1312 0056 14A9     		add	r1, sp, #80
+ 1313              	.LVL140:
+ 1314              		.loc 1 568 4 is_stmt 0 view .LVU473
+ 1315 0058 B961     		str	r1, [r7, #24]
+ 1316              	.LVL141:
+ 569:../../opus/celt/rate.c ****    ALLOC(thresh, len, int);
+ 1317              		.loc 1 569 4 is_stmt 1 view .LVU474
+ 1318 005a ADEB020D 		sub	sp, sp, r2
+ 1319 005e 14A9     		add	r1, sp, #80
+ 1320              	.LVL142:
+ 1321              		.loc 1 569 4 is_stmt 0 view .LVU475
+ 1322 0060 3961     		str	r1, [r7, #16]
+ 1323              	.LVL143:
+ 570:../../opus/celt/rate.c ****    ALLOC(trim_offset, len, int);
+ 1324              		.loc 1 570 4 is_stmt 1 view .LVU476
+ 1325 0062 ADEB020D 		sub	sp, sp, r2
+ 1326 0066 14AE     		add	r6, sp, #80
+ 1327              	.LVL144:
+ 571:../../opus/celt/rate.c **** 
+ 572:../../opus/celt/rate.c ****    for (j=start;j<end;j++)
+ 1328              		.loc 1 572 4 view .LVU477
+ 1329              		.loc 1 572 10 is_stmt 0 view .LVU478
+ 1330 0068 7969     		ldr	r1, [r7, #20]
+ 1331              	.LVL145:
+ 1332              		.loc 1 572 10 view .LVU479
+ 1333 006a 7D63     		str	r5, [r7, #52]
+ 1334              	.LVL146:
+ 1335              		.loc 1 572 10 view .LVU480
+ 1336 006c C7F828E0 		str	lr, [r7, #40]
+ 1337              	.LVL147:
+ 1338              		.loc 1 572 10 view .LVU481
+ 1339 0070 D7F810E0 		ldr	lr, [r7, #16]
+ 1340              	.LVL148:
+ 1341              		.loc 1 572 10 view .LVU482
+ 1342 0074 D7F82CC0 		ldr	ip, [r7, #44]
+ 1343 0078 7C62     		str	r4, [r7, #36]
+ 1344              	.LVL149:
+ 1345              		.loc 1 572 4 view .LVU483
+ 1346 007a 1BE0     		b	.L71
+ 1347              	.LVL150:
+ 1348              	.L91:
+ 551:../../opus/celt/rate.c ****    total -= skip_rsv;
+ 1349              		.loc 1 551 46 discriminator 2 view .LVU484
+ 1350 007c 4FF0000E 		mov	lr, #0
+ 1351 0080 D6E7     		b	.L68
+ 1352              	.LVL151:
+ 1353              	.L97:
+ 557:../../opus/celt/rate.c ****       if (intensity_rsv>total)
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 41
+
+
+ 1354              		.loc 1 557 7 is_stmt 1 view .LVU485
+ 557:../../opus/celt/rate.c ****       if (intensity_rsv>total)
+ 1355              		.loc 1 557 42 is_stmt 0 view .LVU486
+ 1356 0082 FA6A     		ldr	r2, [r7, #44]
+ 1357              	.LVL152:
+ 557:../../opus/celt/rate.c ****       if (intensity_rsv>total)
+ 1358              		.loc 1 557 42 view .LVU487
+ 1359 0084 7969     		ldr	r1, [r7, #20]
+ 1360 0086 521A     		subs	r2, r2, r1
+ 557:../../opus/celt/rate.c ****       if (intensity_rsv>total)
+ 1361              		.loc 1 557 38 view .LVU488
+ 1362 0088 B149     		ldr	r1, .L102
+ 1363 008a 8D5C     		ldrb	r5, [r1, r2]	@ zero_extendqisi2
+ 1364              	.LVL153:
+ 558:../../opus/celt/rate.c ****          intensity_rsv = 0;
+ 1365              		.loc 1 558 7 is_stmt 1 view .LVU489
+ 558:../../opus/celt/rate.c ****          intensity_rsv = 0;
+ 1366              		.loc 1 558 10 is_stmt 0 view .LVU490
+ 1367 008c 3A6A     		ldr	r2, [r7, #32]
+ 1368 008e AA42     		cmp	r2, r5
+ 1369 0090 0BDB     		blt	.L93
+ 562:../../opus/celt/rate.c ****          dual_stereo_rsv = total>=1<<BITRES ? 1<<BITRES : 0;
+ 1370              		.loc 1 562 10 is_stmt 1 view .LVU491
+ 562:../../opus/celt/rate.c ****          dual_stereo_rsv = total>=1<<BITRES ? 1<<BITRES : 0;
+ 1371              		.loc 1 562 16 is_stmt 0 view .LVU492
+ 1372 0092 521B     		subs	r2, r2, r5
+ 1373              	.LVL154:
+ 563:../../opus/celt/rate.c ****          total -= dual_stereo_rsv;
+ 1374              		.loc 1 563 10 is_stmt 1 view .LVU493
+ 563:../../opus/celt/rate.c ****          total -= dual_stereo_rsv;
+ 1375              		.loc 1 563 57 is_stmt 0 view .LVU494
+ 1376 0094 072A     		cmp	r2, #7
+ 1377 0096 05DD     		ble	.L94
+ 563:../../opus/celt/rate.c ****          total -= dual_stereo_rsv;
+ 1378              		.loc 1 563 57 discriminator 1 view .LVU495
+ 1379 0098 0821     		movs	r1, #8
+ 1380 009a F960     		str	r1, [r7, #12]
+ 1381              	.LVL155:
+ 1382              	.L70:
+ 564:../../opus/celt/rate.c ****       }
+ 1383              		.loc 1 564 10 is_stmt 1 view .LVU496
+ 564:../../opus/celt/rate.c ****       }
+ 1384              		.loc 1 564 16 is_stmt 0 view .LVU497
+ 1385 009c F968     		ldr	r1, [r7, #12]
+ 1386 009e 521A     		subs	r2, r2, r1
+ 1387              	.LVL156:
+ 564:../../opus/celt/rate.c ****       }
+ 1388              		.loc 1 564 16 view .LVU498
+ 1389 00a0 3A62     		str	r2, [r7, #32]
+ 1390              	.LVL157:
+ 564:../../opus/celt/rate.c ****       }
+ 1391              		.loc 1 564 16 view .LVU499
+ 1392 00a2 CDE7     		b	.L69
+ 1393              	.LVL158:
+ 1394              	.L94:
+ 563:../../opus/celt/rate.c ****          total -= dual_stereo_rsv;
+ 1395              		.loc 1 563 57 discriminator 2 view .LVU500
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 42
+
+
+ 1396 00a4 0021     		movs	r1, #0
+ 1397 00a6 F960     		str	r1, [r7, #12]
+ 1398              	.LVL159:
+ 563:../../opus/celt/rate.c ****          total -= dual_stereo_rsv;
+ 1399              		.loc 1 563 57 discriminator 2 view .LVU501
+ 1400 00a8 F8E7     		b	.L70
+ 1401              	.LVL160:
+ 1402              	.L93:
+ 554:../../opus/celt/rate.c ****    if (C==2)
+ 1403              		.loc 1 554 36 view .LVU502
+ 1404 00aa 0022     		movs	r2, #0
+ 1405 00ac FA60     		str	r2, [r7, #12]
+ 1406              	.LVL161:
+ 559:../../opus/celt/rate.c ****       else
+ 1407              		.loc 1 559 24 view .LVU503
+ 1408 00ae 1546     		mov	r5, r2
+ 1409              	.LVL162:
+ 559:../../opus/celt/rate.c ****       else
+ 1410              		.loc 1 559 24 view .LVU504
+ 1411 00b0 C6E7     		b	.L69
+ 1412              	.LVL163:
+ 1413              	.L72:
+ 1414              		.loc 1 572 24 is_stmt 1 discriminator 2 view .LVU505
+ 1415 00b2 0131     		adds	r1, r1, #1
+ 1416              	.LVL164:
+ 1417              	.L71:
+ 1418              		.loc 1 572 18 discriminator 1 view .LVU506
+ 1419 00b4 6145     		cmp	r1, ip
+ 1420 00b6 3DDA     		bge	.L98
+ 573:../../opus/celt/rate.c ****    {
+ 574:../../opus/celt/rate.c ****       /* Below this threshold, we're sure not to allocate any PVQ bits */
+ 575:../../opus/celt/rate.c ****       thresh[j] = IMAX((C)<<BITRES, (3*(m->eBands[j+1]-m->eBands[j])<<LM<<BITRES)>>4);
+ 1421              		.loc 1 575 7 view .LVU507
+ 1422              		.loc 1 575 19 is_stmt 0 view .LVU508
+ 1423 00b8 8569     		ldr	r5, [r0, #24]
+ 1424 00ba 4C1C     		adds	r4, r1, #1
+ 1425 00bc 35F91420 		ldrsh	r2, [r5, r4, lsl #1]
+ 1426 00c0 35F91150 		ldrsh	r5, [r5, r1, lsl #1]
+ 1427 00c4 521B     		subs	r2, r2, r5
+ 1428 00c6 02EB4202 		add	r2, r2, r2, lsl #1
+ 1429 00ca 02FA09F2 		lsl	r2, r2, r9
+ 1430 00ce 42F35B02 		sbfx	r2, r2, #1, #28
+ 1431 00d2 DD00     		lsls	r5, r3, #3
+ 1432 00d4 AA42     		cmp	r2, r5
+ 1433 00d6 B8BF     		it	lt
+ 1434 00d8 2A46     		movlt	r2, r5
+ 1435              		.loc 1 575 17 view .LVU509
+ 1436 00da 4EF82120 		str	r2, [lr, r1, lsl #2]
+ 576:../../opus/celt/rate.c ****       /* Tilt of the allocation curve */
+ 577:../../opus/celt/rate.c ****       trim_offset[j] = C*(m->eBands[j+1]-m->eBands[j])*(alloc_trim-5-LM)*(end-j-1)
+ 1437              		.loc 1 577 7 is_stmt 1 view .LVU510
+ 1438              		.loc 1 577 28 is_stmt 0 view .LVU511
+ 1439 00de 8269     		ldr	r2, [r0, #24]
+ 1440              		.loc 1 577 36 view .LVU512
+ 1441 00e0 32F914B0 		ldrsh	fp, [r2, r4, lsl #1]
+ 1442              		.loc 1 577 51 view .LVU513
+ 1443 00e4 32F91120 		ldrsh	r2, [r2, r1, lsl #1]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 43
+
+
+ 1444              		.loc 1 577 41 view .LVU514
+ 1445 00e8 ABEB020B 		sub	fp, fp, r2
+ 1446              		.loc 1 577 25 view .LVU515
+ 1447 00ec 03FB0BFB 		mul	fp, r3, fp
+ 1448              		.loc 1 577 67 view .LVU516
+ 1449 00f0 AAF10502 		sub	r2, r10, #5
+ 1450              		.loc 1 577 69 view .LVU517
+ 1451 00f4 A2EB0902 		sub	r2, r2, r9
+ 1452              		.loc 1 577 55 view .LVU518
+ 1453 00f8 02FB0BFB 		mul	fp, r2, fp
+ 1454              		.loc 1 577 78 view .LVU519
+ 1455 00fc ACEB0102 		sub	r2, ip, r1
+ 1456              		.loc 1 577 80 view .LVU520
+ 1457 0100 013A     		subs	r2, r2, #1
+ 1458              		.loc 1 577 73 view .LVU521
+ 1459 0102 02FB0BF2 		mul	r2, r2, fp
+ 578:../../opus/celt/rate.c ****             *(1<<(LM+BITRES))>>6;
+ 1460              		.loc 1 578 21 view .LVU522
+ 1461 0106 09F1030B 		add	fp, r9, #3
+ 1462              		.loc 1 578 13 view .LVU523
+ 1463 010a 02FA0BF2 		lsl	r2, r2, fp
+ 1464              		.loc 1 578 30 view .LVU524
+ 1465 010e 9211     		asrs	r2, r2, #6
+ 577:../../opus/celt/rate.c ****             *(1<<(LM+BITRES))>>6;
+ 1466              		.loc 1 577 22 view .LVU525
+ 1467 0110 46F82120 		str	r2, [r6, r1, lsl #2]
+ 579:../../opus/celt/rate.c ****       /* Giving less resolution to single-coefficient bands because they get
+ 580:../../opus/celt/rate.c ****          more benefit from having one coarse value per coefficient*/
+ 581:../../opus/celt/rate.c ****       if ((m->eBands[j+1]-m->eBands[j])<<LM==1)
+ 1468              		.loc 1 581 7 is_stmt 1 view .LVU526
+ 1469              		.loc 1 581 13 is_stmt 0 view .LVU527
+ 1470 0114 D0F818B0 		ldr	fp, [r0, #24]
+ 1471              		.loc 1 581 21 view .LVU528
+ 1472 0118 3BF91440 		ldrsh	r4, [fp, r4, lsl #1]
+ 1473              		.loc 1 581 36 view .LVU529
+ 1474 011c 3BF911B0 		ldrsh	fp, [fp, r1, lsl #1]
+ 1475              		.loc 1 581 26 view .LVU530
+ 1476 0120 A4EB0B04 		sub	r4, r4, fp
+ 1477              		.loc 1 581 40 view .LVU531
+ 1478 0124 04FA09F4 		lsl	r4, r4, r9
+ 1479              		.loc 1 581 10 view .LVU532
+ 1480 0128 012C     		cmp	r4, #1
+ 1481 012a C2D1     		bne	.L72
+ 582:../../opus/celt/rate.c ****          trim_offset[j] -= C<<BITRES;
+ 1482              		.loc 1 582 10 is_stmt 1 view .LVU533
+ 1483              		.loc 1 582 25 is_stmt 0 view .LVU534
+ 1484 012c 521B     		subs	r2, r2, r5
+ 1485 012e 46F82120 		str	r2, [r6, r1, lsl #2]
+ 1486 0132 BEE7     		b	.L72
+ 1487              	.L98:
+ 583:../../opus/celt/rate.c ****    }
+ 584:../../opus/celt/rate.c ****    lo = 1;
+ 585:../../opus/celt/rate.c ****    hi = m->nbAllocVectors - 1;
+ 1488              		.loc 1 585 10 view .LVU535
+ 1489 0134 7D6B     		ldr	r5, [r7, #52]
+ 1490 0136 D7F828E0 		ldr	lr, [r7, #40]
+ 1491              	.LVL165:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 44
+
+
+ 1492              		.loc 1 585 10 view .LVU536
+ 1493 013a 7C6A     		ldr	r4, [r7, #36]
+ 584:../../opus/celt/rate.c ****    hi = m->nbAllocVectors - 1;
+ 1494              		.loc 1 584 4 is_stmt 1 view .LVU537
+ 1495              	.LVL166:
+ 1496              		.loc 1 585 4 view .LVU538
+ 1497              		.loc 1 585 10 is_stmt 0 view .LVU539
+ 1498 013c 826A     		ldr	r2, [r0, #40]
+ 1499              		.loc 1 585 7 view .LVU540
+ 1500 013e 013A     		subs	r2, r2, #1
+ 1501              	.LVL167:
+ 584:../../opus/celt/rate.c ****    hi = m->nbAllocVectors - 1;
+ 1502              		.loc 1 584 7 view .LVU541
+ 1503 0140 4FF0010B 		mov	fp, #1
+ 1504 0144 BD60     		str	r5, [r7, #8]
+ 1505              	.LVL168:
+ 584:../../opus/celt/rate.c ****    hi = m->nbAllocVectors - 1;
+ 1506              		.loc 1 584 7 view .LVU542
+ 1507 0146 C7F804E0 		str	lr, [r7, #4]
+ 1508 014a D7F810E0 		ldr	lr, [r7, #16]
+ 1509 014e B246     		mov	r10, r6
+ 1510 0150 1646     		mov	r6, r2
+ 1511              	.LVL169:
+ 584:../../opus/celt/rate.c ****    hi = m->nbAllocVectors - 1;
+ 1512              		.loc 1 584 7 view .LVU543
+ 1513 0152 5A46     		mov	r2, fp
+ 1514              	.LVL170:
+ 584:../../opus/celt/rate.c ****    hi = m->nbAllocVectors - 1;
+ 1515              		.loc 1 584 7 view .LVU544
+ 1516 0154 C7F88890 		str	r9, [r7, #136]
+ 1517 0158 D7F81490 		ldr	r9, [r7, #20]
+ 1518 015c 42E0     		b	.L82
+ 1519              	.LVL171:
+ 1520              	.L76:
+ 1521              	.LBB37:
+ 1522              	.LBB38:
+ 586:../../opus/celt/rate.c ****    do
+ 587:../../opus/celt/rate.c ****    {
+ 588:../../opus/celt/rate.c ****       int done = 0;
+ 589:../../opus/celt/rate.c ****       int psum = 0;
+ 590:../../opus/celt/rate.c ****       int mid = (lo+hi) >> 1;
+ 591:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 592:../../opus/celt/rate.c ****       {
+ 593:../../opus/celt/rate.c ****          int bitsj;
+ 594:../../opus/celt/rate.c ****          int N = m->eBands[j+1]-m->eBands[j];
+ 595:../../opus/celt/rate.c ****          bitsj = C*N*m->allocVectors[mid*len+j]<<LM>>2;
+ 596:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 597:../../opus/celt/rate.c ****             bitsj = IMAX(0, bitsj + trim_offset[j]);
+ 598:../../opus/celt/rate.c ****          bitsj += offsets[j];
+ 599:../../opus/celt/rate.c ****          if (bitsj >= thresh[j] || done)
+ 600:../../opus/celt/rate.c ****          {
+ 601:../../opus/celt/rate.c ****             done = 1;
+ 1523              		.loc 1 601 13 is_stmt 1 view .LVU545
+ 602:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 603:../../opus/celt/rate.c ****             psum += IMIN(bitsj, cap[j]);
+ 1524              		.loc 1 603 13 view .LVU546
+ 1525              		.loc 1 603 21 is_stmt 0 view .LVU547
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 45
+
+
+ 1526 015e 58F82260 		ldr	r6, [r8, r2, lsl #2]
+ 1527              		.loc 1 603 18 view .LVU548
+ 1528 0162 5E45     		cmp	r6, fp
+ 1529 0164 D4BF     		ite	le
+ 1530 0166 AD19     		addle	r5, r5, r6
+ 1531 0168 5D44     		addgt	r5, r5, fp
+ 1532              	.LVL172:
+ 601:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 1533              		.loc 1 601 18 view .LVU549
+ 1534 016a 0121     		movs	r1, #1
+ 1535 016c 7963     		str	r1, [r7, #52]
+ 1536              	.LVL173:
+ 1537              	.L78:
+ 601:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 1538              		.loc 1 601 18 view .LVU550
+ 1539 016e 1146     		mov	r1, r2
+ 1540              	.LVL174:
+ 1541              	.L74:
+ 601:../../opus/celt/rate.c ****             /* Don't allocate more than we can actually use */
+ 1542              		.loc 1 601 18 view .LVU551
+ 1543              	.LBE38:
+ 591:../../opus/celt/rate.c ****       {
+ 1544              		.loc 1 591 21 is_stmt 1 discriminator 1 view .LVU552
+ 591:../../opus/celt/rate.c ****       {
+ 1545              		.loc 1 591 19 is_stmt 0 discriminator 1 view .LVU553
+ 1546 0170 4A1E     		subs	r2, r1, #1
+ 1547              	.LVL175:
+ 591:../../opus/celt/rate.c ****       {
+ 1548              		.loc 1 591 21 discriminator 1 view .LVU554
+ 1549 0172 4945     		cmp	r1, r9
+ 1550 0174 2DDD     		ble	.L99
+ 1551              	.LBB39:
+ 593:../../opus/celt/rate.c ****          int N = m->eBands[j+1]-m->eBands[j];
+ 1552              		.loc 1 593 10 is_stmt 1 view .LVU555
+ 594:../../opus/celt/rate.c ****          bitsj = C*N*m->allocVectors[mid*len+j]<<LM>>2;
+ 1553              		.loc 1 594 10 view .LVU556
+ 594:../../opus/celt/rate.c ****          bitsj = C*N*m->allocVectors[mid*len+j]<<LM>>2;
+ 1554              		.loc 1 594 19 is_stmt 0 view .LVU557
+ 1555 0176 8669     		ldr	r6, [r0, #24]
+ 594:../../opus/celt/rate.c ****          bitsj = C*N*m->allocVectors[mid*len+j]<<LM>>2;
+ 1556              		.loc 1 594 27 view .LVU558
+ 1557 0178 36F911B0 		ldrsh	fp, [r6, r1, lsl #1]
+ 594:../../opus/celt/rate.c ****          bitsj = C*N*m->allocVectors[mid*len+j]<<LM>>2;
+ 1558              		.loc 1 594 42 view .LVU559
+ 1559 017c 36F91210 		ldrsh	r1, [r6, r2, lsl #1]
+ 594:../../opus/celt/rate.c ****          bitsj = C*N*m->allocVectors[mid*len+j]<<LM>>2;
+ 1560              		.loc 1 594 14 view .LVU560
+ 1561 0180 ABEB010B 		sub	fp, fp, r1
+ 1562              	.LVL176:
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1563              		.loc 1 595 10 is_stmt 1 view .LVU561
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1564              		.loc 1 595 19 is_stmt 0 view .LVU562
+ 1565 0184 0BFB03FB 		mul	fp, fp, r3
+ 1566              	.LVL177:
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1567              		.loc 1 595 23 view .LVU563
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 46
+
+
+ 1568 0188 C16A     		ldr	r1, [r0, #44]
+ 1569              	.LVL178:
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1570              		.loc 1 595 45 view .LVU564
+ 1571 018a 3E6B     		ldr	r6, [r7, #48]
+ 1572              	.LVL179:
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1573              		.loc 1 595 45 view .LVU565
+ 1574 018c 0CFB0626 		mla	r6, ip, r6, r2
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1575              		.loc 1 595 37 view .LVU566
+ 1576 0190 895D     		ldrb	r1, [r1, r6]	@ zero_extendqisi2
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1577              		.loc 1 595 21 view .LVU567
+ 1578 0192 01FB0BFB 		mul	fp, r1, fp
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1579              		.loc 1 595 48 view .LVU568
+ 1580 0196 D7F88810 		ldr	r1, [r7, #136]
+ 1581 019a 0BFA01FB 		lsl	fp, fp, r1
+ 595:../../opus/celt/rate.c ****          if (bitsj > 0)
+ 1582              		.loc 1 595 16 view .LVU569
+ 1583 019e 4FEAAB0B 		asr	fp, fp, #2
+ 1584              	.LVL180:
+ 596:../../opus/celt/rate.c ****             bitsj = IMAX(0, bitsj + trim_offset[j]);
+ 1585              		.loc 1 596 10 is_stmt 1 view .LVU570
+ 596:../../opus/celt/rate.c ****             bitsj = IMAX(0, bitsj + trim_offset[j]);
+ 1586              		.loc 1 596 13 is_stmt 0 view .LVU571
+ 1587 01a2 BBF1000F 		cmp	fp, #0
+ 1588 01a6 04DD     		ble	.L75
+ 597:../../opus/celt/rate.c ****          bitsj += offsets[j];
+ 1589              		.loc 1 597 13 is_stmt 1 view .LVU572
+ 597:../../opus/celt/rate.c ****          bitsj += offsets[j];
+ 1590              		.loc 1 597 21 is_stmt 0 view .LVU573
+ 1591 01a8 5AF82210 		ldr	r1, [r10, r2, lsl #2]
+ 1592 01ac 5944     		add	r1, r1, fp
+ 597:../../opus/celt/rate.c ****          bitsj += offsets[j];
+ 1593              		.loc 1 597 19 view .LVU574
+ 1594 01ae 21EAE17B 		bic	fp, r1, r1, asr #31
+ 1595              	.LVL181:
+ 1596              	.L75:
+ 598:../../opus/celt/rate.c ****          if (bitsj >= thresh[j] || done)
+ 1597              		.loc 1 598 10 is_stmt 1 view .LVU575
+ 598:../../opus/celt/rate.c ****          if (bitsj >= thresh[j] || done)
+ 1598              		.loc 1 598 26 is_stmt 0 view .LVU576
+ 1599 01b2 54F82260 		ldr	r6, [r4, r2, lsl #2]
+ 598:../../opus/celt/rate.c ****          if (bitsj >= thresh[j] || done)
+ 1600              		.loc 1 598 16 view .LVU577
+ 1601 01b6 B344     		add	fp, fp, r6
+ 1602              	.LVL182:
+ 599:../../opus/celt/rate.c ****          {
+ 1603              		.loc 1 599 10 is_stmt 1 view .LVU578
+ 599:../../opus/celt/rate.c ****          {
+ 1604              		.loc 1 599 29 is_stmt 0 view .LVU579
+ 1605 01b8 5EF82260 		ldr	r6, [lr, r2, lsl #2]
+ 599:../../opus/celt/rate.c ****          {
+ 1606              		.loc 1 599 13 view .LVU580
+ 1607 01bc 5E45     		cmp	r6, fp
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 47
+
+
+ 1608 01be CEDD     		ble	.L76
+ 599:../../opus/celt/rate.c ****          {
+ 1609              		.loc 1 599 33 discriminator 1 view .LVU581
+ 1610 01c0 796B     		ldr	r1, [r7, #52]
+ 1611 01c2 0029     		cmp	r1, #0
+ 1612 01c4 CBD1     		bne	.L76
+ 604:../../opus/celt/rate.c ****          } else {
+ 605:../../opus/celt/rate.c ****             if (bitsj >= C<<BITRES)
+ 1613              		.loc 1 605 13 is_stmt 1 view .LVU582
+ 1614              		.loc 1 605 27 is_stmt 0 view .LVU583
+ 1615 01c6 D900     		lsls	r1, r3, #3
+ 1616              		.loc 1 605 16 view .LVU584
+ 1617 01c8 BBEBC30F 		cmp	fp, r3, lsl #3
+ 1618 01cc CFDB     		blt	.L78
+ 606:../../opus/celt/rate.c ****                psum += C<<BITRES;
+ 1619              		.loc 1 606 16 is_stmt 1 view .LVU585
+ 1620              		.loc 1 606 21 is_stmt 0 view .LVU586
+ 1621 01ce 0D44     		add	r5, r5, r1
+ 1622              	.LVL183:
+ 1623              		.loc 1 606 21 view .LVU587
+ 1624 01d0 CDE7     		b	.L78
+ 1625              	.LVL184:
+ 1626              	.L99:
+ 1627              		.loc 1 606 21 view .LVU588
+ 1628              	.LBE39:
+ 607:../../opus/celt/rate.c ****          }
+ 608:../../opus/celt/rate.c ****       }
+ 609:../../opus/celt/rate.c ****       if (psum > total)
+ 1629              		.loc 1 609 10 view .LVU589
+ 1630 01d2 BA6A     		ldr	r2, [r7, #40]
+ 1631              	.LVL185:
+ 1632              		.loc 1 609 10 view .LVU590
+ 1633 01d4 7E6A     		ldr	r6, [r7, #36]
+ 1634              		.loc 1 609 7 is_stmt 1 view .LVU591
+ 1635              		.loc 1 609 10 is_stmt 0 view .LVU592
+ 1636 01d6 396A     		ldr	r1, [r7, #32]
+ 1637              	.LVL186:
+ 1638              		.loc 1 609 10 view .LVU593
+ 1639 01d8 A942     		cmp	r1, r5
+ 1640 01da 0DDA     		bge	.L80
+ 610:../../opus/celt/rate.c ****          hi = mid - 1;
+ 1641              		.loc 1 610 10 is_stmt 1 view .LVU594
+ 1642              		.loc 1 610 13 is_stmt 0 view .LVU595
+ 1643 01dc 0CF1FF36 		add	r6, ip, #-1
+ 1644              	.LVL187:
+ 1645              	.L81:
+ 1646              		.loc 1 610 13 view .LVU596
+ 1647              	.LBE37:
+ 611:../../opus/celt/rate.c ****       else
+ 612:../../opus/celt/rate.c ****          lo = mid + 1;
+ 613:../../opus/celt/rate.c ****       /*printf ("lo = %d, hi = %d\n", lo, hi);*/
+ 614:../../opus/celt/rate.c ****    }
+ 615:../../opus/celt/rate.c ****    while (lo <= hi);
+ 1648              		.loc 1 615 14 is_stmt 1 view .LVU597
+ 1649 01e0 B242     		cmp	r2, r6
+ 1650 01e2 0CDC     		bgt	.L100
+ 1651              	.LVL188:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 48
+
+
+ 1652              	.L82:
+ 586:../../opus/celt/rate.c ****    {
+ 1653              		.loc 1 586 4 view .LVU598
+ 1654              	.LBB40:
+ 588:../../opus/celt/rate.c ****       int psum = 0;
+ 1655              		.loc 1 588 7 view .LVU599
+ 589:../../opus/celt/rate.c ****       int mid = (lo+hi) >> 1;
+ 1656              		.loc 1 589 7 view .LVU600
+ 590:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 1657              		.loc 1 590 7 view .LVU601
+ 590:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 1658              		.loc 1 590 20 is_stmt 0 view .LVU602
+ 1659 01e4 02EB060C 		add	ip, r2, r6
+ 590:../../opus/celt/rate.c ****       for (j=end;j-->start;)
+ 1660              		.loc 1 590 11 view .LVU603
+ 1661 01e8 4FEA6C0C 		asr	ip, ip, #1
+ 1662              	.LVL189:
+ 591:../../opus/celt/rate.c ****       {
+ 1663              		.loc 1 591 7 is_stmt 1 view .LVU604
+ 591:../../opus/celt/rate.c ****       {
+ 1664              		.loc 1 591 13 is_stmt 0 view .LVU605
+ 1665 01ec F96A     		ldr	r1, [r7, #44]
+ 589:../../opus/celt/rate.c ****       int mid = (lo+hi) >> 1;
+ 1666              		.loc 1 589 11 view .LVU606
+ 1667 01ee 0025     		movs	r5, #0
+ 588:../../opus/celt/rate.c ****       int psum = 0;
+ 1668              		.loc 1 588 11 view .LVU607
+ 1669 01f0 7D63     		str	r5, [r7, #52]
+ 1670 01f2 BA62     		str	r2, [r7, #40]
+ 1671 01f4 7E62     		str	r6, [r7, #36]
+ 591:../../opus/celt/rate.c ****       {
+ 1672              		.loc 1 591 7 view .LVU608
+ 1673 01f6 BBE7     		b	.L74
+ 1674              	.LVL190:
+ 1675              	.L80:
+ 612:../../opus/celt/rate.c ****       /*printf ("lo = %d, hi = %d\n", lo, hi);*/
+ 1676              		.loc 1 612 10 is_stmt 1 view .LVU609
+ 612:../../opus/celt/rate.c ****       /*printf ("lo = %d, hi = %d\n", lo, hi);*/
+ 1677              		.loc 1 612 13 is_stmt 0 view .LVU610
+ 1678 01f8 0CF10102 		add	r2, ip, #1
+ 1679              	.LVL191:
+ 612:../../opus/celt/rate.c ****       /*printf ("lo = %d, hi = %d\n", lo, hi);*/
+ 1680              		.loc 1 612 13 view .LVU611
+ 1681 01fc F0E7     		b	.L81
+ 1682              	.LVL192:
+ 1683              	.L100:
+ 612:../../opus/celt/rate.c ****       /*printf ("lo = %d, hi = %d\n", lo, hi);*/
+ 1684              		.loc 1 612 13 view .LVU612
+ 1685              	.LBE40:
+ 616:../../opus/celt/rate.c ****    hi = lo--;
+ 1686              		.loc 1 616 11 view .LVU613
+ 1687 01fe 9346     		mov	fp, r2
+ 1688 0200 BD68     		ldr	r5, [r7, #8]
+ 1689              	.LVL193:
+ 1690              		.loc 1 616 11 view .LVU614
+ 1691 0202 D7F804E0 		ldr	lr, [r7, #4]
+ 1692 0206 D7F88890 		ldr	r9, [r7, #136]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 49
+
+
+ 1693              		.loc 1 616 4 is_stmt 1 view .LVU615
+ 1694              		.loc 1 616 11 is_stmt 0 view .LVU616
+ 1695 020a 511E     		subs	r1, r2, #1
+ 1696              	.LVL194:
+ 617:../../opus/celt/rate.c ****    /*printf ("interp between %d and %d\n", lo, hi);*/
+ 618:../../opus/celt/rate.c ****    for (j=start;j<end;j++)
+ 1697              		.loc 1 618 4 is_stmt 1 view .LVU617
+ 549:../../opus/celt/rate.c ****    /* Reserve a bit to signal the end of manually skipped bands. */
+ 1698              		.loc 1 549 15 is_stmt 0 view .LVU618
+ 1699 020c 7A69     		ldr	r2, [r7, #20]
+ 1700 020e BA62     		str	r2, [r7, #40]
+ 1701              		.loc 1 618 10 view .LVU619
+ 1702 0210 9446     		mov	ip, r2
+ 1703              	.LVL195:
+ 1704              		.loc 1 618 10 view .LVU620
+ 1705 0212 7D62     		str	r5, [r7, #36]
+ 1706 0214 C7F808E0 		str	lr, [r7, #8]
+ 1707 0218 C7F834A0 		str	r10, [r7, #52]
+ 1708              	.LVL196:
+ 1709              		.loc 1 618 10 view .LVU621
+ 1710 021c 0D46     		mov	r5, r1
+ 1711 021e C7F86080 		str	r8, [r7, #96]
+ 1712 0222 D7F83080 		ldr	r8, [r7, #48]
+ 1713 0226 C7F88430 		str	r3, [r7, #132]
+ 1714              		.loc 1 618 4 view .LVU622
+ 1715 022a 32E0     		b	.L83
+ 1716              	.LVL197:
+ 1717              	.L84:
+ 1718              	.LBB41:
+ 619:../../opus/celt/rate.c ****    {
+ 620:../../opus/celt/rate.c ****       int bits1j, bits2j;
+ 621:../../opus/celt/rate.c ****       int N = m->eBands[j+1]-m->eBands[j];
+ 622:../../opus/celt/rate.c ****       bits1j = C*N*m->allocVectors[lo*len+j]<<LM>>2;
+ 623:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 624:../../opus/celt/rate.c ****             cap[j] : C*N*m->allocVectors[hi*len+j]<<LM>>2;
+ 1719              		.loc 1 624 48 discriminator 2 view .LVU623
+ 1720 022c 08FB0BC1 		mla	r1, r8, fp, ip
+ 1721              		.loc 1 624 41 discriminator 2 view .LVU624
+ 1722 0230 1AF80110 		ldrb	r1, [r10, r1]	@ zero_extendqisi2
+ 1723              		.loc 1 624 25 discriminator 2 view .LVU625
+ 1724 0234 01FB0EFE 		mul	lr, r1, lr
+ 1725              		.loc 1 624 51 discriminator 2 view .LVU626
+ 1726 0238 0EFA09FE 		lsl	lr, lr, r9
+ 1727              		.loc 1 624 20 discriminator 2 view .LVU627
+ 1728 023c 4FEAAE0E 		asr	lr, lr, #2
+ 1729              	.L85:
+ 1730              	.LVL198:
+ 625:../../opus/celt/rate.c ****       if (bits1j > 0)
+ 1731              		.loc 1 625 7 is_stmt 1 view .LVU628
+ 1732              		.loc 1 625 10 is_stmt 0 view .LVU629
+ 1733 0240 002B     		cmp	r3, #0
+ 1734 0242 05DD     		ble	.L86
+ 626:../../opus/celt/rate.c ****          bits1j = IMAX(0, bits1j + trim_offset[j]);
+ 1735              		.loc 1 626 10 is_stmt 1 view .LVU630
+ 1736              		.loc 1 626 19 is_stmt 0 view .LVU631
+ 1737 0244 796B     		ldr	r1, [r7, #52]
+ 1738 0246 51F82210 		ldr	r1, [r1, r2, lsl #2]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 50
+
+
+ 1739 024a 1944     		add	r1, r1, r3
+ 1740              		.loc 1 626 17 view .LVU632
+ 1741 024c 21EAE173 		bic	r3, r1, r1, asr #31
+ 1742              	.LVL199:
+ 1743              	.L86:
+ 627:../../opus/celt/rate.c ****       if (bits2j > 0)
+ 1744              		.loc 1 627 7 is_stmt 1 view .LVU633
+ 1745              		.loc 1 627 10 is_stmt 0 view .LVU634
+ 1746 0250 BEF1000F 		cmp	lr, #0
+ 1747 0254 05DD     		ble	.L87
+ 628:../../opus/celt/rate.c ****          bits2j = IMAX(0, bits2j + trim_offset[j]);
+ 1748              		.loc 1 628 10 is_stmt 1 view .LVU635
+ 1749              		.loc 1 628 19 is_stmt 0 view .LVU636
+ 1750 0256 796B     		ldr	r1, [r7, #52]
+ 1751 0258 51F82210 		ldr	r1, [r1, r2, lsl #2]
+ 1752 025c 7144     		add	r1, r1, lr
+ 1753              		.loc 1 628 17 view .LVU637
+ 1754 025e 21EAE17E 		bic	lr, r1, r1, asr #31
+ 1755              	.LVL200:
+ 1756              	.L87:
+ 629:../../opus/celt/rate.c ****       if (lo > 0)
+ 1757              		.loc 1 629 7 is_stmt 1 view .LVU638
+ 1758              		.loc 1 629 10 is_stmt 0 view .LVU639
+ 1759 0262 002D     		cmp	r5, #0
+ 1760 0264 02DD     		ble	.L88
+ 630:../../opus/celt/rate.c ****          bits1j += offsets[j];
+ 1761              		.loc 1 630 10 is_stmt 1 view .LVU640
+ 1762              		.loc 1 630 27 is_stmt 0 view .LVU641
+ 1763 0266 54F82210 		ldr	r1, [r4, r2, lsl #2]
+ 1764              		.loc 1 630 17 view .LVU642
+ 1765 026a 0B44     		add	r3, r3, r1
+ 1766              	.LVL201:
+ 1767              	.L88:
+ 631:../../opus/celt/rate.c ****       bits2j += offsets[j];
+ 1768              		.loc 1 631 7 is_stmt 1 view .LVU643
+ 1769              		.loc 1 631 24 is_stmt 0 view .LVU644
+ 1770 026c 54F82210 		ldr	r1, [r4, r2, lsl #2]
+ 1771              		.loc 1 631 14 view .LVU645
+ 1772 0270 8E44     		add	lr, lr, r1
+ 1773              	.LVL202:
+ 632:../../opus/celt/rate.c ****       if (offsets[j]>0)
+ 1774              		.loc 1 632 7 is_stmt 1 view .LVU646
+ 1775              		.loc 1 632 10 is_stmt 0 view .LVU647
+ 1776 0272 0029     		cmp	r1, #0
+ 1777 0274 01DD     		ble	.L89
+ 633:../../opus/celt/rate.c ****          skip_start = j;
+ 1778              		.loc 1 633 21 view .LVU648
+ 1779 0276 C7F828C0 		str	ip, [r7, #40]
+ 1780              	.LVL203:
+ 1781              	.L89:
+ 634:../../opus/celt/rate.c ****       bits2j = IMAX(0,bits2j-bits1j);
+ 1782              		.loc 1 634 7 is_stmt 1 view .LVU649
+ 1783              		.loc 1 634 16 is_stmt 0 view .LVU650
+ 1784 027a AEEB030E 		sub	lr, lr, r3
+ 1785              	.LVL204:
+ 1786              		.loc 1 634 14 view .LVU651
+ 1787 027e 2EEAEE71 		bic	r1, lr, lr, asr #31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 51
+
+
+ 1788              	.LVL205:
+ 635:../../opus/celt/rate.c ****       bits1[j] = bits1j;
+ 1789              		.loc 1 635 7 is_stmt 1 view .LVU652
+ 1790              		.loc 1 635 16 is_stmt 0 view .LVU653
+ 1791 0282 FE69     		ldr	r6, [r7, #28]
+ 1792 0284 46F82230 		str	r3, [r6, r2, lsl #2]
+ 1793              	.LVL206:
+ 636:../../opus/celt/rate.c ****       bits2[j] = bits2j;
+ 1794              		.loc 1 636 7 is_stmt 1 view .LVU654
+ 1795              		.loc 1 636 16 is_stmt 0 view .LVU655
+ 1796 0288 BB69     		ldr	r3, [r7, #24]
+ 1797              	.LVL207:
+ 1798              		.loc 1 636 16 view .LVU656
+ 1799 028a 43F82210 		str	r1, [r3, r2, lsl #2]
+ 1800              	.LVL208:
+ 1801              		.loc 1 636 16 view .LVU657
+ 1802              	.LBE41:
+ 618:../../opus/celt/rate.c ****    {
+ 1803              		.loc 1 618 24 is_stmt 1 discriminator 2 view .LVU658
+ 1804 028e 0CF1010C 		add	ip, ip, #1
+ 1805              	.LVL209:
+ 1806              	.L83:
+ 618:../../opus/celt/rate.c ****    {
+ 1807              		.loc 1 618 18 discriminator 1 view .LVU659
+ 1808 0292 FB6A     		ldr	r3, [r7, #44]
+ 1809 0294 9C45     		cmp	ip, r3
+ 1810 0296 1FDA     		bge	.L101
+ 1811              	.LBB42:
+ 620:../../opus/celt/rate.c ****       int N = m->eBands[j+1]-m->eBands[j];
+ 1812              		.loc 1 620 7 view .LVU660
+ 621:../../opus/celt/rate.c ****       bits1j = C*N*m->allocVectors[lo*len+j]<<LM>>2;
+ 1813              		.loc 1 621 7 view .LVU661
+ 621:../../opus/celt/rate.c ****       bits1j = C*N*m->allocVectors[lo*len+j]<<LM>>2;
+ 1814              		.loc 1 621 16 is_stmt 0 view .LVU662
+ 1815 0298 8369     		ldr	r3, [r0, #24]
+ 621:../../opus/celt/rate.c ****       bits1j = C*N*m->allocVectors[lo*len+j]<<LM>>2;
+ 1816              		.loc 1 621 24 view .LVU663
+ 1817 029a 6246     		mov	r2, ip
+ 1818 029c 0CF10101 		add	r1, ip, #1
+ 1819 02a0 33F911E0 		ldrsh	lr, [r3, r1, lsl #1]
+ 621:../../opus/celt/rate.c ****       bits1j = C*N*m->allocVectors[lo*len+j]<<LM>>2;
+ 1820              		.loc 1 621 39 view .LVU664
+ 1821 02a4 33F91C30 		ldrsh	r3, [r3, ip, lsl #1]
+ 621:../../opus/celt/rate.c ****       bits1j = C*N*m->allocVectors[lo*len+j]<<LM>>2;
+ 1822              		.loc 1 621 11 view .LVU665
+ 1823 02a8 AEEB030E 		sub	lr, lr, r3
+ 1824              	.LVL210:
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1825              		.loc 1 622 7 is_stmt 1 view .LVU666
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1826              		.loc 1 622 17 is_stmt 0 view .LVU667
+ 1827 02ac D7F88430 		ldr	r3, [r7, #132]
+ 1828 02b0 0EFB03FE 		mul	lr, lr, r3
+ 1829              	.LVL211:
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1830              		.loc 1 622 21 view .LVU668
+ 1831 02b4 D0F82CA0 		ldr	r10, [r0, #44]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 52
+
+
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1832              		.loc 1 622 42 view .LVU669
+ 1833 02b8 05FB08C3 		mla	r3, r5, r8, ip
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1834              		.loc 1 622 35 view .LVU670
+ 1835 02bc 1AF80330 		ldrb	r3, [r10, r3]	@ zero_extendqisi2
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1836              		.loc 1 622 19 view .LVU671
+ 1837 02c0 03FB0EF3 		mul	r3, r3, lr
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1838              		.loc 1 622 45 view .LVU672
+ 1839 02c4 03FA09F3 		lsl	r3, r3, r9
+ 622:../../opus/celt/rate.c ****       bits2j = hi>=m->nbAllocVectors ?
+ 1840              		.loc 1 622 14 view .LVU673
+ 1841 02c8 9B10     		asrs	r3, r3, #2
+ 1842              	.LVL212:
+ 623:../../opus/celt/rate.c ****             cap[j] : C*N*m->allocVectors[hi*len+j]<<LM>>2;
+ 1843              		.loc 1 623 7 is_stmt 1 view .LVU674
+ 623:../../opus/celt/rate.c ****             cap[j] : C*N*m->allocVectors[hi*len+j]<<LM>>2;
+ 1844              		.loc 1 623 21 is_stmt 0 view .LVU675
+ 1845 02ca 816A     		ldr	r1, [r0, #40]
+ 1846              	.LVL213:
+ 624:../../opus/celt/rate.c ****       if (bits1j > 0)
+ 1847              		.loc 1 624 20 view .LVU676
+ 1848 02cc 5945     		cmp	r1, fp
+ 1849 02ce ADDC     		bgt	.L84
+ 624:../../opus/celt/rate.c ****       if (bits1j > 0)
+ 1850              		.loc 1 624 20 discriminator 1 view .LVU677
+ 1851 02d0 396E     		ldr	r1, [r7, #96]
+ 1852 02d2 51F82CE0 		ldr	lr, [r1, ip, lsl #2]
+ 1853 02d6 B3E7     		b	.L85
+ 1854              	.LVL214:
+ 1855              	.L101:
+ 624:../../opus/celt/rate.c ****       if (bits1j > 0)
+ 1856              		.loc 1 624 20 discriminator 1 view .LVU678
+ 1857              	.LBE42:
+ 637:../../opus/celt/rate.c ****    }
+ 638:../../opus/celt/rate.c ****    codedBands = interp_bits2pulses(m, start, end, skip_start, bits1, bits2, thresh, cap,
+ 1858              		.loc 1 638 17 view .LVU679
+ 1859 02d8 7D6A     		ldr	r5, [r7, #36]
+ 1860              	.LVL215:
+ 1861              		.loc 1 638 17 view .LVU680
+ 1862 02da D7F808E0 		ldr	lr, [r7, #8]
+ 1863 02de D7F86080 		ldr	r8, [r7, #96]
+ 1864 02e2 D7F88430 		ldr	r3, [r7, #132]
+ 1865              		.loc 1 638 4 is_stmt 1 view .LVU681
+ 1866              		.loc 1 638 17 is_stmt 0 view .LVU682
+ 1867 02e6 D7F89820 		ldr	r2, [r7, #152]
+ 1868 02ea 1392     		str	r2, [sp, #76]
+ 1869 02ec D7F89420 		ldr	r2, [r7, #148]
+ 1870 02f0 1292     		str	r2, [sp, #72]
+ 1871 02f2 D7F89020 		ldr	r2, [r7, #144]
+ 1872 02f6 1192     		str	r2, [sp, #68]
+ 1873 02f8 D7F88C20 		ldr	r2, [r7, #140]
+ 1874 02fc 1092     		str	r2, [sp, #64]
+ 1875 02fe CDF83C90 		str	r9, [sp, #60]
+ 1876 0302 0E93     		str	r3, [sp, #56]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 53
+
+
+ 1877 0304 D7F88030 		ldr	r3, [r7, #128]
+ 1878 0308 0D93     		str	r3, [sp, #52]
+ 1879 030a FB6F     		ldr	r3, [r7, #124]
+ 1880 030c 0C93     		str	r3, [sp, #48]
+ 1881 030e BB6F     		ldr	r3, [r7, #120]
+ 1882 0310 0B93     		str	r3, [sp, #44]
+ 1883 0312 FB68     		ldr	r3, [r7, #12]
+ 1884 0314 0A93     		str	r3, [sp, #40]
+ 1885 0316 FB6E     		ldr	r3, [r7, #108]
+ 1886 0318 0993     		str	r3, [sp, #36]
+ 1887 031a 0895     		str	r5, [sp, #32]
+ 1888 031c BB6E     		ldr	r3, [r7, #104]
+ 1889 031e 0793     		str	r3, [sp, #28]
+ 1890 0320 CDF818E0 		str	lr, [sp, #24]
+ 1891 0324 7B6F     		ldr	r3, [r7, #116]
+ 1892 0326 0593     		str	r3, [sp, #20]
+ 1893 0328 3B6A     		ldr	r3, [r7, #32]
+ 1894 032a 0493     		str	r3, [sp, #16]
+ 1895 032c CDF80C80 		str	r8, [sp, #12]
+ 1896 0330 3B69     		ldr	r3, [r7, #16]
+ 1897 0332 0293     		str	r3, [sp, #8]
+ 1898 0334 BB69     		ldr	r3, [r7, #24]
+ 1899 0336 0193     		str	r3, [sp, #4]
+ 1900 0338 FB69     		ldr	r3, [r7, #28]
+ 1901 033a 0093     		str	r3, [sp]
+ 1902 033c BB6A     		ldr	r3, [r7, #40]
+ 1903 033e FA6A     		ldr	r2, [r7, #44]
+ 1904 0340 7969     		ldr	r1, [r7, #20]
+ 1905 0342 FFF7FEFF 		bl	interp_bits2pulses
+ 1906              	.LVL216:
+ 639:../../opus/celt/rate.c ****          total, balance, skip_rsv, intensity, intensity_rsv, dual_stereo, dual_stereo_rsv,
+ 640:../../opus/celt/rate.c ****          pulses, ebits, fine_priority, C, LM, ec, encode, prev, signalBandwidth);
+ 641:../../opus/celt/rate.c ****    RESTORE_STACK;
+ 1907              		.loc 1 641 17 is_stmt 1 view .LVU683
+ 642:../../opus/celt/rate.c ****    return codedBands;
+ 1908              		.loc 1 642 4 view .LVU684
+ 643:../../opus/celt/rate.c **** }
+ 1909              		.loc 1 643 1 is_stmt 0 view .LVU685
+ 1910 0346 3C37     		adds	r7, r7, #60
+ 1911              	.LCFI6:
+ 1912              		.cfi_def_cfa_offset 36
+ 1913              	.LVL217:
+ 1914              		.loc 1 643 1 view .LVU686
+ 1915 0348 BD46     		mov	sp, r7
+ 1916              	.LCFI7:
+ 1917              		.cfi_def_cfa_register 13
+ 1918              		@ sp needed
+ 1919 034a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1920              	.LVL218:
+ 1921              	.L103:
+ 1922              		.loc 1 643 1 view .LVU687
+ 1923 034e 00BF     		.align	2
+ 1924              	.L102:
+ 1925 0350 00000000 		.word	LOG2_FRAC_TABLE
+ 1926              		.cfi_endproc
+ 1927              	.LFE17:
+ 1929              		.section	.rodata.LOG2_FRAC_TABLE,"a"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 54
+
+
+ 1930              		.align	2
+ 1933              	LOG2_FRAC_TABLE:
+ 1934 0000 00080D10 		.ascii	"\000\010\015\020\023\025\027\030\032\033\034\035\036"
+ 1934      13151718 
+ 1934      1A1B1C1D 
+ 1934      1E
+ 1935 000d 1F202021 		.ascii	"\037  !\"\"#$$%%"
+ 1935      22222324 
+ 1935      242525
+ 1936              		.text
+ 1937              	.Letext0:
+ 1938              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1939              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1940              		.file 5 "../../opus/include/opus_types.h"
+ 1941              		.file 6 "../../opus/include/opus_custom.h"
+ 1942              		.file 7 "../../opus/celt/modes.h"
+ 1943              		.file 8 "../../opus/celt/celt.h"
+ 1944              		.file 9 "../../opus/celt/kiss_fft.h"
+ 1945              		.file 10 "../../opus/celt/mdct.h"
+ 1946              		.file 11 "../../opus/celt/entdec.h"
+ 1947              		.file 12 "../../opus/celt/entenc.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s 			page 55
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 rate.c
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:20     .text.interp_bits2pulses:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:25     .text.interp_bits2pulses:00000000 interp_bits2pulses
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1096   .text.interp_bits2pulses:00000460 $d
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1933   .rodata.LOG2_FRAC_TABLE:00000000 LOG2_FRAC_TABLE
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1100   .text.interp_bits2pulses:00000464 $t
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1204   .text.clt_compute_allocation:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1210   .text.clt_compute_allocation:00000000 clt_compute_allocation
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1925   .text.clt_compute_allocation:00000350 $d
+C:\Users\oleg\AppData\Local\Temp\ccPN0kdb.s:1930   .rodata.LOG2_FRAC_TABLE:00000000 $d
+
+UNDEFINED SYMBOLS
+ec_enc_uint
+ec_enc_bit_logp
+ec_dec_bit_logp
+ec_dec_uint

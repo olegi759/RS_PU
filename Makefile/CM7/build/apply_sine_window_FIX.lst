@@ -1,0 +1,388 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"apply_sine_window_FIX.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/fixed/apply_sine_window_FIX.c"
+  19              		.section	.text.silk_apply_sine_window,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_apply_sine_window
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_apply_sine_window:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/fixed/apply_sine_window_FIX.c **** /***********************************************************************
+   2:../../opus/silk/fixed/apply_sine_window_FIX.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/fixed/apply_sine_window_FIX.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/fixed/apply_sine_window_FIX.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/fixed/apply_sine_window_FIX.c **** are met:
+   6:../../opus/silk/fixed/apply_sine_window_FIX.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/fixed/apply_sine_window_FIX.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/fixed/apply_sine_window_FIX.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/fixed/apply_sine_window_FIX.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/fixed/apply_sine_window_FIX.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/fixed/apply_sine_window_FIX.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/fixed/apply_sine_window_FIX.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/fixed/apply_sine_window_FIX.c **** products derived from this software without specific prior written
+  14:../../opus/silk/fixed/apply_sine_window_FIX.c **** permission.
+  15:../../opus/silk/fixed/apply_sine_window_FIX.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/fixed/apply_sine_window_FIX.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/fixed/apply_sine_window_FIX.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/fixed/apply_sine_window_FIX.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/fixed/apply_sine_window_FIX.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/fixed/apply_sine_window_FIX.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/fixed/apply_sine_window_FIX.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/fixed/apply_sine_window_FIX.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/fixed/apply_sine_window_FIX.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/fixed/apply_sine_window_FIX.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/fixed/apply_sine_window_FIX.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/fixed/apply_sine_window_FIX.c **** ***********************************************************************/
+  27:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  28:../../opus/silk/fixed/apply_sine_window_FIX.c **** #include "opus_config.h"
+  29:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  30:../../opus/silk/fixed/apply_sine_window_FIX.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 2
+
+
+  31:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  32:../../opus/silk/fixed/apply_sine_window_FIX.c **** /* Apply sine window to signal vector.                                      */
+  33:../../opus/silk/fixed/apply_sine_window_FIX.c **** /* Window types:                                                            */
+  34:../../opus/silk/fixed/apply_sine_window_FIX.c **** /*    1 -> sine window from 0 to pi/2                                       */
+  35:../../opus/silk/fixed/apply_sine_window_FIX.c **** /*    2 -> sine window from pi/2 to pi                                      */
+  36:../../opus/silk/fixed/apply_sine_window_FIX.c **** /* Every other sample is linearly interpolated, for speed.                  */
+  37:../../opus/silk/fixed/apply_sine_window_FIX.c **** /* Window length must be between 16 and 120 (incl) and a multiple of 4.     */
+  38:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  39:../../opus/silk/fixed/apply_sine_window_FIX.c **** /* Matlab code for table:
+  40:../../opus/silk/fixed/apply_sine_window_FIX.c ****    for k=16:9*4:16+2*9*4, fprintf(' %7.d,', -round(65536*pi ./ (k:4:k+8*4))); fprintf('\n'); end
+  41:../../opus/silk/fixed/apply_sine_window_FIX.c **** */
+  42:../../opus/silk/fixed/apply_sine_window_FIX.c **** static const opus_int16 freq_table_Q16[ 27 ] = {
+  43:../../opus/silk/fixed/apply_sine_window_FIX.c ****    12111,    9804,    8235,    7100,    6239,    5565,    5022,    4575,    4202,
+  44:../../opus/silk/fixed/apply_sine_window_FIX.c ****     3885,    3612,    3375,    3167,    2984,    2820,    2674,    2542,    2422,
+  45:../../opus/silk/fixed/apply_sine_window_FIX.c ****     2313,    2214,    2123,    2038,    1961,    1889,    1822,    1760,    1702,
+  46:../../opus/silk/fixed/apply_sine_window_FIX.c **** };
+  47:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  48:../../opus/silk/fixed/apply_sine_window_FIX.c **** void silk_apply_sine_window(
+  49:../../opus/silk/fixed/apply_sine_window_FIX.c ****     opus_int16                  px_win[],           /* O    Pointer to windowed signal             
+  50:../../opus/silk/fixed/apply_sine_window_FIX.c ****     const opus_int16            px[],               /* I    Pointer to input signal                
+  51:../../opus/silk/fixed/apply_sine_window_FIX.c ****     const opus_int              win_type,           /* I    Selects a window type                  
+  52:../../opus/silk/fixed/apply_sine_window_FIX.c ****     const opus_int              length              /* I    Window length, multiple of 4           
+  53:../../opus/silk/fixed/apply_sine_window_FIX.c **** )
+  54:../../opus/silk/fixed/apply_sine_window_FIX.c **** {
+  29              		.loc 1 54 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 54 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 4, -32
+  38              		.cfi_offset 5, -28
+  39              		.cfi_offset 6, -24
+  40              		.cfi_offset 7, -20
+  41              		.cfi_offset 8, -16
+  42              		.cfi_offset 9, -12
+  43              		.cfi_offset 10, -8
+  44              		.cfi_offset 14, -4
+  55:../../opus/silk/fixed/apply_sine_window_FIX.c ****     opus_int   k, f_Q16, c_Q16;
+  45              		.loc 1 55 5 is_stmt 1 view .LVU2
+  56:../../opus/silk/fixed/apply_sine_window_FIX.c ****     opus_int32 S0_Q16, S1_Q16;
+  46              		.loc 1 56 5 view .LVU3
+  57:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  58:../../opus/silk/fixed/apply_sine_window_FIX.c ****     celt_assert( win_type == 1 || win_type == 2 );
+  47              		.loc 1 58 50 view .LVU4
+  59:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  60:../../opus/silk/fixed/apply_sine_window_FIX.c ****     /* Length must be in a range from 16 to 120 and a multiple of 4 */
+  61:../../opus/silk/fixed/apply_sine_window_FIX.c ****     celt_assert( length >= 16 && length <= 120 );
+  48              		.loc 1 61 49 view .LVU5
+  62:../../opus/silk/fixed/apply_sine_window_FIX.c ****     celt_assert( ( length & 3 ) == 0 );
+  49              		.loc 1 62 39 view .LVU6
+  63:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  64:../../opus/silk/fixed/apply_sine_window_FIX.c ****     /* Frequency */
+  65:../../opus/silk/fixed/apply_sine_window_FIX.c ****     k = ( length >> 2 ) - 4;
+  50              		.loc 1 65 5 view .LVU7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 3
+
+
+  51              		.loc 1 65 18 is_stmt 0 view .LVU8
+  52 0004 9C10     		asrs	r4, r3, #2
+  53              		.loc 1 65 7 view .LVU9
+  54 0006 043C     		subs	r4, r4, #4
+  55              	.LVL1:
+  66:../../opus/silk/fixed/apply_sine_window_FIX.c ****     celt_assert( k >= 0 && k <= 26 );
+  56              		.loc 1 66 37 is_stmt 1 view .LVU10
+  67:../../opus/silk/fixed/apply_sine_window_FIX.c ****     f_Q16 = (opus_int)freq_table_Q16[ k ];
+  57              		.loc 1 67 5 view .LVU11
+  58              		.loc 1 67 37 is_stmt 0 view .LVU12
+  59 0008 414D     		ldr	r5, .L8
+  60 000a 35F914E0 		ldrsh	lr, [r5, r4, lsl #1]
+  61              	.LVL2:
+  68:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  69:../../opus/silk/fixed/apply_sine_window_FIX.c ****     /* Factor used for cosine approximation */
+  70:../../opus/silk/fixed/apply_sine_window_FIX.c ****     c_Q16 = silk_SMULWB( (opus_int32)f_Q16, -f_Q16 );
+  62              		.loc 1 70 5 is_stmt 1 view .LVU13
+  63              		.loc 1 70 13 is_stmt 0 view .LVU14
+  64 000e 4FEA2E46 		asr	r6, lr, #16
+  65 0012 CEF10004 		rsb	r4, lr, #0
+  66              	.LVL3:
+  67              		.loc 1 70 13 view .LVU15
+  68 0016 24B2     		sxth	r4, r4
+  69 0018 1FFA8EF5 		uxth	r5, lr
+  70 001c 04FB05F5 		mul	r5, r4, r5
+  71 0020 2D14     		asrs	r5, r5, #16
+  72              		.loc 1 70 11 view .LVU16
+  73 0022 04FB0655 		mla	r5, r4, r6, r5
+  74              	.LVL4:
+  71:../../opus/silk/fixed/apply_sine_window_FIX.c ****     silk_assert( c_Q16 >= -32768 );
+  75              		.loc 1 71 35 is_stmt 1 view .LVU17
+  72:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  73:../../opus/silk/fixed/apply_sine_window_FIX.c ****     /* initialize state */
+  74:../../opus/silk/fixed/apply_sine_window_FIX.c ****     if( win_type == 1 ) {
+  76              		.loc 1 74 5 view .LVU18
+  77              		.loc 1 74 7 is_stmt 0 view .LVU19
+  78 0026 012A     		cmp	r2, #1
+  79 0028 0AD0     		beq	.L7
+  75:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* start from 0 */
+  76:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S0_Q16 = 0;
+  77:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* approximation of sin(f) */
+  78:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S1_Q16 = f_Q16 + silk_RSHIFT( length, 3 );
+  79:../../opus/silk/fixed/apply_sine_window_FIX.c ****     } else {
+  80:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* start from 1 */
+  81:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S0_Q16 = ( (opus_int32)1 << 16 );
+  80              		.loc 1 81 9 is_stmt 1 view .LVU20
+  81              	.LVL5:
+  82:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* approximation of cos(f) */
+  83:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S1_Q16 = ( (opus_int32)1 << 16 ) + silk_RSHIFT( c_Q16, 1 ) + silk_RSHIFT( length, 4 );
+  82              		.loc 1 83 9 view .LVU21
+  83              		.loc 1 83 44 is_stmt 0 view .LVU22
+  84 002a 4FEA650E 		asr	lr, r5, #1
+  85              	.LVL6:
+  86              		.loc 1 83 42 view .LVU23
+  87 002e 0EF5803E 		add	lr, lr, #65536
+  88              		.loc 1 83 16 view .LVU24
+  89 0032 0EEB231E 		add	lr, lr, r3, asr #4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 4
+
+
+  90              	.LVL7:
+  81:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* approximation of cos(f) */
+  91              		.loc 1 81 16 view .LVU25
+  92 0036 4FF48036 		mov	r6, #65536
+  93              	.LVL8:
+  94              	.L4:
+  76:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* approximation of sin(f) */
+  95              		.loc 1 76 16 view .LVU26
+  96 003a 4FF0000C 		mov	ip, #0
+  97 003e 62E0     		b	.L3
+  98              	.LVL9:
+  99              	.L7:
+  76:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* approximation of sin(f) */
+ 100              		.loc 1 76 9 is_stmt 1 view .LVU27
+  78:../../opus/silk/fixed/apply_sine_window_FIX.c ****     } else {
+ 101              		.loc 1 78 9 view .LVU28
+  78:../../opus/silk/fixed/apply_sine_window_FIX.c ****     } else {
+ 102              		.loc 1 78 16 is_stmt 0 view .LVU29
+ 103 0040 0EEBE30E 		add	lr, lr, r3, asr #3
+ 104              	.LVL10:
+  76:../../opus/silk/fixed/apply_sine_window_FIX.c ****         /* approximation of sin(f) */
+ 105              		.loc 1 76 16 view .LVU30
+ 106 0044 0026     		movs	r6, #0
+ 107 0046 F8E7     		b	.L4
+ 108              	.LVL11:
+ 109              	.L5:
+  84:../../opus/silk/fixed/apply_sine_window_FIX.c ****     }
+  85:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  86:../../opus/silk/fixed/apply_sine_window_FIX.c ****     /* Uses the recursive equation:   sin(n*f) = 2 * cos(f) * sin((n-1)*f) - sin((n-2)*f)    */
+  87:../../opus/silk/fixed/apply_sine_window_FIX.c ****     /* 4 samples at a time */
+  88:../../opus/silk/fixed/apply_sine_window_FIX.c ****     for( k = 0; k < length; k += 4 ) {
+  89:../../opus/silk/fixed/apply_sine_window_FIX.c ****         px_win[ k ]     = (opus_int16)silk_SMULWB( silk_RSHIFT( S0_Q16 + S1_Q16, 1 ), px[ k ] );
+ 110              		.loc 1 89 9 is_stmt 1 view .LVU31
+ 111              		.loc 1 89 39 is_stmt 0 view .LVU32
+ 112 0048 06EB0E02 		add	r2, r6, lr
+ 113 004c 5414     		asrs	r4, r2, #17
+ 114 004e 31F91C70 		ldrsh	r7, [r1, ip, lsl #1]
+ 115 0052 C2F34F02 		ubfx	r2, r2, #1, #16
+ 116 0056 07FB02F2 		mul	r2, r7, r2
+ 117 005a 14FB07F4 		smulbb	r4, r4, r7
+ 118 005e 04EB2242 		add	r2, r4, r2, asr #16
+ 119              		.loc 1 89 25 view .LVU33
+ 120 0062 20F81C20 		strh	r2, [r0, ip, lsl #1]	@ movhi
+  90:../../opus/silk/fixed/apply_sine_window_FIX.c ****         px_win[ k + 1 ] = (opus_int16)silk_SMULWB( S1_Q16, px[ k + 1] );
+ 121              		.loc 1 90 9 is_stmt 1 view .LVU34
+ 122              		.loc 1 90 39 is_stmt 0 view .LVU35
+ 123 0066 4FEA2E47 		asr	r7, lr, #16
+ 124 006a 0CF10108 		add	r8, ip, #1
+ 125 006e 31F91840 		ldrsh	r4, [r1, r8, lsl #1]
+ 126 0072 1FFA8EF2 		uxth	r2, lr
+ 127 0076 04FB02F9 		mul	r9, r4, r2
+ 128 007a 17FB04F4 		smulbb	r4, r7, r4
+ 129 007e 04EB2944 		add	r4, r4, r9, asr #16
+ 130              		.loc 1 90 25 view .LVU36
+ 131 0082 20F81840 		strh	r4, [r0, r8, lsl #1]	@ movhi
+  91:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S0_Q16 = silk_SMULWB( S1_Q16, c_Q16 ) + silk_LSHIFT( S1_Q16, 1 ) - S0_Q16 + 1;
+ 132              		.loc 1 91 9 is_stmt 1 view .LVU37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 5
+
+
+ 133              		.loc 1 91 18 is_stmt 0 view .LVU38
+ 134 0086 2CB2     		sxth	r4, r5
+ 135 0088 04FB02F2 		mul	r2, r4, r2
+ 136 008c 1214     		asrs	r2, r2, #16
+ 137 008e 04FB0722 		mla	r2, r4, r7, r2
+ 138              		.loc 1 91 47 view .LVU39
+ 139 0092 02EB4E02 		add	r2, r2, lr, lsl #1
+ 140              		.loc 1 91 74 view .LVU40
+ 141 0096 921B     		subs	r2, r2, r6
+ 142              		.loc 1 91 16 view .LVU41
+ 143 0098 0132     		adds	r2, r2, #1
+ 144              	.LVL12:
+  92:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S0_Q16 = silk_min( S0_Q16, ( (opus_int32)1 << 16 ) );
+ 145              		.loc 1 92 9 is_stmt 1 view .LVU42
+ 146              		.loc 1 92 16 is_stmt 0 view .LVU43
+ 147 009a B2F5803F 		cmp	r2, #65536
+ 148 009e A8BF     		it	ge
+ 149 00a0 4FF48032 		movge	r2, #65536
+ 150              	.LVL13:
+ 151              		.loc 1 92 16 view .LVU44
+ 152 00a4 1646     		mov	r6, r2
+ 153              	.LVL14:
+  93:../../opus/silk/fixed/apply_sine_window_FIX.c **** 
+  94:../../opus/silk/fixed/apply_sine_window_FIX.c ****         px_win[ k + 2 ] = (opus_int16)silk_SMULWB( silk_RSHIFT( S0_Q16 + S1_Q16, 1 ), px[ k + 2] );
+ 154              		.loc 1 94 9 is_stmt 1 view .LVU45
+ 155              		.loc 1 94 39 is_stmt 0 view .LVU46
+ 156 00a6 7244     		add	r2, lr, r2
+ 157              	.LVL15:
+ 158              		.loc 1 94 39 view .LVU47
+ 159 00a8 5714     		asrs	r7, r2, #17
+ 160 00aa 0CF10208 		add	r8, ip, #2
+ 161 00ae 31F91890 		ldrsh	r9, [r1, r8, lsl #1]
+ 162 00b2 C2F34F02 		ubfx	r2, r2, #1, #16
+ 163 00b6 09FB02F2 		mul	r2, r9, r2
+ 164 00ba 17FB09F7 		smulbb	r7, r7, r9
+ 165 00be 07EB2242 		add	r2, r7, r2, asr #16
+ 166              		.loc 1 94 25 view .LVU48
+ 167 00c2 20F81820 		strh	r2, [r0, r8, lsl #1]	@ movhi
+  95:../../opus/silk/fixed/apply_sine_window_FIX.c ****         px_win[ k + 3 ] = (opus_int16)silk_SMULWB( S0_Q16, px[ k + 3 ] );
+ 168              		.loc 1 95 9 is_stmt 1 view .LVU49
+ 169              		.loc 1 95 39 is_stmt 0 view .LVU50
+ 170 00c6 4FEA2648 		asr	r8, r6, #16
+ 171 00ca 0CF10309 		add	r9, ip, #3
+ 172 00ce 31F91970 		ldrsh	r7, [r1, r9, lsl #1]
+ 173 00d2 B2B2     		uxth	r2, r6
+ 174 00d4 07FB02FA 		mul	r10, r7, r2
+ 175 00d8 18FB07F7 		smulbb	r7, r8, r7
+ 176 00dc 07EB2A47 		add	r7, r7, r10, asr #16
+ 177              		.loc 1 95 25 view .LVU51
+ 178 00e0 20F81970 		strh	r7, [r0, r9, lsl #1]	@ movhi
+  96:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S1_Q16 = silk_SMULWB( S0_Q16, c_Q16 ) + silk_LSHIFT( S0_Q16, 1 ) - S1_Q16;
+ 179              		.loc 1 96 9 is_stmt 1 view .LVU52
+ 180              		.loc 1 96 18 is_stmt 0 view .LVU53
+ 181 00e4 04FB02F2 		mul	r2, r4, r2
+ 182 00e8 1214     		asrs	r2, r2, #16
+ 183 00ea 08FB0422 		mla	r2, r8, r4, r2
+ 184              		.loc 1 96 47 view .LVU54
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 6
+
+
+ 185 00ee 02EB4602 		add	r2, r2, r6, lsl #1
+ 186              		.loc 1 96 16 view .LVU55
+ 187 00f2 A2EB0E02 		sub	r2, r2, lr
+ 188              	.LVL16:
+  97:../../opus/silk/fixed/apply_sine_window_FIX.c ****         S1_Q16 = silk_min( S1_Q16, ( (opus_int32)1 << 16 ) );
+ 189              		.loc 1 97 9 is_stmt 1 view .LVU56
+ 190              		.loc 1 97 16 is_stmt 0 view .LVU57
+ 191 00f6 B2F5803F 		cmp	r2, #65536
+ 192 00fa A8BF     		it	ge
+ 193 00fc 4FF48032 		movge	r2, #65536
+ 194              	.LVL17:
+ 195              		.loc 1 97 16 view .LVU58
+ 196 0100 9646     		mov	lr, r2
+ 197              	.LVL18:
+  88:../../opus/silk/fixed/apply_sine_window_FIX.c ****         px_win[ k ]     = (opus_int16)silk_SMULWB( silk_RSHIFT( S0_Q16 + S1_Q16, 1 ), px[ k ] );
+ 198              		.loc 1 88 31 is_stmt 1 discriminator 3 view .LVU59
+ 199 0102 0CF1040C 		add	ip, ip, #4
+ 200              	.LVL19:
+ 201              	.L3:
+  88:../../opus/silk/fixed/apply_sine_window_FIX.c ****         px_win[ k ]     = (opus_int16)silk_SMULWB( silk_RSHIFT( S0_Q16 + S1_Q16, 1 ), px[ k ] );
+ 202              		.loc 1 88 19 discriminator 1 view .LVU60
+ 203 0106 9C45     		cmp	ip, r3
+ 204 0108 9EDB     		blt	.L5
+  98:../../opus/silk/fixed/apply_sine_window_FIX.c ****     }
+  99:../../opus/silk/fixed/apply_sine_window_FIX.c **** }
+ 205              		.loc 1 99 1 is_stmt 0 view .LVU61
+ 206 010a BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 207              	.LVL20:
+ 208              	.L9:
+ 209              		.loc 1 99 1 view .LVU62
+ 210 010e 00BF     		.align	2
+ 211              	.L8:
+ 212 0110 00000000 		.word	freq_table_Q16
+ 213              		.cfi_endproc
+ 214              	.LFE19:
+ 216              		.section	.rodata.freq_table_Q16,"a"
+ 217              		.align	2
+ 220              	freq_table_Q16:
+ 221 0000 4F2F     		.short	12111
+ 222 0002 4C26     		.short	9804
+ 223 0004 2B20     		.short	8235
+ 224 0006 BC1B     		.short	7100
+ 225 0008 5F18     		.short	6239
+ 226 000a BD15     		.short	5565
+ 227 000c 9E13     		.short	5022
+ 228 000e DF11     		.short	4575
+ 229 0010 6A10     		.short	4202
+ 230 0012 2D0F     		.short	3885
+ 231 0014 1C0E     		.short	3612
+ 232 0016 2F0D     		.short	3375
+ 233 0018 5F0C     		.short	3167
+ 234 001a A80B     		.short	2984
+ 235 001c 040B     		.short	2820
+ 236 001e 720A     		.short	2674
+ 237 0020 EE09     		.short	2542
+ 238 0022 7609     		.short	2422
+ 239 0024 0909     		.short	2313
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 7
+
+
+ 240 0026 A608     		.short	2214
+ 241 0028 4B08     		.short	2123
+ 242 002a F607     		.short	2038
+ 243 002c A907     		.short	1961
+ 244 002e 6107     		.short	1889
+ 245 0030 1E07     		.short	1822
+ 246 0032 E006     		.short	1760
+ 247 0034 A606     		.short	1702
+ 248              		.text
+ 249              	.Letext0:
+ 250              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 251              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 252              		.file 4 "../../opus/include/opus_types.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 apply_sine_window_FIX.c
+C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s:20     .text.silk_apply_sine_window:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s:26     .text.silk_apply_sine_window:00000000 silk_apply_sine_window
+C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s:212    .text.silk_apply_sine_window:00000110 $d
+C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s:220    .rodata.freq_table_Q16:00000000 freq_table_Q16
+C:\Users\oleg\AppData\Local\Temp\ccwGwjHR.s:217    .rodata.freq_table_Q16:00000000 $d
+
+NO UNDEFINED SYMBOLS

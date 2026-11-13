@@ -1,0 +1,217 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"entcode.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/celt/entcode.c"
+  19              		.section	.text.ec_tell_frac,"ax",%progbits
+  20              		.align	1
+  21              		.global	ec_tell_frac
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	ec_tell_frac:
+  27              	.LVL0:
+  28              	.LFB8:
+   1:../../opus/celt/entcode.c **** /* Copyright (c) 2001-2011 Timothy B. Terriberry
+   2:../../opus/celt/entcode.c **** */
+   3:../../opus/celt/entcode.c **** /*
+   4:../../opus/celt/entcode.c ****    Redistribution and use in source and binary forms, with or without
+   5:../../opus/celt/entcode.c ****    modification, are permitted provided that the following conditions
+   6:../../opus/celt/entcode.c ****    are met:
+   7:../../opus/celt/entcode.c **** 
+   8:../../opus/celt/entcode.c ****    - Redistributions of source code must retain the above copyright
+   9:../../opus/celt/entcode.c ****    notice, this list of conditions and the following disclaimer.
+  10:../../opus/celt/entcode.c **** 
+  11:../../opus/celt/entcode.c ****    - Redistributions in binary form must reproduce the above copyright
+  12:../../opus/celt/entcode.c ****    notice, this list of conditions and the following disclaimer in the
+  13:../../opus/celt/entcode.c ****    documentation and/or other materials provided with the distribution.
+  14:../../opus/celt/entcode.c **** 
+  15:../../opus/celt/entcode.c ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  16:../../opus/celt/entcode.c ****    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  17:../../opus/celt/entcode.c ****    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  18:../../opus/celt/entcode.c ****    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  19:../../opus/celt/entcode.c ****    OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  20:../../opus/celt/entcode.c ****    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  21:../../opus/celt/entcode.c ****    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  22:../../opus/celt/entcode.c ****    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  23:../../opus/celt/entcode.c ****    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  24:../../opus/celt/entcode.c ****    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  25:../../opus/celt/entcode.c ****    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/celt/entcode.c **** */
+  27:../../opus/celt/entcode.c **** 
+  28:../../opus/celt/entcode.c **** #include "opus_config.h"
+  29:../../opus/celt/entcode.c **** 
+  30:../../opus/celt/entcode.c **** #include "entcode.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s 			page 2
+
+
+  31:../../opus/celt/entcode.c **** #include "arch.h"
+  32:../../opus/celt/entcode.c **** 
+  33:../../opus/celt/entcode.c **** #if !defined(EC_CLZ)
+  34:../../opus/celt/entcode.c **** /*This is a fallback for systems where we don't know how to access
+  35:../../opus/celt/entcode.c ****    a BSR or CLZ instruction (see ecintrin.h).
+  36:../../opus/celt/entcode.c ****   If you are optimizing Opus on a new platform and it has a native CLZ or
+  37:../../opus/celt/entcode.c ****    BZR (e.g. cell, MIPS, x86, etc) then making it available to Opus will be
+  38:../../opus/celt/entcode.c ****    an easy performance win.*/
+  39:../../opus/celt/entcode.c **** int ec_ilog(opus_uint32 _v){
+  40:../../opus/celt/entcode.c ****   /*On a Pentium M, this branchless version tested as the fastest on
+  41:../../opus/celt/entcode.c ****      1,000,000,000 random 32-bit integers, edging out a similar version with
+  42:../../opus/celt/entcode.c ****      branches, and a 256-entry LUT version.*/
+  43:../../opus/celt/entcode.c ****   int ret;
+  44:../../opus/celt/entcode.c ****   int m;
+  45:../../opus/celt/entcode.c ****   ret=!!_v;
+  46:../../opus/celt/entcode.c ****   m=!!(_v&0xFFFF0000)<<4;
+  47:../../opus/celt/entcode.c ****   _v>>=m;
+  48:../../opus/celt/entcode.c ****   ret|=m;
+  49:../../opus/celt/entcode.c ****   m=!!(_v&0xFF00)<<3;
+  50:../../opus/celt/entcode.c ****   _v>>=m;
+  51:../../opus/celt/entcode.c ****   ret|=m;
+  52:../../opus/celt/entcode.c ****   m=!!(_v&0xF0)<<2;
+  53:../../opus/celt/entcode.c ****   _v>>=m;
+  54:../../opus/celt/entcode.c ****   ret|=m;
+  55:../../opus/celt/entcode.c ****   m=!!(_v&0xC)<<1;
+  56:../../opus/celt/entcode.c ****   _v>>=m;
+  57:../../opus/celt/entcode.c ****   ret|=m;
+  58:../../opus/celt/entcode.c ****   ret+=!!(_v&0x2);
+  59:../../opus/celt/entcode.c ****   return ret;
+  60:../../opus/celt/entcode.c **** }
+  61:../../opus/celt/entcode.c **** #endif
+  62:../../opus/celt/entcode.c **** 
+  63:../../opus/celt/entcode.c **** #if 1
+  64:../../opus/celt/entcode.c **** /* This is a faster version of ec_tell_frac() that takes advantage
+  65:../../opus/celt/entcode.c ****    of the low (1/8 bit) resolution to use just a linear function
+  66:../../opus/celt/entcode.c ****    followed by a lookup to determine the exact transition thresholds. */
+  67:../../opus/celt/entcode.c **** opus_uint32 ec_tell_frac(ec_ctx *_this){
+  29              		.loc 1 67 40 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 67 40 is_stmt 0 view .LVU1
+  35 0000 10B4     		push	{r4}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 4
+  38              		.cfi_offset 4, -4
+  68:../../opus/celt/entcode.c ****   static const unsigned correction[8] =
+  39              		.loc 1 68 3 is_stmt 1 view .LVU2
+  69:../../opus/celt/entcode.c ****     {35733, 38967, 42495, 46340,
+  70:../../opus/celt/entcode.c ****      50535, 55109, 60097, 65535};
+  71:../../opus/celt/entcode.c ****   opus_uint32 nbits;
+  40              		.loc 1 71 3 view .LVU3
+  72:../../opus/celt/entcode.c ****   opus_uint32 r;
+  41              		.loc 1 72 3 view .LVU4
+  73:../../opus/celt/entcode.c ****   int         l;
+  42              		.loc 1 73 3 view .LVU5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s 			page 3
+
+
+  74:../../opus/celt/entcode.c ****   unsigned    b;
+  43              		.loc 1 74 3 view .LVU6
+  75:../../opus/celt/entcode.c ****   nbits=_this->nbits_total<<BITRES;
+  44              		.loc 1 75 3 view .LVU7
+  45              		.loc 1 75 14 is_stmt 0 view .LVU8
+  46 0002 4169     		ldr	r1, [r0, #20]
+  47              	.LVL1:
+  76:../../opus/celt/entcode.c ****   l=EC_ILOG(_this->rng);
+  48              		.loc 1 76 3 is_stmt 1 view .LVU9
+  49              		.loc 1 76 5 is_stmt 0 view .LVU10
+  50 0004 C269     		ldr	r2, [r0, #28]
+  51 0006 B2FA82F3 		clz	r3, r2
+  52              		.loc 1 76 4 discriminator 1 view .LVU11
+  53 000a C3F12000 		rsb	r0, r3, #32
+  54              	.LVL2:
+  77:../../opus/celt/entcode.c ****   r=_this->rng>>(l-16);
+  55              		.loc 1 77 3 is_stmt 1 view .LVU12
+  56              		.loc 1 77 19 is_stmt 0 view .LVU13
+  57 000e C3F11003 		rsb	r3, r3, #16
+  58              		.loc 1 77 4 view .LVU14
+  59 0012 DA40     		lsrs	r2, r2, r3
+  60              	.LVL3:
+  78:../../opus/celt/entcode.c ****   b = (r>>12)-8;
+  61              		.loc 1 78 3 is_stmt 1 view .LVU15
+  62              		.loc 1 78 9 is_stmt 0 view .LVU16
+  63 0014 130B     		lsrs	r3, r2, #12
+  64              		.loc 1 78 5 view .LVU17
+  65 0016 083B     		subs	r3, r3, #8
+  66              	.LVL4:
+  79:../../opus/celt/entcode.c ****   b += r>correction[b];
+  67              		.loc 1 79 3 is_stmt 1 view .LVU18
+  68              		.loc 1 79 20 is_stmt 0 view .LVU19
+  69 0018 064C     		ldr	r4, .L3
+  70 001a 54F82340 		ldr	r4, [r4, r3, lsl #2]
+  71              		.loc 1 79 5 view .LVU20
+  72 001e 9442     		cmp	r4, r2
+  73 0020 38BF     		it	cc
+  74 0022 0133     		addcc	r3, r3, #1
+  75              	.LVL5:
+  80:../../opus/celt/entcode.c ****   l = (l<<3)+b;
+  76              		.loc 1 80 3 is_stmt 1 view .LVU21
+  77              		.loc 1 80 13 is_stmt 0 view .LVU22
+  78 0024 03EBC000 		add	r0, r3, r0, lsl #3
+  79              	.LVL6:
+  81:../../opus/celt/entcode.c ****   return nbits-l;
+  80              		.loc 1 81 3 is_stmt 1 view .LVU23
+  82:../../opus/celt/entcode.c **** }
+  81              		.loc 1 82 1 is_stmt 0 view .LVU24
+  82 0028 C0EBC100 		rsb	r0, r0, r1, lsl #3
+  83              	.LVL7:
+  84              		.loc 1 82 1 view .LVU25
+  85 002c 5DF8044B 		ldr	r4, [sp], #4
+  86              	.LCFI1:
+  87              		.cfi_restore 4
+  88              		.cfi_def_cfa_offset 0
+  89 0030 7047     		bx	lr
+  90              	.L4:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s 			page 4
+
+
+  91 0032 00BF     		.align	2
+  92              	.L3:
+  93 0034 00000000 		.word	correction.0
+  94              		.cfi_endproc
+  95              	.LFE8:
+  97              		.section	.rodata.correction.0,"a"
+  98              		.align	2
+ 101              	correction.0:
+ 102 0000 958B0000 		.word	35733
+ 103 0004 37980000 		.word	38967
+ 104 0008 FFA50000 		.word	42495
+ 105 000c 04B50000 		.word	46340
+ 106 0010 67C50000 		.word	50535
+ 107 0014 45D70000 		.word	55109
+ 108 0018 C1EA0000 		.word	60097
+ 109 001c FFFF0000 		.word	65535
+ 110              		.text
+ 111              	.Letext0:
+ 112              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 113              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 114              		.file 4 "../../opus/include/opus_types.h"
+ 115              		.file 5 "../../opus/celt/entcode.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 entcode.c
+C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s:20     .text.ec_tell_frac:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s:26     .text.ec_tell_frac:00000000 ec_tell_frac
+C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s:93     .text.ec_tell_frac:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s:101    .rodata.correction.0:00000000 correction.0
+C:\Users\oleg\AppData\Local\Temp\ccLJ8m4C.s:98     .rodata.correction.0:00000000 $d
+
+NO UNDEFINED SYMBOLS

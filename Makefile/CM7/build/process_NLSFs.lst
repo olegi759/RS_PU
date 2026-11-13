@@ -1,0 +1,431 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"process_NLSFs.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/process_NLSFs.c"
+  19              		.section	.text.silk_process_NLSFs,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_process_NLSFs
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_process_NLSFs:
+  27              	.LVL0:
+  28              	.LFB25:
+   1:../../opus/silk/process_NLSFs.c **** /***********************************************************************
+   2:../../opus/silk/process_NLSFs.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/process_NLSFs.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/process_NLSFs.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/process_NLSFs.c **** are met:
+   6:../../opus/silk/process_NLSFs.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/process_NLSFs.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/process_NLSFs.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/process_NLSFs.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/process_NLSFs.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/process_NLSFs.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/process_NLSFs.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/process_NLSFs.c **** products derived from this software without specific prior written
+  14:../../opus/silk/process_NLSFs.c **** permission.
+  15:../../opus/silk/process_NLSFs.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/process_NLSFs.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/process_NLSFs.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/process_NLSFs.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/process_NLSFs.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/process_NLSFs.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/process_NLSFs.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/process_NLSFs.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/process_NLSFs.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/process_NLSFs.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/process_NLSFs.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/process_NLSFs.c **** ***********************************************************************/
+  27:../../opus/silk/process_NLSFs.c **** 
+  28:../../opus/silk/process_NLSFs.c **** #include "opus_config.h"
+  29:../../opus/silk/process_NLSFs.c **** 
+  30:../../opus/silk/process_NLSFs.c **** #include "main.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 2
+
+
+  31:../../opus/silk/process_NLSFs.c **** 
+  32:../../opus/silk/process_NLSFs.c **** /* Limit, stabilize, convert and quantize NLSFs */
+  33:../../opus/silk/process_NLSFs.c **** void silk_process_NLSFs(
+  34:../../opus/silk/process_NLSFs.c ****     silk_encoder_state          *psEncC,                            /* I/O  Encoder state          
+  35:../../opus/silk/process_NLSFs.c ****     opus_int16                  PredCoef_Q12[ 2 ][ MAX_LPC_ORDER ], /* O    Prediction coefficients
+  36:../../opus/silk/process_NLSFs.c ****     opus_int16                  pNLSF_Q15[         MAX_LPC_ORDER ], /* I/O  Normalized LSFs (quant 
+  37:../../opus/silk/process_NLSFs.c ****     const opus_int16            prev_NLSFq_Q15[    MAX_LPC_ORDER ]  /* I    Previous Normalized LSF
+  38:../../opus/silk/process_NLSFs.c **** )
+  39:../../opus/silk/process_NLSFs.c **** {
+  29              		.loc 1 39 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 96
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 39 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 4, -32
+  38              		.cfi_offset 5, -28
+  39              		.cfi_offset 6, -24
+  40              		.cfi_offset 7, -20
+  41              		.cfi_offset 8, -16
+  42              		.cfi_offset 9, -12
+  43              		.cfi_offset 10, -8
+  44              		.cfi_offset 14, -4
+  45 0004 9CB0     		sub	sp, sp, #112
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 144
+  48 0006 0446     		mov	r4, r0
+  49 0008 8846     		mov	r8, r1
+  50 000a 1646     		mov	r6, r2
+  51 000c 9946     		mov	r9, r3
+  40:../../opus/silk/process_NLSFs.c ****     opus_int     i, doInterpolate;
+  52              		.loc 1 40 5 is_stmt 1 view .LVU2
+  41:../../opus/silk/process_NLSFs.c ****     opus_int     NLSF_mu_Q20;
+  53              		.loc 1 41 5 view .LVU3
+  42:../../opus/silk/process_NLSFs.c ****     opus_int16   i_sqr_Q15;
+  54              		.loc 1 42 5 view .LVU4
+  43:../../opus/silk/process_NLSFs.c ****     opus_int16   pNLSF0_temp_Q15[ MAX_LPC_ORDER ];
+  55              		.loc 1 43 5 view .LVU5
+  44:../../opus/silk/process_NLSFs.c ****     opus_int16   pNLSFW_QW[ MAX_LPC_ORDER ];
+  56              		.loc 1 44 5 view .LVU6
+  45:../../opus/silk/process_NLSFs.c ****     opus_int16   pNLSFW0_temp_QW[ MAX_LPC_ORDER ];
+  57              		.loc 1 45 5 view .LVU7
+  46:../../opus/silk/process_NLSFs.c **** 
+  47:../../opus/silk/process_NLSFs.c ****     silk_assert( psEncC->speech_activity_Q8 >=   0 );
+  58              		.loc 1 47 53 view .LVU8
+  48:../../opus/silk/process_NLSFs.c ****     silk_assert( psEncC->speech_activity_Q8 <= SILK_FIX_CONST( 1.0, 8 ) );
+  59              		.loc 1 48 74 view .LVU9
+  49:../../opus/silk/process_NLSFs.c ****     celt_assert( psEncC->useInterpolatedNLSFs == 1 || psEncC->indices.NLSFInterpCoef_Q2 == ( 1 << 2
+  60              		.loc 1 49 104 view .LVU10
+  50:../../opus/silk/process_NLSFs.c **** 
+  51:../../opus/silk/process_NLSFs.c ****     /***********************/
+  52:../../opus/silk/process_NLSFs.c ****     /* Calculate mu values */
+  53:../../opus/silk/process_NLSFs.c ****     /***********************/
+  54:../../opus/silk/process_NLSFs.c ****     /* NLSF_mu  = 0.003 - 0.0015 * psEnc->speech_activity; */
+  55:../../opus/silk/process_NLSFs.c ****     NLSF_mu_Q20 = silk_SMLAWB( SILK_FIX_CONST( 0.003, 20 ), SILK_FIX_CONST( -0.001, 28 ), psEncC->s
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 3
+
+
+  61              		.loc 1 55 5 view .LVU11
+  62              		.loc 1 55 19 is_stmt 0 view .LVU12
+  63 000e 00F58053 		add	r3, r0, #4096
+  64              	.LVL1:
+  65              		.loc 1 55 19 view .LVU13
+  66 0012 B3F9B4C1 		ldrsh	ip, [r3, #436]
+  67 0016 CCEB8C75 		rsb	r5, ip, ip, lsl #30
+  68 001a CCEB8505 		rsb	r5, ip, r5, lsl #2
+  69 001e 4EF26E72 		movw	r2, #59246
+  70              	.LVL2:
+  71              		.loc 1 55 19 view .LVU14
+  72 0022 02FB0CFC 		mul	ip, r2, ip
+  73 0026 05EB2C45 		add	r5, r5, ip, asr #16
+  74              		.loc 1 55 17 view .LVU15
+  75 002a 05F64A45 		addw	r5, r5, #3146
+  76              	.LVL3:
+  56:../../opus/silk/process_NLSFs.c ****     if( psEncC->nb_subfr == 2 ) {
+  77              		.loc 1 56 5 is_stmt 1 view .LVU16
+  78              		.loc 1 56 15 is_stmt 0 view .LVU17
+  79 002e D3F8E431 		ldr	r3, [r3, #484]
+  80              		.loc 1 56 7 view .LVU18
+  81 0032 022B     		cmp	r3, #2
+  82 0034 42D0     		beq	.L11
+  83              	.L2:
+  57:../../opus/silk/process_NLSFs.c ****         /* Multiply by 1.5 for 10 ms packets */
+  58:../../opus/silk/process_NLSFs.c ****         NLSF_mu_Q20 = silk_ADD_RSHIFT( NLSF_mu_Q20, NLSF_mu_Q20, 1 );
+  59:../../opus/silk/process_NLSFs.c ****     }
+  60:../../opus/silk/process_NLSFs.c **** 
+  61:../../opus/silk/process_NLSFs.c ****     celt_assert( NLSF_mu_Q20 >  0 );
+  84              		.loc 1 61 36 is_stmt 1 view .LVU19
+  62:../../opus/silk/process_NLSFs.c ****     silk_assert( NLSF_mu_Q20 <= SILK_FIX_CONST( 0.005, 20 ) );
+  85              		.loc 1 62 62 view .LVU20
+  63:../../opus/silk/process_NLSFs.c **** 
+  64:../../opus/silk/process_NLSFs.c ****     /* Calculate NLSF weights */
+  65:../../opus/silk/process_NLSFs.c ****     silk_NLSF_VQ_weights_laroia( pNLSFW_QW, pNLSF_Q15, psEncC->predictLPCOrder );
+  86              		.loc 1 65 5 view .LVU21
+  87 0036 04F58057 		add	r7, r4, #4096
+  88 003a D7F82022 		ldr	r2, [r7, #544]
+  89 003e 3146     		mov	r1, r6
+  90              	.LVL4:
+  91              		.loc 1 65 5 is_stmt 0 view .LVU22
+  92 0040 0CA8     		add	r0, sp, #48
+  93              	.LVL5:
+  94              		.loc 1 65 5 view .LVU23
+  95 0042 FFF7FEFF 		bl	silk_NLSF_VQ_weights_laroia
+  96              	.LVL6:
+  66:../../opus/silk/process_NLSFs.c **** 
+  67:../../opus/silk/process_NLSFs.c ****     /* Update NLSF weights for interpolated NLSFs */
+  68:../../opus/silk/process_NLSFs.c ****     doInterpolate = ( psEncC->useInterpolatedNLSFs == 1 ) && ( psEncC->indices.NLSFInterpCoef_Q2 < 
+  97              		.loc 1 68 5 is_stmt 1 view .LVU24
+  98              		.loc 1 68 29 is_stmt 0 view .LVU25
+  99 0046 D7F818A2 		ldr	r10, [r7, #536]
+ 100              		.loc 1 68 59 view .LVU26
+ 101 004a BAF1010F 		cmp	r10, #1
+ 102 004e 38D0     		beq	.L12
+ 103              		.loc 1 68 59 discriminator 4 view .LVU27
+ 104 0050 4FF0000A 		mov	r10, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 4
+
+
+ 105              	.L3:
+  69:../../opus/silk/process_NLSFs.c ****     if( doInterpolate ) {
+  70:../../opus/silk/process_NLSFs.c ****         /* Calculate the interpolated NLSF vector for the first half */
+  71:../../opus/silk/process_NLSFs.c ****         silk_interpolate( pNLSF0_temp_Q15, prev_NLSFq_Q15, pNLSF_Q15,
+  72:../../opus/silk/process_NLSFs.c ****             psEncC->indices.NLSFInterpCoef_Q2, psEncC->predictLPCOrder );
+  73:../../opus/silk/process_NLSFs.c **** 
+  74:../../opus/silk/process_NLSFs.c ****         /* Calculate first half NLSF weights for the interpolated NLSFs */
+  75:../../opus/silk/process_NLSFs.c ****         silk_NLSF_VQ_weights_laroia( pNLSFW0_temp_QW, pNLSF0_temp_Q15, psEncC->predictLPCOrder );
+  76:../../opus/silk/process_NLSFs.c **** 
+  77:../../opus/silk/process_NLSFs.c ****         /* Update NLSF weights with contribution from first half */
+  78:../../opus/silk/process_NLSFs.c ****         i_sqr_Q15 = silk_LSHIFT( silk_SMULBB( psEncC->indices.NLSFInterpCoef_Q2, psEncC->indices.NL
+  79:../../opus/silk/process_NLSFs.c ****         for( i = 0; i < psEncC->predictLPCOrder; i++ ) {
+  80:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+  81:../../opus/silk/process_NLSFs.c ****                   silk_SMULBB( pNLSFW0_temp_QW[ i ], i_sqr_Q15 ), 16) );
+  82:../../opus/silk/process_NLSFs.c ****             silk_assert( pNLSFW_QW[ i ] >= 1 );
+  83:../../opus/silk/process_NLSFs.c ****         }
+  84:../../opus/silk/process_NLSFs.c ****     }
+  85:../../opus/silk/process_NLSFs.c **** 
+  86:../../opus/silk/process_NLSFs.c ****     silk_NLSF_encode( psEncC->indices.NLSFIndices, pNLSF_Q15, psEncC->psNLSF_CB, pNLSFW_QW,
+ 106              		.loc 1 86 5 is_stmt 1 view .LVU28
+  87:../../opus/silk/process_NLSFs.c ****         NLSF_mu_Q20, psEncC->NLSF_MSVQ_Survivors, psEncC->indices.signalType );
+ 107              		.loc 1 87 66 is_stmt 0 view .LVU29
+ 108 0054 04F58057 		add	r7, r4, #4096
+ 109 0058 97F99D32 		ldrsb	r3, [r7, #669]
+  86:../../opus/silk/process_NLSFs.c ****         NLSF_mu_Q20, psEncC->NLSF_MSVQ_Survivors, psEncC->indices.signalType );
+ 110              		.loc 1 86 5 view .LVU30
+ 111 005c 0293     		str	r3, [sp, #8]
+ 112 005e D7F83432 		ldr	r3, [r7, #564]
+ 113 0062 0193     		str	r3, [sp, #4]
+ 114 0064 0095     		str	r5, [sp]
+ 115 0066 0CAB     		add	r3, sp, #48
+ 116 0068 D7F85422 		ldr	r2, [r7, #596]
+ 117 006c 3146     		mov	r1, r6
+ 118 006e 41F28820 		movw	r0, #4744
+ 119 0072 2044     		add	r0, r0, r4
+ 120 0074 FFF7FEFF 		bl	silk_NLSF_encode
+ 121              	.LVL7:
+  88:../../opus/silk/process_NLSFs.c **** 
+  89:../../opus/silk/process_NLSFs.c ****     /* Convert quantized NLSFs back to LPC coefficients */
+  90:../../opus/silk/process_NLSFs.c ****     silk_NLSF2A( PredCoef_Q12[ 1 ], pNLSF_Q15, psEncC->predictLPCOrder, psEncC->arch );
+ 122              		.loc 1 90 5 is_stmt 1 view .LVU31
+ 123              		.loc 1 90 30 is_stmt 0 view .LVU32
+ 124 0078 08F12005 		add	r5, r8, #32
+ 125              	.LVL8:
+ 126              		.loc 1 90 5 view .LVU33
+ 127 007c D7F8E433 		ldr	r3, [r7, #996]
+ 128 0080 D7F82022 		ldr	r2, [r7, #544]
+ 129 0084 3146     		mov	r1, r6
+ 130 0086 2846     		mov	r0, r5
+ 131 0088 FFF7FEFF 		bl	silk_NLSF2A
+ 132              	.LVL9:
+  91:../../opus/silk/process_NLSFs.c **** 
+  92:../../opus/silk/process_NLSFs.c ****     if( doInterpolate ) {
+ 133              		.loc 1 92 5 is_stmt 1 view .LVU34
+ 134              		.loc 1 92 7 is_stmt 0 view .LVU35
+ 135 008c BAF1000F 		cmp	r10, #0
+ 136 0090 4AD0     		beq	.L6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 5
+
+
+  93:../../opus/silk/process_NLSFs.c ****         /* Calculate the interpolated, quantized LSF vector for the first half */
+  94:../../opus/silk/process_NLSFs.c ****         silk_interpolate( pNLSF0_temp_Q15, prev_NLSFq_Q15, pNLSF_Q15,
+ 137              		.loc 1 94 9 is_stmt 1 view .LVU36
+ 138 0092 D7F82032 		ldr	r3, [r7, #544]
+ 139 0096 0093     		str	r3, [sp]
+ 140 0098 97F99F32 		ldrsb	r3, [r7, #671]
+ 141 009c 3246     		mov	r2, r6
+ 142 009e 4946     		mov	r1, r9
+ 143 00a0 14A8     		add	r0, sp, #80
+ 144 00a2 FFF7FEFF 		bl	silk_interpolate
+ 145              	.LVL10:
+  95:../../opus/silk/process_NLSFs.c ****             psEncC->indices.NLSFInterpCoef_Q2, psEncC->predictLPCOrder );
+  96:../../opus/silk/process_NLSFs.c **** 
+  97:../../opus/silk/process_NLSFs.c ****         /* Convert back to LPC coefficients */
+  98:../../opus/silk/process_NLSFs.c ****         silk_NLSF2A( PredCoef_Q12[ 0 ], pNLSF0_temp_Q15, psEncC->predictLPCOrder, psEncC->arch );
+ 146              		.loc 1 98 9 view .LVU37
+ 147 00a6 D7F8E433 		ldr	r3, [r7, #996]
+ 148 00aa D7F82022 		ldr	r2, [r7, #544]
+ 149 00ae 14A9     		add	r1, sp, #80
+ 150 00b0 4046     		mov	r0, r8
+ 151 00b2 FFF7FEFF 		bl	silk_NLSF2A
+ 152              	.LVL11:
+ 153              	.L1:
+  99:../../opus/silk/process_NLSFs.c **** 
+ 100:../../opus/silk/process_NLSFs.c ****     } else {
+ 101:../../opus/silk/process_NLSFs.c ****         /* Copy LPC coefficients for first half from second half */
+ 102:../../opus/silk/process_NLSFs.c ****         celt_assert( psEncC->predictLPCOrder <= MAX_LPC_ORDER );
+ 103:../../opus/silk/process_NLSFs.c ****         silk_memcpy( PredCoef_Q12[ 0 ], PredCoef_Q12[ 1 ], psEncC->predictLPCOrder * sizeof( opus_i
+ 104:../../opus/silk/process_NLSFs.c ****     }
+ 105:../../opus/silk/process_NLSFs.c **** }
+ 154              		.loc 1 105 1 is_stmt 0 view .LVU38
+ 155 00b6 1CB0     		add	sp, sp, #112
+ 156              	.LCFI2:
+ 157              		.cfi_remember_state
+ 158              		.cfi_def_cfa_offset 32
+ 159              		@ sp needed
+ 160 00b8 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 161              	.LVL12:
+ 162              	.L11:
+ 163              	.LCFI3:
+ 164              		.cfi_restore_state
+  58:../../opus/silk/process_NLSFs.c ****     }
+ 165              		.loc 1 58 9 is_stmt 1 view .LVU39
+  58:../../opus/silk/process_NLSFs.c ****     }
+ 166              		.loc 1 58 21 is_stmt 0 view .LVU40
+ 167 00bc 05EB6505 		add	r5, r5, r5, asr #1
+ 168              	.LVL13:
+  58:../../opus/silk/process_NLSFs.c ****     }
+ 169              		.loc 1 58 21 view .LVU41
+ 170 00c0 B9E7     		b	.L2
+ 171              	.LVL14:
+ 172              	.L12:
+  68:../../opus/silk/process_NLSFs.c ****     if( doInterpolate ) {
+ 173              		.loc 1 68 79 discriminator 1 view .LVU42
+ 174 00c2 97F99F32 		ldrsb	r3, [r7, #671]
+  68:../../opus/silk/process_NLSFs.c ****     if( doInterpolate ) {
+ 175              		.loc 1 68 59 discriminator 1 view .LVU43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 6
+
+
+ 176 00c6 032B     		cmp	r3, #3
+ 177 00c8 02DD     		ble	.L13
+  68:../../opus/silk/process_NLSFs.c ****     if( doInterpolate ) {
+ 178              		.loc 1 68 59 discriminator 4 view .LVU44
+ 179 00ca 4FF0000A 		mov	r10, #0
+ 180 00ce C1E7     		b	.L3
+ 181              	.L13:
+ 182              	.LVL15:
+  69:../../opus/silk/process_NLSFs.c ****         /* Calculate the interpolated NLSF vector for the first half */
+ 183              		.loc 1 69 5 is_stmt 1 view .LVU45
+  71:../../opus/silk/process_NLSFs.c ****             psEncC->indices.NLSFInterpCoef_Q2, psEncC->predictLPCOrder );
+ 184              		.loc 1 71 9 view .LVU46
+ 185 00d0 D7F82022 		ldr	r2, [r7, #544]
+ 186 00d4 0092     		str	r2, [sp]
+ 187 00d6 3246     		mov	r2, r6
+ 188 00d8 4946     		mov	r1, r9
+ 189 00da 14A8     		add	r0, sp, #80
+ 190 00dc FFF7FEFF 		bl	silk_interpolate
+ 191              	.LVL16:
+  75:../../opus/silk/process_NLSFs.c **** 
+ 192              		.loc 1 75 9 view .LVU47
+ 193 00e0 D7F82022 		ldr	r2, [r7, #544]
+ 194 00e4 14A9     		add	r1, sp, #80
+ 195 00e6 04A8     		add	r0, sp, #16
+ 196 00e8 FFF7FEFF 		bl	silk_NLSF_VQ_weights_laroia
+ 197              	.LVL17:
+  78:../../opus/silk/process_NLSFs.c ****         for( i = 0; i < psEncC->predictLPCOrder; i++ ) {
+ 198              		.loc 1 78 9 view .LVU48
+  78:../../opus/silk/process_NLSFs.c ****         for( i = 0; i < psEncC->predictLPCOrder; i++ ) {
+ 199              		.loc 1 78 21 is_stmt 0 view .LVU49
+ 200 00ec 97F99F72 		ldrsb	r7, [r7, #671]
+  78:../../opus/silk/process_NLSFs.c ****         for( i = 0; i < psEncC->predictLPCOrder; i++ ) {
+ 201              		.loc 1 78 19 view .LVU50
+ 202 00f0 07FB07F7 		mul	r7, r7, r7
+ 203 00f4 FF02     		lsls	r7, r7, #11
+ 204 00f6 3FB2     		sxth	r7, r7
+ 205              	.LVL18:
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 206              		.loc 1 79 9 is_stmt 1 view .LVU51
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 207              		.loc 1 79 16 is_stmt 0 view .LVU52
+ 208 00f8 0022     		movs	r2, #0
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 209              		.loc 1 79 9 view .LVU53
+ 210 00fa 0EE0     		b	.L4
+ 211              	.LVL19:
+ 212              	.L5:
+  80:../../opus/silk/process_NLSFs.c ****                   silk_SMULBB( pNLSFW0_temp_QW[ i ], i_sqr_Q15 ), 16) );
+ 213              		.loc 1 80 13 is_stmt 1 view .LVU54
+  80:../../opus/silk/process_NLSFs.c ****                   silk_SMULBB( pNLSFW0_temp_QW[ i ], i_sqr_Q15 ), 16) );
+ 214              		.loc 1 80 30 is_stmt 0 view .LVU55
+ 215 00fc 1CAB     		add	r3, sp, #112
+ 216 00fe 03EB4201 		add	r1, r3, r2, lsl #1
+ 217 0102 31F9403C 		ldrsh	r3, [r1, #-64]
+ 218 0106 31F9600C 		ldrsh	r0, [r1, #-96]
+ 219 010a 07FB00F0 		mul	r0, r7, r0
+ 220 010e 5B10     		asrs	r3, r3, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 7
+
+
+ 221 0110 03EB2043 		add	r3, r3, r0, asr #16
+  80:../../opus/silk/process_NLSFs.c ****                   silk_SMULBB( pNLSFW0_temp_QW[ i ], i_sqr_Q15 ), 16) );
+ 222              		.loc 1 80 28 view .LVU56
+ 223 0114 21F8403C 		strh	r3, [r1, #-64]	@ movhi
+  82:../../opus/silk/process_NLSFs.c ****         }
+ 224              		.loc 1 82 47 is_stmt 1 view .LVU57
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 225              		.loc 1 79 51 discriminator 3 view .LVU58
+ 226 0118 0132     		adds	r2, r2, #1
+ 227              	.LVL20:
+ 228              	.L4:
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 229              		.loc 1 79 23 discriminator 1 view .LVU59
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 230              		.loc 1 79 31 is_stmt 0 discriminator 1 view .LVU60
+ 231 011a 04F58053 		add	r3, r4, #4096
+ 232 011e D3F82032 		ldr	r3, [r3, #544]
+  79:../../opus/silk/process_NLSFs.c ****             pNLSFW_QW[ i ] = silk_ADD16( silk_RSHIFT( pNLSFW_QW[ i ], 1 ), silk_RSHIFT(
+ 233              		.loc 1 79 23 discriminator 1 view .LVU61
+ 234 0122 9342     		cmp	r3, r2
+ 235 0124 EADC     		bgt	.L5
+ 236 0126 95E7     		b	.L3
+ 237              	.LVL21:
+ 238              	.L6:
+ 102:../../opus/silk/process_NLSFs.c ****         silk_memcpy( PredCoef_Q12[ 0 ], PredCoef_Q12[ 1 ], psEncC->predictLPCOrder * sizeof( opus_i
+ 239              		.loc 1 102 64 is_stmt 1 view .LVU62
+ 103:../../opus/silk/process_NLSFs.c ****     }
+ 240              		.loc 1 103 9 view .LVU63
+ 241 0128 04F58054 		add	r4, r4, #4096
+ 242              	.LVL22:
+ 103:../../opus/silk/process_NLSFs.c ****     }
+ 243              		.loc 1 103 9 is_stmt 0 view .LVU64
+ 244 012c D4F82022 		ldr	r2, [r4, #544]
+ 245 0130 5200     		lsls	r2, r2, #1
+ 246 0132 2946     		mov	r1, r5
+ 247 0134 4046     		mov	r0, r8
+ 248 0136 FFF7FEFF 		bl	memcpy
+ 249              	.LVL23:
+ 250              		.loc 1 105 1 view .LVU65
+ 251 013a BCE7     		b	.L1
+ 252              		.cfi_endproc
+ 253              	.LFE25:
+ 255              		.text
+ 256              	.Letext0:
+ 257              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 258              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 259              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 260              		.file 5 "../../opus/include/opus_types.h"
+ 261              		.file 6 "../../opus/silk/resampler_structs.h"
+ 262              		.file 7 "../../opus/silk/structs.h"
+ 263              		.file 8 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 264              		.file 9 "../../opus/silk/main.h"
+ 265              		.file 10 "../../opus/silk/SigProc_FIX.h"
+ 266              		.file 11 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 process_NLSFs.c
+C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s:20     .text.silk_process_NLSFs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccEHELeI.s:26     .text.silk_process_NLSFs:00000000 silk_process_NLSFs
+
+UNDEFINED SYMBOLS
+silk_NLSF_VQ_weights_laroia
+silk_NLSF_encode
+silk_NLSF2A
+silk_interpolate
+memcpy

@@ -1,0 +1,423 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"LTP_analysis_filter_FIX.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/fixed/LTP_analysis_filter_FIX.c"
+  19              		.section	.text.silk_LTP_analysis_filter_FIX,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_LTP_analysis_filter_FIX
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_LTP_analysis_filter_FIX:
+  27              	.LVL0:
+  28              	.LFB360:
+   1:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** /***********************************************************************
+   2:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** are met:
+   6:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** products derived from this software without specific prior written
+  14:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** permission.
+  15:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** ***********************************************************************/
+  27:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  28:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** #include "opus_config.h"
+  29:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  30:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** #include "main_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 2
+
+
+  31:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  32:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** void silk_LTP_analysis_filter_FIX(
+  33:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     opus_int16                      *LTP_res,                               /* O    LTP residual si
+  34:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int16                *x,                                     /* I    Pointer to inpu
+  35:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int16                LTPCoef_Q14[ LTP_ORDER * MAX_NB_SUBFR ],/* I    LTP_ORDER LTP c
+  36:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int                  pitchL[ MAX_NB_SUBFR ],                 /* I    Pitch lag, one 
+  37:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int32                invGains_Q16[ MAX_NB_SUBFR ],           /* I    Inverse quantiz
+  38:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int                  subfr_length,                           /* I    Length of each 
+  39:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int                  nb_subfr,                               /* I    Number of subfr
+  40:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int                  pre_length                              /* I    Length of the p
+  41:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** )
+  42:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** {
+  29              		.loc 1 42 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 16, pretend = 0, frame = 40
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 42 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 36
+  37              		.cfi_offset 4, -36
+  38              		.cfi_offset 5, -32
+  39              		.cfi_offset 6, -28
+  40              		.cfi_offset 7, -24
+  41              		.cfi_offset 8, -20
+  42              		.cfi_offset 9, -16
+  43              		.cfi_offset 10, -12
+  44              		.cfi_offset 11, -8
+  45              		.cfi_offset 14, -4
+  46 0004 8BB0     		sub	sp, sp, #44
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 80
+  49 0006 0C46     		mov	r4, r1
+  50 0008 9646     		mov	lr, r2
+  51 000a DDF850A0 		ldr	r10, [sp, #80]
+  43:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     const opus_int16 *x_ptr, *x_lag_ptr;
+  52              		.loc 1 43 5 is_stmt 1 view .LVU2
+  44:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     opus_int16   Btmp_Q14[ LTP_ORDER ];
+  53              		.loc 1 44 5 view .LVU3
+  45:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     opus_int16   *LTP_res_ptr;
+  54              		.loc 1 45 5 view .LVU4
+  46:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     opus_int     k, i;
+  55              		.loc 1 46 5 view .LVU5
+  47:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     opus_int32   LTP_est;
+  56              		.loc 1 47 5 view .LVU6
+  48:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  49:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     x_ptr = x;
+  57              		.loc 1 49 5 view .LVU7
+  58              	.LVL1:
+  50:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     LTP_res_ptr = LTP_res;
+  59              		.loc 1 50 5 view .LVU8
+  51:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     for( k = 0; k < nb_subfr; k++ ) {
+  60              		.loc 1 51 5 view .LVU9
+  61              		.loc 1 51 12 is_stmt 0 view .LVU10
+  62 000e 0022     		movs	r2, #0
+  63              	.LVL2:
+  64              		.loc 1 51 12 view .LVU11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 3
+
+
+  65 0010 1E46     		mov	r6, r3
+  66 0012 F346     		mov	fp, lr
+  67              		.loc 1 51 5 view .LVU12
+  68 0014 4FE0     		b	.L2
+  69              	.LVL3:
+  70              	.L7:
+  52:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  53:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         x_lag_ptr = x_ptr - pitchL[ k ];
+  54:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  55:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 0 ] = LTPCoef_Q14[ k * LTP_ORDER ];
+  56:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 1 ] = LTPCoef_Q14[ k * LTP_ORDER + 1 ];
+  57:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 2 ] = LTPCoef_Q14[ k * LTP_ORDER + 2 ];
+  58:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 3 ] = LTPCoef_Q14[ k * LTP_ORDER + 3 ];
+  59:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 4 ] = LTPCoef_Q14[ k * LTP_ORDER + 4 ];
+  60:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  61:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         /* LTP analysis FIR filter */
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         for( i = 0; i < subfr_length + pre_length; i++ ) {
+  63:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+  64:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  65:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             /* Long-term prediction */
+  66:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMULBB( x_lag_ptr[ LTP_ORDER / 2 ], Btmp_Q14[ 0 ] );
+  67:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ 1 ], Btmp_Q14[ 1 ] );
+  68:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ 0 ], Btmp_Q14[ 2 ] );
+  69:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ -1 ], Btmp_Q14[ 3 ] );
+  70:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ -2 ], Btmp_Q14[ 4 ] );
+  71:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  72:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_RSHIFT_ROUND( LTP_est, 14 ); /* round and -> Q0*/
+  73:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  74:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             /* Subtract long-term prediction */
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = (opus_int16)silk_SAT16( (opus_int32)x_ptr[ i ] - LTP_est );
+  71              		.loc 1 75 32 discriminator 2 view .LVU13
+  72 0016 47F6FF72 		movw	r2, #32767
+  73              	.L4:
+  74              		.loc 1 75 30 discriminator 8 view .LVU14
+  75 001a 3280     		strh	r2, [r6]	@ movhi
+  76:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  77:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             /* Scale residual */
+  78:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = silk_SMULWB( invGains_Q16[ k ], LTP_res_ptr[ i ] );
+  76              		.loc 1 78 13 is_stmt 1 view .LVU15
+  77              		.loc 1 78 32 is_stmt 0 view .LVU16
+  78 001c 5AF80930 		ldr	r3, [r10, r9]
+  79 0020 4FEA234B 		asr	fp, r3, #16
+  80              	.LVL4:
+  81              		.loc 1 78 32 view .LVU17
+  82 0024 9BB2     		uxth	r3, r3
+  83 0026 02FB03F3 		mul	r3, r2, r3
+  84 002a 1BFB02FB 		smulbb	fp, fp, r2
+  85 002e 0BEB234B 		add	fp, fp, r3, asr #16
+  86              		.loc 1 78 30 view .LVU18
+  87 0032 A6F800B0 		strh	fp, [r6]	@ movhi
+  79:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  80:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             x_lag_ptr++;
+  88              		.loc 1 80 13 is_stmt 1 view .LVU19
+  89              		.loc 1 80 22 is_stmt 0 view .LVU20
+  90 0036 0231     		adds	r1, r1, #2
+  91              	.LVL5:
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 4
+
+
+  92              		.loc 1 62 53 is_stmt 1 discriminator 2 view .LVU21
+  93 0038 0135     		adds	r5, r5, #1
+  94              	.LVL6:
+  95              	.L3:
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+  96              		.loc 1 62 23 discriminator 1 view .LVU22
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+  97              		.loc 1 62 38 is_stmt 0 discriminator 1 view .LVU23
+  98 003a 159B     		ldr	r3, [sp, #84]
+  99 003c 179A     		ldr	r2, [sp, #92]
+ 100 003e 1344     		add	r3, r3, r2
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+ 101              		.loc 1 62 23 discriminator 1 view .LVU24
+ 102 0040 AB42     		cmp	r3, r5
+ 103 0042 2EDD     		ble	.L10
+  63:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 104              		.loc 1 63 13 is_stmt 1 view .LVU25
+  63:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 105              		.loc 1 63 24 is_stmt 0 view .LVU26
+ 106 0044 00EB4506 		add	r6, r0, r5, lsl #1
+  63:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 107              		.loc 1 63 37 view .LVU27
+ 108 0048 34F91520 		ldrsh	r2, [r4, r5, lsl #1]
+  63:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 109              		.loc 1 63 30 view .LVU28
+ 110 004c 20F81520 		strh	r2, [r0, r5, lsl #1]	@ movhi
+  66:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ 1 ], Btmp_Q14[ 1 ] );
+ 111              		.loc 1 66 13 is_stmt 1 view .LVU29
+  66:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ 1 ], Btmp_Q14[ 1 ] );
+ 112              		.loc 1 66 23 is_stmt 0 view .LVU30
+ 113 0050 B1F904B0 		ldrsh	fp, [r1, #4]
+ 114              	.LVL7:
+  67:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ 0 ], Btmp_Q14[ 2 ] );
+ 115              		.loc 1 67 13 is_stmt 1 view .LVU31
+  67:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ 0 ], Btmp_Q14[ 2 ] );
+ 116              		.loc 1 67 23 is_stmt 0 view .LVU32
+ 117 0054 B1F90230 		ldrsh	r3, [r1, #2]
+ 118 0058 0EFB03F3 		mul	r3, lr, r3
+ 119 005c 08FB0B33 		mla	r3, r8, fp, r3
+ 120              	.LVL8:
+  68:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ -1 ], Btmp_Q14[ 3 ] );
+ 121              		.loc 1 68 13 is_stmt 1 view .LVU33
+  68:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ -1 ], Btmp_Q14[ 3 ] );
+ 122              		.loc 1 68 23 is_stmt 0 view .LVU34
+ 123 0060 B1F900B0 		ldrsh	fp, [r1]
+ 124 0064 019F     		ldr	r7, [sp, #4]
+ 125 0066 07FB0B33 		mla	r3, r7, fp, r3
+ 126              	.LVL9:
+  69:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ -2 ], Btmp_Q14[ 4 ] );
+ 127              		.loc 1 69 13 is_stmt 1 view .LVU35
+  69:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_est = silk_SMLABB_ovflw( LTP_est, x_lag_ptr[ -2 ], Btmp_Q14[ 4 ] );
+ 128              		.loc 1 69 23 is_stmt 0 view .LVU36
+ 129 006a 31F902BC 		ldrsh	fp, [r1, #-2]
+ 130 006e 0CFB0B33 		mla	r3, ip, fp, r3
+ 131              	.LVL10:
+  70:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 132              		.loc 1 70 13 is_stmt 1 view .LVU37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 5
+
+
+  70:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 133              		.loc 1 70 23 is_stmt 0 view .LVU38
+ 134 0072 31F904BC 		ldrsh	fp, [r1, #-4]
+ 135 0076 029F     		ldr	r7, [sp, #8]
+ 136 0078 07FB0B33 		mla	r3, r7, fp, r3
+ 137              	.LVL11:
+  72:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 138              		.loc 1 72 13 is_stmt 1 view .LVU39
+  72:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 139              		.loc 1 72 23 is_stmt 0 view .LVU40
+ 140 007c 5B13     		asrs	r3, r3, #13
+ 141              	.LVL12:
+  72:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 142              		.loc 1 72 23 view .LVU41
+ 143 007e 0133     		adds	r3, r3, #1
+  72:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 144              		.loc 1 72 21 view .LVU42
+ 145 0080 4FEA630B 		asr	fp, r3, #1
+ 146              	.LVL13:
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 147              		.loc 1 75 13 is_stmt 1 view .LVU43
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 148              		.loc 1 75 44 is_stmt 0 view .LVU44
+ 149 0084 A2EB6303 		sub	r3, r2, r3, asr #1
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 150              		.loc 1 75 32 view .LVU45
+ 151 0088 B3F5004F 		cmp	r3, #32768
+ 152 008c C3DA     		bge	.L7
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 153              		.loc 1 75 32 discriminator 1 view .LVU46
+ 154 008e 13F5004F 		cmn	r3, #32768
+ 155 0092 04DB     		blt	.L8
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 156              		.loc 1 75 44 discriminator 3 view .LVU47
+ 157 0094 92B2     		uxth	r2, r2
+ 158 0096 A2EB0B02 		sub	r2, r2, fp
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 159              		.loc 1 75 32 discriminator 3 view .LVU48
+ 160 009a 12B2     		sxth	r2, r2
+ 161 009c BDE7     		b	.L4
+ 162              	.L8:
+  75:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 163              		.loc 1 75 32 discriminator 4 view .LVU49
+ 164 009e 1C4A     		ldr	r2, .L12
+ 165 00a0 BBE7     		b	.L4
+ 166              	.LVL14:
+ 167              	.L10:
+  81:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         }
+  82:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+  83:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         /* Update pointers */
+  84:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         LTP_res_ptr += subfr_length + pre_length;
+ 168              		.loc 1 84 21 view .LVU50
+ 169 00a2 039A     		ldr	r2, [sp, #12]
+ 170 00a4 DDF810B0 		ldr	fp, [sp, #16]
+ 171 00a8 059E     		ldr	r6, [sp, #20]
+ 172              		.loc 1 84 9 is_stmt 1 view .LVU51
+ 173              		.loc 1 84 21 is_stmt 0 view .LVU52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 6
+
+
+ 174 00aa 00EB4300 		add	r0, r0, r3, lsl #1
+ 175              	.LVL15:
+  85:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         x_ptr       += subfr_length;
+ 176              		.loc 1 85 9 is_stmt 1 view .LVU53
+ 177              		.loc 1 85 21 is_stmt 0 view .LVU54
+ 178 00ae 159B     		ldr	r3, [sp, #84]
+ 179 00b0 04EB4304 		add	r4, r4, r3, lsl #1
+ 180              	.LVL16:
+  51:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 181              		.loc 1 51 32 is_stmt 1 discriminator 2 view .LVU55
+ 182 00b4 0132     		adds	r2, r2, #1
+ 183              	.LVL17:
+ 184              	.L2:
+  51:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 185              		.loc 1 51 19 discriminator 1 view .LVU56
+ 186 00b6 169B     		ldr	r3, [sp, #88]
+ 187 00b8 9A42     		cmp	r2, r3
+ 188 00ba 25DA     		bge	.L11
+  53:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 189              		.loc 1 53 9 view .LVU57
+  53:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 190              		.loc 1 53 35 is_stmt 0 view .LVU58
+ 191 00bc 4FEA8209 		lsl	r9, r2, #2
+ 192 00c0 56F82210 		ldr	r1, [r6, r2, lsl #2]
+  53:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 193              		.loc 1 53 19 view .LVU59
+ 194 00c4 A4EB4101 		sub	r1, r4, r1, lsl #1
+ 195              	.LVL18:
+  55:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 1 ] = LTPCoef_Q14[ k * LTP_ORDER + 1 ];
+ 196              		.loc 1 55 9 is_stmt 1 view .LVU60
+  55:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 1 ] = LTPCoef_Q14[ k * LTP_ORDER + 1 ];
+ 197              		.loc 1 55 36 is_stmt 0 view .LVU61
+ 198 00c8 02EB8203 		add	r3, r2, r2, lsl #2
+ 199 00cc 3BF91380 		ldrsh	r8, [fp, r3, lsl #1]
+  55:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 1 ] = LTPCoef_Q14[ k * LTP_ORDER + 1 ];
+ 200              		.loc 1 55 23 view .LVU62
+ 201 00d0 ADF81C80 		strh	r8, [sp, #28]	@ movhi
+  56:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 2 ] = LTPCoef_Q14[ k * LTP_ORDER + 2 ];
+ 202              		.loc 1 56 9 is_stmt 1 view .LVU63
+  56:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 2 ] = LTPCoef_Q14[ k * LTP_ORDER + 2 ];
+ 203              		.loc 1 56 36 is_stmt 0 view .LVU64
+ 204 00d4 0BEB4303 		add	r3, fp, r3, lsl #1
+ 205 00d8 B3F902E0 		ldrsh	lr, [r3, #2]
+  56:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 2 ] = LTPCoef_Q14[ k * LTP_ORDER + 2 ];
+ 206              		.loc 1 56 23 view .LVU65
+ 207 00dc ADF81EE0 		strh	lr, [sp, #30]	@ movhi
+  57:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 3 ] = LTPCoef_Q14[ k * LTP_ORDER + 3 ];
+ 208              		.loc 1 57 9 is_stmt 1 view .LVU66
+  57:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 3 ] = LTPCoef_Q14[ k * LTP_ORDER + 3 ];
+ 209              		.loc 1 57 36 is_stmt 0 view .LVU67
+ 210 00e0 B3F90450 		ldrsh	r5, [r3, #4]
+ 211 00e4 0195     		str	r5, [sp, #4]
+  57:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 3 ] = LTPCoef_Q14[ k * LTP_ORDER + 3 ];
+ 212              		.loc 1 57 23 view .LVU68
+ 213 00e6 ADF82050 		strh	r5, [sp, #32]	@ movhi
+  58:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 4 ] = LTPCoef_Q14[ k * LTP_ORDER + 4 ];
+ 214              		.loc 1 58 9 is_stmt 1 view .LVU69
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 7
+
+
+  58:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 4 ] = LTPCoef_Q14[ k * LTP_ORDER + 4 ];
+ 215              		.loc 1 58 36 is_stmt 0 view .LVU70
+ 216 00ea B3F906C0 		ldrsh	ip, [r3, #6]
+  58:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****         Btmp_Q14[ 4 ] = LTPCoef_Q14[ k * LTP_ORDER + 4 ];
+ 217              		.loc 1 58 23 view .LVU71
+ 218 00ee ADF822C0 		strh	ip, [sp, #34]	@ movhi
+  59:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 219              		.loc 1 59 9 is_stmt 1 view .LVU72
+  59:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 220              		.loc 1 59 36 is_stmt 0 view .LVU73
+ 221 00f2 B3F90870 		ldrsh	r7, [r3, #8]
+  59:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** 
+ 222              		.loc 1 59 23 view .LVU74
+ 223 00f6 ADF82470 		strh	r7, [sp, #36]	@ movhi
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+ 224              		.loc 1 62 9 is_stmt 1 view .LVU75
+ 225              	.LVL19:
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+ 226              		.loc 1 62 16 is_stmt 0 view .LVU76
+ 227 00fa 0025     		movs	r5, #0
+ 228 00fc 0297     		str	r7, [sp, #8]
+ 229 00fe 0392     		str	r2, [sp, #12]
+ 230 0100 CDF810B0 		str	fp, [sp, #16]
+ 231 0104 0596     		str	r6, [sp, #20]
+  62:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****             LTP_res_ptr[ i ] = x_ptr[ i ];
+ 232              		.loc 1 62 9 view .LVU77
+ 233 0106 98E7     		b	.L3
+ 234              	.LVL20:
+ 235              	.L11:
+  86:../../opus/silk/fixed/LTP_analysis_filter_FIX.c ****     }
+  87:../../opus/silk/fixed/LTP_analysis_filter_FIX.c **** }
+ 236              		.loc 1 87 1 view .LVU78
+ 237 0108 0BB0     		add	sp, sp, #44
+ 238              	.LCFI2:
+ 239              		.cfi_def_cfa_offset 36
+ 240              		@ sp needed
+ 241 010a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 242              	.LVL21:
+ 243              	.L13:
+ 244              		.loc 1 87 1 view .LVU79
+ 245 010e 00BF     		.align	2
+ 246              	.L12:
+ 247 0110 0080FFFF 		.word	-32768
+ 248              		.cfi_endproc
+ 249              	.LFE360:
+ 251              		.text
+ 252              	.Letext0:
+ 253              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 254              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 255              		.file 4 "../../opus/include/opus_types.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 LTP_analysis_filter_FIX.c
+C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s:20     .text.silk_LTP_analysis_filter_FIX:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s:26     .text.silk_LTP_analysis_filter_FIX:00000000 silk_LTP_analysis_filter_FIX
+C:\Users\oleg\AppData\Local\Temp\ccbpiuDB.s:247    .text.silk_LTP_analysis_filter_FIX:00000110 $d
+
+NO UNDEFINED SYMBOLS

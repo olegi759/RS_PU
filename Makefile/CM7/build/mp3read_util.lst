@@ -1,0 +1,624 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"mp3read_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/mp3read_util.c"
+  19              		.section	.text.mp3read_close,"ax",%progbits
+  20              		.align	1
+  21              		.global	mp3read_close
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	mp3read_close:
+  27              	.LVL0:
+  28              	.LFB338:
+   1:../../util/mp3read_util.c **** /*
+   2:../../util/mp3read_util.c ****  * mp3play.c
+   3:../../util/mp3read_util.c ****  *
+   4:../../util/mp3read_util.c ****  *  Created on: 6 мая 2024 г.
+   5:../../util/mp3read_util.c ****  *      Author: Rafael Boltachev
+   6:../../util/mp3read_util.c ****  */
+   7:../../util/mp3read_util.c **** 
+   8:../../util/mp3read_util.c **** 
+   9:../../util/mp3read_util.c **** #include "mp3read_util.h"
+  10:../../util/mp3read_util.c **** #include <string.h>
+  11:../../util/mp3read_util.c **** //#include <stdio.h>
+  12:../../util/mp3read_util.c **** //#include "pcm_util.h"
+  13:../../util/mp3read_util.c **** //#include "stm_util.h"
+  14:../../util/mp3read_util.c **** //#include "str_util.h"
+  15:../../util/mp3read_util.c **** #include "fatfs_util.h"
+  16:../../util/mp3read_util.c **** 
+  17:../../util/mp3read_util.c **** 
+  18:../../util/mp3read_util.c **** 
+  19:../../util/mp3read_util.c **** 
+  20:../../util/mp3read_util.c **** 
+  21:../../util/mp3read_util.c **** 
+  22:../../util/mp3read_util.c **** void mp3read_close(FIL * file, mad_data_t * amad_data)
+  23:../../util/mp3read_util.c **** {
+  29              		.loc 1 23 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 23 1 is_stmt 0 view .LVU1
+  34 0000 38B5     		push	{r3, r4, r5, lr}
+  35              	.LCFI0:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 2
+
+
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 3, -16
+  38              		.cfi_offset 4, -12
+  39              		.cfi_offset 5, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0546     		mov	r5, r0
+  42 0004 0C46     		mov	r4, r1
+  24:../../util/mp3read_util.c **** 	if (f_is_open(file)) {
+  43              		.loc 1 24 2 is_stmt 1 view .LVU2
+  44              		.loc 1 24 6 is_stmt 0 view .LVU3
+  45 0006 FFF7FEFF 		bl	f_is_open
+  46              	.LVL1:
+  47              		.loc 1 24 5 discriminator 1 view .LVU4
+  48 000a 18B9     		cbnz	r0, .L4
+  49              	.L2:
+  25:../../util/mp3read_util.c **** 		f_close(file);
+  26:../../util/mp3read_util.c **** 		//ulog("mp3read_close"CRLF);
+  27:../../util/mp3read_util.c **** 	}
+  28:../../util/mp3read_util.c **** 	mad_data_clear(amad_data);
+  50              		.loc 1 28 2 is_stmt 1 view .LVU5
+  51 000c 2046     		mov	r0, r4
+  52 000e FFF7FEFF 		bl	mad_data_clear
+  53              	.LVL2:
+  29:../../util/mp3read_util.c **** }
+  54              		.loc 1 29 1 is_stmt 0 view .LVU6
+  55 0012 38BD     		pop	{r3, r4, r5, pc}
+  56              	.LVL3:
+  57              	.L4:
+  25:../../util/mp3read_util.c **** 		f_close(file);
+  58              		.loc 1 25 3 is_stmt 1 view .LVU7
+  59 0014 2846     		mov	r0, r5
+  60 0016 FFF7FEFF 		bl	f_close
+  61              	.LVL4:
+  62 001a F7E7     		b	.L2
+  63              		.cfi_endproc
+  64              	.LFE338:
+  66              		.section	.text.mp3read_read_pcm16,"ax",%progbits
+  67              		.align	1
+  68              		.global	mp3read_read_pcm16
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  73              	mp3read_read_pcm16:
+  74              	.LVL5:
+  75              	.LFB339:
+  30:../../util/mp3read_util.c **** 
+  31:../../util/mp3read_util.c **** 
+  32:../../util/mp3read_util.c **** int mp3read_read_pcm16(FIL * file, mad_data_t *amad_data, int16_t * pcm16)
+  33:../../util/mp3read_util.c **** {
+  76              		.loc 1 33 1 view -0
+  77              		.cfi_startproc
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80              		.loc 1 33 1 is_stmt 0 view .LVU9
+  81 0000 38B5     		push	{r3, r4, r5, lr}
+  82              	.LCFI1:
+  83              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 3
+
+
+  84              		.cfi_offset 3, -16
+  85              		.cfi_offset 4, -12
+  86              		.cfi_offset 5, -8
+  87              		.cfi_offset 14, -4
+  88 0002 0C46     		mov	r4, r1
+  89 0004 1546     		mov	r5, r2
+  34:../../util/mp3read_util.c **** 	int rc;
+  90              		.loc 1 34 2 is_stmt 1 view .LVU10
+  35:../../util/mp3read_util.c **** 
+  36:../../util/mp3read_util.c **** 	if (!f_is_open(file)) return -1;
+  91              		.loc 1 36 2 view .LVU11
+  92              		.loc 1 36 7 is_stmt 0 view .LVU12
+  93 0006 FFF7FEFF 		bl	f_is_open
+  94              	.LVL6:
+  95              		.loc 1 36 5 discriminator 1 view .LVU13
+  96 000a C8B1     		cbz	r0, .L7
+  37:../../util/mp3read_util.c **** 
+  38:../../util/mp3read_util.c **** 
+  39:../../util/mp3read_util.c **** 	rc = mad_read_next_frame(amad_data);
+  97              		.loc 1 39 2 is_stmt 1 view .LVU14
+  98              		.loc 1 39 7 is_stmt 0 view .LVU15
+  99 000c 2046     		mov	r0, r4
+ 100 000e FFF7FEFF 		bl	mad_read_next_frame
+ 101              	.LVL7:
+  40:../../util/mp3read_util.c **** 	if (rc == -1) {
+ 102              		.loc 1 40 2 is_stmt 1 view .LVU16
+ 103              		.loc 1 40 5 is_stmt 0 view .LVU17
+ 104 0012 B0F1FF3F 		cmp	r0, #-1
+ 105 0016 02D0     		beq	.L5
+  41:../../util/mp3read_util.c **** 		return -1;
+  42:../../util/mp3read_util.c **** 	}
+  43:../../util/mp3read_util.c **** 	if (rc != 1) return 0;
+ 106              		.loc 1 43 2 is_stmt 1 view .LVU18
+ 107              		.loc 1 43 5 is_stmt 0 view .LVU19
+ 108 0018 0128     		cmp	r0, #1
+ 109 001a 01D0     		beq	.L10
+ 110              		.loc 1 43 22 discriminator 1 view .LVU20
+ 111 001c 0020     		movs	r0, #0
+ 112              	.LVL8:
+ 113              	.L5:
+  44:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+  45:../../util/mp3read_util.c ****    	rc = mad_output_pcm16(&amad_data->synth.pcm, pcm16, MAX_MAD_PCM_SIZE);
+  46:../../util/mp3read_util.c **** 
+  47:../../util/mp3read_util.c ****    	return rc;
+  48:../../util/mp3read_util.c **** }
+ 114              		.loc 1 48 1 view .LVU21
+ 115 001e 38BD     		pop	{r3, r4, r5, pc}
+ 116              	.LVL9:
+ 117              	.L10:
+  44:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+ 118              		.loc 1 44 5 is_stmt 1 view .LVU22
+ 119 0020 04F14001 		add	r1, r4, #64
+ 120 0024 42F27040 		movw	r0, #9328
+ 121              	.LVL10:
+  44:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+ 122              		.loc 1 44 5 is_stmt 0 view .LVU23
+ 123 0028 2044     		add	r0, r0, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 4
+
+
+ 124 002a FFF7FEFF 		bl	mad_synth_frame
+ 125              	.LVL11:
+  45:../../util/mp3read_util.c **** 
+ 126              		.loc 1 45 5 is_stmt 1 view .LVU24
+  45:../../util/mp3read_util.c **** 
+ 127              		.loc 1 45 10 is_stmt 0 view .LVU25
+ 128 002e 40F6C412 		movw	r2, #2500
+ 129 0032 2946     		mov	r1, r5
+ 130 0034 43F27440 		movw	r0, #13428
+ 131 0038 2044     		add	r0, r0, r4
+ 132 003a FFF7FEFF 		bl	mad_output_pcm16
+ 133              	.LVL12:
+  47:../../util/mp3read_util.c **** }
+ 134              		.loc 1 47 5 is_stmt 1 view .LVU26
+  47:../../util/mp3read_util.c **** }
+ 135              		.loc 1 47 12 is_stmt 0 view .LVU27
+ 136 003e EEE7     		b	.L5
+ 137              	.LVL13:
+ 138              	.L7:
+  36:../../util/mp3read_util.c **** 
+ 139              		.loc 1 36 31 discriminator 1 view .LVU28
+ 140 0040 4FF0FF30 		mov	r0, #-1
+ 141 0044 EBE7     		b	.L5
+ 142              		.cfi_endproc
+ 143              	.LFE339:
+ 145              		.section	.text.mp3read_read_pcm16_mono,"ax",%progbits
+ 146              		.align	1
+ 147              		.global	mp3read_read_pcm16_mono
+ 148              		.syntax unified
+ 149              		.thumb
+ 150              		.thumb_func
+ 152              	mp3read_read_pcm16_mono:
+ 153              	.LVL14:
+ 154              	.LFB340:
+  49:../../util/mp3read_util.c **** 
+  50:../../util/mp3read_util.c **** int mp3read_read_pcm16_mono(FIL * file, mad_data_t *amad_data, int16_t * pcm16)
+  51:../../util/mp3read_util.c **** {
+ 155              		.loc 1 51 1 is_stmt 1 view -0
+ 156              		.cfi_startproc
+ 157              		@ args = 0, pretend = 0, frame = 0
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159              		.loc 1 51 1 is_stmt 0 view .LVU30
+ 160 0000 38B5     		push	{r3, r4, r5, lr}
+ 161              	.LCFI2:
+ 162              		.cfi_def_cfa_offset 16
+ 163              		.cfi_offset 3, -16
+ 164              		.cfi_offset 4, -12
+ 165              		.cfi_offset 5, -8
+ 166              		.cfi_offset 14, -4
+ 167 0002 0C46     		mov	r4, r1
+ 168 0004 1546     		mov	r5, r2
+  52:../../util/mp3read_util.c **** 	int rc;
+ 169              		.loc 1 52 2 is_stmt 1 view .LVU31
+  53:../../util/mp3read_util.c **** 
+  54:../../util/mp3read_util.c **** 	if (!f_is_open(file)) return -1;
+ 170              		.loc 1 54 2 view .LVU32
+ 171              		.loc 1 54 7 is_stmt 0 view .LVU33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 5
+
+
+ 172 0006 FFF7FEFF 		bl	f_is_open
+ 173              	.LVL15:
+ 174              		.loc 1 54 5 discriminator 1 view .LVU34
+ 175 000a C8B1     		cbz	r0, .L13
+  55:../../util/mp3read_util.c **** 
+  56:../../util/mp3read_util.c **** 
+  57:../../util/mp3read_util.c **** 	rc = mad_read_next_frame(amad_data);
+ 176              		.loc 1 57 2 is_stmt 1 view .LVU35
+ 177              		.loc 1 57 7 is_stmt 0 view .LVU36
+ 178 000c 2046     		mov	r0, r4
+ 179 000e FFF7FEFF 		bl	mad_read_next_frame
+ 180              	.LVL16:
+  58:../../util/mp3read_util.c **** 	if (rc == -1) {
+ 181              		.loc 1 58 2 is_stmt 1 view .LVU37
+ 182              		.loc 1 58 5 is_stmt 0 view .LVU38
+ 183 0012 B0F1FF3F 		cmp	r0, #-1
+ 184 0016 02D0     		beq	.L11
+  59:../../util/mp3read_util.c **** 		return -1;
+  60:../../util/mp3read_util.c **** 	}
+  61:../../util/mp3read_util.c **** 	if (rc != 1) return 0;
+ 185              		.loc 1 61 2 is_stmt 1 view .LVU39
+ 186              		.loc 1 61 5 is_stmt 0 view .LVU40
+ 187 0018 0128     		cmp	r0, #1
+ 188 001a 01D0     		beq	.L16
+ 189              		.loc 1 61 22 discriminator 1 view .LVU41
+ 190 001c 0020     		movs	r0, #0
+ 191              	.LVL17:
+ 192              	.L11:
+  62:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+  63:../../util/mp3read_util.c ****    	rc = mad_output_pcm16_mono(&amad_data->synth.pcm, pcm16, MAX_MAD_PCM_SIZE);
+  64:../../util/mp3read_util.c **** 
+  65:../../util/mp3read_util.c ****    	return rc;
+  66:../../util/mp3read_util.c **** }
+ 193              		.loc 1 66 1 view .LVU42
+ 194 001e 38BD     		pop	{r3, r4, r5, pc}
+ 195              	.LVL18:
+ 196              	.L16:
+  62:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+ 197              		.loc 1 62 5 is_stmt 1 view .LVU43
+ 198 0020 04F14001 		add	r1, r4, #64
+ 199 0024 42F27040 		movw	r0, #9328
+ 200              	.LVL19:
+  62:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+ 201              		.loc 1 62 5 is_stmt 0 view .LVU44
+ 202 0028 2044     		add	r0, r0, r4
+ 203 002a FFF7FEFF 		bl	mad_synth_frame
+ 204              	.LVL20:
+  63:../../util/mp3read_util.c **** 
+ 205              		.loc 1 63 5 is_stmt 1 view .LVU45
+  63:../../util/mp3read_util.c **** 
+ 206              		.loc 1 63 10 is_stmt 0 view .LVU46
+ 207 002e 40F6C412 		movw	r2, #2500
+ 208 0032 2946     		mov	r1, r5
+ 209 0034 43F27440 		movw	r0, #13428
+ 210 0038 2044     		add	r0, r0, r4
+ 211 003a FFF7FEFF 		bl	mad_output_pcm16_mono
+ 212              	.LVL21:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 6
+
+
+  65:../../util/mp3read_util.c **** }
+ 213              		.loc 1 65 5 is_stmt 1 view .LVU47
+  65:../../util/mp3read_util.c **** }
+ 214              		.loc 1 65 12 is_stmt 0 view .LVU48
+ 215 003e EEE7     		b	.L11
+ 216              	.LVL22:
+ 217              	.L13:
+  54:../../util/mp3read_util.c **** 
+ 218              		.loc 1 54 31 discriminator 1 view .LVU49
+ 219 0040 4FF0FF30 		mov	r0, #-1
+ 220 0044 EBE7     		b	.L11
+ 221              		.cfi_endproc
+ 222              	.LFE340:
+ 224              		.section	.text.mp3read_read_dac12_mono,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	mp3read_read_dac12_mono
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 231              	mp3read_read_dac12_mono:
+ 232              	.LVL23:
+ 233              	.LFB341:
+  67:../../util/mp3read_util.c **** 
+  68:../../util/mp3read_util.c **** 
+  69:../../util/mp3read_util.c **** int mp3read_read_dac12_mono(FIL * file, mad_data_t *amad_data, uint16_t * dac12)
+  70:../../util/mp3read_util.c **** {
+ 234              		.loc 1 70 1 is_stmt 1 view -0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              		.loc 1 70 1 is_stmt 0 view .LVU51
+ 239 0000 38B5     		push	{r3, r4, r5, lr}
+ 240              	.LCFI3:
+ 241              		.cfi_def_cfa_offset 16
+ 242              		.cfi_offset 3, -16
+ 243              		.cfi_offset 4, -12
+ 244              		.cfi_offset 5, -8
+ 245              		.cfi_offset 14, -4
+ 246 0002 0C46     		mov	r4, r1
+ 247 0004 1546     		mov	r5, r2
+  71:../../util/mp3read_util.c **** 	int rc;
+ 248              		.loc 1 71 2 is_stmt 1 view .LVU52
+  72:../../util/mp3read_util.c **** 
+  73:../../util/mp3read_util.c **** 	if (!f_is_open(file)) return -1;
+ 249              		.loc 1 73 2 view .LVU53
+ 250              		.loc 1 73 7 is_stmt 0 view .LVU54
+ 251 0006 FFF7FEFF 		bl	f_is_open
+ 252              	.LVL24:
+ 253              		.loc 1 73 5 discriminator 1 view .LVU55
+ 254 000a C8B1     		cbz	r0, .L19
+  74:../../util/mp3read_util.c **** 
+  75:../../util/mp3read_util.c **** 
+  76:../../util/mp3read_util.c **** 	rc = mad_read_next_frame(amad_data);
+ 255              		.loc 1 76 2 is_stmt 1 view .LVU56
+ 256              		.loc 1 76 7 is_stmt 0 view .LVU57
+ 257 000c 2046     		mov	r0, r4
+ 258 000e FFF7FEFF 		bl	mad_read_next_frame
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 7
+
+
+ 259              	.LVL25:
+  77:../../util/mp3read_util.c **** 	if (rc == -1) {
+ 260              		.loc 1 77 2 is_stmt 1 view .LVU58
+ 261              		.loc 1 77 5 is_stmt 0 view .LVU59
+ 262 0012 B0F1FF3F 		cmp	r0, #-1
+ 263 0016 02D0     		beq	.L17
+  78:../../util/mp3read_util.c **** 		return -1;
+  79:../../util/mp3read_util.c **** 	}
+  80:../../util/mp3read_util.c **** 	if (rc != 1) return 0;
+ 264              		.loc 1 80 2 is_stmt 1 view .LVU60
+ 265              		.loc 1 80 5 is_stmt 0 view .LVU61
+ 266 0018 0128     		cmp	r0, #1
+ 267 001a 01D0     		beq	.L22
+ 268              		.loc 1 80 22 discriminator 1 view .LVU62
+ 269 001c 0020     		movs	r0, #0
+ 270              	.LVL26:
+ 271              	.L17:
+  81:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+  82:../../util/mp3read_util.c ****    	rc = mad_output_dac12_mono(&amad_data->synth.pcm, dac12, MAX_MAD_PCM_SIZE);
+  83:../../util/mp3read_util.c **** 
+  84:../../util/mp3read_util.c ****    	return rc;
+  85:../../util/mp3read_util.c **** }
+ 272              		.loc 1 85 1 view .LVU63
+ 273 001e 38BD     		pop	{r3, r4, r5, pc}
+ 274              	.LVL27:
+ 275              	.L22:
+  81:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+ 276              		.loc 1 81 5 is_stmt 1 view .LVU64
+ 277 0020 04F14001 		add	r1, r4, #64
+ 278 0024 42F27040 		movw	r0, #9328
+ 279              	.LVL28:
+  81:../../util/mp3read_util.c ****    	mad_synth_frame(&amad_data->synth, &amad_data->frame);
+ 280              		.loc 1 81 5 is_stmt 0 view .LVU65
+ 281 0028 2044     		add	r0, r0, r4
+ 282 002a FFF7FEFF 		bl	mad_synth_frame
+ 283              	.LVL29:
+  82:../../util/mp3read_util.c **** 
+ 284              		.loc 1 82 5 is_stmt 1 view .LVU66
+  82:../../util/mp3read_util.c **** 
+ 285              		.loc 1 82 10 is_stmt 0 view .LVU67
+ 286 002e 40F6C412 		movw	r2, #2500
+ 287 0032 2946     		mov	r1, r5
+ 288 0034 43F27440 		movw	r0, #13428
+ 289 0038 2044     		add	r0, r0, r4
+ 290 003a FFF7FEFF 		bl	mad_output_dac12_mono
+ 291              	.LVL30:
+  84:../../util/mp3read_util.c **** }
+ 292              		.loc 1 84 5 is_stmt 1 view .LVU68
+  84:../../util/mp3read_util.c **** }
+ 293              		.loc 1 84 12 is_stmt 0 view .LVU69
+ 294 003e EEE7     		b	.L17
+ 295              	.LVL31:
+ 296              	.L19:
+  73:../../util/mp3read_util.c **** 
+ 297              		.loc 1 73 31 discriminator 1 view .LVU70
+ 298 0040 4FF0FF30 		mov	r0, #-1
+ 299 0044 EBE7     		b	.L17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 8
+
+
+ 300              		.cfi_endproc
+ 301              	.LFE341:
+ 303              		.section	.text.mp3read_open,"ax",%progbits
+ 304              		.align	1
+ 305              		.global	mp3read_open
+ 306              		.syntax unified
+ 307              		.thumb
+ 308              		.thumb_func
+ 310              	mp3read_open:
+ 311              	.LVL32:
+ 312              	.LFB342:
+  86:../../util/mp3read_util.c **** 
+  87:../../util/mp3read_util.c **** 
+  88:../../util/mp3read_util.c **** BOOL mp3read_open(FIL * file, mad_data_t *amad_data, const char * file_name)
+  89:../../util/mp3read_util.c **** {
+ 313              		.loc 1 89 1 is_stmt 1 view -0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              		.loc 1 89 1 is_stmt 0 view .LVU72
+ 318 0000 70B5     		push	{r4, r5, r6, lr}
+ 319              	.LCFI4:
+ 320              		.cfi_def_cfa_offset 16
+ 321              		.cfi_offset 4, -16
+ 322              		.cfi_offset 5, -12
+ 323              		.cfi_offset 6, -8
+ 324              		.cfi_offset 14, -4
+ 325 0002 0646     		mov	r6, r0
+  90:../../util/mp3read_util.c **** 
+  91:../../util/mp3read_util.c **** 
+  92:../../util/mp3read_util.c **** 	if (!strlen(file_name)) return FALSE;
+ 326              		.loc 1 92 2 is_stmt 1 view .LVU73
+ 327              		.loc 1 92 6 is_stmt 0 view .LVU74
+ 328 0004 1078     		ldrb	r0, [r2]	@ zero_extendqisi2
+ 329              	.LVL33:
+ 330              		.loc 1 92 5 view .LVU75
+ 331 0006 00B9     		cbnz	r0, .L27
+ 332              	.LVL34:
+ 333              	.L24:
+  93:../../util/mp3read_util.c **** 
+  94:../../util/mp3read_util.c **** 	mp3read_close(file, amad_data);
+  95:../../util/mp3read_util.c **** 
+  96:../../util/mp3read_util.c **** 	mad_data_clear(amad_data);
+  97:../../util/mp3read_util.c **** 
+  98:../../util/mp3read_util.c **** 	if (f_open(file, file_name, FA_READ) != FR_OK) {
+  99:../../util/mp3read_util.c **** 	     //ulog_fmt("mp3read_open: error open file: %s"CRLF, file_name);
+ 100:../../util/mp3read_util.c **** 	     return FALSE;
+ 101:../../util/mp3read_util.c **** 	}
+ 102:../../util/mp3read_util.c **** 
+ 103:../../util/mp3read_util.c **** 
+ 104:../../util/mp3read_util.c **** 	amad_data->file = file;
+ 105:../../util/mp3read_util.c **** 	amad_data->mad_input_read = f_stream_read;
+ 106:../../util/mp3read_util.c **** 	mad_stream_init(&amad_data->stream);
+ 107:../../util/mp3read_util.c **** 	mad_frame_init(&amad_data->frame);
+ 108:../../util/mp3read_util.c **** 	amad_data->frame.header.samplerate = 0;
+ 109:../../util/mp3read_util.c **** 	mad_synth_init(&amad_data->synth);
+ 110:../../util/mp3read_util.c **** 	amad_data->synth.pcm.length = 0;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 9
+
+
+ 111:../../util/mp3read_util.c **** 	mad_stream_options(&amad_data->stream, 0); // TODO - add options support
+ 112:../../util/mp3read_util.c **** 
+ 113:../../util/mp3read_util.c **** 
+ 114:../../util/mp3read_util.c ****     //ulog_fmt("mp3read_open: file:%s"CRLF, file_name);
+ 115:../../util/mp3read_util.c **** 	return TRUE;
+ 116:../../util/mp3read_util.c **** }
+ 334              		.loc 1 116 1 view .LVU76
+ 335 0008 70BD     		pop	{r4, r5, r6, pc}
+ 336              	.LVL35:
+ 337              	.L27:
+ 338              		.loc 1 116 1 view .LVU77
+ 339 000a 0C46     		mov	r4, r1
+ 340 000c 1546     		mov	r5, r2
+  94:../../util/mp3read_util.c **** 
+ 341              		.loc 1 94 2 is_stmt 1 view .LVU78
+ 342 000e 3046     		mov	r0, r6
+ 343 0010 FFF7FEFF 		bl	mp3read_close
+ 344              	.LVL36:
+  96:../../util/mp3read_util.c **** 
+ 345              		.loc 1 96 2 view .LVU79
+ 346 0014 2046     		mov	r0, r4
+ 347 0016 FFF7FEFF 		bl	mad_data_clear
+ 348              	.LVL37:
+  98:../../util/mp3read_util.c **** 	     //ulog_fmt("mp3read_open: error open file: %s"CRLF, file_name);
+ 349              		.loc 1 98 2 view .LVU80
+  98:../../util/mp3read_util.c **** 	     //ulog_fmt("mp3read_open: error open file: %s"CRLF, file_name);
+ 350              		.loc 1 98 6 is_stmt 0 view .LVU81
+ 351 001a 0122     		movs	r2, #1
+ 352 001c 2946     		mov	r1, r5
+ 353 001e 3046     		mov	r0, r6
+ 354 0020 FFF7FEFF 		bl	f_open
+ 355              	.LVL38:
+  98:../../util/mp3read_util.c **** 	     //ulog_fmt("mp3read_open: error open file: %s"CRLF, file_name);
+ 356              		.loc 1 98 5 discriminator 1 view .LVU82
+ 357 0024 08B1     		cbz	r0, .L28
+ 100:../../util/mp3read_util.c **** 	}
+ 358              		.loc 1 100 14 view .LVU83
+ 359 0026 0020     		movs	r0, #0
+ 360 0028 EEE7     		b	.L24
+ 361              	.L28:
+ 104:../../util/mp3read_util.c **** 	amad_data->mad_input_read = f_stream_read;
+ 362              		.loc 1 104 2 is_stmt 1 view .LVU84
+ 104:../../util/mp3read_util.c **** 	amad_data->mad_input_read = f_stream_read;
+ 363              		.loc 1 104 18 is_stmt 0 view .LVU85
+ 364 002a 04F5C043 		add	r3, r4, #24576
+ 365 002e DE67     		str	r6, [r3, #124]
+ 105:../../util/mp3read_util.c **** 	mad_stream_init(&amad_data->stream);
+ 366              		.loc 1 105 2 is_stmt 1 view .LVU86
+ 105:../../util/mp3read_util.c **** 	mad_stream_init(&amad_data->stream);
+ 367              		.loc 1 105 28 is_stmt 0 view .LVU87
+ 368 0030 0B4A     		ldr	r2, .L29
+ 369 0032 C3F88020 		str	r2, [r3, #128]
+ 106:../../util/mp3read_util.c **** 	mad_frame_init(&amad_data->frame);
+ 370              		.loc 1 106 2 is_stmt 1 view .LVU88
+ 371 0036 2046     		mov	r0, r4
+ 372 0038 FFF7FEFF 		bl	mad_stream_init
+ 373              	.LVL39:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 10
+
+
+ 107:../../util/mp3read_util.c **** 	amad_data->frame.header.samplerate = 0;
+ 374              		.loc 1 107 2 view .LVU89
+ 375 003c 04F14000 		add	r0, r4, #64
+ 376 0040 FFF7FEFF 		bl	mad_frame_init
+ 377              	.LVL40:
+ 108:../../util/mp3read_util.c **** 	mad_synth_init(&amad_data->synth);
+ 378              		.loc 1 108 2 view .LVU90
+ 108:../../util/mp3read_util.c **** 	mad_synth_init(&amad_data->synth);
+ 379              		.loc 1 108 37 is_stmt 0 view .LVU91
+ 380 0044 0025     		movs	r5, #0
+ 381              	.LVL41:
+ 108:../../util/mp3read_util.c **** 	mad_synth_init(&amad_data->synth);
+ 382              		.loc 1 108 37 view .LVU92
+ 383 0046 2565     		str	r5, [r4, #80]
+ 109:../../util/mp3read_util.c **** 	amad_data->synth.pcm.length = 0;
+ 384              		.loc 1 109 2 is_stmt 1 view .LVU93
+ 385 0048 42F27040 		movw	r0, #9328
+ 386 004c 2044     		add	r0, r0, r4
+ 387 004e FFF7FEFF 		bl	mad_synth_init
+ 388              	.LVL42:
+ 110:../../util/mp3read_util.c **** 	mad_stream_options(&amad_data->stream, 0); // TODO - add options support
+ 389              		.loc 1 110 2 view .LVU94
+ 110:../../util/mp3read_util.c **** 	mad_stream_options(&amad_data->stream, 0); // TODO - add options support
+ 390              		.loc 1 110 30 is_stmt 0 view .LVU95
+ 391 0052 04F54053 		add	r3, r4, #12288
+ 392 0056 A3F87A54 		strh	r5, [r3, #1146]	@ movhi
+ 111:../../util/mp3read_util.c **** 
+ 393              		.loc 1 111 2 is_stmt 1 view .LVU96
+ 394 005a A563     		str	r5, [r4, #56]
+ 115:../../util/mp3read_util.c **** }
+ 395              		.loc 1 115 2 view .LVU97
+ 115:../../util/mp3read_util.c **** }
+ 396              		.loc 1 115 9 is_stmt 0 view .LVU98
+ 397 005c 0120     		movs	r0, #1
+ 398 005e D3E7     		b	.L24
+ 399              	.L30:
+ 400              		.align	2
+ 401              	.L29:
+ 402 0060 00000000 		.word	f_stream_read
+ 403              		.cfi_endproc
+ 404              	.LFE342:
+ 406              		.text
+ 407              	.Letext0:
+ 408              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 409              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 410              		.file 4 "../../fatfs/ff.h"
+ 411              		.file 5 "../../libmad/mad.h"
+ 412              		.file 6 "../../util/def_util.h"
+ 413              		.file 7 "../../util/mad_util.h"
+ 414              		.file 8 "../../util/fatfs_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mp3read_util.c
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:20     .text.mp3read_close:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:26     .text.mp3read_close:00000000 mp3read_close
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:67     .text.mp3read_read_pcm16:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:73     .text.mp3read_read_pcm16:00000000 mp3read_read_pcm16
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:146    .text.mp3read_read_pcm16_mono:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:152    .text.mp3read_read_pcm16_mono:00000000 mp3read_read_pcm16_mono
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:225    .text.mp3read_read_dac12_mono:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:231    .text.mp3read_read_dac12_mono:00000000 mp3read_read_dac12_mono
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:304    .text.mp3read_open:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:310    .text.mp3read_open:00000000 mp3read_open
+C:\Users\oleg\AppData\Local\Temp\cceTW5lu.s:402    .text.mp3read_open:00000060 $d
+
+UNDEFINED SYMBOLS
+f_is_open
+mad_data_clear
+f_close
+mad_read_next_frame
+mad_synth_frame
+mad_output_pcm16
+mad_output_pcm16_mono
+mad_output_dac12_mono
+f_open
+mad_stream_init
+mad_frame_init
+mad_synth_init
+f_stream_read

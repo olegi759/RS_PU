@@ -1,0 +1,639 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"quant_LTP_gains.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/quant_LTP_gains.c"
+  19              		.section	.text.silk_quant_LTP_gains,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_quant_LTP_gains
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_quant_LTP_gains:
+  27              	.LVL0:
+  28              	.LFB25:
+   1:../../opus/silk/quant_LTP_gains.c **** /***********************************************************************
+   2:../../opus/silk/quant_LTP_gains.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/quant_LTP_gains.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/quant_LTP_gains.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/quant_LTP_gains.c **** are met:
+   6:../../opus/silk/quant_LTP_gains.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/quant_LTP_gains.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/quant_LTP_gains.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/quant_LTP_gains.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/quant_LTP_gains.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/quant_LTP_gains.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/quant_LTP_gains.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/quant_LTP_gains.c **** products derived from this software without specific prior written
+  14:../../opus/silk/quant_LTP_gains.c **** permission.
+  15:../../opus/silk/quant_LTP_gains.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/quant_LTP_gains.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/quant_LTP_gains.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/quant_LTP_gains.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/quant_LTP_gains.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/quant_LTP_gains.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/quant_LTP_gains.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/quant_LTP_gains.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/quant_LTP_gains.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/quant_LTP_gains.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/quant_LTP_gains.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/quant_LTP_gains.c **** ***********************************************************************/
+  27:../../opus/silk/quant_LTP_gains.c **** 
+  28:../../opus/silk/quant_LTP_gains.c **** #include "opus_config.h"
+  29:../../opus/silk/quant_LTP_gains.c **** 
+  30:../../opus/silk/quant_LTP_gains.c **** #include "main.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 2
+
+
+  31:../../opus/silk/quant_LTP_gains.c **** #include "tuning_parameters.h"
+  32:../../opus/silk/quant_LTP_gains.c **** 
+  33:../../opus/silk/quant_LTP_gains.c **** void silk_quant_LTP_gains(
+  34:../../opus/silk/quant_LTP_gains.c ****     opus_int16                  B_Q14[ MAX_NB_SUBFR * LTP_ORDER ],          /* O    Quantized LTP g
+  35:../../opus/silk/quant_LTP_gains.c ****     opus_int8                   cbk_index[ MAX_NB_SUBFR ],                  /* O    Codebook Index 
+  36:../../opus/silk/quant_LTP_gains.c ****     opus_int8                   *periodicity_index,                         /* O    Periodicity Ind
+  37:../../opus/silk/quant_LTP_gains.c ****     opus_int32                  *sum_log_gain_Q7,                           /* I/O  Cumulative max 
+  38:../../opus/silk/quant_LTP_gains.c ****     opus_int                    *pred_gain_dB_Q7,                           /* O    LTP prediction 
+  39:../../opus/silk/quant_LTP_gains.c ****     const opus_int32            XX_Q17[ MAX_NB_SUBFR*LTP_ORDER*LTP_ORDER ], /* I    Correlation mat
+  40:../../opus/silk/quant_LTP_gains.c ****     const opus_int32            xX_Q17[ MAX_NB_SUBFR*LTP_ORDER ],           /* I    Correlation vec
+  41:../../opus/silk/quant_LTP_gains.c ****     const opus_int              subfr_len,                                  /* I    Number of sampl
+  42:../../opus/silk/quant_LTP_gains.c ****     const opus_int              nb_subfr,                                   /* I    Number of subfr
+  43:../../opus/silk/quant_LTP_gains.c ****     int                         arch                                        /* I    Run-time archit
+  44:../../opus/silk/quant_LTP_gains.c **** )
+  45:../../opus/silk/quant_LTP_gains.c **** {
+  29              		.loc 1 45 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 24, pretend = 0, frame = 56
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 45 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 36
+  37              		.cfi_offset 4, -36
+  38              		.cfi_offset 5, -32
+  39              		.cfi_offset 6, -28
+  40              		.cfi_offset 7, -24
+  41              		.cfi_offset 8, -20
+  42              		.cfi_offset 9, -16
+  43              		.cfi_offset 10, -12
+  44              		.cfi_offset 11, -8
+  45              		.cfi_offset 14, -4
+  46 0004 97B0     		sub	sp, sp, #92
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 128
+  49 0006 0F92     		str	r2, [sp, #60]
+  50 0008 0D93     		str	r3, [sp, #52]
+  51 000a DDF890A0 		ldr	r10, [sp, #144]
+  46:../../opus/silk/quant_LTP_gains.c ****     opus_int             j, k, cbk_size;
+  52              		.loc 1 46 5 is_stmt 1 view .LVU2
+  47:../../opus/silk/quant_LTP_gains.c ****     opus_int8            temp_idx[ MAX_NB_SUBFR ];
+  53              		.loc 1 47 5 view .LVU3
+  48:../../opus/silk/quant_LTP_gains.c ****     const opus_uint8     *cl_ptr_Q5;
+  54              		.loc 1 48 5 view .LVU4
+  49:../../opus/silk/quant_LTP_gains.c ****     const opus_int8      *cbk_ptr_Q7;
+  55              		.loc 1 49 5 view .LVU5
+  50:../../opus/silk/quant_LTP_gains.c ****     const opus_uint8     *cbk_gain_ptr_Q7;
+  56              		.loc 1 50 5 view .LVU6
+  51:../../opus/silk/quant_LTP_gains.c ****     const opus_int32     *XX_Q17_ptr, *xX_Q17_ptr;
+  57              		.loc 1 51 5 view .LVU7
+  52:../../opus/silk/quant_LTP_gains.c ****     opus_int32           res_nrg_Q15_subfr, res_nrg_Q15, rate_dist_Q7_subfr, rate_dist_Q7, min_rate
+  58              		.loc 1 52 5 view .LVU8
+  53:../../opus/silk/quant_LTP_gains.c ****     opus_int32           sum_log_gain_tmp_Q7, best_sum_log_gain_Q7, max_gain_Q7;
+  59              		.loc 1 53 5 view .LVU9
+  54:../../opus/silk/quant_LTP_gains.c ****     opus_int             gain_Q7;
+  60              		.loc 1 54 5 view .LVU10
+  55:../../opus/silk/quant_LTP_gains.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 3
+
+
+  56:../../opus/silk/quant_LTP_gains.c ****     /***************************************************/
+  57:../../opus/silk/quant_LTP_gains.c ****     /* iterate over different codebooks with different */
+  58:../../opus/silk/quant_LTP_gains.c ****     /* rates/distortions, and choose best */
+  59:../../opus/silk/quant_LTP_gains.c ****     /***************************************************/
+  60:../../opus/silk/quant_LTP_gains.c ****     min_rate_dist_Q7 = silk_int32_MAX;
+  61              		.loc 1 60 5 view .LVU11
+  62              	.LVL1:
+  61:../../opus/silk/quant_LTP_gains.c ****     best_sum_log_gain_Q7 = 0;
+  63              		.loc 1 61 5 view .LVU12
+  62:../../opus/silk/quant_LTP_gains.c ****     res_nrg_Q15 = 0;
+  64              		.loc 1 62 5 view .LVU13
+  63:../../opus/silk/quant_LTP_gains.c ****     for( k = 0; k < 3; k++ ) {
+  65              		.loc 1 63 5 view .LVU14
+  61:../../opus/silk/quant_LTP_gains.c ****     best_sum_log_gain_Q7 = 0;
+  66              		.loc 1 61 26 is_stmt 0 view .LVU15
+  67 000e 0023     		movs	r3, #0
+  68              	.LVL2:
+  61:../../opus/silk/quant_LTP_gains.c ****     best_sum_log_gain_Q7 = 0;
+  69              		.loc 1 61 26 view .LVU16
+  70 0010 0E93     		str	r3, [sp, #56]
+  60:../../opus/silk/quant_LTP_gains.c ****     best_sum_log_gain_Q7 = 0;
+  71              		.loc 1 60 22 view .LVU17
+  72 0012 6FF00042 		mvn	r2, #-2147483648
+  73              	.LVL3:
+  60:../../opus/silk/quant_LTP_gains.c ****     best_sum_log_gain_Q7 = 0;
+  74              		.loc 1 60 22 view .LVU18
+  75 0016 0C92     		str	r2, [sp, #48]
+  62:../../opus/silk/quant_LTP_gains.c ****     res_nrg_Q15 = 0;
+  76              		.loc 1 62 17 view .LVU19
+  77 0018 9946     		mov	r9, r3
+  78              		.loc 1 63 12 view .LVU20
+  79 001a 0B93     		str	r3, [sp, #44]
+  80 001c 1190     		str	r0, [sp, #68]
+  81 001e 1091     		str	r1, [sp, #64]
+  82              		.loc 1 63 5 view .LVU21
+  83 0020 45E0     		b	.L2
+  84              	.LVL4:
+  85              	.L15:
+  86              	.LBB2:
+  64:../../opus/silk/quant_LTP_gains.c ****         /* Safety margin for pitch gain control, to take into account factors
+  65:../../opus/silk/quant_LTP_gains.c ****            such as state rescaling/rewhitening. */
+  66:../../opus/silk/quant_LTP_gains.c ****         opus_int32 gain_safety = SILK_FIX_CONST( 0.4, 7 );
+  67:../../opus/silk/quant_LTP_gains.c **** 
+  68:../../opus/silk/quant_LTP_gains.c ****         cl_ptr_Q5  = silk_LTP_gain_BITS_Q5_ptrs[ k ];
+  69:../../opus/silk/quant_LTP_gains.c ****         cbk_ptr_Q7 = silk_LTP_vq_ptrs_Q7[        k ];
+  70:../../opus/silk/quant_LTP_gains.c ****         cbk_gain_ptr_Q7 = silk_LTP_vq_gain_ptrs_Q7[ k ];
+  71:../../opus/silk/quant_LTP_gains.c ****         cbk_size   = silk_LTP_vq_sizes[          k ];
+  72:../../opus/silk/quant_LTP_gains.c **** 
+  73:../../opus/silk/quant_LTP_gains.c ****         /* Set up pointers to first subframe */
+  74:../../opus/silk/quant_LTP_gains.c ****         XX_Q17_ptr = XX_Q17;
+  75:../../opus/silk/quant_LTP_gains.c ****         xX_Q17_ptr = xX_Q17;
+  76:../../opus/silk/quant_LTP_gains.c **** 
+  77:../../opus/silk/quant_LTP_gains.c ****         res_nrg_Q15 = 0;
+  78:../../opus/silk/quant_LTP_gains.c ****         rate_dist_Q7 = 0;
+  79:../../opus/silk/quant_LTP_gains.c ****         sum_log_gain_tmp_Q7 = *sum_log_gain_Q7;
+  80:../../opus/silk/quant_LTP_gains.c ****         for( j = 0; j < nb_subfr; j++ ) {
+  81:../../opus/silk/quant_LTP_gains.c ****             max_gain_Q7 = silk_log2lin( ( SILK_FIX_CONST( MAX_SUM_LOG_GAIN_DB / 6.0, 7 ) - sum_log_
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 4
+
+
+  82:../../opus/silk/quant_LTP_gains.c ****                                         + SILK_FIX_CONST( 7, 7 ) ) - gain_safety;
+  83:../../opus/silk/quant_LTP_gains.c ****             silk_VQ_WMat_EC(
+  84:../../opus/silk/quant_LTP_gains.c ****                 &temp_idx[ j ],         /* O    index of best codebook vector                      
+  85:../../opus/silk/quant_LTP_gains.c ****                 &res_nrg_Q15_subfr,     /* O    residual energy                                    
+  86:../../opus/silk/quant_LTP_gains.c ****                 &rate_dist_Q7_subfr,    /* O    best weighted quantization error + mu * rate       
+  87:../../opus/silk/quant_LTP_gains.c ****                 &gain_Q7,               /* O    sum of absolute LTP coefficients                   
+  88:../../opus/silk/quant_LTP_gains.c ****                 XX_Q17_ptr,             /* I    correlation matrix                                 
+  89:../../opus/silk/quant_LTP_gains.c ****                 xX_Q17_ptr,             /* I    correlation vector                                 
+  90:../../opus/silk/quant_LTP_gains.c ****                 cbk_ptr_Q7,             /* I    codebook                                           
+  91:../../opus/silk/quant_LTP_gains.c ****                 cbk_gain_ptr_Q7,        /* I    codebook effective gains                           
+  92:../../opus/silk/quant_LTP_gains.c ****                 cl_ptr_Q5,              /* I    code length for each codebook vector               
+  93:../../opus/silk/quant_LTP_gains.c ****                 subfr_len,              /* I    number of samples per subframe                     
+  94:../../opus/silk/quant_LTP_gains.c ****                 max_gain_Q7,            /* I    maximum sum of absolute LTP coefficients           
+  95:../../opus/silk/quant_LTP_gains.c ****                 cbk_size,               /* I    number of vectors in codebook                      
+  96:../../opus/silk/quant_LTP_gains.c ****                 arch                    /* I    Run-time architecture                              
+  97:../../opus/silk/quant_LTP_gains.c ****             );
+  98:../../opus/silk/quant_LTP_gains.c **** 
+  99:../../opus/silk/quant_LTP_gains.c ****             res_nrg_Q15  = silk_ADD_POS_SAT32( res_nrg_Q15, res_nrg_Q15_subfr );
+  87              		.loc 1 99 28 discriminator 2 view .LVU22
+  88 0022 6FF00049 		mvn	r9, #-2147483648
+  89              	.LVL5:
+  90              		.loc 1 99 28 discriminator 2 view .LVU23
+  91 0026 2EE0     		b	.L4
+  92              	.LVL6:
+  93              	.L16:
+ 100:../../opus/silk/quant_LTP_gains.c ****             rate_dist_Q7 = silk_ADD_POS_SAT32( rate_dist_Q7, rate_dist_Q7_subfr );
+  94              		.loc 1 100 28 discriminator 2 view .LVU24
+  95 0028 6FF00048 		mvn	r8, #-2147483648
+  96              	.LVL7:
+  97              	.L5:
+ 101:../../opus/silk/quant_LTP_gains.c ****             sum_log_gain_tmp_Q7 = silk_max(0, sum_log_gain_tmp_Q7
+  98              		.loc 1 101 13 is_stmt 1 view .LVU25
+  99              		.loc 1 101 35 is_stmt 0 view .LVU26
+ 100 002c 1298     		ldr	r0, [sp, #72]
+ 101 002e 3330     		adds	r0, r0, #51
+ 102 0030 FFF7FEFF 		bl	silk_lin2log
+ 103              	.LVL8:
+ 104              		.loc 1 101 35 discriminator 1 view .LVU27
+ 105 0034 2044     		add	r0, r0, r4
+ 106 0036 B0F5607F 		cmp	r0, #896
+ 107 003a 2ADA     		bge	.L20
+ 108              		.loc 1 101 35 discriminator 2 view .LVU28
+ 109 003c 0024     		movs	r4, #0
+ 110              	.LVL9:
+ 111              	.L6:
+ 102:../../opus/silk/quant_LTP_gains.c ****                                 + silk_lin2log( gain_safety + gain_Q7 ) - SILK_FIX_CONST( 7, 7 ));
+ 103:../../opus/silk/quant_LTP_gains.c **** 
+ 104:../../opus/silk/quant_LTP_gains.c ****             XX_Q17_ptr += LTP_ORDER * LTP_ORDER;
+ 112              		.loc 1 104 13 is_stmt 1 view .LVU29
+ 113              		.loc 1 104 24 is_stmt 0 view .LVU30
+ 114 003e 6436     		adds	r6, r6, #100
+ 115              	.LVL10:
+ 105:../../opus/silk/quant_LTP_gains.c ****             xX_Q17_ptr += LTP_ORDER;
+ 116              		.loc 1 105 13 is_stmt 1 view .LVU31
+ 117              		.loc 1 105 24 is_stmt 0 view .LVU32
+ 118 0040 1437     		adds	r7, r7, #20
+ 119              	.LVL11:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 5
+
+
+  80:../../opus/silk/quant_LTP_gains.c ****             max_gain_Q7 = silk_log2lin( ( SILK_FIX_CONST( MAX_SUM_LOG_GAIN_DB / 6.0, 7 ) - sum_log_
+ 120              		.loc 1 80 36 is_stmt 1 discriminator 2 view .LVU33
+ 121 0042 0135     		adds	r5, r5, #1
+ 122              	.LVL12:
+ 123              	.L3:
+  80:../../opus/silk/quant_LTP_gains.c ****             max_gain_Q7 = silk_log2lin( ( SILK_FIX_CONST( MAX_SUM_LOG_GAIN_DB / 6.0, 7 ) - sum_log_
+ 124              		.loc 1 80 23 discriminator 1 view .LVU34
+ 125 0044 5545     		cmp	r5, r10
+ 126 0046 2CDA     		bge	.L21
+  81:../../opus/silk/quant_LTP_gains.c ****                                         + SILK_FIX_CONST( 7, 7 ) ) - gain_safety;
+ 127              		.loc 1 81 13 view .LVU35
+  81:../../opus/silk/quant_LTP_gains.c ****                                         + SILK_FIX_CONST( 7, 7 ) ) - gain_safety;
+ 128              		.loc 1 81 27 is_stmt 0 view .LVU36
+ 129 0048 41F65500 		movw	r0, #6229
+ 130 004c 001B     		subs	r0, r0, r4
+ 131 004e FFF7FEFF 		bl	silk_log2lin
+ 132              	.LVL13:
+  81:../../opus/silk/quant_LTP_gains.c ****                                         + SILK_FIX_CONST( 7, 7 ) ) - gain_safety;
+ 133              		.loc 1 81 25 discriminator 1 view .LVU37
+ 134 0052 3338     		subs	r0, r0, #51
+ 135              	.LVL14:
+  83:../../opus/silk/quant_LTP_gains.c ****                 &temp_idx[ j ],         /* O    index of best codebook vector                      
+ 136              		.loc 1 83 13 is_stmt 1 view .LVU38
+ 137 0054 CDF81CB0 		str	fp, [sp, #28]
+ 138 0058 0690     		str	r0, [sp, #24]
+ 139 005a 239B     		ldr	r3, [sp, #140]
+ 140 005c 0593     		str	r3, [sp, #20]
+ 141 005e 089B     		ldr	r3, [sp, #32]
+ 142 0060 0493     		str	r3, [sp, #16]
+ 143 0062 0A9B     		ldr	r3, [sp, #40]
+ 144 0064 0393     		str	r3, [sp, #12]
+ 145 0066 099B     		ldr	r3, [sp, #36]
+ 146 0068 0293     		str	r3, [sp, #8]
+ 147 006a 0197     		str	r7, [sp, #4]
+ 148 006c 0096     		str	r6, [sp]
+ 149 006e 12AB     		add	r3, sp, #72
+ 150 0070 13AA     		add	r2, sp, #76
+ 151 0072 14A9     		add	r1, sp, #80
+ 152 0074 15A8     		add	r0, sp, #84
+ 153              	.LVL15:
+  83:../../opus/silk/quant_LTP_gains.c ****                 &temp_idx[ j ],         /* O    index of best codebook vector                      
+ 154              		.loc 1 83 13 is_stmt 0 view .LVU39
+ 155 0076 2844     		add	r0, r0, r5
+ 156 0078 FFF7FEFF 		bl	silk_VQ_WMat_EC_c
+ 157              	.LVL16:
+  99:../../opus/silk/quant_LTP_gains.c ****             rate_dist_Q7 = silk_ADD_POS_SAT32( rate_dist_Q7, rate_dist_Q7_subfr );
+ 158              		.loc 1 99 13 is_stmt 1 view .LVU40
+  99:../../opus/silk/quant_LTP_gains.c ****             rate_dist_Q7 = silk_ADD_POS_SAT32( rate_dist_Q7, rate_dist_Q7_subfr );
+ 159              		.loc 1 99 28 is_stmt 0 view .LVU41
+ 160 007c 149B     		ldr	r3, [sp, #80]
+ 161 007e 19EB030F 		cmn	r9, r3
+ 162 0082 CED4     		bmi	.L15
+  99:../../opus/silk/quant_LTP_gains.c ****             rate_dist_Q7 = silk_ADD_POS_SAT32( rate_dist_Q7, rate_dist_Q7_subfr );
+ 163              		.loc 1 99 28 discriminator 1 view .LVU42
+ 164 0084 9944     		add	r9, r9, r3
+ 165              	.LVL17:
+ 166              	.L4:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 6
+
+
+ 100:../../opus/silk/quant_LTP_gains.c ****             sum_log_gain_tmp_Q7 = silk_max(0, sum_log_gain_tmp_Q7
+ 167              		.loc 1 100 13 is_stmt 1 view .LVU43
+ 100:../../opus/silk/quant_LTP_gains.c ****             sum_log_gain_tmp_Q7 = silk_max(0, sum_log_gain_tmp_Q7
+ 168              		.loc 1 100 28 is_stmt 0 view .LVU44
+ 169 0086 139B     		ldr	r3, [sp, #76]
+ 170 0088 18EB030F 		cmn	r8, r3
+ 171 008c CCD4     		bmi	.L16
+ 100:../../opus/silk/quant_LTP_gains.c ****             sum_log_gain_tmp_Q7 = silk_max(0, sum_log_gain_tmp_Q7
+ 172              		.loc 1 100 28 discriminator 1 view .LVU45
+ 173 008e 9844     		add	r8, r8, r3
+ 174              	.LVL18:
+ 100:../../opus/silk/quant_LTP_gains.c ****             sum_log_gain_tmp_Q7 = silk_max(0, sum_log_gain_tmp_Q7
+ 175              		.loc 1 100 28 discriminator 1 view .LVU46
+ 176 0090 CCE7     		b	.L5
+ 177              	.LVL19:
+ 178              	.L20:
+ 101:../../opus/silk/quant_LTP_gains.c ****                                 + silk_lin2log( gain_safety + gain_Q7 ) - SILK_FIX_CONST( 7, 7 ));
+ 179              		.loc 1 101 35 discriminator 1 view .LVU47
+ 180 0092 1298     		ldr	r0, [sp, #72]
+ 181 0094 3330     		adds	r0, r0, #51
+ 182 0096 FFF7FEFF 		bl	silk_lin2log
+ 183              	.LVL20:
+ 184 009a 2044     		add	r0, r0, r4
+ 185 009c A0F56074 		sub	r4, r0, #896
+ 186              	.LVL21:
+ 101:../../opus/silk/quant_LTP_gains.c ****                                 + silk_lin2log( gain_safety + gain_Q7 ) - SILK_FIX_CONST( 7, 7 ));
+ 187              		.loc 1 101 35 discriminator 1 view .LVU48
+ 188 00a0 CDE7     		b	.L6
+ 189              	.LVL22:
+ 190              	.L21:
+ 106:../../opus/silk/quant_LTP_gains.c ****         }
+ 107:../../opus/silk/quant_LTP_gains.c **** 
+ 108:../../opus/silk/quant_LTP_gains.c ****         if( rate_dist_Q7 <= min_rate_dist_Q7 ) {
+ 191              		.loc 1 108 9 is_stmt 1 view .LVU49
+ 192              		.loc 1 108 11 is_stmt 0 view .LVU50
+ 193 00a2 0C9B     		ldr	r3, [sp, #48]
+ 194 00a4 9845     		cmp	r8, r3
+ 195 00a6 1EDD     		ble	.L22
+ 196              	.L8:
+ 197              		.loc 1 108 11 view .LVU51
+ 198              	.LBE2:
+  63:../../opus/silk/quant_LTP_gains.c ****         /* Safety margin for pitch gain control, to take into account factors
+ 199              		.loc 1 63 25 is_stmt 1 discriminator 2 view .LVU52
+ 200 00a8 0B9B     		ldr	r3, [sp, #44]
+ 201 00aa 0133     		adds	r3, r3, #1
+ 202 00ac 0B93     		str	r3, [sp, #44]
+ 203              	.LVL23:
+ 204              	.L2:
+  63:../../opus/silk/quant_LTP_gains.c ****         /* Safety margin for pitch gain control, to take into account factors
+ 205              		.loc 1 63 19 discriminator 1 view .LVU53
+ 206 00ae 0B9B     		ldr	r3, [sp, #44]
+ 207 00b0 022B     		cmp	r3, #2
+ 208 00b2 24DC     		bgt	.L23
+ 209              	.LBB3:
+  66:../../opus/silk/quant_LTP_gains.c **** 
+ 210              		.loc 1 66 9 view .LVU54
+ 211              	.LVL24:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 7
+
+
+  68:../../opus/silk/quant_LTP_gains.c ****         cbk_ptr_Q7 = silk_LTP_vq_ptrs_Q7[        k ];
+ 212              		.loc 1 68 9 view .LVU55
+  68:../../opus/silk/quant_LTP_gains.c ****         cbk_ptr_Q7 = silk_LTP_vq_ptrs_Q7[        k ];
+ 213              		.loc 1 68 20 is_stmt 0 view .LVU56
+ 214 00b4 2D4B     		ldr	r3, .L26
+ 215 00b6 0B9A     		ldr	r2, [sp, #44]
+ 216 00b8 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 217 00bc 0893     		str	r3, [sp, #32]
+ 218              	.LVL25:
+  69:../../opus/silk/quant_LTP_gains.c ****         cbk_gain_ptr_Q7 = silk_LTP_vq_gain_ptrs_Q7[ k ];
+ 219              		.loc 1 69 9 is_stmt 1 view .LVU57
+  69:../../opus/silk/quant_LTP_gains.c ****         cbk_gain_ptr_Q7 = silk_LTP_vq_gain_ptrs_Q7[ k ];
+ 220              		.loc 1 69 20 is_stmt 0 view .LVU58
+ 221 00be 2C4B     		ldr	r3, .L26+4
+ 222              	.LVL26:
+  69:../../opus/silk/quant_LTP_gains.c ****         cbk_gain_ptr_Q7 = silk_LTP_vq_gain_ptrs_Q7[ k ];
+ 223              		.loc 1 69 20 view .LVU59
+ 224 00c0 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 225 00c4 0993     		str	r3, [sp, #36]
+ 226              	.LVL27:
+  70:../../opus/silk/quant_LTP_gains.c ****         cbk_size   = silk_LTP_vq_sizes[          k ];
+ 227              		.loc 1 70 9 is_stmt 1 view .LVU60
+  70:../../opus/silk/quant_LTP_gains.c ****         cbk_size   = silk_LTP_vq_sizes[          k ];
+ 228              		.loc 1 70 25 is_stmt 0 view .LVU61
+ 229 00c6 2B4B     		ldr	r3, .L26+8
+ 230              	.LVL28:
+  70:../../opus/silk/quant_LTP_gains.c ****         cbk_size   = silk_LTP_vq_sizes[          k ];
+ 231              		.loc 1 70 25 view .LVU62
+ 232 00c8 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 233 00cc 0A93     		str	r3, [sp, #40]
+ 234              	.LVL29:
+  71:../../opus/silk/quant_LTP_gains.c **** 
+ 235              		.loc 1 71 9 is_stmt 1 view .LVU63
+  71:../../opus/silk/quant_LTP_gains.c **** 
+ 236              		.loc 1 71 39 is_stmt 0 view .LVU64
+ 237 00ce 2A4B     		ldr	r3, .L26+12
+ 238              	.LVL30:
+  71:../../opus/silk/quant_LTP_gains.c **** 
+ 239              		.loc 1 71 39 view .LVU65
+ 240 00d0 13F902B0 		ldrsb	fp, [r3, r2]
+ 241              	.LVL31:
+  74:../../opus/silk/quant_LTP_gains.c ****         xX_Q17_ptr = xX_Q17;
+ 242              		.loc 1 74 9 is_stmt 1 view .LVU66
+  75:../../opus/silk/quant_LTP_gains.c **** 
+ 243              		.loc 1 75 9 view .LVU67
+  77:../../opus/silk/quant_LTP_gains.c ****         rate_dist_Q7 = 0;
+ 244              		.loc 1 77 9 view .LVU68
+  78:../../opus/silk/quant_LTP_gains.c ****         sum_log_gain_tmp_Q7 = *sum_log_gain_Q7;
+ 245              		.loc 1 78 9 view .LVU69
+  79:../../opus/silk/quant_LTP_gains.c ****         for( j = 0; j < nb_subfr; j++ ) {
+ 246              		.loc 1 79 9 view .LVU70
+  79:../../opus/silk/quant_LTP_gains.c ****         for( j = 0; j < nb_subfr; j++ ) {
+ 247              		.loc 1 79 29 is_stmt 0 view .LVU71
+ 248 00d4 0D9B     		ldr	r3, [sp, #52]
+ 249 00d6 1C68     		ldr	r4, [r3]
+ 250              	.LVL32:
+  80:../../opus/silk/quant_LTP_gains.c ****             max_gain_Q7 = silk_log2lin( ( SILK_FIX_CONST( MAX_SUM_LOG_GAIN_DB / 6.0, 7 ) - sum_log_
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 8
+
+
+ 251              		.loc 1 80 9 is_stmt 1 view .LVU72
+  75:../../opus/silk/quant_LTP_gains.c **** 
+ 252              		.loc 1 75 20 is_stmt 0 view .LVU73
+ 253 00d8 229F     		ldr	r7, [sp, #136]
+  74:../../opus/silk/quant_LTP_gains.c ****         xX_Q17_ptr = xX_Q17;
+ 254              		.loc 1 74 20 view .LVU74
+ 255 00da 219E     		ldr	r6, [sp, #132]
+  78:../../opus/silk/quant_LTP_gains.c ****         sum_log_gain_tmp_Q7 = *sum_log_gain_Q7;
+ 256              		.loc 1 78 22 view .LVU75
+ 257 00dc 4FF00008 		mov	r8, #0
+  77:../../opus/silk/quant_LTP_gains.c ****         rate_dist_Q7 = 0;
+ 258              		.loc 1 77 21 view .LVU76
+ 259 00e0 C146     		mov	r9, r8
+  80:../../opus/silk/quant_LTP_gains.c ****             max_gain_Q7 = silk_log2lin( ( SILK_FIX_CONST( MAX_SUM_LOG_GAIN_DB / 6.0, 7 ) - sum_log_
+ 260              		.loc 1 80 16 view .LVU77
+ 261 00e2 4546     		mov	r5, r8
+  80:../../opus/silk/quant_LTP_gains.c ****             max_gain_Q7 = silk_log2lin( ( SILK_FIX_CONST( MAX_SUM_LOG_GAIN_DB / 6.0, 7 ) - sum_log_
+ 262              		.loc 1 80 9 view .LVU78
+ 263 00e4 AEE7     		b	.L3
+ 264              	.LVL33:
+ 265              	.L22:
+ 109:../../opus/silk/quant_LTP_gains.c ****             min_rate_dist_Q7 = rate_dist_Q7;
+ 266              		.loc 1 109 13 is_stmt 1 view .LVU79
+ 110:../../opus/silk/quant_LTP_gains.c ****             *periodicity_index = (opus_int8)k;
+ 267              		.loc 1 110 13 view .LVU80
+ 268              		.loc 1 110 32 is_stmt 0 view .LVU81
+ 269 00e6 0F9B     		ldr	r3, [sp, #60]
+ 270 00e8 0B9A     		ldr	r2, [sp, #44]
+ 271 00ea 1A70     		strb	r2, [r3]
+ 111:../../opus/silk/quant_LTP_gains.c ****             silk_memcpy( cbk_index, temp_idx, nb_subfr * sizeof( opus_int8 ) );
+ 272              		.loc 1 111 13 is_stmt 1 view .LVU82
+ 273 00ec 5246     		mov	r2, r10
+ 274 00ee 15A9     		add	r1, sp, #84
+ 275 00f0 1098     		ldr	r0, [sp, #64]
+ 276 00f2 FFF7FEFF 		bl	memcpy
+ 277              	.LVL34:
+ 112:../../opus/silk/quant_LTP_gains.c ****             best_sum_log_gain_Q7 = sum_log_gain_tmp_Q7;
+ 278              		.loc 1 112 13 view .LVU83
+ 279              		.loc 1 112 34 is_stmt 0 view .LVU84
+ 280 00f6 0E94     		str	r4, [sp, #56]
+ 109:../../opus/silk/quant_LTP_gains.c ****             *periodicity_index = (opus_int8)k;
+ 281              		.loc 1 109 30 view .LVU85
+ 282 00f8 CDF83080 		str	r8, [sp, #48]
+ 283 00fc D4E7     		b	.L8
+ 284              	.LVL35:
+ 285              	.L23:
+ 109:../../opus/silk/quant_LTP_gains.c ****             *periodicity_index = (opus_int8)k;
+ 286              		.loc 1 109 30 view .LVU86
+ 287              	.LBE3:
+ 113:../../opus/silk/quant_LTP_gains.c ****         }
+ 114:../../opus/silk/quant_LTP_gains.c ****     }
+ 115:../../opus/silk/quant_LTP_gains.c **** 
+ 116:../../opus/silk/quant_LTP_gains.c ****     cbk_ptr_Q7 = silk_LTP_vq_ptrs_Q7[ *periodicity_index ];
+ 288              		.loc 1 116 39 view .LVU87
+ 289 00fe 119D     		ldr	r5, [sp, #68]
+ 290 0100 DDF840B0 		ldr	fp, [sp, #64]
+ 291              		.loc 1 116 5 is_stmt 1 view .LVU88
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 9
+
+
+ 292              		.loc 1 116 39 is_stmt 0 view .LVU89
+ 293 0104 0F9B     		ldr	r3, [sp, #60]
+ 294              	.LVL36:
+ 295              		.loc 1 116 39 view .LVU90
+ 296 0106 93F90020 		ldrsb	r2, [r3]
+ 297              		.loc 1 116 16 view .LVU91
+ 298 010a 194B     		ldr	r3, .L26+4
+ 299 010c 53F82200 		ldr	r0, [r3, r2, lsl #2]
+ 300              	.LVL37:
+ 117:../../opus/silk/quant_LTP_gains.c ****     for( j = 0; j < nb_subfr; j++ ) {
+ 301              		.loc 1 117 5 is_stmt 1 view .LVU92
+ 302              		.loc 1 117 12 is_stmt 0 view .LVU93
+ 303 0110 0021     		movs	r1, #0
+ 304              		.loc 1 117 5 view .LVU94
+ 305 0112 0FE0     		b	.L10
+ 306              	.LVL38:
+ 307              	.L11:
+ 118:../../opus/silk/quant_LTP_gains.c ****         for( k = 0; k < LTP_ORDER; k++ ) {
+ 119:../../opus/silk/quant_LTP_gains.c ****             B_Q14[ j * LTP_ORDER + k ] = silk_LSHIFT( cbk_ptr_Q7[ cbk_index[ j ] * LTP_ORDER + k ],
+ 308              		.loc 1 119 13 is_stmt 1 view .LVU95
+ 309              		.loc 1 119 42 is_stmt 0 view .LVU96
+ 310 0114 1BF90130 		ldrsb	r3, [fp, r1]
+ 311 0118 03EB8303 		add	r3, r3, r3, lsl #2
+ 312 011c 1344     		add	r3, r3, r2
+ 313 011e C456     		ldrsb	r4, [r0, r3]
+ 314              		.loc 1 119 22 view .LVU97
+ 315 0120 01EB8103 		add	r3, r1, r1, lsl #2
+ 316              		.loc 1 119 34 view .LVU98
+ 317 0124 1344     		add	r3, r3, r2
+ 318              		.loc 1 119 40 view .LVU99
+ 319 0126 E401     		lsls	r4, r4, #7
+ 320 0128 25F81340 		strh	r4, [r5, r3, lsl #1]	@ movhi
+ 118:../../opus/silk/quant_LTP_gains.c ****         for( k = 0; k < LTP_ORDER; k++ ) {
+ 321              		.loc 1 118 37 is_stmt 1 discriminator 3 view .LVU100
+ 322 012c 0132     		adds	r2, r2, #1
+ 323              	.LVL39:
+ 324              	.L12:
+ 118:../../opus/silk/quant_LTP_gains.c ****         for( k = 0; k < LTP_ORDER; k++ ) {
+ 325              		.loc 1 118 23 discriminator 1 view .LVU101
+ 326 012e 042A     		cmp	r2, #4
+ 327 0130 F0DD     		ble	.L11
+ 117:../../opus/silk/quant_LTP_gains.c ****     for( j = 0; j < nb_subfr; j++ ) {
+ 328              		.loc 1 117 32 discriminator 2 view .LVU102
+ 329 0132 0131     		adds	r1, r1, #1
+ 330              	.LVL40:
+ 331              	.L10:
+ 117:../../opus/silk/quant_LTP_gains.c ****     for( j = 0; j < nb_subfr; j++ ) {
+ 332              		.loc 1 117 19 discriminator 1 view .LVU103
+ 333 0134 5145     		cmp	r1, r10
+ 334 0136 01DA     		bge	.L24
+ 118:../../opus/silk/quant_LTP_gains.c ****         for( k = 0; k < LTP_ORDER; k++ ) {
+ 335              		.loc 1 118 16 is_stmt 0 view .LVU104
+ 336 0138 0022     		movs	r2, #0
+ 337 013a F8E7     		b	.L12
+ 338              	.L24:
+ 120:../../opus/silk/quant_LTP_gains.c ****         }
+ 121:../../opus/silk/quant_LTP_gains.c ****     }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 10
+
+
+ 122:../../opus/silk/quant_LTP_gains.c **** 
+ 123:../../opus/silk/quant_LTP_gains.c ****     if( nb_subfr == 2 ) {
+ 339              		.loc 1 123 5 is_stmt 1 view .LVU105
+ 340              		.loc 1 123 7 is_stmt 0 view .LVU106
+ 341 013c BAF1020F 		cmp	r10, #2
+ 342 0140 10D0     		beq	.L25
+ 124:../../opus/silk/quant_LTP_gains.c ****         res_nrg_Q15 = silk_RSHIFT32( res_nrg_Q15, 1 );
+ 125:../../opus/silk/quant_LTP_gains.c ****     } else {
+ 126:../../opus/silk/quant_LTP_gains.c ****         res_nrg_Q15 = silk_RSHIFT32( res_nrg_Q15, 2 );
+ 343              		.loc 1 126 9 is_stmt 1 view .LVU107
+ 344              		.loc 1 126 21 is_stmt 0 view .LVU108
+ 345 0142 4FEAA900 		asr	r0, r9, #2
+ 346              	.LVL41:
+ 347              	.L14:
+ 127:../../opus/silk/quant_LTP_gains.c ****     }
+ 128:../../opus/silk/quant_LTP_gains.c **** 
+ 129:../../opus/silk/quant_LTP_gains.c ****     *sum_log_gain_Q7 = best_sum_log_gain_Q7;
+ 348              		.loc 1 129 5 is_stmt 1 view .LVU109
+ 349              		.loc 1 129 22 is_stmt 0 view .LVU110
+ 350 0146 0D9B     		ldr	r3, [sp, #52]
+ 351 0148 0E9A     		ldr	r2, [sp, #56]
+ 352 014a 1A60     		str	r2, [r3]
+ 130:../../opus/silk/quant_LTP_gains.c ****     *pred_gain_dB_Q7 = (opus_int)silk_SMULBB( -3, silk_lin2log( res_nrg_Q15 ) - ( 15 << 7 ) );
+ 353              		.loc 1 130 5 is_stmt 1 view .LVU111
+ 354              		.loc 1 130 34 is_stmt 0 view .LVU112
+ 355 014c FFF7FEFF 		bl	silk_lin2log
+ 356              	.LVL42:
+ 357              		.loc 1 130 34 discriminator 1 view .LVU113
+ 358 0150 A0F5F063 		sub	r3, r0, #1920
+ 359 0154 1BB2     		sxth	r3, r3
+ 360 0156 A3EB8303 		sub	r3, r3, r3, lsl #2
+ 361              		.loc 1 130 22 discriminator 1 view .LVU114
+ 362 015a 209A     		ldr	r2, [sp, #128]
+ 363 015c 1360     		str	r3, [r2]
+ 131:../../opus/silk/quant_LTP_gains.c **** }
+ 364              		.loc 1 131 1 view .LVU115
+ 365 015e 17B0     		add	sp, sp, #92
+ 366              	.LCFI2:
+ 367              		.cfi_remember_state
+ 368              		.cfi_def_cfa_offset 36
+ 369              		@ sp needed
+ 370 0160 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 371              	.LVL43:
+ 372              	.L25:
+ 373              	.LCFI3:
+ 374              		.cfi_restore_state
+ 124:../../opus/silk/quant_LTP_gains.c ****     } else {
+ 375              		.loc 1 124 9 is_stmt 1 view .LVU116
+ 124:../../opus/silk/quant_LTP_gains.c ****     } else {
+ 376              		.loc 1 124 21 is_stmt 0 view .LVU117
+ 377 0164 4FEA6900 		asr	r0, r9, #1
+ 378              	.LVL44:
+ 124:../../opus/silk/quant_LTP_gains.c ****     } else {
+ 379              		.loc 1 124 21 view .LVU118
+ 380 0168 EDE7     		b	.L14
+ 381              	.L27:
+ 382 016a 00BF     		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 11
+
+
+ 383              	.L26:
+ 384 016c 00000000 		.word	silk_LTP_gain_BITS_Q5_ptrs
+ 385 0170 00000000 		.word	silk_LTP_vq_ptrs_Q7
+ 386 0174 00000000 		.word	silk_LTP_vq_gain_ptrs_Q7
+ 387 0178 00000000 		.word	silk_LTP_vq_sizes
+ 388              		.cfi_endproc
+ 389              	.LFE25:
+ 391              		.text
+ 392              	.Letext0:
+ 393              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 394              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 395              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 396              		.file 5 "../../opus/include/opus_types.h"
+ 397              		.file 6 "../../opus/silk/tables.h"
+ 398              		.file 7 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 399              		.file 8 "../../opus/silk/SigProc_FIX.h"
+ 400              		.file 9 "../../opus/silk/main.h"
+ 401              		.file 10 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 quant_LTP_gains.c
+C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s:20     .text.silk_quant_LTP_gains:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s:26     .text.silk_quant_LTP_gains:00000000 silk_quant_LTP_gains
+C:\Users\oleg\AppData\Local\Temp\ccXglTJo.s:384    .text.silk_quant_LTP_gains:0000016c $d
+
+UNDEFINED SYMBOLS
+silk_lin2log
+silk_log2lin
+silk_VQ_WMat_EC_c
+memcpy
+silk_LTP_gain_BITS_Q5_ptrs
+silk_LTP_vq_ptrs_Q7
+silk_LTP_vq_gain_ptrs_Q7
+silk_LTP_vq_sizes

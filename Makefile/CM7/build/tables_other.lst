@@ -1,0 +1,244 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceivNMn.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"tables_other.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/tables_other.c"
+  19              		.global	silk_Transition_LP_A_Q28
+  20              		.section	.rodata.silk_Transition_LP_A_Q28,"a"
+  21              		.align	2
+  24              	silk_Transition_LP_A_Q28:
+  25 0000 46F32E1E 		.word	506393414
+  26 0004 2BE34B0E 		.word	239854379
+  27 0008 1F668018 		.word	411067935
+  28 000c 1C2C1D0A 		.word	169683996
+  29 0010 DA614812 		.word	306733530
+  30 0014 ED9CF406 		.word	116694253
+  31 0018 EC30130B 		.word	185807084
+  32 001c E390A504 		.word	77959395
+  33 0020 EDA41D02 		.word	35497197
+  34 0024 0ADF6B03 		.word	57401098
+  35              		.global	silk_Transition_LP_B_Q28
+  36              		.section	.rodata.silk_Transition_LP_B_Q28,"a"
+  37              		.align	2
+  40              	silk_Transition_LP_B_Q28:
+  41 0000 0A67F20E 		.word	250767114
+  42 0004 56CDE41D 		.word	501534038
+  43 0008 0A67F20E 		.word	250767114
+  44 000c 7552820C 		.word	209867381
+  45 0010 599A0419 		.word	419732057
+  46 0014 7552820C 		.word	209867381
+  47 0018 4611310A 		.word	170987846
+  48 001c ED036214 		.word	341967853
+  49 0020 4611310A 		.word	170987846
+  50 0024 DA02D707 		.word	131531482
+  51 0028 F9C6AD0F 		.word	263046905
+  52 002c DA02D707 		.word	131531482
+  53 0030 22B65205 		.word	89306658
+  54 0034 DAFAA40A 		.word	178584282
+  55 0038 22B65205 		.word	89306658
+  56              		.global	silk_NLSF_EXT_iCDF
+  57              		.section	.rodata.silk_NLSF_EXT_iCDF,"a"
+  58              		.align	2
+  61              	silk_NLSF_EXT_iCDF:
+  62 0000 64281007 		.ascii	"d(\020\007\003\001\000"
+  62      030100
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceivNMn.s 			page 2
+
+
+  63              		.global	silk_uniform8_iCDF
+  64              		.section	.rodata.silk_uniform8_iCDF,"a"
+  65              		.align	2
+  68              	silk_uniform8_iCDF:
+  69 0000 E0C0A080 		.ascii	"\340\300\240\200`@ \000"
+  69      60402000 
+  70              		.global	silk_uniform6_iCDF
+  71              		.section	.rodata.silk_uniform6_iCDF,"a"
+  72              		.align	2
+  75              	silk_uniform6_iCDF:
+  76 0000 D5AB8055 		.ascii	"\325\253\200U+\000"
+  76      2B00
+  77              		.global	silk_uniform5_iCDF
+  78              		.section	.rodata.silk_uniform5_iCDF,"a"
+  79              		.align	2
+  82              	silk_uniform5_iCDF:
+  83 0000 CD9A6633 		.ascii	"\315\232f3\000"
+  83      00
+  84              		.global	silk_uniform4_iCDF
+  85              		.section	.rodata.silk_uniform4_iCDF,"a"
+  86              		.align	2
+  89              	silk_uniform4_iCDF:
+  90 0000 C0804000 		.ascii	"\300\200@\000"
+  91              		.global	silk_uniform3_iCDF
+  92              		.section	.rodata.silk_uniform3_iCDF,"a"
+  93              		.align	2
+  96              	silk_uniform3_iCDF:
+  97 0000 AB5500   		.ascii	"\253U\000"
+  98              		.global	silk_LTPScales_table_Q14
+  99              		.section	.rodata.silk_LTPScales_table_Q14,"a"
+ 100              		.align	2
+ 103              	silk_LTPScales_table_Q14:
+ 104 0000 CD3C     		.short	15565
+ 105 0002 0030     		.short	12288
+ 106 0004 0020     		.short	8192
+ 107              		.global	silk_Quantization_Offsets_Q10
+ 108              		.section	.rodata.silk_Quantization_Offsets_Q10,"a"
+ 109              		.align	2
+ 112              	silk_Quantization_Offsets_Q10:
+ 113 0000 6400     		.short	100
+ 114 0002 F000     		.short	240
+ 115 0004 2000     		.short	32
+ 116 0006 6400     		.short	100
+ 117              		.global	silk_NLSF_interpolation_factor_iCDF
+ 118              		.section	.rodata.silk_NLSF_interpolation_factor_iCDF,"a"
+ 119              		.align	2
+ 122              	silk_NLSF_interpolation_factor_iCDF:
+ 123 0000 F3DDC0B5 		.ascii	"\363\335\300\265\000"
+ 123      00
+ 124              		.global	silk_type_offset_no_VAD_iCDF
+ 125              		.section	.rodata.silk_type_offset_no_VAD_iCDF,"a"
+ 126              		.align	2
+ 129              	silk_type_offset_no_VAD_iCDF:
+ 130 0000 E600     		.ascii	"\346\000"
+ 131              		.global	silk_type_offset_VAD_iCDF
+ 132              		.section	.rodata.silk_type_offset_VAD_iCDF,"a"
+ 133              		.align	2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceivNMn.s 			page 3
+
+
+ 136              	silk_type_offset_VAD_iCDF:
+ 137 0000 E89E0A00 		.ascii	"\350\236\012\000"
+ 138              		.global	silk_LTPscale_iCDF
+ 139              		.section	.rodata.silk_LTPscale_iCDF,"a"
+ 140              		.align	2
+ 143              	silk_LTPscale_iCDF:
+ 144 0000 804000   		.ascii	"\200@\000"
+ 145              		.global	silk_lsb_iCDF
+ 146              		.section	.rodata.silk_lsb_iCDF,"a"
+ 147              		.align	2
+ 150              	silk_lsb_iCDF:
+ 151 0000 7800     		.ascii	"x\000"
+ 152              		.global	silk_LBRR_flags_iCDF_ptr
+ 153              		.section	.rodata.silk_LBRR_flags_iCDF_ptr,"a"
+ 154              		.align	2
+ 157              	silk_LBRR_flags_iCDF_ptr:
+ 158 0000 00000000 		.word	silk_LBRR_flags_2_iCDF
+ 159 0004 00000000 		.word	silk_LBRR_flags_3_iCDF
+ 160              		.section	.rodata.silk_LBRR_flags_3_iCDF,"a"
+ 161              		.align	2
+ 164              	silk_LBRR_flags_3_iCDF:
+ 165 0000 D7C3A67D 		.ascii	"\327\303\246}nR\000"
+ 165      6E5200
+ 166              		.section	.rodata.silk_LBRR_flags_2_iCDF,"a"
+ 167              		.align	2
+ 170              	silk_LBRR_flags_2_iCDF:
+ 171 0000 CB9600   		.ascii	"\313\226\000"
+ 172              		.global	silk_stereo_only_code_mid_iCDF
+ 173              		.section	.rodata.silk_stereo_only_code_mid_iCDF,"a"
+ 174              		.align	2
+ 177              	silk_stereo_only_code_mid_iCDF:
+ 178 0000 4000     		.ascii	"@\000"
+ 179              		.global	silk_stereo_pred_joint_iCDF
+ 180              		.section	.rodata.silk_stereo_pred_joint_iCDF,"a"
+ 181              		.align	2
+ 184              	silk_stereo_pred_joint_iCDF:
+ 185 0000 F9F7F6F5 		.ascii	"\371\367\366\365\364\352\322\312\311\310\305\256R;8"
+ 185      F4EAD2CA 
+ 185      C9C8C5AE 
+ 185      523B38
+ 186 000f 37362E16 		.ascii	"76.\026\014\013\012\011\007\000"
+ 186      0C0B0A09 
+ 186      0700
+ 187              		.global	silk_stereo_pred_quant_Q13
+ 188              		.section	.rodata.silk_stereo_pred_quant_Q13,"a"
+ 189              		.align	2
+ 192              	silk_stereo_pred_quant_Q13:
+ 193 0000 5CCA     		.short	-13732
+ 194 0002 BED8     		.short	-10050
+ 195 0004 B6DF     		.short	-8266
+ 196 0006 9AE2     		.short	-7526
+ 197 0008 9CE6     		.short	-6500
+ 198 000a 78EC     		.short	-5000
+ 199 000c 7AF4     		.short	-2950
+ 200 000e CCFC     		.short	-820
+ 201 0010 3403     		.short	820
+ 202 0012 860B     		.short	2950
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceivNMn.s 			page 4
+
+
+ 203 0014 8813     		.short	5000
+ 204 0016 6419     		.short	6500
+ 205 0018 661D     		.short	7526
+ 206 001a 4A20     		.short	8266
+ 207 001c 4227     		.short	10050
+ 208 001e A435     		.short	13732
+ 209              		.text
+ 210              	.Letext0:
+ 211              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 212              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 213              		.file 4 "../../opus/include/opus_types.h"
+ 214              		.file 5 "../../opus/silk/tables.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cceivNMn.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tables_other.c
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:24     .rodata.silk_Transition_LP_A_Q28:00000000 silk_Transition_LP_A_Q28
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:21     .rodata.silk_Transition_LP_A_Q28:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:40     .rodata.silk_Transition_LP_B_Q28:00000000 silk_Transition_LP_B_Q28
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:37     .rodata.silk_Transition_LP_B_Q28:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:61     .rodata.silk_NLSF_EXT_iCDF:00000000 silk_NLSF_EXT_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:58     .rodata.silk_NLSF_EXT_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:68     .rodata.silk_uniform8_iCDF:00000000 silk_uniform8_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:65     .rodata.silk_uniform8_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:75     .rodata.silk_uniform6_iCDF:00000000 silk_uniform6_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:72     .rodata.silk_uniform6_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:82     .rodata.silk_uniform5_iCDF:00000000 silk_uniform5_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:79     .rodata.silk_uniform5_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:89     .rodata.silk_uniform4_iCDF:00000000 silk_uniform4_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:86     .rodata.silk_uniform4_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:96     .rodata.silk_uniform3_iCDF:00000000 silk_uniform3_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:93     .rodata.silk_uniform3_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:103    .rodata.silk_LTPScales_table_Q14:00000000 silk_LTPScales_table_Q14
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:100    .rodata.silk_LTPScales_table_Q14:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:112    .rodata.silk_Quantization_Offsets_Q10:00000000 silk_Quantization_Offsets_Q10
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:109    .rodata.silk_Quantization_Offsets_Q10:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:122    .rodata.silk_NLSF_interpolation_factor_iCDF:00000000 silk_NLSF_interpolation_factor_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:119    .rodata.silk_NLSF_interpolation_factor_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:129    .rodata.silk_type_offset_no_VAD_iCDF:00000000 silk_type_offset_no_VAD_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:126    .rodata.silk_type_offset_no_VAD_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:136    .rodata.silk_type_offset_VAD_iCDF:00000000 silk_type_offset_VAD_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:133    .rodata.silk_type_offset_VAD_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:143    .rodata.silk_LTPscale_iCDF:00000000 silk_LTPscale_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:140    .rodata.silk_LTPscale_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:150    .rodata.silk_lsb_iCDF:00000000 silk_lsb_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:147    .rodata.silk_lsb_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:157    .rodata.silk_LBRR_flags_iCDF_ptr:00000000 silk_LBRR_flags_iCDF_ptr
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:154    .rodata.silk_LBRR_flags_iCDF_ptr:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:170    .rodata.silk_LBRR_flags_2_iCDF:00000000 silk_LBRR_flags_2_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:164    .rodata.silk_LBRR_flags_3_iCDF:00000000 silk_LBRR_flags_3_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:161    .rodata.silk_LBRR_flags_3_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:167    .rodata.silk_LBRR_flags_2_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:177    .rodata.silk_stereo_only_code_mid_iCDF:00000000 silk_stereo_only_code_mid_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:174    .rodata.silk_stereo_only_code_mid_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:184    .rodata.silk_stereo_pred_joint_iCDF:00000000 silk_stereo_pred_joint_iCDF
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:181    .rodata.silk_stereo_pred_joint_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:192    .rodata.silk_stereo_pred_quant_Q13:00000000 silk_stereo_pred_quant_Q13
+C:\Users\oleg\AppData\Local\Temp\cceivNMn.s:189    .rodata.silk_stereo_pred_quant_Q13:00000000 $d
+
+NO UNDEFINED SYMBOLS

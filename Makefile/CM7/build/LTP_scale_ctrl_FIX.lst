@@ -1,0 +1,246 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"LTP_scale_ctrl_FIX.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/fixed/LTP_scale_ctrl_FIX.c"
+  19              		.section	.text.silk_LTP_scale_ctrl_FIX,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_LTP_scale_ctrl_FIX
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_LTP_scale_ctrl_FIX:
+  27              	.LVL0:
+  28              	.LFB360:
+   1:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** /***********************************************************************
+   2:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** are met:
+   6:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** products derived from this software without specific prior written
+  14:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** permission.
+  15:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** ***********************************************************************/
+  27:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** 
+  28:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** #include "opus_config.h"
+  29:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** 
+  30:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** #include "main_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s 			page 2
+
+
+  31:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** 
+  32:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** /* Calculation of LTP state scaling */
+  33:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** void silk_LTP_scale_ctrl_FIX(
+  34:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     silk_encoder_state_FIX          *psEnc,                                 /* I/O  encoder state  
+  35:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     silk_encoder_control_FIX        *psEncCtrl,                             /* I/O  encoder control
+  36:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     opus_int                        condCoding                              /* I    The type of con
+  37:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** )
+  38:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** {
+  29              		.loc 1 38 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 38 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 24
+  37              		.cfi_offset 4, -24
+  38              		.cfi_offset 5, -20
+  39              		.cfi_offset 6, -16
+  40              		.cfi_offset 7, -12
+  41              		.cfi_offset 8, -8
+  42              		.cfi_offset 14, -4
+  43 0004 0446     		mov	r4, r0
+  44 0006 0E46     		mov	r6, r1
+  39:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     opus_int round_loss;
+  45              		.loc 1 39 5 is_stmt 1 view .LVU2
+  40:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** 
+  41:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     if( condCoding == CODE_INDEPENDENTLY ) {
+  46              		.loc 1 41 5 view .LVU3
+  47              		.loc 1 41 7 is_stmt 0 view .LVU4
+  48 0008 002A     		cmp	r2, #0
+  49 000a 43D1     		bne	.L2
+  42:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         /* Only scale if first frame in packet */
+  43:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         round_loss = psEnc->sCmn.PacketLoss_perc * psEnc->sCmn.nFramesPerPacket;
+  50              		.loc 1 43 9 is_stmt 1 view .LVU5
+  51              		.loc 1 43 33 is_stmt 0 view .LVU6
+  52 000c 00F58052 		add	r2, r0, #4096
+  53              	.LVL1:
+  54              		.loc 1 43 33 view .LVU7
+  55 0010 D2F80832 		ldr	r3, [r2, #520]
+  56              		.loc 1 43 63 view .LVU8
+  57 0014 D2F87016 		ldr	r1, [r2, #1648]
+  58              	.LVL2:
+  59              		.loc 1 43 20 view .LVU9
+  60 0018 01FB03F3 		mul	r3, r1, r3
+  61              	.LVL3:
+  44:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         if ( psEnc->sCmn.LBRR_flag ) {
+  62              		.loc 1 44 9 is_stmt 1 view .LVU10
+  63              		.loc 1 44 25 is_stmt 0 view .LVU11
+  64 001c 92F97322 		ldrsb	r2, [r2, #627]
+  65              		.loc 1 44 12 view .LVU12
+  66 0020 42B1     		cbz	r2, .L3
+  45:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****             /* LBRR reduces the effective loss. In practice, it does not square the loss because
+  46:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****                losses aren't independent, but that still seems to work best. We also never go below
+  47:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****             round_loss = 2 + silk_SMULBB( round_loss, round_loss ) / 100;
+  67              		.loc 1 47 13 is_stmt 1 view .LVU13
+  68              		.loc 1 47 30 is_stmt 0 view .LVU14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s 			page 3
+
+
+  69 0022 13FB03F3 		smulbb	r3, r3, r3
+  70              	.LVL4:
+  71              		.loc 1 47 68 view .LVU15
+  72 0026 1E4A     		ldr	r2, .L6
+  73 0028 82FB0312 		smull	r1, r2, r2, r3
+  74              	.LVL5:
+  75              		.loc 1 47 68 view .LVU16
+  76 002c DB17     		asrs	r3, r3, #31
+  77 002e C3EB6213 		rsb	r3, r3, r2, asr #5
+  78              		.loc 1 47 24 view .LVU17
+  79 0032 0233     		adds	r3, r3, #2
+  80              	.LVL6:
+  81              	.L3:
+  48:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         }
+  49:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         psEnc->sCmn.indices.LTP_scaleIndex = silk_SMULBB( psEncCtrl->LTPredCodGain_Q7, round_loss )
+  82              		.loc 1 49 9 is_stmt 1 view .LVU18
+  83              		.loc 1 49 46 is_stmt 0 view .LVU19
+  84 0034 B6F98C71 		ldrsh	r7, [r6, #396]
+  85 0038 1DB2     		sxth	r5, r3
+  86 003a 05FB07F7 		mul	r7, r5, r7
+  87              		.loc 1 49 141 view .LVU20
+  88 003e 04F58058 		add	r8, r4, #4096
+  89 0042 D8F86C32 		ldr	r3, [r8, #620]
+  90              	.LVL7:
+  91              		.loc 1 49 103 view .LVU21
+  92 0046 40F6D460 		movw	r0, #3796
+  93              	.LVL8:
+  94              		.loc 1 49 103 view .LVU22
+  95 004a C01A     		subs	r0, r0, r3
+  96 004c FFF7FEFF 		bl	silk_log2lin
+  97              	.LVL9:
+  98              		.loc 1 49 101 discriminator 1 view .LVU23
+  99 0050 8742     		cmp	r7, r0
+ 100 0052 D4BF     		ite	le
+ 101 0054 0027     		movle	r7, #0
+ 102 0056 0127     		movgt	r7, #1
+ 103              		.loc 1 49 44 discriminator 1 view .LVU24
+ 104 0058 88F8A172 		strb	r7, [r8, #673]
+  50:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         psEnc->sCmn.indices.LTP_scaleIndex += silk_SMULBB( psEncCtrl->LTPredCodGain_Q7, round_loss 
+ 105              		.loc 1 50 9 is_stmt 1 view .LVU25
+ 106              		.loc 1 50 47 is_stmt 0 view .LVU26
+ 107 005c B6F98C31 		ldrsh	r3, [r6, #396]
+ 108 0060 03FB05F5 		mul	r5, r3, r5
+ 109              		.loc 1 50 142 view .LVU27
+ 110 0064 D8F86C32 		ldr	r3, [r8, #620]
+ 111              		.loc 1 50 104 view .LVU28
+ 112 0068 41F2BC20 		movw	r0, #4796
+ 113 006c C01A     		subs	r0, r0, r3
+ 114 006e FFF7FEFF 		bl	silk_log2lin
+ 115              	.LVL10:
+ 116              		.loc 1 50 28 discriminator 1 view .LVU29
+ 117 0072 98F8A132 		ldrb	r3, [r8, #673]	@ zero_extendqisi2
+ 118              		.loc 1 50 44 discriminator 1 view .LVU30
+ 119 0076 8542     		cmp	r5, r0
+ 120 0078 C8BF     		it	gt
+ 121 007a 0133     		addgt	r3, r3, #1
+ 122 007c 88F8A132 		strb	r3, [r8, #673]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s 			page 4
+
+
+ 123              	.LVL11:
+ 124              	.L4:
+  51:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     } else {
+  52:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         /* Default is minimum scaling */
+  53:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****         psEnc->sCmn.indices.LTP_scaleIndex = 0;
+  54:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     }
+  55:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     psEncCtrl->LTP_scale_Q14 = silk_LTPScales_table_Q14[ psEnc->sCmn.indices.LTP_scaleIndex ];
+ 125              		.loc 1 55 5 is_stmt 1 view .LVU31
+ 126              		.loc 1 55 77 is_stmt 0 view .LVU32
+ 127 0080 04F58054 		add	r4, r4, #4096
+ 128              	.LVL12:
+ 129              		.loc 1 55 77 view .LVU33
+ 130 0084 94F9A122 		ldrsb	r2, [r4, #673]
+ 131              		.loc 1 55 56 view .LVU34
+ 132 0088 064B     		ldr	r3, .L6+4
+ 133 008a 33F91230 		ldrsh	r3, [r3, r2, lsl #1]
+ 134              		.loc 1 55 30 view .LVU35
+ 135 008e B367     		str	r3, [r6, #120]
+  56:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c **** }
+ 136              		.loc 1 56 1 view .LVU36
+ 137 0090 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 138              	.LVL13:
+ 139              	.L2:
+  53:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     }
+ 140              		.loc 1 53 9 is_stmt 1 view .LVU37
+  53:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     }
+ 141              		.loc 1 53 44 is_stmt 0 view .LVU38
+ 142 0094 00F58053 		add	r3, r0, #4096
+ 143 0098 0022     		movs	r2, #0
+ 144              	.LVL14:
+  53:../../opus/silk/fixed/LTP_scale_ctrl_FIX.c ****     }
+ 145              		.loc 1 53 44 view .LVU39
+ 146 009a 83F8A122 		strb	r2, [r3, #673]
+ 147 009e EFE7     		b	.L4
+ 148              	.L7:
+ 149              		.align	2
+ 150              	.L6:
+ 151 00a0 1F85EB51 		.word	1374389535
+ 152 00a4 00000000 		.word	silk_LTPScales_table_Q14
+ 153              		.cfi_endproc
+ 154              	.LFE360:
+ 156              		.text
+ 157              	.Letext0:
+ 158              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 159              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 160              		.file 4 "../../opus/include/opus_types.h"
+ 161              		.file 5 "../../opus/silk/resampler_structs.h"
+ 162              		.file 6 "../../opus/silk/structs.h"
+ 163              		.file 7 "../../opus/silk/fixed/structs_FIX.h"
+ 164              		.file 8 "../../opus/silk/tables.h"
+ 165              		.file 9 "../../opus/silk/SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 LTP_scale_ctrl_FIX.c
+C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s:20     .text.silk_LTP_scale_ctrl_FIX:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s:26     .text.silk_LTP_scale_ctrl_FIX:00000000 silk_LTP_scale_ctrl_FIX
+C:\Users\oleg\AppData\Local\Temp\cc8dt5GS.s:151    .text.silk_LTP_scale_ctrl_FIX:000000a0 $d
+
+UNDEFINED SYMBOLS
+silk_log2lin
+silk_LTPScales_table_Q14

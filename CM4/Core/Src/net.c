@@ -17,6 +17,7 @@
 #include "common.h"
 
 #include "ws_server.h"
+#include "web_keep_alive.h"
 
 //#define USE_IO_LIBRARY	1
 
@@ -222,6 +223,7 @@ void net_init_continue(void)
 	http_server_init();
 	ws_server_init(4, 8080, 0); // протокольный WS (ctx 0)
     ws_server_init(5, 8081, 1); // heartbeat WS (ctx 1)
+	init_socket_keepalive(socknumlist, MAX_HTTPSOCK, 1);
 #endif
 
 

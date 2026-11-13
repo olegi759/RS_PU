@@ -1,0 +1,102 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"tables_pitch_lag.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/tables_pitch_lag.c"
+  19              		.global	silk_pitch_contour_10_ms_NB_iCDF
+  20              		.section	.rodata.silk_pitch_contour_10_ms_NB_iCDF,"a"
+  21              		.align	2
+  24              	silk_pitch_contour_10_ms_NB_iCDF:
+  25 0000 713F00   		.ascii	"q?\000"
+  26              		.global	silk_pitch_contour_10_ms_iCDF
+  27              		.section	.rodata.silk_pitch_contour_10_ms_iCDF,"a"
+  28              		.align	2
+  31              	silk_pitch_contour_10_ms_iCDF:
+  32 0000 A577503D 		.ascii	"\245wP=/#\033\024\016\011\004\000"
+  32      2F231B14 
+  32      0E090400 
+  33              		.global	silk_pitch_contour_NB_iCDF
+  34              		.section	.rodata.silk_pitch_contour_NB_iCDF,"a"
+  35              		.align	2
+  38              	silk_pitch_contour_NB_iCDF:
+  39 0000 BCB09B8A 		.ascii	"\274\260\233\212waC+\032\012\000"
+  39      7761432B 
+  39      1A0A00
+  40              		.global	silk_pitch_contour_iCDF
+  41              		.section	.rodata.silk_pitch_contour_iCDF,"a"
+  42              		.align	2
+  45              	silk_pitch_contour_iCDF:
+  46 0000 DFC9B7A7 		.ascii	"\337\311\267\247\230\212|obXOF>82,'#\037\033\030\025"
+  46      988A7C6F 
+  46      62584F46 
+  46      3E38322C 
+  46      27231F1B 
+  47 0016 12100E0C 		.ascii	"\022\020\016\014\012\010\006\004\003\002\001\000"
+  47      0A080604 
+  47      03020100 
+  48              		.global	silk_pitch_delta_iCDF
+  49              		.section	.rodata.silk_pitch_delta_iCDF,"a"
+  50              		.align	2
+  53              	silk_pitch_delta_iCDF:
+  54 0000 D2D0CECB 		.ascii	"\322\320\316\313\307\301\267\250\216hJ4%\033\024\016"
+  54      C7C1B7A8 
+  54      8E684A34 
+  54      251B140E 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s 			page 2
+
+
+  55 0010 0A060402 		.ascii	"\012\006\004\002\000"
+  55      00
+  56              		.global	silk_pitch_lag_iCDF
+  57              		.section	.rodata.silk_pitch_lag_iCDF,"a"
+  58              		.align	2
+  61              	silk_pitch_lag_iCDF:
+  62 0000 FDFAF4E9 		.ascii	"\375\372\364\351\324\266\226\203xnbUH<1( \031\023\017"
+  62      D4B69683 
+  62      786E6255 
+  62      483C3128 
+  62      2019130F 
+  63 0014 0D0B0908 		.ascii	"\015\013\011\010\007\006\005\004\003\002\001\000"
+  63      07060504 
+  63      03020100 
+  64              		.text
+  65              	.Letext0:
+  66              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+  67              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+  68              		.file 4 "../../opus/include/opus_types.h"
+  69              		.file 5 "../../opus/silk/tables.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tables_pitch_lag.c
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:24     .rodata.silk_pitch_contour_10_ms_NB_iCDF:00000000 silk_pitch_contour_10_ms_NB_iCDF
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:21     .rodata.silk_pitch_contour_10_ms_NB_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:31     .rodata.silk_pitch_contour_10_ms_iCDF:00000000 silk_pitch_contour_10_ms_iCDF
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:28     .rodata.silk_pitch_contour_10_ms_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:38     .rodata.silk_pitch_contour_NB_iCDF:00000000 silk_pitch_contour_NB_iCDF
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:35     .rodata.silk_pitch_contour_NB_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:45     .rodata.silk_pitch_contour_iCDF:00000000 silk_pitch_contour_iCDF
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:42     .rodata.silk_pitch_contour_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:53     .rodata.silk_pitch_delta_iCDF:00000000 silk_pitch_delta_iCDF
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:50     .rodata.silk_pitch_delta_iCDF:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:61     .rodata.silk_pitch_lag_iCDF:00000000 silk_pitch_lag_iCDF
+C:\Users\oleg\AppData\Local\Temp\cc0SEqYq.s:58     .rodata.silk_pitch_lag_iCDF:00000000 $d
+
+NO UNDEFINED SYMBOLS

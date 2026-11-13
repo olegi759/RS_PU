@@ -1,0 +1,1411 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"screen1.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/Screens/screen1.c"
+  19              		.section	.rodata.screen1_get_item.str1.4,"aMS",%progbits,1
+  20              		.align	2
+  21              	.LC0:
+  22 0000 3E00     		.ascii	">\000"
+  23 0002 0000     		.align	2
+  24              	.LC1:
+  25 0004 2000     		.ascii	" \000"
+  26 0006 0000     		.align	2
+  27              	.LC2:
+  28 0008 D090D092 		.ascii	"\320\220\320\222\320\242\320\236\320\234\320\220\320"
+  28      D0A2D09E 
+  28      D09CD090 
+  28      D0
+  29 0015 A2D098D0 		.ascii	"\242\320\230\320\232\320\220 \320\236\320\242\320\232"
+  29      9AD09020 
+  29      D09ED0A2 
+  29      D09A
+  30 0023 D09BD0AE 		.ascii	"\320\233\320\256\320\247\320\225\320\235\320\220\000"
+  30      D0A7D095 
+  30      D09DD090 
+  30      00
+  31              		.align	2
+  32              	.LC3:
+  33 0030 D09ED0A2 		.ascii	"\320\236\320\242\320\232\320\233\320\256\320\247\320"
+  33      D09AD09B 
+  33      D0AED0A7 
+  33      D0
+  34 003d 95D09DD0 		.ascii	"\225\320\235\320\230\320\225\000"
+  34      98D09500 
+  35 0045 000000   		.align	2
+  36              	.LC4:
+  37 0048 D0A0D095 		.ascii	"\320\240\320\225\320\226\320\230\320\234: \000"
+  37      D096D098 
+  37      D09C3A20 
+  37      00
+  38 0055 000000   		.align	2
+  39              	.LC5:
+  40 0058 D09DD095 		.ascii	"\320\235\320\225\320\230\320\241\320\237\320\240\320"
+  40      D098D0A1 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 2
+
+
+  40      D09FD0A0 
+  40      D0
+  41 0065 90D092D0 		.ascii	"\220\320\222\320\235\320\236\320\241\320\242\320\230"
+  41      9DD09ED0 
+  41      A1D0A2D0 
+  41      98
+  42 0072 00       		.ascii	"\000"
+  43 0073 00       		.align	2
+  44              	.LC6:
+  45 0074 D092D092 		.ascii	"\320\222\320\222\320\236\320\224 \320\237\320\230\320"
+  45      D09ED094 
+  45      20D09FD0 
+  45      98D0
+  46 0082 9D20D09A 		.ascii	"\235 \320\232\320\236\320\224\320\220\000"
+  46      D09ED094 
+  46      D09000
+  47              		.section	.text.screen1_get_item,"ax",%progbits
+  48              		.align	1
+  49              		.global	screen1_get_item
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  54              	screen1_get_item:
+  55              	.LVL0:
+  56              	.LFB335:
+   1:../../CM7/Core/Src/Screens/screen1.c **** /*
+   2:../../CM7/Core/Src/Screens/screen1.c ****  * screen1.c
+   3:../../CM7/Core/Src/Screens/screen1.c ****  *
+   4:../../CM7/Core/Src/Screens/screen1.c ****  *  Created on: 9 апр. 2025 г.
+   5:../../CM7/Core/Src/Screens/screen1.c ****  *      Author: Rafael Boltachev
+   6:../../CM7/Core/Src/Screens/screen1.c ****  */
+   7:../../CM7/Core/Src/Screens/screen1.c **** 
+   8:../../CM7/Core/Src/Screens/screen1.c **** #include "screen1.h"
+   9:../../CM7/Core/Src/Screens/screen1.c **** #include "str_util.h"
+  10:../../CM7/Core/Src/Screens/screen1.c **** #include "mki_data.h"
+  11:../../CM7/Core/Src/Screens/screen1.c **** #include "pu.h"
+  12:../../CM7/Core/Src/Screens/screen1.c **** #include "mki_data.h"
+  13:../../CM7/Core/Src/Screens/screen1.c **** #include "screens.h"
+  14:../../CM7/Core/Src/Screens/screen1.c **** #include "screen2.h"
+  15:../../CM7/Core/Src/Screens/screen1.c **** #include "mkk_data.h"
+  16:../../CM7/Core/Src/Screens/screen1.c **** #include "screen4.h"
+  17:../../CM7/Core/Src/Screens/screen1.c **** #include "stm_util.h"
+  18:../../CM7/Core/Src/Screens/screen1.c **** #include "screen6.h"
+  19:../../CM7/Core/Src/Screens/screen1.c **** #include "display.h"
+  20:../../CM7/Core/Src/Screens/screen1.c **** #include "screen3.h"
+  21:../../CM7/Core/Src/Screens/screen1.c **** #include "beep.h"
+  22:../../CM7/Core/Src/Screens/screen1.c **** #include "common.h"
+  23:../../CM7/Core/Src/Screens/screen1.c **** #include "cm7core.h"
+  24:../../CM7/Core/Src/Screens/screen1.c **** 
+  25:../../CM7/Core/Src/Screens/screen1.c **** //--------------- МЕНЮ --------------------
+  26:../../CM7/Core/Src/Screens/screen1.c **** 
+  27:../../CM7/Core/Src/Screens/screen1.c **** 
+  28:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_MAX_ITEMS	10
+  29:../../CM7/Core/Src/Screens/screen1.c **** static uint8_t screen1_index = 0;
+  30:../../CM7/Core/Src/Screens/screen1.c **** 
+  31:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_REJIM_STR	"РЕЖИМ: "
+  32:../../CM7/Core/Src/Screens/screen1.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 3
+
+
+  33:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_OPTION_AVTOMATIKA_OTKLUCHENA 	0
+  34:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE 				1
+  35:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_MODE_DEJURNIY 					2
+  36:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE 			3
+  37:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR 			4
+  38:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS 				5
+  39:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK 				6
+  40:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE 		7
+  41:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_FAULTS 							8
+  42:../../CM7/Core/Src/Screens/screen1.c **** #define SCREEN1_ITEM_PIN_CODE							9
+  43:../../CM7/Core/Src/Screens/screen1.c **** 
+  44:../../CM7/Core/Src/Screens/screen1.c **** void screen1_get_item(uint8_t index, char * buf, uint16_t buf_size)
+  45:../../CM7/Core/Src/Screens/screen1.c **** {
+  57              		.loc 1 45 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		.loc 1 45 1 is_stmt 0 view .LVU1
+  62 0000 70B5     		push	{r4, r5, r6, lr}
+  63              	.LCFI0:
+  64              		.cfi_def_cfa_offset 16
+  65              		.cfi_offset 4, -16
+  66              		.cfi_offset 5, -12
+  67              		.cfi_offset 6, -8
+  68              		.cfi_offset 14, -4
+  69 0002 0446     		mov	r4, r0
+  70 0004 0D46     		mov	r5, r1
+  71 0006 1646     		mov	r6, r2
+  46:../../CM7/Core/Src/Screens/screen1.c **** 	strcpy_s(buf, buf_size, index == screen1_index ? ">" : " ");
+  72              		.loc 1 46 2 is_stmt 1 view .LVU2
+  73              		.loc 1 46 32 is_stmt 0 view .LVU3
+  74 0008 3F4B     		ldr	r3, .L19
+  75 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  76              		.loc 1 46 2 view .LVU4
+  77 000c 8342     		cmp	r3, r0
+  78 000e 0DD0     		beq	.L18
+  79              		.loc 1 46 2 discriminator 2 view .LVU5
+  80 0010 3E4A     		ldr	r2, .L19+4
+  81              	.LVL1:
+  82              	.L2:
+  83              		.loc 1 46 2 discriminator 4 view .LVU6
+  84 0012 3146     		mov	r1, r6
+  85              	.LVL2:
+  86              		.loc 1 46 2 discriminator 4 view .LVU7
+  87 0014 2846     		mov	r0, r5
+  88              	.LVL3:
+  89              		.loc 1 46 2 discriminator 4 view .LVU8
+  90 0016 FFF7FEFF 		bl	strcpy_s
+  91              	.LVL4:
+  47:../../CM7/Core/Src/Screens/screen1.c **** 
+  48:../../CM7/Core/Src/Screens/screen1.c **** 	switch (index) {
+  92              		.loc 1 48 2 is_stmt 1 view .LVU9
+  93 001a 092C     		cmp	r4, #9
+  94 001c 0DD8     		bhi	.L1
+  95 001e DFE804F0 		tbb	[pc, r4]
+  96              	.L5:
+  97 0022 07       		.byte	(.L14-.L5)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 4
+
+
+  98 0023 0D       		.byte	(.L13-.L5)/2
+  99 0024 13       		.byte	(.L12-.L5)/2
+ 100 0025 21       		.byte	(.L11-.L5)/2
+ 101 0026 2F       		.byte	(.L10-.L5)/2
+ 102 0027 3D       		.byte	(.L9-.L5)/2
+ 103 0028 4B       		.byte	(.L8-.L5)/2
+ 104 0029 59       		.byte	(.L7-.L5)/2
+ 105 002a 67       		.byte	(.L6-.L5)/2
+ 106 002b 6D       		.byte	(.L4-.L5)/2
+ 107              	.LVL5:
+ 108              		.p2align 1
+ 109              	.L18:
+  46:../../CM7/Core/Src/Screens/screen1.c **** 	strcpy_s(buf, buf_size, index == screen1_index ? ">" : " ");
+ 110              		.loc 1 46 2 is_stmt 0 discriminator 1 view .LVU10
+ 111 002c 384A     		ldr	r2, .L19+8
+ 112              	.LVL6:
+  46:../../CM7/Core/Src/Screens/screen1.c **** 	strcpy_s(buf, buf_size, index == screen1_index ? ">" : " ");
+ 113              		.loc 1 46 2 discriminator 1 view .LVU11
+ 114 002e F0E7     		b	.L2
+ 115              	.LVL7:
+ 116              	.L14:
+  49:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_OPTION_AVTOMATIKA_OTKLUCHENA: strcat_s(buf, buf_size, "АВТОМАТИКА 
+ 117              		.loc 1 49 54 is_stmt 1 view .LVU12
+ 118 0030 384A     		ldr	r2, .L19+12
+ 119 0032 3146     		mov	r1, r6
+ 120 0034 2846     		mov	r0, r5
+ 121 0036 FFF7FEFF 		bl	strcat_s
+ 122              	.LVL8:
+ 123              		.loc 1 49 122 discriminator 1 view .LVU13
+ 124              	.L1:
+  50:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE: strcat_s(buf, buf_size, "ОТКЛЮЧЕНИЕ"); break;
+  51:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_DEJURNIY: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf, buf
+  52:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s
+  53:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(bu
+  54:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf
+  55:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf,
+  56:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_
+  57:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_FAULTS: strcat_s(buf, buf_size, "НЕИСПРАВНОСТИ"); break;
+  58:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PIN_CODE: strcat_s(buf, buf_size, "ВВОД ПИН КОДА"); break;
+  59:../../CM7/Core/Src/Screens/screen1.c **** 		default: break;
+  60:../../CM7/Core/Src/Screens/screen1.c **** 	}
+  61:../../CM7/Core/Src/Screens/screen1.c **** }
+ 125              		.loc 1 61 1 is_stmt 0 view .LVU14
+ 126 003a 70BD     		pop	{r4, r5, r6, pc}
+ 127              	.LVL9:
+ 128              	.L13:
+  50:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE: strcat_s(buf, buf_size, "ОТКЛЮЧЕНИЕ"); break;
+ 129              		.loc 1 50 44 is_stmt 1 view .LVU15
+ 130 003c 364A     		ldr	r2, .L19+16
+ 131 003e 3146     		mov	r1, r6
+ 132 0040 2846     		mov	r0, r5
+ 133 0042 FFF7FEFF 		bl	strcat_s
+ 134              	.LVL10:
+  50:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE: strcat_s(buf, buf_size, "ОТКЛЮЧЕНИЕ"); break;
+ 135              		.loc 1 50 93 discriminator 1 view .LVU16
+  50:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE: strcat_s(buf, buf_size, "ОТКЛЮЧЕНИЕ"); break;
+ 136              		.loc 1 50 93 is_stmt 0 view .LVU17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 5
+
+
+ 137 0046 F8E7     		b	.L1
+ 138              	.L12:
+  51:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s
+ 139              		.loc 1 51 39 is_stmt 1 view .LVU18
+ 140 0048 344A     		ldr	r2, .L19+20
+ 141 004a 3146     		mov	r1, r6
+ 142 004c 2846     		mov	r0, r5
+ 143 004e FFF7FEFF 		bl	strcat_s
+ 144              	.LVL11:
+  51:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s
+ 145              		.loc 1 51 83 discriminator 1 view .LVU19
+ 146 0052 0120     		movs	r0, #1
+ 147 0054 FFF7FEFF 		bl	pu_mode2str
+ 148              	.LVL12:
+ 149 0058 0246     		mov	r2, r0
+  51:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s
+ 150              		.loc 1 51 83 is_stmt 0 discriminator 2 view .LVU20
+ 151 005a 3146     		mov	r1, r6
+ 152 005c 2846     		mov	r0, r5
+ 153 005e FFF7FEFF 		bl	strcat_s
+ 154              	.LVL13:
+  51:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s
+ 155              		.loc 1 51 139 is_stmt 1 discriminator 3 view .LVU21
+  51:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s
+ 156              		.loc 1 51 139 is_stmt 0 view .LVU22
+ 157 0062 EAE7     		b	.L1
+ 158              	.L11:
+  52:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(bu
+ 159              		.loc 1 52 48 is_stmt 1 view .LVU23
+ 160 0064 2D4A     		ldr	r2, .L19+20
+ 161 0066 3146     		mov	r1, r6
+ 162 0068 2846     		mov	r0, r5
+ 163 006a FFF7FEFF 		bl	strcat_s
+ 164              	.LVL14:
+  52:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(bu
+ 165              		.loc 1 52 92 discriminator 1 view .LVU24
+ 166 006e 0220     		movs	r0, #2
+ 167 0070 FFF7FEFF 		bl	pu_mode2str
+ 168              	.LVL15:
+ 169 0074 0246     		mov	r2, r0
+  52:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(bu
+ 170              		.loc 1 52 92 is_stmt 0 discriminator 2 view .LVU25
+ 171 0076 3146     		mov	r1, r6
+ 172 0078 2846     		mov	r0, r5
+ 173 007a FFF7FEFF 		bl	strcat_s
+ 174              	.LVL16:
+  52:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(bu
+ 175              		.loc 1 52 157 is_stmt 1 discriminator 3 view .LVU26
+  52:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(bu
+ 176              		.loc 1 52 157 is_stmt 0 view .LVU27
+ 177 007e DCE7     		b	.L1
+ 178              	.L10:
+  53:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf
+ 179              		.loc 1 53 45 is_stmt 1 view .LVU28
+ 180 0080 264A     		ldr	r2, .L19+20
+ 181 0082 3146     		mov	r1, r6
+ 182 0084 2846     		mov	r0, r5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 6
+
+
+ 183 0086 FFF7FEFF 		bl	strcat_s
+ 184              	.LVL17:
+  53:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf
+ 185              		.loc 1 53 89 discriminator 1 view .LVU29
+ 186 008a 0420     		movs	r0, #4
+ 187 008c FFF7FEFF 		bl	pu_mode2str
+ 188              	.LVL18:
+ 189 0090 0246     		mov	r2, r0
+  53:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf
+ 190              		.loc 1 53 89 is_stmt 0 discriminator 2 view .LVU30
+ 191 0092 3146     		mov	r1, r6
+ 192 0094 2846     		mov	r0, r5
+ 193 0096 FFF7FEFF 		bl	strcat_s
+ 194              	.LVL19:
+  53:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf
+ 195              		.loc 1 53 151 is_stmt 1 discriminator 3 view .LVU31
+  53:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf
+ 196              		.loc 1 53 151 is_stmt 0 view .LVU32
+ 197 009a CEE7     		b	.L1
+ 198              	.L9:
+  54:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf,
+ 199              		.loc 1 54 44 is_stmt 1 view .LVU33
+ 200 009c 1F4A     		ldr	r2, .L19+20
+ 201 009e 3146     		mov	r1, r6
+ 202 00a0 2846     		mov	r0, r5
+ 203 00a2 FFF7FEFF 		bl	strcat_s
+ 204              	.LVL20:
+  54:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf,
+ 205              		.loc 1 54 88 discriminator 1 view .LVU34
+ 206 00a6 0520     		movs	r0, #5
+ 207 00a8 FFF7FEFF 		bl	pu_mode2str
+ 208              	.LVL21:
+ 209 00ac 0246     		mov	r2, r0
+  54:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf,
+ 210              		.loc 1 54 88 is_stmt 0 discriminator 2 view .LVU35
+ 211 00ae 3146     		mov	r1, r6
+ 212 00b0 2846     		mov	r0, r5
+ 213 00b2 FFF7FEFF 		bl	strcat_s
+ 214              	.LVL22:
+  54:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf,
+ 215              		.loc 1 54 149 is_stmt 1 discriminator 3 view .LVU36
+  54:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_s(buf,
+ 216              		.loc 1 54 149 is_stmt 0 view .LVU37
+ 217 00b6 C0E7     		b	.L1
+ 218              	.L8:
+  55:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_
+ 219              		.loc 1 55 43 is_stmt 1 view .LVU38
+ 220 00b8 184A     		ldr	r2, .L19+20
+ 221 00ba 3146     		mov	r1, r6
+ 222 00bc 2846     		mov	r0, r5
+ 223 00be FFF7FEFF 		bl	strcat_s
+ 224              	.LVL23:
+  55:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_
+ 225              		.loc 1 55 87 discriminator 1 view .LVU39
+ 226 00c2 0720     		movs	r0, #7
+ 227 00c4 FFF7FEFF 		bl	pu_mode2str
+ 228              	.LVL24:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 7
+
+
+ 229 00c8 0246     		mov	r2, r0
+  55:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_
+ 230              		.loc 1 55 87 is_stmt 0 discriminator 2 view .LVU40
+ 231 00ca 3146     		mov	r1, r6
+ 232 00cc 2846     		mov	r0, r5
+ 233 00ce FFF7FEFF 		bl	strcat_s
+ 234              	.LVL25:
+  55:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_
+ 235              		.loc 1 55 147 is_stmt 1 discriminator 3 view .LVU41
+  55:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE: strcat_s(buf, buf_size, SCREEN1_REJIM_STR); strcat_
+ 236              		.loc 1 55 147 is_stmt 0 view .LVU42
+ 237 00d2 B2E7     		b	.L1
+ 238              	.L7:
+  56:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_FAULTS: strcat_s(buf, buf_size, "НЕИСПРАВНОСТИ"); break;
+ 239              		.loc 1 56 49 is_stmt 1 view .LVU43
+ 240 00d4 114A     		ldr	r2, .L19+20
+ 241 00d6 3146     		mov	r1, r6
+ 242 00d8 2846     		mov	r0, r5
+ 243 00da FFF7FEFF 		bl	strcat_s
+ 244              	.LVL26:
+  56:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_FAULTS: strcat_s(buf, buf_size, "НЕИСПРАВНОСТИ"); break;
+ 245              		.loc 1 56 93 discriminator 1 view .LVU44
+ 246 00de 0820     		movs	r0, #8
+ 247 00e0 FFF7FEFF 		bl	pu_mode2str
+ 248              	.LVL27:
+ 249 00e4 0246     		mov	r2, r0
+  56:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_FAULTS: strcat_s(buf, buf_size, "НЕИСПРАВНОСТИ"); break;
+ 250              		.loc 1 56 93 is_stmt 0 discriminator 2 view .LVU45
+ 251 00e6 3146     		mov	r1, r6
+ 252 00e8 2846     		mov	r0, r5
+ 253 00ea FFF7FEFF 		bl	strcat_s
+ 254              	.LVL28:
+  56:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_FAULTS: strcat_s(buf, buf_size, "НЕИСПРАВНОСТИ"); break;
+ 255              		.loc 1 56 162 is_stmt 1 discriminator 3 view .LVU46
+  56:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_FAULTS: strcat_s(buf, buf_size, "НЕИСПРАВНОСТИ"); break;
+ 256              		.loc 1 56 162 is_stmt 0 view .LVU47
+ 257 00ee A4E7     		b	.L1
+ 258              	.L6:
+  57:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PIN_CODE: strcat_s(buf, buf_size, "ВВОД ПИН КОДА"); break;
+ 259              		.loc 1 57 29 is_stmt 1 view .LVU48
+ 260 00f0 0B4A     		ldr	r2, .L19+24
+ 261 00f2 3146     		mov	r1, r6
+ 262 00f4 2846     		mov	r0, r5
+ 263 00f6 FFF7FEFF 		bl	strcat_s
+ 264              	.LVL29:
+  57:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PIN_CODE: strcat_s(buf, buf_size, "ВВОД ПИН КОДА"); break;
+ 265              		.loc 1 57 84 discriminator 1 view .LVU49
+  57:../../CM7/Core/Src/Screens/screen1.c **** 		case SCREEN1_ITEM_PIN_CODE: strcat_s(buf, buf_size, "ВВОД ПИН КОДА"); break;
+ 266              		.loc 1 57 84 is_stmt 0 view .LVU50
+ 267 00fa 9EE7     		b	.L1
+ 268              	.L4:
+  58:../../CM7/Core/Src/Screens/screen1.c **** 		default: break;
+ 269              		.loc 1 58 31 is_stmt 1 view .LVU51
+ 270 00fc 094A     		ldr	r2, .L19+28
+ 271 00fe 3146     		mov	r1, r6
+ 272 0100 2846     		mov	r0, r5
+ 273 0102 FFF7FEFF 		bl	strcat_s
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 8
+
+
+ 274              	.LVL30:
+  58:../../CM7/Core/Src/Screens/screen1.c **** 		default: break;
+ 275              		.loc 1 58 84 discriminator 1 view .LVU52
+ 276              		.loc 1 61 1 is_stmt 0 view .LVU53
+ 277 0106 98E7     		b	.L1
+ 278              	.L20:
+ 279              		.align	2
+ 280              	.L19:
+ 281 0108 00000000 		.word	screen1_index
+ 282 010c 04000000 		.word	.LC1
+ 283 0110 00000000 		.word	.LC0
+ 284 0114 08000000 		.word	.LC2
+ 285 0118 30000000 		.word	.LC3
+ 286 011c 48000000 		.word	.LC4
+ 287 0120 58000000 		.word	.LC5
+ 288 0124 74000000 		.word	.LC6
+ 289              		.cfi_endproc
+ 290              	.LFE335:
+ 292              		.section	.text.screen1_paint,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	screen1_paint
+ 295              		.syntax unified
+ 296              		.thumb
+ 297              		.thumb_func
+ 299              	screen1_paint:
+ 300              	.LFB336:
+  62:../../CM7/Core/Src/Screens/screen1.c **** 
+  63:../../CM7/Core/Src/Screens/screen1.c **** 
+  64:../../CM7/Core/Src/Screens/screen1.c **** void screen1_paint(void)
+  65:../../CM7/Core/Src/Screens/screen1.c **** {
+ 301              		.loc 1 65 1 is_stmt 1 view -0
+ 302              		.cfi_startproc
+ 303              		@ args = 0, pretend = 0, frame = 1024
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305 0000 10B5     		push	{r4, lr}
+ 306              	.LCFI1:
+ 307              		.cfi_def_cfa_offset 8
+ 308              		.cfi_offset 4, -8
+ 309              		.cfi_offset 14, -4
+ 310 0002 ADF5806D 		sub	sp, sp, #1024
+ 311              	.LCFI2:
+ 312              		.cfi_def_cfa_offset 1032
+  66:../../CM7/Core/Src/Screens/screen1.c **** 
+  67:../../CM7/Core/Src/Screens/screen1.c **** 	char buf[MAX_STR_SIZE];
+ 313              		.loc 1 67 2 view .LVU55
+  68:../../CM7/Core/Src/Screens/screen1.c **** 	int start_index;
+ 314              		.loc 1 68 2 view .LVU56
+  69:../../CM7/Core/Src/Screens/screen1.c **** 
+  70:../../CM7/Core/Src/Screens/screen1.c **** 	clear_display();
+ 315              		.loc 1 70 2 view .LVU57
+ 316 0006 FFF7FEFF 		bl	clear_display
+ 317              	.LVL31:
+  71:../../CM7/Core/Src/Screens/screen1.c **** 
+  72:../../CM7/Core/Src/Screens/screen1.c **** 	start_index = screen1_index - 3;
+ 318              		.loc 1 72 2 view .LVU58
+ 319              		.loc 1 72 30 is_stmt 0 view .LVU59
+ 320 000a 1D4B     		ldr	r3, .L26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 9
+
+
+ 321 000c 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 322              	.LVL32:
+  73:../../CM7/Core/Src/Screens/screen1.c **** 	if (start_index < 0) start_index = 0;
+ 323              		.loc 1 73 2 is_stmt 1 view .LVU60
+ 324              		.loc 1 73 5 is_stmt 0 view .LVU61
+ 325 000e 033C     		subs	r4, r4, #3
+ 326              	.LVL33:
+ 327              		.loc 1 73 5 view .LVU62
+ 328 0010 34D4     		bmi	.L25
+ 329              	.LVL34:
+ 330              	.L22:
+  74:../../CM7/Core/Src/Screens/screen1.c **** 
+  75:../../CM7/Core/Src/Screens/screen1.c **** 	screen1_get_item(start_index,  buf, sizeof(buf));
+ 331              		.loc 1 75 2 is_stmt 1 view .LVU63
+ 332 0012 E4B2     		uxtb	r4, r4
+ 333              	.LVL35:
+ 334              		.loc 1 75 2 is_stmt 0 view .LVU64
+ 335 0014 4FF48062 		mov	r2, #1024
+ 336 0018 6946     		mov	r1, sp
+ 337 001a 2046     		mov	r0, r4
+ 338 001c FFF7FEFF 		bl	screen1_get_item
+ 339              	.LVL36:
+  76:../../CM7/Core/Src/Screens/screen1.c **** 	set_display(0, 0, buf);
+ 340              		.loc 1 76 2 is_stmt 1 view .LVU65
+ 341 0020 6A46     		mov	r2, sp
+ 342 0022 0021     		movs	r1, #0
+ 343 0024 0846     		mov	r0, r1
+ 344 0026 FFF7FEFF 		bl	set_display
+ 345              	.LVL37:
+  77:../../CM7/Core/Src/Screens/screen1.c **** 	screen1_get_item(start_index + 1, buf, sizeof(buf));
+ 346              		.loc 1 77 2 view .LVU66
+ 347 002a 601C     		adds	r0, r4, #1
+ 348 002c 4FF48062 		mov	r2, #1024
+ 349 0030 6946     		mov	r1, sp
+ 350 0032 C0B2     		uxtb	r0, r0
+ 351 0034 FFF7FEFF 		bl	screen1_get_item
+ 352              	.LVL38:
+  78:../../CM7/Core/Src/Screens/screen1.c **** 	set_display(1, 0, buf);
+ 353              		.loc 1 78 2 view .LVU67
+ 354 0038 6A46     		mov	r2, sp
+ 355 003a 0021     		movs	r1, #0
+ 356 003c 0120     		movs	r0, #1
+ 357 003e FFF7FEFF 		bl	set_display
+ 358              	.LVL39:
+  79:../../CM7/Core/Src/Screens/screen1.c **** 	screen1_get_item(start_index + 2, buf, sizeof(buf));
+ 359              		.loc 1 79 2 view .LVU68
+ 360 0042 A01C     		adds	r0, r4, #2
+ 361 0044 4FF48062 		mov	r2, #1024
+ 362 0048 6946     		mov	r1, sp
+ 363 004a C0B2     		uxtb	r0, r0
+ 364 004c FFF7FEFF 		bl	screen1_get_item
+ 365              	.LVL40:
+  80:../../CM7/Core/Src/Screens/screen1.c **** 	set_display(2, 0, buf);
+ 366              		.loc 1 80 2 view .LVU69
+ 367 0050 6A46     		mov	r2, sp
+ 368 0052 0021     		movs	r1, #0
+ 369 0054 0220     		movs	r0, #2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 10
+
+
+ 370 0056 FFF7FEFF 		bl	set_display
+ 371              	.LVL41:
+  81:../../CM7/Core/Src/Screens/screen1.c **** 	screen1_get_item(start_index + 3, buf, sizeof(buf));
+ 372              		.loc 1 81 2 view .LVU70
+ 373 005a E01C     		adds	r0, r4, #3
+ 374 005c 4FF48062 		mov	r2, #1024
+ 375 0060 6946     		mov	r1, sp
+ 376 0062 C0B2     		uxtb	r0, r0
+ 377 0064 FFF7FEFF 		bl	screen1_get_item
+ 378              	.LVL42:
+  82:../../CM7/Core/Src/Screens/screen1.c **** 	set_display(3, 0, buf);
+ 379              		.loc 1 82 2 view .LVU71
+ 380 0068 6A46     		mov	r2, sp
+ 381 006a 0021     		movs	r1, #0
+ 382 006c 0320     		movs	r0, #3
+ 383 006e FFF7FEFF 		bl	set_display
+ 384              	.LVL43:
+  83:../../CM7/Core/Src/Screens/screen1.c **** 
+  84:../../CM7/Core/Src/Screens/screen1.c **** 	//ulog("300"CRLF);
+  85:../../CM7/Core/Src/Screens/screen1.c **** 	send_display();
+ 385              		.loc 1 85 2 view .LVU72
+ 386 0072 FFF7FEFF 		bl	send_display
+ 387              	.LVL44:
+  86:../../CM7/Core/Src/Screens/screen1.c **** 
+  87:../../CM7/Core/Src/Screens/screen1.c **** }
+ 388              		.loc 1 87 1 is_stmt 0 view .LVU73
+ 389 0076 0DF5806D 		add	sp, sp, #1024
+ 390              	.LCFI3:
+ 391              		.cfi_remember_state
+ 392              		.cfi_def_cfa_offset 8
+ 393              		@ sp needed
+ 394 007a 10BD     		pop	{r4, pc}
+ 395              	.LVL45:
+ 396              	.L25:
+ 397              	.LCFI4:
+ 398              		.cfi_restore_state
+  73:../../CM7/Core/Src/Screens/screen1.c **** 
+ 399              		.loc 1 73 35 discriminator 1 view .LVU74
+ 400 007c 0024     		movs	r4, #0
+ 401              	.LVL46:
+  73:../../CM7/Core/Src/Screens/screen1.c **** 
+ 402              		.loc 1 73 35 discriminator 1 view .LVU75
+ 403 007e C8E7     		b	.L22
+ 404              	.L27:
+ 405              		.align	2
+ 406              	.L26:
+ 407 0080 00000000 		.word	screen1_index
+ 408              		.cfi_endproc
+ 409              	.LFE336:
+ 411              		.section	.text.screen1_init,"ax",%progbits
+ 412              		.align	1
+ 413              		.global	screen1_init
+ 414              		.syntax unified
+ 415              		.thumb
+ 416              		.thumb_func
+ 418              	screen1_init:
+ 419              	.LFB337:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 11
+
+
+  88:../../CM7/Core/Src/Screens/screen1.c **** 
+  89:../../CM7/Core/Src/Screens/screen1.c **** void screen1_init(void)
+  90:../../CM7/Core/Src/Screens/screen1.c **** {
+ 420              		.loc 1 90 1 is_stmt 1 view -0
+ 421              		.cfi_startproc
+ 422              		@ args = 0, pretend = 0, frame = 0
+ 423              		@ frame_needed = 0, uses_anonymous_args = 0
+ 424              		@ link register save eliminated.
+  91:../../CM7/Core/Src/Screens/screen1.c **** 	screen1_index = 0;
+ 425              		.loc 1 91 2 view .LVU77
+ 426              		.loc 1 91 16 is_stmt 0 view .LVU78
+ 427 0000 014B     		ldr	r3, .L29
+ 428 0002 0022     		movs	r2, #0
+ 429 0004 1A70     		strb	r2, [r3]
+  92:../../CM7/Core/Src/Screens/screen1.c **** }
+ 430              		.loc 1 92 1 view .LVU79
+ 431 0006 7047     		bx	lr
+ 432              	.L30:
+ 433              		.align	2
+ 434              	.L29:
+ 435 0008 00000000 		.word	screen1_index
+ 436              		.cfi_endproc
+ 437              	.LFE337:
+ 439              		.section	.rodata.screen1_button_press.str1.4,"aMS",%progbits,1
+ 440              		.align	2
+ 441              	.LC7:
+ 442 0000 73637265 		.ascii	"screen: menu index=%d(%s)\015\012\000"
+ 442      656E3A20 
+ 442      6D656E75 
+ 442      20696E64 
+ 442      65783D25 
+ 443              		.align	2
+ 444              	.LC8:
+ 445 001c 434D372E 		.ascii	"CM7.screen1: error OPTION_AVTOMATIKA_OTKLUCHENA by "
+ 445      73637265 
+ 445      656E313A 
+ 445      20657272 
+ 445      6F72204F 
+ 446 004f 75736572 		.ascii	"user level\015\012\000"
+ 446      206C6576 
+ 446      656C0D0A 
+ 446      00
+ 447              		.align	2
+ 448              	.LC9:
+ 449 005c 434D372E 		.ascii	"CM7.screen1: error OPTION_OTKLUCHENIE by user level"
+ 449      73637265 
+ 449      656E313A 
+ 449      20657272 
+ 449      6F72204F 
+ 450 008f 0D0A00   		.ascii	"\015\012\000"
+ 451 0092 0000     		.align	2
+ 452              	.LC10:
+ 453 0094 434D372E 		.ascii	"CM7.screen1: error MODE_ZVUKOVOE_VESHANIE by user l"
+ 453      73637265 
+ 453      656E313A 
+ 453      20657272 
+ 453      6F72204D 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 12
+
+
+ 454 00c7 6576656C 		.ascii	"evel\015\012\000"
+ 454      0D0A00
+ 455 00ce 0000     		.align	2
+ 456              	.LC11:
+ 457 00d0 434D372E 		.ascii	"CM7.screen1: error MODE_VESHANIE_POJAR by user leve"
+ 457      73637265 
+ 457      656E313A 
+ 457      20657272 
+ 457      6F72204D 
+ 458 0103 6C0D0A00 		.ascii	"l\015\012\000"
+ 459 0107 00       		.align	2
+ 460              	.LC12:
+ 461 0108 434D372E 		.ascii	"CM7.screen1: error MODE_VESHANIE_MCHS by user level"
+ 461      73637265 
+ 461      656E313A 
+ 461      20657272 
+ 461      6F72204D 
+ 462 013b 0D0A00   		.ascii	"\015\012\000"
+ 463 013e 0000     		.align	2
+ 464              	.LC13:
+ 465 0140 434D372E 		.ascii	"CM7.screen1: error MODE_RUCHNOI_PUSK by user level\015"
+ 465      73637265 
+ 465      656E313A 
+ 465      20657272 
+ 465      6F72204D 
+ 466 0173 0A00     		.ascii	"\012\000"
+ 467 0175 000000   		.align	2
+ 468              	.LC14:
+ 469 0178 434D372E 		.ascii	"CM7.screen1: error MODE_SETEVOE_UPRAVLENIE by user "
+ 469      73637265 
+ 469      656E313A 
+ 469      20657272 
+ 469      6F72204D 
+ 470 01ab 6C657665 		.ascii	"level\015\012\000"
+ 470      6C0D0A00 
+ 471              		.section	.text.screen1_button_press,"ax",%progbits
+ 472              		.align	1
+ 473              		.global	screen1_button_press
+ 474              		.syntax unified
+ 475              		.thumb
+ 476              		.thumb_func
+ 478              	screen1_button_press:
+ 479              	.LVL47:
+ 480              	.LFB338:
+  93:../../CM7/Core/Src/Screens/screen1.c **** 
+  94:../../CM7/Core/Src/Screens/screen1.c **** void screen1_button_press(uint8_t key)
+  95:../../CM7/Core/Src/Screens/screen1.c **** {
+ 481              		.loc 1 95 1 is_stmt 1 view -0
+ 482              		.cfi_startproc
+ 483              		@ args = 0, pretend = 0, frame = 1024
+ 484              		@ frame_needed = 0, uses_anonymous_args = 0
+ 485              		.loc 1 95 1 is_stmt 0 view .LVU81
+ 486 0000 10B5     		push	{r4, lr}
+ 487              	.LCFI5:
+ 488              		.cfi_def_cfa_offset 8
+ 489              		.cfi_offset 4, -8
+ 490              		.cfi_offset 14, -4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 13
+
+
+ 491 0002 ADF5806D 		sub	sp, sp, #1024
+ 492              	.LCFI6:
+ 493              		.cfi_def_cfa_offset 1032
+  96:../../CM7/Core/Src/Screens/screen1.c **** 	char buf[MAX_STR_SIZE];
+ 494              		.loc 1 96 2 is_stmt 1 view .LVU82
+  97:../../CM7/Core/Src/Screens/screen1.c **** 
+  98:../../CM7/Core/Src/Screens/screen1.c **** 	switch (key) {
+ 495              		.loc 1 98 2 view .LVU83
+ 496 0006 1B38     		subs	r0, r0, #27
+ 497              	.LVL48:
+ 498              		.loc 1 98 2 is_stmt 0 view .LVU84
+ 499 0008 0928     		cmp	r0, #9
+ 500 000a 15D8     		bhi	.L31
+ 501 000c DFE800F0 		tbb	[pc, r0]
+ 502              	.L34:
+ 503 0010 D1       		.byte	(.L36-.L34)/2
+ 504 0011 14       		.byte	(.L31-.L34)/2
+ 505 0012 D1       		.byte	(.L36-.L34)/2
+ 506 0013 14       		.byte	(.L31-.L34)/2
+ 507 0014 05       		.byte	(.L37-.L34)/2
+ 508 0015 14       		.byte	(.L31-.L34)/2
+ 509 0016 14       		.byte	(.L31-.L34)/2
+ 510 0017 D1       		.byte	(.L36-.L34)/2
+ 511 0018 1D       		.byte	(.L35-.L34)/2
+ 512 0019 34       		.byte	(.L33-.L34)/2
+ 513              		.p2align 1
+ 514              	.L37:
+  99:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_UP:
+ 100:../../CM7/Core/Src/Screens/screen1.c **** 			if (screen1_index) {
+ 515              		.loc 1 100 4 is_stmt 1 view .LVU85
+ 516              		.loc 1 100 8 is_stmt 0 view .LVU86
+ 517 001a 684B     		ldr	r3, .L72
+ 518 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 519              		.loc 1 100 7 view .LVU87
+ 520 001e 73B9     		cbnz	r3, .L63
+ 521              	.LVL49:
+ 522              	.L38:
+ 101:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_index--;
+ 102:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_paint();
+ 103:../../CM7/Core/Src/Screens/screen1.c **** 			}
+ 104:../../CM7/Core/Src/Screens/screen1.c **** 			screen1_get_item(screen1_index,  buf, sizeof(buf));
+ 523              		.loc 1 104 4 is_stmt 1 view .LVU88
+ 524 0020 664C     		ldr	r4, .L72
+ 525 0022 4FF48062 		mov	r2, #1024
+ 526 0026 6946     		mov	r1, sp
+ 527 0028 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 528 002a FFF7FEFF 		bl	screen1_get_item
+ 529              	.LVL50:
+ 105:../../CM7/Core/Src/Screens/screen1.c **** 			ulog_fmt("screen: menu index=%d(%s)"CRLF, screen1_index, buf);
+ 530              		.loc 1 105 4 view .LVU89
+ 531 002e 6A46     		mov	r2, sp
+ 532 0030 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 533 0032 6348     		ldr	r0, .L72+4
+ 534 0034 FFF7FEFF 		bl	ulog_fmt
+ 535              	.LVL51:
+ 106:../../CM7/Core/Src/Screens/screen1.c **** 		break;
+ 536              		.loc 1 106 3 view .LVU90
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 14
+
+
+ 537              	.L31:
+ 107:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_DOWN:
+ 108:../../CM7/Core/Src/Screens/screen1.c **** 			if (screen1_index < SCREEN1_MAX_ITEMS -1) {
+ 109:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_index++;
+ 110:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_paint();
+ 111:../../CM7/Core/Src/Screens/screen1.c **** 			}
+ 112:../../CM7/Core/Src/Screens/screen1.c **** 			screen1_get_item(screen1_index,  buf, sizeof(buf));
+ 113:../../CM7/Core/Src/Screens/screen1.c **** 			ulog_fmt("screen: menu index=%d(%s)"CRLF, screen1_index, buf);
+ 114:../../CM7/Core/Src/Screens/screen1.c **** 		break;
+ 115:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_ENTER:
+ 116:../../CM7/Core/Src/Screens/screen1.c **** 			switch (screen1_index) {
+ 117:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_OPTION_AVTOMATIKA_OTKLUCHENA:
+ 118:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //Автоматика отключена (уро�
+ 119:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_AVTOMATIKA_OTKLUCHENA by user level"CRLF, 2
+ 120:../../CM7/Core/Src/Screens/screen1.c **** 					 	return;
+ 121:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 122:../../CM7/Core/Src/Screens/screen1.c **** 					pu_option = PU_OPYION_AVTOMATIKA_OTKLUCHENA;
+ 123:../../CM7/Core/Src/Screens/screen1.c **** 					cm7core_option_change();
+ 124:../../CM7/Core/Src/Screens/screen1.c **** 					pu_paint_led_lines(pu_option_avtomatika_otkluchena_lines, LED_COLOR_OPTION_AVTOMATIKA_OTKLUCHE
+ 125:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 126:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 127:../../CM7/Core/Src/Screens/screen1.c **** 				case  SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE:
+ 128:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //Отключение (уровень досту�
+ 129:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_OTKLUCHENIE by user level"CRLF, 2);
+ 130:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 131:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 132:../../CM7/Core/Src/Screens/screen1.c **** 					pu_option = PU_OPTION_OTKLUCHENIE;
+ 133:../../CM7/Core/Src/Screens/screen1.c **** 					cm7core_option_change();
+ 134:../../CM7/Core/Src/Screens/screen1.c **** 					pu_paint_led_lines(pu_option_otkluchenie_lines, LED_COLOR_OPTION_OTKLUCHENIE);
+ 135:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 136:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 137:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_DEJURNIY:
+ 138:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_DEJURNIY);
+ 139:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 140:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 141:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE:
+ 142:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //Режим: Звук. Вещ. (уровень д
+ 143:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_ZVUKOVOE_VESHANIE by user level"CRLF, 2);
+ 144:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 145:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 146:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_ZVUKOVOE_VESHANIE);
+ 147:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 148:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 149:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR:
+ 150:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //Режим: Вещ. Пожар (уровень �
+ 151:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_POJAR by user level"CRLF, 2);
+ 152:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 153:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 154:../../CM7/Core/Src/Screens/screen1.c **** 					fire_lines_imit = 0xFFF;
+ 155:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_VESHANIE_POJAR);
+ 156:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 157:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 158:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS:
+ 159:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //Режим: Вещ. Пожар (уровень �
+ 160:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_MCHS by user level"CRLF, 2);
+ 161:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 162:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 15
+
+
+ 163:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_VESHANIE_MCHS);
+ 164:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 165:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 166:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK:
+ 167:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //Режим: Вещ. Пожар (уровень �
+ 168:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_RUCHNOI_PUSK by user level"CRLF, 2);
+ 169:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 170:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 171:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_RUCHNOI_PUSK);
+ 172:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 173:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 174:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE:
+ 175:../../CM7/Core/Src/Screens/screen1.c **** 					if (safety_get_level_from_pin_code() < 2) { //
+ 176:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_SETEVOE_UPRAVLENIE by user level"CRLF, 2);
+ 177:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 178:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 179:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_UPRAVLENIE_DRUGIMI_PU);
+ 180:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 181:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_FAULTS:
+ 182:../../CM7/Core/Src/Screens/screen1.c **** 					screen2_init();
+ 183:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(2);
+ 184:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 185:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PIN_CODE:
+ 186:../../CM7/Core/Src/Screens/screen1.c **** 					screen3_init();
+ 187:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(3);
+ 188:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 189:../../CM7/Core/Src/Screens/screen1.c **** 				default: break;
+ 190:../../CM7/Core/Src/Screens/screen1.c **** 			}
+ 191:../../CM7/Core/Src/Screens/screen1.c **** 
+ 192:../../CM7/Core/Src/Screens/screen1.c **** 		break;
+ 193:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_RESET:
+ 194:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_MENU:
+ 195:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_EXIT:
+ 196:../../CM7/Core/Src/Screens/screen1.c **** 			screens_goto(0);
+ 197:../../CM7/Core/Src/Screens/screen1.c **** 		break;
+ 198:../../CM7/Core/Src/Screens/screen1.c **** 	}
+ 199:../../CM7/Core/Src/Screens/screen1.c **** }
+ 538              		.loc 1 199 1 is_stmt 0 view .LVU91
+ 539 0038 0DF5806D 		add	sp, sp, #1024
+ 540              	.LCFI7:
+ 541              		.cfi_remember_state
+ 542              		.cfi_def_cfa_offset 8
+ 543              		@ sp needed
+ 544 003c 10BD     		pop	{r4, pc}
+ 545              	.L63:
+ 546              	.LCFI8:
+ 547              		.cfi_restore_state
+ 101:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_paint();
+ 548              		.loc 1 101 5 is_stmt 1 view .LVU92
+ 101:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_paint();
+ 549              		.loc 1 101 18 is_stmt 0 view .LVU93
+ 550 003e 013B     		subs	r3, r3, #1
+ 551 0040 5E4A     		ldr	r2, .L72
+ 552 0042 1370     		strb	r3, [r2]
+ 102:../../CM7/Core/Src/Screens/screen1.c **** 			}
+ 553              		.loc 1 102 5 is_stmt 1 view .LVU94
+ 554 0044 FFF7FEFF 		bl	screen1_paint
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 16
+
+
+ 555              	.LVL52:
+ 556 0048 EAE7     		b	.L38
+ 557              	.L35:
+ 108:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_index++;
+ 558              		.loc 1 108 4 view .LVU95
+ 108:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_index++;
+ 559              		.loc 1 108 22 is_stmt 0 view .LVU96
+ 560 004a 5C4B     		ldr	r3, .L72
+ 561 004c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 108:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_index++;
+ 562              		.loc 1 108 7 view .LVU97
+ 563 004e 082B     		cmp	r3, #8
+ 564 0050 0CD9     		bls	.L64
+ 565              	.L39:
+ 112:../../CM7/Core/Src/Screens/screen1.c **** 			ulog_fmt("screen: menu index=%d(%s)"CRLF, screen1_index, buf);
+ 566              		.loc 1 112 4 is_stmt 1 view .LVU98
+ 567 0052 5A4C     		ldr	r4, .L72
+ 568 0054 4FF48062 		mov	r2, #1024
+ 569 0058 6946     		mov	r1, sp
+ 570 005a 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 571 005c FFF7FEFF 		bl	screen1_get_item
+ 572              	.LVL53:
+ 113:../../CM7/Core/Src/Screens/screen1.c **** 		break;
+ 573              		.loc 1 113 4 view .LVU99
+ 574 0060 6A46     		mov	r2, sp
+ 575 0062 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 576 0064 5648     		ldr	r0, .L72+4
+ 577 0066 FFF7FEFF 		bl	ulog_fmt
+ 578              	.LVL54:
+ 114:../../CM7/Core/Src/Screens/screen1.c **** 		case MKI_KEY_ENTER:
+ 579              		.loc 1 114 3 view .LVU100
+ 580 006a E5E7     		b	.L31
+ 581              	.L64:
+ 109:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_paint();
+ 582              		.loc 1 109 5 view .LVU101
+ 109:../../CM7/Core/Src/Screens/screen1.c **** 				screen1_paint();
+ 583              		.loc 1 109 18 is_stmt 0 view .LVU102
+ 584 006c 0133     		adds	r3, r3, #1
+ 585 006e 534A     		ldr	r2, .L72
+ 586 0070 1370     		strb	r3, [r2]
+ 110:../../CM7/Core/Src/Screens/screen1.c **** 			}
+ 587              		.loc 1 110 5 is_stmt 1 view .LVU103
+ 588 0072 FFF7FEFF 		bl	screen1_paint
+ 589              	.LVL55:
+ 590 0076 ECE7     		b	.L39
+ 591              	.L33:
+ 116:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_OPTION_AVTOMATIKA_OTKLUCHENA:
+ 592              		.loc 1 116 4 view .LVU104
+ 593 0078 504B     		ldr	r3, .L72
+ 594 007a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 595 007c 092B     		cmp	r3, #9
+ 596 007e DBD8     		bhi	.L31
+ 597 0080 DFE803F0 		tbb	[pc, r3]
+ 598              	.L41:
+ 599 0084 05       		.byte	(.L50-.L41)/2
+ 600 0085 1C       		.byte	(.L49-.L41)/2
+ 601 0086 33       		.byte	(.L48-.L41)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 17
+
+
+ 602 0087 3A       		.byte	(.L47-.L41)/2
+ 603 0088 4A       		.byte	(.L46-.L41)/2
+ 604 0089 5E       		.byte	(.L45-.L41)/2
+ 605 008a 6E       		.byte	(.L44-.L41)/2
+ 606 008b 7E       		.byte	(.L43-.L41)/2
+ 607 008c 8B       		.byte	(.L42-.L41)/2
+ 608 008d 91       		.byte	(.L40-.L41)/2
+ 609              		.p2align 1
+ 610              	.L50:
+ 118:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_AVTOMATIKA_OTKLUCHENA by user level"CRLF, 2
+ 611              		.loc 1 118 6 view .LVU105
+ 118:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_AVTOMATIKA_OTKLUCHENA by user level"CRLF, 2
+ 612              		.loc 1 118 10 is_stmt 0 view .LVU106
+ 613 008e FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 614              	.LVL56:
+ 118:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_AVTOMATIKA_OTKLUCHENA by user level"CRLF, 2
+ 615              		.loc 1 118 9 discriminator 1 view .LVU107
+ 616 0092 0128     		cmp	r0, #1
+ 617 0094 0DD9     		bls	.L65
+ 122:../../CM7/Core/Src/Screens/screen1.c **** 					cm7core_option_change();
+ 618              		.loc 1 122 6 is_stmt 1 view .LVU108
+ 122:../../CM7/Core/Src/Screens/screen1.c **** 					cm7core_option_change();
+ 619              		.loc 1 122 16 is_stmt 0 view .LVU109
+ 620 0096 4B4B     		ldr	r3, .L72+8
+ 621 0098 0222     		movs	r2, #2
+ 622 009a 1A70     		strb	r2, [r3]
+ 123:../../CM7/Core/Src/Screens/screen1.c **** 					pu_paint_led_lines(pu_option_avtomatika_otkluchena_lines, LED_COLOR_OPTION_AVTOMATIKA_OTKLUCHE
+ 623              		.loc 1 123 6 is_stmt 1 view .LVU110
+ 624 009c FFF7FEFF 		bl	cm7core_option_change
+ 625              	.LVL57:
+ 124:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 626              		.loc 1 124 6 view .LVU111
+ 627 00a0 0621     		movs	r1, #6
+ 628 00a2 494B     		ldr	r3, .L72+12
+ 629 00a4 1868     		ldr	r0, [r3]
+ 630 00a6 FFF7FEFF 		bl	pu_paint_led_lines
+ 631              	.LVL58:
+ 125:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 632              		.loc 1 125 6 view .LVU112
+ 633 00aa 0020     		movs	r0, #0
+ 634 00ac FFF7FEFF 		bl	screens_goto
+ 635              	.LVL59:
+ 126:../../CM7/Core/Src/Screens/screen1.c **** 				case  SCREEN1_ITEM_PU_OPTION_OTKLUCHENIE:
+ 636              		.loc 1 126 5 view .LVU113
+ 637 00b0 C2E7     		b	.L31
+ 638              	.L65:
+ 119:../../CM7/Core/Src/Screens/screen1.c **** 					 	return;
+ 639              		.loc 1 119 7 view .LVU114
+ 640 00b2 0221     		movs	r1, #2
+ 641 00b4 4548     		ldr	r0, .L72+16
+ 642 00b6 FFF7FEFF 		bl	pu_invalid_access_code
+ 643              	.LVL60:
+ 120:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 644              		.loc 1 120 8 view .LVU115
+ 645 00ba BDE7     		b	.L31
+ 646              	.L49:
+ 128:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_OTKLUCHENIE by user level"CRLF, 2);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 18
+
+
+ 647              		.loc 1 128 6 view .LVU116
+ 128:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_OTKLUCHENIE by user level"CRLF, 2);
+ 648              		.loc 1 128 10 is_stmt 0 view .LVU117
+ 649 00bc FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 650              	.LVL61:
+ 128:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error OPTION_OTKLUCHENIE by user level"CRLF, 2);
+ 651              		.loc 1 128 9 discriminator 1 view .LVU118
+ 652 00c0 0128     		cmp	r0, #1
+ 653 00c2 0DD9     		bls	.L66
+ 132:../../CM7/Core/Src/Screens/screen1.c **** 					cm7core_option_change();
+ 654              		.loc 1 132 6 is_stmt 1 view .LVU119
+ 132:../../CM7/Core/Src/Screens/screen1.c **** 					cm7core_option_change();
+ 655              		.loc 1 132 16 is_stmt 0 view .LVU120
+ 656 00c4 3F4B     		ldr	r3, .L72+8
+ 657 00c6 0122     		movs	r2, #1
+ 658 00c8 1A70     		strb	r2, [r3]
+ 133:../../CM7/Core/Src/Screens/screen1.c **** 					pu_paint_led_lines(pu_option_otkluchenie_lines, LED_COLOR_OPTION_OTKLUCHENIE);
+ 659              		.loc 1 133 6 is_stmt 1 view .LVU121
+ 660 00ca FFF7FEFF 		bl	cm7core_option_change
+ 661              	.LVL62:
+ 134:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 662              		.loc 1 134 6 view .LVU122
+ 663 00ce 0621     		movs	r1, #6
+ 664 00d0 3F4B     		ldr	r3, .L72+20
+ 665 00d2 1868     		ldr	r0, [r3]
+ 666 00d4 FFF7FEFF 		bl	pu_paint_led_lines
+ 667              	.LVL63:
+ 135:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 668              		.loc 1 135 6 view .LVU123
+ 669 00d8 0020     		movs	r0, #0
+ 670 00da FFF7FEFF 		bl	screens_goto
+ 671              	.LVL64:
+ 136:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_DEJURNIY:
+ 672              		.loc 1 136 5 view .LVU124
+ 673 00de ABE7     		b	.L31
+ 674              	.L66:
+ 129:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 675              		.loc 1 129 7 view .LVU125
+ 676 00e0 0221     		movs	r1, #2
+ 677 00e2 3C48     		ldr	r0, .L72+24
+ 678 00e4 FFF7FEFF 		bl	pu_invalid_access_code
+ 679              	.LVL65:
+ 130:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 680              		.loc 1 130 7 view .LVU126
+ 681 00e8 A6E7     		b	.L31
+ 682              	.L48:
+ 138:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 683              		.loc 1 138 6 view .LVU127
+ 684 00ea 0120     		movs	r0, #1
+ 685 00ec FFF7FEFF 		bl	pu_set_mode
+ 686              	.LVL66:
+ 139:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 687              		.loc 1 139 6 view .LVU128
+ 688 00f0 0020     		movs	r0, #0
+ 689 00f2 FFF7FEFF 		bl	screens_goto
+ 690              	.LVL67:
+ 140:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_ZVUKOVOE_VESHANIE:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 19
+
+
+ 691              		.loc 1 140 5 view .LVU129
+ 692 00f6 9FE7     		b	.L31
+ 693              	.L47:
+ 142:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_ZVUKOVOE_VESHANIE by user level"CRLF, 2);
+ 694              		.loc 1 142 6 view .LVU130
+ 142:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_ZVUKOVOE_VESHANIE by user level"CRLF, 2);
+ 695              		.loc 1 142 10 is_stmt 0 view .LVU131
+ 696 00f8 FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 697              	.LVL68:
+ 142:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_ZVUKOVOE_VESHANIE by user level"CRLF, 2);
+ 698              		.loc 1 142 9 discriminator 1 view .LVU132
+ 699 00fc 0128     		cmp	r0, #1
+ 700 00fe 06D9     		bls	.L67
+ 146:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 701              		.loc 1 146 6 is_stmt 1 view .LVU133
+ 702 0100 0220     		movs	r0, #2
+ 703 0102 FFF7FEFF 		bl	pu_set_mode
+ 704              	.LVL69:
+ 147:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 705              		.loc 1 147 6 view .LVU134
+ 706 0106 0020     		movs	r0, #0
+ 707 0108 FFF7FEFF 		bl	screens_goto
+ 708              	.LVL70:
+ 148:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_VESHANIE_POJAR:
+ 709              		.loc 1 148 5 view .LVU135
+ 710 010c 94E7     		b	.L31
+ 711              	.L67:
+ 143:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 712              		.loc 1 143 7 view .LVU136
+ 713 010e 0221     		movs	r1, #2
+ 714 0110 3148     		ldr	r0, .L72+28
+ 715 0112 FFF7FEFF 		bl	pu_invalid_access_code
+ 716              	.LVL71:
+ 144:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 717              		.loc 1 144 7 view .LVU137
+ 718 0116 8FE7     		b	.L31
+ 719              	.L46:
+ 150:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_POJAR by user level"CRLF, 2);
+ 720              		.loc 1 150 6 view .LVU138
+ 150:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_POJAR by user level"CRLF, 2);
+ 721              		.loc 1 150 10 is_stmt 0 view .LVU139
+ 722 0118 FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 723              	.LVL72:
+ 150:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_POJAR by user level"CRLF, 2);
+ 724              		.loc 1 150 9 discriminator 1 view .LVU140
+ 725 011c 0128     		cmp	r0, #1
+ 726 011e 0AD9     		bls	.L68
+ 154:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_VESHANIE_POJAR);
+ 727              		.loc 1 154 6 is_stmt 1 view .LVU141
+ 154:../../CM7/Core/Src/Screens/screen1.c **** 					pu_set_mode(PU_MODE_VESHANIE_POJAR);
+ 728              		.loc 1 154 22 is_stmt 0 view .LVU142
+ 729 0120 2E4B     		ldr	r3, .L72+32
+ 730 0122 40F6FF72 		movw	r2, #4095
+ 731 0126 1A60     		str	r2, [r3]
+ 155:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 732              		.loc 1 155 6 is_stmt 1 view .LVU143
+ 733 0128 0420     		movs	r0, #4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 20
+
+
+ 734 012a FFF7FEFF 		bl	pu_set_mode
+ 735              	.LVL73:
+ 156:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 736              		.loc 1 156 6 view .LVU144
+ 737 012e 0020     		movs	r0, #0
+ 738 0130 FFF7FEFF 		bl	screens_goto
+ 739              	.LVL74:
+ 157:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_VESHANIE_MCHS:
+ 740              		.loc 1 157 5 view .LVU145
+ 741 0134 80E7     		b	.L31
+ 742              	.L68:
+ 151:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 743              		.loc 1 151 7 view .LVU146
+ 744 0136 0221     		movs	r1, #2
+ 745 0138 2948     		ldr	r0, .L72+36
+ 746 013a FFF7FEFF 		bl	pu_invalid_access_code
+ 747              	.LVL75:
+ 152:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 748              		.loc 1 152 7 view .LVU147
+ 749 013e 7BE7     		b	.L31
+ 750              	.L45:
+ 159:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_MCHS by user level"CRLF, 2);
+ 751              		.loc 1 159 6 view .LVU148
+ 159:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_MCHS by user level"CRLF, 2);
+ 752              		.loc 1 159 10 is_stmt 0 view .LVU149
+ 753 0140 FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 754              	.LVL76:
+ 159:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_VESHANIE_MCHS by user level"CRLF, 2);
+ 755              		.loc 1 159 9 discriminator 1 view .LVU150
+ 756 0144 0128     		cmp	r0, #1
+ 757 0146 06D9     		bls	.L69
+ 163:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 758              		.loc 1 163 6 is_stmt 1 view .LVU151
+ 759 0148 0520     		movs	r0, #5
+ 760 014a FFF7FEFF 		bl	pu_set_mode
+ 761              	.LVL77:
+ 164:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 762              		.loc 1 164 6 view .LVU152
+ 763 014e 0020     		movs	r0, #0
+ 764 0150 FFF7FEFF 		bl	screens_goto
+ 765              	.LVL78:
+ 165:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_RUCHNOI_PUSK:
+ 766              		.loc 1 165 5 view .LVU153
+ 767 0154 70E7     		b	.L31
+ 768              	.L69:
+ 160:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 769              		.loc 1 160 7 view .LVU154
+ 770 0156 0221     		movs	r1, #2
+ 771 0158 2248     		ldr	r0, .L72+40
+ 772 015a FFF7FEFF 		bl	pu_invalid_access_code
+ 773              	.LVL79:
+ 161:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 774              		.loc 1 161 7 view .LVU155
+ 775 015e 6BE7     		b	.L31
+ 776              	.L44:
+ 167:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_RUCHNOI_PUSK by user level"CRLF, 2);
+ 777              		.loc 1 167 6 view .LVU156
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 21
+
+
+ 167:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_RUCHNOI_PUSK by user level"CRLF, 2);
+ 778              		.loc 1 167 10 is_stmt 0 view .LVU157
+ 779 0160 FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 780              	.LVL80:
+ 167:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_RUCHNOI_PUSK by user level"CRLF, 2);
+ 781              		.loc 1 167 9 discriminator 1 view .LVU158
+ 782 0164 0128     		cmp	r0, #1
+ 783 0166 06D9     		bls	.L70
+ 171:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(0);
+ 784              		.loc 1 171 6 is_stmt 1 view .LVU159
+ 785 0168 0720     		movs	r0, #7
+ 786 016a FFF7FEFF 		bl	pu_set_mode
+ 787              	.LVL81:
+ 172:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 788              		.loc 1 172 6 view .LVU160
+ 789 016e 0020     		movs	r0, #0
+ 790 0170 FFF7FEFF 		bl	screens_goto
+ 791              	.LVL82:
+ 173:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PU_MODE_SETEVOE_UPRAVLENIE:
+ 792              		.loc 1 173 5 view .LVU161
+ 793 0174 60E7     		b	.L31
+ 794              	.L70:
+ 168:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 795              		.loc 1 168 7 view .LVU162
+ 796 0176 0221     		movs	r1, #2
+ 797 0178 1B48     		ldr	r0, .L72+44
+ 798 017a FFF7FEFF 		bl	pu_invalid_access_code
+ 799              	.LVL83:
+ 169:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 800              		.loc 1 169 7 view .LVU163
+ 801 017e 5BE7     		b	.L31
+ 802              	.L43:
+ 175:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_SETEVOE_UPRAVLENIE by user level"CRLF, 2);
+ 803              		.loc 1 175 6 view .LVU164
+ 175:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_SETEVOE_UPRAVLENIE by user level"CRLF, 2);
+ 804              		.loc 1 175 10 is_stmt 0 view .LVU165
+ 805 0180 FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 806              	.LVL84:
+ 175:../../CM7/Core/Src/Screens/screen1.c **** 						pu_invalid_access_code(CONM"screen1: error MODE_SETEVOE_UPRAVLENIE by user level"CRLF, 2);
+ 807              		.loc 1 175 9 discriminator 1 view .LVU166
+ 808 0184 0128     		cmp	r0, #1
+ 809 0186 03D9     		bls	.L71
+ 179:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 810              		.loc 1 179 6 is_stmt 1 view .LVU167
+ 811 0188 0820     		movs	r0, #8
+ 812 018a FFF7FEFF 		bl	pu_set_mode
+ 813              	.LVL85:
+ 180:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_FAULTS:
+ 814              		.loc 1 180 5 view .LVU168
+ 815 018e 53E7     		b	.L31
+ 816              	.L71:
+ 176:../../CM7/Core/Src/Screens/screen1.c **** 						return;
+ 817              		.loc 1 176 7 view .LVU169
+ 818 0190 0221     		movs	r1, #2
+ 819 0192 1648     		ldr	r0, .L72+48
+ 820 0194 FFF7FEFF 		bl	pu_invalid_access_code
+ 821              	.LVL86:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 22
+
+
+ 177:../../CM7/Core/Src/Screens/screen1.c **** 					}
+ 822              		.loc 1 177 7 view .LVU170
+ 823 0198 4EE7     		b	.L31
+ 824              	.L42:
+ 182:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(2);
+ 825              		.loc 1 182 6 view .LVU171
+ 826 019a FFF7FEFF 		bl	screen2_init
+ 827              	.LVL87:
+ 183:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 828              		.loc 1 183 6 view .LVU172
+ 829 019e 0220     		movs	r0, #2
+ 830 01a0 FFF7FEFF 		bl	screens_goto
+ 831              	.LVL88:
+ 184:../../CM7/Core/Src/Screens/screen1.c **** 				case SCREEN1_ITEM_PIN_CODE:
+ 832              		.loc 1 184 5 view .LVU173
+ 833 01a4 48E7     		b	.L31
+ 834              	.L40:
+ 186:../../CM7/Core/Src/Screens/screen1.c **** 					screens_goto(3);
+ 835              		.loc 1 186 6 view .LVU174
+ 836 01a6 FFF7FEFF 		bl	screen3_init
+ 837              	.LVL89:
+ 187:../../CM7/Core/Src/Screens/screen1.c **** 				break;
+ 838              		.loc 1 187 6 view .LVU175
+ 839 01aa 0320     		movs	r0, #3
+ 840 01ac FFF7FEFF 		bl	screens_goto
+ 841              	.LVL90:
+ 188:../../CM7/Core/Src/Screens/screen1.c **** 				default: break;
+ 842              		.loc 1 188 5 view .LVU176
+ 843 01b0 42E7     		b	.L31
+ 844              	.L36:
+ 196:../../CM7/Core/Src/Screens/screen1.c **** 		break;
+ 845              		.loc 1 196 4 view .LVU177
+ 846 01b2 0020     		movs	r0, #0
+ 847 01b4 FFF7FEFF 		bl	screens_goto
+ 848              	.LVL91:
+ 197:../../CM7/Core/Src/Screens/screen1.c **** 	}
+ 849              		.loc 1 197 3 view .LVU178
+ 850 01b8 3EE7     		b	.L31
+ 851              	.L73:
+ 852 01ba 00BF     		.align	2
+ 853              	.L72:
+ 854 01bc 00000000 		.word	screen1_index
+ 855 01c0 00000000 		.word	.LC7
+ 856 01c4 00000000 		.word	pu_option
+ 857 01c8 00000000 		.word	pu_option_avtomatika_otkluchena_lines
+ 858 01cc 1C000000 		.word	.LC8
+ 859 01d0 00000000 		.word	pu_option_otkluchenie_lines
+ 860 01d4 5C000000 		.word	.LC9
+ 861 01d8 94000000 		.word	.LC10
+ 862 01dc 00000000 		.word	fire_lines_imit
+ 863 01e0 D0000000 		.word	.LC11
+ 864 01e4 08010000 		.word	.LC12
+ 865 01e8 40010000 		.word	.LC13
+ 866 01ec 78010000 		.word	.LC14
+ 867              		.cfi_endproc
+ 868              	.LFE338:
+ 870              		.section	.text.screen1_button_unpress,"ax",%progbits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 23
+
+
+ 871              		.align	1
+ 872              		.global	screen1_button_unpress
+ 873              		.syntax unified
+ 874              		.thumb
+ 875              		.thumb_func
+ 877              	screen1_button_unpress:
+ 878              	.LVL92:
+ 879              	.LFB339:
+ 200:../../CM7/Core/Src/Screens/screen1.c **** 
+ 201:../../CM7/Core/Src/Screens/screen1.c **** void screen1_button_unpress(uint8_t key)
+ 202:../../CM7/Core/Src/Screens/screen1.c **** {
+ 880              		.loc 1 202 1 view -0
+ 881              		.cfi_startproc
+ 882              		@ args = 0, pretend = 0, frame = 0
+ 883              		@ frame_needed = 0, uses_anonymous_args = 0
+ 884              		@ link register save eliminated.
+ 203:../../CM7/Core/Src/Screens/screen1.c **** }
+ 885              		.loc 1 203 1 view .LVU180
+ 886 0000 7047     		bx	lr
+ 887              		.cfi_endproc
+ 888              	.LFE339:
+ 890              		.section	.bss.screen1_index,"aw",%nobits
+ 893              	screen1_index:
+ 894 0000 00       		.space	1
+ 895              		.text
+ 896              	.Letext0:
+ 897              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 898              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 899              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 900              		.file 5 "../../common/common.h"
+ 901              		.file 6 "../../CM7/Core/Inc/pu.h"
+ 902              		.file 7 "../../CM7/Core/Inc/Screens/screen3.h"
+ 903              		.file 8 "../../CM7/Core/Inc/Screens/screen2.h"
+ 904              		.file 9 "../../CM7/Core/Inc/Screens/screens.h"
+ 905              		.file 10 "../../CM7/Core/Inc/cm7core.h"
+ 906              		.file 11 "../../util/stm_util.h"
+ 907              		.file 12 "../../CM7/Core/Inc/display.h"
+ 908              		.file 13 "../../util/str_util.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc596rTg.s 			page 24
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 screen1.c
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:20     .rodata.screen1_get_item.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:48     .text.screen1_get_item:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:54     .text.screen1_get_item:00000000 screen1_get_item
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:97     .text.screen1_get_item:00000022 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:108    .text.screen1_get_item:0000002c $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:281    .text.screen1_get_item:00000108 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:893    .bss.screen1_index:00000000 screen1_index
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:293    .text.screen1_paint:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:299    .text.screen1_paint:00000000 screen1_paint
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:407    .text.screen1_paint:00000080 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:412    .text.screen1_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:418    .text.screen1_init:00000000 screen1_init
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:435    .text.screen1_init:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:440    .rodata.screen1_button_press.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:472    .text.screen1_button_press:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:478    .text.screen1_button_press:00000000 screen1_button_press
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:503    .text.screen1_button_press:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:513    .text.screen1_button_press:0000001a $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:599    .text.screen1_button_press:00000084 $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:609    .text.screen1_button_press:0000008e $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:854    .text.screen1_button_press:000001bc $d
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:871    .text.screen1_button_unpress:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:877    .text.screen1_button_unpress:00000000 screen1_button_unpress
+C:\Users\oleg\AppData\Local\Temp\cc596rTg.s:894    .bss.screen1_index:00000000 $d
+
+UNDEFINED SYMBOLS
+strcpy_s
+strcat_s
+pu_mode2str
+clear_display
+set_display
+send_display
+ulog_fmt
+safety_get_level_from_pin_code
+cm7core_option_change
+pu_paint_led_lines
+screens_goto
+pu_invalid_access_code
+pu_set_mode
+screen2_init
+screen3_init
+pu_option
+pu_option_avtomatika_otkluchena_lines
+pu_option_otkluchenie_lines
+fire_lines_imit

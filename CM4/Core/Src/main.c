@@ -58,6 +58,7 @@
 #include "ws_server.h"
 #include "ws_rubetec.h"
 #include "user_timer.h"
+#include "web_keep_alive.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -143,7 +144,7 @@ char mkk2_version[32] = {'\0'};
 
 void rubetec_on_start_alert_rec(uint8_t pu_id, uint8_t input_line){
   rubetec_send_acept();
-        if(ws_try_ping_pong(RUBETEC_SOCK_NUM, 500)){
+        if(ws_try_ping_pong(5, 500)){
         ulog("++++++++++++++++"CRLF);
       } else {
         ulog("---------------"CRLF);        
@@ -154,6 +155,18 @@ void rubetec_on_start_alert_rec(uint8_t pu_id, uint8_t input_line){
 void rubetec_on_reset_rec(uint32_t pu_id_mask){
    //rubetec_send_acept();
    rubetec_send_error("errEpta", "rubetec_on_reset_rec");
+   const uint8_t socknumlist[4] = {0, 1, 2, 3};
+  if(is_any_socket_established(socknumlist, 4)){
+    ulog("is_any_socket_established = true"CRLF);
+  }else {
+    ulog("is_any_socket_established = false"CRLF);
+  }
+
+  if(is_any_socket_keep_alive(socknumlist, 4)){
+     ulog("is_any_socket_keep_alive = true"CRLF);
+  }else {
+    ulog("is_any_socket_keep_alive = false"CRLF);
+  }
 }
 
 void rubetec_on_emergency_start(uint32_t pu_id_mask){
@@ -886,7 +899,7 @@ int main(void)
 		  net_int_state = FALSE;
 		  net_task();
       ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
-      ws_server_poll(5, NULL);
+      //ws_server_poll(5, NULL);
       startTimer(&ws_period_timer);                               // heartbeat
       // ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
       // ws_server_poll(5, NULL);                               // heartbeat
@@ -897,13 +910,13 @@ int main(void)
 	  if (PIN_GET(E_INT_SPI) == 0) {
 		   net_task();
        ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
-       ws_server_poll(5, NULL);                               // heartbeat
+       //ws_server_poll(5, NULL);                               // heartbeat
        startTimer(&ws_period_timer); 
 	  }
 
     if(isTimerExpired(&ws_period_timer, 500)){
       ws_server_poll(RUBETEC_SOCK_NUM, rubetec_msg_handler); // протокольный
-      ws_server_poll(5, NULL);                               // heartbeat
+      //ws_server_poll(5, NULL);                               // heartbeat
     }
 
 	  //if (mki_int_button_flag_fast) {

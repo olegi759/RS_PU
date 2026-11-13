@@ -1,0 +1,675 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"NLSF2A.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/NLSF2A.c"
+  19              		.section	.text.silk_NLSF2A_find_poly,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	silk_NLSF2A_find_poly:
+  26              	.LVL0:
+  27              	.LFB25:
+   1:../../opus/silk/NLSF2A.c **** /***********************************************************************
+   2:../../opus/silk/NLSF2A.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/NLSF2A.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/NLSF2A.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/NLSF2A.c **** are met:
+   6:../../opus/silk/NLSF2A.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/NLSF2A.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/NLSF2A.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/NLSF2A.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/NLSF2A.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/NLSF2A.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/NLSF2A.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/NLSF2A.c **** products derived from this software without specific prior written
+  14:../../opus/silk/NLSF2A.c **** permission.
+  15:../../opus/silk/NLSF2A.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/NLSF2A.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/NLSF2A.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/NLSF2A.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/NLSF2A.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/NLSF2A.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/NLSF2A.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/NLSF2A.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/NLSF2A.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/NLSF2A.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/NLSF2A.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/NLSF2A.c **** ***********************************************************************/
+  27:../../opus/silk/NLSF2A.c **** 
+  28:../../opus/silk/NLSF2A.c **** #include "opus_config.h"
+  29:../../opus/silk/NLSF2A.c **** 
+  30:../../opus/silk/NLSF2A.c **** /* conversion between prediction filter coefficients and LSFs   */
+  31:../../opus/silk/NLSF2A.c **** /* order should be even                                         */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 2
+
+
+  32:../../opus/silk/NLSF2A.c **** /* a piecewise linear approximation maps LSF <-> cos(LSF)       */
+  33:../../opus/silk/NLSF2A.c **** /* therefore the result is not accurate LSFs, but the two       */
+  34:../../opus/silk/NLSF2A.c **** /* functions are accurate inverses of each other                */
+  35:../../opus/silk/NLSF2A.c **** 
+  36:../../opus/silk/NLSF2A.c **** #include "SigProc_FIX.h"
+  37:../../opus/silk/NLSF2A.c **** #include "tables.h"
+  38:../../opus/silk/NLSF2A.c **** 
+  39:../../opus/silk/NLSF2A.c **** #define QA      16
+  40:../../opus/silk/NLSF2A.c **** 
+  41:../../opus/silk/NLSF2A.c **** /* helper function for NLSF2A(..) */
+  42:../../opus/silk/NLSF2A.c **** static OPUS_INLINE void silk_NLSF2A_find_poly(
+  43:../../opus/silk/NLSF2A.c ****     opus_int32          *out,      /* O    intermediate polynomial, QA [dd+1]        */
+  44:../../opus/silk/NLSF2A.c ****     const opus_int32    *cLSF,     /* I    vector of interleaved 2*cos(LSFs), QA [d] */
+  45:../../opus/silk/NLSF2A.c ****     opus_int            dd         /* I    polynomial order (= 1/2 * filter order)   */
+  46:../../opus/silk/NLSF2A.c **** )
+  47:../../opus/silk/NLSF2A.c **** {
+  28              		.loc 1 47 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 47 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 28
+  36              		.cfi_offset 4, -28
+  37              		.cfi_offset 5, -24
+  38              		.cfi_offset 6, -20
+  39              		.cfi_offset 7, -16
+  40              		.cfi_offset 8, -12
+  41              		.cfi_offset 9, -8
+  42              		.cfi_offset 14, -4
+  43 0004 0E46     		mov	r6, r1
+  44 0006 1746     		mov	r7, r2
+  48:../../opus/silk/NLSF2A.c ****     opus_int   k, n;
+  45              		.loc 1 48 5 is_stmt 1 view .LVU2
+  49:../../opus/silk/NLSF2A.c ****     opus_int32 ftmp;
+  46              		.loc 1 49 5 view .LVU3
+  50:../../opus/silk/NLSF2A.c **** 
+  51:../../opus/silk/NLSF2A.c ****     out[0] = silk_LSHIFT( 1, QA );
+  47              		.loc 1 51 5 view .LVU4
+  48              		.loc 1 51 12 is_stmt 0 view .LVU5
+  49 0008 4FF48033 		mov	r3, #65536
+  50 000c 0360     		str	r3, [r0]
+  52:../../opus/silk/NLSF2A.c ****     out[1] = -cLSF[0];
+  51              		.loc 1 52 5 is_stmt 1 view .LVU6
+  52              		.loc 1 52 19 is_stmt 0 view .LVU7
+  53 000e 0B68     		ldr	r3, [r1]
+  54              		.loc 1 52 14 view .LVU8
+  55 0010 5B42     		rsbs	r3, r3, #0
+  56              		.loc 1 52 12 view .LVU9
+  57 0012 4360     		str	r3, [r0, #4]
+  53:../../opus/silk/NLSF2A.c ****     for( k = 1; k < dd; k++ ) {
+  58              		.loc 1 53 5 is_stmt 1 view .LVU10
+  59              	.LVL1:
+  60              		.loc 1 53 12 is_stmt 0 view .LVU11
+  61 0014 0125     		movs	r5, #1
+  62              		.loc 1 53 5 view .LVU12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 3
+
+
+  63 0016 2BE0     		b	.L2
+  64              	.LVL2:
+  65              	.L4:
+  54:../../opus/silk/NLSF2A.c ****         ftmp = cLSF[2*k];            /* QA*/
+  55:../../opus/silk/NLSF2A.c ****         out[k+1] = silk_LSHIFT( out[k-1], 1 ) - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, 
+  56:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+  57:../../opus/silk/NLSF2A.c ****             out[n] += out[n-2] - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, out[n-1] ), QA 
+  66              		.loc 1 57 13 is_stmt 1 view .LVU13
+  67              		.loc 1 57 26 is_stmt 0 view .LVU14
+  68 0018 294B     		ldr	r3, .L8
+  69 001a 6344     		add	r3, r3, ip
+  70 001c 50F82320 		ldr	r2, [r0, r3, lsl #2]
+  71              		.loc 1 57 46 view .LVU15
+  72 0020 6FF04043 		mvn	r3, #-1073741824
+  73 0024 6344     		add	r3, r3, ip
+  74 0026 50F82330 		ldr	r3, [r0, r3, lsl #2]
+  75 002a 4FEAE378 		asr	r8, r3, #31
+  76 002e 01FB08F8 		mul	r8, r1, r8
+  77 0032 03FB0488 		mla	r8, r3, r4, r8
+  78 0036 AEFB0339 		umull	r3, r9, lr, r3
+  79 003a C844     		add	r8, r8, r9
+  80 003c DB0B     		lsrs	r3, r3, #15
+  81 003e 43EA4843 		orr	r3, r3, r8, lsl #17
+  82 0042 4FEAE838 		asr	r8, r8, #15
+  83 0046 0133     		adds	r3, r3, #1
+  84 0048 48F10008 		adc	r8, r8, #0
+  85 004c 5B08     		lsrs	r3, r3, #1
+  86 004e 43EAC873 		orr	r3, r3, r8, lsl #31
+  87              		.loc 1 57 32 view .LVU16
+  88 0052 D21A     		subs	r2, r2, r3
+  89              		.loc 1 57 20 view .LVU17
+  90 0054 50F82C30 		ldr	r3, [r0, ip, lsl #2]
+  91 0058 1A44     		add	r2, r2, r3
+  92 005a 40F82C20 		str	r2, [r0, ip, lsl #2]
+  56:../../opus/silk/NLSF2A.c ****             out[n] += out[n-2] - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, out[n-1] ), QA 
+  93              		.loc 1 56 29 is_stmt 1 discriminator 3 view .LVU18
+  94 005e 0CF1FF3C 		add	ip, ip, #-1
+  95              	.LVL3:
+  96              	.L3:
+  56:../../opus/silk/NLSF2A.c ****             out[n] += out[n-2] - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, out[n-1] ), QA 
+  97              		.loc 1 56 23 discriminator 1 view .LVU19
+  98 0062 BCF1010F 		cmp	ip, #1
+  99 0066 D7DC     		bgt	.L4
+  58:../../opus/silk/NLSF2A.c ****         }
+  59:../../opus/silk/NLSF2A.c ****         out[1] -= ftmp;
+ 100              		.loc 1 59 9 view .LVU20
+ 101              		.loc 1 59 12 is_stmt 0 view .LVU21
+ 102 0068 4368     		ldr	r3, [r0, #4]
+ 103              		.loc 1 59 16 view .LVU22
+ 104 006a 5B1A     		subs	r3, r3, r1
+ 105 006c 4360     		str	r3, [r0, #4]
+  53:../../opus/silk/NLSF2A.c ****         ftmp = cLSF[2*k];            /* QA*/
+ 106              		.loc 1 53 26 is_stmt 1 discriminator 2 view .LVU23
+ 107 006e 0135     		adds	r5, r5, #1
+ 108              	.LVL4:
+ 109              	.L2:
+  53:../../opus/silk/NLSF2A.c ****         ftmp = cLSF[2*k];            /* QA*/
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 4
+
+
+ 110              		.loc 1 53 19 discriminator 1 view .LVU24
+ 111 0070 BD42     		cmp	r5, r7
+ 112 0072 23DA     		bge	.L7
+  54:../../opus/silk/NLSF2A.c ****         out[k+1] = silk_LSHIFT( out[k-1], 1 ) - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, 
+ 113              		.loc 1 54 9 view .LVU25
+  54:../../opus/silk/NLSF2A.c ****         out[k+1] = silk_LSHIFT( out[k-1], 1 ) - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, 
+ 114              		.loc 1 54 14 is_stmt 0 view .LVU26
+ 115 0074 56F83510 		ldr	r1, [r6, r5, lsl #3]
+ 116              	.LVL5:
+  55:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+ 117              		.loc 1 55 9 is_stmt 1 view .LVU27
+  55:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+ 118              		.loc 1 55 20 is_stmt 0 view .LVU28
+ 119 0078 6FF04043 		mvn	r3, #-1073741824
+ 120 007c 2B44     		add	r3, r3, r5
+ 121 007e 50F823C0 		ldr	ip, [r0, r3, lsl #2]
+  55:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+ 122              		.loc 1 55 61 view .LVU29
+ 123 0082 CC17     		asrs	r4, r1, #31
+ 124 0084 8E46     		mov	lr, r1
+ 125 0086 50F82530 		ldr	r3, [r0, r5, lsl #2]
+ 126 008a DA17     		asrs	r2, r3, #31
+ 127 008c 01FB02F2 		mul	r2, r1, r2
+ 128 0090 03FB0422 		mla	r2, r3, r4, r2
+ 129 0094 A1FB0338 		umull	r3, r8, r1, r3
+ 130 0098 4244     		add	r2, r2, r8
+ 131 009a DB0B     		lsrs	r3, r3, #15
+ 132 009c 43EA4243 		orr	r3, r3, r2, lsl #17
+ 133 00a0 D213     		asrs	r2, r2, #15
+ 134 00a2 0133     		adds	r3, r3, #1
+ 135 00a4 42F10002 		adc	r2, r2, #0
+ 136 00a8 5B08     		lsrs	r3, r3, #1
+ 137 00aa 43EAC273 		orr	r3, r3, r2, lsl #31
+  55:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+ 138              		.loc 1 55 12 view .LVU30
+ 139 00ae 6A1C     		adds	r2, r5, #1
+  55:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+ 140              		.loc 1 55 47 view .LVU31
+ 141 00b0 C3EB4C03 		rsb	r3, r3, ip, lsl #1
+  55:../../opus/silk/NLSF2A.c ****         for( n = k; n > 1; n-- ) {
+ 142              		.loc 1 55 18 view .LVU32
+ 143 00b4 40F82230 		str	r3, [r0, r2, lsl #2]
+  56:../../opus/silk/NLSF2A.c ****             out[n] += out[n-2] - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, out[n-1] ), QA 
+ 144              		.loc 1 56 9 is_stmt 1 view .LVU33
+ 145              	.LVL6:
+  56:../../opus/silk/NLSF2A.c ****             out[n] += out[n-2] - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, out[n-1] ), QA 
+ 146              		.loc 1 56 16 is_stmt 0 view .LVU34
+ 147 00b8 AC46     		mov	ip, r5
+  56:../../opus/silk/NLSF2A.c ****             out[n] += out[n-2] - (opus_int32)silk_RSHIFT_ROUND64( silk_SMULL( ftmp, out[n-1] ), QA 
+ 148              		.loc 1 56 9 view .LVU35
+ 149 00ba D2E7     		b	.L3
+ 150              	.LVL7:
+ 151              	.L7:
+  60:../../opus/silk/NLSF2A.c ****     }
+  61:../../opus/silk/NLSF2A.c **** }
+ 152              		.loc 1 61 1 view .LVU36
+ 153 00bc BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 5
+
+
+ 154              	.LVL8:
+ 155              	.L9:
+ 156              		.loc 1 61 1 view .LVU37
+ 157              		.align	2
+ 158              	.L8:
+ 159 00c0 FEFFFF3F 		.word	1073741822
+ 160              		.cfi_endproc
+ 161              	.LFE25:
+ 163              		.section	.text.silk_NLSF2A,"ax",%progbits
+ 164              		.align	1
+ 165              		.global	silk_NLSF2A
+ 166              		.syntax unified
+ 167              		.thumb
+ 168              		.thumb_func
+ 170              	silk_NLSF2A:
+ 171              	.LVL9:
+ 172              	.LFB26:
+  62:../../opus/silk/NLSF2A.c **** 
+  63:../../opus/silk/NLSF2A.c **** /* compute whitening filter coefficients from normalized line spectral frequencies */
+  64:../../opus/silk/NLSF2A.c **** void silk_NLSF2A(
+  65:../../opus/silk/NLSF2A.c ****     opus_int16                  *a_Q12,             /* O    monic whitening filter coefficients in 
+  66:../../opus/silk/NLSF2A.c ****     const opus_int16            *NLSF,              /* I    normalized line spectral frequencies in
+  67:../../opus/silk/NLSF2A.c ****     const opus_int              d,                  /* I    filter order (should be even)          
+  68:../../opus/silk/NLSF2A.c ****     int                         arch                /* I    Run-time architecture                  
+  69:../../opus/silk/NLSF2A.c **** )
+  70:../../opus/silk/NLSF2A.c **** {
+ 173              		.loc 1 70 1 is_stmt 1 view -0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 296
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177              		.loc 1 70 1 is_stmt 0 view .LVU39
+ 178 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 179              	.LCFI1:
+ 180              		.cfi_def_cfa_offset 20
+ 181              		.cfi_offset 4, -20
+ 182              		.cfi_offset 5, -16
+ 183              		.cfi_offset 6, -12
+ 184              		.cfi_offset 7, -8
+ 185              		.cfi_offset 14, -4
+ 186 0002 CDB0     		sub	sp, sp, #308
+ 187              	.LCFI2:
+ 188              		.cfi_def_cfa_offset 328
+ 189 0004 0646     		mov	r6, r0
+ 190 0006 1546     		mov	r5, r2
+  71:../../opus/silk/NLSF2A.c ****     /* This ordering was found to maximize quality. It improves numerical accuracy of
+  72:../../opus/silk/NLSF2A.c ****        silk_NLSF2A_find_poly() compared to "standard" ordering. */
+  73:../../opus/silk/NLSF2A.c ****     static const unsigned char ordering16[16] = {
+ 191              		.loc 1 73 5 is_stmt 1 view .LVU40
+  74:../../opus/silk/NLSF2A.c ****       0, 15, 8, 7, 4, 11, 12, 3, 2, 13, 10, 5, 6, 9, 14, 1
+  75:../../opus/silk/NLSF2A.c ****     };
+  76:../../opus/silk/NLSF2A.c ****     static const unsigned char ordering10[10] = {
+ 192              		.loc 1 76 5 view .LVU41
+  77:../../opus/silk/NLSF2A.c ****       0, 9, 6, 3, 4, 5, 8, 1, 2, 7
+  78:../../opus/silk/NLSF2A.c ****     };
+  79:../../opus/silk/NLSF2A.c ****     const unsigned char *ordering;
+ 193              		.loc 1 79 5 view .LVU42
+  80:../../opus/silk/NLSF2A.c ****     opus_int   k, i, dd;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 6
+
+
+ 194              		.loc 1 80 5 view .LVU43
+  81:../../opus/silk/NLSF2A.c ****     opus_int32 cos_LSF_QA[ SILK_MAX_ORDER_LPC ];
+ 195              		.loc 1 81 5 view .LVU44
+  82:../../opus/silk/NLSF2A.c ****     opus_int32 P[ SILK_MAX_ORDER_LPC / 2 + 1 ], Q[ SILK_MAX_ORDER_LPC / 2 + 1 ];
+ 196              		.loc 1 82 5 view .LVU45
+  83:../../opus/silk/NLSF2A.c ****     opus_int32 Ptmp, Qtmp, f_int, f_frac, cos_val, delta;
+ 197              		.loc 1 83 5 view .LVU46
+  84:../../opus/silk/NLSF2A.c ****     opus_int32 a32_QA1[ SILK_MAX_ORDER_LPC ];
+ 198              		.loc 1 84 5 view .LVU47
+  85:../../opus/silk/NLSF2A.c **** 
+  86:../../opus/silk/NLSF2A.c ****     silk_assert( LSF_COS_TAB_SZ_FIX == 128 );
+ 199              		.loc 1 86 45 view .LVU48
+  87:../../opus/silk/NLSF2A.c ****     celt_assert( d==10 || d==16 );
+ 200              		.loc 1 87 34 view .LVU49
+  88:../../opus/silk/NLSF2A.c **** 
+  89:../../opus/silk/NLSF2A.c ****     /* convert LSFs to 2*cos(LSF), using piecewise linear curve from table */
+  90:../../opus/silk/NLSF2A.c ****     ordering = d == 16 ? ordering16 : ordering10;
+ 201              		.loc 1 90 5 view .LVU50
+ 202              		.loc 1 90 37 is_stmt 0 view .LVU51
+ 203 0008 102A     		cmp	r2, #16
+ 204 000a 02D0     		beq	.L23
+ 205              		.loc 1 90 37 discriminator 2 view .LVU52
+ 206 000c 3B4C     		ldr	r4, .L24
+ 207              	.L11:
+ 208              	.LVL10:
+  91:../../opus/silk/NLSF2A.c ****     for( k = 0; k < d; k++ ) {
+ 209              		.loc 1 91 5 is_stmt 1 view .LVU53
+ 210              		.loc 1 91 12 is_stmt 0 view .LVU54
+ 211 000e 0020     		movs	r0, #0
+ 212              	.LVL11:
+ 213              		.loc 1 91 5 view .LVU55
+ 214 0010 1BE0     		b	.L12
+ 215              	.LVL12:
+ 216              	.L23:
+  90:../../opus/silk/NLSF2A.c ****     for( k = 0; k < d; k++ ) {
+ 217              		.loc 1 90 37 discriminator 1 view .LVU56
+ 218 0012 3B4C     		ldr	r4, .L24+4
+ 219 0014 FBE7     		b	.L11
+ 220              	.LVL13:
+ 221              	.L13:
+  92:../../opus/silk/NLSF2A.c ****         silk_assert( NLSF[k] >= 0 );
+ 222              		.loc 1 92 36 is_stmt 1 view .LVU57
+  93:../../opus/silk/NLSF2A.c **** 
+  94:../../opus/silk/NLSF2A.c ****         /* f_int on a scale 0-127 (rounded down) */
+  95:../../opus/silk/NLSF2A.c ****         f_int = silk_RSHIFT( NLSF[k], 15 - 7 );
+ 223              		.loc 1 95 9 view .LVU58
+ 224              		.loc 1 95 17 is_stmt 0 view .LVU59
+ 225 0016 31F91030 		ldrsh	r3, [r1, r0, lsl #1]
+ 226 001a 1A12     		asrs	r2, r3, #8
+ 227              	.LVL14:
+  96:../../opus/silk/NLSF2A.c **** 
+  97:../../opus/silk/NLSF2A.c ****         /* f_frac, range: 0..255 */
+  98:../../opus/silk/NLSF2A.c ****         f_frac = NLSF[k] - silk_LSHIFT( f_int, 15 - 7 );
+ 228              		.loc 1 98 9 is_stmt 1 view .LVU60
+ 229              		.loc 1 98 16 is_stmt 0 view .LVU61
+ 230 001c DBB2     		uxtb	r3, r3
+ 231              	.LVL15:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 7
+
+
+  99:../../opus/silk/NLSF2A.c **** 
+ 100:../../opus/silk/NLSF2A.c ****         silk_assert(f_int >= 0);
+ 232              		.loc 1 100 32 is_stmt 1 view .LVU62
+ 101:../../opus/silk/NLSF2A.c ****         silk_assert(f_int < LSF_COS_TAB_SZ_FIX );
+ 233              		.loc 1 101 49 view .LVU63
+ 102:../../opus/silk/NLSF2A.c **** 
+ 103:../../opus/silk/NLSF2A.c ****         /* Read start and end value from table */
+ 104:../../opus/silk/NLSF2A.c ****         cos_val = silk_LSFCosTab_FIX_Q12[ f_int ];                /* Q12 */
+ 234              		.loc 1 104 9 view .LVU64
+ 235              		.loc 1 104 41 is_stmt 0 view .LVU65
+ 236 001e DFF8E4C0 		ldr	ip, .L24+8
+ 237 0022 3CF91270 		ldrsh	r7, [ip, r2, lsl #1]
+ 238              	.LVL16:
+ 105:../../opus/silk/NLSF2A.c ****         delta   = silk_LSFCosTab_FIX_Q12[ f_int + 1 ] - cos_val;  /* Q12, with a range of 0..200 */
+ 239              		.loc 1 105 9 is_stmt 1 view .LVU66
+ 240              		.loc 1 105 49 is_stmt 0 view .LVU67
+ 241 0026 0132     		adds	r2, r2, #1
+ 242              	.LVL17:
+ 243              		.loc 1 105 41 view .LVU68
+ 244 0028 3CF91220 		ldrsh	r2, [ip, r2, lsl #1]
+ 245              	.LVL18:
+ 246              		.loc 1 105 17 view .LVU69
+ 247 002c D21B     		subs	r2, r2, r7
+ 248              	.LVL19:
+ 106:../../opus/silk/NLSF2A.c **** 
+ 107:../../opus/silk/NLSF2A.c ****         /* Linear interpolation */
+ 108:../../opus/silk/NLSF2A.c ****         cos_LSF_QA[ordering[k]] = silk_RSHIFT_ROUND( silk_LSHIFT( cos_val, 8 ) + silk_MUL( delta, f
+ 249              		.loc 1 108 9 is_stmt 1 view .LVU70
+ 250              		.loc 1 108 35 is_stmt 0 view .LVU71
+ 251 002e 02FB03F3 		mul	r3, r2, r3
+ 252              	.LVL20:
+ 253              		.loc 1 108 35 view .LVU72
+ 254 0032 03EB0723 		add	r3, r3, r7, lsl #8
+ 255 0036 DB10     		asrs	r3, r3, #3
+ 256 0038 0133     		adds	r3, r3, #1
+ 257              		.loc 1 108 28 view .LVU73
+ 258 003a 225C     		ldrb	r2, [r4, r0]	@ zero_extendqisi2
+ 259              	.LVL21:
+ 260              		.loc 1 108 35 view .LVU74
+ 261 003c 5B10     		asrs	r3, r3, #1
+ 262              		.loc 1 108 33 view .LVU75
+ 263 003e 4CAF     		add	r7, sp, #304
+ 264              	.LVL22:
+ 265              		.loc 1 108 33 view .LVU76
+ 266 0040 07EB8202 		add	r2, r7, r2, lsl #2
+ 267 0044 42F8603C 		str	r3, [r2, #-96]
+ 268              	.LVL23:
+  91:../../opus/silk/NLSF2A.c ****         silk_assert( NLSF[k] >= 0 );
+ 269              		.loc 1 91 25 is_stmt 1 discriminator 3 view .LVU77
+ 270 0048 0130     		adds	r0, r0, #1
+ 271              	.LVL24:
+ 272              	.L12:
+  91:../../opus/silk/NLSF2A.c ****         silk_assert( NLSF[k] >= 0 );
+ 273              		.loc 1 91 19 discriminator 1 view .LVU78
+ 274 004a A842     		cmp	r0, r5
+ 275 004c E3DB     		blt	.L13
+ 109:../../opus/silk/NLSF2A.c ****     }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 8
+
+
+ 110:../../opus/silk/NLSF2A.c **** 
+ 111:../../opus/silk/NLSF2A.c ****     dd = silk_RSHIFT( d, 1 );
+ 276              		.loc 1 111 5 view .LVU79
+ 277              		.loc 1 111 8 is_stmt 0 view .LVU80
+ 278 004e 6C10     		asrs	r4, r5, #1
+ 279              	.LVL25:
+ 112:../../opus/silk/NLSF2A.c **** 
+ 113:../../opus/silk/NLSF2A.c ****     /* generate even and odd polynomials using convolution */
+ 114:../../opus/silk/NLSF2A.c ****     silk_NLSF2A_find_poly( P, &cos_LSF_QA[ 0 ], dd );
+ 280              		.loc 1 114 5 is_stmt 1 view .LVU81
+ 281 0050 2246     		mov	r2, r4
+ 282 0052 34A9     		add	r1, sp, #208
+ 283              	.LVL26:
+ 284              		.loc 1 114 5 is_stmt 0 view .LVU82
+ 285 0054 27A8     		add	r0, sp, #156
+ 286              	.LVL27:
+ 287              		.loc 1 114 5 view .LVU83
+ 288 0056 FFF7FEFF 		bl	silk_NLSF2A_find_poly
+ 289              	.LVL28:
+ 115:../../opus/silk/NLSF2A.c ****     silk_NLSF2A_find_poly( Q, &cos_LSF_QA[ 1 ], dd );
+ 290              		.loc 1 115 5 is_stmt 1 view .LVU84
+ 291 005a 2246     		mov	r2, r4
+ 292 005c 35A9     		add	r1, sp, #212
+ 293 005e 1AA8     		add	r0, sp, #104
+ 294 0060 FFF7FEFF 		bl	silk_NLSF2A_find_poly
+ 295              	.LVL29:
+ 116:../../opus/silk/NLSF2A.c **** 
+ 117:../../opus/silk/NLSF2A.c ****     /* convert even and odd polynomials to opus_int32 Q12 filter coefs */
+ 118:../../opus/silk/NLSF2A.c ****     for( k = 0; k < dd; k++ ) {
+ 296              		.loc 1 118 5 view .LVU85
+ 297              		.loc 1 118 12 is_stmt 0 view .LVU86
+ 298 0064 0023     		movs	r3, #0
+ 299              		.loc 1 118 5 view .LVU87
+ 300 0066 1DE0     		b	.L14
+ 301              	.LVL30:
+ 302              	.L15:
+ 119:../../opus/silk/NLSF2A.c ****         Ptmp = P[ k+1 ] + P[ k ];
+ 303              		.loc 1 119 9 is_stmt 1 view .LVU88
+ 304              		.loc 1 119 20 is_stmt 0 view .LVU89
+ 305 0068 5F1C     		adds	r7, r3, #1
+ 306              		.loc 1 119 17 view .LVU90
+ 307 006a 4CAA     		add	r2, sp, #304
+ 308 006c 02EB870C 		add	ip, r2, r7, lsl #2
+ 309 0070 5CF8941C 		ldr	r1, [ip, #-148]
+ 310              		.loc 1 119 28 view .LVU91
+ 311 0074 02EB8302 		add	r2, r2, r3, lsl #2
+ 312 0078 52F8940C 		ldr	r0, [r2, #-148]
+ 313              		.loc 1 119 14 view .LVU92
+ 314 007c 0144     		add	r1, r1, r0
+ 315              	.LVL31:
+ 120:../../opus/silk/NLSF2A.c ****         Qtmp = Q[ k+1 ] - Q[ k ];
+ 316              		.loc 1 120 9 is_stmt 1 view .LVU93
+ 317              		.loc 1 120 17 is_stmt 0 view .LVU94
+ 318 007e 5CF8C8CC 		ldr	ip, [ip, #-200]
+ 319              		.loc 1 120 28 view .LVU95
+ 320 0082 52F8C82C 		ldr	r2, [r2, #-200]
+ 321              		.loc 1 120 14 view .LVU96
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 9
+
+
+ 322 0086 ACEB0200 		sub	r0, ip, r2
+ 323              	.LVL32:
+ 121:../../opus/silk/NLSF2A.c **** 
+ 122:../../opus/silk/NLSF2A.c ****         /* the Ptmp and Qtmp values at this stage need to fit in int32 */
+ 123:../../opus/silk/NLSF2A.c ****         a32_QA1[ k ]     = -Qtmp - Ptmp;        /* QA+1 */
+ 324              		.loc 1 123 9 is_stmt 1 view .LVU97
+ 325              		.loc 1 123 28 is_stmt 0 view .LVU98
+ 326 008a A2EB0C02 		sub	r2, r2, ip
+ 327              		.loc 1 123 34 view .LVU99
+ 328 008e 521A     		subs	r2, r2, r1
+ 329              		.loc 1 123 26 view .LVU100
+ 330 0090 0DF1080C 		add	ip, sp, #8
+ 331 0094 4CF82320 		str	r2, [ip, r3, lsl #2]
+ 124:../../opus/silk/NLSF2A.c ****         a32_QA1[ d-k-1 ] =  Qtmp - Ptmp;        /* QA+1 */
+ 332              		.loc 1 124 9 is_stmt 1 view .LVU101
+ 333              		.loc 1 124 19 is_stmt 0 view .LVU102
+ 334 0098 EB1A     		subs	r3, r5, r3
+ 335              	.LVL33:
+ 336              		.loc 1 124 21 view .LVU103
+ 337 009a 013B     		subs	r3, r3, #1
+ 338              		.loc 1 124 34 view .LVU104
+ 339 009c 411A     		subs	r1, r0, r1
+ 340              	.LVL34:
+ 341              		.loc 1 124 26 view .LVU105
+ 342 009e 4CF82310 		str	r1, [ip, r3, lsl #2]
+ 118:../../opus/silk/NLSF2A.c ****         Ptmp = P[ k+1 ] + P[ k ];
+ 343              		.loc 1 118 26 is_stmt 1 discriminator 3 view .LVU106
+ 344              	.LVL35:
+ 118:../../opus/silk/NLSF2A.c ****         Ptmp = P[ k+1 ] + P[ k ];
+ 345              		.loc 1 118 26 is_stmt 0 discriminator 3 view .LVU107
+ 346 00a2 3B46     		mov	r3, r7
+ 347              	.LVL36:
+ 348              	.L14:
+ 118:../../opus/silk/NLSF2A.c ****         Ptmp = P[ k+1 ] + P[ k ];
+ 349              		.loc 1 118 19 is_stmt 1 discriminator 1 view .LVU108
+ 350 00a4 A342     		cmp	r3, r4
+ 351 00a6 DFDB     		blt	.L15
+ 125:../../opus/silk/NLSF2A.c ****     }
+ 126:../../opus/silk/NLSF2A.c **** 
+ 127:../../opus/silk/NLSF2A.c ****     /* Convert int32 coefficients to Q12 int16 coefs */
+ 128:../../opus/silk/NLSF2A.c ****     silk_LPC_fit( a_Q12, a32_QA1, 12, QA + 1, d );
+ 352              		.loc 1 128 5 view .LVU109
+ 353 00a8 0095     		str	r5, [sp]
+ 354 00aa 1123     		movs	r3, #17
+ 355              	.LVL37:
+ 356              		.loc 1 128 5 is_stmt 0 view .LVU110
+ 357 00ac 0C22     		movs	r2, #12
+ 358 00ae 02A9     		add	r1, sp, #8
+ 359 00b0 3046     		mov	r0, r6
+ 360 00b2 FFF7FEFF 		bl	silk_LPC_fit
+ 361              	.LVL38:
+ 129:../../opus/silk/NLSF2A.c **** 
+ 130:../../opus/silk/NLSF2A.c ****     for( i = 0; silk_LPC_inverse_pred_gain( a_Q12, d, arch ) == 0 && i < MAX_LPC_STABILIZE_ITERATIO
+ 362              		.loc 1 130 5 is_stmt 1 view .LVU111
+ 363              		.loc 1 130 12 is_stmt 0 view .LVU112
+ 364 00b6 0027     		movs	r7, #0
+ 365              		.loc 1 130 5 view .LVU113
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 10
+
+
+ 366 00b8 0CE0     		b	.L16
+ 367              	.LVL39:
+ 368              	.L18:
+ 131:../../opus/silk/NLSF2A.c ****         /* Prediction coefficients are (too close to) unstable; apply bandwidth expansion   */
+ 132:../../opus/silk/NLSF2A.c ****         /* on the unscaled coefficients, convert to Q12 and measure again                   */
+ 133:../../opus/silk/NLSF2A.c ****         silk_bwexpander_32( a32_QA1, d, 65536 - silk_LSHIFT( 2, i ) );
+ 134:../../opus/silk/NLSF2A.c ****         for( k = 0; k < d; k++ ) {
+ 135:../../opus/silk/NLSF2A.c ****             a_Q12[ k ] = (opus_int16)silk_RSHIFT_ROUND( a32_QA1[ k ], QA + 1 - 12 );            /* 
+ 369              		.loc 1 135 13 is_stmt 1 view .LVU114
+ 370              		.loc 1 135 38 is_stmt 0 view .LVU115
+ 371 00ba 02AB     		add	r3, sp, #8
+ 372 00bc 53F82430 		ldr	r3, [r3, r4, lsl #2]
+ 373 00c0 1B11     		asrs	r3, r3, #4
+ 374 00c2 0133     		adds	r3, r3, #1
+ 375              		.loc 1 135 26 view .LVU116
+ 376 00c4 43F34F03 		sbfx	r3, r3, #1, #16
+ 377              		.loc 1 135 24 view .LVU117
+ 378 00c8 26F81430 		strh	r3, [r6, r4, lsl #1]	@ movhi
+ 134:../../opus/silk/NLSF2A.c ****             a_Q12[ k ] = (opus_int16)silk_RSHIFT_ROUND( a32_QA1[ k ], QA + 1 - 12 );            /* 
+ 379              		.loc 1 134 29 is_stmt 1 discriminator 3 view .LVU118
+ 380 00cc 0134     		adds	r4, r4, #1
+ 381              	.LVL40:
+ 382              	.L17:
+ 134:../../opus/silk/NLSF2A.c ****             a_Q12[ k ] = (opus_int16)silk_RSHIFT_ROUND( a32_QA1[ k ], QA + 1 - 12 );            /* 
+ 383              		.loc 1 134 23 discriminator 1 view .LVU119
+ 384 00ce AC42     		cmp	r4, r5
+ 385 00d0 F3DB     		blt	.L18
+ 130:../../opus/silk/NLSF2A.c ****         /* Prediction coefficients are (too close to) unstable; apply bandwidth expansion   */
+ 386              		.loc 1 130 105 discriminator 2 view .LVU120
+ 387 00d2 0137     		adds	r7, r7, #1
+ 388              	.LVL41:
+ 389              	.L16:
+ 130:../../opus/silk/NLSF2A.c ****         /* Prediction coefficients are (too close to) unstable; apply bandwidth expansion   */
+ 390              		.loc 1 130 67 discriminator 1 view .LVU121
+ 130:../../opus/silk/NLSF2A.c ****         /* Prediction coefficients are (too close to) unstable; apply bandwidth expansion   */
+ 391              		.loc 1 130 17 is_stmt 0 discriminator 1 view .LVU122
+ 392 00d4 2946     		mov	r1, r5
+ 393 00d6 3046     		mov	r0, r6
+ 394 00d8 FFF7FEFF 		bl	silk_LPC_inverse_pred_gain_c
+ 395              	.LVL42:
+ 130:../../opus/silk/NLSF2A.c ****         /* Prediction coefficients are (too close to) unstable; apply bandwidth expansion   */
+ 396              		.loc 1 130 67 discriminator 1 view .LVU123
+ 397 00dc 0446     		mov	r4, r0
+ 398 00de 50B9     		cbnz	r0, .L10
+ 130:../../opus/silk/NLSF2A.c ****         /* Prediction coefficients are (too close to) unstable; apply bandwidth expansion   */
+ 399              		.loc 1 130 67 discriminator 3 view .LVU124
+ 400 00e0 0F2F     		cmp	r7, #15
+ 401 00e2 08DC     		bgt	.L10
+ 133:../../opus/silk/NLSF2A.c ****         for( k = 0; k < d; k++ ) {
+ 402              		.loc 1 133 9 is_stmt 1 view .LVU125
+ 133:../../opus/silk/NLSF2A.c ****         for( k = 0; k < d; k++ ) {
+ 403              		.loc 1 133 49 is_stmt 0 view .LVU126
+ 404 00e4 0222     		movs	r2, #2
+ 405 00e6 BA40     		lsls	r2, r2, r7
+ 133:../../opus/silk/NLSF2A.c ****         for( k = 0; k < d; k++ ) {
+ 406              		.loc 1 133 9 view .LVU127
+ 407 00e8 C2F58032 		rsb	r2, r2, #65536
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 11
+
+
+ 408 00ec 2946     		mov	r1, r5
+ 409 00ee 02A8     		add	r0, sp, #8
+ 410 00f0 FFF7FEFF 		bl	silk_bwexpander_32
+ 411              	.LVL43:
+ 134:../../opus/silk/NLSF2A.c ****             a_Q12[ k ] = (opus_int16)silk_RSHIFT_ROUND( a32_QA1[ k ], QA + 1 - 12 );            /* 
+ 412              		.loc 1 134 9 is_stmt 1 view .LVU128
+ 134:../../opus/silk/NLSF2A.c ****             a_Q12[ k ] = (opus_int16)silk_RSHIFT_ROUND( a32_QA1[ k ], QA + 1 - 12 );            /* 
+ 413              		.loc 1 134 9 is_stmt 0 view .LVU129
+ 414 00f4 EBE7     		b	.L17
+ 415              	.LVL44:
+ 416              	.L10:
+ 136:../../opus/silk/NLSF2A.c ****         }
+ 137:../../opus/silk/NLSF2A.c ****     }
+ 138:../../opus/silk/NLSF2A.c **** }
+ 417              		.loc 1 138 1 view .LVU130
+ 418 00f6 4DB0     		add	sp, sp, #308
+ 419              	.LCFI3:
+ 420              		.cfi_def_cfa_offset 20
+ 421              		@ sp needed
+ 422 00f8 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 423              	.LVL45:
+ 424              	.L25:
+ 425              		.loc 1 138 1 view .LVU131
+ 426 00fa 00BF     		.align	2
+ 427              	.L24:
+ 428 00fc 00000000 		.word	ordering10.0
+ 429 0100 00000000 		.word	ordering16.1
+ 430 0104 00000000 		.word	silk_LSFCosTab_FIX_Q12
+ 431              		.cfi_endproc
+ 432              	.LFE26:
+ 434              		.section	.rodata.ordering10.0,"a"
+ 435              		.align	2
+ 438              	ordering10.0:
+ 439 0000 00090603 		.ascii	"\000\011\006\003\004\005\010\001\002\007"
+ 439      04050801 
+ 439      0207
+ 440              		.section	.rodata.ordering16.1,"a"
+ 441              		.align	2
+ 444              	ordering16.1:
+ 445 0000 000F0807 		.ascii	"\000\017\010\007\004\013\014\003\002\015\012\005\006"
+ 445      040B0C03 
+ 445      020D0A05 
+ 445      06
+ 446 000d 090E01   		.ascii	"\011\016\001"
+ 447              		.text
+ 448              	.Letext0:
+ 449              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 450              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 451              		.file 4 "../../opus/include/opus_types.h"
+ 452              		.file 5 "../../opus/silk/SigProc_FIX.h"
+ 453              		.file 6 "../../opus/silk/tables.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NLSF2A.c
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:20     .text.silk_NLSF2A_find_poly:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:25     .text.silk_NLSF2A_find_poly:00000000 silk_NLSF2A_find_poly
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:159    .text.silk_NLSF2A_find_poly:000000c0 $d
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:164    .text.silk_NLSF2A:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:170    .text.silk_NLSF2A:00000000 silk_NLSF2A
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:428    .text.silk_NLSF2A:000000fc $d
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:438    .rodata.ordering10.0:00000000 ordering10.0
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:444    .rodata.ordering16.1:00000000 ordering16.1
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:435    .rodata.ordering10.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccfzgsIL.s:441    .rodata.ordering16.1:00000000 $d
+
+UNDEFINED SYMBOLS
+silk_LPC_fit
+silk_LPC_inverse_pred_gain_c
+silk_bwexpander_32
+silk_LSFCosTab_FIX_Q12

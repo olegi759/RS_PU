@@ -1,0 +1,1040 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"resampler.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/resampler.c"
+  19              		.section	.text.silk_resampler_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_resampler_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_resampler_init:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/resampler.c **** /***********************************************************************
+   2:../../opus/silk/resampler.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/resampler.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/resampler.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/resampler.c **** are met:
+   6:../../opus/silk/resampler.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/resampler.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/resampler.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/resampler.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/resampler.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/resampler.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/resampler.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/resampler.c **** products derived from this software without specific prior written
+  14:../../opus/silk/resampler.c **** permission.
+  15:../../opus/silk/resampler.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/resampler.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/resampler.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/resampler.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/resampler.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/resampler.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/resampler.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/resampler.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/resampler.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/resampler.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/resampler.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/resampler.c **** ***********************************************************************/
+  27:../../opus/silk/resampler.c **** 
+  28:../../opus/silk/resampler.c **** #include "opus_config.h"
+  29:../../opus/silk/resampler.c **** 
+  30:../../opus/silk/resampler.c **** /*
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 2
+
+
+  31:../../opus/silk/resampler.c ****  * Matrix of resampling methods used:
+  32:../../opus/silk/resampler.c ****  *                                 Fs_out (kHz)
+  33:../../opus/silk/resampler.c ****  *                        8      12     16     24     48
+  34:../../opus/silk/resampler.c ****  *
+  35:../../opus/silk/resampler.c ****  *               8        C      UF     U      UF     UF
+  36:../../opus/silk/resampler.c ****  *              12        AF     C      UF     U      UF
+  37:../../opus/silk/resampler.c ****  * Fs_in (kHz)  16        D      AF     C      UF     UF
+  38:../../opus/silk/resampler.c ****  *              24        AF     D      AF     C      U
+  39:../../opus/silk/resampler.c ****  *              48        AF     AF     AF     D      C
+  40:../../opus/silk/resampler.c ****  *
+  41:../../opus/silk/resampler.c ****  * C   -> Copy (no resampling)
+  42:../../opus/silk/resampler.c ****  * D   -> Allpass-based 2x downsampling
+  43:../../opus/silk/resampler.c ****  * U   -> Allpass-based 2x upsampling
+  44:../../opus/silk/resampler.c ****  * UF  -> Allpass-based 2x upsampling followed by FIR interpolation
+  45:../../opus/silk/resampler.c ****  * AF  -> AR2 filter followed by FIR interpolation
+  46:../../opus/silk/resampler.c ****  */
+  47:../../opus/silk/resampler.c **** 
+  48:../../opus/silk/resampler.c **** #include "resampler_private.h"
+  49:../../opus/silk/resampler.c **** 
+  50:../../opus/silk/resampler.c **** /* Tables with delay compensation values to equalize total delay for different modes */
+  51:../../opus/silk/resampler.c **** static const opus_int8 delay_matrix_enc[ 5 ][ 3 ] = {
+  52:../../opus/silk/resampler.c **** /* in  \ out  8  12  16 */
+  53:../../opus/silk/resampler.c **** /*  8 */   {  6,  0,  3 },
+  54:../../opus/silk/resampler.c **** /* 12 */   {  0,  7,  3 },
+  55:../../opus/silk/resampler.c **** /* 16 */   {  0,  1, 10 },
+  56:../../opus/silk/resampler.c **** /* 24 */   {  0,  2,  6 },
+  57:../../opus/silk/resampler.c **** /* 48 */   { 18, 10, 12 }
+  58:../../opus/silk/resampler.c **** };
+  59:../../opus/silk/resampler.c **** 
+  60:../../opus/silk/resampler.c **** static const opus_int8 delay_matrix_dec[ 3 ][ 5 ] = {
+  61:../../opus/silk/resampler.c **** /* in  \ out  8  12  16  24  48 */
+  62:../../opus/silk/resampler.c **** /*  8 */   {  4,  0,  2,  0,  0 },
+  63:../../opus/silk/resampler.c **** /* 12 */   {  0,  9,  4,  7,  4 },
+  64:../../opus/silk/resampler.c **** /* 16 */   {  0,  3, 12,  7,  7 }
+  65:../../opus/silk/resampler.c **** };
+  66:../../opus/silk/resampler.c **** 
+  67:../../opus/silk/resampler.c **** /* Simple way to make [8000, 12000, 16000, 24000, 48000] to [0, 1, 2, 3, 4] */
+  68:../../opus/silk/resampler.c **** #define rateID(R) ( ( ( ((R)>>12) - ((R)>16000) ) >> ((R)>24000) ) - 1 )
+  69:../../opus/silk/resampler.c **** 
+  70:../../opus/silk/resampler.c **** #define USE_silk_resampler_copy                     (0)
+  71:../../opus/silk/resampler.c **** #define USE_silk_resampler_private_up2_HQ_wrapper   (1)
+  72:../../opus/silk/resampler.c **** #define USE_silk_resampler_private_IIR_FIR          (2)
+  73:../../opus/silk/resampler.c **** #define USE_silk_resampler_private_down_FIR         (3)
+  74:../../opus/silk/resampler.c **** 
+  75:../../opus/silk/resampler.c **** /* Initialize/reset the resampler state for a given pair of input/output sampling rates */
+  76:../../opus/silk/resampler.c **** opus_int silk_resampler_init(
+  77:../../opus/silk/resampler.c ****     silk_resampler_state_struct *S,                 /* I/O  Resampler state                        
+  78:../../opus/silk/resampler.c ****     opus_int32                  Fs_Hz_in,           /* I    Input sampling rate (Hz)               
+  79:../../opus/silk/resampler.c ****     opus_int32                  Fs_Hz_out,          /* I    Output sampling rate (Hz)              
+  80:../../opus/silk/resampler.c ****     opus_int                    forEnc              /* I    If 1: encoder; if 0: decoder           
+  81:../../opus/silk/resampler.c **** )
+  82:../../opus/silk/resampler.c **** {
+  29              		.loc 1 82 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 82 1 is_stmt 0 view .LVU1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 3
+
+
+  34 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 24
+  37              		.cfi_offset 3, -24
+  38              		.cfi_offset 4, -20
+  39              		.cfi_offset 5, -16
+  40              		.cfi_offset 6, -12
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0002 0546     		mov	r5, r0
+  44 0004 0E46     		mov	r6, r1
+  45 0006 1446     		mov	r4, r2
+  46 0008 1F46     		mov	r7, r3
+  83:../../opus/silk/resampler.c ****     opus_int up2x;
+  47              		.loc 1 83 5 is_stmt 1 view .LVU2
+  84:../../opus/silk/resampler.c **** 
+  85:../../opus/silk/resampler.c ****     /* Clear state */
+  86:../../opus/silk/resampler.c ****     silk_memset( S, 0, sizeof( silk_resampler_state_struct ) );
+  48              		.loc 1 86 5 view .LVU3
+  49 000a 4FF49672 		mov	r2, #300
+  50              	.LVL1:
+  51              		.loc 1 86 5 is_stmt 0 view .LVU4
+  52 000e 0021     		movs	r1, #0
+  53              	.LVL2:
+  54              		.loc 1 86 5 view .LVU5
+  55 0010 FFF7FEFF 		bl	memset
+  56              	.LVL3:
+  87:../../opus/silk/resampler.c **** 
+  88:../../opus/silk/resampler.c ****     /* Input checking */
+  89:../../opus/silk/resampler.c ****     if( forEnc ) {
+  57              		.loc 1 89 5 is_stmt 1 view .LVU6
+  58              		.loc 1 89 7 is_stmt 0 view .LVU7
+  59 0014 002F     		cmp	r7, #0
+  60 0016 69D0     		beq	.L2
+  90:../../opus/silk/resampler.c ****         if( ( Fs_Hz_in  != 8000 && Fs_Hz_in  != 12000 && Fs_Hz_in  != 16000 && Fs_Hz_in  != 24000 &
+  61              		.loc 1 90 9 is_stmt 1 view .LVU8
+  62              		.loc 1 90 11 is_stmt 0 view .LVU9
+  63 0018 42F6E063 		movw	r3, #12000
+  64 001c B6F5FA5F 		cmp	r6, #8000
+  65 0020 18BF     		it	ne
+  66 0022 9E42     		cmpne	r6, r3
+  67 0024 0DD0     		beq	.L3
+  68              		.loc 1 90 90 discriminator 1 view .LVU10
+  69 0026 45F6C053 		movw	r3, #24000
+  70 002a F31A     		subs	r3, r6, r3
+  71 002c 18BF     		it	ne
+  72 002e 0123     		movne	r3, #1
+  73              		.loc 1 90 77 discriminator 1 view .LVU11
+  74 0030 B6F57A5F 		cmp	r6, #16000
+  75 0034 05D0     		beq	.L3
+  76 0036 23B1     		cbz	r3, .L3
+  77              		.loc 1 90 99 discriminator 3 view .LVU12
+  78 0038 4BF68033 		movw	r3, #48000
+  79 003c 9E42     		cmp	r6, r3
+  80 003e 40F01781 		bne	.L19
+  81              	.L3:
+  82              		.loc 1 90 123 discriminator 5 view .LVU13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 4
+
+
+  83 0042 42F6E063 		movw	r3, #12000
+  84 0046 B4F5FA5F 		cmp	r4, #8000
+  85 004a 18BF     		it	ne
+  86 004c 9C42     		cmpne	r4, r3
+  87 004e 03D0     		beq	.L5
+  91:../../opus/silk/resampler.c ****             ( Fs_Hz_out != 8000 && Fs_Hz_out != 12000 && Fs_Hz_out != 16000 ) ) {
+  88              		.loc 1 91 55 view .LVU14
+  89 0050 B4F57A5F 		cmp	r4, #16000
+  90 0054 40F00F81 		bne	.L20
+  91              	.L5:
+  92:../../opus/silk/resampler.c ****             celt_assert( 0 );
+  93:../../opus/silk/resampler.c ****             return -1;
+  94:../../opus/silk/resampler.c ****         }
+  95:../../opus/silk/resampler.c ****         S->inputDelay = delay_matrix_enc[ rateID( Fs_Hz_in ) ][ rateID( Fs_Hz_out ) ];
+  92              		.loc 1 95 9 is_stmt 1 view .LVU15
+  93              		.loc 1 95 43 is_stmt 0 view .LVU16
+  94 0058 B6F57A5F 		cmp	r6, #16000
+  95 005c D4BF     		ite	le
+  96 005e 0023     		movle	r3, #0
+  97 0060 0123     		movgt	r3, #1
+  98 0062 C3EB2633 		rsb	r3, r3, r6, asr #12
+  99 0066 45F6C051 		movw	r1, #24000
+ 100 006a 8E42     		cmp	r6, r1
+ 101 006c D4BF     		ite	le
+ 102 006e 0022     		movle	r2, #0
+ 103 0070 0122     		movgt	r2, #1
+ 104 0072 1341     		asrs	r3, r3, r2
+ 105 0074 013B     		subs	r3, r3, #1
+ 106              		.loc 1 95 65 view .LVU17
+ 107 0076 B4F57A5F 		cmp	r4, #16000
+ 108 007a D4BF     		ite	le
+ 109 007c 0022     		movle	r2, #0
+ 110 007e 0122     		movgt	r2, #1
+ 111 0080 C2EB2432 		rsb	r2, r2, r4, asr #12
+ 112 0084 8C42     		cmp	r4, r1
+ 113 0086 D4BF     		ite	le
+ 114 0088 0021     		movle	r1, #0
+ 115 008a 0121     		movgt	r1, #1
+ 116 008c 0A41     		asrs	r2, r2, r1
+ 117 008e 013A     		subs	r2, r2, #1
+ 118              		.loc 1 95 63 view .LVU18
+ 119 0090 03EB4303 		add	r3, r3, r3, lsl #1
+ 120 0094 7E49     		ldr	r1, .L32
+ 121 0096 0B44     		add	r3, r3, r1
+ 122 0098 9B56     		ldrsb	r3, [r3, r2]
+ 123              		.loc 1 95 23 view .LVU19
+ 124 009a C5F82431 		str	r3, [r5, #292]
+ 125              	.L6:
+  96:../../opus/silk/resampler.c ****     } else {
+  97:../../opus/silk/resampler.c ****         if( ( Fs_Hz_in  != 8000 && Fs_Hz_in  != 12000 && Fs_Hz_in  != 16000 ) ||
+  98:../../opus/silk/resampler.c ****             ( Fs_Hz_out != 8000 && Fs_Hz_out != 12000 && Fs_Hz_out != 16000 && Fs_Hz_out != 24000 &
+  99:../../opus/silk/resampler.c ****             celt_assert( 0 );
+ 100:../../opus/silk/resampler.c ****             return -1;
+ 101:../../opus/silk/resampler.c ****         }
+ 102:../../opus/silk/resampler.c ****         S->inputDelay = delay_matrix_dec[ rateID( Fs_Hz_in ) ][ rateID( Fs_Hz_out ) ];
+ 103:../../opus/silk/resampler.c ****     }
+ 104:../../opus/silk/resampler.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 5
+
+
+ 105:../../opus/silk/resampler.c ****     S->Fs_in_kHz  = silk_DIV32_16( Fs_Hz_in,  1000 );
+ 126              		.loc 1 105 5 is_stmt 1 view .LVU20
+ 127              		.loc 1 105 21 is_stmt 0 view .LVU21
+ 128 009e 7D4A     		ldr	r2, .L32+4
+ 129 00a0 82FB0631 		smull	r3, r1, r2, r6
+ 130 00a4 F317     		asrs	r3, r6, #31
+ 131 00a6 C3EBA113 		rsb	r3, r3, r1, asr #6
+ 132              		.loc 1 105 19 view .LVU22
+ 133 00aa C5F81C31 		str	r3, [r5, #284]
+ 106:../../opus/silk/resampler.c ****     S->Fs_out_kHz = silk_DIV32_16( Fs_Hz_out, 1000 );
+ 134              		.loc 1 106 5 is_stmt 1 view .LVU23
+ 135              		.loc 1 106 21 is_stmt 0 view .LVU24
+ 136 00ae 82FB0412 		smull	r1, r2, r2, r4
+ 137 00b2 E117     		asrs	r1, r4, #31
+ 138 00b4 C1EBA212 		rsb	r2, r1, r2, asr #6
+ 139              		.loc 1 106 19 view .LVU25
+ 140 00b8 C5F82021 		str	r2, [r5, #288]
+ 107:../../opus/silk/resampler.c **** 
+ 108:../../opus/silk/resampler.c ****     /* Number of samples processed per batch */
+ 109:../../opus/silk/resampler.c ****     S->batchSize = S->Fs_in_kHz * RESAMPLER_MAX_BATCH_SIZE_MS;
+ 141              		.loc 1 109 5 is_stmt 1 view .LVU26
+ 142              		.loc 1 109 33 is_stmt 0 view .LVU27
+ 143 00bc 03EB8303 		add	r3, r3, r3, lsl #2
+ 144 00c0 5B00     		lsls	r3, r3, #1
+ 145              		.loc 1 109 18 view .LVU28
+ 146 00c2 C5F80C31 		str	r3, [r5, #268]
+ 110:../../opus/silk/resampler.c **** 
+ 111:../../opus/silk/resampler.c ****     /* Find resampler with the right sampling ratio */
+ 112:../../opus/silk/resampler.c ****     up2x = 0;
+ 147              		.loc 1 112 5 is_stmt 1 view .LVU29
+ 148              	.LVL4:
+ 113:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 149              		.loc 1 113 5 view .LVU30
+ 150              		.loc 1 113 7 is_stmt 0 view .LVU31
+ 151 00c6 A642     		cmp	r6, r4
+ 152 00c8 59DA     		bge	.L9
+ 114:../../opus/silk/resampler.c ****         /* Upsample */
+ 115:../../opus/silk/resampler.c ****         if( Fs_Hz_out == silk_MUL( Fs_Hz_in, 2 ) ) {                            /* Fs_out : Fs_in =
+ 153              		.loc 1 115 9 is_stmt 1 view .LVU32
+ 154              		.loc 1 115 11 is_stmt 0 view .LVU33
+ 155 00ca B4EB460F 		cmp	r4, r6, lsl #1
+ 156 00ce 51D0     		beq	.L26
+ 116:../../opus/silk/resampler.c ****             /* Special case: directly use 2x upsampler */
+ 117:../../opus/silk/resampler.c ****             S->resampler_function = USE_silk_resampler_private_up2_HQ_wrapper;
+ 118:../../opus/silk/resampler.c ****         } else {
+ 119:../../opus/silk/resampler.c ****             /* Default resampler */
+ 120:../../opus/silk/resampler.c ****             S->resampler_function = USE_silk_resampler_private_IIR_FIR;
+ 157              		.loc 1 120 13 is_stmt 1 view .LVU34
+ 158              		.loc 1 120 35 is_stmt 0 view .LVU35
+ 159 00d0 0223     		movs	r3, #2
+ 160 00d2 C5F80831 		str	r3, [r5, #264]
+ 121:../../opus/silk/resampler.c ****             up2x = 1;
+ 161              		.loc 1 121 13 is_stmt 1 view .LVU36
+ 162              	.LVL5:
+ 163              		.loc 1 121 18 is_stmt 0 view .LVU37
+ 164 00d6 0120     		movs	r0, #1
+ 165              	.LVL6:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 6
+
+
+ 166              	.L11:
+ 122:../../opus/silk/resampler.c ****         }
+ 123:../../opus/silk/resampler.c ****     } else if ( Fs_Hz_out < Fs_Hz_in ) {
+ 124:../../opus/silk/resampler.c ****         /* Downsample */
+ 125:../../opus/silk/resampler.c ****          S->resampler_function = USE_silk_resampler_private_down_FIR;
+ 126:../../opus/silk/resampler.c ****         if( silk_MUL( Fs_Hz_out, 4 ) == silk_MUL( Fs_Hz_in, 3 ) ) {             /* Fs_out : Fs_in =
+ 127:../../opus/silk/resampler.c ****             S->FIR_Fracs = 3;
+ 128:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR0;
+ 129:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_3_4_COEFS;
+ 130:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 3 ) == silk_MUL( Fs_Hz_in, 2 ) ) {      /* Fs_out : Fs_in =
+ 131:../../opus/silk/resampler.c ****             S->FIR_Fracs = 2;
+ 132:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR0;
+ 133:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_2_3_COEFS;
+ 134:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 2 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 135:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 136:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR1;
+ 137:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_2_COEFS;
+ 138:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 3 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 139:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 140:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 141:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_3_COEFS;
+ 142:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 4 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 143:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 144:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 145:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_4_COEFS;
+ 146:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 6 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 147:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 148:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 149:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_6_COEFS;
+ 150:../../opus/silk/resampler.c ****         } else {
+ 151:../../opus/silk/resampler.c ****             /* None available */
+ 152:../../opus/silk/resampler.c ****             celt_assert( 0 );
+ 153:../../opus/silk/resampler.c ****             return -1;
+ 154:../../opus/silk/resampler.c ****         }
+ 155:../../opus/silk/resampler.c ****     } else {
+ 156:../../opus/silk/resampler.c ****         /* Input and output sampling rates are equal: copy */
+ 157:../../opus/silk/resampler.c ****         S->resampler_function = USE_silk_resampler_copy;
+ 158:../../opus/silk/resampler.c ****     }
+ 159:../../opus/silk/resampler.c **** 
+ 160:../../opus/silk/resampler.c ****     /* Ratio of input/output samples */
+ 161:../../opus/silk/resampler.c ****     S->invRatio_Q16 = silk_LSHIFT32( silk_DIV32( silk_LSHIFT32( Fs_Hz_in, 14 + up2x ), Fs_Hz_out ),
+ 167              		.loc 1 161 5 is_stmt 1 view .LVU38
+ 168              		.loc 1 161 23 is_stmt 0 view .LVU39
+ 169 00d8 00F10E03 		add	r3, r0, #14
+ 170 00dc 06FA03F3 		lsl	r3, r6, r3
+ 171 00e0 93FBF4F3 		sdiv	r3, r3, r4
+ 172 00e4 9B00     		lsls	r3, r3, #2
+ 173              		.loc 1 161 21 view .LVU40
+ 174 00e6 C5F81031 		str	r3, [r5, #272]
+ 162:../../opus/silk/resampler.c ****     /* Make sure the ratio is rounded up */
+ 163:../../opus/silk/resampler.c ****     while( silk_SMULWW( S->invRatio_Q16, Fs_Hz_out ) < silk_LSHIFT32( Fs_Hz_in, up2x ) ) {
+ 175              		.loc 1 163 5 is_stmt 1 view .LVU41
+ 176              		.loc 1 163 10 is_stmt 0 view .LVU42
+ 177 00ea ABE0     		b	.L17
+ 178              	.LVL7:
+ 179              	.L2:
+  97:../../opus/silk/resampler.c ****             ( Fs_Hz_out != 8000 && Fs_Hz_out != 12000 && Fs_Hz_out != 16000 && Fs_Hz_out != 24000 &
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 7
+
+
+ 180              		.loc 1 97 9 is_stmt 1 view .LVU43
+  97:../../opus/silk/resampler.c ****             ( Fs_Hz_out != 8000 && Fs_Hz_out != 12000 && Fs_Hz_out != 16000 && Fs_Hz_out != 24000 &
+ 181              		.loc 1 97 11 is_stmt 0 view .LVU44
+ 182 00ec 42F6E063 		movw	r3, #12000
+ 183 00f0 B6F5FA5F 		cmp	r6, #8000
+ 184 00f4 18BF     		it	ne
+ 185 00f6 9E42     		cmpne	r6, r3
+ 186 00f8 03D0     		beq	.L7
+  97:../../opus/silk/resampler.c ****             ( Fs_Hz_out != 8000 && Fs_Hz_out != 12000 && Fs_Hz_out != 16000 && Fs_Hz_out != 24000 &
+ 187              		.loc 1 97 55 discriminator 1 view .LVU45
+ 188 00fa B6F57A5F 		cmp	r6, #16000
+ 189 00fe 40F0BD80 		bne	.L21
+ 190              	.L7:
+  97:../../opus/silk/resampler.c ****             ( Fs_Hz_out != 8000 && Fs_Hz_out != 12000 && Fs_Hz_out != 16000 && Fs_Hz_out != 24000 &
+ 191              		.loc 1 97 79 discriminator 3 view .LVU46
+ 192 0102 42F6E063 		movw	r3, #12000
+ 193 0106 B4F5FA5F 		cmp	r4, #8000
+ 194 010a 18BF     		it	ne
+ 195 010c 9C42     		cmpne	r4, r3
+ 196 010e 0DD0     		beq	.L8
+  98:../../opus/silk/resampler.c ****             celt_assert( 0 );
+ 197              		.loc 1 98 90 view .LVU47
+ 198 0110 45F6C053 		movw	r3, #24000
+ 199 0114 E31A     		subs	r3, r4, r3
+ 200 0116 18BF     		it	ne
+ 201 0118 0123     		movne	r3, #1
+  98:../../opus/silk/resampler.c ****             celt_assert( 0 );
+ 202              		.loc 1 98 77 view .LVU48
+ 203 011a B4F57A5F 		cmp	r4, #16000
+ 204 011e 05D0     		beq	.L8
+ 205 0120 23B1     		cbz	r3, .L8
+  98:../../opus/silk/resampler.c ****             celt_assert( 0 );
+ 206              		.loc 1 98 99 discriminator 1 view .LVU49
+ 207 0122 4BF68033 		movw	r3, #48000
+ 208 0126 9C42     		cmp	r4, r3
+ 209 0128 40F0AB80 		bne	.L22
+ 210              	.L8:
+ 102:../../opus/silk/resampler.c ****     }
+ 211              		.loc 1 102 9 is_stmt 1 view .LVU50
+ 102:../../opus/silk/resampler.c ****     }
+ 212              		.loc 1 102 43 is_stmt 0 view .LVU51
+ 213 012c B6F57A5F 		cmp	r6, #16000
+ 214 0130 D4BF     		ite	le
+ 215 0132 0023     		movle	r3, #0
+ 216 0134 0123     		movgt	r3, #1
+ 217 0136 C3EB2633 		rsb	r3, r3, r6, asr #12
+ 218 013a 45F6C051 		movw	r1, #24000
+ 219 013e 8E42     		cmp	r6, r1
+ 220 0140 D4BF     		ite	le
+ 221 0142 0022     		movle	r2, #0
+ 222 0144 0122     		movgt	r2, #1
+ 223 0146 1341     		asrs	r3, r3, r2
+ 224 0148 013B     		subs	r3, r3, #1
+ 102:../../opus/silk/resampler.c ****     }
+ 225              		.loc 1 102 65 view .LVU52
+ 226 014a B4F57A5F 		cmp	r4, #16000
+ 227 014e D4BF     		ite	le
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 8
+
+
+ 228 0150 0022     		movle	r2, #0
+ 229 0152 0122     		movgt	r2, #1
+ 230 0154 C2EB2432 		rsb	r2, r2, r4, asr #12
+ 231 0158 8C42     		cmp	r4, r1
+ 232 015a D4BF     		ite	le
+ 233 015c 0021     		movle	r1, #0
+ 234 015e 0121     		movgt	r1, #1
+ 235 0160 0A41     		asrs	r2, r2, r1
+ 236 0162 013A     		subs	r2, r2, #1
+ 102:../../opus/silk/resampler.c ****     }
+ 237              		.loc 1 102 63 view .LVU53
+ 238 0164 03EB8303 		add	r3, r3, r3, lsl #2
+ 239 0168 4B49     		ldr	r1, .L32+8
+ 240 016a 0B44     		add	r3, r3, r1
+ 241 016c 9B56     		ldrsb	r3, [r3, r2]
+ 102:../../opus/silk/resampler.c ****     }
+ 242              		.loc 1 102 23 view .LVU54
+ 243 016e C5F82431 		str	r3, [r5, #292]
+ 244 0172 94E7     		b	.L6
+ 245              	.LVL8:
+ 246              	.L26:
+ 117:../../opus/silk/resampler.c ****         } else {
+ 247              		.loc 1 117 13 is_stmt 1 view .LVU55
+ 117:../../opus/silk/resampler.c ****         } else {
+ 248              		.loc 1 117 35 is_stmt 0 view .LVU56
+ 249 0174 0123     		movs	r3, #1
+ 250 0176 C5F80831 		str	r3, [r5, #264]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 251              		.loc 1 112 10 view .LVU57
+ 252 017a 0020     		movs	r0, #0
+ 253 017c ACE7     		b	.L11
+ 254              	.L9:
+ 123:../../opus/silk/resampler.c ****         /* Downsample */
+ 255              		.loc 1 123 12 is_stmt 1 view .LVU58
+ 123:../../opus/silk/resampler.c ****         /* Downsample */
+ 256              		.loc 1 123 15 is_stmt 0 view .LVU59
+ 257 017e A642     		cmp	r6, r4
+ 258 0180 5BDD     		ble	.L23
+ 125:../../opus/silk/resampler.c ****         if( silk_MUL( Fs_Hz_out, 4 ) == silk_MUL( Fs_Hz_in, 3 ) ) {             /* Fs_out : Fs_in =
+ 259              		.loc 1 125 10 is_stmt 1 view .LVU60
+ 125:../../opus/silk/resampler.c ****         if( silk_MUL( Fs_Hz_out, 4 ) == silk_MUL( Fs_Hz_in, 3 ) ) {             /* Fs_out : Fs_in =
+ 260              		.loc 1 125 32 is_stmt 0 view .LVU61
+ 261 0182 0323     		movs	r3, #3
+ 262 0184 C5F80831 		str	r3, [r5, #264]
+ 126:../../opus/silk/resampler.c ****             S->FIR_Fracs = 3;
+ 263              		.loc 1 126 9 is_stmt 1 view .LVU62
+ 126:../../opus/silk/resampler.c ****             S->FIR_Fracs = 3;
+ 264              		.loc 1 126 13 is_stmt 0 view .LVU63
+ 265 0188 A200     		lsls	r2, r4, #2
+ 126:../../opus/silk/resampler.c ****             S->FIR_Fracs = 3;
+ 266              		.loc 1 126 41 view .LVU64
+ 267 018a 06EB4603 		add	r3, r6, r6, lsl #1
+ 126:../../opus/silk/resampler.c ****             S->FIR_Fracs = 3;
+ 268              		.loc 1 126 11 view .LVU65
+ 269 018e B3EB840F 		cmp	r3, r4, lsl #2
+ 270 0192 1BD0     		beq	.L27
+ 130:../../opus/silk/resampler.c ****             S->FIR_Fracs = 2;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 9
+
+
+ 271              		.loc 1 130 16 is_stmt 1 view .LVU66
+ 130:../../opus/silk/resampler.c ****             S->FIR_Fracs = 2;
+ 272              		.loc 1 130 20 is_stmt 0 view .LVU67
+ 273 0194 04EB4403 		add	r3, r4, r4, lsl #1
+ 130:../../opus/silk/resampler.c ****             S->FIR_Fracs = 2;
+ 274              		.loc 1 130 18 view .LVU68
+ 275 0198 B3EB460F 		cmp	r3, r6, lsl #1
+ 276 019c 21D0     		beq	.L28
+ 134:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 277              		.loc 1 134 16 is_stmt 1 view .LVU69
+ 134:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 278              		.loc 1 134 18 is_stmt 0 view .LVU70
+ 279 019e B6EB440F 		cmp	r6, r4, lsl #1
+ 280 01a2 29D0     		beq	.L29
+ 138:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 281              		.loc 1 138 16 is_stmt 1 view .LVU71
+ 138:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 282              		.loc 1 138 18 is_stmt 0 view .LVU72
+ 283 01a4 B342     		cmp	r3, r6
+ 284 01a6 32D0     		beq	.L30
+ 142:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 285              		.loc 1 142 16 is_stmt 1 view .LVU73
+ 142:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 286              		.loc 1 142 18 is_stmt 0 view .LVU74
+ 287 01a8 B242     		cmp	r2, r6
+ 288 01aa 3BD0     		beq	.L31
+ 146:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 289              		.loc 1 146 16 is_stmt 1 view .LVU75
+ 146:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 290              		.loc 1 146 20 is_stmt 0 view .LVU76
+ 291 01ac 04EB4403 		add	r3, r4, r4, lsl #1
+ 146:../../opus/silk/resampler.c ****             S->FIR_Fracs = 1;
+ 292              		.loc 1 146 18 view .LVU77
+ 293 01b0 B6EB430F 		cmp	r6, r3, lsl #1
+ 294 01b4 68D1     		bne	.L24
+ 147:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 295              		.loc 1 147 13 is_stmt 1 view .LVU78
+ 147:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 296              		.loc 1 147 26 is_stmt 0 view .LVU79
+ 297 01b6 0123     		movs	r3, #1
+ 298 01b8 C5F81831 		str	r3, [r5, #280]
+ 148:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_6_COEFS;
+ 299              		.loc 1 148 13 is_stmt 1 view .LVU80
+ 148:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_6_COEFS;
+ 300              		.loc 1 148 26 is_stmt 0 view .LVU81
+ 301 01bc 2423     		movs	r3, #36
+ 302 01be C5F81431 		str	r3, [r5, #276]
+ 149:../../opus/silk/resampler.c ****         } else {
+ 303              		.loc 1 149 13 is_stmt 1 view .LVU82
+ 149:../../opus/silk/resampler.c ****         } else {
+ 304              		.loc 1 149 22 is_stmt 0 view .LVU83
+ 305 01c2 364B     		ldr	r3, .L32+12
+ 306 01c4 C5F82831 		str	r3, [r5, #296]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 307              		.loc 1 112 10 view .LVU84
+ 308 01c8 0020     		movs	r0, #0
+ 309 01ca 85E7     		b	.L11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 10
+
+
+ 310              	.L27:
+ 127:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR0;
+ 311              		.loc 1 127 13 is_stmt 1 view .LVU85
+ 127:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR0;
+ 312              		.loc 1 127 26 is_stmt 0 view .LVU86
+ 313 01cc 0323     		movs	r3, #3
+ 314 01ce C5F81831 		str	r3, [r5, #280]
+ 128:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_3_4_COEFS;
+ 315              		.loc 1 128 13 is_stmt 1 view .LVU87
+ 128:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_3_4_COEFS;
+ 316              		.loc 1 128 26 is_stmt 0 view .LVU88
+ 317 01d2 1223     		movs	r3, #18
+ 318 01d4 C5F81431 		str	r3, [r5, #276]
+ 129:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 3 ) == silk_MUL( Fs_Hz_in, 2 ) ) {      /* Fs_out : Fs_in =
+ 319              		.loc 1 129 13 is_stmt 1 view .LVU89
+ 129:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 3 ) == silk_MUL( Fs_Hz_in, 2 ) ) {      /* Fs_out : Fs_in =
+ 320              		.loc 1 129 22 is_stmt 0 view .LVU90
+ 321 01d8 314B     		ldr	r3, .L32+16
+ 322 01da C5F82831 		str	r3, [r5, #296]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 323              		.loc 1 112 10 view .LVU91
+ 324 01de 0020     		movs	r0, #0
+ 325 01e0 7AE7     		b	.L11
+ 326              	.L28:
+ 131:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR0;
+ 327              		.loc 1 131 13 is_stmt 1 view .LVU92
+ 131:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR0;
+ 328              		.loc 1 131 26 is_stmt 0 view .LVU93
+ 329 01e2 0223     		movs	r3, #2
+ 330 01e4 C5F81831 		str	r3, [r5, #280]
+ 132:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_2_3_COEFS;
+ 331              		.loc 1 132 13 is_stmt 1 view .LVU94
+ 132:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_2_3_COEFS;
+ 332              		.loc 1 132 26 is_stmt 0 view .LVU95
+ 333 01e8 1223     		movs	r3, #18
+ 334 01ea C5F81431 		str	r3, [r5, #276]
+ 133:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 2 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 335              		.loc 1 133 13 is_stmt 1 view .LVU96
+ 133:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 2 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 336              		.loc 1 133 22 is_stmt 0 view .LVU97
+ 337 01ee 2D4B     		ldr	r3, .L32+20
+ 338 01f0 C5F82831 		str	r3, [r5, #296]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 339              		.loc 1 112 10 view .LVU98
+ 340 01f4 0020     		movs	r0, #0
+ 341 01f6 6FE7     		b	.L11
+ 342              	.L29:
+ 135:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR1;
+ 343              		.loc 1 135 13 is_stmt 1 view .LVU99
+ 135:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR1;
+ 344              		.loc 1 135 26 is_stmt 0 view .LVU100
+ 345 01f8 0123     		movs	r3, #1
+ 346 01fa C5F81831 		str	r3, [r5, #280]
+ 136:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_2_COEFS;
+ 347              		.loc 1 136 13 is_stmt 1 view .LVU101
+ 136:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_2_COEFS;
+ 348              		.loc 1 136 26 is_stmt 0 view .LVU102
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 11
+
+
+ 349 01fe 1823     		movs	r3, #24
+ 350 0200 C5F81431 		str	r3, [r5, #276]
+ 137:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 3 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 351              		.loc 1 137 13 is_stmt 1 view .LVU103
+ 137:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 3 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 352              		.loc 1 137 22 is_stmt 0 view .LVU104
+ 353 0204 284B     		ldr	r3, .L32+24
+ 354 0206 C5F82831 		str	r3, [r5, #296]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 355              		.loc 1 112 10 view .LVU105
+ 356 020a 0020     		movs	r0, #0
+ 357 020c 64E7     		b	.L11
+ 358              	.L30:
+ 139:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 359              		.loc 1 139 13 is_stmt 1 view .LVU106
+ 139:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 360              		.loc 1 139 26 is_stmt 0 view .LVU107
+ 361 020e 0123     		movs	r3, #1
+ 362 0210 C5F81831 		str	r3, [r5, #280]
+ 140:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_3_COEFS;
+ 363              		.loc 1 140 13 is_stmt 1 view .LVU108
+ 140:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_3_COEFS;
+ 364              		.loc 1 140 26 is_stmt 0 view .LVU109
+ 365 0214 2423     		movs	r3, #36
+ 366 0216 C5F81431 		str	r3, [r5, #276]
+ 141:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 4 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 367              		.loc 1 141 13 is_stmt 1 view .LVU110
+ 141:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 4 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 368              		.loc 1 141 22 is_stmt 0 view .LVU111
+ 369 021a 244B     		ldr	r3, .L32+28
+ 370 021c C5F82831 		str	r3, [r5, #296]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 371              		.loc 1 112 10 view .LVU112
+ 372 0220 0020     		movs	r0, #0
+ 373 0222 59E7     		b	.L11
+ 374              	.L31:
+ 143:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 375              		.loc 1 143 13 is_stmt 1 view .LVU113
+ 143:../../opus/silk/resampler.c ****             S->FIR_Order = RESAMPLER_DOWN_ORDER_FIR2;
+ 376              		.loc 1 143 26 is_stmt 0 view .LVU114
+ 377 0224 0123     		movs	r3, #1
+ 378 0226 C5F81831 		str	r3, [r5, #280]
+ 144:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_4_COEFS;
+ 379              		.loc 1 144 13 is_stmt 1 view .LVU115
+ 144:../../opus/silk/resampler.c ****             S->Coefs = silk_Resampler_1_4_COEFS;
+ 380              		.loc 1 144 26 is_stmt 0 view .LVU116
+ 381 022a 2423     		movs	r3, #36
+ 382 022c C5F81431 		str	r3, [r5, #276]
+ 145:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 6 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 383              		.loc 1 145 13 is_stmt 1 view .LVU117
+ 145:../../opus/silk/resampler.c ****         } else if( silk_MUL( Fs_Hz_out, 6 ) == Fs_Hz_in ) {                     /* Fs_out : Fs_in =
+ 384              		.loc 1 145 22 is_stmt 0 view .LVU118
+ 385 0230 1F4B     		ldr	r3, .L32+32
+ 386 0232 C5F82831 		str	r3, [r5, #296]
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 387              		.loc 1 112 10 view .LVU119
+ 388 0236 0020     		movs	r0, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 12
+
+
+ 389 0238 4EE7     		b	.L11
+ 390              	.L23:
+ 112:../../opus/silk/resampler.c ****     if( Fs_Hz_out > Fs_Hz_in ) {
+ 391              		.loc 1 112 10 view .LVU120
+ 392 023a 0020     		movs	r0, #0
+ 393 023c 4CE7     		b	.L11
+ 394              	.LVL9:
+ 395              	.L18:
+ 164:../../opus/silk/resampler.c ****         S->invRatio_Q16++;
+ 396              		.loc 1 164 9 is_stmt 1 view .LVU121
+ 397              		.loc 1 164 24 is_stmt 0 view .LVU122
+ 398 023e 0132     		adds	r2, r2, #1
+ 399 0240 C5F81021 		str	r2, [r5, #272]
+ 400              	.L17:
+ 163:../../opus/silk/resampler.c ****         S->invRatio_Q16++;
+ 401              		.loc 1 163 54 is_stmt 1 view .LVU123
+ 163:../../opus/silk/resampler.c ****         S->invRatio_Q16++;
+ 402              		.loc 1 163 12 is_stmt 0 view .LVU124
+ 403 0244 D5F81021 		ldr	r2, [r5, #272]
+ 404 0248 4FEA224C 		asr	ip, r2, #16
+ 405 024c 21B2     		sxth	r1, r4
+ 406 024e 93B2     		uxth	r3, r2
+ 407 0250 01FB03F3 		mul	r3, r1, r3
+ 408 0254 1B14     		asrs	r3, r3, #16
+ 409 0256 01FB0C33 		mla	r3, r1, ip, r3
+ 410 025a E113     		asrs	r1, r4, #15
+ 411 025c 0131     		adds	r1, r1, #1
+ 412 025e 4910     		asrs	r1, r1, #1
+ 413 0260 01FB0233 		mla	r3, r1, r2, r3
+ 163:../../opus/silk/resampler.c ****         S->invRatio_Q16++;
+ 414              		.loc 1 163 56 view .LVU125
+ 415 0264 06FA00F1 		lsl	r1, r6, r0
+ 163:../../opus/silk/resampler.c ****         S->invRatio_Q16++;
+ 416              		.loc 1 163 54 view .LVU126
+ 417 0268 8B42     		cmp	r3, r1
+ 418 026a E8DB     		blt	.L18
+ 165:../../opus/silk/resampler.c ****     }
+ 166:../../opus/silk/resampler.c **** 
+ 167:../../opus/silk/resampler.c ****     return 0;
+ 419              		.loc 1 167 12 view .LVU127
+ 420 026c 0020     		movs	r0, #0
+ 421              	.LVL10:
+ 422              	.L1:
+ 168:../../opus/silk/resampler.c **** }
+ 423              		.loc 1 168 1 view .LVU128
+ 424 026e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 425              	.LVL11:
+ 426              	.L19:
+  93:../../opus/silk/resampler.c ****         }
+ 427              		.loc 1 93 20 view .LVU129
+ 428 0270 4FF0FF30 		mov	r0, #-1
+ 429 0274 FBE7     		b	.L1
+ 430              	.L20:
+  93:../../opus/silk/resampler.c ****         }
+ 431              		.loc 1 93 20 view .LVU130
+ 432 0276 4FF0FF30 		mov	r0, #-1
+ 433 027a F8E7     		b	.L1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 13
+
+
+ 434              	.L21:
+ 100:../../opus/silk/resampler.c ****         }
+ 435              		.loc 1 100 20 view .LVU131
+ 436 027c 4FF0FF30 		mov	r0, #-1
+ 437 0280 F5E7     		b	.L1
+ 438              	.L22:
+ 100:../../opus/silk/resampler.c ****         }
+ 439              		.loc 1 100 20 view .LVU132
+ 440 0282 4FF0FF30 		mov	r0, #-1
+ 441 0286 F2E7     		b	.L1
+ 442              	.LVL12:
+ 443              	.L24:
+ 153:../../opus/silk/resampler.c ****         }
+ 444              		.loc 1 153 20 view .LVU133
+ 445 0288 4FF0FF30 		mov	r0, #-1
+ 446 028c EFE7     		b	.L1
+ 447              	.L33:
+ 448 028e 00BF     		.align	2
+ 449              	.L32:
+ 450 0290 00000000 		.word	delay_matrix_enc
+ 451 0294 D34D6210 		.word	274877907
+ 452 0298 00000000 		.word	delay_matrix_dec
+ 453 029c 00000000 		.word	silk_Resampler_1_6_COEFS
+ 454 02a0 00000000 		.word	silk_Resampler_3_4_COEFS
+ 455 02a4 00000000 		.word	silk_Resampler_2_3_COEFS
+ 456 02a8 00000000 		.word	silk_Resampler_1_2_COEFS
+ 457 02ac 00000000 		.word	silk_Resampler_1_3_COEFS
+ 458 02b0 00000000 		.word	silk_Resampler_1_4_COEFS
+ 459              		.cfi_endproc
+ 460              	.LFE19:
+ 462              		.section	.text.silk_resampler,"ax",%progbits
+ 463              		.align	1
+ 464              		.global	silk_resampler
+ 465              		.syntax unified
+ 466              		.thumb
+ 467              		.thumb_func
+ 469              	silk_resampler:
+ 470              	.LVL13:
+ 471              	.LFB20:
+ 169:../../opus/silk/resampler.c **** 
+ 170:../../opus/silk/resampler.c **** /* Resampler: convert from one sampling rate to another */
+ 171:../../opus/silk/resampler.c **** /* Input and output sampling rate are at most 48000 Hz  */
+ 172:../../opus/silk/resampler.c **** opus_int silk_resampler(
+ 173:../../opus/silk/resampler.c ****     silk_resampler_state_struct *S,                 /* I/O  Resampler state                        
+ 174:../../opus/silk/resampler.c ****     opus_int16                  out[],              /* O    Output signal                          
+ 175:../../opus/silk/resampler.c ****     const opus_int16            in[],               /* I    Input signal                           
+ 176:../../opus/silk/resampler.c ****     opus_int32                  inLen               /* I    Number of input samples                
+ 177:../../opus/silk/resampler.c **** )
+ 178:../../opus/silk/resampler.c **** {
+ 472              		.loc 1 178 1 is_stmt 1 view -0
+ 473              		.cfi_startproc
+ 474              		@ args = 0, pretend = 0, frame = 0
+ 475              		@ frame_needed = 0, uses_anonymous_args = 0
+ 476              		.loc 1 178 1 is_stmt 0 view .LVU135
+ 477 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 478              	.LCFI1:
+ 479              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 14
+
+
+ 480              		.cfi_offset 4, -24
+ 481              		.cfi_offset 5, -20
+ 482              		.cfi_offset 6, -16
+ 483              		.cfi_offset 7, -12
+ 484              		.cfi_offset 8, -8
+ 485              		.cfi_offset 14, -4
+ 486 0004 0446     		mov	r4, r0
+ 487 0006 8846     		mov	r8, r1
+ 488 0008 1746     		mov	r7, r2
+ 489 000a 1D46     		mov	r5, r3
+ 179:../../opus/silk/resampler.c ****     opus_int nSamples;
+ 490              		.loc 1 179 5 is_stmt 1 view .LVU136
+ 180:../../opus/silk/resampler.c **** 
+ 181:../../opus/silk/resampler.c ****     /* Need at least 1 ms of input data */
+ 182:../../opus/silk/resampler.c ****     celt_assert( inLen >= S->Fs_in_kHz );
+ 491              		.loc 1 182 41 view .LVU137
+ 183:../../opus/silk/resampler.c ****     /* Delay can't exceed the 1 ms of buffering */
+ 184:../../opus/silk/resampler.c ****     celt_assert( S->inputDelay <= S->Fs_in_kHz );
+ 492              		.loc 1 184 49 view .LVU138
+ 185:../../opus/silk/resampler.c **** 
+ 186:../../opus/silk/resampler.c ****     nSamples = S->Fs_in_kHz - S->inputDelay;
+ 493              		.loc 1 186 5 view .LVU139
+ 494              		.loc 1 186 17 is_stmt 0 view .LVU140
+ 495 000c D0F81C61 		ldr	r6, [r0, #284]
+ 496              		.loc 1 186 32 view .LVU141
+ 497 0010 D0F82401 		ldr	r0, [r0, #292]
+ 498              	.LVL14:
+ 499              		.loc 1 186 14 view .LVU142
+ 500 0014 361A     		subs	r6, r6, r0
+ 501              	.LVL15:
+ 187:../../opus/silk/resampler.c **** 
+ 188:../../opus/silk/resampler.c ****     /* Copy to delay buffer */
+ 189:../../opus/silk/resampler.c ****     silk_memcpy( &S->delayBuf[ S->inputDelay ], in, nSamples * sizeof( opus_int16 ) );
+ 502              		.loc 1 189 5 is_stmt 1 view .LVU143
+ 503 0016 5430     		adds	r0, r0, #84
+ 504 0018 7600     		lsls	r6, r6, #1
+ 505              	.LVL16:
+ 506              		.loc 1 189 5 is_stmt 0 view .LVU144
+ 507 001a 3246     		mov	r2, r6
+ 508              	.LVL17:
+ 509              		.loc 1 189 5 view .LVU145
+ 510 001c 3946     		mov	r1, r7
+ 511              	.LVL18:
+ 512              		.loc 1 189 5 view .LVU146
+ 513 001e 04EB4000 		add	r0, r4, r0, lsl #1
+ 514 0022 FFF7FEFF 		bl	memcpy
+ 515              	.LVL19:
+ 190:../../opus/silk/resampler.c **** 
+ 191:../../opus/silk/resampler.c ****     switch( S->resampler_function ) {
+ 516              		.loc 1 191 5 is_stmt 1 view .LVU147
+ 517              		.loc 1 191 14 is_stmt 0 view .LVU148
+ 518 0026 D4F80831 		ldr	r3, [r4, #264]
+ 519              		.loc 1 191 5 view .LVU149
+ 520 002a 022B     		cmp	r3, #2
+ 521 002c 23D0     		beq	.L35
+ 522 002e 032B     		cmp	r3, #3
+ 523 0030 35D0     		beq	.L36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 15
+
+
+ 524 0032 012B     		cmp	r3, #1
+ 525 0034 47D1     		bne	.L37
+ 192:../../opus/silk/resampler.c ****         case USE_silk_resampler_private_up2_HQ_wrapper:
+ 193:../../opus/silk/resampler.c ****             silk_resampler_private_up2_HQ_wrapper( S, out, S->delayBuf, S->Fs_in_kHz );
+ 526              		.loc 1 193 13 is_stmt 1 view .LVU150
+ 527 0036 D4F81C31 		ldr	r3, [r4, #284]
+ 528 003a 04F1A802 		add	r2, r4, #168
+ 529 003e 4146     		mov	r1, r8
+ 530 0040 2046     		mov	r0, r4
+ 531 0042 FFF7FEFF 		bl	silk_resampler_private_up2_HQ_wrapper
+ 532              	.LVL20:
+ 194:../../opus/silk/resampler.c ****             silk_resampler_private_up2_HQ_wrapper( S, &out[ S->Fs_out_kHz ], &in[ nSamples ], inLen
+ 533              		.loc 1 194 13 view .LVU151
+ 534              		.loc 1 194 62 is_stmt 0 view .LVU152
+ 535 0046 D4F82011 		ldr	r1, [r4, #288]
+ 536              		.loc 1 194 104 view .LVU153
+ 537 004a D4F81C31 		ldr	r3, [r4, #284]
+ 538              		.loc 1 194 13 view .LVU154
+ 539 004e EB1A     		subs	r3, r5, r3
+ 540 0050 BA19     		adds	r2, r7, r6
+ 541 0052 08EB4101 		add	r1, r8, r1, lsl #1
+ 542 0056 2046     		mov	r0, r4
+ 543 0058 FFF7FEFF 		bl	silk_resampler_private_up2_HQ_wrapper
+ 544              	.LVL21:
+ 195:../../opus/silk/resampler.c ****             break;
+ 545              		.loc 1 195 13 is_stmt 1 view .LVU155
+ 546              	.L38:
+ 196:../../opus/silk/resampler.c ****         case USE_silk_resampler_private_IIR_FIR:
+ 197:../../opus/silk/resampler.c ****             silk_resampler_private_IIR_FIR( S, out, S->delayBuf, S->Fs_in_kHz );
+ 198:../../opus/silk/resampler.c ****             silk_resampler_private_IIR_FIR( S, &out[ S->Fs_out_kHz ], &in[ nSamples ], inLen - S->F
+ 199:../../opus/silk/resampler.c ****             break;
+ 200:../../opus/silk/resampler.c ****         case USE_silk_resampler_private_down_FIR:
+ 201:../../opus/silk/resampler.c ****             silk_resampler_private_down_FIR( S, out, S->delayBuf, S->Fs_in_kHz );
+ 202:../../opus/silk/resampler.c ****             silk_resampler_private_down_FIR( S, &out[ S->Fs_out_kHz ], &in[ nSamples ], inLen - S->
+ 203:../../opus/silk/resampler.c ****             break;
+ 204:../../opus/silk/resampler.c ****         default:
+ 205:../../opus/silk/resampler.c ****             silk_memcpy( out, S->delayBuf, S->Fs_in_kHz * sizeof( opus_int16 ) );
+ 206:../../opus/silk/resampler.c ****             silk_memcpy( &out[ S->Fs_out_kHz ], &in[ nSamples ], ( inLen - S->Fs_in_kHz ) * sizeof(
+ 207:../../opus/silk/resampler.c ****     }
+ 208:../../opus/silk/resampler.c **** 
+ 209:../../opus/silk/resampler.c ****     /* Copy to delay buffer */
+ 210:../../opus/silk/resampler.c ****     silk_memcpy( S->delayBuf, &in[ inLen - S->inputDelay ], S->inputDelay * sizeof( opus_int16 ) );
+ 547              		.loc 1 210 5 view .LVU156
+ 548 005c D4F82421 		ldr	r2, [r4, #292]
+ 549 0060 A91A     		subs	r1, r5, r2
+ 550 0062 5200     		lsls	r2, r2, #1
+ 551 0064 07EB4101 		add	r1, r7, r1, lsl #1
+ 552 0068 04F1A800 		add	r0, r4, #168
+ 553 006c FFF7FEFF 		bl	memcpy
+ 554              	.LVL22:
+ 211:../../opus/silk/resampler.c **** 
+ 212:../../opus/silk/resampler.c ****     return 0;
+ 555              		.loc 1 212 5 view .LVU157
+ 213:../../opus/silk/resampler.c **** }
+ 556              		.loc 1 213 1 is_stmt 0 view .LVU158
+ 557 0070 0020     		movs	r0, #0
+ 558 0072 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 16
+
+
+ 559              	.LVL23:
+ 560              	.L35:
+ 197:../../opus/silk/resampler.c ****             silk_resampler_private_IIR_FIR( S, &out[ S->Fs_out_kHz ], &in[ nSamples ], inLen - S->F
+ 561              		.loc 1 197 13 is_stmt 1 view .LVU159
+ 562 0076 D4F81C31 		ldr	r3, [r4, #284]
+ 563 007a 04F1A802 		add	r2, r4, #168
+ 564 007e 4146     		mov	r1, r8
+ 565 0080 2046     		mov	r0, r4
+ 566 0082 FFF7FEFF 		bl	silk_resampler_private_IIR_FIR
+ 567              	.LVL24:
+ 198:../../opus/silk/resampler.c ****             break;
+ 568              		.loc 1 198 13 view .LVU160
+ 198:../../opus/silk/resampler.c ****             break;
+ 569              		.loc 1 198 55 is_stmt 0 view .LVU161
+ 570 0086 D4F82011 		ldr	r1, [r4, #288]
+ 198:../../opus/silk/resampler.c ****             break;
+ 571              		.loc 1 198 97 view .LVU162
+ 572 008a D4F81C31 		ldr	r3, [r4, #284]
+ 198:../../opus/silk/resampler.c ****             break;
+ 573              		.loc 1 198 13 view .LVU163
+ 574 008e EB1A     		subs	r3, r5, r3
+ 575 0090 BA19     		adds	r2, r7, r6
+ 576 0092 08EB4101 		add	r1, r8, r1, lsl #1
+ 577 0096 2046     		mov	r0, r4
+ 578 0098 FFF7FEFF 		bl	silk_resampler_private_IIR_FIR
+ 579              	.LVL25:
+ 199:../../opus/silk/resampler.c ****         case USE_silk_resampler_private_down_FIR:
+ 580              		.loc 1 199 13 is_stmt 1 view .LVU164
+ 581 009c DEE7     		b	.L38
+ 582              	.L36:
+ 201:../../opus/silk/resampler.c ****             silk_resampler_private_down_FIR( S, &out[ S->Fs_out_kHz ], &in[ nSamples ], inLen - S->
+ 583              		.loc 1 201 13 view .LVU165
+ 584 009e D4F81C31 		ldr	r3, [r4, #284]
+ 585 00a2 04F1A802 		add	r2, r4, #168
+ 586 00a6 4146     		mov	r1, r8
+ 587 00a8 2046     		mov	r0, r4
+ 588 00aa FFF7FEFF 		bl	silk_resampler_private_down_FIR
+ 589              	.LVL26:
+ 202:../../opus/silk/resampler.c ****             break;
+ 590              		.loc 1 202 13 view .LVU166
+ 202:../../opus/silk/resampler.c ****             break;
+ 591              		.loc 1 202 56 is_stmt 0 view .LVU167
+ 592 00ae D4F82011 		ldr	r1, [r4, #288]
+ 202:../../opus/silk/resampler.c ****             break;
+ 593              		.loc 1 202 98 view .LVU168
+ 594 00b2 D4F81C31 		ldr	r3, [r4, #284]
+ 202:../../opus/silk/resampler.c ****             break;
+ 595              		.loc 1 202 13 view .LVU169
+ 596 00b6 EB1A     		subs	r3, r5, r3
+ 597 00b8 BA19     		adds	r2, r7, r6
+ 598 00ba 08EB4101 		add	r1, r8, r1, lsl #1
+ 599 00be 2046     		mov	r0, r4
+ 600 00c0 FFF7FEFF 		bl	silk_resampler_private_down_FIR
+ 601              	.LVL27:
+ 203:../../opus/silk/resampler.c ****         default:
+ 602              		.loc 1 203 13 is_stmt 1 view .LVU170
+ 603 00c4 CAE7     		b	.L38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 17
+
+
+ 604              	.L37:
+ 205:../../opus/silk/resampler.c ****             silk_memcpy( &out[ S->Fs_out_kHz ], &in[ nSamples ], ( inLen - S->Fs_in_kHz ) * sizeof(
+ 605              		.loc 1 205 13 view .LVU171
+ 606 00c6 D4F81C21 		ldr	r2, [r4, #284]
+ 607 00ca 5200     		lsls	r2, r2, #1
+ 608 00cc 04F1A801 		add	r1, r4, #168
+ 609 00d0 4046     		mov	r0, r8
+ 610 00d2 FFF7FEFF 		bl	memcpy
+ 611              	.LVL28:
+ 206:../../opus/silk/resampler.c ****     }
+ 612              		.loc 1 206 13 view .LVU172
+ 613 00d6 D4F82001 		ldr	r0, [r4, #288]
+ 614 00da D4F81C21 		ldr	r2, [r4, #284]
+ 615 00de AA1A     		subs	r2, r5, r2
+ 616 00e0 5200     		lsls	r2, r2, #1
+ 617 00e2 B919     		adds	r1, r7, r6
+ 618 00e4 08EB4000 		add	r0, r8, r0, lsl #1
+ 619 00e8 FFF7FEFF 		bl	memcpy
+ 620              	.LVL29:
+ 621 00ec B6E7     		b	.L38
+ 622              		.cfi_endproc
+ 623              	.LFE20:
+ 625              		.section	.rodata.delay_matrix_dec,"a"
+ 626              		.align	2
+ 629              	delay_matrix_dec:
+ 630 0000 04000200 		.ascii	"\004\000\002\000\000"
+ 630      00
+ 631 0005 00090407 		.ascii	"\000\011\004\007\004"
+ 631      04
+ 632 000a 00030C07 		.ascii	"\000\003\014\007\007"
+ 632      07
+ 633              		.section	.rodata.delay_matrix_enc,"a"
+ 634              		.align	2
+ 637              	delay_matrix_enc:
+ 638 0000 060003   		.ascii	"\006\000\003"
+ 639 0003 000703   		.ascii	"\000\007\003"
+ 640 0006 00010A   		.ascii	"\000\001\012"
+ 641 0009 000206   		.ascii	"\000\002\006"
+ 642 000c 120A0C   		.ascii	"\022\012\014"
+ 643              		.text
+ 644              	.Letext0:
+ 645              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 646              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 647              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 648              		.file 5 "../../opus/include/opus_types.h"
+ 649              		.file 6 "../../opus/silk/resampler_structs.h"
+ 650              		.file 7 "../../opus/silk/resampler_rom.h"
+ 651              		.file 8 "../../opus/silk/resampler_private.h"
+ 652              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 653              		.file 10 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 resampler.c
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:20     .text.silk_resampler_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:26     .text.silk_resampler_init:00000000 silk_resampler_init
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:450    .text.silk_resampler_init:00000290 $d
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:637    .rodata.delay_matrix_enc:00000000 delay_matrix_enc
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:629    .rodata.delay_matrix_dec:00000000 delay_matrix_dec
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:463    .text.silk_resampler:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:469    .text.silk_resampler:00000000 silk_resampler
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:626    .rodata.delay_matrix_dec:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccu5UsLO.s:634    .rodata.delay_matrix_enc:00000000 $d
+
+UNDEFINED SYMBOLS
+memset
+silk_Resampler_1_6_COEFS
+silk_Resampler_3_4_COEFS
+silk_Resampler_2_3_COEFS
+silk_Resampler_1_2_COEFS
+silk_Resampler_1_3_COEFS
+silk_Resampler_1_4_COEFS
+memcpy
+silk_resampler_private_up2_HQ_wrapper
+silk_resampler_private_IIR_FIR
+silk_resampler_private_down_FIR

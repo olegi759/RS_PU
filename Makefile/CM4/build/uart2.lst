@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
   27:../../CM4/Core/Src/uart2.c **** //#define DEBUG_UART2	1
   28:../../CM4/Core/Src/uart2.c **** //#define DEBUG_UART2_CMD_ONLY		  MKI_CMD_SMALL_LEDS
   29:../../CM4/Core/Src/uart2.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 2
 
 
   30:../../CM4/Core/Src/uart2.c **** static dynamic_buf_t uart2_dyn_buf = DYNAMIC_BUF_STATIC_INIT(20 * 1024) ;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
   60 001c 0821     		movs	r1, #8
   61 001e 2846     		mov	r0, r5
   62 0020 FFF7FEFF 		bl	HAL_GPIO_WritePin
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 3
 
 
   63              	.LVL4:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
   98              		.loc 1 65 4 view .LVU13
   99 0052 0122     		movs	r2, #1
  100 0054 1021     		movs	r1, #16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 4
 
 
  101 0056 0348     		ldr	r0, .L6+4
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  148              		.loc 1 76 2 is_stmt 1 view .LVU22
  149              		.loc 1 76 6 is_stmt 0 view .LVU23
  150 0014 04EA0003 		and	r3, r4, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 5
 
 
  151              		.loc 1 76 5 view .LVU24
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  199              	.LVL19:
  200              	.LFB137:
   81:../../CM4/Core/Src/uart2.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 6
 
 
   82:../../CM4/Core/Src/uart2.c **** 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  244              	.L17:
  245 0024 00000000 		.word	uart2_rx_buf
  246 0028 00000000 		.word	uart2_dyn_buf
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 7
 
 
  247              		.cfi_endproc
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  289 0014 1868     		ldr	r0, [r3]
  290              	.LVL24:
  291              		.loc 1 105 9 view .LVU57
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 8
 
 
  292 0016 FFF7FEFF 		bl	HAL_DiffTick
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  332 004e 1860     		str	r0, [r3]
  120:../../CM4/Core/Src/uart2.c **** 
  121:../../CM4/Core/Src/uart2.c **** 	HAL_UARTEx_ReceiveToIdle_IT(&huart2, (uint8_t *)uart2_rx_buf, MAX_UART2_PACKET_SIZE);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 9
 
 
  333              		.loc 1 121 2 is_stmt 1 view .LVU68
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  368              	.LVL37:
  369              	.LFB139:
  141:../../CM4/Core/Src/uart2.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 10
 
 
  142:../../CM4/Core/Src/uart2.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  166:../../CM4/Core/Src/uart2.c **** 		break;
  400              		.loc 1 166 3 is_stmt 1 view .LVU77
  401              	.L30:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 11
 
 
  167:../../CM4/Core/Src/uart2.c **** 		case UART2_MUX_MKKL_1:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  435              		.loc 1 175 3 is_stmt 1 view .LVU87
  436              		.loc 1 178 1 is_stmt 0 view .LVU88
  437 0036 EFE7     		b	.L30
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 12
 
 
  438              		.cfi_endproc
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  483              		.cfi_restore_state
  186:../../CM4/Core/Src/uart2.c **** 		len  = byte_len / 2;
  484              		.loc 1 186 3 is_stmt 1 view .LVU96
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 13
 
 
  186:../../CM4/Core/Src/uart2.c **** 		len  = byte_len / 2;
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  530              		.cfi_def_cfa_offset 8
  531              		.cfi_offset 3, -8
  532              		.cfi_offset 14, -4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 14
 
 
  194:../../CM4/Core/Src/uart2.c **** 	if (DYNAMIC_BUF_IS_EMPTY(uart2_dyn_buf)) return;
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  213:../../CM4/Core/Src/uart2.c **** 		return;
  214:../../CM4/Core/Src/uart2.c **** 	}
  215:../../CM4/Core/Src/uart2.c **** 	uart2_tick = 0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 15
 
 
  216:../../CM4/Core/Src/uart2.c **** 
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  587 000a 0133     		adds	r3, r3, #1
  588 000c 134A     		ldr	r2, .L61
  589 000e 1360     		str	r3, [r2]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 16
 
 
  252:../../CM4/Core/Src/uart2.c **** 	else {
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  618 002e 0C2B     		cmp	r3, #12
  619 0030 06D9     		bls	.L51
  620              		.loc 1 277 33 is_stmt 1 discriminator 1 view .LVU132
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 17
 
 
  621 0032 0220     		movs	r0, #2
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  663              	.LFE142:
  665              		.section	.bss.uart2_send_tick,"aw",%nobits
  666              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 18
 
 
  669              	uart2_send_tick:
@@ -1075,46 +1075,46 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 1
  720              		.file 20 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
  721              		.file 21 "../../util/stm_util.h"
  722              		.file 22 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 19
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 uart2.c
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:21     .text.uart2_set_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:27     .text.uart2_set_mux:00000000 uart2_set_mux
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:110    .text.uart2_set_mux:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:116    .text.uart2_get_mux:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:122    .text.uart2_get_mux:00000000 uart2_get_mux
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:186    .text.uart2_get_mux:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:192    .text.HAL_UART2_RxEventCallback:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:198    .text.HAL_UART2_RxEventCallback:00000000 HAL_UART2_RxEventCallback
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:245    .text.HAL_UART2_RxEventCallback:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:687    .bss.uart2_rx_buf:00000000 uart2_rx_buf
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:693    .data.uart2_dyn_buf:00000000 uart2_dyn_buf
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:251    .text.uart2_transmit:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:257    .text.uart2_transmit:00000000 uart2_transmit
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:353    .text.uart2_transmit:00000068 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:669    .bss.uart2_send_tick:00000000 uart2_send_tick
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:681    .bss.uart2_tx_buf:00000000 uart2_tx_buf
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:361    .text.uart2_rcv:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:367    .text.uart2_rcv:00000000 uart2_rcv
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:387    .text.uart2_rcv:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:391    .text.uart2_rcv:00000010 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:442    .text.uart2_task_data:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:448    .text.uart2_task_data:00000000 uart2_task_data
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:511    .text.uart2_task_data:00000034 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:516    .text.uart2_task_rx:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:522    .text.uart2_task_rx:00000000 uart2_task_rx
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:556    .text.uart2_task_rx:00000018 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:561    .text.uart2_task_tx:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:567    .text.uart2_task_tx:00000000 uart2_task_tx
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:659    .text.uart2_task_tx:0000005c $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:675    .data.uart2_tick:00000000 uart2_tick
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:666    .bss.uart2_send_tick:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:672    .data.uart2_tick:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:678    .bss.uart2_tx_buf:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:684    .bss.uart2_rx_buf:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s:690    .data.uart2_dyn_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:21     .text.uart2_set_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:27     .text.uart2_set_mux:00000000 uart2_set_mux
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:110    .text.uart2_set_mux:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:116    .text.uart2_get_mux:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:122    .text.uart2_get_mux:00000000 uart2_get_mux
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:186    .text.uart2_get_mux:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:192    .text.HAL_UART2_RxEventCallback:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:198    .text.HAL_UART2_RxEventCallback:00000000 HAL_UART2_RxEventCallback
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:245    .text.HAL_UART2_RxEventCallback:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:687    .bss.uart2_rx_buf:00000000 uart2_rx_buf
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:693    .data.uart2_dyn_buf:00000000 uart2_dyn_buf
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:251    .text.uart2_transmit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:257    .text.uart2_transmit:00000000 uart2_transmit
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:353    .text.uart2_transmit:00000068 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:669    .bss.uart2_send_tick:00000000 uart2_send_tick
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:681    .bss.uart2_tx_buf:00000000 uart2_tx_buf
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:361    .text.uart2_rcv:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:367    .text.uart2_rcv:00000000 uart2_rcv
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:387    .text.uart2_rcv:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:391    .text.uart2_rcv:00000010 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:442    .text.uart2_task_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:448    .text.uart2_task_data:00000000 uart2_task_data
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:511    .text.uart2_task_data:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:516    .text.uart2_task_rx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:522    .text.uart2_task_rx:00000000 uart2_task_rx
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:556    .text.uart2_task_rx:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:561    .text.uart2_task_tx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:567    .text.uart2_task_tx:00000000 uart2_task_tx
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:659    .text.uart2_task_tx:0000005c $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:675    .data.uart2_tick:00000000 uart2_tick
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:666    .bss.uart2_send_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:672    .data.uart2_tick:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:678    .bss.uart2_tx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:684    .bss.uart2_rx_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s:690    .data.uart2_dyn_buf:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin
@@ -1135,7 +1135,7 @@ mup_rcv
 dynamic_buf_pop
 mkk_send_insig_lin
 mki_send_key
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccUtt5NZ.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccbMO5eg.s 			page 20
 
 
 mup_send_query

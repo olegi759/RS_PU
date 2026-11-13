@@ -1,0 +1,1351 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"ogg_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/ogg_util.c"
+  19              		.section	.text.ogg_decoder_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	ogg_decoder_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	ogg_decoder_init:
+  27              	.LVL0:
+  28              	.LFB0:
+   1:../../util/ogg_util.c **** 
+   2:../../util/ogg_util.c **** #include "ogg_util.h"
+   3:../../util/ogg_util.c **** #include <string.h>
+   4:../../util/ogg_util.c **** #include "math_util.h"
+   5:../../util/ogg_util.c **** 
+   6:../../util/ogg_util.c **** 
+   7:../../util/ogg_util.c **** ogg_decoder_t  global_ogg_decoder = {0};
+   8:../../util/ogg_util.c **** 
+   9:../../util/ogg_util.c **** void ogg_decoder_init(ogg_decoder_t * ogg_decoder, ogg_stream_t stream, ogg_stream_read_t * stream_
+  10:../../util/ogg_util.c **** {
+  29              		.loc 1 10 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  11:../../util/ogg_util.c ****   ogg_decoder->stream = stream;
+  34              		.loc 1 11 3 view .LVU1
+  35              		.loc 1 11 23 is_stmt 0 view .LVU2
+  36 0000 0160     		str	r1, [r0]
+  12:../../util/ogg_util.c ****   ogg_decoder->stream_read = stream_read;
+  37              		.loc 1 12 3 is_stmt 1 view .LVU3
+  38              		.loc 1 12 28 is_stmt 0 view .LVU4
+  39 0002 4260     		str	r2, [r0, #4]
+  13:../../util/ogg_util.c ****   ogg_decoder->page_load = FALSE;
+  40              		.loc 1 13 3 is_stmt 1 view .LVU5
+  41              		.loc 1 13 26 is_stmt 0 view .LVU6
+  42 0004 0023     		movs	r3, #0
+  43 0006 80F82331 		strb	r3, [r0, #291]
+  14:../../util/ogg_util.c ****   ogg_decoder->segment_index = 0;
+  44              		.loc 1 14 3 is_stmt 1 view .LVU7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 2
+
+
+  45              		.loc 1 14 30 is_stmt 0 view .LVU8
+  46 000a 80F82431 		strb	r3, [r0, #292]
+  15:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+  16:../../util/ogg_util.c ****   ogg_decoder->stat_pages_cnt = 0;
+  17:../../util/ogg_util.c ****   ogg_decoder->stat_segments_cnt = 0;
+  18:../../util/ogg_util.c ****   ogg_decoder->stat_bytes_cnt = 0;
+  19:../../util/ogg_util.c **** #endif  
+  20:../../util/ogg_util.c **** }
+  47              		.loc 1 20 1 view .LVU9
+  48 000e 7047     		bx	lr
+  49              		.cfi_endproc
+  50              	.LFE0:
+  52              		.section	.text.ogg_read_page_data,"ax",%progbits
+  53              		.align	1
+  54              		.global	ogg_read_page_data
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+  59              	ogg_read_page_data:
+  60              	.LVL1:
+  61              	.LFB1:
+  21:../../util/ogg_util.c **** 
+  22:../../util/ogg_util.c **** 
+  23:../../util/ogg_util.c **** ogg_result_t ogg_read_page_data(ogg_decoder_t * ogg_decoder, ogg_page_t * ogg_page)
+  24:../../util/ogg_util.c **** {
+  62              		.loc 1 24 1 is_stmt 1 view -0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66              		.loc 1 24 1 is_stmt 0 view .LVU11
+  67 0000 38B5     		push	{r3, r4, r5, lr}
+  68              	.LCFI0:
+  69              		.cfi_def_cfa_offset 16
+  70              		.cfi_offset 3, -16
+  71              		.cfi_offset 4, -12
+  72              		.cfi_offset 5, -8
+  73              		.cfi_offset 14, -4
+  74 0002 0446     		mov	r4, r0
+  75 0004 0D46     		mov	r5, r1
+  25:../../util/ogg_util.c ****     uint8_t len, rc;
+  76              		.loc 1 25 5 is_stmt 1 view .LVU12
+  26:../../util/ogg_util.c **** 
+  27:../../util/ogg_util.c ****     rc = ogg_decoder->stream_read(ogg_decoder->stream, (uint8_t *)&ogg_page->capture_pattern, sizeo
+  77              		.loc 1 27 5 view .LVU13
+  78              		.loc 1 27 21 is_stmt 0 view .LVU14
+  79 0006 4368     		ldr	r3, [r0, #4]
+  80              		.loc 1 27 10 view .LVU15
+  81 0008 0422     		movs	r2, #4
+  82 000a 0068     		ldr	r0, [r0]
+  83              	.LVL2:
+  84              		.loc 1 27 10 view .LVU16
+  85 000c 9847     		blx	r3
+  86              	.LVL3:
+  28:../../util/ogg_util.c **** 
+  29:../../util/ogg_util.c ****     if (!rc) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+  87              		.loc 1 29 5 is_stmt 1 view .LVU17
+  88              		.loc 1 29 8 is_stmt 0 view .LVU18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 3
+
+
+  89 000e 10F0FF00 		ands	r0, r0, #255
+  90              	.LVL4:
+  91              		.loc 1 29 8 view .LVU19
+  92 0012 1DD0     		beq	.L4
+  30:../../util/ogg_util.c **** 
+  31:../../util/ogg_util.c ****     if (rc != sizeof(ogg_page->capture_pattern)) return OGG_RESULT_ERROR_READ_STREAM_CNT;
+  93              		.loc 1 31 5 is_stmt 1 view .LVU20
+  94              		.loc 1 31 8 is_stmt 0 view .LVU21
+  95 0014 0428     		cmp	r0, #4
+  96 0016 1DD1     		bne	.L5
+  32:../../util/ogg_util.c **** 
+  33:../../util/ogg_util.c ****     if (ogg_page->capture_pattern != OGG_CAPTURE_PATTERN_UINT) return OGG_RESULT_ERROR_CAPTURE_PATT
+  97              		.loc 1 33 5 is_stmt 1 view .LVU22
+  98              		.loc 1 33 17 is_stmt 0 view .LVU23
+  99 0018 2A68     		ldr	r2, [r5]	@ unaligned
+ 100              		.loc 1 33 8 view .LVU24
+ 101 001a 144B     		ldr	r3, .L12
+ 102 001c 9A42     		cmp	r2, r3
+ 103 001e 1BD1     		bne	.L6
+  34:../../util/ogg_util.c **** 
+  35:../../util/ogg_util.c ****     len = sizeof(ogg_page_t) - sizeof(ogg_page->capture_pattern) - sizeof(ogg_page->segment_size);
+ 104              		.loc 1 35 5 is_stmt 1 view .LVU25
+ 105              	.LVL5:
+  36:../../util/ogg_util.c **** 
+  37:../../util/ogg_util.c ****     rc = ogg_decoder->stream_read(ogg_decoder->stream, (uint8_t *)&ogg_page->version, len);
+ 106              		.loc 1 37 5 view .LVU26
+ 107              		.loc 1 37 21 is_stmt 0 view .LVU27
+ 108 0020 6368     		ldr	r3, [r4, #4]
+ 109              		.loc 1 37 10 view .LVU28
+ 110 0022 1722     		movs	r2, #23
+ 111 0024 291D     		adds	r1, r5, #4
+ 112 0026 2068     		ldr	r0, [r4]
+ 113 0028 9847     		blx	r3
+ 114              	.LVL6:
+  38:../../util/ogg_util.c **** 
+  39:../../util/ogg_util.c ****     if (!rc) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+ 115              		.loc 1 39 5 is_stmt 1 view .LVU29
+ 116              		.loc 1 39 8 is_stmt 0 view .LVU30
+ 117 002a 10F0FF00 		ands	r0, r0, #255
+ 118              	.LVL7:
+ 119              		.loc 1 39 8 view .LVU31
+ 120 002e 15D0     		beq	.L7
+  40:../../util/ogg_util.c **** 
+  41:../../util/ogg_util.c ****     if (rc != len) return OGG_RESULT_ERROR_READ_STREAM_CNT;
+ 121              		.loc 1 41 5 is_stmt 1 view .LVU32
+ 122              		.loc 1 41 8 is_stmt 0 view .LVU33
+ 123 0030 1728     		cmp	r0, #23
+ 124 0032 15D1     		bne	.L8
+  42:../../util/ogg_util.c **** 
+  43:../../util/ogg_util.c **** 
+  44:../../util/ogg_util.c ****     rc = ogg_decoder->stream_read(ogg_decoder->stream, (uint8_t *)ogg_page->segment_size, ogg_page-
+ 125              		.loc 1 44 5 is_stmt 1 view .LVU34
+ 126              		.loc 1 44 21 is_stmt 0 view .LVU35
+ 127 0034 6368     		ldr	r3, [r4, #4]
+ 128              		.loc 1 44 10 view .LVU36
+ 129 0036 AA7E     		ldrb	r2, [r5, #26]	@ zero_extendqisi2
+ 130 0038 05F11B01 		add	r1, r5, #27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 4
+
+
+ 131 003c 2068     		ldr	r0, [r4]
+ 132 003e 9847     		blx	r3
+ 133              	.LVL8:
+  45:../../util/ogg_util.c **** 
+  46:../../util/ogg_util.c ****     if (!rc) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+ 134              		.loc 1 46 5 is_stmt 1 view .LVU37
+ 135              		.loc 1 46 8 is_stmt 0 view .LVU38
+ 136 0040 10F0FF00 		ands	r0, r0, #255
+ 137              	.LVL9:
+ 138              		.loc 1 46 8 view .LVU39
+ 139 0044 0ED0     		beq	.L9
+  47:../../util/ogg_util.c **** 
+  48:../../util/ogg_util.c ****     if (rc != ogg_page->segments_cnt) return OGG_RESULT_ERROR_READ_STREAM_CNT;
+ 140              		.loc 1 48 5 is_stmt 1 view .LVU40
+ 141              		.loc 1 48 23 is_stmt 0 view .LVU41
+ 142 0046 AB7E     		ldrb	r3, [r5, #26]	@ zero_extendqisi2
+ 143              		.loc 1 48 8 view .LVU42
+ 144 0048 8342     		cmp	r3, r0
+ 145 004a 0DD1     		bne	.L10
+  49:../../util/ogg_util.c **** 
+  50:../../util/ogg_util.c ****     return OGG_RESULT_NO_ERROR;
+ 146              		.loc 1 50 12 view .LVU43
+ 147 004c 0020     		movs	r0, #0
+ 148 004e 00E0     		b	.L3
+ 149              	.LVL10:
+ 150              	.L4:
+  29:../../util/ogg_util.c **** 
+ 151              		.loc 1 29 21 discriminator 1 view .LVU44
+ 152 0050 0120     		movs	r0, #1
+ 153              	.LVL11:
+ 154              	.L3:
+  51:../../util/ogg_util.c **** }
+ 155              		.loc 1 51 1 view .LVU45
+ 156 0052 38BD     		pop	{r3, r4, r5, pc}
+ 157              	.LVL12:
+ 158              	.L5:
+  31:../../util/ogg_util.c **** 
+ 159              		.loc 1 31 57 discriminator 1 view .LVU46
+ 160 0054 0220     		movs	r0, #2
+ 161 0056 FCE7     		b	.L3
+ 162              	.L6:
+  33:../../util/ogg_util.c **** 
+ 163              		.loc 1 33 71 discriminator 1 view .LVU47
+ 164 0058 0320     		movs	r0, #3
+ 165 005a FAE7     		b	.L3
+ 166              	.LVL13:
+ 167              	.L7:
+  39:../../util/ogg_util.c **** 
+ 168              		.loc 1 39 21 discriminator 1 view .LVU48
+ 169 005c 0120     		movs	r0, #1
+ 170 005e F8E7     		b	.L3
+ 171              	.L8:
+  41:../../util/ogg_util.c **** 
+ 172              		.loc 1 41 27 discriminator 1 view .LVU49
+ 173 0060 0220     		movs	r0, #2
+ 174 0062 F6E7     		b	.L3
+ 175              	.L9:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 5
+
+
+  46:../../util/ogg_util.c **** 
+ 176              		.loc 1 46 21 discriminator 1 view .LVU50
+ 177 0064 0120     		movs	r0, #1
+ 178 0066 F4E7     		b	.L3
+ 179              	.L10:
+  48:../../util/ogg_util.c **** 
+ 180              		.loc 1 48 46 discriminator 1 view .LVU51
+ 181 0068 0220     		movs	r0, #2
+ 182 006a F2E7     		b	.L3
+ 183              	.L13:
+ 184              		.align	2
+ 185              	.L12:
+ 186 006c 4F676753 		.word	1399285583
+ 187              		.cfi_endproc
+ 188              	.LFE1:
+ 190              		.section	.text.ogg_next_segment,"ax",%progbits
+ 191              		.align	1
+ 192              		.global	ogg_next_segment
+ 193              		.syntax unified
+ 194              		.thumb
+ 195              		.thumb_func
+ 197              	ogg_next_segment:
+ 198              	.LVL14:
+ 199              	.LFB2:
+  52:../../util/ogg_util.c **** 
+  53:../../util/ogg_util.c **** 
+  54:../../util/ogg_util.c **** 
+  55:../../util/ogg_util.c **** 
+  56:../../util/ogg_util.c **** ogg_result_t ogg_next_segment(ogg_decoder_t * ogg_decoder, uint8_t * segment, uint8_t * segment_siz
+  57:../../util/ogg_util.c **** {
+ 200              		.loc 1 57 1 is_stmt 1 view -0
+ 201              		.cfi_startproc
+ 202              		@ args = 0, pretend = 0, frame = 0
+ 203              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204              		.loc 1 57 1 is_stmt 0 view .LVU53
+ 205 0000 70B5     		push	{r4, r5, r6, lr}
+ 206              	.LCFI1:
+ 207              		.cfi_def_cfa_offset 16
+ 208              		.cfi_offset 4, -16
+ 209              		.cfi_offset 5, -12
+ 210              		.cfi_offset 6, -8
+ 211              		.cfi_offset 14, -4
+ 212 0002 0446     		mov	r4, r0
+ 213 0004 0E46     		mov	r6, r1
+ 214 0006 1546     		mov	r5, r2
+  58:../../util/ogg_util.c **** 
+  59:../../util/ogg_util.c ****    if (!ogg_decoder->page_load) {
+ 215              		.loc 1 59 4 is_stmt 1 view .LVU54
+ 216              		.loc 1 59 20 is_stmt 0 view .LVU55
+ 217 0008 90F82331 		ldrb	r3, [r0, #291]	@ zero_extendqisi2
+ 218              		.loc 1 59 7 view .LVU56
+ 219 000c C3B1     		cbz	r3, .L23
+ 220              	.LVL15:
+ 221              	.L15:
+  60:../../util/ogg_util.c ****       ogg_result_t res = ogg_read_page_data(ogg_decoder, &ogg_decoder->page);
+  61:../../util/ogg_util.c ****       if (res != OGG_RESULT_NO_ERROR) return res;
+  62:../../util/ogg_util.c ****       ogg_decoder->page_load = TRUE;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 6
+
+
+  63:../../util/ogg_util.c ****       ogg_decoder->segment_index = 0;
+  64:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+  65:../../util/ogg_util.c ****       ogg_decoder->stat_pages_cnt++;
+  66:../../util/ogg_util.c **** #endif
+  67:../../util/ogg_util.c ****       if (ogg_decoder->page.segments_cnt == 0) {
+  68:../../util/ogg_util.c ****         ogg_decoder->page_load = FALSE;
+  69:../../util/ogg_util.c ****         ogg_decoder->segment_index = 0;
+  70:../../util/ogg_util.c ****         return ogg_next_segment(ogg_decoder, segment, segment_size);
+  71:../../util/ogg_util.c ****       }
+  72:../../util/ogg_util.c ****    }
+  73:../../util/ogg_util.c **** 
+  74:../../util/ogg_util.c **** 
+  75:../../util/ogg_util.c ****    if (ogg_decoder->page.segment_size[ogg_decoder->segment_index] == 0) {
+ 222              		.loc 1 75 4 is_stmt 1 view .LVU57
+ 223              		.loc 1 75 50 is_stmt 0 view .LVU58
+ 224 000e 94F82431 		ldrb	r3, [r4, #292]	@ zero_extendqisi2
+ 225              		.loc 1 75 38 view .LVU59
+ 226 0012 2344     		add	r3, r3, r4
+ 227 0014 93F82320 		ldrb	r2, [r3, #35]	@ zero_extendqisi2
+ 228              		.loc 1 75 7 view .LVU60
+ 229 0018 4ABB     		cbnz	r2, .L17
+  76:../../util/ogg_util.c ****         *segment_size = 0;
+ 230              		.loc 1 76 9 is_stmt 1 view .LVU61
+ 231              		.loc 1 76 23 is_stmt 0 view .LVU62
+ 232 001a 0023     		movs	r3, #0
+ 233 001c 2B70     		strb	r3, [r5]
+  77:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+ 234              		.loc 1 77 9 is_stmt 1 view .LVU63
+ 235              		.loc 1 77 20 is_stmt 0 view .LVU64
+ 236 001e 94F82431 		ldrb	r3, [r4, #292]	@ zero_extendqisi2
+ 237              		.loc 1 77 35 view .LVU65
+ 238 0022 0133     		adds	r3, r3, #1
+ 239 0024 84F82431 		strb	r3, [r4, #292]
+ 240              	.L18:
+  78:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+  79:../../util/ogg_util.c ****         ogg_decoder->stat_segments_cnt++;
+  80:../../util/ogg_util.c **** #endif
+  81:../../util/ogg_util.c ****    } else {
+  82:../../util/ogg_util.c ****         *segment_size = ogg_decoder->stream_read(ogg_decoder->stream, segment, ogg_decoder->page.se
+  83:../../util/ogg_util.c ****         if (!(*segment_size)) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+  84:../../util/ogg_util.c ****         if (*segment_size != ogg_decoder->page.segment_size[ogg_decoder->segment_index]) return OGG
+  85:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+  86:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+  87:../../util/ogg_util.c ****         ogg_decoder->stat_segments_cnt++;
+  88:../../util/ogg_util.c ****         ogg_decoder->stat_bytes_cnt += *segment_size;
+  89:../../util/ogg_util.c **** #endif
+  90:../../util/ogg_util.c ****    }
+  91:../../util/ogg_util.c **** 
+  92:../../util/ogg_util.c ****    if (ogg_decoder->segment_index >= ogg_decoder->page.segments_cnt) {
+ 241              		.loc 1 92 4 is_stmt 1 view .LVU66
+ 242              		.loc 1 92 19 is_stmt 0 view .LVU67
+ 243 0028 94F82421 		ldrb	r2, [r4, #292]	@ zero_extendqisi2
+ 244              		.loc 1 92 55 view .LVU68
+ 245 002c 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 246              		.loc 1 92 7 view .LVU69
+ 247 0030 9A42     		cmp	r2, r3
+ 248 0032 32D3     		bcc	.L21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 7
+
+
+  93:../../util/ogg_util.c ****       ogg_decoder->page_load = FALSE;
+ 249              		.loc 1 93 7 is_stmt 1 view .LVU70
+ 250              		.loc 1 93 30 is_stmt 0 view .LVU71
+ 251 0034 0020     		movs	r0, #0
+ 252 0036 84F82301 		strb	r0, [r4, #291]
+  94:../../util/ogg_util.c ****       ogg_decoder->segment_index = 0;
+ 253              		.loc 1 94 7 is_stmt 1 view .LVU72
+ 254              		.loc 1 94 34 is_stmt 0 view .LVU73
+ 255 003a 84F82401 		strb	r0, [r4, #292]
+ 256 003e 2DE0     		b	.L16
+ 257              	.LVL16:
+ 258              	.L23:
+ 259              	.LBB2:
+  60:../../util/ogg_util.c ****       if (res != OGG_RESULT_NO_ERROR) return res;
+ 260              		.loc 1 60 7 is_stmt 1 view .LVU74
+  60:../../util/ogg_util.c ****       if (res != OGG_RESULT_NO_ERROR) return res;
+ 261              		.loc 1 60 26 is_stmt 0 view .LVU75
+ 262 0040 00F10801 		add	r1, r0, #8
+ 263              	.LVL17:
+  60:../../util/ogg_util.c ****       if (res != OGG_RESULT_NO_ERROR) return res;
+ 264              		.loc 1 60 26 view .LVU76
+ 265 0044 FFF7FEFF 		bl	ogg_read_page_data
+ 266              	.LVL18:
+  61:../../util/ogg_util.c ****       ogg_decoder->page_load = TRUE;
+ 267              		.loc 1 61 7 is_stmt 1 view .LVU77
+  61:../../util/ogg_util.c ****       ogg_decoder->page_load = TRUE;
+ 268              		.loc 1 61 10 is_stmt 0 view .LVU78
+ 269 0048 40BB     		cbnz	r0, .L16
+  62:../../util/ogg_util.c ****       ogg_decoder->segment_index = 0;
+ 270              		.loc 1 62 7 is_stmt 1 view .LVU79
+  62:../../util/ogg_util.c ****       ogg_decoder->segment_index = 0;
+ 271              		.loc 1 62 30 is_stmt 0 view .LVU80
+ 272 004a 0123     		movs	r3, #1
+ 273 004c 84F82331 		strb	r3, [r4, #291]
+  63:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+ 274              		.loc 1 63 7 is_stmt 1 view .LVU81
+  63:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+ 275              		.loc 1 63 34 is_stmt 0 view .LVU82
+ 276 0050 0023     		movs	r3, #0
+ 277 0052 84F82431 		strb	r3, [r4, #292]
+  67:../../util/ogg_util.c ****         ogg_decoder->page_load = FALSE;
+ 278              		.loc 1 67 7 is_stmt 1 view .LVU83
+  67:../../util/ogg_util.c ****         ogg_decoder->page_load = FALSE;
+ 279              		.loc 1 67 28 is_stmt 0 view .LVU84
+ 280 0056 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+  67:../../util/ogg_util.c ****         ogg_decoder->page_load = FALSE;
+ 281              		.loc 1 67 10 view .LVU85
+ 282 005a 002B     		cmp	r3, #0
+ 283 005c D7D1     		bne	.L15
+  68:../../util/ogg_util.c ****         ogg_decoder->segment_index = 0;
+ 284              		.loc 1 68 9 is_stmt 1 view .LVU86
+  68:../../util/ogg_util.c ****         ogg_decoder->segment_index = 0;
+ 285              		.loc 1 68 32 is_stmt 0 view .LVU87
+ 286 005e 84F82331 		strb	r3, [r4, #291]
+  69:../../util/ogg_util.c ****         return ogg_next_segment(ogg_decoder, segment, segment_size);
+ 287              		.loc 1 69 9 is_stmt 1 view .LVU88
+  70:../../util/ogg_util.c ****       }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 8
+
+
+ 288              		.loc 1 70 9 view .LVU89
+  70:../../util/ogg_util.c ****       }
+ 289              		.loc 1 70 16 is_stmt 0 view .LVU90
+ 290 0062 2A46     		mov	r2, r5
+ 291 0064 3146     		mov	r1, r6
+ 292 0066 2046     		mov	r0, r4
+ 293              	.LVL19:
+  70:../../util/ogg_util.c ****       }
+ 294              		.loc 1 70 16 view .LVU91
+ 295 0068 FFF7FEFF 		bl	ogg_next_segment
+ 296              	.LVL20:
+ 297 006c 16E0     		b	.L16
+ 298              	.LVL21:
+ 299              	.L17:
+  70:../../util/ogg_util.c ****       }
+ 300              		.loc 1 70 16 view .LVU92
+ 301              	.LBE2:
+  82:../../util/ogg_util.c ****         if (!(*segment_size)) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+ 302              		.loc 1 82 9 is_stmt 1 view .LVU93
+  82:../../util/ogg_util.c ****         if (!(*segment_size)) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+ 303              		.loc 1 82 36 is_stmt 0 view .LVU94
+ 304 006e 6368     		ldr	r3, [r4, #4]
+  82:../../util/ogg_util.c ****         if (!(*segment_size)) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+ 305              		.loc 1 82 25 view .LVU95
+ 306 0070 3146     		mov	r1, r6
+ 307 0072 2068     		ldr	r0, [r4]
+ 308 0074 9847     		blx	r3
+ 309              	.LVL22:
+  82:../../util/ogg_util.c ****         if (!(*segment_size)) return OGG_RESULT_ERROR_READ_STREAM_EOFF;
+ 310              		.loc 1 82 23 discriminator 1 view .LVU96
+ 311 0076 C0B2     		uxtb	r0, r0
+ 312 0078 2870     		strb	r0, [r5]
+  83:../../util/ogg_util.c ****         if (*segment_size != ogg_decoder->page.segment_size[ogg_decoder->segment_index]) return OGG
+ 313              		.loc 1 83 9 is_stmt 1 view .LVU97
+  83:../../util/ogg_util.c ****         if (*segment_size != ogg_decoder->page.segment_size[ogg_decoder->segment_index]) return OGG
+ 314              		.loc 1 83 12 is_stmt 0 view .LVU98
+ 315 007a 50B1     		cbz	r0, .L19
+  84:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+ 316              		.loc 1 84 9 is_stmt 1 view .LVU99
+  84:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+ 317              		.loc 1 84 72 is_stmt 0 view .LVU100
+ 318 007c 94F82431 		ldrb	r3, [r4, #292]	@ zero_extendqisi2
+  84:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+ 319              		.loc 1 84 60 view .LVU101
+ 320 0080 E218     		adds	r2, r4, r3
+ 321 0082 92F82320 		ldrb	r2, [r2, #35]	@ zero_extendqisi2
+  84:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+ 322              		.loc 1 84 12 view .LVU102
+ 323 0086 9042     		cmp	r0, r2
+ 324 0088 05D1     		bne	.L20
+  85:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+ 325              		.loc 1 85 9 is_stmt 1 view .LVU103
+  85:../../util/ogg_util.c **** #ifdef OGG_STATISTIC
+ 326              		.loc 1 85 35 is_stmt 0 view .LVU104
+ 327 008a 0133     		adds	r3, r3, #1
+ 328 008c 84F82431 		strb	r3, [r4, #292]
+ 329 0090 CAE7     		b	.L18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 9
+
+
+ 330              	.L19:
+  83:../../util/ogg_util.c ****         if (*segment_size != ogg_decoder->page.segment_size[ogg_decoder->segment_index]) return OGG
+ 331              		.loc 1 83 38 discriminator 1 view .LVU105
+ 332 0092 0120     		movs	r0, #1
+ 333 0094 02E0     		b	.L16
+ 334              	.L20:
+  84:../../util/ogg_util.c ****         ogg_decoder->segment_index++;
+ 335              		.loc 1 84 97 discriminator 1 view .LVU106
+ 336 0096 0220     		movs	r0, #2
+ 337 0098 00E0     		b	.L16
+ 338              	.L21:
+  95:../../util/ogg_util.c ****    }
+  96:../../util/ogg_util.c **** 
+  97:../../util/ogg_util.c ****    return OGG_RESULT_NO_ERROR;
+ 339              		.loc 1 97 11 view .LVU107
+ 340 009a 0020     		movs	r0, #0
+ 341              	.L16:
+  98:../../util/ogg_util.c **** }
+ 342              		.loc 1 98 1 view .LVU108
+ 343 009c 70BD     		pop	{r4, r5, r6, pc}
+ 344              		.loc 1 98 1 view .LVU109
+ 345              		.cfi_endproc
+ 346              	.LFE2:
+ 348              		.section	.text.ogg_get_page_full_segments_size,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	ogg_get_page_full_segments_size
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	ogg_get_page_full_segments_size:
+ 356              	.LVL23:
+ 357              	.LFB3:
+  99:../../util/ogg_util.c **** 
+ 100:../../util/ogg_util.c **** uint32_t ogg_get_page_full_segments_size(ogg_page_t * ogg_page)
+ 101:../../util/ogg_util.c **** {
+ 358              		.loc 1 101 1 is_stmt 1 view -0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 363              		.loc 1 101 1 is_stmt 0 view .LVU111
+ 364 0000 0246     		mov	r2, r0
+ 102:../../util/ogg_util.c ****    uint16_t i;
+ 365              		.loc 1 102 4 is_stmt 1 view .LVU112
+ 103:../../util/ogg_util.c ****    uint32_t res;
+ 366              		.loc 1 103 4 view .LVU113
+ 104:../../util/ogg_util.c **** 
+ 105:../../util/ogg_util.c ****    res = 0;
+ 367              		.loc 1 105 4 view .LVU114
+ 368              	.LVL24:
+ 106:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 369              		.loc 1 106 4 view .LVU115
+ 105:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 370              		.loc 1 105 8 is_stmt 0 view .LVU116
+ 371 0002 0020     		movs	r0, #0
+ 372              	.LVL25:
+ 373              		.loc 1 106 11 view .LVU117
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 10
+
+
+ 374 0004 0346     		mov	r3, r0
+ 375              		.loc 1 106 4 view .LVU118
+ 376 0006 04E0     		b	.L25
+ 377              	.LVL26:
+ 378              	.L26:
+ 107:../../util/ogg_util.c ****        res += ogg_page->segment_size[i];
+ 379              		.loc 1 107 8 is_stmt 1 view .LVU119
+ 380              		.loc 1 107 37 is_stmt 0 view .LVU120
+ 381 0008 D118     		adds	r1, r2, r3
+ 382 000a C97E     		ldrb	r1, [r1, #27]	@ zero_extendqisi2
+ 383              		.loc 1 107 12 view .LVU121
+ 384 000c 0844     		add	r0, r0, r1
+ 385              	.LVL27:
+ 106:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 386              		.loc 1 106 45 is_stmt 1 discriminator 3 view .LVU122
+ 387 000e 0133     		adds	r3, r3, #1
+ 388              	.LVL28:
+ 106:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 389              		.loc 1 106 45 is_stmt 0 discriminator 3 view .LVU123
+ 390 0010 9BB2     		uxth	r3, r3
+ 391              	.LVL29:
+ 392              	.L25:
+ 106:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 393              		.loc 1 106 18 is_stmt 1 discriminator 1 view .LVU124
+ 106:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 394              		.loc 1 106 28 is_stmt 0 discriminator 1 view .LVU125
+ 395 0012 917E     		ldrb	r1, [r2, #26]	@ zero_extendqisi2
+ 106:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 396              		.loc 1 106 18 discriminator 1 view .LVU126
+ 397 0014 9942     		cmp	r1, r3
+ 398 0016 F7D8     		bhi	.L26
+ 108:../../util/ogg_util.c ****    }
+ 109:../../util/ogg_util.c ****    return res;
+ 399              		.loc 1 109 4 is_stmt 1 view .LVU127
+ 110:../../util/ogg_util.c **** }
+ 400              		.loc 1 110 1 is_stmt 0 view .LVU128
+ 401 0018 7047     		bx	lr
+ 402              		.cfi_endproc
+ 403              	.LFE3:
+ 405              		.section	.text.ogg_get_page_packets_count,"ax",%progbits
+ 406              		.align	1
+ 407              		.global	ogg_get_page_packets_count
+ 408              		.syntax unified
+ 409              		.thumb
+ 410              		.thumb_func
+ 412              	ogg_get_page_packets_count:
+ 413              	.LVL30:
+ 414              	.LFB4:
+ 111:../../util/ogg_util.c **** 
+ 112:../../util/ogg_util.c **** uint8_t ogg_get_page_packets_count(ogg_page_t * ogg_page)
+ 113:../../util/ogg_util.c **** {
+ 415              		.loc 1 113 1 is_stmt 1 view -0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 0
+ 418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 419              		@ link register save eliminated.
+ 420              		.loc 1 113 1 is_stmt 0 view .LVU130
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 11
+
+
+ 421 0000 0246     		mov	r2, r0
+ 114:../../util/ogg_util.c ****    uint16_t i;
+ 422              		.loc 1 114 4 is_stmt 1 view .LVU131
+ 115:../../util/ogg_util.c ****    uint8_t res;
+ 423              		.loc 1 115 4 view .LVU132
+ 116:../../util/ogg_util.c **** 
+ 117:../../util/ogg_util.c ****    res = 0;
+ 424              		.loc 1 117 4 view .LVU133
+ 425              	.LVL31:
+ 118:../../util/ogg_util.c **** 
+ 119:../../util/ogg_util.c **** 
+ 120:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 426              		.loc 1 120 4 view .LVU134
+ 117:../../util/ogg_util.c **** 
+ 427              		.loc 1 117 8 is_stmt 0 view .LVU135
+ 428 0002 0020     		movs	r0, #0
+ 429              	.LVL32:
+ 430              		.loc 1 120 11 view .LVU136
+ 431 0004 0346     		mov	r3, r0
+ 432              		.loc 1 120 4 view .LVU137
+ 433 0006 01E0     		b	.L28
+ 434              	.LVL33:
+ 435              	.L29:
+ 436              		.loc 1 120 45 is_stmt 1 discriminator 2 view .LVU138
+ 437 0008 0133     		adds	r3, r3, #1
+ 438              	.LVL34:
+ 439              		.loc 1 120 45 is_stmt 0 discriminator 2 view .LVU139
+ 440 000a 9BB2     		uxth	r3, r3
+ 441              	.LVL35:
+ 442              	.L28:
+ 443              		.loc 1 120 18 is_stmt 1 discriminator 1 view .LVU140
+ 444              		.loc 1 120 28 is_stmt 0 discriminator 1 view .LVU141
+ 445 000c 917E     		ldrb	r1, [r2, #26]	@ zero_extendqisi2
+ 446              		.loc 1 120 18 discriminator 1 view .LVU142
+ 447 000e 9942     		cmp	r1, r3
+ 448 0010 06D9     		bls	.L31
+ 121:../../util/ogg_util.c ****      if (ogg_page->segment_size[i] == 255) continue;
+ 449              		.loc 1 121 6 is_stmt 1 view .LVU143
+ 450              		.loc 1 121 32 is_stmt 0 view .LVU144
+ 451 0012 D118     		adds	r1, r2, r3
+ 452 0014 C97E     		ldrb	r1, [r1, #27]	@ zero_extendqisi2
+ 453              		.loc 1 121 9 view .LVU145
+ 454 0016 FF29     		cmp	r1, #255
+ 455 0018 F6D0     		beq	.L29
+ 122:../../util/ogg_util.c ****      res++;
+ 456              		.loc 1 122 6 is_stmt 1 view .LVU146
+ 457              		.loc 1 122 9 is_stmt 0 view .LVU147
+ 458 001a 0130     		adds	r0, r0, #1
+ 459              	.LVL36:
+ 460              		.loc 1 122 9 view .LVU148
+ 461 001c C0B2     		uxtb	r0, r0
+ 462              	.LVL37:
+ 463              		.loc 1 122 9 view .LVU149
+ 464 001e F3E7     		b	.L29
+ 465              	.L31:
+ 123:../../util/ogg_util.c ****    }
+ 124:../../util/ogg_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 12
+
+
+ 125:../../util/ogg_util.c ****    return res;
+ 466              		.loc 1 125 4 is_stmt 1 view .LVU150
+ 126:../../util/ogg_util.c **** }
+ 467              		.loc 1 126 1 is_stmt 0 view .LVU151
+ 468 0020 7047     		bx	lr
+ 469              		.cfi_endproc
+ 470              	.LFE4:
+ 472              		.section	.text.ogg_write_page,"ax",%progbits
+ 473              		.align	1
+ 474              		.global	ogg_write_page
+ 475              		.syntax unified
+ 476              		.thumb
+ 477              		.thumb_func
+ 479              	ogg_write_page:
+ 480              	.LVL38:
+ 481              	.LFB5:
+ 127:../../util/ogg_util.c **** 
+ 128:../../util/ogg_util.c **** 
+ 129:../../util/ogg_util.c **** ogg_result_t ogg_write_page(ogg_stream_t stream, ogg_stream_write_t * ogg_stream_write, ogg_page_t 
+ 130:../../util/ogg_util.c **** {
+ 482              		.loc 1 130 1 is_stmt 1 view -0
+ 483              		.cfi_startproc
+ 484              		@ args = 0, pretend = 0, frame = 0
+ 485              		@ frame_needed = 0, uses_anonymous_args = 0
+ 486              		.loc 1 130 1 is_stmt 0 view .LVU153
+ 487 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 488              	.LCFI2:
+ 489              		.cfi_def_cfa_offset 32
+ 490              		.cfi_offset 3, -32
+ 491              		.cfi_offset 4, -28
+ 492              		.cfi_offset 5, -24
+ 493              		.cfi_offset 6, -20
+ 494              		.cfi_offset 7, -16
+ 495              		.cfi_offset 8, -12
+ 496              		.cfi_offset 9, -8
+ 497              		.cfi_offset 14, -4
+ 498 0004 0746     		mov	r7, r0
+ 499 0006 8846     		mov	r8, r1
+ 500 0008 1546     		mov	r5, r2
+ 501 000a 1E46     		mov	r6, r3
+ 131:../../util/ogg_util.c **** 
+ 132:../../util/ogg_util.c ****    uint16_t i, page_len;
+ 502              		.loc 1 132 4 is_stmt 1 view .LVU154
+ 133:../../util/ogg_util.c ****    uint8_t rc;
+ 503              		.loc 1 133 4 view .LVU155
+ 134:../../util/ogg_util.c **** 
+ 135:../../util/ogg_util.c ****    ogg_page->checksum = 0;
+ 504              		.loc 1 135 4 view .LVU156
+ 505              		.loc 1 135 23 is_stmt 0 view .LVU157
+ 506 000c 0024     		movs	r4, #0
+ 507 000e 9475     		strb	r4, [r2, #22]
+ 508 0010 D475     		strb	r4, [r2, #23]
+ 509 0012 1476     		strb	r4, [r2, #24]
+ 510 0014 5476     		strb	r4, [r2, #25]
+ 136:../../util/ogg_util.c **** 
+ 137:../../util/ogg_util.c ****    page_len = sizeof(ogg_page_t) - sizeof(ogg_page->segment_size) + ogg_page->segments_cnt;
+ 511              		.loc 1 137 4 is_stmt 1 view .LVU158
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 13
+
+
+ 512              		.loc 1 137 77 is_stmt 0 view .LVU159
+ 513 0016 927E     		ldrb	r2, [r2, #26]	@ zero_extendqisi2
+ 514              	.LVL39:
+ 138:../../util/ogg_util.c **** 
+ 139:../../util/ogg_util.c ****    ogg_page->checksum = crc32(0, (unsigned char *)ogg_page, page_len);
+ 515              		.loc 1 139 4 is_stmt 1 view .LVU160
+ 516              		.loc 1 139 25 is_stmt 0 view .LVU161
+ 517 0018 1B32     		adds	r2, r2, #27
+ 518              	.LVL40:
+ 519              		.loc 1 139 25 view .LVU162
+ 520 001a 2946     		mov	r1, r5
+ 521              	.LVL41:
+ 522              		.loc 1 139 25 view .LVU163
+ 523 001c 2046     		mov	r0, r4
+ 524              	.LVL42:
+ 525              		.loc 1 139 25 view .LVU164
+ 526 001e FFF7FEFF 		bl	crc32
+ 527              	.LVL43:
+ 528              		.loc 1 139 23 discriminator 1 view .LVU165
+ 529 0022 C5F81600 		str	r0, [r5, #22]	@ unaligned
+ 140:../../util/ogg_util.c **** 
+ 141:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 530              		.loc 1 141 4 is_stmt 1 view .LVU166
+ 531              	.LVL44:
+ 532              		.loc 1 141 4 is_stmt 0 view .LVU167
+ 533 0026 0BE0     		b	.L33
+ 534              	.LVL45:
+ 535              	.L34:
+ 142:../../util/ogg_util.c ****        ogg_page->checksum = crc32(ogg_page->checksum, segments_data[i], ogg_page->segment_size[i]);
+ 536              		.loc 1 142 8 is_stmt 1 view .LVU168
+ 537              		.loc 1 142 95 is_stmt 0 view .LVU169
+ 538 0028 2B19     		adds	r3, r5, r4
+ 539              		.loc 1 142 29 view .LVU170
+ 540 002a DA7E     		ldrb	r2, [r3, #27]	@ zero_extendqisi2
+ 541 002c 06EB0421 		add	r1, r6, r4, lsl #8
+ 542 0030 D5F81600 		ldr	r0, [r5, #22]	@ unaligned
+ 543 0034 FFF7FEFF 		bl	crc32
+ 544              	.LVL46:
+ 545              		.loc 1 142 27 discriminator 1 view .LVU171
+ 546 0038 C5F81600 		str	r0, [r5, #22]	@ unaligned
+ 141:../../util/ogg_util.c ****        ogg_page->checksum = crc32(ogg_page->checksum, segments_data[i], ogg_page->segment_size[i]);
+ 547              		.loc 1 141 45 is_stmt 1 discriminator 3 view .LVU172
+ 548 003c 0134     		adds	r4, r4, #1
+ 549              	.LVL47:
+ 141:../../util/ogg_util.c ****        ogg_page->checksum = crc32(ogg_page->checksum, segments_data[i], ogg_page->segment_size[i]);
+ 550              		.loc 1 141 45 is_stmt 0 discriminator 3 view .LVU173
+ 551 003e A4B2     		uxth	r4, r4
+ 552              	.LVL48:
+ 553              	.L33:
+ 141:../../util/ogg_util.c ****        ogg_page->checksum = crc32(ogg_page->checksum, segments_data[i], ogg_page->segment_size[i]);
+ 554              		.loc 1 141 18 is_stmt 1 discriminator 1 view .LVU174
+ 141:../../util/ogg_util.c ****        ogg_page->checksum = crc32(ogg_page->checksum, segments_data[i], ogg_page->segment_size[i]);
+ 555              		.loc 1 141 28 is_stmt 0 discriminator 1 view .LVU175
+ 556 0040 AB7E     		ldrb	r3, [r5, #26]	@ zero_extendqisi2
+ 141:../../util/ogg_util.c ****        ogg_page->checksum = crc32(ogg_page->checksum, segments_data[i], ogg_page->segment_size[i]);
+ 557              		.loc 1 141 18 discriminator 1 view .LVU176
+ 558 0042 A342     		cmp	r3, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 14
+
+
+ 559 0044 F0D8     		bhi	.L34
+ 143:../../util/ogg_util.c ****    }
+ 144:../../util/ogg_util.c **** 
+ 145:../../util/ogg_util.c ****    rc = ogg_stream_write(stream, (uint8_t *)ogg_page, sizeof(ogg_page_t) - sizeof(ogg_page->segment
+ 560              		.loc 1 145 4 is_stmt 1 view .LVU177
+ 561              		.loc 1 145 9 is_stmt 0 view .LVU178
+ 562 0046 1B22     		movs	r2, #27
+ 563 0048 2946     		mov	r1, r5
+ 564 004a 3846     		mov	r0, r7
+ 565 004c C047     		blx	r8
+ 566              	.LVL49:
+ 567              		.loc 1 145 7 discriminator 1 view .LVU179
+ 568 004e C0B2     		uxtb	r0, r0
+ 569              	.LVL50:
+ 146:../../util/ogg_util.c ****    if (rc != sizeof(ogg_page_t) - sizeof(ogg_page->segment_size)) return OGG_RESULT_ERROR_WRITE_PAG
+ 570              		.loc 1 146 4 is_stmt 1 view .LVU180
+ 571              		.loc 1 146 7 is_stmt 0 view .LVU181
+ 572 0050 1B28     		cmp	r0, #27
+ 573 0052 1FD1     		bne	.L38
+ 147:../../util/ogg_util.c **** 
+ 148:../../util/ogg_util.c ****    rc = ogg_stream_write(stream, (uint8_t *)ogg_page->segment_size, ogg_page->segments_cnt);
+ 574              		.loc 1 148 4 is_stmt 1 view .LVU182
+ 575              		.loc 1 148 9 is_stmt 0 view .LVU183
+ 576 0054 AA7E     		ldrb	r2, [r5, #26]	@ zero_extendqisi2
+ 577 0056 05F11B01 		add	r1, r5, #27
+ 578 005a 3846     		mov	r0, r7
+ 579              	.LVL51:
+ 580              		.loc 1 148 9 view .LVU184
+ 581 005c C047     		blx	r8
+ 582              	.LVL52:
+ 583              		.loc 1 148 7 discriminator 1 view .LVU185
+ 584 005e C0B2     		uxtb	r0, r0
+ 585              	.LVL53:
+ 149:../../util/ogg_util.c ****    if (rc != ogg_page->segments_cnt) return OGG_RESULT_ERROR_WRITE_PAGE_SEGMENTS_SIZE;
+ 586              		.loc 1 149 4 is_stmt 1 view .LVU186
+ 587              		.loc 1 149 22 is_stmt 0 view .LVU187
+ 588 0060 AB7E     		ldrb	r3, [r5, #26]	@ zero_extendqisi2
+ 589              		.loc 1 149 7 view .LVU188
+ 590 0062 8342     		cmp	r3, r0
+ 591 0064 19D1     		bne	.L39
+ 150:../../util/ogg_util.c **** 
+ 151:../../util/ogg_util.c **** 
+ 152:../../util/ogg_util.c ****    if (!segments_data) return OGG_RESULT_NO_ERROR;
+ 592              		.loc 1 152 4 is_stmt 1 view .LVU189
+ 593              		.loc 1 152 7 is_stmt 0 view .LVU190
+ 594 0066 D6B1     		cbz	r6, .L40
+ 153:../../util/ogg_util.c **** 
+ 154:../../util/ogg_util.c ****    for (i = 0; i < ogg_page->segments_cnt; i++) {
+ 595              		.loc 1 154 11 view .LVU191
+ 596 0068 0024     		movs	r4, #0
+ 597              	.LVL54:
+ 598              	.L36:
+ 599              		.loc 1 154 18 is_stmt 1 discriminator 1 view .LVU192
+ 600              		.loc 1 154 28 is_stmt 0 discriminator 1 view .LVU193
+ 601 006a AB7E     		ldrb	r3, [r5, #26]	@ zero_extendqisi2
+ 602              		.loc 1 154 18 discriminator 1 view .LVU194
+ 603 006c A342     		cmp	r3, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 15
+
+
+ 604 006e 0FD9     		bls	.L43
+ 155:../../util/ogg_util.c ****      rc = ogg_stream_write(stream, segments_data[i], ogg_page->segment_size[i]);
+ 605              		.loc 1 155 6 is_stmt 1 view .LVU195
+ 606              		.loc 1 155 76 is_stmt 0 view .LVU196
+ 607 0070 05EB0409 		add	r9, r5, r4
+ 608              		.loc 1 155 11 view .LVU197
+ 609 0074 99F81B20 		ldrb	r2, [r9, #27]	@ zero_extendqisi2
+ 610 0078 06EB0421 		add	r1, r6, r4, lsl #8
+ 611 007c 3846     		mov	r0, r7
+ 612              	.LVL55:
+ 613              		.loc 1 155 11 view .LVU198
+ 614 007e C047     		blx	r8
+ 615              	.LVL56:
+ 616              		.loc 1 155 9 discriminator 1 view .LVU199
+ 617 0080 C0B2     		uxtb	r0, r0
+ 618              	.LVL57:
+ 156:../../util/ogg_util.c ****      if (rc != ogg_page->segment_size[i]) return OGG_RESULT_ERROR_WRITE_SEGMENT;
+ 619              		.loc 1 156 6 is_stmt 1 view .LVU200
+ 620              		.loc 1 156 38 is_stmt 0 view .LVU201
+ 621 0082 99F81B30 		ldrb	r3, [r9, #27]	@ zero_extendqisi2
+ 622              		.loc 1 156 9 view .LVU202
+ 623 0086 8342     		cmp	r3, r0
+ 624 0088 0BD1     		bne	.L41
+ 154:../../util/ogg_util.c ****      rc = ogg_stream_write(stream, segments_data[i], ogg_page->segment_size[i]);
+ 625              		.loc 1 154 45 is_stmt 1 discriminator 2 view .LVU203
+ 626 008a 0134     		adds	r4, r4, #1
+ 627              	.LVL58:
+ 154:../../util/ogg_util.c ****      rc = ogg_stream_write(stream, segments_data[i], ogg_page->segment_size[i]);
+ 628              		.loc 1 154 45 is_stmt 0 discriminator 2 view .LVU204
+ 629 008c A4B2     		uxth	r4, r4
+ 630              	.LVL59:
+ 154:../../util/ogg_util.c ****      rc = ogg_stream_write(stream, segments_data[i], ogg_page->segment_size[i]);
+ 631              		.loc 1 154 45 discriminator 2 view .LVU205
+ 632 008e ECE7     		b	.L36
+ 633              	.L43:
+ 157:../../util/ogg_util.c ****    }
+ 158:../../util/ogg_util.c **** 
+ 159:../../util/ogg_util.c ****    return OGG_RESULT_NO_ERROR;
+ 634              		.loc 1 159 11 view .LVU206
+ 635 0090 0020     		movs	r0, #0
+ 636              	.LVL60:
+ 637              		.loc 1 159 11 view .LVU207
+ 638 0092 00E0     		b	.L35
+ 639              	.LVL61:
+ 640              	.L38:
+ 146:../../util/ogg_util.c **** 
+ 641              		.loc 1 146 74 discriminator 1 view .LVU208
+ 642 0094 0420     		movs	r0, #4
+ 643              	.LVL62:
+ 644              	.L35:
+ 160:../../util/ogg_util.c **** }
+ 645              		.loc 1 160 1 view .LVU209
+ 646 0096 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 647              	.LVL63:
+ 648              	.L39:
+ 149:../../util/ogg_util.c **** 
+ 649              		.loc 1 149 45 discriminator 1 view .LVU210
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 16
+
+
+ 650 009a 0520     		movs	r0, #5
+ 651              	.LVL64:
+ 149:../../util/ogg_util.c **** 
+ 652              		.loc 1 149 45 discriminator 1 view .LVU211
+ 653 009c FBE7     		b	.L35
+ 654              	.LVL65:
+ 655              	.L40:
+ 152:../../util/ogg_util.c **** 
+ 656              		.loc 1 152 31 discriminator 1 view .LVU212
+ 657 009e 0020     		movs	r0, #0
+ 658              	.LVL66:
+ 152:../../util/ogg_util.c **** 
+ 659              		.loc 1 152 31 discriminator 1 view .LVU213
+ 660 00a0 F9E7     		b	.L35
+ 661              	.LVL67:
+ 662              	.L41:
+ 156:../../util/ogg_util.c ****    }
+ 663              		.loc 1 156 50 discriminator 1 view .LVU214
+ 664 00a2 0620     		movs	r0, #6
+ 665              	.LVL68:
+ 156:../../util/ogg_util.c ****    }
+ 666              		.loc 1 156 50 discriminator 1 view .LVU215
+ 667 00a4 F7E7     		b	.L35
+ 668              		.cfi_endproc
+ 669              	.LFE5:
+ 671              		.section	.text.ogg_write_page_segment,"ax",%progbits
+ 672              		.align	1
+ 673              		.global	ogg_write_page_segment
+ 674              		.syntax unified
+ 675              		.thumb
+ 676              		.thumb_func
+ 678              	ogg_write_page_segment:
+ 679              	.LVL69:
+ 680              	.LFB6:
+ 161:../../util/ogg_util.c **** 
+ 162:../../util/ogg_util.c **** ogg_result_t ogg_write_page_segment(ogg_stream_t stream, ogg_stream_write_t * ogg_stream_write, uin
+ 163:../../util/ogg_util.c **** {
+ 681              		.loc 1 163 1 is_stmt 1 view -0
+ 682              		.cfi_startproc
+ 683              		@ args = 0, pretend = 0, frame = 0
+ 684              		@ frame_needed = 0, uses_anonymous_args = 0
+ 685              		.loc 1 163 1 is_stmt 0 view .LVU217
+ 686 0000 10B5     		push	{r4, lr}
+ 687              	.LCFI3:
+ 688              		.cfi_def_cfa_offset 8
+ 689              		.cfi_offset 4, -8
+ 690              		.cfi_offset 14, -4
+ 691 0002 0C46     		mov	r4, r1
+ 692 0004 1146     		mov	r1, r2
+ 693              	.LVL70:
+ 164:../../util/ogg_util.c **** 	return ogg_stream_write(stream, segment, segment_size);
+ 694              		.loc 1 164 2 is_stmt 1 view .LVU218
+ 695              		.loc 1 164 9 is_stmt 0 view .LVU219
+ 696 0006 1A46     		mov	r2, r3
+ 697              	.LVL71:
+ 698              		.loc 1 164 9 view .LVU220
+ 699 0008 A047     		blx	r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 17
+
+
+ 700              	.LVL72:
+ 165:../../util/ogg_util.c **** }
+ 701              		.loc 1 165 1 view .LVU221
+ 702 000a C0B2     		uxtb	r0, r0
+ 703 000c 10BD     		pop	{r4, pc}
+ 704              		.loc 1 165 1 view .LVU222
+ 705              		.cfi_endproc
+ 706              	.LFE6:
+ 708              		.section	.text.get_opus_tag,"ax",%progbits
+ 709              		.align	1
+ 710              		.global	get_opus_tag
+ 711              		.syntax unified
+ 712              		.thumb
+ 713              		.thumb_func
+ 715              	get_opus_tag:
+ 716              	.LVL73:
+ 717              	.LFB7:
+ 166:../../util/ogg_util.c **** 
+ 167:../../util/ogg_util.c **** 
+ 168:../../util/ogg_util.c **** //------------------------- OPUS -----------------------------------------------
+ 169:../../util/ogg_util.c **** 
+ 170:../../util/ogg_util.c **** uint8_t * get_opus_tag(uint8_t * data, char * buf, uint8_t buf_size)
+ 171:../../util/ogg_util.c **** {
+ 718              		.loc 1 171 1 is_stmt 1 view -0
+ 719              		.cfi_startproc
+ 720              		@ args = 0, pretend = 0, frame = 0
+ 721              		@ frame_needed = 0, uses_anonymous_args = 0
+ 722              		.loc 1 171 1 is_stmt 0 view .LVU224
+ 723 0000 70B5     		push	{r4, r5, r6, lr}
+ 724              	.LCFI4:
+ 725              		.cfi_def_cfa_offset 16
+ 726              		.cfi_offset 4, -16
+ 727              		.cfi_offset 5, -12
+ 728              		.cfi_offset 6, -8
+ 729              		.cfi_offset 14, -4
+ 730 0002 0446     		mov	r4, r0
+ 172:../../util/ogg_util.c ****    uint32_t * plen, len;
+ 731              		.loc 1 172 4 is_stmt 1 view .LVU225
+ 173:../../util/ogg_util.c **** 
+ 174:../../util/ogg_util.c ****    if (!buf_size) return data;
+ 732              		.loc 1 174 4 view .LVU226
+ 733              		.loc 1 174 7 is_stmt 0 view .LVU227
+ 734 0004 0AB9     		cbnz	r2, .L49
+ 735              	.LVL74:
+ 736              	.L47:
+ 175:../../util/ogg_util.c **** 
+ 176:../../util/ogg_util.c ****    plen = (uint32_t *)data;
+ 177:../../util/ogg_util.c **** 
+ 178:../../util/ogg_util.c ****    len = MIN(*plen, (uint32_t)(buf_size - 1));
+ 179:../../util/ogg_util.c **** 
+ 180:../../util/ogg_util.c ****    memcpy(buf, data + sizeof(uint32_t), len);
+ 181:../../util/ogg_util.c ****    buf[len] = '\0';
+ 182:../../util/ogg_util.c **** 
+ 183:../../util/ogg_util.c ****    return  data + sizeof(uint32_t) + *plen;
+ 184:../../util/ogg_util.c **** }
+ 737              		.loc 1 184 1 view .LVU228
+ 738 0006 2046     		mov	r0, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 18
+
+
+ 739 0008 70BD     		pop	{r4, r5, r6, pc}
+ 740              	.LVL75:
+ 741              	.L49:
+ 742              		.loc 1 184 1 view .LVU229
+ 743 000a 0E46     		mov	r6, r1
+ 176:../../util/ogg_util.c **** 
+ 744              		.loc 1 176 4 is_stmt 1 view .LVU230
+ 745              	.LVL76:
+ 178:../../util/ogg_util.c **** 
+ 746              		.loc 1 178 4 view .LVU231
+ 178:../../util/ogg_util.c **** 
+ 747              		.loc 1 178 10 is_stmt 0 view .LVU232
+ 748 000c 551E     		subs	r5, r2, #1
+ 749 000e 0146     		mov	r1, r0
+ 750              	.LVL77:
+ 178:../../util/ogg_util.c **** 
+ 751              		.loc 1 178 10 view .LVU233
+ 752 0010 51F8043B 		ldr	r3, [r1], #4
+ 178:../../util/ogg_util.c **** 
+ 753              		.loc 1 178 8 view .LVU234
+ 754 0014 9D42     		cmp	r5, r3
+ 755 0016 28BF     		it	cs
+ 756 0018 1D46     		movcs	r5, r3
+ 757              	.LVL78:
+ 180:../../util/ogg_util.c ****    buf[len] = '\0';
+ 758              		.loc 1 180 4 is_stmt 1 view .LVU235
+ 759 001a 2A46     		mov	r2, r5
+ 760              	.LVL79:
+ 180:../../util/ogg_util.c ****    buf[len] = '\0';
+ 761              		.loc 1 180 4 is_stmt 0 view .LVU236
+ 762 001c 3046     		mov	r0, r6
+ 763              	.LVL80:
+ 180:../../util/ogg_util.c ****    buf[len] = '\0';
+ 764              		.loc 1 180 4 view .LVU237
+ 765 001e FFF7FEFF 		bl	memcpy
+ 766              	.LVL81:
+ 181:../../util/ogg_util.c **** 
+ 767              		.loc 1 181 4 is_stmt 1 view .LVU238
+ 181:../../util/ogg_util.c **** 
+ 768              		.loc 1 181 13 is_stmt 0 view .LVU239
+ 769 0022 0023     		movs	r3, #0
+ 770 0024 7355     		strb	r3, [r6, r5]
+ 183:../../util/ogg_util.c **** }
+ 771              		.loc 1 183 4 is_stmt 1 view .LVU240
+ 183:../../util/ogg_util.c **** }
+ 772              		.loc 1 183 38 is_stmt 0 view .LVU241
+ 773 0026 2368     		ldr	r3, [r4]
+ 183:../../util/ogg_util.c **** }
+ 774              		.loc 1 183 36 view .LVU242
+ 775 0028 0433     		adds	r3, r3, #4
+ 776 002a 1C44     		add	r4, r4, r3
+ 777              	.LVL82:
+ 183:../../util/ogg_util.c **** }
+ 778              		.loc 1 183 36 view .LVU243
+ 779 002c EBE7     		b	.L47
+ 780              		.cfi_endproc
+ 781              	.LFE7:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 19
+
+
+ 783              		.section	.text.add_opus_data,"ax",%progbits
+ 784              		.align	1
+ 785              		.global	add_opus_data
+ 786              		.syntax unified
+ 787              		.thumb
+ 788              		.thumb_func
+ 790              	add_opus_data:
+ 791              	.LVL83:
+ 792              	.LFB8:
+ 185:../../util/ogg_util.c **** 
+ 186:../../util/ogg_util.c **** uint8_t * add_opus_data(uint8_t * buf, uint32_t buf_size, uint8_t * data, uint32_t data_size)
+ 187:../../util/ogg_util.c **** {
+ 793              		.loc 1 187 1 is_stmt 1 view -0
+ 794              		.cfi_startproc
+ 795              		@ args = 0, pretend = 0, frame = 0
+ 796              		@ frame_needed = 0, uses_anonymous_args = 0
+ 797              		.loc 1 187 1 is_stmt 0 view .LVU245
+ 798 0000 38B5     		push	{r3, r4, r5, lr}
+ 799              	.LCFI5:
+ 800              		.cfi_def_cfa_offset 16
+ 801              		.cfi_offset 3, -16
+ 802              		.cfi_offset 4, -12
+ 803              		.cfi_offset 5, -8
+ 804              		.cfi_offset 14, -4
+ 188:../../util/ogg_util.c ****     uint8_t len;
+ 805              		.loc 1 188 5 is_stmt 1 view .LVU246
+ 189:../../util/ogg_util.c **** 
+ 190:../../util/ogg_util.c ****     if (!buf || !data || (data_size > buf_size) || !buf_size || !data_size) return buf;
+ 806              		.loc 1 190 5 view .LVU247
+ 807              		.loc 1 190 9 is_stmt 0 view .LVU248
+ 808 0002 0546     		mov	r5, r0
+ 809              		.loc 1 190 8 view .LVU249
+ 810 0004 002A     		cmp	r2, #0
+ 811 0006 18BF     		it	ne
+ 812 0008 0028     		cmpne	r0, #0
+ 813 000a 07D0     		beq	.L51
+ 814 000c 9446     		mov	ip, r2
+ 815              		.loc 1 190 52 discriminator 2 view .LVU250
+ 816 000e B1FA81F2 		clz	r2, r1
+ 817              	.LVL84:
+ 818              		.loc 1 190 52 discriminator 2 view .LVU251
+ 819 0012 5209     		lsrs	r2, r2, #5
+ 820              		.loc 1 190 49 discriminator 2 view .LVU252
+ 821 0014 8B42     		cmp	r3, r1
+ 822 0016 01D8     		bhi	.L51
+ 823 0018 02B9     		cbnz	r2, .L51
+ 824              		.loc 1 190 62 discriminator 4 view .LVU253
+ 825 001a 0BB9     		cbnz	r3, .L53
+ 826              	.LVL85:
+ 827              	.L51:
+ 191:../../util/ogg_util.c **** 
+ 192:../../util/ogg_util.c ****     len = MIN(buf_size, data_size);
+ 193:../../util/ogg_util.c ****     memcpy(buf, data, len);
+ 194:../../util/ogg_util.c ****     return buf + len;
+ 195:../../util/ogg_util.c **** }
+ 828              		.loc 1 195 1 view .LVU254
+ 829 001c 2846     		mov	r0, r5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 20
+
+
+ 830 001e 38BD     		pop	{r3, r4, r5, pc}
+ 831              	.LVL86:
+ 832              	.L53:
+ 192:../../util/ogg_util.c ****     memcpy(buf, data, len);
+ 833              		.loc 1 192 5 is_stmt 1 view .LVU255
+ 192:../../util/ogg_util.c ****     memcpy(buf, data, len);
+ 834              		.loc 1 192 11 is_stmt 0 view .LVU256
+ 835 0020 8B42     		cmp	r3, r1
+ 836 0022 28BF     		it	cs
+ 837 0024 0B46     		movcs	r3, r1
+ 838              	.LVL87:
+ 193:../../util/ogg_util.c ****     return buf + len;
+ 839              		.loc 1 193 5 is_stmt 1 view .LVU257
+ 840 0026 DCB2     		uxtb	r4, r3
+ 841 0028 2246     		mov	r2, r4
+ 842 002a 6146     		mov	r1, ip
+ 843              	.LVL88:
+ 193:../../util/ogg_util.c ****     return buf + len;
+ 844              		.loc 1 193 5 is_stmt 0 view .LVU258
+ 845 002c FFF7FEFF 		bl	memcpy
+ 846              	.LVL89:
+ 194:../../util/ogg_util.c **** }
+ 847              		.loc 1 194 5 is_stmt 1 view .LVU259
+ 194:../../util/ogg_util.c **** }
+ 848              		.loc 1 194 16 is_stmt 0 view .LVU260
+ 849 0030 2544     		add	r5, r5, r4
+ 850              	.LVL90:
+ 194:../../util/ogg_util.c **** }
+ 851              		.loc 1 194 16 view .LVU261
+ 852 0032 F3E7     		b	.L51
+ 853              		.cfi_endproc
+ 854              	.LFE8:
+ 856              		.section	.text.add_opus_uint32,"ax",%progbits
+ 857              		.align	1
+ 858              		.global	add_opus_uint32
+ 859              		.syntax unified
+ 860              		.thumb
+ 861              		.thumb_func
+ 863              	add_opus_uint32:
+ 864              	.LVL91:
+ 865              	.LFB9:
+ 196:../../util/ogg_util.c **** 
+ 197:../../util/ogg_util.c **** 
+ 198:../../util/ogg_util.c **** uint8_t * add_opus_uint32(uint8_t * buf, uint32_t buf_size, uint32_t value)
+ 199:../../util/ogg_util.c **** {
+ 866              		.loc 1 199 1 is_stmt 1 view -0
+ 867              		.cfi_startproc
+ 868              		@ args = 0, pretend = 0, frame = 8
+ 869              		@ frame_needed = 0, uses_anonymous_args = 0
+ 870              		.loc 1 199 1 is_stmt 0 view .LVU263
+ 871 0000 00B5     		push	{lr}
+ 872              	.LCFI6:
+ 873              		.cfi_def_cfa_offset 4
+ 874              		.cfi_offset 14, -4
+ 875 0002 83B0     		sub	sp, sp, #12
+ 876              	.LCFI7:
+ 877              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 21
+
+
+ 878 0004 0192     		str	r2, [sp, #4]
+ 200:../../util/ogg_util.c ****   return add_opus_data(buf, buf_size, (uint8_t *)&value, sizeof(value));
+ 879              		.loc 1 200 3 is_stmt 1 view .LVU264
+ 880              		.loc 1 200 10 is_stmt 0 view .LVU265
+ 881 0006 0423     		movs	r3, #4
+ 882 0008 0DEB0302 		add	r2, sp, r3
+ 883              	.LVL92:
+ 884              		.loc 1 200 10 view .LVU266
+ 885 000c FFF7FEFF 		bl	add_opus_data
+ 886              	.LVL93:
+ 201:../../util/ogg_util.c **** }
+ 887              		.loc 1 201 1 view .LVU267
+ 888 0010 03B0     		add	sp, sp, #12
+ 889              	.LCFI8:
+ 890              		.cfi_def_cfa_offset 4
+ 891              		@ sp needed
+ 892 0012 5DF804FB 		ldr	pc, [sp], #4
+ 893              		.cfi_endproc
+ 894              	.LFE9:
+ 896              		.section	.text.add_opus_tag,"ax",%progbits
+ 897              		.align	1
+ 898              		.global	add_opus_tag
+ 899              		.syntax unified
+ 900              		.thumb
+ 901              		.thumb_func
+ 903              	add_opus_tag:
+ 904              	.LVL94:
+ 905              	.LFB10:
+ 202:../../util/ogg_util.c **** 
+ 203:../../util/ogg_util.c **** uint8_t * add_opus_tag(uint8_t * buf, uint32_t buf_size, char * tag)
+ 204:../../util/ogg_util.c **** {
+ 906              		.loc 1 204 1 is_stmt 1 view -0
+ 907              		.cfi_startproc
+ 908              		@ args = 0, pretend = 0, frame = 0
+ 909              		@ frame_needed = 0, uses_anonymous_args = 0
+ 910              		.loc 1 204 1 is_stmt 0 view .LVU269
+ 911 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 912              	.LCFI9:
+ 913              		.cfi_def_cfa_offset 24
+ 914              		.cfi_offset 3, -24
+ 915              		.cfi_offset 4, -20
+ 916              		.cfi_offset 5, -16
+ 917              		.cfi_offset 6, -12
+ 918              		.cfi_offset 7, -8
+ 919              		.cfi_offset 14, -4
+ 920 0002 0746     		mov	r7, r0
+ 921 0004 0C46     		mov	r4, r1
+ 922 0006 1546     		mov	r5, r2
+ 205:../../util/ogg_util.c ****   uint32_t len;
+ 923              		.loc 1 205 3 is_stmt 1 view .LVU270
+ 206:../../util/ogg_util.c ****   uint8_t * ptr;
+ 924              		.loc 1 206 3 view .LVU271
+ 207:../../util/ogg_util.c **** 
+ 208:../../util/ogg_util.c ****   len = strlen(tag);
+ 925              		.loc 1 208 3 view .LVU272
+ 926              		.loc 1 208 9 is_stmt 0 view .LVU273
+ 927 0008 1046     		mov	r0, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 22
+
+
+ 928              	.LVL95:
+ 929              		.loc 1 208 9 view .LVU274
+ 930 000a FFF7FEFF 		bl	strlen
+ 931              	.LVL96:
+ 932              		.loc 1 208 9 view .LVU275
+ 933 000e 0646     		mov	r6, r0
+ 934              	.LVL97:
+ 209:../../util/ogg_util.c ****   ptr = add_opus_uint32(buf, buf_size, len);
+ 935              		.loc 1 209 3 is_stmt 1 view .LVU276
+ 936              		.loc 1 209 9 is_stmt 0 view .LVU277
+ 937 0010 0246     		mov	r2, r0
+ 938 0012 2146     		mov	r1, r4
+ 939 0014 3846     		mov	r0, r7
+ 940              	.LVL98:
+ 941              		.loc 1 209 9 view .LVU278
+ 942 0016 FFF7FEFF 		bl	add_opus_uint32
+ 943              	.LVL99:
+ 210:../../util/ogg_util.c ****   
+ 211:../../util/ogg_util.c ****   return add_opus_data(ptr, buf_size - (ptr - buf), (uint8_t *)tag, len);
+ 944              		.loc 1 211 3 is_stmt 1 view .LVU279
+ 945              		.loc 1 211 45 is_stmt 0 view .LVU280
+ 946 001a C11B     		subs	r1, r0, r7
+ 947              		.loc 1 211 10 view .LVU281
+ 948 001c 3346     		mov	r3, r6
+ 949 001e 2A46     		mov	r2, r5
+ 950 0020 611A     		subs	r1, r4, r1
+ 951 0022 FFF7FEFF 		bl	add_opus_data
+ 952              	.LVL100:
+ 212:../../util/ogg_util.c **** }
+ 953              		.loc 1 212 1 view .LVU282
+ 954 0026 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 955              		.loc 1 212 1 view .LVU283
+ 956              		.cfi_endproc
+ 957              	.LFE10:
+ 959              		.global	global_ogg_decoder
+ 960              		.section	.bss.global_ogg_decoder,"aw",%nobits
+ 961              		.align	2
+ 964              	global_ogg_decoder:
+ 965 0000 00000000 		.space	296
+ 965      00000000 
+ 965      00000000 
+ 965      00000000 
+ 965      00000000 
+ 966              		.text
+ 967              	.Letext0:
+ 968              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 969              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 970              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 971              		.file 5 "../../util/def_util.h"
+ 972              		.file 6 "../../util/ogg_util.h"
+ 973              		.file 7 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 974              		.file 8 "../../util/math_util.h"
+ 975              		.file 9 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ogg_util.c
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:20     .text.ogg_decoder_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:26     .text.ogg_decoder_init:00000000 ogg_decoder_init
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:53     .text.ogg_read_page_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:59     .text.ogg_read_page_data:00000000 ogg_read_page_data
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:186    .text.ogg_read_page_data:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:191    .text.ogg_next_segment:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:197    .text.ogg_next_segment:00000000 ogg_next_segment
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:349    .text.ogg_get_page_full_segments_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:355    .text.ogg_get_page_full_segments_size:00000000 ogg_get_page_full_segments_size
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:406    .text.ogg_get_page_packets_count:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:412    .text.ogg_get_page_packets_count:00000000 ogg_get_page_packets_count
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:473    .text.ogg_write_page:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:479    .text.ogg_write_page:00000000 ogg_write_page
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:672    .text.ogg_write_page_segment:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:678    .text.ogg_write_page_segment:00000000 ogg_write_page_segment
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:709    .text.get_opus_tag:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:715    .text.get_opus_tag:00000000 get_opus_tag
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:784    .text.add_opus_data:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:790    .text.add_opus_data:00000000 add_opus_data
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:857    .text.add_opus_uint32:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:863    .text.add_opus_uint32:00000000 add_opus_uint32
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:897    .text.add_opus_tag:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:903    .text.add_opus_tag:00000000 add_opus_tag
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:964    .bss.global_ogg_decoder:00000000 global_ogg_decoder
+C:\Users\oleg\AppData\Local\Temp\cc27MQ9d.s:961    .bss.global_ogg_decoder:00000000 $d
+
+UNDEFINED SYMBOLS
+crc32
+memcpy
+strlen

@@ -1,0 +1,3111 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"ringbuff_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/ringbuff_util.c"
+  19              		.section	.text.ringbuff_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	ringbuff_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	ringbuff_init:
+  27              	.LVL0:
+  28              	.LFB0:
+   1:../../util/ringbuff_util.c **** /**
+   2:../../util/ringbuff_util.c ****  * \file            ringbuff.c
+   3:../../util/ringbuff_util.c ****  * \brief           Ring buffer manager
+   4:../../util/ringbuff_util.c ****  */
+   5:../../util/ringbuff_util.c **** 
+   6:../../util/ringbuff_util.c **** /*
+   7:../../util/ringbuff_util.c ****  * Copyright (c) 2020 Tilen MAJERLE
+   8:../../util/ringbuff_util.c ****  *
+   9:../../util/ringbuff_util.c ****  * Permission is hereby granted, free of charge, to any person
+  10:../../util/ringbuff_util.c ****  * obtaining a copy of this software and associated documentation
+  11:../../util/ringbuff_util.c ****  * files (the "Software"), to deal in the Software without restriction,
+  12:../../util/ringbuff_util.c ****  * including without limitation the rights to use, copy, modify, merge,
+  13:../../util/ringbuff_util.c ****  * publish, distribute, sublicense, and/or sell copies of the Software,
+  14:../../util/ringbuff_util.c ****  * and to permit persons to whom the Software is furnished to do so,
+  15:../../util/ringbuff_util.c ****  * subject to the following conditions:
+  16:../../util/ringbuff_util.c ****  *
+  17:../../util/ringbuff_util.c ****  * The above copyright notice and this permission notice shall be
+  18:../../util/ringbuff_util.c ****  * included in all copies or substantial portions of the Software.
+  19:../../util/ringbuff_util.c ****  *
+  20:../../util/ringbuff_util.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  21:../../util/ringbuff_util.c ****  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+  22:../../util/ringbuff_util.c ****  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+  23:../../util/ringbuff_util.c ****  * AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  24:../../util/ringbuff_util.c ****  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  25:../../util/ringbuff_util.c ****  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  26:../../util/ringbuff_util.c ****  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+  27:../../util/ringbuff_util.c ****  * OTHER DEALINGS IN THE SOFTWARE.
+  28:../../util/ringbuff_util.c ****  *
+  29:../../util/ringbuff_util.c ****  * This file is part of ring buffer library.
+  30:../../util/ringbuff_util.c ****  *
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 2
+
+
+  31:../../util/ringbuff_util.c ****  * Author:          Tilen MAJERLE <tilen@majerle.eu>
+  32:../../util/ringbuff_util.c ****  * Version:         v1.3.1
+  33:../../util/ringbuff_util.c ****  */
+  34:../../util/ringbuff_util.c **** #include "ringbuff_util.h"
+  35:../../util/ringbuff_util.c **** 
+  36:../../util/ringbuff_util.c **** /* Memory set and copy functions */
+  37:../../util/ringbuff_util.c **** #define BUF_MEMSET                      memset
+  38:../../util/ringbuff_util.c **** #define BUF_MEMCPY                      memcpy
+  39:../../util/ringbuff_util.c **** 
+  40:../../util/ringbuff_util.c **** #if RINGBUFF_USE_MAGIC
+  41:../../util/ringbuff_util.c **** #define BUF_IS_VALID(b)                 ((b) != NULL && (b)->magic1 == 0xDEADBEEF && (b)->magic2 ==
+  42:../../util/ringbuff_util.c **** #else
+  43:../../util/ringbuff_util.c **** #define BUF_IS_VALID(b)                 ((b) != NULL && (b)->buff != NULL && (b)->size > 0)
+  44:../../util/ringbuff_util.c **** #endif /* RINGBUFF_USE_MAGIC */
+  45:../../util/ringbuff_util.c **** #define BUF_MIN(x, y)                   ((x) < (y) ? (x) : (y))
+  46:../../util/ringbuff_util.c **** #define BUF_MAX(x, y)                   ((x) > (y) ? (x) : (y))
+  47:../../util/ringbuff_util.c **** #define BUF_SEND_EVT(b, type, bp)       do { if ((b)->evt_fn != NULL) { (b)->evt_fn((b), (type), (b
+  48:../../util/ringbuff_util.c **** 
+  49:../../util/ringbuff_util.c **** /**
+  50:../../util/ringbuff_util.c ****  * \brief           Initialize buffer handle to default values with size and buffer data array
+  51:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+  52:../../util/ringbuff_util.c ****  * \param[in]       buffdata: Pointer to memory to use as buffer data
+  53:../../util/ringbuff_util.c ****  * \param[in]       size: Size of `buffdata` in units of bytes
+  54:../../util/ringbuff_util.c ****  *                      Maximum number of bytes buffer can hold is `size - 1`
+  55:../../util/ringbuff_util.c ****  * \return          `1` on success, `0` otherwise
+  56:../../util/ringbuff_util.c ****  */
+  57:../../util/ringbuff_util.c **** uint8_t
+  58:../../util/ringbuff_util.c **** ringbuff_init(RINGBUFF_VOLATILE ringbuff_t* buff, void* buffdata, size_t size) {
+  29              		.loc 1 58 80 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  59:../../util/ringbuff_util.c ****     if (buff == NULL || buffdata == NULL || size == 0) {
+  33              		.loc 1 59 5 view .LVU1
+  34              		.loc 1 59 8 is_stmt 0 view .LVU2
+  35 0000 0029     		cmp	r1, #0
+  36 0002 18BF     		it	ne
+  37 0004 0028     		cmpne	r0, #0
+  38 0006 12D0     		beq	.L3
+  58:../../util/ringbuff_util.c ****     if (buff == NULL || buffdata == NULL || size == 0) {
+  39              		.loc 1 58 80 view .LVU3
+  40 0008 70B5     		push	{r4, r5, r6, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 16
+  43              		.cfi_offset 4, -16
+  44              		.cfi_offset 5, -12
+  45              		.cfi_offset 6, -8
+  46              		.cfi_offset 14, -4
+  47 000a 1446     		mov	r4, r2
+  48 000c 0546     		mov	r5, r0
+  49 000e 0E46     		mov	r6, r1
+  50              		.loc 1 59 42 discriminator 1 view .LVU4
+  51 0010 0AB9     		cbnz	r2, .L9
+  60:../../util/ringbuff_util.c ****         return 0;
+  52              		.loc 1 60 16 view .LVU5
+  53 0012 0020     		movs	r0, #0
+  54              	.LVL1:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 3
+
+
+  55              	.L2:
+  61:../../util/ringbuff_util.c ****     }
+  62:../../util/ringbuff_util.c **** 
+  63:../../util/ringbuff_util.c ****     BUF_MEMSET((void *)buff, 0x00, sizeof(*buff));
+  64:../../util/ringbuff_util.c **** 
+  65:../../util/ringbuff_util.c ****     buff->size = size;
+  66:../../util/ringbuff_util.c ****     buff->buff = buffdata;
+  67:../../util/ringbuff_util.c **** 
+  68:../../util/ringbuff_util.c **** #if RINGBUFF_USE_MAGIC
+  69:../../util/ringbuff_util.c ****     buff->magic1 = 0xDEADBEEF;
+  70:../../util/ringbuff_util.c ****     buff->magic2 = ~0xDEADBEEF;
+  71:../../util/ringbuff_util.c **** #endif /* RINGBUFF_USE_MAGIC */
+  72:../../util/ringbuff_util.c **** 
+  73:../../util/ringbuff_util.c ****     return 1;
+  74:../../util/ringbuff_util.c **** }
+  56              		.loc 1 74 1 view .LVU6
+  57 0014 70BD     		pop	{r4, r5, r6, pc}
+  58              	.LVL2:
+  59              	.L9:
+  63:../../util/ringbuff_util.c **** 
+  60              		.loc 1 63 5 is_stmt 1 view .LVU7
+  61 0016 2022     		movs	r2, #32
+  62              	.LVL3:
+  63:../../util/ringbuff_util.c **** 
+  63              		.loc 1 63 5 is_stmt 0 view .LVU8
+  64 0018 0021     		movs	r1, #0
+  65              	.LVL4:
+  63:../../util/ringbuff_util.c **** 
+  66              		.loc 1 63 5 view .LVU9
+  67 001a FFF7FEFF 		bl	memset
+  68              	.LVL5:
+  65:../../util/ringbuff_util.c ****     buff->buff = buffdata;
+  69              		.loc 1 65 5 is_stmt 1 view .LVU10
+  65:../../util/ringbuff_util.c ****     buff->buff = buffdata;
+  70              		.loc 1 65 16 is_stmt 0 view .LVU11
+  71 001e AC60     		str	r4, [r5, #8]
+  66:../../util/ringbuff_util.c **** 
+  72              		.loc 1 66 5 is_stmt 1 view .LVU12
+  66:../../util/ringbuff_util.c **** 
+  73              		.loc 1 66 16 is_stmt 0 view .LVU13
+  74 0020 6E60     		str	r6, [r5, #4]
+  69:../../util/ringbuff_util.c ****     buff->magic2 = ~0xDEADBEEF;
+  75              		.loc 1 69 5 is_stmt 1 view .LVU14
+  69:../../util/ringbuff_util.c ****     buff->magic2 = ~0xDEADBEEF;
+  76              		.loc 1 69 18 is_stmt 0 view .LVU15
+  77 0022 044B     		ldr	r3, .L10
+  78 0024 2B60     		str	r3, [r5]
+  70:../../util/ringbuff_util.c **** #endif /* RINGBUFF_USE_MAGIC */
+  79              		.loc 1 70 5 is_stmt 1 view .LVU16
+  70:../../util/ringbuff_util.c **** #endif /* RINGBUFF_USE_MAGIC */
+  80              		.loc 1 70 18 is_stmt 0 view .LVU17
+  81 0026 044B     		ldr	r3, .L10+4
+  82 0028 EB61     		str	r3, [r5, #28]
+  73:../../util/ringbuff_util.c **** }
+  83              		.loc 1 73 5 is_stmt 1 view .LVU18
+  73:../../util/ringbuff_util.c **** }
+  84              		.loc 1 73 12 is_stmt 0 view .LVU19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 4
+
+
+  85 002a 0120     		movs	r0, #1
+  86 002c F2E7     		b	.L2
+  87              	.LVL6:
+  88              	.L3:
+  89              	.LCFI1:
+  90              		.cfi_def_cfa_offset 0
+  91              		.cfi_restore 4
+  92              		.cfi_restore 5
+  93              		.cfi_restore 6
+  94              		.cfi_restore 14
+  60:../../util/ringbuff_util.c ****     }
+  95              		.loc 1 60 16 view .LVU20
+  96 002e 0020     		movs	r0, #0
+  97              	.LVL7:
+  98              		.loc 1 74 1 view .LVU21
+  99 0030 7047     		bx	lr
+ 100              	.L11:
+ 101 0032 00BF     		.align	2
+ 102              	.L10:
+ 103 0034 EFBEADDE 		.word	-559038737
+ 104 0038 10415221 		.word	559038736
+ 105              		.cfi_endproc
+ 106              	.LFE0:
+ 108              		.section	.text.ringbuff_is_ready,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	ringbuff_is_ready
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	ringbuff_is_ready:
+ 116              	.LVL8:
+ 117              	.LFB1:
+  75:../../util/ringbuff_util.c **** 
+  76:../../util/ringbuff_util.c **** /**
+  77:../../util/ringbuff_util.c ****  * \brief           Check if ringbuff is initialized and ready to use
+  78:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+  79:../../util/ringbuff_util.c ****  * \return          `1` if ready, `0` otherwise
+  80:../../util/ringbuff_util.c ****  */
+  81:../../util/ringbuff_util.c **** uint8_t
+  82:../../util/ringbuff_util.c **** ringbuff_is_ready(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 118              		.loc 1 82 55 is_stmt 1 view -0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+  83:../../util/ringbuff_util.c ****     return BUF_IS_VALID(buff);
+ 123              		.loc 1 83 5 view .LVU23
+ 124              		.loc 1 83 12 is_stmt 0 view .LVU24
+ 125 0000 88B1     		cbz	r0, .L14
+ 126              		.loc 1 83 12 discriminator 1 view .LVU25
+ 127 0002 0168     		ldr	r1, [r0]
+ 128 0004 0B4A     		ldr	r2, .L21
+ 129 0006 9142     		cmp	r1, r2
+ 130 0008 01D0     		beq	.L19
+ 131              		.loc 1 83 12 discriminator 10 view .LVU26
+ 132 000a 0020     		movs	r0, #0
+ 133              	.LVL9:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 5
+
+
+ 134              		.loc 1 83 12 discriminator 10 view .LVU27
+ 135 000c 7047     		bx	lr
+ 136              	.LVL10:
+ 137              	.L19:
+ 138              		.loc 1 83 12 discriminator 3 view .LVU28
+ 139 000e C169     		ldr	r1, [r0, #28]
+ 140 0010 094A     		ldr	r2, .L21+4
+ 141 0012 9142     		cmp	r1, r2
+ 142 0014 01D0     		beq	.L20
+ 143              		.loc 1 83 12 discriminator 10 view .LVU29
+ 144 0016 0020     		movs	r0, #0
+ 145              	.LVL11:
+ 146              		.loc 1 83 12 discriminator 10 view .LVU30
+ 147 0018 7047     		bx	lr
+ 148              	.LVL12:
+ 149              	.L20:
+ 150              		.loc 1 83 12 discriminator 5 view .LVU31
+ 151 001a 4268     		ldr	r2, [r0, #4]
+ 152 001c 2AB1     		cbz	r2, .L17
+ 153              		.loc 1 83 12 discriminator 7 view .LVU32
+ 154 001e 8368     		ldr	r3, [r0, #8]
+ 155 0020 2BB9     		cbnz	r3, .L18
+ 156              		.loc 1 83 12 discriminator 10 view .LVU33
+ 157 0022 0020     		movs	r0, #0
+ 158              	.LVL13:
+ 159              		.loc 1 83 12 discriminator 10 view .LVU34
+ 160 0024 7047     		bx	lr
+ 161              	.LVL14:
+ 162              	.L14:
+ 163              		.loc 1 83 12 discriminator 10 view .LVU35
+ 164 0026 0020     		movs	r0, #0
+ 165              	.LVL15:
+ 166              		.loc 1 83 12 discriminator 10 view .LVU36
+ 167 0028 7047     		bx	lr
+ 168              	.LVL16:
+ 169              	.L17:
+ 170              		.loc 1 83 12 discriminator 10 view .LVU37
+ 171 002a 0020     		movs	r0, #0
+ 172              	.LVL17:
+ 173              		.loc 1 83 12 discriminator 10 view .LVU38
+ 174 002c 7047     		bx	lr
+ 175              	.LVL18:
+ 176              	.L18:
+ 177              		.loc 1 83 12 discriminator 9 view .LVU39
+ 178 002e 0120     		movs	r0, #1
+ 179              	.LVL19:
+  84:../../util/ringbuff_util.c **** }
+ 180              		.loc 1 84 1 view .LVU40
+ 181 0030 7047     		bx	lr
+ 182              	.L22:
+ 183 0032 00BF     		.align	2
+ 184              	.L21:
+ 185 0034 EFBEADDE 		.word	-559038737
+ 186 0038 10415221 		.word	559038736
+ 187              		.cfi_endproc
+ 188              	.LFE1:
+ 190              		.section	.text.ringbuff_free,"ax",%progbits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 6
+
+
+ 191              		.align	1
+ 192              		.global	ringbuff_free
+ 193              		.syntax unified
+ 194              		.thumb
+ 195              		.thumb_func
+ 197              	ringbuff_free:
+ 198              	.LVL20:
+ 199              	.LFB2:
+  85:../../util/ringbuff_util.c **** 
+  86:../../util/ringbuff_util.c **** /**
+  87:../../util/ringbuff_util.c ****  * \brief           Free buffer memory
+  88:../../util/ringbuff_util.c ****  * \note            Since implementation does not use dynamic allocation,
+  89:../../util/ringbuff_util.c ****  *                  it just sets buffer handle to `NULL`
+  90:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+  91:../../util/ringbuff_util.c ****  */
+  92:../../util/ringbuff_util.c **** void
+  93:../../util/ringbuff_util.c **** ringbuff_free(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 200              		.loc 1 93 51 is_stmt 1 view -0
+ 201              		.cfi_startproc
+ 202              		@ args = 0, pretend = 0, frame = 0
+ 203              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204              		@ link register save eliminated.
+  94:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 205              		.loc 1 94 5 view .LVU42
+ 206              		.loc 1 94 8 is_stmt 0 view .LVU43
+ 207 0000 18B1     		cbz	r0, .L23
+ 208              		.loc 1 94 9 discriminator 1 view .LVU44
+ 209 0002 0168     		ldr	r1, [r0]
+ 210 0004 084A     		ldr	r2, .L26
+ 211 0006 9142     		cmp	r1, r2
+ 212 0008 00D0     		beq	.L25
+ 213              	.L23:
+  95:../../util/ringbuff_util.c ****         buff->buff = NULL;
+  96:../../util/ringbuff_util.c ****     }
+  97:../../util/ringbuff_util.c **** }
+ 214              		.loc 1 97 1 view .LVU45
+ 215 000a 7047     		bx	lr
+ 216              	.L25:
+  94:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 217              		.loc 1 94 9 discriminator 2 view .LVU46
+ 218 000c C169     		ldr	r1, [r0, #28]
+ 219 000e 074A     		ldr	r2, .L26+4
+ 220 0010 9142     		cmp	r1, r2
+ 221 0012 FAD1     		bne	.L23
+  94:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 222              		.loc 1 94 9 discriminator 3 view .LVU47
+ 223 0014 4268     		ldr	r2, [r0, #4]
+ 224 0016 002A     		cmp	r2, #0
+ 225 0018 F7D0     		beq	.L23
+  94:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 226              		.loc 1 94 9 discriminator 4 view .LVU48
+ 227 001a 8268     		ldr	r2, [r0, #8]
+ 228 001c 002A     		cmp	r2, #0
+ 229 001e F4D0     		beq	.L23
+  95:../../util/ringbuff_util.c ****         buff->buff = NULL;
+ 230              		.loc 1 95 9 is_stmt 1 view .LVU49
+  95:../../util/ringbuff_util.c ****         buff->buff = NULL;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 7
+
+
+ 231              		.loc 1 95 20 is_stmt 0 view .LVU50
+ 232 0020 0022     		movs	r2, #0
+ 233 0022 4260     		str	r2, [r0, #4]
+ 234              		.loc 1 97 1 view .LVU51
+ 235 0024 F1E7     		b	.L23
+ 236              	.L27:
+ 237 0026 00BF     		.align	2
+ 238              	.L26:
+ 239 0028 EFBEADDE 		.word	-559038737
+ 240 002c 10415221 		.word	559038736
+ 241              		.cfi_endproc
+ 242              	.LFE2:
+ 244              		.section	.text.ringbuff_set_evt_fn,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	ringbuff_set_evt_fn
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 251              	ringbuff_set_evt_fn:
+ 252              	.LVL21:
+ 253              	.LFB3:
+  98:../../util/ringbuff_util.c **** 
+  99:../../util/ringbuff_util.c **** /**
+ 100:../../util/ringbuff_util.c ****  * \brief           Set event function callback for different buffer operations
+ 101:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 102:../../util/ringbuff_util.c ****  * \param[in]       evt_fn: Callback function
+ 103:../../util/ringbuff_util.c ****  */
+ 104:../../util/ringbuff_util.c **** void
+ 105:../../util/ringbuff_util.c **** ringbuff_set_evt_fn(RINGBUFF_VOLATILE ringbuff_t* buff, ringbuff_evt_fn evt_fn) {
+ 254              		.loc 1 105 81 is_stmt 1 view -0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              		@ link register save eliminated.
+ 106:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 259              		.loc 1 106 5 view .LVU53
+ 260              		.loc 1 106 8 is_stmt 0 view .LVU54
+ 261 0000 0346     		mov	r3, r0
+ 262 0002 18B1     		cbz	r0, .L28
+ 263              		.loc 1 106 9 discriminator 1 view .LVU55
+ 264 0004 0068     		ldr	r0, [r0]
+ 265              	.LVL22:
+ 266              		.loc 1 106 9 discriminator 1 view .LVU56
+ 267 0006 084A     		ldr	r2, .L31
+ 268 0008 9042     		cmp	r0, r2
+ 269 000a 00D0     		beq	.L30
+ 270              	.L28:
+ 107:../../util/ringbuff_util.c ****         buff->evt_fn = evt_fn;
+ 108:../../util/ringbuff_util.c ****     }
+ 109:../../util/ringbuff_util.c **** }
+ 271              		.loc 1 109 1 view .LVU57
+ 272 000c 7047     		bx	lr
+ 273              	.L30:
+ 106:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 274              		.loc 1 106 9 discriminator 2 view .LVU58
+ 275 000e D869     		ldr	r0, [r3, #28]
+ 276 0010 064A     		ldr	r2, .L31+4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 8
+
+
+ 277 0012 9042     		cmp	r0, r2
+ 278 0014 FAD1     		bne	.L28
+ 106:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 279              		.loc 1 106 9 discriminator 3 view .LVU59
+ 280 0016 5A68     		ldr	r2, [r3, #4]
+ 281 0018 002A     		cmp	r2, #0
+ 282 001a F7D0     		beq	.L28
+ 106:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 283              		.loc 1 106 9 discriminator 4 view .LVU60
+ 284 001c 9A68     		ldr	r2, [r3, #8]
+ 285 001e 002A     		cmp	r2, #0
+ 286 0020 F4D0     		beq	.L28
+ 107:../../util/ringbuff_util.c ****         buff->evt_fn = evt_fn;
+ 287              		.loc 1 107 9 is_stmt 1 view .LVU61
+ 107:../../util/ringbuff_util.c ****         buff->evt_fn = evt_fn;
+ 288              		.loc 1 107 22 is_stmt 0 view .LVU62
+ 289 0022 5961     		str	r1, [r3, #20]
+ 290              		.loc 1 109 1 view .LVU63
+ 291 0024 F2E7     		b	.L28
+ 292              	.L32:
+ 293 0026 00BF     		.align	2
+ 294              	.L31:
+ 295 0028 EFBEADDE 		.word	-559038737
+ 296 002c 10415221 		.word	559038736
+ 297              		.cfi_endproc
+ 298              	.LFE3:
+ 300              		.section	.text.ringbuff_get_free,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	ringbuff_get_free
+ 303              		.syntax unified
+ 304              		.thumb
+ 305              		.thumb_func
+ 307              	ringbuff_get_free:
+ 308              	.LVL23:
+ 309              	.LFB7:
+ 110:../../util/ringbuff_util.c **** 
+ 111:../../util/ringbuff_util.c **** /**
+ 112:../../util/ringbuff_util.c ****  * \brief           Write data to buffer.
+ 113:../../util/ringbuff_util.c ****  * Copies data from `data` array to buffer and marks buffer as full for maximum `btw` number of byt
+ 114:../../util/ringbuff_util.c ****  *
+ 115:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 116:../../util/ringbuff_util.c ****  * \param[in]       data: Pointer to data to write into buffer
+ 117:../../util/ringbuff_util.c ****  * \param[in]       btw: Number of bytes to write
+ 118:../../util/ringbuff_util.c ****  * \return          Number of bytes written to buffer.
+ 119:../../util/ringbuff_util.c ****  *                      When returned value is less than `btw`, there was no enough memory availabl
+ 120:../../util/ringbuff_util.c ****  *                      to copy full data array
+ 121:../../util/ringbuff_util.c ****  */
+ 122:../../util/ringbuff_util.c **** size_t
+ 123:../../util/ringbuff_util.c **** ringbuff_write(RINGBUFF_VOLATILE ringbuff_t* buff, const void* data, size_t btw) {
+ 124:../../util/ringbuff_util.c ****     size_t tocopy, free;
+ 125:../../util/ringbuff_util.c ****     const uint8_t* d = data;
+ 126:../../util/ringbuff_util.c **** 
+ 127:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff) || data == NULL || btw == 0) {
+ 128:../../util/ringbuff_util.c ****         return 0;
+ 129:../../util/ringbuff_util.c ****     }
+ 130:../../util/ringbuff_util.c **** 
+ 131:../../util/ringbuff_util.c ****     /* Calculate maximum number of bytes available to write */
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 9
+
+
+ 132:../../util/ringbuff_util.c ****     free = ringbuff_get_free(buff);
+ 133:../../util/ringbuff_util.c ****     btw = BUF_MIN(free, btw);
+ 134:../../util/ringbuff_util.c ****     if (btw == 0) {
+ 135:../../util/ringbuff_util.c ****         return 0;
+ 136:../../util/ringbuff_util.c ****     }
+ 137:../../util/ringbuff_util.c **** 
+ 138:../../util/ringbuff_util.c ****     /* Step 1: Write data to linear part of buffer */
+ 139:../../util/ringbuff_util.c ****     tocopy = BUF_MIN(buff->size - buff->w, btw);
+ 140:../../util/ringbuff_util.c ****     BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
+ 141:../../util/ringbuff_util.c ****     buff->w += tocopy;
+ 142:../../util/ringbuff_util.c ****     btw -= tocopy;
+ 143:../../util/ringbuff_util.c **** 
+ 144:../../util/ringbuff_util.c ****     /* Step 2: Write data to beginning of buffer (overflow part) */
+ 145:../../util/ringbuff_util.c ****     if (btw > 0) {
+ 146:../../util/ringbuff_util.c ****         BUF_MEMCPY(buff->buff, &d[tocopy], btw);
+ 147:../../util/ringbuff_util.c ****         buff->w = btw;
+ 148:../../util/ringbuff_util.c ****     }
+ 149:../../util/ringbuff_util.c **** 
+ 150:../../util/ringbuff_util.c ****     /* Step 3: Check end of buffer */
+ 151:../../util/ringbuff_util.c ****     if (buff->w >= buff->size) {
+ 152:../../util/ringbuff_util.c ****         buff->w = 0;
+ 153:../../util/ringbuff_util.c ****     }
+ 154:../../util/ringbuff_util.c ****     BUF_SEND_EVT(buff, RINGBUFF_EVT_WRITE, tocopy + btw);
+ 155:../../util/ringbuff_util.c ****     return tocopy + btw;
+ 156:../../util/ringbuff_util.c **** }
+ 157:../../util/ringbuff_util.c **** 
+ 158:../../util/ringbuff_util.c **** /**
+ 159:../../util/ringbuff_util.c ****  * \brief           Read data from buffer.
+ 160:../../util/ringbuff_util.c ****  * Copies data from buffer to `data` array and marks buffer as free for maximum `btr` number of byt
+ 161:../../util/ringbuff_util.c ****  *
+ 162:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 163:../../util/ringbuff_util.c ****  * \param[out]      data: Pointer to output memory to copy buffer data to
+ 164:../../util/ringbuff_util.c ****  * \param[in]       btr: Number of bytes to read
+ 165:../../util/ringbuff_util.c ****  * \return          Number of bytes read and copied to data array
+ 166:../../util/ringbuff_util.c ****  */
+ 167:../../util/ringbuff_util.c **** size_t
+ 168:../../util/ringbuff_util.c **** ringbuff_read(RINGBUFF_VOLATILE ringbuff_t* buff, void* data, size_t btr) {
+ 169:../../util/ringbuff_util.c ****     size_t tocopy, full;
+ 170:../../util/ringbuff_util.c ****     uint8_t *d = data;
+ 171:../../util/ringbuff_util.c **** 
+ 172:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff) || data == NULL || btr == 0) {
+ 173:../../util/ringbuff_util.c ****         return 0;
+ 174:../../util/ringbuff_util.c ****     }
+ 175:../../util/ringbuff_util.c **** 
+ 176:../../util/ringbuff_util.c ****     /* Calculate maximum number of bytes available to read */
+ 177:../../util/ringbuff_util.c ****     full = ringbuff_get_full(buff);
+ 178:../../util/ringbuff_util.c ****     btr = BUF_MIN(full, btr);
+ 179:../../util/ringbuff_util.c ****     if (btr == 0) {
+ 180:../../util/ringbuff_util.c ****         return 0;
+ 181:../../util/ringbuff_util.c ****     }
+ 182:../../util/ringbuff_util.c **** 
+ 183:../../util/ringbuff_util.c ****     /* Step 1: Read data from linear part of buffer */
+ 184:../../util/ringbuff_util.c ****     tocopy = BUF_MIN(buff->size - buff->r, btr);
+ 185:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
+ 186:../../util/ringbuff_util.c ****     buff->r += tocopy;
+ 187:../../util/ringbuff_util.c ****     btr -= tocopy;
+ 188:../../util/ringbuff_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 10
+
+
+ 189:../../util/ringbuff_util.c ****     /* Step 2: Read data from beginning of buffer (overflow part) */
+ 190:../../util/ringbuff_util.c ****     if (btr > 0) {
+ 191:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btr);
+ 192:../../util/ringbuff_util.c ****         buff->r = btr;
+ 193:../../util/ringbuff_util.c ****     }
+ 194:../../util/ringbuff_util.c **** 
+ 195:../../util/ringbuff_util.c ****     /* Step 3: Check end of buffer */
+ 196:../../util/ringbuff_util.c ****     if (buff->r >= buff->size) {
+ 197:../../util/ringbuff_util.c ****         buff->r = 0;
+ 198:../../util/ringbuff_util.c ****     }
+ 199:../../util/ringbuff_util.c ****     BUF_SEND_EVT(buff, RINGBUFF_EVT_READ, tocopy + btr);
+ 200:../../util/ringbuff_util.c ****     return tocopy + btr;
+ 201:../../util/ringbuff_util.c **** }
+ 202:../../util/ringbuff_util.c **** 
+ 203:../../util/ringbuff_util.c **** /**
+ 204:../../util/ringbuff_util.c ****  * \brief           Read from buffer without changing read pointer (peek only)
+ 205:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 206:../../util/ringbuff_util.c ****  * \param[in]       skip_count: Number of bytes to skip before reading data
+ 207:../../util/ringbuff_util.c ****  * \param[out]      data: Pointer to output memory to copy buffer data to
+ 208:../../util/ringbuff_util.c ****  * \param[in]       btp: Number of bytes to peek
+ 209:../../util/ringbuff_util.c ****  * \return          Number of bytes peeked and written to output array
+ 210:../../util/ringbuff_util.c ****  */
+ 211:../../util/ringbuff_util.c **** size_t
+ 212:../../util/ringbuff_util.c **** ringbuff_peek(RINGBUFF_VOLATILE ringbuff_t* buff, size_t skip_count, void* data, size_t btp) {
+ 213:../../util/ringbuff_util.c ****     size_t full, tocopy, r;
+ 214:../../util/ringbuff_util.c ****     uint8_t *d = data;
+ 215:../../util/ringbuff_util.c **** 
+ 216:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff) || data == NULL || btp == 0) {
+ 217:../../util/ringbuff_util.c ****         return 0;
+ 218:../../util/ringbuff_util.c ****     }
+ 219:../../util/ringbuff_util.c **** 
+ 220:../../util/ringbuff_util.c ****     r = buff->r;
+ 221:../../util/ringbuff_util.c **** 
+ 222:../../util/ringbuff_util.c ****     /* Calculate maximum number of bytes available to read */
+ 223:../../util/ringbuff_util.c ****     full = ringbuff_get_full(buff);
+ 224:../../util/ringbuff_util.c **** 
+ 225:../../util/ringbuff_util.c ****     /* Skip beginning of buffer */
+ 226:../../util/ringbuff_util.c ****     if (skip_count >= full) {
+ 227:../../util/ringbuff_util.c ****         return 0;
+ 228:../../util/ringbuff_util.c ****     }
+ 229:../../util/ringbuff_util.c ****     r += skip_count;
+ 230:../../util/ringbuff_util.c ****     full -= skip_count;
+ 231:../../util/ringbuff_util.c ****     if (r >= buff->size) {
+ 232:../../util/ringbuff_util.c ****         r -= buff->size;
+ 233:../../util/ringbuff_util.c ****     }
+ 234:../../util/ringbuff_util.c **** 
+ 235:../../util/ringbuff_util.c ****     /* Check maximum number of bytes available to read after skip */
+ 236:../../util/ringbuff_util.c ****     btp = BUF_MIN(full, btp);
+ 237:../../util/ringbuff_util.c ****     if (btp == 0) {
+ 238:../../util/ringbuff_util.c ****         return 0;
+ 239:../../util/ringbuff_util.c ****     }
+ 240:../../util/ringbuff_util.c **** 
+ 241:../../util/ringbuff_util.c ****     /* Step 1: Read data from linear part of buffer */
+ 242:../../util/ringbuff_util.c ****     tocopy = BUF_MIN(buff->size - r, btp);
+ 243:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[r], tocopy);
+ 244:../../util/ringbuff_util.c ****     btp -= tocopy;
+ 245:../../util/ringbuff_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 11
+
+
+ 246:../../util/ringbuff_util.c ****     /* Step 2: Read data from beginning of buffer (overflow part) */
+ 247:../../util/ringbuff_util.c ****     if (btp > 0) {
+ 248:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btp);
+ 249:../../util/ringbuff_util.c ****     }
+ 250:../../util/ringbuff_util.c ****     return tocopy + btp;
+ 251:../../util/ringbuff_util.c **** }
+ 252:../../util/ringbuff_util.c **** 
+ 253:../../util/ringbuff_util.c **** /**
+ 254:../../util/ringbuff_util.c ****  * \brief           Get available size in buffer for write operation
+ 255:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 256:../../util/ringbuff_util.c ****  * \return          Number of free bytes in memory
+ 257:../../util/ringbuff_util.c ****  */
+ 258:../../util/ringbuff_util.c **** size_t
+ 259:../../util/ringbuff_util.c **** ringbuff_get_free(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 310              		.loc 1 259 55 is_stmt 1 view -0
+ 311              		.cfi_startproc
+ 312              		@ args = 0, pretend = 0, frame = 0
+ 313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 314              		@ link register save eliminated.
+ 260:../../util/ringbuff_util.c ****     size_t size, w, r;
+ 315              		.loc 1 260 5 view .LVU65
+ 261:../../util/ringbuff_util.c **** 
+ 262:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff)) {
+ 316              		.loc 1 262 5 view .LVU66
+ 317              		.loc 1 262 8 is_stmt 0 view .LVU67
+ 318 0000 0346     		mov	r3, r0
+ 319 0002 D0B1     		cbz	r0, .L38
+ 320              		.loc 1 262 10 discriminator 1 view .LVU68
+ 321 0004 0168     		ldr	r1, [r0]
+ 322 0006 114A     		ldr	r2, .L43
+ 323 0008 9142     		cmp	r1, r2
+ 324 000a 18D1     		bne	.L39
+ 325              		.loc 1 262 10 discriminator 2 view .LVU69
+ 326 000c C169     		ldr	r1, [r0, #28]
+ 327 000e 104A     		ldr	r2, .L43+4
+ 328 0010 9142     		cmp	r1, r2
+ 329 0012 16D1     		bne	.L40
+ 330              		.loc 1 262 10 discriminator 3 view .LVU70
+ 331 0014 4268     		ldr	r2, [r0, #4]
+ 332 0016 B2B1     		cbz	r2, .L41
+ 333              		.loc 1 262 10 discriminator 4 view .LVU71
+ 334 0018 8068     		ldr	r0, [r0, #8]
+ 335              	.LVL24:
+ 336              		.loc 1 262 9 discriminator 4 view .LVU72
+ 337 001a A8B1     		cbz	r0, .L33
+ 263:../../util/ringbuff_util.c ****         return 0;
+ 264:../../util/ringbuff_util.c ****     }
+ 265:../../util/ringbuff_util.c **** 
+ 266:../../util/ringbuff_util.c ****     /* Use temporary values in case they are changed during operations */
+ 267:../../util/ringbuff_util.c ****     w = buff->w;
+ 338              		.loc 1 267 5 is_stmt 1 view .LVU73
+ 339              		.loc 1 267 7 is_stmt 0 view .LVU74
+ 340 001c 1969     		ldr	r1, [r3, #16]
+ 341              	.LVL25:
+ 268:../../util/ringbuff_util.c ****     r = buff->r;
+ 342              		.loc 1 268 5 is_stmt 1 view .LVU75
+ 343              		.loc 1 268 7 is_stmt 0 view .LVU76
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 12
+
+
+ 344 001e DA68     		ldr	r2, [r3, #12]
+ 345              	.LVL26:
+ 269:../../util/ringbuff_util.c ****     if (w == r) {
+ 346              		.loc 1 269 5 is_stmt 1 view .LVU77
+ 347              		.loc 1 269 8 is_stmt 0 view .LVU78
+ 348 0020 9142     		cmp	r1, r2
+ 349 0022 03D0     		beq	.L42
+ 270:../../util/ringbuff_util.c ****         size = buff->size;
+ 271:../../util/ringbuff_util.c ****     } else if (r > w) {
+ 350              		.loc 1 271 12 is_stmt 1 view .LVU79
+ 351              		.loc 1 271 15 is_stmt 0 view .LVU80
+ 352 0024 9142     		cmp	r1, r2
+ 353 0026 04D2     		bcs	.L37
+ 272:../../util/ringbuff_util.c ****         size = r - w;
+ 354              		.loc 1 272 9 is_stmt 1 view .LVU81
+ 355              		.loc 1 272 14 is_stmt 0 view .LVU82
+ 356 0028 501A     		subs	r0, r2, r1
+ 357              	.LVL27:
+ 358              		.loc 1 272 14 view .LVU83
+ 359 002a 00E0     		b	.L36
+ 360              	.LVL28:
+ 361              	.L42:
+ 270:../../util/ringbuff_util.c ****         size = buff->size;
+ 362              		.loc 1 270 9 is_stmt 1 view .LVU84
+ 270:../../util/ringbuff_util.c ****         size = buff->size;
+ 363              		.loc 1 270 14 is_stmt 0 view .LVU85
+ 364 002c 9868     		ldr	r0, [r3, #8]
+ 365              	.LVL29:
+ 366              	.L36:
+ 273:../../util/ringbuff_util.c ****     } else {
+ 274:../../util/ringbuff_util.c ****         size = buff->size - (w - r);
+ 275:../../util/ringbuff_util.c ****     }
+ 276:../../util/ringbuff_util.c **** 
+ 277:../../util/ringbuff_util.c ****     /* Buffer free size is always 1 less than actual size */
+ 278:../../util/ringbuff_util.c ****     return size - 1;
+ 367              		.loc 1 278 5 is_stmt 1 view .LVU86
+ 368              		.loc 1 278 17 is_stmt 0 view .LVU87
+ 369 002e 0138     		subs	r0, r0, #1
+ 370              	.LVL30:
+ 371              		.loc 1 278 17 view .LVU88
+ 372 0030 7047     		bx	lr
+ 373              	.LVL31:
+ 374              	.L37:
+ 274:../../util/ringbuff_util.c ****     }
+ 375              		.loc 1 274 9 is_stmt 1 view .LVU89
+ 274:../../util/ringbuff_util.c ****     }
+ 376              		.loc 1 274 20 is_stmt 0 view .LVU90
+ 377 0032 9868     		ldr	r0, [r3, #8]
+ 274:../../util/ringbuff_util.c ****     }
+ 378              		.loc 1 274 27 view .LVU91
+ 379 0034 521A     		subs	r2, r2, r1
+ 380              	.LVL32:
+ 274:../../util/ringbuff_util.c ****     }
+ 381              		.loc 1 274 14 view .LVU92
+ 382 0036 1044     		add	r0, r0, r2
+ 383              	.LVL33:
+ 274:../../util/ringbuff_util.c ****     }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 13
+
+
+ 384              		.loc 1 274 14 view .LVU93
+ 385 0038 F9E7     		b	.L36
+ 386              	.LVL34:
+ 387              	.L38:
+ 263:../../util/ringbuff_util.c ****     }
+ 388              		.loc 1 263 16 view .LVU94
+ 389 003a 0020     		movs	r0, #0
+ 390              	.LVL35:
+ 263:../../util/ringbuff_util.c ****     }
+ 391              		.loc 1 263 16 view .LVU95
+ 392 003c 7047     		bx	lr
+ 393              	.LVL36:
+ 394              	.L39:
+ 263:../../util/ringbuff_util.c ****     }
+ 395              		.loc 1 263 16 view .LVU96
+ 396 003e 0020     		movs	r0, #0
+ 397              	.LVL37:
+ 263:../../util/ringbuff_util.c ****     }
+ 398              		.loc 1 263 16 view .LVU97
+ 399 0040 7047     		bx	lr
+ 400              	.LVL38:
+ 401              	.L40:
+ 263:../../util/ringbuff_util.c ****     }
+ 402              		.loc 1 263 16 view .LVU98
+ 403 0042 0020     		movs	r0, #0
+ 404              	.LVL39:
+ 263:../../util/ringbuff_util.c ****     }
+ 405              		.loc 1 263 16 view .LVU99
+ 406 0044 7047     		bx	lr
+ 407              	.LVL40:
+ 408              	.L41:
+ 263:../../util/ringbuff_util.c ****     }
+ 409              		.loc 1 263 16 view .LVU100
+ 410 0046 0020     		movs	r0, #0
+ 411              	.LVL41:
+ 412              	.L33:
+ 279:../../util/ringbuff_util.c **** }
+ 413              		.loc 1 279 1 view .LVU101
+ 414 0048 7047     		bx	lr
+ 415              	.L44:
+ 416 004a 00BF     		.align	2
+ 417              	.L43:
+ 418 004c EFBEADDE 		.word	-559038737
+ 419 0050 10415221 		.word	559038736
+ 420              		.cfi_endproc
+ 421              	.LFE7:
+ 423              		.section	.text.ringbuff_write,"ax",%progbits
+ 424              		.align	1
+ 425              		.global	ringbuff_write
+ 426              		.syntax unified
+ 427              		.thumb
+ 428              		.thumb_func
+ 430              	ringbuff_write:
+ 431              	.LVL42:
+ 432              	.LFB4:
+ 123:../../util/ringbuff_util.c ****     size_t tocopy, free;
+ 433              		.loc 1 123 82 is_stmt 1 view -0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 14
+
+
+ 434              		.cfi_startproc
+ 435              		@ args = 0, pretend = 0, frame = 0
+ 436              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123:../../util/ringbuff_util.c ****     size_t tocopy, free;
+ 437              		.loc 1 123 82 is_stmt 0 view .LVU103
+ 438 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 439              	.LCFI2:
+ 440              		.cfi_def_cfa_offset 24
+ 441              		.cfi_offset 4, -24
+ 442              		.cfi_offset 5, -20
+ 443              		.cfi_offset 6, -16
+ 444              		.cfi_offset 7, -12
+ 445              		.cfi_offset 8, -8
+ 446              		.cfi_offset 14, -4
+ 124:../../util/ringbuff_util.c ****     const uint8_t* d = data;
+ 447              		.loc 1 124 5 is_stmt 1 view .LVU104
+ 125:../../util/ringbuff_util.c **** 
+ 448              		.loc 1 125 5 view .LVU105
+ 449              	.LVL43:
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 450              		.loc 1 127 5 view .LVU106
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 451              		.loc 1 127 8 is_stmt 0 view .LVU107
+ 452 0004 0028     		cmp	r0, #0
+ 453 0006 4BD0     		beq	.L50
+ 454 0008 0F46     		mov	r7, r1
+ 455 000a 1646     		mov	r6, r2
+ 456 000c 0446     		mov	r4, r0
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 457              		.loc 1 127 10 discriminator 1 view .LVU108
+ 458 000e 0268     		ldr	r2, [r0]
+ 459              	.LVL44:
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 460              		.loc 1 127 10 discriminator 1 view .LVU109
+ 461 0010 294B     		ldr	r3, .L58
+ 462 0012 9A42     		cmp	r2, r3
+ 463 0014 46D1     		bne	.L51
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 464              		.loc 1 127 10 discriminator 2 view .LVU110
+ 465 0016 C269     		ldr	r2, [r0, #28]
+ 466 0018 284B     		ldr	r3, .L58+4
+ 467 001a 9A42     		cmp	r2, r3
+ 468 001c 46D1     		bne	.L52
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 469              		.loc 1 127 10 discriminator 3 view .LVU111
+ 470 001e 4368     		ldr	r3, [r0, #4]
+ 471 0020 002B     		cmp	r3, #0
+ 472 0022 45D0     		beq	.L53
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 473              		.loc 1 127 10 discriminator 4 view .LVU112
+ 474 0024 8568     		ldr	r5, [r0, #8]
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 475              		.loc 1 127 9 discriminator 4 view .LVU113
+ 476 0026 002D     		cmp	r5, #0
+ 477 0028 3DD0     		beq	.L45
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 478              		.loc 1 127 52 discriminator 5 view .LVU114
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 15
+
+
+ 479 002a B6FA86F3 		clz	r3, r6
+ 480 002e 5B09     		lsrs	r3, r3, #5
+ 127:../../util/ringbuff_util.c ****         return 0;
+ 481              		.loc 1 127 45 discriminator 5 view .LVU115
+ 482 0030 0029     		cmp	r1, #0
+ 483 0032 3FD0     		beq	.L54
+ 484 0034 002B     		cmp	r3, #0
+ 485 0036 3DD1     		bne	.L54
+ 132:../../util/ringbuff_util.c ****     btw = BUF_MIN(free, btw);
+ 486              		.loc 1 132 5 is_stmt 1 view .LVU116
+ 132:../../util/ringbuff_util.c ****     btw = BUF_MIN(free, btw);
+ 487              		.loc 1 132 12 is_stmt 0 view .LVU117
+ 488 0038 FFF7FEFF 		bl	ringbuff_get_free
+ 489              	.LVL45:
+ 133:../../util/ringbuff_util.c ****     if (btw == 0) {
+ 490              		.loc 1 133 5 is_stmt 1 view .LVU118
+ 133:../../util/ringbuff_util.c ****     if (btw == 0) {
+ 491              		.loc 1 133 9 is_stmt 0 view .LVU119
+ 492 003c 3546     		mov	r5, r6
+ 493 003e 8642     		cmp	r6, r0
+ 494 0040 28BF     		it	cs
+ 495 0042 0546     		movcs	r5, r0
+ 496              	.LVL46:
+ 134:../../util/ringbuff_util.c ****         return 0;
+ 497              		.loc 1 134 5 is_stmt 1 view .LVU120
+ 134:../../util/ringbuff_util.c ****         return 0;
+ 498              		.loc 1 134 8 is_stmt 0 view .LVU121
+ 499 0044 7DB3     		cbz	r5, .L45
+ 139:../../util/ringbuff_util.c ****     BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
+ 500              		.loc 1 139 5 is_stmt 1 view .LVU122
+ 139:../../util/ringbuff_util.c ****     BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
+ 501              		.loc 1 139 14 is_stmt 0 view .LVU123
+ 502 0046 A368     		ldr	r3, [r4, #8]
+ 503 0048 2269     		ldr	r2, [r4, #16]
+ 504 004a 9B1A     		subs	r3, r3, r2
+ 505 004c AB42     		cmp	r3, r5
+ 506 004e 1DD2     		bcs	.L55
+ 139:../../util/ringbuff_util.c ****     BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
+ 507              		.loc 1 139 14 discriminator 1 view .LVU124
+ 508 0050 A668     		ldr	r6, [r4, #8]
+ 509 0052 2369     		ldr	r3, [r4, #16]
+ 510 0054 F61A     		subs	r6, r6, r3
+ 511              	.L47:
+ 512              	.LVL47:
+ 140:../../util/ringbuff_util.c ****     buff->w += tocopy;
+ 513              		.loc 1 140 5 is_stmt 1 view .LVU125
+ 140:../../util/ringbuff_util.c ****     buff->w += tocopy;
+ 514              		.loc 1 140 21 is_stmt 0 view .LVU126
+ 515 0056 6068     		ldr	r0, [r4, #4]
+ 516              	.LVL48:
+ 140:../../util/ringbuff_util.c ****     buff->w += tocopy;
+ 517              		.loc 1 140 32 view .LVU127
+ 518 0058 2369     		ldr	r3, [r4, #16]
+ 140:../../util/ringbuff_util.c ****     buff->w += tocopy;
+ 519              		.loc 1 140 5 view .LVU128
+ 520 005a 3246     		mov	r2, r6
+ 521 005c 3946     		mov	r1, r7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 16
+
+
+ 522 005e 1844     		add	r0, r0, r3
+ 523 0060 FFF7FEFF 		bl	memcpy
+ 524              	.LVL49:
+ 141:../../util/ringbuff_util.c ****     btw -= tocopy;
+ 525              		.loc 1 141 5 is_stmt 1 view .LVU129
+ 141:../../util/ringbuff_util.c ****     btw -= tocopy;
+ 526              		.loc 1 141 9 is_stmt 0 view .LVU130
+ 527 0064 2369     		ldr	r3, [r4, #16]
+ 141:../../util/ringbuff_util.c ****     btw -= tocopy;
+ 528              		.loc 1 141 13 view .LVU131
+ 529 0066 3344     		add	r3, r3, r6
+ 530 0068 2361     		str	r3, [r4, #16]
+ 142:../../util/ringbuff_util.c **** 
+ 531              		.loc 1 142 5 is_stmt 1 view .LVU132
+ 532              	.LVL50:
+ 145:../../util/ringbuff_util.c ****         BUF_MEMCPY(buff->buff, &d[tocopy], btw);
+ 533              		.loc 1 145 5 view .LVU133
+ 145:../../util/ringbuff_util.c ****         BUF_MEMCPY(buff->buff, &d[tocopy], btw);
+ 534              		.loc 1 145 8 is_stmt 0 view .LVU134
+ 535 006a B5EB0608 		subs	r8, r5, r6
+ 536              	.LVL51:
+ 145:../../util/ringbuff_util.c ****         BUF_MEMCPY(buff->buff, &d[tocopy], btw);
+ 537              		.loc 1 145 8 view .LVU135
+ 538 006e 0FD1     		bne	.L57
+ 539              	.L48:
+ 151:../../util/ringbuff_util.c ****         buff->w = 0;
+ 540              		.loc 1 151 5 is_stmt 1 view .LVU136
+ 151:../../util/ringbuff_util.c ****         buff->w = 0;
+ 541              		.loc 1 151 13 is_stmt 0 view .LVU137
+ 542 0070 2269     		ldr	r2, [r4, #16]
+ 151:../../util/ringbuff_util.c ****         buff->w = 0;
+ 543              		.loc 1 151 24 view .LVU138
+ 544 0072 A368     		ldr	r3, [r4, #8]
+ 151:../../util/ringbuff_util.c ****         buff->w = 0;
+ 545              		.loc 1 151 8 view .LVU139
+ 546 0074 9A42     		cmp	r2, r3
+ 547 0076 01D3     		bcc	.L49
+ 152:../../util/ringbuff_util.c ****     }
+ 548              		.loc 1 152 9 is_stmt 1 view .LVU140
+ 152:../../util/ringbuff_util.c ****     }
+ 549              		.loc 1 152 17 is_stmt 0 view .LVU141
+ 550 0078 0023     		movs	r3, #0
+ 551 007a 2361     		str	r3, [r4, #16]
+ 552              	.L49:
+ 154:../../util/ringbuff_util.c ****     return tocopy + btw;
+ 553              		.loc 1 154 5 is_stmt 1 view .LVU142
+ 154:../../util/ringbuff_util.c ****     return tocopy + btw;
+ 554              		.loc 1 154 5 view .LVU143
+ 555 007c 6369     		ldr	r3, [r4, #20]
+ 556 007e 93B1     		cbz	r3, .L45
+ 154:../../util/ringbuff_util.c ****     return tocopy + btw;
+ 557              		.loc 1 154 5 discriminator 1 view .LVU144
+ 558 0080 6369     		ldr	r3, [r4, #20]
+ 559 0082 2A46     		mov	r2, r5
+ 560 0084 0121     		movs	r1, #1
+ 561 0086 2046     		mov	r0, r4
+ 562 0088 9847     		blx	r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 17
+
+
+ 563              	.LVL52:
+ 564 008a 0CE0     		b	.L45
+ 565              	.LVL53:
+ 566              	.L55:
+ 139:../../util/ringbuff_util.c ****     BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
+ 567              		.loc 1 139 14 is_stmt 0 discriminator 2 view .LVU145
+ 568 008c 2E46     		mov	r6, r5
+ 569 008e E2E7     		b	.L47
+ 570              	.LVL54:
+ 571              	.L57:
+ 146:../../util/ringbuff_util.c ****         buff->w = btw;
+ 572              		.loc 1 146 9 is_stmt 1 view .LVU146
+ 146:../../util/ringbuff_util.c ****         buff->w = btw;
+ 573              		.loc 1 146 24 is_stmt 0 view .LVU147
+ 574 0090 6068     		ldr	r0, [r4, #4]
+ 146:../../util/ringbuff_util.c ****         buff->w = btw;
+ 575              		.loc 1 146 9 view .LVU148
+ 576 0092 4246     		mov	r2, r8
+ 577 0094 B919     		adds	r1, r7, r6
+ 578 0096 FFF7FEFF 		bl	memcpy
+ 579              	.LVL55:
+ 147:../../util/ringbuff_util.c ****     }
+ 580              		.loc 1 147 9 is_stmt 1 view .LVU149
+ 147:../../util/ringbuff_util.c ****     }
+ 581              		.loc 1 147 17 is_stmt 0 view .LVU150
+ 582 009a C4F81080 		str	r8, [r4, #16]
+ 583 009e E7E7     		b	.L48
+ 584              	.LVL56:
+ 585              	.L50:
+ 128:../../util/ringbuff_util.c ****     }
+ 586              		.loc 1 128 16 view .LVU151
+ 587 00a0 0025     		movs	r5, #0
+ 588 00a2 00E0     		b	.L45
+ 589              	.LVL57:
+ 590              	.L51:
+ 128:../../util/ringbuff_util.c ****     }
+ 591              		.loc 1 128 16 view .LVU152
+ 592 00a4 0025     		movs	r5, #0
+ 593              	.LVL58:
+ 594              	.L45:
+ 156:../../util/ringbuff_util.c **** 
+ 595              		.loc 1 156 1 view .LVU153
+ 596 00a6 2846     		mov	r0, r5
+ 597 00a8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 598              	.LVL59:
+ 599              	.L52:
+ 128:../../util/ringbuff_util.c ****     }
+ 600              		.loc 1 128 16 view .LVU154
+ 601 00ac 0025     		movs	r5, #0
+ 602 00ae FAE7     		b	.L45
+ 603              	.L53:
+ 604 00b0 0025     		movs	r5, #0
+ 605 00b2 F8E7     		b	.L45
+ 606              	.L54:
+ 607 00b4 0025     		movs	r5, #0
+ 608 00b6 F6E7     		b	.L45
+ 609              	.L59:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 18
+
+
+ 610              		.align	2
+ 611              	.L58:
+ 612 00b8 EFBEADDE 		.word	-559038737
+ 613 00bc 10415221 		.word	559038736
+ 614              		.cfi_endproc
+ 615              	.LFE4:
+ 617              		.section	.text.ringbuff_get_full,"ax",%progbits
+ 618              		.align	1
+ 619              		.global	ringbuff_get_full
+ 620              		.syntax unified
+ 621              		.thumb
+ 622              		.thumb_func
+ 624              	ringbuff_get_full:
+ 625              	.LVL60:
+ 626              	.LFB8:
+ 280:../../util/ringbuff_util.c **** 
+ 281:../../util/ringbuff_util.c **** /**
+ 282:../../util/ringbuff_util.c ****  * \brief           Get number of bytes currently available in buffer
+ 283:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 284:../../util/ringbuff_util.c ****  * \return          Number of bytes ready to be read
+ 285:../../util/ringbuff_util.c ****  */
+ 286:../../util/ringbuff_util.c **** size_t
+ 287:../../util/ringbuff_util.c **** ringbuff_get_full(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 627              		.loc 1 287 55 is_stmt 1 view -0
+ 628              		.cfi_startproc
+ 629              		@ args = 0, pretend = 0, frame = 0
+ 630              		@ frame_needed = 0, uses_anonymous_args = 0
+ 631              		@ link register save eliminated.
+ 288:../../util/ringbuff_util.c ****     size_t w, r, size;
+ 632              		.loc 1 288 5 view .LVU156
+ 289:../../util/ringbuff_util.c **** 
+ 290:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff)) {
+ 633              		.loc 1 290 5 view .LVU157
+ 634              		.loc 1 290 8 is_stmt 0 view .LVU158
+ 635 0000 0346     		mov	r3, r0
+ 636 0002 B0B1     		cbz	r0, .L63
+ 637              		.loc 1 290 10 discriminator 1 view .LVU159
+ 638 0004 0168     		ldr	r1, [r0]
+ 639 0006 104A     		ldr	r2, .L68
+ 640 0008 9142     		cmp	r1, r2
+ 641 000a 14D1     		bne	.L64
+ 642              		.loc 1 290 10 discriminator 2 view .LVU160
+ 643 000c C169     		ldr	r1, [r0, #28]
+ 644 000e 0F4A     		ldr	r2, .L68+4
+ 645 0010 9142     		cmp	r1, r2
+ 646 0012 12D1     		bne	.L65
+ 647              		.loc 1 290 10 discriminator 3 view .LVU161
+ 648 0014 4268     		ldr	r2, [r0, #4]
+ 649 0016 92B1     		cbz	r2, .L66
+ 650              		.loc 1 290 10 discriminator 4 view .LVU162
+ 651 0018 8068     		ldr	r0, [r0, #8]
+ 652              	.LVL61:
+ 653              		.loc 1 290 9 discriminator 4 view .LVU163
+ 654 001a 98B1     		cbz	r0, .L60
+ 291:../../util/ringbuff_util.c ****         return 0;
+ 292:../../util/ringbuff_util.c ****     }
+ 293:../../util/ringbuff_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 19
+
+
+ 294:../../util/ringbuff_util.c ****     /* Use temporary values in case they are changed during operations */
+ 295:../../util/ringbuff_util.c ****     w = buff->w;
+ 655              		.loc 1 295 5 is_stmt 1 view .LVU164
+ 656              		.loc 1 295 7 is_stmt 0 view .LVU165
+ 657 001c 1A69     		ldr	r2, [r3, #16]
+ 658              	.LVL62:
+ 296:../../util/ringbuff_util.c ****     r = buff->r;
+ 659              		.loc 1 296 5 is_stmt 1 view .LVU166
+ 660              		.loc 1 296 7 is_stmt 0 view .LVU167
+ 661 001e D968     		ldr	r1, [r3, #12]
+ 662              	.LVL63:
+ 297:../../util/ringbuff_util.c ****     if (w == r) {
+ 663              		.loc 1 297 5 is_stmt 1 view .LVU168
+ 664              		.loc 1 297 8 is_stmt 0 view .LVU169
+ 665 0020 8A42     		cmp	r2, r1
+ 666 0022 0ED0     		beq	.L67
+ 298:../../util/ringbuff_util.c ****         size = 0;
+ 299:../../util/ringbuff_util.c ****     } else if (w > r) {
+ 667              		.loc 1 299 12 is_stmt 1 view .LVU170
+ 668              		.loc 1 299 15 is_stmt 0 view .LVU171
+ 669 0024 01D9     		bls	.L62
+ 300:../../util/ringbuff_util.c ****         size = w - r;
+ 670              		.loc 1 300 9 is_stmt 1 view .LVU172
+ 671              		.loc 1 300 14 is_stmt 0 view .LVU173
+ 672 0026 501A     		subs	r0, r2, r1
+ 673              	.LVL64:
+ 674              		.loc 1 300 14 view .LVU174
+ 675 0028 7047     		bx	lr
+ 676              	.LVL65:
+ 677              	.L62:
+ 301:../../util/ringbuff_util.c ****     } else {
+ 302:../../util/ringbuff_util.c ****         size = buff->size - (r - w);
+ 678              		.loc 1 302 9 is_stmt 1 view .LVU175
+ 679              		.loc 1 302 20 is_stmt 0 view .LVU176
+ 680 002a 9868     		ldr	r0, [r3, #8]
+ 681              		.loc 1 302 27 view .LVU177
+ 682 002c 521A     		subs	r2, r2, r1
+ 683              	.LVL66:
+ 684              		.loc 1 302 14 view .LVU178
+ 685 002e 1044     		add	r0, r0, r2
+ 686              	.LVL67:
+ 687              		.loc 1 302 14 view .LVU179
+ 688 0030 7047     		bx	lr
+ 689              	.LVL68:
+ 690              	.L63:
+ 291:../../util/ringbuff_util.c ****     }
+ 691              		.loc 1 291 16 view .LVU180
+ 692 0032 0020     		movs	r0, #0
+ 693              	.LVL69:
+ 291:../../util/ringbuff_util.c ****     }
+ 694              		.loc 1 291 16 view .LVU181
+ 695 0034 7047     		bx	lr
+ 696              	.LVL70:
+ 697              	.L64:
+ 291:../../util/ringbuff_util.c ****     }
+ 698              		.loc 1 291 16 view .LVU182
+ 699 0036 0020     		movs	r0, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 20
+
+
+ 700              	.LVL71:
+ 291:../../util/ringbuff_util.c ****     }
+ 701              		.loc 1 291 16 view .LVU183
+ 702 0038 7047     		bx	lr
+ 703              	.LVL72:
+ 704              	.L65:
+ 291:../../util/ringbuff_util.c ****     }
+ 705              		.loc 1 291 16 view .LVU184
+ 706 003a 0020     		movs	r0, #0
+ 707              	.LVL73:
+ 291:../../util/ringbuff_util.c ****     }
+ 708              		.loc 1 291 16 view .LVU185
+ 709 003c 7047     		bx	lr
+ 710              	.LVL74:
+ 711              	.L66:
+ 291:../../util/ringbuff_util.c ****     }
+ 712              		.loc 1 291 16 view .LVU186
+ 713 003e 0020     		movs	r0, #0
+ 714              	.LVL75:
+ 291:../../util/ringbuff_util.c ****     }
+ 715              		.loc 1 291 16 view .LVU187
+ 716 0040 7047     		bx	lr
+ 717              	.LVL76:
+ 718              	.L67:
+ 298:../../util/ringbuff_util.c ****     } else if (w > r) {
+ 719              		.loc 1 298 14 view .LVU188
+ 720 0042 0020     		movs	r0, #0
+ 721              	.LVL77:
+ 722              	.L60:
+ 303:../../util/ringbuff_util.c ****     }
+ 304:../../util/ringbuff_util.c ****     return size;
+ 305:../../util/ringbuff_util.c **** }
+ 723              		.loc 1 305 1 view .LVU189
+ 724 0044 7047     		bx	lr
+ 725              	.L69:
+ 726 0046 00BF     		.align	2
+ 727              	.L68:
+ 728 0048 EFBEADDE 		.word	-559038737
+ 729 004c 10415221 		.word	559038736
+ 730              		.cfi_endproc
+ 731              	.LFE8:
+ 733              		.section	.text.ringbuff_read,"ax",%progbits
+ 734              		.align	1
+ 735              		.global	ringbuff_read
+ 736              		.syntax unified
+ 737              		.thumb
+ 738              		.thumb_func
+ 740              	ringbuff_read:
+ 741              	.LVL78:
+ 742              	.LFB5:
+ 168:../../util/ringbuff_util.c ****     size_t tocopy, full;
+ 743              		.loc 1 168 75 is_stmt 1 view -0
+ 744              		.cfi_startproc
+ 745              		@ args = 0, pretend = 0, frame = 0
+ 746              		@ frame_needed = 0, uses_anonymous_args = 0
+ 168:../../util/ringbuff_util.c ****     size_t tocopy, full;
+ 747              		.loc 1 168 75 is_stmt 0 view .LVU191
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 21
+
+
+ 748 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 749              	.LCFI3:
+ 750              		.cfi_def_cfa_offset 24
+ 751              		.cfi_offset 4, -24
+ 752              		.cfi_offset 5, -20
+ 753              		.cfi_offset 6, -16
+ 754              		.cfi_offset 7, -12
+ 755              		.cfi_offset 8, -8
+ 756              		.cfi_offset 14, -4
+ 169:../../util/ringbuff_util.c ****     uint8_t *d = data;
+ 757              		.loc 1 169 5 is_stmt 1 view .LVU192
+ 170:../../util/ringbuff_util.c **** 
+ 758              		.loc 1 170 5 view .LVU193
+ 759              	.LVL79:
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 760              		.loc 1 172 5 view .LVU194
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 761              		.loc 1 172 8 is_stmt 0 view .LVU195
+ 762 0004 0028     		cmp	r0, #0
+ 763 0006 4BD0     		beq	.L75
+ 764 0008 0F46     		mov	r7, r1
+ 765 000a 1646     		mov	r6, r2
+ 766 000c 0446     		mov	r4, r0
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 767              		.loc 1 172 10 discriminator 1 view .LVU196
+ 768 000e 0268     		ldr	r2, [r0]
+ 769              	.LVL80:
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 770              		.loc 1 172 10 discriminator 1 view .LVU197
+ 771 0010 294B     		ldr	r3, .L83
+ 772 0012 9A42     		cmp	r2, r3
+ 773 0014 46D1     		bne	.L76
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 774              		.loc 1 172 10 discriminator 2 view .LVU198
+ 775 0016 C269     		ldr	r2, [r0, #28]
+ 776 0018 284B     		ldr	r3, .L83+4
+ 777 001a 9A42     		cmp	r2, r3
+ 778 001c 46D1     		bne	.L77
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 779              		.loc 1 172 10 discriminator 3 view .LVU199
+ 780 001e 4368     		ldr	r3, [r0, #4]
+ 781 0020 002B     		cmp	r3, #0
+ 782 0022 45D0     		beq	.L78
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 783              		.loc 1 172 10 discriminator 4 view .LVU200
+ 784 0024 8568     		ldr	r5, [r0, #8]
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 785              		.loc 1 172 9 discriminator 4 view .LVU201
+ 786 0026 002D     		cmp	r5, #0
+ 787 0028 3DD0     		beq	.L70
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 788              		.loc 1 172 52 discriminator 5 view .LVU202
+ 789 002a B6FA86F3 		clz	r3, r6
+ 790 002e 5B09     		lsrs	r3, r3, #5
+ 172:../../util/ringbuff_util.c ****         return 0;
+ 791              		.loc 1 172 45 discriminator 5 view .LVU203
+ 792 0030 0029     		cmp	r1, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 22
+
+
+ 793 0032 3FD0     		beq	.L79
+ 794 0034 002B     		cmp	r3, #0
+ 795 0036 3DD1     		bne	.L79
+ 177:../../util/ringbuff_util.c ****     btr = BUF_MIN(full, btr);
+ 796              		.loc 1 177 5 is_stmt 1 view .LVU204
+ 177:../../util/ringbuff_util.c ****     btr = BUF_MIN(full, btr);
+ 797              		.loc 1 177 12 is_stmt 0 view .LVU205
+ 798 0038 FFF7FEFF 		bl	ringbuff_get_full
+ 799              	.LVL81:
+ 178:../../util/ringbuff_util.c ****     if (btr == 0) {
+ 800              		.loc 1 178 5 is_stmt 1 view .LVU206
+ 178:../../util/ringbuff_util.c ****     if (btr == 0) {
+ 801              		.loc 1 178 9 is_stmt 0 view .LVU207
+ 802 003c 3546     		mov	r5, r6
+ 803 003e 8642     		cmp	r6, r0
+ 804 0040 28BF     		it	cs
+ 805 0042 0546     		movcs	r5, r0
+ 806              	.LVL82:
+ 179:../../util/ringbuff_util.c ****         return 0;
+ 807              		.loc 1 179 5 is_stmt 1 view .LVU208
+ 179:../../util/ringbuff_util.c ****         return 0;
+ 808              		.loc 1 179 8 is_stmt 0 view .LVU209
+ 809 0044 7DB3     		cbz	r5, .L70
+ 184:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
+ 810              		.loc 1 184 5 is_stmt 1 view .LVU210
+ 184:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
+ 811              		.loc 1 184 14 is_stmt 0 view .LVU211
+ 812 0046 A368     		ldr	r3, [r4, #8]
+ 813 0048 E268     		ldr	r2, [r4, #12]
+ 814 004a 9B1A     		subs	r3, r3, r2
+ 815 004c AB42     		cmp	r3, r5
+ 816 004e 1DD2     		bcs	.L80
+ 184:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
+ 817              		.loc 1 184 14 discriminator 1 view .LVU212
+ 818 0050 A668     		ldr	r6, [r4, #8]
+ 819 0052 E368     		ldr	r3, [r4, #12]
+ 820 0054 F61A     		subs	r6, r6, r3
+ 821              	.L72:
+ 822              	.LVL83:
+ 185:../../util/ringbuff_util.c ****     buff->r += tocopy;
+ 823              		.loc 1 185 5 is_stmt 1 view .LVU213
+ 185:../../util/ringbuff_util.c ****     buff->r += tocopy;
+ 824              		.loc 1 185 24 is_stmt 0 view .LVU214
+ 825 0056 6168     		ldr	r1, [r4, #4]
+ 185:../../util/ringbuff_util.c ****     buff->r += tocopy;
+ 826              		.loc 1 185 35 view .LVU215
+ 827 0058 E368     		ldr	r3, [r4, #12]
+ 185:../../util/ringbuff_util.c ****     buff->r += tocopy;
+ 828              		.loc 1 185 5 view .LVU216
+ 829 005a 3246     		mov	r2, r6
+ 830 005c 1944     		add	r1, r1, r3
+ 831 005e 3846     		mov	r0, r7
+ 832              	.LVL84:
+ 185:../../util/ringbuff_util.c ****     buff->r += tocopy;
+ 833              		.loc 1 185 5 view .LVU217
+ 834 0060 FFF7FEFF 		bl	memcpy
+ 835              	.LVL85:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 23
+
+
+ 186:../../util/ringbuff_util.c ****     btr -= tocopy;
+ 836              		.loc 1 186 5 is_stmt 1 view .LVU218
+ 186:../../util/ringbuff_util.c ****     btr -= tocopy;
+ 837              		.loc 1 186 9 is_stmt 0 view .LVU219
+ 838 0064 E368     		ldr	r3, [r4, #12]
+ 186:../../util/ringbuff_util.c ****     btr -= tocopy;
+ 839              		.loc 1 186 13 view .LVU220
+ 840 0066 3344     		add	r3, r3, r6
+ 841 0068 E360     		str	r3, [r4, #12]
+ 187:../../util/ringbuff_util.c **** 
+ 842              		.loc 1 187 5 is_stmt 1 view .LVU221
+ 843              	.LVL86:
+ 190:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btr);
+ 844              		.loc 1 190 5 view .LVU222
+ 190:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btr);
+ 845              		.loc 1 190 8 is_stmt 0 view .LVU223
+ 846 006a B5EB0608 		subs	r8, r5, r6
+ 847              	.LVL87:
+ 190:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btr);
+ 848              		.loc 1 190 8 view .LVU224
+ 849 006e 0FD1     		bne	.L82
+ 850              	.L73:
+ 196:../../util/ringbuff_util.c ****         buff->r = 0;
+ 851              		.loc 1 196 5 is_stmt 1 view .LVU225
+ 196:../../util/ringbuff_util.c ****         buff->r = 0;
+ 852              		.loc 1 196 13 is_stmt 0 view .LVU226
+ 853 0070 E268     		ldr	r2, [r4, #12]
+ 196:../../util/ringbuff_util.c ****         buff->r = 0;
+ 854              		.loc 1 196 24 view .LVU227
+ 855 0072 A368     		ldr	r3, [r4, #8]
+ 196:../../util/ringbuff_util.c ****         buff->r = 0;
+ 856              		.loc 1 196 8 view .LVU228
+ 857 0074 9A42     		cmp	r2, r3
+ 858 0076 01D3     		bcc	.L74
+ 197:../../util/ringbuff_util.c ****     }
+ 859              		.loc 1 197 9 is_stmt 1 view .LVU229
+ 197:../../util/ringbuff_util.c ****     }
+ 860              		.loc 1 197 17 is_stmt 0 view .LVU230
+ 861 0078 0023     		movs	r3, #0
+ 862 007a E360     		str	r3, [r4, #12]
+ 863              	.L74:
+ 199:../../util/ringbuff_util.c ****     return tocopy + btr;
+ 864              		.loc 1 199 5 is_stmt 1 view .LVU231
+ 199:../../util/ringbuff_util.c ****     return tocopy + btr;
+ 865              		.loc 1 199 5 view .LVU232
+ 866 007c 6369     		ldr	r3, [r4, #20]
+ 867 007e 93B1     		cbz	r3, .L70
+ 199:../../util/ringbuff_util.c ****     return tocopy + btr;
+ 868              		.loc 1 199 5 discriminator 1 view .LVU233
+ 869 0080 6369     		ldr	r3, [r4, #20]
+ 870 0082 2A46     		mov	r2, r5
+ 871 0084 0021     		movs	r1, #0
+ 872 0086 2046     		mov	r0, r4
+ 873 0088 9847     		blx	r3
+ 874              	.LVL88:
+ 875 008a 0CE0     		b	.L70
+ 876              	.LVL89:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 24
+
+
+ 877              	.L80:
+ 184:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
+ 878              		.loc 1 184 14 is_stmt 0 discriminator 2 view .LVU234
+ 879 008c 2E46     		mov	r6, r5
+ 880 008e E2E7     		b	.L72
+ 881              	.LVL90:
+ 882              	.L82:
+ 191:../../util/ringbuff_util.c ****         buff->r = btr;
+ 883              		.loc 1 191 9 is_stmt 1 view .LVU235
+ 191:../../util/ringbuff_util.c ****         buff->r = btr;
+ 884              		.loc 1 191 36 is_stmt 0 view .LVU236
+ 885 0090 6168     		ldr	r1, [r4, #4]
+ 191:../../util/ringbuff_util.c ****         buff->r = btr;
+ 886              		.loc 1 191 9 view .LVU237
+ 887 0092 4246     		mov	r2, r8
+ 888 0094 B819     		adds	r0, r7, r6
+ 889 0096 FFF7FEFF 		bl	memcpy
+ 890              	.LVL91:
+ 192:../../util/ringbuff_util.c ****     }
+ 891              		.loc 1 192 9 is_stmt 1 view .LVU238
+ 192:../../util/ringbuff_util.c ****     }
+ 892              		.loc 1 192 17 is_stmt 0 view .LVU239
+ 893 009a C4F80C80 		str	r8, [r4, #12]
+ 894 009e E7E7     		b	.L73
+ 895              	.LVL92:
+ 896              	.L75:
+ 173:../../util/ringbuff_util.c ****     }
+ 897              		.loc 1 173 16 view .LVU240
+ 898 00a0 0025     		movs	r5, #0
+ 899 00a2 00E0     		b	.L70
+ 900              	.LVL93:
+ 901              	.L76:
+ 173:../../util/ringbuff_util.c ****     }
+ 902              		.loc 1 173 16 view .LVU241
+ 903 00a4 0025     		movs	r5, #0
+ 904              	.LVL94:
+ 905              	.L70:
+ 201:../../util/ringbuff_util.c **** 
+ 906              		.loc 1 201 1 view .LVU242
+ 907 00a6 2846     		mov	r0, r5
+ 908 00a8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 909              	.LVL95:
+ 910              	.L77:
+ 173:../../util/ringbuff_util.c ****     }
+ 911              		.loc 1 173 16 view .LVU243
+ 912 00ac 0025     		movs	r5, #0
+ 913 00ae FAE7     		b	.L70
+ 914              	.L78:
+ 915 00b0 0025     		movs	r5, #0
+ 916 00b2 F8E7     		b	.L70
+ 917              	.L79:
+ 918 00b4 0025     		movs	r5, #0
+ 919 00b6 F6E7     		b	.L70
+ 920              	.L84:
+ 921              		.align	2
+ 922              	.L83:
+ 923 00b8 EFBEADDE 		.word	-559038737
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 25
+
+
+ 924 00bc 10415221 		.word	559038736
+ 925              		.cfi_endproc
+ 926              	.LFE5:
+ 928              		.section	.text.ringbuff_peek,"ax",%progbits
+ 929              		.align	1
+ 930              		.global	ringbuff_peek
+ 931              		.syntax unified
+ 932              		.thumb
+ 933              		.thumb_func
+ 935              	ringbuff_peek:
+ 936              	.LVL96:
+ 937              	.LFB6:
+ 212:../../util/ringbuff_util.c ****     size_t full, tocopy, r;
+ 938              		.loc 1 212 94 is_stmt 1 view -0
+ 939              		.cfi_startproc
+ 940              		@ args = 0, pretend = 0, frame = 0
+ 941              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212:../../util/ringbuff_util.c ****     size_t full, tocopy, r;
+ 942              		.loc 1 212 94 is_stmt 0 view .LVU245
+ 943 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 944              	.LCFI4:
+ 945              		.cfi_def_cfa_offset 24
+ 946              		.cfi_offset 4, -24
+ 947              		.cfi_offset 5, -20
+ 948              		.cfi_offset 6, -16
+ 949              		.cfi_offset 7, -12
+ 950              		.cfi_offset 8, -8
+ 951              		.cfi_offset 14, -4
+ 213:../../util/ringbuff_util.c ****     uint8_t *d = data;
+ 952              		.loc 1 213 5 is_stmt 1 view .LVU246
+ 214:../../util/ringbuff_util.c **** 
+ 953              		.loc 1 214 5 view .LVU247
+ 954              	.LVL97:
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 955              		.loc 1 216 5 view .LVU248
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 956              		.loc 1 216 8 is_stmt 0 view .LVU249
+ 957 0004 0028     		cmp	r0, #0
+ 958 0006 3BD0     		beq	.L89
+ 959 0008 8846     		mov	r8, r1
+ 960 000a 1746     		mov	r7, r2
+ 961 000c 1E46     		mov	r6, r3
+ 962 000e 0446     		mov	r4, r0
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 963              		.loc 1 216 10 discriminator 1 view .LVU250
+ 964 0010 0268     		ldr	r2, [r0]
+ 965              	.LVL98:
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 966              		.loc 1 216 10 discriminator 1 view .LVU251
+ 967 0012 224B     		ldr	r3, .L97
+ 968              	.LVL99:
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 969              		.loc 1 216 10 discriminator 1 view .LVU252
+ 970 0014 9A42     		cmp	r2, r3
+ 971 0016 35D1     		bne	.L90
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 972              		.loc 1 216 10 discriminator 2 view .LVU253
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 26
+
+
+ 973 0018 C269     		ldr	r2, [r0, #28]
+ 974 001a 214B     		ldr	r3, .L97+4
+ 975 001c 9A42     		cmp	r2, r3
+ 976 001e 35D1     		bne	.L91
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 977              		.loc 1 216 10 discriminator 3 view .LVU254
+ 978 0020 4368     		ldr	r3, [r0, #4]
+ 979 0022 ABB3     		cbz	r3, .L92
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 980              		.loc 1 216 10 discriminator 4 view .LVU255
+ 981 0024 8568     		ldr	r5, [r0, #8]
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 982              		.loc 1 216 9 discriminator 4 view .LVU256
+ 983 0026 75B3     		cbz	r5, .L85
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 984              		.loc 1 216 52 discriminator 5 view .LVU257
+ 985 0028 B6FA86F3 		clz	r3, r6
+ 986 002c 5B09     		lsrs	r3, r3, #5
+ 216:../../util/ringbuff_util.c ****         return 0;
+ 987              		.loc 1 216 45 discriminator 5 view .LVU258
+ 988 002e 8FB3     		cbz	r7, .L93
+ 989 0030 83BB     		cbnz	r3, .L93
+ 220:../../util/ringbuff_util.c **** 
+ 990              		.loc 1 220 5 is_stmt 1 view .LVU259
+ 220:../../util/ringbuff_util.c **** 
+ 991              		.loc 1 220 7 is_stmt 0 view .LVU260
+ 992 0032 C568     		ldr	r5, [r0, #12]
+ 993              	.LVL100:
+ 223:../../util/ringbuff_util.c **** 
+ 994              		.loc 1 223 5 is_stmt 1 view .LVU261
+ 223:../../util/ringbuff_util.c **** 
+ 995              		.loc 1 223 12 is_stmt 0 view .LVU262
+ 996 0034 FFF7FEFF 		bl	ringbuff_get_full
+ 997              	.LVL101:
+ 226:../../util/ringbuff_util.c ****         return 0;
+ 998              		.loc 1 226 5 is_stmt 1 view .LVU263
+ 226:../../util/ringbuff_util.c ****         return 0;
+ 999              		.loc 1 226 8 is_stmt 0 view .LVU264
+ 1000 0038 4045     		cmp	r0, r8
+ 1001 003a 2DD9     		bls	.L94
+ 229:../../util/ringbuff_util.c ****     full -= skip_count;
+ 1002              		.loc 1 229 5 is_stmt 1 view .LVU265
+ 229:../../util/ringbuff_util.c ****     full -= skip_count;
+ 1003              		.loc 1 229 7 is_stmt 0 view .LVU266
+ 1004 003c 05EB0803 		add	r3, r5, r8
+ 1005              	.LVL102:
+ 230:../../util/ringbuff_util.c ****     if (r >= buff->size) {
+ 1006              		.loc 1 230 5 is_stmt 1 view .LVU267
+ 230:../../util/ringbuff_util.c ****     if (r >= buff->size) {
+ 1007              		.loc 1 230 10 is_stmt 0 view .LVU268
+ 1008 0040 A0EB0805 		sub	r5, r0, r8
+ 1009              	.LVL103:
+ 231:../../util/ringbuff_util.c ****         r -= buff->size;
+ 1010              		.loc 1 231 5 is_stmt 1 view .LVU269
+ 231:../../util/ringbuff_util.c ****         r -= buff->size;
+ 1011              		.loc 1 231 18 is_stmt 0 view .LVU270
+ 1012 0044 A268     		ldr	r2, [r4, #8]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 27
+
+
+ 231:../../util/ringbuff_util.c ****         r -= buff->size;
+ 1013              		.loc 1 231 8 view .LVU271
+ 1014 0046 9A42     		cmp	r2, r3
+ 1015 0048 01D8     		bhi	.L87
+ 232:../../util/ringbuff_util.c ****     }
+ 1016              		.loc 1 232 9 is_stmt 1 view .LVU272
+ 232:../../util/ringbuff_util.c ****     }
+ 1017              		.loc 1 232 18 is_stmt 0 view .LVU273
+ 1018 004a A268     		ldr	r2, [r4, #8]
+ 232:../../util/ringbuff_util.c ****     }
+ 1019              		.loc 1 232 11 view .LVU274
+ 1020 004c 9B1A     		subs	r3, r3, r2
+ 1021              	.LVL104:
+ 1022              	.L87:
+ 236:../../util/ringbuff_util.c ****     if (btp == 0) {
+ 1023              		.loc 1 236 5 is_stmt 1 view .LVU275
+ 236:../../util/ringbuff_util.c ****     if (btp == 0) {
+ 1024              		.loc 1 236 9 is_stmt 0 view .LVU276
+ 1025 004e B542     		cmp	r5, r6
+ 1026 0050 28BF     		it	cs
+ 1027 0052 3546     		movcs	r5, r6
+ 1028              	.LVL105:
+ 237:../../util/ringbuff_util.c ****         return 0;
+ 1029              		.loc 1 237 5 is_stmt 1 view .LVU277
+ 237:../../util/ringbuff_util.c ****         return 0;
+ 1030              		.loc 1 237 8 is_stmt 0 view .LVU278
+ 1031 0054 BDB1     		cbz	r5, .L85
+ 242:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[r], tocopy);
+ 1032              		.loc 1 242 5 is_stmt 1 view .LVU279
+ 242:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[r], tocopy);
+ 1033              		.loc 1 242 14 is_stmt 0 view .LVU280
+ 1034 0056 A268     		ldr	r2, [r4, #8]
+ 1035 0058 D21A     		subs	r2, r2, r3
+ 1036 005a AA42     		cmp	r2, r5
+ 1037 005c 0ED2     		bcs	.L95
+ 242:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[r], tocopy);
+ 1038              		.loc 1 242 14 discriminator 1 view .LVU281
+ 1039 005e A668     		ldr	r6, [r4, #8]
+ 1040 0060 F61A     		subs	r6, r6, r3
+ 1041              	.L88:
+ 1042              	.LVL106:
+ 243:../../util/ringbuff_util.c ****     btp -= tocopy;
+ 1043              		.loc 1 243 5 is_stmt 1 view .LVU282
+ 243:../../util/ringbuff_util.c ****     btp -= tocopy;
+ 1044              		.loc 1 243 24 is_stmt 0 view .LVU283
+ 1045 0062 6168     		ldr	r1, [r4, #4]
+ 243:../../util/ringbuff_util.c ****     btp -= tocopy;
+ 1046              		.loc 1 243 5 view .LVU284
+ 1047 0064 3246     		mov	r2, r6
+ 1048 0066 1944     		add	r1, r1, r3
+ 1049 0068 3846     		mov	r0, r7
+ 1050              	.LVL107:
+ 243:../../util/ringbuff_util.c ****     btp -= tocopy;
+ 1051              		.loc 1 243 5 view .LVU285
+ 1052 006a FFF7FEFF 		bl	memcpy
+ 1053              	.LVL108:
+ 244:../../util/ringbuff_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 28
+
+
+ 1054              		.loc 1 244 5 is_stmt 1 view .LVU286
+ 247:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btp);
+ 1055              		.loc 1 247 5 view .LVU287
+ 247:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btp);
+ 1056              		.loc 1 247 8 is_stmt 0 view .LVU288
+ 1057 006e AA1B     		subs	r2, r5, r6
+ 1058              	.LVL109:
+ 247:../../util/ringbuff_util.c ****         BUF_MEMCPY(&d[tocopy], buff->buff, btp);
+ 1059              		.loc 1 247 8 view .LVU289
+ 1060 0070 09D0     		beq	.L85
+ 248:../../util/ringbuff_util.c ****     }
+ 1061              		.loc 1 248 9 is_stmt 1 view .LVU290
+ 248:../../util/ringbuff_util.c ****     }
+ 1062              		.loc 1 248 36 is_stmt 0 view .LVU291
+ 1063 0072 6168     		ldr	r1, [r4, #4]
+ 248:../../util/ringbuff_util.c ****     }
+ 1064              		.loc 1 248 9 view .LVU292
+ 1065 0074 B819     		adds	r0, r7, r6
+ 1066 0076 FFF7FEFF 		bl	memcpy
+ 1067              	.LVL110:
+ 248:../../util/ringbuff_util.c ****     }
+ 1068              		.loc 1 248 9 view .LVU293
+ 1069 007a 04E0     		b	.L85
+ 1070              	.LVL111:
+ 1071              	.L95:
+ 242:../../util/ringbuff_util.c ****     BUF_MEMCPY(d, &buff->buff[r], tocopy);
+ 1072              		.loc 1 242 14 discriminator 2 view .LVU294
+ 1073 007c 2E46     		mov	r6, r5
+ 1074 007e F0E7     		b	.L88
+ 1075              	.LVL112:
+ 1076              	.L89:
+ 217:../../util/ringbuff_util.c ****     }
+ 1077              		.loc 1 217 16 view .LVU295
+ 1078 0080 0025     		movs	r5, #0
+ 1079 0082 00E0     		b	.L85
+ 1080              	.LVL113:
+ 1081              	.L90:
+ 217:../../util/ringbuff_util.c ****     }
+ 1082              		.loc 1 217 16 view .LVU296
+ 1083 0084 0025     		movs	r5, #0
+ 1084              	.LVL114:
+ 1085              	.L85:
+ 251:../../util/ringbuff_util.c **** 
+ 1086              		.loc 1 251 1 view .LVU297
+ 1087 0086 2846     		mov	r0, r5
+ 1088 0088 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1089              	.LVL115:
+ 1090              	.L91:
+ 217:../../util/ringbuff_util.c ****     }
+ 1091              		.loc 1 217 16 view .LVU298
+ 1092 008c 0025     		movs	r5, #0
+ 1093 008e FAE7     		b	.L85
+ 1094              	.L92:
+ 1095 0090 0025     		movs	r5, #0
+ 1096 0092 F8E7     		b	.L85
+ 1097              	.L93:
+ 1098 0094 0025     		movs	r5, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 29
+
+
+ 1099 0096 F6E7     		b	.L85
+ 1100              	.LVL116:
+ 1101              	.L94:
+ 227:../../util/ringbuff_util.c ****     }
+ 1102              		.loc 1 227 16 view .LVU299
+ 1103 0098 0025     		movs	r5, #0
+ 1104              	.LVL117:
+ 227:../../util/ringbuff_util.c ****     }
+ 1105              		.loc 1 227 16 view .LVU300
+ 1106 009a F4E7     		b	.L85
+ 1107              	.L98:
+ 1108              		.align	2
+ 1109              	.L97:
+ 1110 009c EFBEADDE 		.word	-559038737
+ 1111 00a0 10415221 		.word	559038736
+ 1112              		.cfi_endproc
+ 1113              	.LFE6:
+ 1115              		.section	.text.ringbuff_reset,"ax",%progbits
+ 1116              		.align	1
+ 1117              		.global	ringbuff_reset
+ 1118              		.syntax unified
+ 1119              		.thumb
+ 1120              		.thumb_func
+ 1122              	ringbuff_reset:
+ 1123              	.LVL118:
+ 1124              	.LFB9:
+ 306:../../util/ringbuff_util.c **** 
+ 307:../../util/ringbuff_util.c **** /**
+ 308:../../util/ringbuff_util.c ****  * \brief           Resets buffer to default values. Buffer size is not modified
+ 309:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 310:../../util/ringbuff_util.c ****  */
+ 311:../../util/ringbuff_util.c **** void
+ 312:../../util/ringbuff_util.c **** ringbuff_reset(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 1125              		.loc 1 312 52 is_stmt 1 view -0
+ 1126              		.cfi_startproc
+ 1127              		@ args = 0, pretend = 0, frame = 0
+ 1128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 1129              		.loc 1 313 5 view .LVU302
+ 1130              		.loc 1 313 8 is_stmt 0 view .LVU303
+ 1131 0000 18B1     		cbz	r0, .L102
+ 1132              		.loc 1 313 9 discriminator 1 view .LVU304
+ 1133 0002 0168     		ldr	r1, [r0]
+ 1134 0004 0C4A     		ldr	r2, .L106
+ 1135 0006 9142     		cmp	r1, r2
+ 1136 0008 00D0     		beq	.L105
+ 1137              	.L102:
+ 1138 000a 7047     		bx	lr
+ 1139              	.L105:
+ 1140              		.loc 1 313 9 discriminator 2 view .LVU305
+ 1141 000c C169     		ldr	r1, [r0, #28]
+ 1142 000e 0B4A     		ldr	r2, .L106+4
+ 1143 0010 9142     		cmp	r1, r2
+ 1144 0012 FAD1     		bne	.L102
+ 1145              		.loc 1 313 9 discriminator 3 view .LVU306
+ 1146 0014 4268     		ldr	r2, [r0, #4]
+ 1147 0016 002A     		cmp	r2, #0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 30
+
+
+ 1148 0018 F7D0     		beq	.L102
+ 1149              		.loc 1 313 9 discriminator 4 view .LVU307
+ 1150 001a 8268     		ldr	r2, [r0, #8]
+ 1151 001c 002A     		cmp	r2, #0
+ 1152 001e F4D0     		beq	.L102
+ 314:../../util/ringbuff_util.c ****         buff->w = 0;
+ 1153              		.loc 1 314 9 is_stmt 1 view .LVU308
+ 1154              		.loc 1 314 17 is_stmt 0 view .LVU309
+ 1155 0020 0022     		movs	r2, #0
+ 1156 0022 0261     		str	r2, [r0, #16]
+ 315:../../util/ringbuff_util.c ****         buff->r = 0;
+ 1157              		.loc 1 315 9 is_stmt 1 view .LVU310
+ 1158              		.loc 1 315 17 is_stmt 0 view .LVU311
+ 1159 0024 C260     		str	r2, [r0, #12]
+ 316:../../util/ringbuff_util.c ****         BUF_SEND_EVT(buff, RINGBUFF_EVT_RESET, 0);
+ 1160              		.loc 1 316 9 is_stmt 1 view .LVU312
+ 1161              		.loc 1 316 9 view .LVU313
+ 1162 0026 4269     		ldr	r2, [r0, #20]
+ 1163 0028 002A     		cmp	r2, #0
+ 1164 002a EED0     		beq	.L102
+ 312:../../util/ringbuff_util.c ****     if (BUF_IS_VALID(buff)) {
+ 1165              		.loc 1 312 52 is_stmt 0 view .LVU314
+ 1166 002c 10B5     		push	{r4, lr}
+ 1167              	.LCFI5:
+ 1168              		.cfi_def_cfa_offset 8
+ 1169              		.cfi_offset 4, -8
+ 1170              		.cfi_offset 14, -4
+ 1171              		.loc 1 316 9 is_stmt 1 discriminator 1 view .LVU315
+ 1172 002e 4469     		ldr	r4, [r0, #20]
+ 1173 0030 0022     		movs	r2, #0
+ 1174 0032 0221     		movs	r1, #2
+ 1175 0034 A047     		blx	r4
+ 1176              	.LVL119:
+ 1177              		.loc 1 316 9 discriminator 3 view .LVU316
+ 317:../../util/ringbuff_util.c ****     }
+ 318:../../util/ringbuff_util.c **** }
+ 1178              		.loc 1 318 1 is_stmt 0 view .LVU317
+ 1179 0036 10BD     		pop	{r4, pc}
+ 1180              	.L107:
+ 1181              		.align	2
+ 1182              	.L106:
+ 1183 0038 EFBEADDE 		.word	-559038737
+ 1184 003c 10415221 		.word	559038736
+ 1185              		.cfi_endproc
+ 1186              	.LFE9:
+ 1188              		.section	.text.ringbuff_get_linear_block_read_address,"ax",%progbits
+ 1189              		.align	1
+ 1190              		.global	ringbuff_get_linear_block_read_address
+ 1191              		.syntax unified
+ 1192              		.thumb
+ 1193              		.thumb_func
+ 1195              	ringbuff_get_linear_block_read_address:
+ 1196              	.LVL120:
+ 1197              	.LFB10:
+ 319:../../util/ringbuff_util.c **** 
+ 320:../../util/ringbuff_util.c **** /**
+ 321:../../util/ringbuff_util.c ****  * \brief           Get linear address for buffer for fast read
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 31
+
+
+ 322:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 323:../../util/ringbuff_util.c ****  * \return          Linear buffer start address
+ 324:../../util/ringbuff_util.c ****  */
+ 325:../../util/ringbuff_util.c **** void *
+ 326:../../util/ringbuff_util.c **** ringbuff_get_linear_block_read_address(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 1198              		.loc 1 326 76 is_stmt 1 view -0
+ 1199              		.cfi_startproc
+ 1200              		@ args = 0, pretend = 0, frame = 0
+ 1201              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1202              		@ link register save eliminated.
+ 327:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff)) {
+ 1203              		.loc 1 327 5 view .LVU319
+ 1204              		.loc 1 327 8 is_stmt 0 view .LVU320
+ 1205 0000 0346     		mov	r3, r0
+ 1206 0002 78B1     		cbz	r0, .L110
+ 1207              		.loc 1 327 10 discriminator 1 view .LVU321
+ 1208 0004 0168     		ldr	r1, [r0]
+ 1209 0006 0B4A     		ldr	r2, .L114
+ 1210 0008 9142     		cmp	r1, r2
+ 1211 000a 0CD1     		bne	.L111
+ 1212              		.loc 1 327 10 discriminator 2 view .LVU322
+ 1213 000c C169     		ldr	r1, [r0, #28]
+ 1214 000e 0A4A     		ldr	r2, .L114+4
+ 1215 0010 9142     		cmp	r1, r2
+ 1216 0012 0AD1     		bne	.L112
+ 1217              		.loc 1 327 10 discriminator 3 view .LVU323
+ 1218 0014 4068     		ldr	r0, [r0, #4]
+ 1219              	.LVL121:
+ 1220              		.loc 1 327 10 discriminator 3 view .LVU324
+ 1221 0016 58B1     		cbz	r0, .L108
+ 1222              		.loc 1 327 10 discriminator 4 view .LVU325
+ 1223 0018 9A68     		ldr	r2, [r3, #8]
+ 1224              		.loc 1 327 9 discriminator 4 view .LVU326
+ 1225 001a 42B1     		cbz	r2, .L113
+ 328:../../util/ringbuff_util.c ****         return NULL;
+ 329:../../util/ringbuff_util.c ****     }
+ 330:../../util/ringbuff_util.c ****     return &buff->buff[buff->r];
+ 1226              		.loc 1 330 5 is_stmt 1 view .LVU327
+ 1227              		.loc 1 330 17 is_stmt 0 view .LVU328
+ 1228 001c 5868     		ldr	r0, [r3, #4]
+ 1229              		.loc 1 330 28 view .LVU329
+ 1230 001e DB68     		ldr	r3, [r3, #12]
+ 1231              	.LVL122:
+ 1232              		.loc 1 330 12 view .LVU330
+ 1233 0020 1844     		add	r0, r0, r3
+ 1234 0022 7047     		bx	lr
+ 1235              	.LVL123:
+ 1236              	.L110:
+ 1237              		.loc 1 330 12 view .LVU331
+ 1238 0024 7047     		bx	lr
+ 1239              	.L111:
+ 328:../../util/ringbuff_util.c ****         return NULL;
+ 1240              		.loc 1 328 16 view .LVU332
+ 1241 0026 0020     		movs	r0, #0
+ 1242              	.LVL124:
+ 328:../../util/ringbuff_util.c ****         return NULL;
+ 1243              		.loc 1 328 16 view .LVU333
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 32
+
+
+ 1244 0028 7047     		bx	lr
+ 1245              	.LVL125:
+ 1246              	.L112:
+ 328:../../util/ringbuff_util.c ****         return NULL;
+ 1247              		.loc 1 328 16 view .LVU334
+ 1248 002a 0020     		movs	r0, #0
+ 1249              	.LVL126:
+ 328:../../util/ringbuff_util.c ****         return NULL;
+ 1250              		.loc 1 328 16 view .LVU335
+ 1251 002c 7047     		bx	lr
+ 1252              	.L113:
+ 1253 002e 0020     		movs	r0, #0
+ 1254              	.L108:
+ 331:../../util/ringbuff_util.c **** }
+ 1255              		.loc 1 331 1 view .LVU336
+ 1256 0030 7047     		bx	lr
+ 1257              	.L115:
+ 1258 0032 00BF     		.align	2
+ 1259              	.L114:
+ 1260 0034 EFBEADDE 		.word	-559038737
+ 1261 0038 10415221 		.word	559038736
+ 1262              		.cfi_endproc
+ 1263              	.LFE10:
+ 1265              		.section	.text.ringbuff_get_linear_block_read_length,"ax",%progbits
+ 1266              		.align	1
+ 1267              		.global	ringbuff_get_linear_block_read_length
+ 1268              		.syntax unified
+ 1269              		.thumb
+ 1270              		.thumb_func
+ 1272              	ringbuff_get_linear_block_read_length:
+ 1273              	.LVL127:
+ 1274              	.LFB11:
+ 332:../../util/ringbuff_util.c **** 
+ 333:../../util/ringbuff_util.c **** /**
+ 334:../../util/ringbuff_util.c ****  * \brief           Get length of linear block address before it overflows for read operation
+ 335:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 336:../../util/ringbuff_util.c ****  * \return          Linear buffer size in units of bytes for read operation
+ 337:../../util/ringbuff_util.c ****  */
+ 338:../../util/ringbuff_util.c **** size_t
+ 339:../../util/ringbuff_util.c **** ringbuff_get_linear_block_read_length(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 1275              		.loc 1 339 75 is_stmt 1 view -0
+ 1276              		.cfi_startproc
+ 1277              		@ args = 0, pretend = 0, frame = 0
+ 1278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1279              		@ link register save eliminated.
+ 340:../../util/ringbuff_util.c ****     size_t w, r, len;
+ 1280              		.loc 1 340 5 view .LVU338
+ 341:../../util/ringbuff_util.c **** 
+ 342:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff)) {
+ 1281              		.loc 1 342 5 view .LVU339
+ 1282              		.loc 1 342 8 is_stmt 0 view .LVU340
+ 1283 0000 0346     		mov	r3, r0
+ 1284 0002 B0B1     		cbz	r0, .L119
+ 1285              		.loc 1 342 10 discriminator 1 view .LVU341
+ 1286 0004 0168     		ldr	r1, [r0]
+ 1287 0006 104A     		ldr	r2, .L124
+ 1288 0008 9142     		cmp	r1, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 33
+
+
+ 1289 000a 14D1     		bne	.L120
+ 1290              		.loc 1 342 10 discriminator 2 view .LVU342
+ 1291 000c C169     		ldr	r1, [r0, #28]
+ 1292 000e 0F4A     		ldr	r2, .L124+4
+ 1293 0010 9142     		cmp	r1, r2
+ 1294 0012 12D1     		bne	.L121
+ 1295              		.loc 1 342 10 discriminator 3 view .LVU343
+ 1296 0014 4268     		ldr	r2, [r0, #4]
+ 1297 0016 92B1     		cbz	r2, .L122
+ 1298              		.loc 1 342 10 discriminator 4 view .LVU344
+ 1299 0018 8068     		ldr	r0, [r0, #8]
+ 1300              	.LVL128:
+ 1301              		.loc 1 342 9 discriminator 4 view .LVU345
+ 1302 001a 98B1     		cbz	r0, .L116
+ 343:../../util/ringbuff_util.c ****         return 0;
+ 344:../../util/ringbuff_util.c ****     }
+ 345:../../util/ringbuff_util.c **** 
+ 346:../../util/ringbuff_util.c ****     /* Use temporary values in case they are changed during operations */
+ 347:../../util/ringbuff_util.c ****     w = buff->w;
+ 1303              		.loc 1 347 5 is_stmt 1 view .LVU346
+ 1304              		.loc 1 347 7 is_stmt 0 view .LVU347
+ 1305 001c 1A69     		ldr	r2, [r3, #16]
+ 1306              	.LVL129:
+ 348:../../util/ringbuff_util.c ****     r = buff->r;
+ 1307              		.loc 1 348 5 is_stmt 1 view .LVU348
+ 1308              		.loc 1 348 7 is_stmt 0 view .LVU349
+ 1309 001e D868     		ldr	r0, [r3, #12]
+ 1310              	.LVL130:
+ 349:../../util/ringbuff_util.c ****     if (w > r) {
+ 1311              		.loc 1 349 5 is_stmt 1 view .LVU350
+ 1312              		.loc 1 349 8 is_stmt 0 view .LVU351
+ 1313 0020 8242     		cmp	r2, r0
+ 1314 0022 01D9     		bls	.L118
+ 350:../../util/ringbuff_util.c ****         len = w - r;
+ 1315              		.loc 1 350 9 is_stmt 1 view .LVU352
+ 1316              		.loc 1 350 13 is_stmt 0 view .LVU353
+ 1317 0024 101A     		subs	r0, r2, r0
+ 1318              	.LVL131:
+ 1319              		.loc 1 350 13 view .LVU354
+ 1320 0026 7047     		bx	lr
+ 1321              	.LVL132:
+ 1322              	.L118:
+ 351:../../util/ringbuff_util.c ****     } else if (r > w) {
+ 1323              		.loc 1 351 12 is_stmt 1 view .LVU355
+ 1324              		.loc 1 351 15 is_stmt 0 view .LVU356
+ 1325 0028 8242     		cmp	r2, r0
+ 1326 002a 0AD2     		bcs	.L123
+ 352:../../util/ringbuff_util.c ****         len = buff->size - r;
+ 1327              		.loc 1 352 9 is_stmt 1 view .LVU357
+ 1328              		.loc 1 352 19 is_stmt 0 view .LVU358
+ 1329 002c 9B68     		ldr	r3, [r3, #8]
+ 1330              	.LVL133:
+ 1331              		.loc 1 352 13 view .LVU359
+ 1332 002e 181A     		subs	r0, r3, r0
+ 1333              	.LVL134:
+ 1334              		.loc 1 352 13 view .LVU360
+ 1335 0030 7047     		bx	lr
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 34
+
+
+ 1336              	.LVL135:
+ 1337              	.L119:
+ 343:../../util/ringbuff_util.c ****     }
+ 1338              		.loc 1 343 16 view .LVU361
+ 1339 0032 0020     		movs	r0, #0
+ 1340              	.LVL136:
+ 343:../../util/ringbuff_util.c ****     }
+ 1341              		.loc 1 343 16 view .LVU362
+ 1342 0034 7047     		bx	lr
+ 1343              	.LVL137:
+ 1344              	.L120:
+ 343:../../util/ringbuff_util.c ****     }
+ 1345              		.loc 1 343 16 view .LVU363
+ 1346 0036 0020     		movs	r0, #0
+ 1347              	.LVL138:
+ 343:../../util/ringbuff_util.c ****     }
+ 1348              		.loc 1 343 16 view .LVU364
+ 1349 0038 7047     		bx	lr
+ 1350              	.LVL139:
+ 1351              	.L121:
+ 343:../../util/ringbuff_util.c ****     }
+ 1352              		.loc 1 343 16 view .LVU365
+ 1353 003a 0020     		movs	r0, #0
+ 1354              	.LVL140:
+ 343:../../util/ringbuff_util.c ****     }
+ 1355              		.loc 1 343 16 view .LVU366
+ 1356 003c 7047     		bx	lr
+ 1357              	.LVL141:
+ 1358              	.L122:
+ 343:../../util/ringbuff_util.c ****     }
+ 1359              		.loc 1 343 16 view .LVU367
+ 1360 003e 0020     		movs	r0, #0
+ 1361              	.LVL142:
+ 343:../../util/ringbuff_util.c ****     }
+ 1362              		.loc 1 343 16 view .LVU368
+ 1363 0040 7047     		bx	lr
+ 1364              	.LVL143:
+ 1365              	.L123:
+ 353:../../util/ringbuff_util.c ****     } else {
+ 354:../../util/ringbuff_util.c ****         len = 0;
+ 1366              		.loc 1 354 13 view .LVU369
+ 1367 0042 0020     		movs	r0, #0
+ 1368              	.LVL144:
+ 1369              	.L116:
+ 355:../../util/ringbuff_util.c ****     }
+ 356:../../util/ringbuff_util.c ****     return len;
+ 357:../../util/ringbuff_util.c **** }
+ 1370              		.loc 1 357 1 view .LVU370
+ 1371 0044 7047     		bx	lr
+ 1372              	.L125:
+ 1373 0046 00BF     		.align	2
+ 1374              	.L124:
+ 1375 0048 EFBEADDE 		.word	-559038737
+ 1376 004c 10415221 		.word	559038736
+ 1377              		.cfi_endproc
+ 1378              	.LFE11:
+ 1380              		.section	.text.ringbuff_skip,"ax",%progbits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 35
+
+
+ 1381              		.align	1
+ 1382              		.global	ringbuff_skip
+ 1383              		.syntax unified
+ 1384              		.thumb
+ 1385              		.thumb_func
+ 1387              	ringbuff_skip:
+ 1388              	.LVL145:
+ 1389              	.LFB12:
+ 358:../../util/ringbuff_util.c **** 
+ 359:../../util/ringbuff_util.c **** /**
+ 360:../../util/ringbuff_util.c ****  * \brief           Skip (ignore; advance read pointer) buffer data
+ 361:../../util/ringbuff_util.c ****  * Marks data as read in the buffer and increases free memory for up to `len` bytes
+ 362:../../util/ringbuff_util.c ****  *
+ 363:../../util/ringbuff_util.c ****  * \note            Useful at the end of streaming transfer such as DMA
+ 364:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 365:../../util/ringbuff_util.c ****  * \param[in]       len: Number of bytes to skip and mark as read
+ 366:../../util/ringbuff_util.c ****  * \return          Number of bytes skipped
+ 367:../../util/ringbuff_util.c ****  */
+ 368:../../util/ringbuff_util.c **** size_t
+ 369:../../util/ringbuff_util.c **** ringbuff_skip(RINGBUFF_VOLATILE ringbuff_t* buff, size_t len) {
+ 1390              		.loc 1 369 63 is_stmt 1 view -0
+ 1391              		.cfi_startproc
+ 1392              		@ args = 0, pretend = 0, frame = 0
+ 1393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1394              		.loc 1 369 63 is_stmt 0 view .LVU372
+ 1395 0000 70B5     		push	{r4, r5, r6, lr}
+ 1396              	.LCFI6:
+ 1397              		.cfi_def_cfa_offset 16
+ 1398              		.cfi_offset 4, -16
+ 1399              		.cfi_offset 5, -12
+ 1400              		.cfi_offset 6, -8
+ 1401              		.cfi_offset 14, -4
+ 370:../../util/ringbuff_util.c ****     size_t full;
+ 1402              		.loc 1 370 5 is_stmt 1 view .LVU373
+ 371:../../util/ringbuff_util.c **** 
+ 372:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff) || len == 0) {
+ 1403              		.loc 1 372 5 view .LVU374
+ 1404              		.loc 1 372 8 is_stmt 0 view .LVU375
+ 1405 0002 48B3     		cbz	r0, .L129
+ 1406 0004 0D46     		mov	r5, r1
+ 1407 0006 0646     		mov	r6, r0
+ 1408              		.loc 1 372 10 discriminator 1 view .LVU376
+ 1409 0008 0268     		ldr	r2, [r0]
+ 1410 000a 184B     		ldr	r3, .L136
+ 1411 000c 9A42     		cmp	r2, r3
+ 1412 000e 25D1     		bne	.L130
+ 1413              		.loc 1 372 10 discriminator 2 view .LVU377
+ 1414 0010 C269     		ldr	r2, [r0, #28]
+ 1415 0012 174B     		ldr	r3, .L136+4
+ 1416 0014 9A42     		cmp	r2, r3
+ 1417 0016 24D1     		bne	.L131
+ 1418              		.loc 1 372 10 discriminator 3 view .LVU378
+ 1419 0018 4368     		ldr	r3, [r0, #4]
+ 1420 001a 23B3     		cbz	r3, .L132
+ 1421              		.loc 1 372 10 discriminator 4 view .LVU379
+ 1422 001c 8468     		ldr	r4, [r0, #8]
+ 1423              		.loc 1 372 9 discriminator 4 view .LVU380
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 36
+
+
+ 1424 001e F4B1     		cbz	r4, .L126
+ 1425              		.loc 1 372 29 discriminator 5 view .LVU381
+ 1426 0020 09B9     		cbnz	r1, .L135
+ 373:../../util/ringbuff_util.c ****         return 0;
+ 1427              		.loc 1 373 16 view .LVU382
+ 1428 0022 0C46     		mov	r4, r1
+ 1429 0024 1BE0     		b	.L126
+ 1430              	.L135:
+ 374:../../util/ringbuff_util.c ****     }
+ 375:../../util/ringbuff_util.c **** 
+ 376:../../util/ringbuff_util.c ****     full = ringbuff_get_full(buff);             /* Get buffer used length */
+ 1431              		.loc 1 376 5 is_stmt 1 view .LVU383
+ 1432              		.loc 1 376 12 is_stmt 0 view .LVU384
+ 1433 0026 FFF7FEFF 		bl	ringbuff_get_full
+ 1434              	.LVL146:
+ 377:../../util/ringbuff_util.c ****     len = BUF_MIN(len, full);                   /* Calculate max skip */
+ 1435              		.loc 1 377 5 is_stmt 1 view .LVU385
+ 1436              		.loc 1 377 9 is_stmt 0 view .LVU386
+ 1437 002a 2C46     		mov	r4, r5
+ 1438 002c 8542     		cmp	r5, r0
+ 1439 002e 28BF     		it	cs
+ 1440 0030 0446     		movcs	r4, r0
+ 1441              	.LVL147:
+ 378:../../util/ringbuff_util.c ****     buff->r += len;                             /* Advance read pointer */
+ 1442              		.loc 1 378 5 is_stmt 1 view .LVU387
+ 1443              		.loc 1 378 9 is_stmt 0 view .LVU388
+ 1444 0032 F368     		ldr	r3, [r6, #12]
+ 1445              		.loc 1 378 13 view .LVU389
+ 1446 0034 2344     		add	r3, r3, r4
+ 1447 0036 F360     		str	r3, [r6, #12]
+ 379:../../util/ringbuff_util.c ****     if (buff->r >= buff->size) {                /* Subtract possible overflow */
+ 1448              		.loc 1 379 5 is_stmt 1 view .LVU390
+ 1449              		.loc 1 379 13 is_stmt 0 view .LVU391
+ 1450 0038 F268     		ldr	r2, [r6, #12]
+ 1451              		.loc 1 379 24 view .LVU392
+ 1452 003a B368     		ldr	r3, [r6, #8]
+ 1453              		.loc 1 379 8 view .LVU393
+ 1454 003c 9A42     		cmp	r2, r3
+ 1455 003e 03D3     		bcc	.L128
+ 380:../../util/ringbuff_util.c ****         buff->r -= buff->size;
+ 1456              		.loc 1 380 9 is_stmt 1 view .LVU394
+ 1457              		.loc 1 380 24 is_stmt 0 view .LVU395
+ 1458 0040 B268     		ldr	r2, [r6, #8]
+ 1459              		.loc 1 380 13 view .LVU396
+ 1460 0042 F368     		ldr	r3, [r6, #12]
+ 1461              		.loc 1 380 17 view .LVU397
+ 1462 0044 9B1A     		subs	r3, r3, r2
+ 1463 0046 F360     		str	r3, [r6, #12]
+ 1464              	.L128:
+ 381:../../util/ringbuff_util.c ****     }
+ 382:../../util/ringbuff_util.c ****     BUF_SEND_EVT(buff, RINGBUFF_EVT_READ, len);
+ 1465              		.loc 1 382 5 is_stmt 1 view .LVU398
+ 1466              		.loc 1 382 5 view .LVU399
+ 1467 0048 7369     		ldr	r3, [r6, #20]
+ 1468 004a 43B1     		cbz	r3, .L126
+ 1469              		.loc 1 382 5 discriminator 1 view .LVU400
+ 1470 004c 7369     		ldr	r3, [r6, #20]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 37
+
+
+ 1471 004e 2246     		mov	r2, r4
+ 1472 0050 0021     		movs	r1, #0
+ 1473 0052 3046     		mov	r0, r6
+ 1474              	.LVL148:
+ 1475              		.loc 1 382 5 is_stmt 0 discriminator 1 view .LVU401
+ 1476 0054 9847     		blx	r3
+ 1477              	.LVL149:
+ 1478 0056 02E0     		b	.L126
+ 1479              	.LVL150:
+ 1480              	.L129:
+ 373:../../util/ringbuff_util.c ****     }
+ 1481              		.loc 1 373 16 view .LVU402
+ 1482 0058 0024     		movs	r4, #0
+ 1483 005a 00E0     		b	.L126
+ 1484              	.L130:
+ 373:../../util/ringbuff_util.c ****     }
+ 1485              		.loc 1 373 16 view .LVU403
+ 1486 005c 0024     		movs	r4, #0
+ 1487              	.LVL151:
+ 1488              	.L126:
+ 383:../../util/ringbuff_util.c ****     return len;
+ 384:../../util/ringbuff_util.c **** }
+ 1489              		.loc 1 384 1 view .LVU404
+ 1490 005e 2046     		mov	r0, r4
+ 1491 0060 70BD     		pop	{r4, r5, r6, pc}
+ 1492              	.LVL152:
+ 1493              	.L131:
+ 373:../../util/ringbuff_util.c ****     }
+ 1494              		.loc 1 373 16 view .LVU405
+ 1495 0062 0024     		movs	r4, #0
+ 1496 0064 FBE7     		b	.L126
+ 1497              	.L132:
+ 1498 0066 0024     		movs	r4, #0
+ 1499 0068 F9E7     		b	.L126
+ 1500              	.L137:
+ 1501 006a 00BF     		.align	2
+ 1502              	.L136:
+ 1503 006c EFBEADDE 		.word	-559038737
+ 1504 0070 10415221 		.word	559038736
+ 1505              		.cfi_endproc
+ 1506              	.LFE12:
+ 1508              		.section	.text.ringbuff_get_linear_block_write_address,"ax",%progbits
+ 1509              		.align	1
+ 1510              		.global	ringbuff_get_linear_block_write_address
+ 1511              		.syntax unified
+ 1512              		.thumb
+ 1513              		.thumb_func
+ 1515              	ringbuff_get_linear_block_write_address:
+ 1516              	.LVL153:
+ 1517              	.LFB13:
+ 385:../../util/ringbuff_util.c **** 
+ 386:../../util/ringbuff_util.c **** /**
+ 387:../../util/ringbuff_util.c ****  * \brief           Get linear address for buffer for fast read
+ 388:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 389:../../util/ringbuff_util.c ****  * \return          Linear buffer start address
+ 390:../../util/ringbuff_util.c ****  */
+ 391:../../util/ringbuff_util.c **** void *
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 38
+
+
+ 392:../../util/ringbuff_util.c **** ringbuff_get_linear_block_write_address(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 1518              		.loc 1 392 77 is_stmt 1 view -0
+ 1519              		.cfi_startproc
+ 1520              		@ args = 0, pretend = 0, frame = 0
+ 1521              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1522              		@ link register save eliminated.
+ 393:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff)) {
+ 1523              		.loc 1 393 5 view .LVU407
+ 1524              		.loc 1 393 8 is_stmt 0 view .LVU408
+ 1525 0000 0346     		mov	r3, r0
+ 1526 0002 78B1     		cbz	r0, .L140
+ 1527              		.loc 1 393 10 discriminator 1 view .LVU409
+ 1528 0004 0168     		ldr	r1, [r0]
+ 1529 0006 0B4A     		ldr	r2, .L144
+ 1530 0008 9142     		cmp	r1, r2
+ 1531 000a 0CD1     		bne	.L141
+ 1532              		.loc 1 393 10 discriminator 2 view .LVU410
+ 1533 000c C169     		ldr	r1, [r0, #28]
+ 1534 000e 0A4A     		ldr	r2, .L144+4
+ 1535 0010 9142     		cmp	r1, r2
+ 1536 0012 0AD1     		bne	.L142
+ 1537              		.loc 1 393 10 discriminator 3 view .LVU411
+ 1538 0014 4068     		ldr	r0, [r0, #4]
+ 1539              	.LVL154:
+ 1540              		.loc 1 393 10 discriminator 3 view .LVU412
+ 1541 0016 58B1     		cbz	r0, .L138
+ 1542              		.loc 1 393 10 discriminator 4 view .LVU413
+ 1543 0018 9A68     		ldr	r2, [r3, #8]
+ 1544              		.loc 1 393 9 discriminator 4 view .LVU414
+ 1545 001a 42B1     		cbz	r2, .L143
+ 394:../../util/ringbuff_util.c ****         return NULL;
+ 395:../../util/ringbuff_util.c ****     }
+ 396:../../util/ringbuff_util.c ****     return &buff->buff[buff->w];
+ 1546              		.loc 1 396 5 is_stmt 1 view .LVU415
+ 1547              		.loc 1 396 17 is_stmt 0 view .LVU416
+ 1548 001c 5868     		ldr	r0, [r3, #4]
+ 1549              		.loc 1 396 28 view .LVU417
+ 1550 001e 1B69     		ldr	r3, [r3, #16]
+ 1551              	.LVL155:
+ 1552              		.loc 1 396 12 view .LVU418
+ 1553 0020 1844     		add	r0, r0, r3
+ 1554 0022 7047     		bx	lr
+ 1555              	.LVL156:
+ 1556              	.L140:
+ 1557              		.loc 1 396 12 view .LVU419
+ 1558 0024 7047     		bx	lr
+ 1559              	.L141:
+ 394:../../util/ringbuff_util.c ****         return NULL;
+ 1560              		.loc 1 394 16 view .LVU420
+ 1561 0026 0020     		movs	r0, #0
+ 1562              	.LVL157:
+ 394:../../util/ringbuff_util.c ****         return NULL;
+ 1563              		.loc 1 394 16 view .LVU421
+ 1564 0028 7047     		bx	lr
+ 1565              	.LVL158:
+ 1566              	.L142:
+ 394:../../util/ringbuff_util.c ****         return NULL;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 39
+
+
+ 1567              		.loc 1 394 16 view .LVU422
+ 1568 002a 0020     		movs	r0, #0
+ 1569              	.LVL159:
+ 394:../../util/ringbuff_util.c ****         return NULL;
+ 1570              		.loc 1 394 16 view .LVU423
+ 1571 002c 7047     		bx	lr
+ 1572              	.L143:
+ 1573 002e 0020     		movs	r0, #0
+ 1574              	.L138:
+ 397:../../util/ringbuff_util.c **** }
+ 1575              		.loc 1 397 1 view .LVU424
+ 1576 0030 7047     		bx	lr
+ 1577              	.L145:
+ 1578 0032 00BF     		.align	2
+ 1579              	.L144:
+ 1580 0034 EFBEADDE 		.word	-559038737
+ 1581 0038 10415221 		.word	559038736
+ 1582              		.cfi_endproc
+ 1583              	.LFE13:
+ 1585              		.section	.text.ringbuff_get_linear_block_write_length,"ax",%progbits
+ 1586              		.align	1
+ 1587              		.global	ringbuff_get_linear_block_write_length
+ 1588              		.syntax unified
+ 1589              		.thumb
+ 1590              		.thumb_func
+ 1592              	ringbuff_get_linear_block_write_length:
+ 1593              	.LVL160:
+ 1594              	.LFB14:
+ 398:../../util/ringbuff_util.c **** 
+ 399:../../util/ringbuff_util.c **** /**
+ 400:../../util/ringbuff_util.c ****  * \brief           Get length of linear block address before it overflows for write operation
+ 401:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 402:../../util/ringbuff_util.c ****  * \return          Linear buffer size in units of bytes for write operation
+ 403:../../util/ringbuff_util.c ****  */
+ 404:../../util/ringbuff_util.c **** size_t
+ 405:../../util/ringbuff_util.c **** ringbuff_get_linear_block_write_length(RINGBUFF_VOLATILE ringbuff_t* buff) {
+ 1595              		.loc 1 405 76 is_stmt 1 view -0
+ 1596              		.cfi_startproc
+ 1597              		@ args = 0, pretend = 0, frame = 0
+ 1598              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1599              		@ link register save eliminated.
+ 406:../../util/ringbuff_util.c ****     size_t w, r, len;
+ 1600              		.loc 1 406 5 view .LVU426
+ 407:../../util/ringbuff_util.c **** 
+ 408:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff)) {
+ 1601              		.loc 1 408 5 view .LVU427
+ 1602              		.loc 1 408 8 is_stmt 0 view .LVU428
+ 1603 0000 0346     		mov	r3, r0
+ 1604 0002 B8B1     		cbz	r0, .L149
+ 1605              		.loc 1 408 10 discriminator 1 view .LVU429
+ 1606 0004 0168     		ldr	r1, [r0]
+ 1607 0006 0F4A     		ldr	r2, .L153
+ 1608 0008 9142     		cmp	r1, r2
+ 1609 000a 15D1     		bne	.L150
+ 1610              		.loc 1 408 10 discriminator 2 view .LVU430
+ 1611 000c C169     		ldr	r1, [r0, #28]
+ 1612 000e 0E4A     		ldr	r2, .L153+4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 40
+
+
+ 1613 0010 9142     		cmp	r1, r2
+ 1614 0012 13D1     		bne	.L151
+ 1615              		.loc 1 408 10 discriminator 3 view .LVU431
+ 1616 0014 4268     		ldr	r2, [r0, #4]
+ 1617 0016 9AB1     		cbz	r2, .L152
+ 1618              		.loc 1 408 10 discriminator 4 view .LVU432
+ 1619 0018 8068     		ldr	r0, [r0, #8]
+ 1620              	.LVL161:
+ 1621              		.loc 1 408 9 discriminator 4 view .LVU433
+ 1622 001a 90B1     		cbz	r0, .L146
+ 409:../../util/ringbuff_util.c ****         return 0;
+ 410:../../util/ringbuff_util.c ****     }
+ 411:../../util/ringbuff_util.c **** 
+ 412:../../util/ringbuff_util.c ****     /* Use temporary values in case they are changed during operations */
+ 413:../../util/ringbuff_util.c ****     w = buff->w;
+ 1623              		.loc 1 413 5 is_stmt 1 view .LVU434
+ 1624              		.loc 1 413 7 is_stmt 0 view .LVU435
+ 1625 001c 1969     		ldr	r1, [r3, #16]
+ 1626              	.LVL162:
+ 414:../../util/ringbuff_util.c ****     r = buff->r;
+ 1627              		.loc 1 414 5 is_stmt 1 view .LVU436
+ 1628              		.loc 1 414 7 is_stmt 0 view .LVU437
+ 1629 001e DA68     		ldr	r2, [r3, #12]
+ 1630              	.LVL163:
+ 415:../../util/ringbuff_util.c ****     if (w >= r) {
+ 1631              		.loc 1 415 5 is_stmt 1 view .LVU438
+ 1632              		.loc 1 415 8 is_stmt 0 view .LVU439
+ 1633 0020 9142     		cmp	r1, r2
+ 1634 0022 04D3     		bcc	.L148
+ 416:../../util/ringbuff_util.c ****         len = buff->size - w;
+ 1635              		.loc 1 416 9 is_stmt 1 view .LVU440
+ 1636              		.loc 1 416 19 is_stmt 0 view .LVU441
+ 1637 0024 9868     		ldr	r0, [r3, #8]
+ 1638              		.loc 1 416 13 view .LVU442
+ 1639 0026 401A     		subs	r0, r0, r1
+ 1640              	.LVL164:
+ 417:../../util/ringbuff_util.c ****         /*
+ 418:../../util/ringbuff_util.c ****          * When read pointer is 0,
+ 419:../../util/ringbuff_util.c ****          * maximal length is one less as if too many bytes
+ 420:../../util/ringbuff_util.c ****          * are written, buffer would be considered empty again (r == w)
+ 421:../../util/ringbuff_util.c ****          */
+ 422:../../util/ringbuff_util.c ****         if (r == 0) {
+ 1641              		.loc 1 422 9 is_stmt 1 view .LVU443
+ 1642              		.loc 1 422 12 is_stmt 0 view .LVU444
+ 1643 0028 5AB9     		cbnz	r2, .L146
+ 423:../../util/ringbuff_util.c ****             /*
+ 424:../../util/ringbuff_util.c ****              * Cannot overflow:
+ 425:../../util/ringbuff_util.c ****              * - If r is not 0, statement does not get called
+ 426:../../util/ringbuff_util.c ****              * - buff->size cannot be 0 and if r is 0, len is greater 0
+ 427:../../util/ringbuff_util.c ****              */
+ 428:../../util/ringbuff_util.c ****             --len;
+ 1644              		.loc 1 428 13 is_stmt 1 view .LVU445
+ 1645 002a 0138     		subs	r0, r0, #1
+ 1646              	.LVL165:
+ 1647              		.loc 1 428 13 is_stmt 0 view .LVU446
+ 1648 002c 7047     		bx	lr
+ 1649              	.LVL166:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 41
+
+
+ 1650              	.L148:
+ 429:../../util/ringbuff_util.c ****         }
+ 430:../../util/ringbuff_util.c ****     } else {
+ 431:../../util/ringbuff_util.c ****         len = r - w - 1;
+ 1651              		.loc 1 431 9 is_stmt 1 view .LVU447
+ 1652              		.loc 1 431 17 is_stmt 0 view .LVU448
+ 1653 002e 521A     		subs	r2, r2, r1
+ 1654              	.LVL167:
+ 1655              		.loc 1 431 13 view .LVU449
+ 1656 0030 501E     		subs	r0, r2, #1
+ 1657              	.LVL168:
+ 1658              		.loc 1 431 13 view .LVU450
+ 1659 0032 7047     		bx	lr
+ 1660              	.LVL169:
+ 1661              	.L149:
+ 409:../../util/ringbuff_util.c ****     }
+ 1662              		.loc 1 409 16 view .LVU451
+ 1663 0034 0020     		movs	r0, #0
+ 1664              	.LVL170:
+ 409:../../util/ringbuff_util.c ****     }
+ 1665              		.loc 1 409 16 view .LVU452
+ 1666 0036 7047     		bx	lr
+ 1667              	.LVL171:
+ 1668              	.L150:
+ 409:../../util/ringbuff_util.c ****     }
+ 1669              		.loc 1 409 16 view .LVU453
+ 1670 0038 0020     		movs	r0, #0
+ 1671              	.LVL172:
+ 409:../../util/ringbuff_util.c ****     }
+ 1672              		.loc 1 409 16 view .LVU454
+ 1673 003a 7047     		bx	lr
+ 1674              	.LVL173:
+ 1675              	.L151:
+ 409:../../util/ringbuff_util.c ****     }
+ 1676              		.loc 1 409 16 view .LVU455
+ 1677 003c 0020     		movs	r0, #0
+ 1678              	.LVL174:
+ 409:../../util/ringbuff_util.c ****     }
+ 1679              		.loc 1 409 16 view .LVU456
+ 1680 003e 7047     		bx	lr
+ 1681              	.LVL175:
+ 1682              	.L152:
+ 409:../../util/ringbuff_util.c ****     }
+ 1683              		.loc 1 409 16 view .LVU457
+ 1684 0040 0020     		movs	r0, #0
+ 1685              	.LVL176:
+ 1686              	.L146:
+ 432:../../util/ringbuff_util.c ****     }
+ 433:../../util/ringbuff_util.c ****     return len;
+ 434:../../util/ringbuff_util.c **** }
+ 1687              		.loc 1 434 1 view .LVU458
+ 1688 0042 7047     		bx	lr
+ 1689              	.L154:
+ 1690              		.align	2
+ 1691              	.L153:
+ 1692 0044 EFBEADDE 		.word	-559038737
+ 1693 0048 10415221 		.word	559038736
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 42
+
+
+ 1694              		.cfi_endproc
+ 1695              	.LFE14:
+ 1697              		.section	.text.ringbuff_advance,"ax",%progbits
+ 1698              		.align	1
+ 1699              		.global	ringbuff_advance
+ 1700              		.syntax unified
+ 1701              		.thumb
+ 1702              		.thumb_func
+ 1704              	ringbuff_advance:
+ 1705              	.LVL177:
+ 1706              	.LFB15:
+ 435:../../util/ringbuff_util.c **** 
+ 436:../../util/ringbuff_util.c **** /**
+ 437:../../util/ringbuff_util.c ****  * \brief           Advance write pointer in the buffer.
+ 438:../../util/ringbuff_util.c ****  * Similar to skip function but modifies write pointer instead of read
+ 439:../../util/ringbuff_util.c ****  *
+ 440:../../util/ringbuff_util.c ****  * \note            Useful when hardware is writing to buffer and application needs to increase num
+ 441:../../util/ringbuff_util.c ****  *                      of bytes written to buffer by hardware
+ 442:../../util/ringbuff_util.c ****  * \param[in]       buff: Buffer handle
+ 443:../../util/ringbuff_util.c ****  * \param[in]       len: Number of bytes to advance
+ 444:../../util/ringbuff_util.c ****  * \return          Number of bytes advanced for write operation
+ 445:../../util/ringbuff_util.c ****  */
+ 446:../../util/ringbuff_util.c **** size_t
+ 447:../../util/ringbuff_util.c **** ringbuff_advance(RINGBUFF_VOLATILE ringbuff_t* buff, size_t len) {
+ 1707              		.loc 1 447 66 is_stmt 1 view -0
+ 1708              		.cfi_startproc
+ 1709              		@ args = 0, pretend = 0, frame = 0
+ 1710              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1711              		.loc 1 447 66 is_stmt 0 view .LVU460
+ 1712 0000 70B5     		push	{r4, r5, r6, lr}
+ 1713              	.LCFI7:
+ 1714              		.cfi_def_cfa_offset 16
+ 1715              		.cfi_offset 4, -16
+ 1716              		.cfi_offset 5, -12
+ 1717              		.cfi_offset 6, -8
+ 1718              		.cfi_offset 14, -4
+ 448:../../util/ringbuff_util.c ****     size_t free;
+ 1719              		.loc 1 448 5 is_stmt 1 view .LVU461
+ 449:../../util/ringbuff_util.c **** 
+ 450:../../util/ringbuff_util.c ****     if (!BUF_IS_VALID(buff) || len == 0) {
+ 1720              		.loc 1 450 5 view .LVU462
+ 1721              		.loc 1 450 8 is_stmt 0 view .LVU463
+ 1722 0002 48B3     		cbz	r0, .L158
+ 1723 0004 0D46     		mov	r5, r1
+ 1724 0006 0646     		mov	r6, r0
+ 1725              		.loc 1 450 10 discriminator 1 view .LVU464
+ 1726 0008 0268     		ldr	r2, [r0]
+ 1727 000a 184B     		ldr	r3, .L165
+ 1728 000c 9A42     		cmp	r2, r3
+ 1729 000e 25D1     		bne	.L159
+ 1730              		.loc 1 450 10 discriminator 2 view .LVU465
+ 1731 0010 C269     		ldr	r2, [r0, #28]
+ 1732 0012 174B     		ldr	r3, .L165+4
+ 1733 0014 9A42     		cmp	r2, r3
+ 1734 0016 24D1     		bne	.L160
+ 1735              		.loc 1 450 10 discriminator 3 view .LVU466
+ 1736 0018 4368     		ldr	r3, [r0, #4]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 43
+
+
+ 1737 001a 23B3     		cbz	r3, .L161
+ 1738              		.loc 1 450 10 discriminator 4 view .LVU467
+ 1739 001c 8468     		ldr	r4, [r0, #8]
+ 1740              		.loc 1 450 9 discriminator 4 view .LVU468
+ 1741 001e F4B1     		cbz	r4, .L155
+ 1742              		.loc 1 450 29 discriminator 5 view .LVU469
+ 1743 0020 09B9     		cbnz	r1, .L164
+ 451:../../util/ringbuff_util.c ****         return 0;
+ 1744              		.loc 1 451 16 view .LVU470
+ 1745 0022 0C46     		mov	r4, r1
+ 1746 0024 1BE0     		b	.L155
+ 1747              	.L164:
+ 452:../../util/ringbuff_util.c ****     }
+ 453:../../util/ringbuff_util.c **** 
+ 454:../../util/ringbuff_util.c ****     free = ringbuff_get_free(buff);             /* Get buffer free length */
+ 1748              		.loc 1 454 5 is_stmt 1 view .LVU471
+ 1749              		.loc 1 454 12 is_stmt 0 view .LVU472
+ 1750 0026 FFF7FEFF 		bl	ringbuff_get_free
+ 1751              	.LVL178:
+ 455:../../util/ringbuff_util.c ****     len = BUF_MIN(len, free);                   /* Calculate max advance */
+ 1752              		.loc 1 455 5 is_stmt 1 view .LVU473
+ 1753              		.loc 1 455 9 is_stmt 0 view .LVU474
+ 1754 002a 2C46     		mov	r4, r5
+ 1755 002c 8542     		cmp	r5, r0
+ 1756 002e 28BF     		it	cs
+ 1757 0030 0446     		movcs	r4, r0
+ 1758              	.LVL179:
+ 456:../../util/ringbuff_util.c ****     buff->w += len;                             /* Advance write pointer */
+ 1759              		.loc 1 456 5 is_stmt 1 view .LVU475
+ 1760              		.loc 1 456 9 is_stmt 0 view .LVU476
+ 1761 0032 3369     		ldr	r3, [r6, #16]
+ 1762              		.loc 1 456 13 view .LVU477
+ 1763 0034 2344     		add	r3, r3, r4
+ 1764 0036 3361     		str	r3, [r6, #16]
+ 457:../../util/ringbuff_util.c ****     if (buff->w >= buff->size) {                /* Subtract possible overflow */
+ 1765              		.loc 1 457 5 is_stmt 1 view .LVU478
+ 1766              		.loc 1 457 13 is_stmt 0 view .LVU479
+ 1767 0038 3269     		ldr	r2, [r6, #16]
+ 1768              		.loc 1 457 24 view .LVU480
+ 1769 003a B368     		ldr	r3, [r6, #8]
+ 1770              		.loc 1 457 8 view .LVU481
+ 1771 003c 9A42     		cmp	r2, r3
+ 1772 003e 03D3     		bcc	.L157
+ 458:../../util/ringbuff_util.c ****         buff->w -= buff->size;
+ 1773              		.loc 1 458 9 is_stmt 1 view .LVU482
+ 1774              		.loc 1 458 24 is_stmt 0 view .LVU483
+ 1775 0040 B268     		ldr	r2, [r6, #8]
+ 1776              		.loc 1 458 13 view .LVU484
+ 1777 0042 3369     		ldr	r3, [r6, #16]
+ 1778              		.loc 1 458 17 view .LVU485
+ 1779 0044 9B1A     		subs	r3, r3, r2
+ 1780 0046 3361     		str	r3, [r6, #16]
+ 1781              	.L157:
+ 459:../../util/ringbuff_util.c ****     }
+ 460:../../util/ringbuff_util.c ****     BUF_SEND_EVT(buff, RINGBUFF_EVT_WRITE, len);
+ 1782              		.loc 1 460 5 is_stmt 1 view .LVU486
+ 1783              		.loc 1 460 5 view .LVU487
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 44
+
+
+ 1784 0048 7369     		ldr	r3, [r6, #20]
+ 1785 004a 43B1     		cbz	r3, .L155
+ 1786              		.loc 1 460 5 discriminator 1 view .LVU488
+ 1787 004c 7369     		ldr	r3, [r6, #20]
+ 1788 004e 2246     		mov	r2, r4
+ 1789 0050 0121     		movs	r1, #1
+ 1790 0052 3046     		mov	r0, r6
+ 1791              	.LVL180:
+ 1792              		.loc 1 460 5 is_stmt 0 discriminator 1 view .LVU489
+ 1793 0054 9847     		blx	r3
+ 1794              	.LVL181:
+ 1795 0056 02E0     		b	.L155
+ 1796              	.LVL182:
+ 1797              	.L158:
+ 451:../../util/ringbuff_util.c ****     }
+ 1798              		.loc 1 451 16 view .LVU490
+ 1799 0058 0024     		movs	r4, #0
+ 1800 005a 00E0     		b	.L155
+ 1801              	.L159:
+ 451:../../util/ringbuff_util.c ****     }
+ 1802              		.loc 1 451 16 view .LVU491
+ 1803 005c 0024     		movs	r4, #0
+ 1804              	.LVL183:
+ 1805              	.L155:
+ 461:../../util/ringbuff_util.c ****     return len;
+ 462:../../util/ringbuff_util.c **** }
+ 1806              		.loc 1 462 1 view .LVU492
+ 1807 005e 2046     		mov	r0, r4
+ 1808 0060 70BD     		pop	{r4, r5, r6, pc}
+ 1809              	.LVL184:
+ 1810              	.L160:
+ 451:../../util/ringbuff_util.c ****     }
+ 1811              		.loc 1 451 16 view .LVU493
+ 1812 0062 0024     		movs	r4, #0
+ 1813 0064 FBE7     		b	.L155
+ 1814              	.L161:
+ 1815 0066 0024     		movs	r4, #0
+ 1816 0068 F9E7     		b	.L155
+ 1817              	.L166:
+ 1818 006a 00BF     		.align	2
+ 1819              	.L165:
+ 1820 006c EFBEADDE 		.word	-559038737
+ 1821 0070 10415221 		.word	559038736
+ 1822              		.cfi_endproc
+ 1823              	.LFE15:
+ 1825              		.section	.text.ringbuff_write_packet,"ax",%progbits
+ 1826              		.align	1
+ 1827              		.global	ringbuff_write_packet
+ 1828              		.syntax unified
+ 1829              		.thumb
+ 1830              		.thumb_func
+ 1832              	ringbuff_write_packet:
+ 1833              	.LVL185:
+ 1834              	.LFB16:
+ 463:../../util/ringbuff_util.c **** 
+ 464:../../util/ringbuff_util.c **** 
+ 465:../../util/ringbuff_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 45
+
+
+ 466:../../util/ringbuff_util.c **** 
+ 467:../../util/ringbuff_util.c **** 
+ 468:../../util/ringbuff_util.c **** 
+ 469:../../util/ringbuff_util.c **** 
+ 470:../../util/ringbuff_util.c **** 
+ 471:../../util/ringbuff_util.c **** uint16_t ringbuff_write_packet(RINGBUFF_VOLATILE ringbuff_t* buff, const void * packet, uint16_t pa
+ 472:../../util/ringbuff_util.c **** {
+ 1835              		.loc 1 472 1 is_stmt 1 view -0
+ 1836              		.cfi_startproc
+ 1837              		@ args = 0, pretend = 0, frame = 16
+ 1838              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1839              		.loc 1 472 1 is_stmt 0 view .LVU495
+ 1840 0000 30B5     		push	{r4, r5, lr}
+ 1841              	.LCFI8:
+ 1842              		.cfi_def_cfa_offset 12
+ 1843              		.cfi_offset 4, -12
+ 1844              		.cfi_offset 5, -8
+ 1845              		.cfi_offset 14, -4
+ 1846 0002 85B0     		sub	sp, sp, #20
+ 1847              	.LCFI9:
+ 1848              		.cfi_def_cfa_offset 32
+ 1849 0004 0546     		mov	r5, r0
+ 1850 0006 0C46     		mov	r4, r1
+ 1851 0008 ADF80620 		strh	r2, [sp, #6]	@ movhi
+ 473:../../util/ringbuff_util.c **** 	uint8_t b;
+ 1852              		.loc 1 473 2 is_stmt 1 view .LVU496
+ 474:../../util/ringbuff_util.c **** 
+ 475:../../util/ringbuff_util.c **** 	b = 0x55;
+ 1853              		.loc 1 475 2 view .LVU497
+ 1854              		.loc 1 475 4 is_stmt 0 view .LVU498
+ 1855 000c 5523     		movs	r3, #85
+ 1856 000e 8DF80F30 		strb	r3, [sp, #15]
+ 476:../../util/ringbuff_util.c **** 	if (ringbuff_write(buff, &b, sizeof(b)) != sizeof(b)) return 0;
+ 1857              		.loc 1 476 2 is_stmt 1 view .LVU499
+ 1858              		.loc 1 476 6 is_stmt 0 view .LVU500
+ 1859 0012 0122     		movs	r2, #1
+ 1860              	.LVL186:
+ 1861              		.loc 1 476 6 view .LVU501
+ 1862 0014 0DF10F01 		add	r1, sp, #15
+ 1863              	.LVL187:
+ 1864              		.loc 1 476 6 view .LVU502
+ 1865 0018 FFF7FEFF 		bl	ringbuff_write
+ 1866              	.LVL188:
+ 1867              		.loc 1 476 5 discriminator 1 view .LVU503
+ 1868 001c 0128     		cmp	r0, #1
+ 1869 001e 02D0     		beq	.L173
+ 1870              		.loc 1 476 63 discriminator 1 view .LVU504
+ 1871 0020 0020     		movs	r0, #0
+ 1872              	.L168:
+ 477:../../util/ringbuff_util.c **** 	b = 0xAA;
+ 478:../../util/ringbuff_util.c **** 	if (ringbuff_write(buff, &b, sizeof(b)) != sizeof(b)) return 0;
+ 479:../../util/ringbuff_util.c **** 
+ 480:../../util/ringbuff_util.c **** 	if (ringbuff_write(buff, &packet_len, sizeof(packet_len)) != sizeof(packet_len)) return 0;
+ 481:../../util/ringbuff_util.c **** 
+ 482:../../util/ringbuff_util.c **** 	return ringbuff_write(buff, packet, packet_len);
+ 483:../../util/ringbuff_util.c **** }
+ 1873              		.loc 1 483 1 view .LVU505
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 46
+
+
+ 1874 0022 05B0     		add	sp, sp, #20
+ 1875              	.LCFI10:
+ 1876              		.cfi_remember_state
+ 1877              		.cfi_def_cfa_offset 12
+ 1878              		@ sp needed
+ 1879 0024 30BD     		pop	{r4, r5, pc}
+ 1880              	.LVL189:
+ 1881              	.L173:
+ 1882              	.LCFI11:
+ 1883              		.cfi_restore_state
+ 477:../../util/ringbuff_util.c **** 	b = 0xAA;
+ 1884              		.loc 1 477 2 is_stmt 1 view .LVU506
+ 477:../../util/ringbuff_util.c **** 	b = 0xAA;
+ 1885              		.loc 1 477 4 is_stmt 0 view .LVU507
+ 1886 0026 AA23     		movs	r3, #170
+ 1887 0028 8DF80F30 		strb	r3, [sp, #15]
+ 478:../../util/ringbuff_util.c **** 
+ 1888              		.loc 1 478 2 is_stmt 1 view .LVU508
+ 478:../../util/ringbuff_util.c **** 
+ 1889              		.loc 1 478 6 is_stmt 0 view .LVU509
+ 1890 002c 0122     		movs	r2, #1
+ 1891 002e 0DF10F01 		add	r1, sp, #15
+ 1892 0032 2846     		mov	r0, r5
+ 1893 0034 FFF7FEFF 		bl	ringbuff_write
+ 1894              	.LVL190:
+ 478:../../util/ringbuff_util.c **** 
+ 1895              		.loc 1 478 5 discriminator 1 view .LVU510
+ 1896 0038 0128     		cmp	r0, #1
+ 1897 003a 01D0     		beq	.L174
+ 478:../../util/ringbuff_util.c **** 
+ 1898              		.loc 1 478 63 discriminator 1 view .LVU511
+ 1899 003c 0020     		movs	r0, #0
+ 1900 003e F0E7     		b	.L168
+ 1901              	.L174:
+ 480:../../util/ringbuff_util.c **** 
+ 1902              		.loc 1 480 2 is_stmt 1 view .LVU512
+ 480:../../util/ringbuff_util.c **** 
+ 1903              		.loc 1 480 6 is_stmt 0 view .LVU513
+ 1904 0040 0222     		movs	r2, #2
+ 1905 0042 0DF10601 		add	r1, sp, #6
+ 1906 0046 2846     		mov	r0, r5
+ 1907 0048 FFF7FEFF 		bl	ringbuff_write
+ 1908              	.LVL191:
+ 480:../../util/ringbuff_util.c **** 
+ 1909              		.loc 1 480 5 discriminator 1 view .LVU514
+ 1910 004c 0228     		cmp	r0, #2
+ 1911 004e 01D0     		beq	.L175
+ 480:../../util/ringbuff_util.c **** 
+ 1912              		.loc 1 480 90 discriminator 1 view .LVU515
+ 1913 0050 0020     		movs	r0, #0
+ 1914 0052 E6E7     		b	.L168
+ 1915              	.L175:
+ 482:../../util/ringbuff_util.c **** }
+ 1916              		.loc 1 482 2 is_stmt 1 view .LVU516
+ 482:../../util/ringbuff_util.c **** }
+ 1917              		.loc 1 482 9 is_stmt 0 view .LVU517
+ 1918 0054 BDF80620 		ldrh	r2, [sp, #6]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 47
+
+
+ 1919 0058 2146     		mov	r1, r4
+ 1920 005a 2846     		mov	r0, r5
+ 1921 005c FFF7FEFF 		bl	ringbuff_write
+ 1922              	.LVL192:
+ 482:../../util/ringbuff_util.c **** }
+ 1923              		.loc 1 482 9 discriminator 1 view .LVU518
+ 1924 0060 80B2     		uxth	r0, r0
+ 482:../../util/ringbuff_util.c **** }
+ 1925              		.loc 1 482 9 view .LVU519
+ 1926 0062 DEE7     		b	.L168
+ 1927              		.cfi_endproc
+ 1928              	.LFE16:
+ 1930              		.section	.text.ringbuff_read_packet,"ax",%progbits
+ 1931              		.align	1
+ 1932              		.global	ringbuff_read_packet
+ 1933              		.syntax unified
+ 1934              		.thumb
+ 1935              		.thumb_func
+ 1937              	ringbuff_read_packet:
+ 1938              	.LVL193:
+ 1939              	.LFB17:
+ 484:../../util/ringbuff_util.c **** 
+ 485:../../util/ringbuff_util.c **** uint16_t ringbuff_read_packet(RINGBUFF_VOLATILE ringbuff_t* buff, void * buf, uint16_t buf_size)
+ 486:../../util/ringbuff_util.c **** {
+ 1940              		.loc 1 486 1 is_stmt 1 view -0
+ 1941              		.cfi_startproc
+ 1942              		@ args = 0, pretend = 0, frame = 8
+ 1943              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1944              		.loc 1 486 1 is_stmt 0 view .LVU521
+ 1945 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1946              	.LCFI12:
+ 1947              		.cfi_def_cfa_offset 20
+ 1948              		.cfi_offset 4, -20
+ 1949              		.cfi_offset 5, -16
+ 1950              		.cfi_offset 6, -12
+ 1951              		.cfi_offset 7, -8
+ 1952              		.cfi_offset 14, -4
+ 1953 0002 83B0     		sub	sp, sp, #12
+ 1954              	.LCFI13:
+ 1955              		.cfi_def_cfa_offset 32
+ 1956 0004 0546     		mov	r5, r0
+ 1957 0006 0F46     		mov	r7, r1
+ 1958 0008 1646     		mov	r6, r2
+ 487:../../util/ringbuff_util.c **** 	uint8_t old_b, b;
+ 1959              		.loc 1 487 2 is_stmt 1 view .LVU522
+ 488:../../util/ringbuff_util.c **** 	uint16_t packet_len;
+ 1960              		.loc 1 488 2 view .LVU523
+ 489:../../util/ringbuff_util.c **** 
+ 490:../../util/ringbuff_util.c **** 	old_b = 0;
+ 1961              		.loc 1 490 2 view .LVU524
+ 1962              	.LVL194:
+ 1963              		.loc 1 490 8 is_stmt 0 view .LVU525
+ 1964 000a 0024     		movs	r4, #0
+ 1965 000c 00E0     		b	.L178
+ 1966              	.LVL195:
+ 1967              	.L180:
+ 1968              		.loc 1 490 8 view .LVU526
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 48
+
+
+ 1969 000e 1C46     		mov	r4, r3
+ 1970              	.LVL196:
+ 1971              	.L178:
+ 491:../../util/ringbuff_util.c **** 	while (1) {
+ 1972              		.loc 1 491 2 is_stmt 1 view .LVU527
+ 492:../../util/ringbuff_util.c **** 		if (ringbuff_read(buff, &b, sizeof(b)) != sizeof(b)) return 0;
+ 1973              		.loc 1 492 3 view .LVU528
+ 1974              		.loc 1 492 7 is_stmt 0 view .LVU529
+ 1975 0010 0122     		movs	r2, #1
+ 1976 0012 0DF10701 		add	r1, sp, #7
+ 1977 0016 2846     		mov	r0, r5
+ 1978 0018 FFF7FEFF 		bl	ringbuff_read
+ 1979              	.LVL197:
+ 1980              		.loc 1 492 6 discriminator 1 view .LVU530
+ 1981 001c 0128     		cmp	r0, #1
+ 1982 001e 1AD1     		bne	.L179
+ 493:../../util/ringbuff_util.c **** 		if ((b == 0xAA) && (old_b == 0x55)) break;
+ 1983              		.loc 1 493 3 is_stmt 1 view .LVU531
+ 1984              		.loc 1 493 10 is_stmt 0 view .LVU532
+ 1985 0020 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 1986              		.loc 1 493 6 view .LVU533
+ 1987 0024 AA2B     		cmp	r3, #170
+ 1988 0026 F2D1     		bne	.L180
+ 1989              		.loc 1 493 19 discriminator 1 view .LVU534
+ 1990 0028 552C     		cmp	r4, #85
+ 1991 002a 01D0     		beq	.L185
+ 1992 002c 1C46     		mov	r4, r3
+ 1993              	.LVL198:
+ 1994              		.loc 1 493 19 discriminator 1 view .LVU535
+ 1995 002e EFE7     		b	.L178
+ 1996              	.LVL199:
+ 1997              	.L185:
+ 494:../../util/ringbuff_util.c **** 		old_b = b;
+ 495:../../util/ringbuff_util.c **** 	}
+ 496:../../util/ringbuff_util.c **** 
+ 497:../../util/ringbuff_util.c **** 	if (ringbuff_read(buff, &packet_len, sizeof(packet_len)) != sizeof(packet_len)) return 0;
+ 1998              		.loc 1 497 2 is_stmt 1 view .LVU536
+ 1999              		.loc 1 497 6 is_stmt 0 view .LVU537
+ 2000 0030 0222     		movs	r2, #2
+ 2001 0032 01A9     		add	r1, sp, #4
+ 2002 0034 2846     		mov	r0, r5
+ 2003 0036 FFF7FEFF 		bl	ringbuff_read
+ 2004              	.LVL200:
+ 2005              		.loc 1 497 5 discriminator 1 view .LVU538
+ 2006 003a 0228     		cmp	r0, #2
+ 2007 003c 0ED1     		bne	.L182
+ 498:../../util/ringbuff_util.c **** 
+ 499:../../util/ringbuff_util.c **** 	if (packet_len > buf_size) return 0;
+ 2008              		.loc 1 499 2 is_stmt 1 view .LVU539
+ 2009              		.loc 1 499 17 is_stmt 0 view .LVU540
+ 2010 003e BDF80420 		ldrh	r2, [sp, #4]
+ 2011              		.loc 1 499 5 view .LVU541
+ 2012 0042 B242     		cmp	r2, r6
+ 2013 0044 01D9     		bls	.L186
+ 2014              		.loc 1 499 36 discriminator 1 view .LVU542
+ 2015 0046 0020     		movs	r0, #0
+ 2016 0048 06E0     		b	.L177
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 49
+
+
+ 2017              	.L186:
+ 500:../../util/ringbuff_util.c **** 
+ 501:../../util/ringbuff_util.c **** 	return ringbuff_read(buff, buf, packet_len);
+ 2018              		.loc 1 501 2 is_stmt 1 view .LVU543
+ 2019              		.loc 1 501 9 is_stmt 0 view .LVU544
+ 2020 004a 3946     		mov	r1, r7
+ 2021 004c 2846     		mov	r0, r5
+ 2022 004e FFF7FEFF 		bl	ringbuff_read
+ 2023              	.LVL201:
+ 2024              		.loc 1 501 9 discriminator 1 view .LVU545
+ 2025 0052 80B2     		uxth	r0, r0
+ 2026              		.loc 1 501 9 view .LVU546
+ 2027 0054 00E0     		b	.L177
+ 2028              	.L179:
+ 492:../../util/ringbuff_util.c **** 		if ((b == 0xAA) && (old_b == 0x55)) break;
+ 2029              		.loc 1 492 63 discriminator 1 view .LVU547
+ 2030 0056 0020     		movs	r0, #0
+ 2031              	.L177:
+ 502:../../util/ringbuff_util.c **** }
+ 2032              		.loc 1 502 1 view .LVU548
+ 2033 0058 03B0     		add	sp, sp, #12
+ 2034              	.LCFI14:
+ 2035              		.cfi_remember_state
+ 2036              		.cfi_def_cfa_offset 20
+ 2037              		@ sp needed
+ 2038 005a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 2039              	.LVL202:
+ 2040              	.L182:
+ 2041              	.LCFI15:
+ 2042              		.cfi_restore_state
+ 497:../../util/ringbuff_util.c **** 
+ 2043              		.loc 1 497 89 discriminator 1 view .LVU549
+ 2044 005c 0020     		movs	r0, #0
+ 2045 005e FBE7     		b	.L177
+ 2046              		.cfi_endproc
+ 2047              	.LFE17:
+ 2049              		.section	.text.ringbuff_set_busy,"ax",%progbits
+ 2050              		.align	1
+ 2051              		.global	ringbuff_set_busy
+ 2052              		.syntax unified
+ 2053              		.thumb
+ 2054              		.thumb_func
+ 2056              	ringbuff_set_busy:
+ 2057              	.LVL203:
+ 2058              	.LFB18:
+ 503:../../util/ringbuff_util.c **** 
+ 504:../../util/ringbuff_util.c **** void ringbuff_set_busy(RINGBUFF_VOLATILE ringbuff_t* buff, uint8_t value)
+ 505:../../util/ringbuff_util.c **** {
+ 2059              		.loc 1 505 1 is_stmt 1 view -0
+ 2060              		.cfi_startproc
+ 2061              		@ args = 0, pretend = 0, frame = 0
+ 2062              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2063              		@ link register save eliminated.
+ 506:../../util/ringbuff_util.c **** 	buff->busy = value;
+ 2064              		.loc 1 506 2 view .LVU551
+ 2065              		.loc 1 506 13 is_stmt 0 view .LVU552
+ 2066 0000 0176     		strb	r1, [r0, #24]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 50
+
+
+ 507:../../util/ringbuff_util.c **** }
+ 2067              		.loc 1 507 1 view .LVU553
+ 2068 0002 7047     		bx	lr
+ 2069              		.cfi_endproc
+ 2070              	.LFE18:
+ 2072              		.section	.text.ringbuff_get_busy,"ax",%progbits
+ 2073              		.align	1
+ 2074              		.global	ringbuff_get_busy
+ 2075              		.syntax unified
+ 2076              		.thumb
+ 2077              		.thumb_func
+ 2079              	ringbuff_get_busy:
+ 2080              	.LVL204:
+ 2081              	.LFB19:
+ 508:../../util/ringbuff_util.c **** 
+ 509:../../util/ringbuff_util.c **** uint8_t ringbuff_get_busy(RINGBUFF_VOLATILE ringbuff_t* buff)
+ 510:../../util/ringbuff_util.c **** {
+ 2082              		.loc 1 510 1 is_stmt 1 view -0
+ 2083              		.cfi_startproc
+ 2084              		@ args = 0, pretend = 0, frame = 0
+ 2085              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2086              		@ link register save eliminated.
+ 511:../../util/ringbuff_util.c **** 	return buff->busy;
+ 2087              		.loc 1 511 2 view .LVU555
+ 2088              		.loc 1 511 13 is_stmt 0 view .LVU556
+ 2089 0000 007E     		ldrb	r0, [r0, #24]	@ zero_extendqisi2
+ 2090              	.LVL205:
+ 512:../../util/ringbuff_util.c **** }
+ 2091              		.loc 1 512 1 view .LVU557
+ 2092 0002 7047     		bx	lr
+ 2093              		.cfi_endproc
+ 2094              	.LFE19:
+ 2096              		.section	.text.ringbuff_get_max_size,"ax",%progbits
+ 2097              		.align	1
+ 2098              		.global	ringbuff_get_max_size
+ 2099              		.syntax unified
+ 2100              		.thumb
+ 2101              		.thumb_func
+ 2103              	ringbuff_get_max_size:
+ 2104              	.LVL206:
+ 2105              	.LFB20:
+ 513:../../util/ringbuff_util.c **** 
+ 514:../../util/ringbuff_util.c **** size_t ringbuff_get_max_size(RINGBUFF_VOLATILE ringbuff_t* buff)
+ 515:../../util/ringbuff_util.c **** {
+ 2106              		.loc 1 515 1 is_stmt 1 view -0
+ 2107              		.cfi_startproc
+ 2108              		@ args = 0, pretend = 0, frame = 0
+ 2109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2110              		@ link register save eliminated.
+ 516:../../util/ringbuff_util.c **** 	return buff->size;
+ 2111              		.loc 1 516 2 view .LVU559
+ 2112              		.loc 1 516 13 is_stmt 0 view .LVU560
+ 2113 0000 8068     		ldr	r0, [r0, #8]
+ 2114              	.LVL207:
+ 517:../../util/ringbuff_util.c **** }
+ 2115              		.loc 1 517 1 view .LVU561
+ 2116 0002 7047     		bx	lr
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 51
+
+
+ 2117              		.cfi_endproc
+ 2118              	.LFE20:
+ 2120              		.section	.text.ringbuff_set_max_size,"ax",%progbits
+ 2121              		.align	1
+ 2122              		.global	ringbuff_set_max_size
+ 2123              		.syntax unified
+ 2124              		.thumb
+ 2125              		.thumb_func
+ 2127              	ringbuff_set_max_size:
+ 2128              	.LVL208:
+ 2129              	.LFB21:
+ 518:../../util/ringbuff_util.c **** 
+ 519:../../util/ringbuff_util.c **** void ringbuff_set_max_size(RINGBUFF_VOLATILE ringbuff_t* buff, size_t size)
+ 520:../../util/ringbuff_util.c **** {
+ 2130              		.loc 1 520 1 is_stmt 1 view -0
+ 2131              		.cfi_startproc
+ 2132              		@ args = 0, pretend = 0, frame = 0
+ 2133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2134              		@ link register save eliminated.
+ 521:../../util/ringbuff_util.c **** 	buff->size = size;
+ 2135              		.loc 1 521 2 view .LVU563
+ 2136              		.loc 1 521 13 is_stmt 0 view .LVU564
+ 2137 0000 8160     		str	r1, [r0, #8]
+ 522:../../util/ringbuff_util.c **** }
+ 2138              		.loc 1 522 1 view .LVU565
+ 2139 0002 7047     		bx	lr
+ 2140              		.cfi_endproc
+ 2141              	.LFE21:
+ 2143              		.text
+ 2144              	.Letext0:
+ 2145              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 2146              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 2147              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 2148              		.file 5 "../../util/ringbuff_util.h"
+ 2149              		.file 6 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 2150              		.file 7 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 52
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ringbuff_util.c
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:20     .text.ringbuff_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:26     .text.ringbuff_init:00000000 ringbuff_init
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:103    .text.ringbuff_init:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:109    .text.ringbuff_is_ready:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:115    .text.ringbuff_is_ready:00000000 ringbuff_is_ready
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:185    .text.ringbuff_is_ready:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:191    .text.ringbuff_free:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:197    .text.ringbuff_free:00000000 ringbuff_free
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:239    .text.ringbuff_free:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:245    .text.ringbuff_set_evt_fn:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:251    .text.ringbuff_set_evt_fn:00000000 ringbuff_set_evt_fn
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:295    .text.ringbuff_set_evt_fn:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:301    .text.ringbuff_get_free:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:307    .text.ringbuff_get_free:00000000 ringbuff_get_free
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:418    .text.ringbuff_get_free:0000004c $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:424    .text.ringbuff_write:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:430    .text.ringbuff_write:00000000 ringbuff_write
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:612    .text.ringbuff_write:000000b8 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:618    .text.ringbuff_get_full:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:624    .text.ringbuff_get_full:00000000 ringbuff_get_full
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:728    .text.ringbuff_get_full:00000048 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:734    .text.ringbuff_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:740    .text.ringbuff_read:00000000 ringbuff_read
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:923    .text.ringbuff_read:000000b8 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:929    .text.ringbuff_peek:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:935    .text.ringbuff_peek:00000000 ringbuff_peek
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1110   .text.ringbuff_peek:0000009c $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1116   .text.ringbuff_reset:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1122   .text.ringbuff_reset:00000000 ringbuff_reset
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1183   .text.ringbuff_reset:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1189   .text.ringbuff_get_linear_block_read_address:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1195   .text.ringbuff_get_linear_block_read_address:00000000 ringbuff_get_linear_block_read_address
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1260   .text.ringbuff_get_linear_block_read_address:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1266   .text.ringbuff_get_linear_block_read_length:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1272   .text.ringbuff_get_linear_block_read_length:00000000 ringbuff_get_linear_block_read_length
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1375   .text.ringbuff_get_linear_block_read_length:00000048 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1381   .text.ringbuff_skip:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1387   .text.ringbuff_skip:00000000 ringbuff_skip
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1503   .text.ringbuff_skip:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1509   .text.ringbuff_get_linear_block_write_address:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1515   .text.ringbuff_get_linear_block_write_address:00000000 ringbuff_get_linear_block_write_address
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1580   .text.ringbuff_get_linear_block_write_address:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1586   .text.ringbuff_get_linear_block_write_length:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1592   .text.ringbuff_get_linear_block_write_length:00000000 ringbuff_get_linear_block_write_length
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1692   .text.ringbuff_get_linear_block_write_length:00000044 $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1698   .text.ringbuff_advance:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1704   .text.ringbuff_advance:00000000 ringbuff_advance
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1820   .text.ringbuff_advance:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1826   .text.ringbuff_write_packet:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1832   .text.ringbuff_write_packet:00000000 ringbuff_write_packet
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1931   .text.ringbuff_read_packet:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:1937   .text.ringbuff_read_packet:00000000 ringbuff_read_packet
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2050   .text.ringbuff_set_busy:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2056   .text.ringbuff_set_busy:00000000 ringbuff_set_busy
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2073   .text.ringbuff_get_busy:00000000 $t
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s 			page 53
+
+
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2079   .text.ringbuff_get_busy:00000000 ringbuff_get_busy
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2097   .text.ringbuff_get_max_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2103   .text.ringbuff_get_max_size:00000000 ringbuff_get_max_size
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2121   .text.ringbuff_set_max_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccBv7duL.s:2127   .text.ringbuff_set_max_size:00000000 ringbuff_set_max_size
+
+UNDEFINED SYMBOLS
+memset
+memcpy

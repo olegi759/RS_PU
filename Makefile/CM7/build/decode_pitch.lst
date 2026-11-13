@@ -1,0 +1,290 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"decode_pitch.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/decode_pitch.c"
+  19              		.section	.text.silk_decode_pitch,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_decode_pitch
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_decode_pitch:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/decode_pitch.c **** /***********************************************************************
+   2:../../opus/silk/decode_pitch.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/decode_pitch.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/decode_pitch.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/decode_pitch.c **** are met:
+   6:../../opus/silk/decode_pitch.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/decode_pitch.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/decode_pitch.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/decode_pitch.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/decode_pitch.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/decode_pitch.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/decode_pitch.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/decode_pitch.c **** products derived from this software without specific prior written
+  14:../../opus/silk/decode_pitch.c **** permission.
+  15:../../opus/silk/decode_pitch.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/decode_pitch.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/decode_pitch.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/decode_pitch.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/decode_pitch.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/decode_pitch.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/decode_pitch.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/decode_pitch.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/decode_pitch.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/decode_pitch.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/decode_pitch.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/decode_pitch.c **** ***********************************************************************/
+  27:../../opus/silk/decode_pitch.c **** 
+  28:../../opus/silk/decode_pitch.c **** #include "opus_config.h"
+  29:../../opus/silk/decode_pitch.c **** 
+  30:../../opus/silk/decode_pitch.c **** /***********************************************************
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s 			page 2
+
+
+  31:../../opus/silk/decode_pitch.c **** * Pitch analyser function
+  32:../../opus/silk/decode_pitch.c **** ********************************************************** */
+  33:../../opus/silk/decode_pitch.c **** #include "SigProc_FIX.h"
+  34:../../opus/silk/decode_pitch.c **** #include "pitch_est_defines.h"
+  35:../../opus/silk/decode_pitch.c **** 
+  36:../../opus/silk/decode_pitch.c **** void silk_decode_pitch(
+  37:../../opus/silk/decode_pitch.c ****     opus_int16                  lagIndex,           /* I                                           
+  38:../../opus/silk/decode_pitch.c ****     opus_int8                   contourIndex,       /* O                                           
+  39:../../opus/silk/decode_pitch.c ****     opus_int                    pitch_lags[],       /* O    4 pitch values                         
+  40:../../opus/silk/decode_pitch.c ****     const opus_int              Fs_kHz,             /* I    sampling frequency (kHz)               
+  41:../../opus/silk/decode_pitch.c ****     const opus_int              nb_subfr            /* I    number of sub frames                   
+  42:../../opus/silk/decode_pitch.c **** )
+  43:../../opus/silk/decode_pitch.c **** {
+  29              		.loc 1 43 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 43 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 24
+  37              		.cfi_offset 4, -24
+  38              		.cfi_offset 5, -20
+  39              		.cfi_offset 6, -16
+  40              		.cfi_offset 7, -12
+  41              		.cfi_offset 8, -8
+  42              		.cfi_offset 14, -4
+  43 0004 069E     		ldr	r6, [sp, #24]
+  44:../../opus/silk/decode_pitch.c ****     opus_int   lag, k, min_lag, max_lag, cbk_size;
+  44              		.loc 1 44 5 is_stmt 1 view .LVU2
+  45:../../opus/silk/decode_pitch.c ****     const opus_int8 *Lag_CB_ptr;
+  45              		.loc 1 45 5 view .LVU3
+  46:../../opus/silk/decode_pitch.c **** 
+  47:../../opus/silk/decode_pitch.c ****     if( Fs_kHz == 8 ) {
+  46              		.loc 1 47 5 view .LVU4
+  47              		.loc 1 47 7 is_stmt 0 view .LVU5
+  48 0006 082B     		cmp	r3, #8
+  49 0008 0FD0     		beq	.L13
+  48:../../opus/silk/decode_pitch.c ****         if( nb_subfr == PE_MAX_NB_SUBFR ) {
+  49:../../opus/silk/decode_pitch.c ****             Lag_CB_ptr = &silk_CB_lags_stage2[ 0 ][ 0 ];
+  50:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE2_EXT;
+  51:../../opus/silk/decode_pitch.c ****         } else {
+  52:../../opus/silk/decode_pitch.c ****             celt_assert( nb_subfr == PE_MAX_NB_SUBFR >> 1 );
+  53:../../opus/silk/decode_pitch.c ****             Lag_CB_ptr = &silk_CB_lags_stage2_10_ms[ 0 ][ 0 ];
+  54:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE2_10MS;
+  55:../../opus/silk/decode_pitch.c ****         }
+  56:../../opus/silk/decode_pitch.c ****     } else {
+  57:../../opus/silk/decode_pitch.c ****         if( nb_subfr == PE_MAX_NB_SUBFR ) {
+  50              		.loc 1 57 9 is_stmt 1 view .LVU6
+  51              		.loc 1 57 11 is_stmt 0 view .LVU7
+  52 000a 042E     		cmp	r6, #4
+  53 000c 17D0     		beq	.L14
+  58:../../opus/silk/decode_pitch.c ****             Lag_CB_ptr = &silk_CB_lags_stage3[ 0 ][ 0 ];
+  59:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE3_MAX;
+  60:../../opus/silk/decode_pitch.c ****         } else {
+  61:../../opus/silk/decode_pitch.c ****             celt_assert( nb_subfr == PE_MAX_NB_SUBFR >> 1 );
+  62:../../opus/silk/decode_pitch.c ****             Lag_CB_ptr = &silk_CB_lags_stage3_10_ms[ 0 ][ 0 ];
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s 			page 3
+
+
+  54              		.loc 1 62 24 view .LVU8
+  55 000e DFF87480 		ldr	r8, .L17
+  63:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE3_10MS;
+  56              		.loc 1 63 24 view .LVU9
+  57 0012 0C27     		movs	r7, #12
+  58              	.L3:
+  59              	.LVL1:
+  64:../../opus/silk/decode_pitch.c ****         }
+  65:../../opus/silk/decode_pitch.c ****     }
+  66:../../opus/silk/decode_pitch.c **** 
+  67:../../opus/silk/decode_pitch.c ****     min_lag = silk_SMULBB( PE_MIN_LAG_MS, Fs_kHz );
+  60              		.loc 1 67 5 is_stmt 1 view .LVU10
+  61              		.loc 1 67 15 is_stmt 0 view .LVU11
+  62 0014 1BB2     		sxth	r3, r3
+  63              	.LVL2:
+  64              		.loc 1 67 13 view .LVU12
+  65 0016 4FEA430E 		lsl	lr, r3, #1
+  66              	.LVL3:
+  68:../../opus/silk/decode_pitch.c ****     max_lag = silk_SMULBB( PE_MAX_LAG_MS, Fs_kHz );
+  67              		.loc 1 68 5 is_stmt 1 view .LVU13
+  68              		.loc 1 68 13 is_stmt 0 view .LVU14
+  69 001a 03EBC30C 		add	ip, r3, r3, lsl #3
+  70 001e 4FEA4C0C 		lsl	ip, ip, #1
+  71              	.LVL4:
+  69:../../opus/silk/decode_pitch.c ****     lag = min_lag + lagIndex;
+  72              		.loc 1 69 5 is_stmt 1 view .LVU15
+  73              		.loc 1 69 9 is_stmt 0 view .LVU16
+  74 0022 00EB4305 		add	r5, r0, r3, lsl #1
+  75              	.LVL5:
+  70:../../opus/silk/decode_pitch.c **** 
+  71:../../opus/silk/decode_pitch.c ****     for( k = 0; k < nb_subfr; k++ ) {
+  76              		.loc 1 71 5 is_stmt 1 view .LVU17
+  77              		.loc 1 71 12 is_stmt 0 view .LVU18
+  78 0026 0023     		movs	r3, #0
+  79              		.loc 1 71 5 view .LVU19
+  80 0028 16E0     		b	.L4
+  81              	.LVL6:
+  82              	.L13:
+  48:../../opus/silk/decode_pitch.c ****             Lag_CB_ptr = &silk_CB_lags_stage2[ 0 ][ 0 ];
+  83              		.loc 1 48 9 is_stmt 1 view .LVU20
+  48:../../opus/silk/decode_pitch.c ****             Lag_CB_ptr = &silk_CB_lags_stage2[ 0 ][ 0 ];
+  84              		.loc 1 48 11 is_stmt 0 view .LVU21
+  85 002a 042E     		cmp	r6, #4
+  86 002c 03D0     		beq	.L15
+  53:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE2_10MS;
+  87              		.loc 1 53 24 view .LVU22
+  88 002e DFF85880 		ldr	r8, .L17+4
+  54:../../opus/silk/decode_pitch.c ****         }
+  89              		.loc 1 54 24 view .LVU23
+  90 0032 0327     		movs	r7, #3
+  91 0034 EEE7     		b	.L3
+  92              	.L15:
+  49:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE2_EXT;
+  93              		.loc 1 49 24 view .LVU24
+  94 0036 DFF85480 		ldr	r8, .L17+8
+  50:../../opus/silk/decode_pitch.c ****         } else {
+  95              		.loc 1 50 24 view .LVU25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s 			page 4
+
+
+  96 003a 0B27     		movs	r7, #11
+  97 003c EAE7     		b	.L3
+  98              	.L14:
+  58:../../opus/silk/decode_pitch.c ****             cbk_size   = PE_NB_CBKS_STAGE3_MAX;
+  99              		.loc 1 58 24 view .LVU26
+ 100 003e DFF85080 		ldr	r8, .L17+12
+  59:../../opus/silk/decode_pitch.c ****         } else {
+ 101              		.loc 1 59 24 view .LVU27
+ 102 0042 2227     		movs	r7, #34
+ 103 0044 E6E7     		b	.L3
+ 104              	.LVL7:
+ 105              	.L5:
+  72:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+  73:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = silk_LIMIT( pitch_lags[ k ], min_lag, max_lag );
+ 106              		.loc 1 73 27 discriminator 2 view .LVU28
+ 107 0046 6045     		cmp	r0, ip
+ 108 0048 18DC     		bgt	.L11
+ 109              		.loc 1 73 27 discriminator 8 view .LVU29
+ 110 004a 7045     		cmp	r0, lr
+ 111 004c B8BF     		it	lt
+ 112 004e 7046     		movlt	r0, lr
+ 113 0050 00E0     		b	.L6
+ 114              	.L10:
+ 115              		.loc 1 73 27 discriminator 4 view .LVU30
+ 116 0052 7046     		mov	r0, lr
+ 117              	.L6:
+ 118              		.loc 1 73 25 discriminator 12 view .LVU31
+ 119 0054 1051     		str	r0, [r2, r4]
+  71:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 120              		.loc 1 71 32 is_stmt 1 discriminator 2 view .LVU32
+ 121 0056 0133     		adds	r3, r3, #1
+ 122              	.LVL8:
+ 123              	.L4:
+  71:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 124              		.loc 1 71 19 discriminator 1 view .LVU33
+ 125 0058 B342     		cmp	r3, r6
+ 126 005a 11DA     		bge	.L16
+  72:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 127              		.loc 1 72 9 view .LVU34
+  72:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 128              		.loc 1 72 33 is_stmt 0 view .LVU35
+ 129 005c 07FB0314 		mla	r4, r7, r3, r1
+ 130 0060 18F90400 		ldrsb	r0, [r8, r4]
+  72:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 131              		.loc 1 72 19 view .LVU36
+ 132 0064 9C00     		lsls	r4, r3, #2
+  72:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 133              		.loc 1 72 31 view .LVU37
+ 134 0066 2844     		add	r0, r0, r5
+  72:../../opus/silk/decode_pitch.c ****         pitch_lags[ k ] = lag + matrix_ptr( Lag_CB_ptr, k, contourIndex, cbk_size );
+ 135              		.loc 1 72 25 view .LVU38
+ 136 0068 42F82300 		str	r0, [r2, r3, lsl #2]
+ 137              		.loc 1 73 9 is_stmt 1 view .LVU39
+ 138              		.loc 1 73 27 is_stmt 0 view .LVU40
+ 139 006c E645     		cmp	lr, ip
+ 140 006e EADD     		ble	.L5
+ 141              		.loc 1 73 27 discriminator 1 view .LVU41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s 			page 5
+
+
+ 142 0070 7045     		cmp	r0, lr
+ 143 0072 EEDC     		bgt	.L10
+ 144              		.loc 1 73 27 discriminator 3 view .LVU42
+ 145 0074 6045     		cmp	r0, ip
+ 146 0076 B8BF     		it	lt
+ 147 0078 6046     		movlt	r0, ip
+ 148 007a EBE7     		b	.L6
+ 149              	.L11:
+ 150              		.loc 1 73 27 discriminator 9 view .LVU43
+ 151 007c 6046     		mov	r0, ip
+ 152 007e E9E7     		b	.L6
+ 153              	.L16:
+  74:../../opus/silk/decode_pitch.c ****     }
+  75:../../opus/silk/decode_pitch.c **** }
+ 154              		.loc 1 75 1 view .LVU44
+ 155 0080 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 156              	.LVL9:
+ 157              	.L18:
+ 158              		.loc 1 75 1 view .LVU45
+ 159              		.align	2
+ 160              	.L17:
+ 161 0084 00000000 		.word	silk_CB_lags_stage3_10_ms
+ 162 0088 00000000 		.word	silk_CB_lags_stage2_10_ms
+ 163 008c 00000000 		.word	silk_CB_lags_stage2
+ 164 0090 00000000 		.word	silk_CB_lags_stage3
+ 165              		.cfi_endproc
+ 166              	.LFE19:
+ 168              		.text
+ 169              	.Letext0:
+ 170              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 171              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 172              		.file 4 "../../opus/include/opus_types.h"
+ 173              		.file 5 "../../opus/silk/pitch_est_defines.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 decode_pitch.c
+C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s:20     .text.silk_decode_pitch:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s:26     .text.silk_decode_pitch:00000000 silk_decode_pitch
+C:\Users\oleg\AppData\Local\Temp\ccaIPhJh.s:161    .text.silk_decode_pitch:00000084 $d
+
+UNDEFINED SYMBOLS
+silk_CB_lags_stage3_10_ms
+silk_CB_lags_stage2_10_ms
+silk_CB_lags_stage2
+silk_CB_lags_stage3

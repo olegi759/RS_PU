@@ -1,0 +1,271 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"resampler_rom.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/resampler_rom.c"
+  19              		.global	silk_resampler_frac_FIR_12
+  20              		.section	.rodata.silk_resampler_frac_FIR_12,"a"
+  21              		.align	2
+  24              	silk_resampler_frac_FIR_12:
+  25 0000 BD00     		.short	189
+  26 0002 A8FD     		.short	-600
+  27 0004 6902     		.short	617
+  28 0006 6777     		.short	30567
+  29 0008 7500     		.short	117
+  30 000a 61FF     		.short	-159
+  31 000c D2FB     		.short	-1070
+  32 000e 0874     		.short	29704
+  33 0010 3400     		.short	52
+  34 0012 DD00     		.short	221
+  35 0014 A8F6     		.short	-2392
+  36 0016 746E     		.short	28276
+  37 0018 FCFF     		.short	-4
+  38 001a 1102     		.short	529
+  39 001c EAF2     		.short	-3350
+  40 001e E566     		.short	26341
+  41 0020 D0FF     		.short	-48
+  42 0022 F602     		.short	758
+  43 0024 8CF0     		.short	-3956
+  44 0026 A55D     		.short	23973
+  45 0028 B0FF     		.short	-80
+  46 002a 8903     		.short	905
+  47 002c 75EF     		.short	-4235
+  48 002e 0653     		.short	21254
+  49 0030 9DFF     		.short	-99
+  50 0032 CC03     		.short	972
+  51 0034 82EF     		.short	-4222
+  52 0036 6647     		.short	18278
+  53 0038 95FF     		.short	-107
+  54 003a C703     		.short	967
+  55 003c 8BF0     		.short	-3957
+  56 003e 273B     		.short	15143
+  57 0040 99FF     		.short	-103
+  58 0042 8003     		.short	896
+  59 0044 61F2     		.short	-3487
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s 			page 2
+
+
+  60 0046 AE2E     		.short	11950
+  61 0048 A5FF     		.short	-91
+  62 004a 0503     		.short	773
+  63 004c CFF4     		.short	-2865
+  64 004e 5E22     		.short	8798
+  65 0050 B9FF     		.short	-71
+  66 0052 6302     		.short	611
+  67 0054 A1F7     		.short	-2143
+  68 0056 9816     		.short	5784
+  69 0058 D2FF     		.short	-46
+  70 005a A901     		.short	425
+  71 005c A1FA     		.short	-1375
+  72 005e B40B     		.short	2996
+  73              		.global	silk_Resampler_2_3_COEFS_LQ
+  74              		.section	.rodata.silk_Resampler_2_3_COEFS_LQ,"a"
+  75              		.align	2
+  78              	silk_Resampler_2_3_COEFS_LQ:
+  79 0000 13F5     		.short	-2797
+  80 0002 95E6     		.short	-6507
+  81 0004 5912     		.short	4697
+  82 0006 F329     		.short	10739
+  83 0008 1F06     		.short	1567
+  84 000a 5420     		.short	8276
+  85              		.global	silk_Resampler_1_6_COEFS
+  86              		.section	.rodata.silk_Resampler_1_6_COEFS,"a"
+  87              		.align	2
+  90              	silk_Resampler_1_6_COEFS:
+  91 0000 946B     		.short	27540
+  92 0002 67C4     		.short	-15257
+  93 0004 1100     		.short	17
+  94 0006 0C00     		.short	12
+  95 0008 0800     		.short	8
+  96 000a 0100     		.short	1
+  97 000c F6FF     		.short	-10
+  98 000e EAFF     		.short	-22
+  99 0010 E2FF     		.short	-30
+ 100 0012 E0FF     		.short	-32
+ 101 0014 EAFF     		.short	-22
+ 102 0016 0300     		.short	3
+ 103 0018 2C00     		.short	44
+ 104 001a 6400     		.short	100
+ 105 001c A800     		.short	168
+ 106 001e F300     		.short	243
+ 107 0020 3D01     		.short	317
+ 108 0022 7D01     		.short	381
+ 109 0024 AD01     		.short	429
+ 110 0026 C701     		.short	455
+ 111              		.global	silk_Resampler_1_4_COEFS
+ 112              		.section	.rodata.silk_Resampler_1_4_COEFS,"a"
+ 113              		.align	2
+ 116              	silk_Resampler_1_4_COEFS:
+ 117 0000 E457     		.short	22500
+ 118 0002 05C5     		.short	-15099
+ 119 0004 0300     		.short	3
+ 120 0006 F2FF     		.short	-14
+ 121 0008 ECFF     		.short	-20
+ 122 000a F1FF     		.short	-15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s 			page 3
+
+
+ 123 000c 0200     		.short	2
+ 124 000e 1900     		.short	25
+ 125 0010 2500     		.short	37
+ 126 0012 1900     		.short	25
+ 127 0014 F0FF     		.short	-16
+ 128 0016 B9FF     		.short	-71
+ 129 0018 95FF     		.short	-107
+ 130 001a B1FF     		.short	-79
+ 131 001c 3200     		.short	50
+ 132 001e 2401     		.short	292
+ 133 0020 6F02     		.short	623
+ 134 0022 D603     		.short	982
+ 135 0024 0805     		.short	1288
+ 136 0026 B805     		.short	1464
+ 137              		.global	silk_Resampler_1_3_COEFS
+ 138              		.section	.rodata.silk_Resampler_1_3_COEFS,"a"
+ 139              		.align	2
+ 142              	silk_Resampler_1_3_COEFS:
+ 143 0000 E63E     		.short	16102
+ 144 0002 C6C4     		.short	-15162
+ 145 0004 F3FF     		.short	-13
+ 146 0006 0000     		.short	0
+ 147 0008 1400     		.short	20
+ 148 000a 1A00     		.short	26
+ 149 000c 0500     		.short	5
+ 150 000e E1FF     		.short	-31
+ 151 0010 D5FF     		.short	-43
+ 152 0012 FCFF     		.short	-4
+ 153 0014 4100     		.short	65
+ 154 0016 5A00     		.short	90
+ 155 0018 0700     		.short	7
+ 156 001a 63FF     		.short	-157
+ 157 001c 08FF     		.short	-248
+ 158 001e D4FF     		.short	-44
+ 159 0020 5102     		.short	593
+ 160 0022 2F06     		.short	1583
+ 161 0024 340A     		.short	2612
+ 162 0026 C70C     		.short	3271
+ 163              		.global	silk_Resampler_1_2_COEFS
+ 164              		.section	.rodata.silk_Resampler_1_2_COEFS,"a"
+ 165              		.align	2
+ 168              	silk_Resampler_1_2_COEFS:
+ 169 0000 6802     		.short	616
+ 170 0002 0DC8     		.short	-14323
+ 171 0004 F6FF     		.short	-10
+ 172 0006 2700     		.short	39
+ 173 0008 3A00     		.short	58
+ 174 000a D2FF     		.short	-46
+ 175 000c ACFF     		.short	-84
+ 176 000e 7800     		.short	120
+ 177 0010 B800     		.short	184
+ 178 0012 C5FE     		.short	-315
+ 179 0014 E3FD     		.short	-541
+ 180 0016 0405     		.short	1284
+ 181 0018 0415     		.short	5380
+ 182 001a 4023     		.short	9024
+ 183              		.global	silk_Resampler_2_3_COEFS
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s 			page 4
+
+
+ 184              		.section	.rodata.silk_Resampler_2_3_COEFS,"a"
+ 185              		.align	2
+ 188              	silk_Resampler_2_3_COEFS:
+ 189 0000 87C7     		.short	-14457
+ 190 0002 3DC9     		.short	-14019
+ 191 0004 4000     		.short	64
+ 192 0006 8000     		.short	128
+ 193 0008 86FF     		.short	-122
+ 194 000a 2400     		.short	36
+ 195 000c 3601     		.short	310
+ 196 000e 00FD     		.short	-768
+ 197 0010 4802     		.short	584
+ 198 0012 3324     		.short	9267
+ 199 0014 4545     		.short	17733
+ 200 0016 0C00     		.short	12
+ 201 0018 8000     		.short	128
+ 202 001a 1200     		.short	18
+ 203 001c 72FF     		.short	-142
+ 204 001e 2001     		.short	288
+ 205 0020 8BFF     		.short	-117
+ 206 0022 9FFC     		.short	-865
+ 207 0024 1B10     		.short	4123
+ 208 0026 7B38     		.short	14459
+ 209              		.global	silk_Resampler_3_4_COEFS
+ 210              		.section	.rodata.silk_Resampler_3_4_COEFS,"a"
+ 211              		.align	2
+ 214              	silk_Resampler_3_4_COEFS:
+ 215 0000 2AAF     		.short	-20694
+ 216 0002 D5C9     		.short	-13867
+ 217 0004 CFFF     		.short	-49
+ 218 0006 4000     		.short	64
+ 219 0008 1100     		.short	17
+ 220 000a 63FF     		.short	-157
+ 221 000c 6101     		.short	353
+ 222 000e 10FE     		.short	-496
+ 223 0010 A300     		.short	163
+ 224 0012 272B     		.short	11047
+ 225 0014 BD56     		.short	22205
+ 226 0016 D9FF     		.short	-39
+ 227 0018 0600     		.short	6
+ 228 001a 5B00     		.short	91
+ 229 001c 56FF     		.short	-170
+ 230 001e BA00     		.short	186
+ 231 0020 1700     		.short	23
+ 232 0022 80FC     		.short	-896
+ 233 0024 C018     		.short	6336
+ 234 0026 D84D     		.short	19928
+ 235 0028 EDFF     		.short	-19
+ 236 002a DCFF     		.short	-36
+ 237 002c 6600     		.short	102
+ 238 002e A7FF     		.short	-89
+ 239 0030 E8FF     		.short	-24
+ 240 0032 4801     		.short	328
+ 241 0034 49FC     		.short	-951
+ 242 0036 080A     		.short	2568
+ 243 0038 253E     		.short	15909
+ 244              		.text
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s 			page 5
+
+
+ 245              	.Letext0:
+ 246              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 247              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 248              		.file 4 "../../opus/include/opus_types.h"
+ 249              		.file 5 "../../opus/silk/resampler_rom.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 resampler_rom.c
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:24     .rodata.silk_resampler_frac_FIR_12:00000000 silk_resampler_frac_FIR_12
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:21     .rodata.silk_resampler_frac_FIR_12:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:78     .rodata.silk_Resampler_2_3_COEFS_LQ:00000000 silk_Resampler_2_3_COEFS_LQ
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:75     .rodata.silk_Resampler_2_3_COEFS_LQ:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:90     .rodata.silk_Resampler_1_6_COEFS:00000000 silk_Resampler_1_6_COEFS
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:87     .rodata.silk_Resampler_1_6_COEFS:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:116    .rodata.silk_Resampler_1_4_COEFS:00000000 silk_Resampler_1_4_COEFS
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:113    .rodata.silk_Resampler_1_4_COEFS:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:142    .rodata.silk_Resampler_1_3_COEFS:00000000 silk_Resampler_1_3_COEFS
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:139    .rodata.silk_Resampler_1_3_COEFS:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:168    .rodata.silk_Resampler_1_2_COEFS:00000000 silk_Resampler_1_2_COEFS
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:165    .rodata.silk_Resampler_1_2_COEFS:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:188    .rodata.silk_Resampler_2_3_COEFS:00000000 silk_Resampler_2_3_COEFS
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:185    .rodata.silk_Resampler_2_3_COEFS:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:214    .rodata.silk_Resampler_3_4_COEFS:00000000 silk_Resampler_3_4_COEFS
+C:\Users\oleg\AppData\Local\Temp\ccPCKOdc.s:211    .rodata.silk_Resampler_3_4_COEFS:00000000 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,640 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"tables_NLSF_CB_NB_MB.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/tables_NLSF_CB_NB_MB.c"
+  19              		.global	silk_NLSF_CB_NB_MB
+  20              		.section	.rodata.silk_NLSF_CB_NB_MB,"a"
+  21              		.align	2
+  24              	silk_NLSF_CB_NB_MB:
+  25 0000 2000     		.short	32
+  26 0002 0A00     		.short	10
+  27 0004 142E     		.short	11796
+  28 0006 6401     		.short	356
+  29 0008 00000000 		.word	silk_NLSF_CB1_NB_MB_Q8
+  30 000c 00000000 		.word	silk_NLSF_CB1_Wght_Q9
+  31 0010 00000000 		.word	silk_NLSF_CB1_iCDF_NB_MB
+  32 0014 00000000 		.word	silk_NLSF_PRED_NB_MB_Q8
+  33 0018 00000000 		.word	silk_NLSF_CB2_SELECT_NB_MB
+  34 001c 00000000 		.word	silk_NLSF_CB2_iCDF_NB_MB
+  35 0020 00000000 		.word	silk_NLSF_CB2_BITS_NB_MB_Q5
+  36 0024 00000000 		.word	silk_NLSF_DELTA_MIN_NB_MB_Q15
+  37              		.section	.rodata.silk_NLSF_DELTA_MIN_NB_MB_Q15,"a"
+  38              		.align	2
+  41              	silk_NLSF_DELTA_MIN_NB_MB_Q15:
+  42 0000 FA00     		.short	250
+  43 0002 0300     		.short	3
+  44 0004 0600     		.short	6
+  45 0006 0300     		.short	3
+  46 0008 0300     		.short	3
+  47 000a 0300     		.short	3
+  48 000c 0400     		.short	4
+  49 000e 0300     		.short	3
+  50 0010 0300     		.short	3
+  51 0012 0300     		.short	3
+  52 0014 CD01     		.short	461
+  53              		.section	.rodata.silk_NLSF_PRED_NB_MB_Q8,"a"
+  54              		.align	2
+  57              	silk_NLSF_PRED_NB_MB_Q8:
+  58 0000 B38A8C94 		.ascii	"\263\212\214\224\227\225\231\227\243tCR;\\HdY\\"
+  58      97959997 
+  58      A3744352 
+  58      3B5C4864 
+  58      595C
+  59              		.section	.rodata.silk_NLSF_CB2_BITS_NB_MB_Q5,"a"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 2
+
+
+  60              		.align	2
+  63              	silk_NLSF_CB2_BITS_NB_MB_Q5:
+  64 0000 FFFFFF83 		.ascii	"\377\377\377\203\006\221\377\377\377\377\377\354]\017"
+  64      0691FFFF 
+  64      FFFFFFEC 
+  64      5D0F
+  65 000e 60FFFFFF 		.ascii	"`\377\377\377\377\377\302S\031G\335\377\377\377\377"
+  65      FFFFC253 
+  65      1947DDFF 
+  65      FFFFFF
+  66 001d A2492242 		.ascii	"\242I\"B\242\377\377\377\322~I+9\255\377\377\377\311"
+  66      A2FFFFFF 
+  66      D27E492B 
+  66      39ADFFFF 
+  66      FFC9
+  67 002f 7D47303A 		.ascii	"}G0:\202\377\377\377\246nI9>h\322\377\377\373{A7Dd\253"
+  67      82FFFFFF 
+  67      A66E4939 
+  67      3E68D2FF 
+  67      FFFB7B41 
+  68 0047 FF       		.ascii	"\377"
+  69              		.section	.rodata.silk_NLSF_CB2_iCDF_NB_MB,"a"
+  70              		.align	2
+  73              	silk_NLSF_CB2_iCDF_NB_MB:
+  74 0000 FFFEFDEE 		.ascii	"\377\376\375\356\016\003\002\001\000\377\376\374\332"
+  74      0E030201 
+  74      00FFFEFC 
+  74      DA
+  75 000d 23030201 		.ascii	"#\003\002\001\000\377\376\372\320;\004\002\001\000\377"
+  75      00FFFEFA 
+  75      D03B0402 
+  75      0100FF
+  76 001c FEF6C247 		.ascii	"\376\366\302G\012\002\001\000\377\374\354\267R\010\002"
+  76      0A020100 
+  76      FFFCECB7 
+  76      520802
+  77 002b 0100FFFC 		.ascii	"\001\000\377\374\353\264Z\021\002\001\000\377\370\340"
+  77      EBB45A11 
+  77      020100FF 
+  77      F8E0
+  78 0039 AB611E04 		.ascii	"\253a\036\004\001\000\377\376\354\255_%\007\001\000"
+  78      0100FFFE 
+  78      ECAD5F25 
+  78      070100
+  79              		.section	.rodata.silk_NLSF_CB2_SELECT_NB_MB,"a"
+  80              		.align	2
+  83              	silk_NLSF_CB2_SELECT_NB_MB:
+  84 0000 10000000 		.ascii	"\020\000\000\000\000cB$$\"$\"\"\"\"SE$4\"tfFDD\260f"
+  84      00634224 
+  84      24222422 
+  84      22222253 
+  84      45243422 
+  85 001b 44442241 		.ascii	"DD\"AUDT$t\215\230\213\252\204\273\270\330\211\204\371"
+  85      55445424 
+  85      748D988B 
+  85      AA84BBB8 
+  85      D88984F9 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 3
+
+
+  86 002f A8B98B68 		.ascii	"\250\271\213hfdDD\262\332\271\271\252\364\330\273\273"
+  86      66644444 
+  86      B2DAB9B9 
+  86      AAF4D8BB 
+  86      BB
+  87 0040 AAF4BBBB 		.ascii	"\252\364\273\273\333\212g\233\270\271\211t\267\233\230"
+  87      DB8A679B 
+  87      B8B98974 
+  87      B79B98
+  88 004f 8884D9B8 		.ascii	"\210\204\331\270\270\252\244\331\253\233\213\364\251"
+  88      B8AAA4D9 
+  88      AB9B8BF4 
+  88      A9
+  89 005c B8B9AAA4 		.ascii	"\270\271\252\244\330\337\332\212\326\217\274\332\250"
+  89      D8DFDA8A 
+  89      D68FBCDA 
+  89      A8
+  90 0069 F48D889B 		.ascii	"\364\215\210\233\252\250\212\334\333\213\244\333\312"
+  90      AAA88ADC 
+  90      DB8BA4DB 
+  90      CA
+  91 0076 D889A8BA 		.ascii	"\330\211\250\272\366\271\213t\271\333\271\212dd\206"
+  91      F6B98B74 
+  91      B9DBB98A 
+  91      646486
+  92 0085 64662244 		.ascii	"df\"DDdD\250\313\335\332\250\247\232\210hF\244\366\253"
+  92      446444A8 
+  92      CBDDDAA8 
+  92      A79A8868 
+  92      46A4F6AB 
+  93 0099 898B899B 		.ascii	"\211\213\211\233\332\333\213"
+  93      DADB8B
+  94              		.section	.rodata.silk_NLSF_CB1_iCDF_NB_MB,"a"
+  95              		.align	2
+  98              	silk_NLSF_CB1_iCDF_NB_MB:
+  99 0000 D4B29481 		.ascii	"\324\262\224\201l`UROM=;98310-*)(&$\"\037\036\025\014"
+  99      6C605552 
+  99      4F4D3D3B 
+  99      39383331 
+  99      302D2A29 
+ 100 001c 0A030100 		.ascii	"\012\003\001\000\377\365\364\354\351\341\331\313\276"
+ 100      FFF5F4EC 
+ 100      E9E1D9CB 
+ 100      BE
+ 101 0029 B0AFA195 		.ascii	"\260\257\241\225\210}rf[QG<4+#\034\024\023\022\014\013"
+ 101      887D7266 
+ 101      5B51473C 
+ 101      342B231C 
+ 101      1413120C 
+ 102 003e 0500     		.ascii	"\005\000"
+ 103              		.section	.rodata.silk_NLSF_CB1_Wght_Q9,"a"
+ 104              		.align	2
+ 107              	silk_NLSF_CB1_Wght_Q9:
+ 108 0000 510B     		.short	2897
+ 109 0002 0A09     		.short	2314
+ 110 0004 0A09     		.short	2314
+ 111 0006 0A09     		.short	2314
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 4
+
+
+ 112 0008 EF08     		.short	2287
+ 113 000a EF08     		.short	2287
+ 114 000c 0A09     		.short	2314
+ 115 000e FC08     		.short	2300
+ 116 0010 1709     		.short	2327
+ 117 0012 EF08     		.short	2287
+ 118 0014 480B     		.short	2888
+ 119 0016 140A     		.short	2580
+ 120 0018 5A09     		.short	2394
+ 121 001a 3F09     		.short	2367
+ 122 001c 0A09     		.short	2314
+ 123 001e E208     		.short	2274
+ 124 0020 E208     		.short	2274
+ 125 0022 E208     		.short	2274
+ 126 0024 E208     		.short	2274
+ 127 0026 9208     		.short	2194
+ 128 0028 B709     		.short	2487
+ 129 002a 2409     		.short	2340
+ 130 002c 2409     		.short	2340
+ 131 002e 0A09     		.short	2314
+ 132 0030 0A09     		.short	2314
+ 133 0032 0A09     		.short	2314
+ 134 0034 2409     		.short	2340
+ 135 0036 2409     		.short	2340
+ 136 0038 3F09     		.short	2367
+ 137 003a 3209     		.short	2354
+ 138 003c 900C     		.short	3216
+ 139 003e CE0A     		.short	2766
+ 140 0040 2409     		.short	2340
+ 141 0042 2409     		.short	2340
+ 142 0044 0A09     		.short	2314
+ 143 0046 E208     		.short	2274
+ 144 0048 AD08     		.short	2221
+ 145 004a 9F08     		.short	2207
+ 146 004c D508     		.short	2261
+ 147 004e 9208     		.short	2194
+ 148 0050 9C09     		.short	2460
+ 149 0052 AA09     		.short	2474
+ 150 0054 3F09     		.short	2367
+ 151 0056 5A09     		.short	2394
+ 152 0058 5A09     		.short	2394
+ 153 005a 5A09     		.short	2394
+ 154 005c 5A09     		.short	2394
+ 155 005e 3F09     		.short	2367
+ 156 0060 6709     		.short	2407
+ 157 0062 0A09     		.short	2314
+ 158 0064 970D     		.short	3479
+ 159 0066 F00B     		.short	3056
+ 160 0068 4F08     		.short	2127
+ 161 006a 9F08     		.short	2207
+ 162 006c E208     		.short	2274
+ 163 006e E208     		.short	2274
+ 164 0070 E208     		.short	2274
+ 165 0072 EF08     		.short	2287
+ 166 0074 0A09     		.short	2314
+ 167 0076 D508     		.short	2261
+ 168 0078 D20C     		.short	3282
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 5
+
+
+ 169 007a 450C     		.short	3141
+ 170 007c 140A     		.short	2580
+ 171 007e 5A09     		.short	2394
+ 172 0080 C708     		.short	2247
+ 173 0082 AD08     		.short	2221
+ 174 0084 9F08     		.short	2207
+ 175 0086 9208     		.short	2194
+ 176 0088 9208     		.short	2194
+ 177 008a 4208     		.short	2114
+ 178 008c 0010     		.short	4096
+ 179 008e 050F     		.short	3845
+ 180 0090 AD08     		.short	2221
+ 181 0092 3C0A     		.short	2620
+ 182 0094 3C0A     		.short	2620
+ 183 0096 6709     		.short	2407
+ 184 0098 0A09     		.short	2314
+ 185 009a 5A09     		.short	2394
+ 186 009c 3F09     		.short	2367
+ 187 009e 1A08     		.short	2074
+ 188 00a0 6A0C     		.short	3178
+ 189 00a2 AC0C     		.short	3244
+ 190 00a4 3F09     		.short	2367
+ 191 00a6 AD08     		.short	2221
+ 192 00a8 F909     		.short	2553
+ 193 00aa 8209     		.short	2434
+ 194 00ac 2409     		.short	2340
+ 195 00ae 0A09     		.short	2314
+ 196 00b0 7708     		.short	2167
+ 197 00b2 AD08     		.short	2221
+ 198 00b4 0A0D     		.short	3338
+ 199 00b6 A00D     		.short	3488
+ 200 00b8 A60A     		.short	2726
+ 201 00ba 9208     		.short	2194
+ 202 00bc D508     		.short	2261
+ 203 00be 9C09     		.short	2460
+ 204 00c0 3209     		.short	2354
+ 205 00c2 3F09     		.short	2367
+ 206 00c4 9F08     		.short	2207
+ 207 00c6 3508     		.short	2101
+ 208 00c8 3209     		.short	2354
+ 209 00ca 7409     		.short	2420
+ 210 00cc 1709     		.short	2327
+ 211 00ce 3F09     		.short	2367
+ 212 00d0 5A09     		.short	2394
+ 213 00d2 7409     		.short	2420
+ 214 00d4 7409     		.short	2420
+ 215 00d6 7409     		.short	2420
+ 216 00d8 9C09     		.short	2460
+ 217 00da 3F09     		.short	2367
+ 218 00dc C30E     		.short	3779
+ 219 00de 2D0E     		.short	3629
+ 220 00e0 8209     		.short	2434
+ 221 00e2 DF09     		.short	2527
+ 222 00e4 3F09     		.short	2367
+ 223 00e6 E208     		.short	2274
+ 224 00e8 E208     		.short	2274
+ 225 00ea FC08     		.short	2300
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 6
+
+
+ 226 00ec 9F08     		.short	2207
+ 227 00ee 0008     		.short	2048
+ 228 00f0 B60C     		.short	3254
+ 229 00f2 990C     		.short	3225
+ 230 00f4 990A     		.short	2713
+ 231 00f6 1E0B     		.short	2846
+ 232 00f8 8F09     		.short	2447
+ 233 00fa 1709     		.short	2327
+ 234 00fc FC08     		.short	2300
+ 235 00fe FC08     		.short	2300
+ 236 0100 E208     		.short	2274
+ 237 0102 4F08     		.short	2127
+ 238 0104 BF0C     		.short	3263
+ 239 0106 E40C     		.short	3300
+ 240 0108 C10A     		.short	2753
+ 241 010a F60A     		.short	2806
+ 242 010c 8F09     		.short	2447
+ 243 010e D508     		.short	2261
+ 244 0110 D508     		.short	2261
+ 245 0112 C708     		.short	2247
+ 246 0114 4F08     		.short	2127
+ 247 0116 3508     		.short	2101
+ 248 0118 390B     		.short	2873
+ 249 011a A50B     		.short	2981
+ 250 011c 490A     		.short	2633
+ 251 011e 3F09     		.short	2367
+ 252 0120 6709     		.short	2407
+ 253 0122 3209     		.short	2354
+ 254 0124 9208     		.short	2194
+ 255 0126 C708     		.short	2247
+ 256 0128 C708     		.short	2247
+ 257 012a 4208     		.short	2114
+ 258 012c 990C     		.short	3225
+ 259 012e 7D0C     		.short	3197
+ 260 0130 490A     		.short	2633
+ 261 0132 140A     		.short	2580
+ 262 0134 E208     		.short	2274
+ 263 0136 8508     		.short	2181
+ 264 0138 C708     		.short	2247
+ 265 013a AD08     		.short	2221
+ 266 013c AD08     		.short	2221
+ 267 013e 5D08     		.short	2141
+ 268 0140 6A0C     		.short	3178
+ 269 0142 EE0C     		.short	3310
+ 270 0144 B40A     		.short	2740
+ 271 0146 6709     		.short	2407
+ 272 0148 E208     		.short	2274
+ 273 014a E208     		.short	2274
+ 274 014c E208     		.short	2274
+ 275 014e EF08     		.short	2287
+ 276 0150 9208     		.short	2194
+ 277 0152 4208     		.short	2114
+ 278 0154 450C     		.short	3141
+ 279 0156 C80C     		.short	3272
+ 280 0158 9C09     		.short	2460
+ 281 015a 0D08     		.short	2061
+ 282 015c EF08     		.short	2287
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 7
+
+
+ 283 015e C409     		.short	2500
+ 284 0160 3F09     		.short	2367
+ 285 0162 B709     		.short	2487
+ 286 0164 8209     		.short	2434
+ 287 0166 8508     		.short	2181
+ 288 0168 B30D     		.short	3507
+ 289 016a D20C     		.short	3282
+ 290 016c 0A09     		.short	2314
+ 291 016e 8C0A     		.short	2700
+ 292 0170 570A     		.short	2647
+ 293 0172 AA09     		.short	2474
+ 294 0174 3F09     		.short	2367
+ 295 0176 5A09     		.short	2394
+ 296 0178 2409     		.short	2340
+ 297 017a 4F08     		.short	2127
+ 298 017c 5F0D     		.short	3423
+ 299 017e CF0D     		.short	3535
+ 300 0180 DE0B     		.short	3038
+ 301 0182 F00B     		.short	3056
+ 302 0184 FC08     		.short	2300
+ 303 0186 9E07     		.short	1950
+ 304 0188 AD08     		.short	2221
+ 305 018a E208     		.short	2274
+ 306 018c E208     		.short	2274
+ 307 018e E208     		.short	2274
+ 308 0190 4C0D     		.short	3404
+ 309 0192 260D     		.short	3366
+ 310 0194 2708     		.short	2087
+ 311 0196 7F0A     		.short	2687
+ 312 0198 390B     		.short	2873
+ 313 019a 3209     		.short	2354
+ 314 019c 7409     		.short	2420
+ 315 019e E208     		.short	2274
+ 316 01a0 AA09     		.short	2474
+ 317 01a2 EC09     		.short	2540
+ 318 01a4 B00E     		.short	3760
+ 319 01a6 A00D     		.short	3488
+ 320 01a8 9E07     		.short	1950
+ 321 01aa 640A     		.short	2660
+ 322 01ac 510B     		.short	2897
+ 323 01ae DF09     		.short	2527
+ 324 01b0 5A09     		.short	2394
+ 325 01b2 3F09     		.short	2367
+ 326 01b4 9C09     		.short	2460
+ 327 01b6 D508     		.short	2261
+ 328 01b8 D40B     		.short	3028
+ 329 01ba C80C     		.short	3272
+ 330 01bc B40A     		.short	2740
+ 331 01be 480B     		.short	2888
+ 332 01c0 B40A     		.short	2740
+ 333 01c2 6A08     		.short	2154
+ 334 01c4 4F08     		.short	2127
+ 335 01c6 EF08     		.short	2287
+ 336 01c8 BA08     		.short	2234
+ 337 01ca C708     		.short	2247
+ 338 01cc 6F0E     		.short	3695
+ 339 01ce 490E     		.short	3657
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 8
+
+
+ 340 01d0 E907     		.short	2025
+ 341 01d2 B107     		.short	1969
+ 342 01d4 640A     		.short	2660
+ 343 01d6 8C0A     		.short	2700
+ 344 01d8 140A     		.short	2580
+ 345 01da C409     		.short	2500
+ 346 01dc 1709     		.short	2327
+ 347 01de 3F09     		.short	2367
+ 348 01e0 870C     		.short	3207
+ 349 01e2 550D     		.short	3413
+ 350 01e4 3209     		.short	2354
+ 351 01e6 1A08     		.short	2074
+ 352 01e8 480B     		.short	2888
+ 353 01ea 480B     		.short	2888
+ 354 01ec 2409     		.short	2340
+ 355 01ee B709     		.short	2487
+ 356 01f0 C708     		.short	2247
+ 357 01f2 7708     		.short	2167
+ 358 01f4 0A0D     		.short	3338
+ 359 01f6 260D     		.short	3366
+ 360 01f8 1E0B     		.short	2846
+ 361 01fa DC0A     		.short	2780
+ 362 01fc 1709     		.short	2327
+ 363 01fe 6A08     		.short	2154
+ 364 0200 E208     		.short	2274
+ 365 0202 EF08     		.short	2287
+ 366 0204 4208     		.short	2114
+ 367 0206 0D08     		.short	2061
+ 368 0208 1709     		.short	2327
+ 369 020a FC08     		.short	2300
+ 370 020c 8508     		.short	2181
+ 371 020e 7708     		.short	2167
+ 372 0210 8508     		.short	2181
+ 373 0212 3F09     		.short	2367
+ 374 0214 490A     		.short	2633
+ 375 0216 8C0A     		.short	2700
+ 376 0218 8C0A     		.short	2700
+ 377 021a F909     		.short	2553
+ 378 021c 6709     		.short	2407
+ 379 021e 8209     		.short	2434
+ 380 0220 AD08     		.short	2221
+ 381 0222 D508     		.short	2261
+ 382 0224 AD08     		.short	2221
+ 383 0226 AD08     		.short	2221
+ 384 0228 2409     		.short	2340
+ 385 022a 7409     		.short	2420
+ 386 022c 2F0A     		.short	2607
+ 387 022e 8C0A     		.short	2700
+ 388 0230 DE0B     		.short	3038
+ 389 0232 AC0C     		.short	3244
+ 390 0234 F60A     		.short	2806
+ 391 0236 480B     		.short	2888
+ 392 0238 AA09     		.short	2474
+ 393 023a 1A08     		.short	2074
+ 394 023c FC08     		.short	2300
+ 395 023e 0A09     		.short	2314
+ 396 0240 3209     		.short	2354
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 9
+
+
+ 397 0242 4C09     		.short	2380
+ 398 0244 AD08     		.short	2221
+ 399 0246 6A08     		.short	2154
+ 400 0248 4F08     		.short	2127
+ 401 024a EF08     		.short	2287
+ 402 024c C409     		.short	2500
+ 403 024e E90A     		.short	2793
+ 404 0250 E90A     		.short	2793
+ 405 0252 3C0A     		.short	2620
+ 406 0254 140A     		.short	2580
+ 407 0256 3F09     		.short	2367
+ 408 0258 5C0E     		.short	3676
+ 409 025a 810E     		.short	3713
+ 410 025c BA08     		.short	2234
+ 411 025e 2E07     		.short	1838
+ 412 0260 8508     		.short	2181
+ 413 0262 C10A     		.short	2753
+ 414 0264 A60A     		.short	2726
+ 415 0266 710A     		.short	2673
+ 416 0268 D109     		.short	2513
+ 417 026a 9F08     		.short	2207
+ 418 026c E90A     		.short	2793
+ 419 026e 580C     		.short	3160
+ 420 0270 A60A     		.short	2726
+ 421 0272 F909     		.short	2553
+ 422 0274 1E0B     		.short	2846
+ 423 0276 D109     		.short	2513
+ 424 0278 8508     		.short	2181
+ 425 027a 5A09     		.short	2394
+ 426 027c AD08     		.short	2221
+ 427 027e 8508     		.short	2181
+ 428              		.section	.rodata.silk_NLSF_CB1_NB_MB_Q8,"a"
+ 429              		.align	2
+ 432              	silk_NLSF_CB1_NB_MB_Q8:
+ 433 0000 0C233C53 		.ascii	"\014#<Sl\204\235\264\316\344\017 7Me}\227\257\311\341"
+ 433      6C849DB4 
+ 433      CEE40F20 
+ 433      374D657D 
+ 433      97AFC9E1 
+ 434 0014 132A4259 		.ascii	"\023*BYr\211\242\270\321\346\014\0312Hax\223\254\310"
+ 434      7289A2B8 
+ 434      D1E60C19 
+ 434      32486178 
+ 434      93ACC8
+ 435 0027 DF1A2C45 		.ascii	"\337\032,EZr\207\237\264\315\341\015\0265Pj\202\234"
+ 435      5A72879F 
+ 435      B4CDE10D 
+ 435      1635506A 
+ 435      829C
+ 436 0039 B4CDE40F 		.ascii	"\264\315\344\017\031,@Zs\216\250\304\336\023\030>Rd"
+ 436      192C405A 
+ 436      738EA8C4 
+ 436      DE13183E 
+ 436      5264
+ 437 004b 7891A8BE 		.ascii	"x\221\250\276\326\026\0372Ogx\227\252\313\343\025\035"
+ 437      D6161F32 
+ 437      4F677897 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 10
+
+
+ 437      AACBE315 
+ 437      1D
+ 438 005c 2D416A7C 		.ascii	"-Aj|\226\253\304\340\0361Kay\216\245\272\321\345\023"
+ 438      96ABC4E0 
+ 438      1E314B61 
+ 438      798EA5BA 
+ 438      D1E513
+ 439 006f 1934465D 		.ascii	"\0314F]t\217\246\300\333\032\">Kav\221\247\302\331\031"
+ 439      748FA6C0 
+ 439      DB1A223E 
+ 439      4B617691 
+ 439      A7C2D919 
+ 440 0083 2138465B 		.ascii	"!8F[q\217\245\304\337\025\"3Hau\221\253\304\336\024"
+ 440      718FA5C4 
+ 440      DF152233 
+ 440      48617591 
+ 440      ABC4DE14 
+ 441 0097 1D32435A 		.ascii	"\0352CZu\220\250\305\335\026\0370B_u\222\250\304\336"
+ 441      7590A8C5 
+ 441      DD161F30 
+ 441      425F7592 
+ 441      A8C4DE
+ 442 00aa 1821334D 		.ascii	"\030!3Mt\206\236\264\310\340\025\034FWj|\225\252\302"
+ 442      74869EB4 
+ 442      C8E0151C 
+ 442      46576A7C 
+ 442      95AAC2
+ 443 00bd D91A2135 		.ascii	"\331\032!5@Su\230\255\314\341\033\"A_l\201\233\256\322"
+ 443      40537598 
+ 443      ADCCE11B 
+ 443      22415F6C 
+ 443      819BAED2 
+ 444 00d1 E1141A48 		.ascii	"\341\024\032Hcq\203\232\260\310\333\"+=N]r\233\261\315"
+ 444      6371839A 
+ 444      B0C8DB22 
+ 444      2B3D4E5D 
+ 444      729BB1CD 
+ 445 00e5 E5171D36 		.ascii	"\345\027\0356a|\212\243\263\321\345\036&8Yv\201\236"
+ 445      617C8AA3 
+ 445      B3D1E51E 
+ 445      26385976 
+ 445      819E
+ 446 00f7 B2C8E715 		.ascii	"\262\310\347\025\0351?Uo\216\243\301\336\0330Mg\205"
+ 446      1D313F55 
+ 446      6F8EA3C1 
+ 446      DE1B304D 
+ 446      6785
+ 447 0109 9EB3C4D7 		.ascii	"\236\263\304\327\350\035/Jc|\227\260\306\334\355!*="
+ 447      E81D2F4A 
+ 447      637C97B0 
+ 447      C6DCED21 
+ 447      2A3D
+ 448 011b 4C5D799B 		.ascii	"L]y\233\256\317\341\0355Wp\210\232\252\274\320\343\030"
+ 448      AECFE11D 
+ 448      35577088 
+ 448      9AAABCD0 
+ 448      E318
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 11
+
+
+ 449 012d 1E345483 		.ascii	"\0364T\203\226\246\272\313\345%0@Thv\234\261\311\346"
+ 449      96A6BACB 
+ 449      E5253040 
+ 449      5468769C 
+ 449      B1C9E6
+ 450              		.text
+ 451              	.Letext0:
+ 452              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 453              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 454              		.file 4 "../../opus/include/opus_types.h"
+ 455              		.file 5 "../../opus/silk/structs.h"
+ 456              		.file 6 "../../opus/silk/tables.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tables_NLSF_CB_NB_MB.c
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:24     .rodata.silk_NLSF_CB_NB_MB:00000000 silk_NLSF_CB_NB_MB
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:21     .rodata.silk_NLSF_CB_NB_MB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:432    .rodata.silk_NLSF_CB1_NB_MB_Q8:00000000 silk_NLSF_CB1_NB_MB_Q8
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:107    .rodata.silk_NLSF_CB1_Wght_Q9:00000000 silk_NLSF_CB1_Wght_Q9
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:98     .rodata.silk_NLSF_CB1_iCDF_NB_MB:00000000 silk_NLSF_CB1_iCDF_NB_MB
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:57     .rodata.silk_NLSF_PRED_NB_MB_Q8:00000000 silk_NLSF_PRED_NB_MB_Q8
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:83     .rodata.silk_NLSF_CB2_SELECT_NB_MB:00000000 silk_NLSF_CB2_SELECT_NB_MB
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:73     .rodata.silk_NLSF_CB2_iCDF_NB_MB:00000000 silk_NLSF_CB2_iCDF_NB_MB
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:63     .rodata.silk_NLSF_CB2_BITS_NB_MB_Q5:00000000 silk_NLSF_CB2_BITS_NB_MB_Q5
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:41     .rodata.silk_NLSF_DELTA_MIN_NB_MB_Q15:00000000 silk_NLSF_DELTA_MIN_NB_MB_Q15
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:38     .rodata.silk_NLSF_DELTA_MIN_NB_MB_Q15:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:54     .rodata.silk_NLSF_PRED_NB_MB_Q8:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:60     .rodata.silk_NLSF_CB2_BITS_NB_MB_Q5:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:70     .rodata.silk_NLSF_CB2_iCDF_NB_MB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:80     .rodata.silk_NLSF_CB2_SELECT_NB_MB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:95     .rodata.silk_NLSF_CB1_iCDF_NB_MB:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:104    .rodata.silk_NLSF_CB1_Wght_Q9:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccDCdTIO.s:429    .rodata.silk_NLSF_CB1_NB_MB_Q8:00000000 $d
+
+NO UNDEFINED SYMBOLS

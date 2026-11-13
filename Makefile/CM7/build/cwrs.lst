@@ -1,0 +1,2829 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"cwrs.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/celt/cwrs.c"
+  19              		.section	.text.icwrs,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	icwrs:
+  26              	.LVL0:
+  27              	.LFB21:
+   1:../../opus/celt/cwrs.c **** /* Copyright (c) 2007-2008 CSIRO
+   2:../../opus/celt/cwrs.c ****    Copyright (c) 2007-2009 Xiph.Org Foundation
+   3:../../opus/celt/cwrs.c ****    Copyright (c) 2007-2009 Timothy B. Terriberry
+   4:../../opus/celt/cwrs.c ****    Written by Timothy B. Terriberry and Jean-Marc Valin */
+   5:../../opus/celt/cwrs.c **** /*
+   6:../../opus/celt/cwrs.c ****    Redistribution and use in source and binary forms, with or without
+   7:../../opus/celt/cwrs.c ****    modification, are permitted provided that the following conditions
+   8:../../opus/celt/cwrs.c ****    are met:
+   9:../../opus/celt/cwrs.c **** 
+  10:../../opus/celt/cwrs.c ****    - Redistributions of source code must retain the above copyright
+  11:../../opus/celt/cwrs.c ****    notice, this list of conditions and the following disclaimer.
+  12:../../opus/celt/cwrs.c **** 
+  13:../../opus/celt/cwrs.c ****    - Redistributions in binary form must reproduce the above copyright
+  14:../../opus/celt/cwrs.c ****    notice, this list of conditions and the following disclaimer in the
+  15:../../opus/celt/cwrs.c ****    documentation and/or other materials provided with the distribution.
+  16:../../opus/celt/cwrs.c **** 
+  17:../../opus/celt/cwrs.c ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  18:../../opus/celt/cwrs.c ****    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  19:../../opus/celt/cwrs.c ****    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  20:../../opus/celt/cwrs.c ****    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+  21:../../opus/celt/cwrs.c ****    OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  22:../../opus/celt/cwrs.c ****    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  23:../../opus/celt/cwrs.c ****    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  24:../../opus/celt/cwrs.c ****    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  25:../../opus/celt/cwrs.c ****    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  26:../../opus/celt/cwrs.c ****    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  27:../../opus/celt/cwrs.c ****    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  28:../../opus/celt/cwrs.c **** */
+  29:../../opus/celt/cwrs.c **** 
+  30:../../opus/celt/cwrs.c **** #include "opus_config.h"
+  31:../../opus/celt/cwrs.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 2
+
+
+  32:../../opus/celt/cwrs.c **** #include "os_support.h"
+  33:../../opus/celt/cwrs.c **** #include "cwrs.h"
+  34:../../opus/celt/cwrs.c **** #include "mathops.h"
+  35:../../opus/celt/cwrs.c **** #include "arch.h"
+  36:../../opus/celt/cwrs.c **** 
+  37:../../opus/celt/cwrs.c **** #ifdef CUSTOM_MODES
+  38:../../opus/celt/cwrs.c **** 
+  39:../../opus/celt/cwrs.c **** /*Guaranteed to return a conservatively large estimate of the binary logarithm
+  40:../../opus/celt/cwrs.c ****    with frac bits of fractional precision.
+  41:../../opus/celt/cwrs.c ****   Tested for all possible 32-bit inputs with frac=4, where the maximum
+  42:../../opus/celt/cwrs.c ****    overestimation is 0.06254243 bits.*/
+  43:../../opus/celt/cwrs.c **** int log2_frac(opus_uint32 val, int frac)
+  44:../../opus/celt/cwrs.c **** {
+  45:../../opus/celt/cwrs.c ****   int l;
+  46:../../opus/celt/cwrs.c ****   l=EC_ILOG(val);
+  47:../../opus/celt/cwrs.c ****   if(val&(val-1)){
+  48:../../opus/celt/cwrs.c ****     /*This is (val>>l-16), but guaranteed to round up, even if adding a bias
+  49:../../opus/celt/cwrs.c ****        before the shift would cause overflow (e.g., for 0xFFFFxxxx).
+  50:../../opus/celt/cwrs.c ****        Doesn't work for val=0, but that case fails the test above.*/
+  51:../../opus/celt/cwrs.c ****     if(l>16)val=((val-1)>>(l-16))+1;
+  52:../../opus/celt/cwrs.c ****     else val<<=16-l;
+  53:../../opus/celt/cwrs.c ****     l=(l-1)<<frac;
+  54:../../opus/celt/cwrs.c ****     /*Note that we always need one iteration, since the rounding up above means
+  55:../../opus/celt/cwrs.c ****        that we might need to adjust the integer part of the logarithm.*/
+  56:../../opus/celt/cwrs.c ****     do{
+  57:../../opus/celt/cwrs.c ****       int b;
+  58:../../opus/celt/cwrs.c ****       b=(int)(val>>16);
+  59:../../opus/celt/cwrs.c ****       l+=b<<frac;
+  60:../../opus/celt/cwrs.c ****       val=(val+b)>>b;
+  61:../../opus/celt/cwrs.c ****       val=(val*val+0x7FFF)>>15;
+  62:../../opus/celt/cwrs.c ****     }
+  63:../../opus/celt/cwrs.c ****     while(frac-->0);
+  64:../../opus/celt/cwrs.c ****     /*If val is not exactly 0x8000, then we have to round up the remainder.*/
+  65:../../opus/celt/cwrs.c ****     return l+(val>0x8000);
+  66:../../opus/celt/cwrs.c ****   }
+  67:../../opus/celt/cwrs.c ****   /*Exact powers of two require no rounding.*/
+  68:../../opus/celt/cwrs.c ****   else return (l-1)<<frac;
+  69:../../opus/celt/cwrs.c **** }
+  70:../../opus/celt/cwrs.c **** #endif
+  71:../../opus/celt/cwrs.c **** 
+  72:../../opus/celt/cwrs.c **** /*Although derived separately, the pulse vector coding scheme is equivalent to
+  73:../../opus/celt/cwrs.c ****    a Pyramid Vector Quantizer \cite{Fis86}.
+  74:../../opus/celt/cwrs.c ****   Some additional notes about an early version appear at
+  75:../../opus/celt/cwrs.c ****    https://people.xiph.org/~tterribe/notes/cwrs.html, but the codebook ordering
+  76:../../opus/celt/cwrs.c ****    and the definitions of some terms have evolved since that was written.
+  77:../../opus/celt/cwrs.c **** 
+  78:../../opus/celt/cwrs.c ****   The conversion from a pulse vector to an integer index (encoding) and back
+  79:../../opus/celt/cwrs.c ****    (decoding) is governed by two related functions, V(N,K) and U(N,K).
+  80:../../opus/celt/cwrs.c **** 
+  81:../../opus/celt/cwrs.c ****   V(N,K) = the number of combinations, with replacement, of N items, taken K
+  82:../../opus/celt/cwrs.c ****    at a time, when a sign bit is added to each item taken at least once (i.e.,
+  83:../../opus/celt/cwrs.c ****    the number of N-dimensional unit pulse vectors with K pulses).
+  84:../../opus/celt/cwrs.c ****   One way to compute this is via
+  85:../../opus/celt/cwrs.c ****     V(N,K) = K>0 ? sum(k=1...K,2**k*choose(N,k)*choose(K-1,k-1)) : 1,
+  86:../../opus/celt/cwrs.c ****    where choose() is the binomial function.
+  87:../../opus/celt/cwrs.c ****   A table of values for N<10 and K<10 looks like:
+  88:../../opus/celt/cwrs.c ****   V[10][10] = {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 3
+
+
+  89:../../opus/celt/cwrs.c ****     {1,  0,   0,    0,    0,     0,     0,      0,      0,       0},
+  90:../../opus/celt/cwrs.c ****     {1,  2,   2,    2,    2,     2,     2,      2,      2,       2},
+  91:../../opus/celt/cwrs.c ****     {1,  4,   8,   12,   16,    20,    24,     28,     32,      36},
+  92:../../opus/celt/cwrs.c ****     {1,  6,  18,   38,   66,   102,   146,    198,    258,     326},
+  93:../../opus/celt/cwrs.c ****     {1,  8,  32,   88,  192,   360,   608,    952,   1408,    1992},
+  94:../../opus/celt/cwrs.c ****     {1, 10,  50,  170,  450,  1002,  1970,   3530,   5890,    9290},
+  95:../../opus/celt/cwrs.c ****     {1, 12,  72,  292,  912,  2364,  5336,  10836,  20256,   35436},
+  96:../../opus/celt/cwrs.c ****     {1, 14,  98,  462, 1666,  4942, 12642,  28814,  59906,  115598},
+  97:../../opus/celt/cwrs.c ****     {1, 16, 128,  688, 2816,  9424, 27008,  68464, 157184,  332688},
+  98:../../opus/celt/cwrs.c ****     {1, 18, 162,  978, 4482, 16722, 53154, 148626, 374274,  864146}
+  99:../../opus/celt/cwrs.c ****   };
+ 100:../../opus/celt/cwrs.c **** 
+ 101:../../opus/celt/cwrs.c ****   U(N,K) = the number of such combinations wherein N-1 objects are taken at
+ 102:../../opus/celt/cwrs.c ****    most K-1 at a time.
+ 103:../../opus/celt/cwrs.c ****   This is given by
+ 104:../../opus/celt/cwrs.c ****     U(N,K) = sum(k=0...K-1,V(N-1,k))
+ 105:../../opus/celt/cwrs.c ****            = K>0 ? (V(N-1,K-1) + V(N,K-1))/2 : 0.
+ 106:../../opus/celt/cwrs.c ****   The latter expression also makes clear that U(N,K) is half the number of such
+ 107:../../opus/celt/cwrs.c ****    combinations wherein the first object is taken at least once.
+ 108:../../opus/celt/cwrs.c ****   Although it may not be clear from either of these definitions, U(N,K) is the
+ 109:../../opus/celt/cwrs.c ****    natural function to work with when enumerating the pulse vector codebooks,
+ 110:../../opus/celt/cwrs.c ****    not V(N,K).
+ 111:../../opus/celt/cwrs.c ****   U(N,K) is not well-defined for N=0, but with the extension
+ 112:../../opus/celt/cwrs.c ****     U(0,K) = K>0 ? 0 : 1,
+ 113:../../opus/celt/cwrs.c ****    the function becomes symmetric: U(N,K) = U(K,N), with a similar table:
+ 114:../../opus/celt/cwrs.c ****   U[10][10] = {
+ 115:../../opus/celt/cwrs.c ****     {1, 0,  0,   0,    0,    0,     0,     0,      0,      0},
+ 116:../../opus/celt/cwrs.c ****     {0, 1,  1,   1,    1,    1,     1,     1,      1,      1},
+ 117:../../opus/celt/cwrs.c ****     {0, 1,  3,   5,    7,    9,    11,    13,     15,     17},
+ 118:../../opus/celt/cwrs.c ****     {0, 1,  5,  13,   25,   41,    61,    85,    113,    145},
+ 119:../../opus/celt/cwrs.c ****     {0, 1,  7,  25,   63,  129,   231,   377,    575,    833},
+ 120:../../opus/celt/cwrs.c ****     {0, 1,  9,  41,  129,  321,   681,  1289,   2241,   3649},
+ 121:../../opus/celt/cwrs.c ****     {0, 1, 11,  61,  231,  681,  1683,  3653,   7183,  13073},
+ 122:../../opus/celt/cwrs.c ****     {0, 1, 13,  85,  377, 1289,  3653,  8989,  19825,  40081},
+ 123:../../opus/celt/cwrs.c ****     {0, 1, 15, 113,  575, 2241,  7183, 19825,  48639, 108545},
+ 124:../../opus/celt/cwrs.c ****     {0, 1, 17, 145,  833, 3649, 13073, 40081, 108545, 265729}
+ 125:../../opus/celt/cwrs.c ****   };
+ 126:../../opus/celt/cwrs.c **** 
+ 127:../../opus/celt/cwrs.c ****   With this extension, V(N,K) may be written in terms of U(N,K):
+ 128:../../opus/celt/cwrs.c ****     V(N,K) = U(N,K) + U(N,K+1)
+ 129:../../opus/celt/cwrs.c ****    for all N>=0, K>=0.
+ 130:../../opus/celt/cwrs.c ****   Thus U(N,K+1) represents the number of combinations where the first element
+ 131:../../opus/celt/cwrs.c ****    is positive or zero, and U(N,K) represents the number of combinations where
+ 132:../../opus/celt/cwrs.c ****    it is negative.
+ 133:../../opus/celt/cwrs.c ****   With a large enough table of U(N,K) values, we could write O(N) encoding
+ 134:../../opus/celt/cwrs.c ****    and O(min(N*log(K),N+K)) decoding routines, but such a table would be
+ 135:../../opus/celt/cwrs.c ****    prohibitively large for small embedded devices (K may be as large as 32767
+ 136:../../opus/celt/cwrs.c ****    for small N, and N may be as large as 200).
+ 137:../../opus/celt/cwrs.c **** 
+ 138:../../opus/celt/cwrs.c ****   Both functions obey the same recurrence relation:
+ 139:../../opus/celt/cwrs.c ****     V(N,K) = V(N-1,K) + V(N,K-1) + V(N-1,K-1),
+ 140:../../opus/celt/cwrs.c ****     U(N,K) = U(N-1,K) + U(N,K-1) + U(N-1,K-1),
+ 141:../../opus/celt/cwrs.c ****    for all N>0, K>0, with different initial conditions at N=0 or K=0.
+ 142:../../opus/celt/cwrs.c ****   This allows us to construct a row of one of the tables above given the
+ 143:../../opus/celt/cwrs.c ****    previous row or the next row.
+ 144:../../opus/celt/cwrs.c ****   Thus we can derive O(NK) encoding and decoding routines with O(K) memory
+ 145:../../opus/celt/cwrs.c ****    using only addition and subtraction.
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 4
+
+
+ 146:../../opus/celt/cwrs.c **** 
+ 147:../../opus/celt/cwrs.c ****   When encoding, we build up from the U(2,K) row and work our way forwards.
+ 148:../../opus/celt/cwrs.c ****   When decoding, we need to start at the U(N,K) row and work our way backwards,
+ 149:../../opus/celt/cwrs.c ****    which requires a means of computing U(N,K).
+ 150:../../opus/celt/cwrs.c ****   U(N,K) may be computed from two previous values with the same N:
+ 151:../../opus/celt/cwrs.c ****     U(N,K) = ((2*N-1)*U(N,K-1) - U(N,K-2))/(K-1) + U(N,K-2)
+ 152:../../opus/celt/cwrs.c ****    for all N>1, and since U(N,K) is symmetric, a similar relation holds for two
+ 153:../../opus/celt/cwrs.c ****    previous values with the same K:
+ 154:../../opus/celt/cwrs.c ****     U(N,K>1) = ((2*K-1)*U(N-1,K) - U(N-2,K))/(N-1) + U(N-2,K)
+ 155:../../opus/celt/cwrs.c ****    for all K>1.
+ 156:../../opus/celt/cwrs.c ****   This allows us to construct an arbitrary row of the U(N,K) table by starting
+ 157:../../opus/celt/cwrs.c ****    with the first two values, which are constants.
+ 158:../../opus/celt/cwrs.c ****   This saves roughly 2/3 the work in our O(NK) decoding routine, but costs O(K)
+ 159:../../opus/celt/cwrs.c ****    multiplications.
+ 160:../../opus/celt/cwrs.c ****   Similar relations can be derived for V(N,K), but are not used here.
+ 161:../../opus/celt/cwrs.c **** 
+ 162:../../opus/celt/cwrs.c ****   For N>0 and K>0, U(N,K) and V(N,K) take on the form of an (N-1)-degree
+ 163:../../opus/celt/cwrs.c ****    polynomial for fixed N.
+ 164:../../opus/celt/cwrs.c ****   The first few are
+ 165:../../opus/celt/cwrs.c ****     U(1,K) = 1,
+ 166:../../opus/celt/cwrs.c ****     U(2,K) = 2*K-1,
+ 167:../../opus/celt/cwrs.c ****     U(3,K) = (2*K-2)*K+1,
+ 168:../../opus/celt/cwrs.c ****     U(4,K) = (((4*K-6)*K+8)*K-3)/3,
+ 169:../../opus/celt/cwrs.c ****     U(5,K) = ((((2*K-4)*K+10)*K-8)*K+3)/3,
+ 170:../../opus/celt/cwrs.c ****    and
+ 171:../../opus/celt/cwrs.c ****     V(1,K) = 2,
+ 172:../../opus/celt/cwrs.c ****     V(2,K) = 4*K,
+ 173:../../opus/celt/cwrs.c ****     V(3,K) = 4*K*K+2,
+ 174:../../opus/celt/cwrs.c ****     V(4,K) = 8*(K*K+2)*K/3,
+ 175:../../opus/celt/cwrs.c ****     V(5,K) = ((4*K*K+20)*K*K+6)/3,
+ 176:../../opus/celt/cwrs.c ****    for all K>0.
+ 177:../../opus/celt/cwrs.c ****   This allows us to derive O(N) encoding and O(N*log(K)) decoding routines for
+ 178:../../opus/celt/cwrs.c ****    small N (and indeed decoding is also O(N) for N<3).
+ 179:../../opus/celt/cwrs.c **** 
+ 180:../../opus/celt/cwrs.c ****   @ARTICLE{Fis86,
+ 181:../../opus/celt/cwrs.c ****     author="Thomas R. Fischer",
+ 182:../../opus/celt/cwrs.c ****     title="A Pyramid Vector Quantizer",
+ 183:../../opus/celt/cwrs.c ****     journal="IEEE Transactions on Information Theory",
+ 184:../../opus/celt/cwrs.c ****     volume="IT-32",
+ 185:../../opus/celt/cwrs.c ****     number=4,
+ 186:../../opus/celt/cwrs.c ****     pages="568--583",
+ 187:../../opus/celt/cwrs.c ****     month=Jul,
+ 188:../../opus/celt/cwrs.c ****     year=1986
+ 189:../../opus/celt/cwrs.c ****   }*/
+ 190:../../opus/celt/cwrs.c **** 
+ 191:../../opus/celt/cwrs.c **** #if !defined(SMALL_FOOTPRINT)
+ 192:../../opus/celt/cwrs.c **** 
+ 193:../../opus/celt/cwrs.c **** /*U(N,K) = U(K,N) := N>0?K>0?U(N-1,K)+U(N,K-1)+U(N-1,K-1):0:K>0?1:0*/
+ 194:../../opus/celt/cwrs.c **** # define CELT_PVQ_U(_n,_k) (CELT_PVQ_U_ROW[IMIN(_n,_k)][IMAX(_n,_k)])
+ 195:../../opus/celt/cwrs.c **** /*V(N,K) := U(N,K)+U(N,K+1) = the number of PVQ codewords for a band of size N
+ 196:../../opus/celt/cwrs.c ****    with K pulses allocated to it.*/
+ 197:../../opus/celt/cwrs.c **** # define CELT_PVQ_V(_n,_k) (CELT_PVQ_U(_n,_k)+CELT_PVQ_U(_n,(_k)+1))
+ 198:../../opus/celt/cwrs.c **** 
+ 199:../../opus/celt/cwrs.c **** /*For each V(N,K) supported, we will access element U(min(N,K+1),max(N,K+1)).
+ 200:../../opus/celt/cwrs.c ****   Thus, the number of entries in row I is the larger of the maximum number of
+ 201:../../opus/celt/cwrs.c ****    pulses we will ever allocate for a given N=I (K=128, or however many fit in
+ 202:../../opus/celt/cwrs.c ****    32 bits, whichever is smaller), plus one, and the maximum N for which
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 5
+
+
+ 203:../../opus/celt/cwrs.c ****    K=I-1 pulses fit in 32 bits.
+ 204:../../opus/celt/cwrs.c ****   The largest band size in an Opus Custom mode is 208.
+ 205:../../opus/celt/cwrs.c ****   Otherwise, we can limit things to the set of N which can be achieved by
+ 206:../../opus/celt/cwrs.c ****    splitting a band from a standard Opus mode: 176, 144, 96, 88, 72, 64, 48,
+ 207:../../opus/celt/cwrs.c ****    44, 36, 32, 24, 22, 18, 16, 8, 4, 2).*/
+ 208:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 209:../../opus/celt/cwrs.c **** static const opus_uint32 CELT_PVQ_U_DATA[1488]={
+ 210:../../opus/celt/cwrs.c **** #else
+ 211:../../opus/celt/cwrs.c **** static const opus_uint32 CELT_PVQ_U_DATA[1272]={
+ 212:../../opus/celt/cwrs.c **** #endif
+ 213:../../opus/celt/cwrs.c ****   /*N=0, K=0...176:*/
+ 214:../../opus/celt/cwrs.c ****   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 215:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 216:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 217:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 218:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 219:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 220:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 221:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 222:../../opus/celt/cwrs.c ****   /*...208:*/
+ 223:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 224:../../opus/celt/cwrs.c ****   0, 0, 0, 0, 0, 0,
+ 225:../../opus/celt/cwrs.c **** #endif
+ 226:../../opus/celt/cwrs.c ****   /*N=1, K=1...176:*/
+ 227:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 228:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 229:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 230:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 231:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 232:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 233:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 234:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 235:../../opus/celt/cwrs.c ****   /*...208:*/
+ 236:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+ 237:../../opus/celt/cwrs.c ****   1, 1, 1, 1, 1, 1,
+ 238:../../opus/celt/cwrs.c **** #endif
+ 239:../../opus/celt/cwrs.c ****   /*N=2, K=2...176:*/
+ 240:../../opus/celt/cwrs.c ****   3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41,
+ 241:../../opus/celt/cwrs.c ****   43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77, 79,
+ 242:../../opus/celt/cwrs.c ****   81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113,
+ 243:../../opus/celt/cwrs.c ****   115, 117, 119, 121, 123, 125, 127, 129, 131, 133, 135, 137, 139, 141, 143,
+ 244:../../opus/celt/cwrs.c ****   145, 147, 149, 151, 153, 155, 157, 159, 161, 163, 165, 167, 169, 171, 173,
+ 245:../../opus/celt/cwrs.c ****   175, 177, 179, 181, 183, 185, 187, 189, 191, 193, 195, 197, 199, 201, 203,
+ 246:../../opus/celt/cwrs.c ****   205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229, 231, 233,
+ 247:../../opus/celt/cwrs.c ****   235, 237, 239, 241, 243, 245, 247, 249, 251, 253, 255, 257, 259, 261, 263,
+ 248:../../opus/celt/cwrs.c ****   265, 267, 269, 271, 273, 275, 277, 279, 281, 283, 285, 287, 289, 291, 293,
+ 249:../../opus/celt/cwrs.c ****   295, 297, 299, 301, 303, 305, 307, 309, 311, 313, 315, 317, 319, 321, 323,
+ 250:../../opus/celt/cwrs.c ****   325, 327, 329, 331, 333, 335, 337, 339, 341, 343, 345, 347, 349, 351,
+ 251:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 252:../../opus/celt/cwrs.c ****   /*...208:*/
+ 253:../../opus/celt/cwrs.c ****   353, 355, 357, 359, 361, 363, 365, 367, 369, 371, 373, 375, 377, 379, 381,
+ 254:../../opus/celt/cwrs.c ****   383, 385, 387, 389, 391, 393, 395, 397, 399, 401, 403, 405, 407, 409, 411,
+ 255:../../opus/celt/cwrs.c ****   413, 415,
+ 256:../../opus/celt/cwrs.c **** #endif
+ 257:../../opus/celt/cwrs.c ****   /*N=3, K=3...176:*/
+ 258:../../opus/celt/cwrs.c ****   13, 25, 41, 61, 85, 113, 145, 181, 221, 265, 313, 365, 421, 481, 545, 613,
+ 259:../../opus/celt/cwrs.c ****   685, 761, 841, 925, 1013, 1105, 1201, 1301, 1405, 1513, 1625, 1741, 1861,
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 6
+
+
+ 260:../../opus/celt/cwrs.c ****   1985, 2113, 2245, 2381, 2521, 2665, 2813, 2965, 3121, 3281, 3445, 3613, 3785,
+ 261:../../opus/celt/cwrs.c ****   3961, 4141, 4325, 4513, 4705, 4901, 5101, 5305, 5513, 5725, 5941, 6161, 6385,
+ 262:../../opus/celt/cwrs.c ****   6613, 6845, 7081, 7321, 7565, 7813, 8065, 8321, 8581, 8845, 9113, 9385, 9661,
+ 263:../../opus/celt/cwrs.c ****   9941, 10225, 10513, 10805, 11101, 11401, 11705, 12013, 12325, 12641, 12961,
+ 264:../../opus/celt/cwrs.c ****   13285, 13613, 13945, 14281, 14621, 14965, 15313, 15665, 16021, 16381, 16745,
+ 265:../../opus/celt/cwrs.c ****   17113, 17485, 17861, 18241, 18625, 19013, 19405, 19801, 20201, 20605, 21013,
+ 266:../../opus/celt/cwrs.c ****   21425, 21841, 22261, 22685, 23113, 23545, 23981, 24421, 24865, 25313, 25765,
+ 267:../../opus/celt/cwrs.c ****   26221, 26681, 27145, 27613, 28085, 28561, 29041, 29525, 30013, 30505, 31001,
+ 268:../../opus/celt/cwrs.c ****   31501, 32005, 32513, 33025, 33541, 34061, 34585, 35113, 35645, 36181, 36721,
+ 269:../../opus/celt/cwrs.c ****   37265, 37813, 38365, 38921, 39481, 40045, 40613, 41185, 41761, 42341, 42925,
+ 270:../../opus/celt/cwrs.c ****   43513, 44105, 44701, 45301, 45905, 46513, 47125, 47741, 48361, 48985, 49613,
+ 271:../../opus/celt/cwrs.c ****   50245, 50881, 51521, 52165, 52813, 53465, 54121, 54781, 55445, 56113, 56785,
+ 272:../../opus/celt/cwrs.c ****   57461, 58141, 58825, 59513, 60205, 60901, 61601,
+ 273:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 274:../../opus/celt/cwrs.c ****   /*...208:*/
+ 275:../../opus/celt/cwrs.c ****   62305, 63013, 63725, 64441, 65161, 65885, 66613, 67345, 68081, 68821, 69565,
+ 276:../../opus/celt/cwrs.c ****   70313, 71065, 71821, 72581, 73345, 74113, 74885, 75661, 76441, 77225, 78013,
+ 277:../../opus/celt/cwrs.c ****   78805, 79601, 80401, 81205, 82013, 82825, 83641, 84461, 85285, 86113,
+ 278:../../opus/celt/cwrs.c **** #endif
+ 279:../../opus/celt/cwrs.c ****   /*N=4, K=4...176:*/
+ 280:../../opus/celt/cwrs.c ****   63, 129, 231, 377, 575, 833, 1159, 1561, 2047, 2625, 3303, 4089, 4991, 6017,
+ 281:../../opus/celt/cwrs.c ****   7175, 8473, 9919, 11521, 13287, 15225, 17343, 19649, 22151, 24857, 27775,
+ 282:../../opus/celt/cwrs.c ****   30913, 34279, 37881, 41727, 45825, 50183, 54809, 59711, 64897, 70375, 76153,
+ 283:../../opus/celt/cwrs.c ****   82239, 88641, 95367, 102425, 109823, 117569, 125671, 134137, 142975, 152193,
+ 284:../../opus/celt/cwrs.c ****   161799, 171801, 182207, 193025, 204263, 215929, 228031, 240577, 253575,
+ 285:../../opus/celt/cwrs.c ****   267033, 280959, 295361, 310247, 325625, 341503, 357889, 374791, 392217,
+ 286:../../opus/celt/cwrs.c ****   410175, 428673, 447719, 467321, 487487, 508225, 529543, 551449, 573951,
+ 287:../../opus/celt/cwrs.c ****   597057, 620775, 645113, 670079, 695681, 721927, 748825, 776383, 804609,
+ 288:../../opus/celt/cwrs.c ****   833511, 863097, 893375, 924353, 956039, 988441, 1021567, 1055425, 1090023,
+ 289:../../opus/celt/cwrs.c ****   1125369, 1161471, 1198337, 1235975, 1274393, 1313599, 1353601, 1394407,
+ 290:../../opus/celt/cwrs.c ****   1436025, 1478463, 1521729, 1565831, 1610777, 1656575, 1703233, 1750759,
+ 291:../../opus/celt/cwrs.c ****   1799161, 1848447, 1898625, 1949703, 2001689, 2054591, 2108417, 2163175,
+ 292:../../opus/celt/cwrs.c ****   2218873, 2275519, 2333121, 2391687, 2451225, 2511743, 2573249, 2635751,
+ 293:../../opus/celt/cwrs.c ****   2699257, 2763775, 2829313, 2895879, 2963481, 3032127, 3101825, 3172583,
+ 294:../../opus/celt/cwrs.c ****   3244409, 3317311, 3391297, 3466375, 3542553, 3619839, 3698241, 3777767,
+ 295:../../opus/celt/cwrs.c ****   3858425, 3940223, 4023169, 4107271, 4192537, 4278975, 4366593, 4455399,
+ 296:../../opus/celt/cwrs.c ****   4545401, 4636607, 4729025, 4822663, 4917529, 5013631, 5110977, 5209575,
+ 297:../../opus/celt/cwrs.c ****   5309433, 5410559, 5512961, 5616647, 5721625, 5827903, 5935489, 6044391,
+ 298:../../opus/celt/cwrs.c ****   6154617, 6266175, 6379073, 6493319, 6608921, 6725887, 6844225, 6963943,
+ 299:../../opus/celt/cwrs.c ****   7085049, 7207551,
+ 300:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 301:../../opus/celt/cwrs.c ****   /*...208:*/
+ 302:../../opus/celt/cwrs.c ****   7331457, 7456775, 7583513, 7711679, 7841281, 7972327, 8104825, 8238783,
+ 303:../../opus/celt/cwrs.c ****   8374209, 8511111, 8649497, 8789375, 8930753, 9073639, 9218041, 9363967,
+ 304:../../opus/celt/cwrs.c ****   9511425, 9660423, 9810969, 9963071, 10116737, 10271975, 10428793, 10587199,
+ 305:../../opus/celt/cwrs.c ****   10747201, 10908807, 11072025, 11236863, 11403329, 11571431, 11741177,
+ 306:../../opus/celt/cwrs.c ****   11912575,
+ 307:../../opus/celt/cwrs.c **** #endif
+ 308:../../opus/celt/cwrs.c ****   /*N=5, K=5...176:*/
+ 309:../../opus/celt/cwrs.c ****   321, 681, 1289, 2241, 3649, 5641, 8361, 11969, 16641, 22569, 29961, 39041,
+ 310:../../opus/celt/cwrs.c ****   50049, 63241, 78889, 97281, 118721, 143529, 172041, 204609, 241601, 283401,
+ 311:../../opus/celt/cwrs.c ****   330409, 383041, 441729, 506921, 579081, 658689, 746241, 842249, 947241,
+ 312:../../opus/celt/cwrs.c ****   1061761, 1186369, 1321641, 1468169, 1626561, 1797441, 1981449, 2179241,
+ 313:../../opus/celt/cwrs.c ****   2391489, 2618881, 2862121, 3121929, 3399041, 3694209, 4008201, 4341801,
+ 314:../../opus/celt/cwrs.c ****   4695809, 5071041, 5468329, 5888521, 6332481, 6801089, 7295241, 7815849,
+ 315:../../opus/celt/cwrs.c ****   8363841, 8940161, 9545769, 10181641, 10848769, 11548161, 12280841, 13047849,
+ 316:../../opus/celt/cwrs.c ****   13850241, 14689089, 15565481, 16480521, 17435329, 18431041, 19468809,
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 7
+
+
+ 317:../../opus/celt/cwrs.c ****   20549801, 21675201, 22846209, 24064041, 25329929, 26645121, 28010881,
+ 318:../../opus/celt/cwrs.c ****   29428489, 30899241, 32424449, 34005441, 35643561, 37340169, 39096641,
+ 319:../../opus/celt/cwrs.c ****   40914369, 42794761, 44739241, 46749249, 48826241, 50971689, 53187081,
+ 320:../../opus/celt/cwrs.c ****   55473921, 57833729, 60268041, 62778409, 65366401, 68033601, 70781609,
+ 321:../../opus/celt/cwrs.c ****   73612041, 76526529, 79526721, 82614281, 85790889, 89058241, 92418049,
+ 322:../../opus/celt/cwrs.c ****   95872041, 99421961, 103069569, 106816641, 110664969, 114616361, 118672641,
+ 323:../../opus/celt/cwrs.c ****   122835649, 127107241, 131489289, 135983681, 140592321, 145317129, 150160041,
+ 324:../../opus/celt/cwrs.c ****   155123009, 160208001, 165417001, 170752009, 176215041, 181808129, 187533321,
+ 325:../../opus/celt/cwrs.c ****   193392681, 199388289, 205522241, 211796649, 218213641, 224775361, 231483969,
+ 326:../../opus/celt/cwrs.c ****   238341641, 245350569, 252512961, 259831041, 267307049, 274943241, 282741889,
+ 327:../../opus/celt/cwrs.c ****   290705281, 298835721, 307135529, 315607041, 324252609, 333074601, 342075401,
+ 328:../../opus/celt/cwrs.c ****   351257409, 360623041, 370174729, 379914921, 389846081, 399970689, 410291241,
+ 329:../../opus/celt/cwrs.c ****   420810249, 431530241, 442453761, 453583369, 464921641, 476471169, 488234561,
+ 330:../../opus/celt/cwrs.c ****   500214441, 512413449, 524834241, 537479489, 550351881, 563454121, 576788929,
+ 331:../../opus/celt/cwrs.c ****   590359041, 604167209, 618216201, 632508801,
+ 332:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 333:../../opus/celt/cwrs.c ****   /*...208:*/
+ 334:../../opus/celt/cwrs.c ****   647047809, 661836041, 676876329, 692171521, 707724481, 723538089, 739615241,
+ 335:../../opus/celt/cwrs.c ****   755958849, 772571841, 789457161, 806617769, 824056641, 841776769, 859781161,
+ 336:../../opus/celt/cwrs.c ****   878072841, 896654849, 915530241, 934702089, 954173481, 973947521, 994027329,
+ 337:../../opus/celt/cwrs.c ****   1014416041, 1035116809, 1056132801, 1077467201, 1099123209, 1121104041,
+ 338:../../opus/celt/cwrs.c ****   1143412929, 1166053121, 1189027881, 1212340489, 1235994241,
+ 339:../../opus/celt/cwrs.c **** #endif
+ 340:../../opus/celt/cwrs.c ****   /*N=6, K=6...96:*/
+ 341:../../opus/celt/cwrs.c ****   1683, 3653, 7183, 13073, 22363, 36365, 56695, 85305, 124515, 177045, 246047,
+ 342:../../opus/celt/cwrs.c ****   335137, 448427, 590557, 766727, 982729, 1244979, 1560549, 1937199, 2383409,
+ 343:../../opus/celt/cwrs.c ****   2908411, 3522221, 4235671, 5060441, 6009091, 7095093, 8332863, 9737793,
+ 344:../../opus/celt/cwrs.c ****   11326283, 13115773, 15124775, 17372905, 19880915, 22670725, 25765455,
+ 345:../../opus/celt/cwrs.c ****   29189457, 32968347, 37129037, 41699767, 46710137, 52191139, 58175189,
+ 346:../../opus/celt/cwrs.c ****   64696159, 71789409, 79491819, 87841821, 96879431, 106646281, 117185651,
+ 347:../../opus/celt/cwrs.c ****   128542501, 140763503, 153897073, 167993403, 183104493, 199284183, 216588185,
+ 348:../../opus/celt/cwrs.c ****   235074115, 254801525, 275831935, 298228865, 322057867, 347386557, 374284647,
+ 349:../../opus/celt/cwrs.c ****   402823977, 433078547, 465124549, 499040399, 534906769, 572806619, 612825229,
+ 350:../../opus/celt/cwrs.c ****   655050231, 699571641, 746481891, 795875861, 847850911, 902506913, 959946283,
+ 351:../../opus/celt/cwrs.c ****   1020274013, 1083597703, 1150027593, 1219676595, 1292660325, 1369097135,
+ 352:../../opus/celt/cwrs.c ****   1449108145, 1532817275, 1620351277, 1711839767, 1807415257, 1907213187,
+ 353:../../opus/celt/cwrs.c ****   2011371957, 2120032959,
+ 354:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 355:../../opus/celt/cwrs.c ****   /*...109:*/
+ 356:../../opus/celt/cwrs.c ****   2233340609U, 2351442379U, 2474488829U, 2602633639U, 2736033641U, 2874848851U,
+ 357:../../opus/celt/cwrs.c ****   3019242501U, 3169381071U, 3325434321U, 3487575323U, 3655980493U, 3830829623U,
+ 358:../../opus/celt/cwrs.c ****   4012305913U,
+ 359:../../opus/celt/cwrs.c **** #endif
+ 360:../../opus/celt/cwrs.c ****   /*N=7, K=7...54*/
+ 361:../../opus/celt/cwrs.c ****   8989, 19825, 40081, 75517, 134245, 227305, 369305, 579125, 880685, 1303777,
+ 362:../../opus/celt/cwrs.c ****   1884961, 2668525, 3707509, 5064793, 6814249, 9041957, 11847485, 15345233,
+ 363:../../opus/celt/cwrs.c ****   19665841, 24957661, 31388293, 39146185, 48442297, 59511829, 72616013,
+ 364:../../opus/celt/cwrs.c ****   88043969, 106114625, 127178701, 151620757, 179861305, 212358985, 249612805,
+ 365:../../opus/celt/cwrs.c ****   292164445, 340600625, 395555537, 457713341, 527810725, 606639529, 695049433,
+ 366:../../opus/celt/cwrs.c ****   793950709, 904317037, 1027188385, 1163673953, 1314955181, 1482288821,
+ 367:../../opus/celt/cwrs.c ****   1667010073, 1870535785, 2094367717,
+ 368:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 369:../../opus/celt/cwrs.c ****   /*...60:*/
+ 370:../../opus/celt/cwrs.c ****   2340095869U, 2609401873U, 2904062449U, 3225952925U, 3577050821U, 3959439497U,
+ 371:../../opus/celt/cwrs.c **** #endif
+ 372:../../opus/celt/cwrs.c ****   /*N=8, K=8...37*/
+ 373:../../opus/celt/cwrs.c ****   48639, 108545, 224143, 433905, 795455, 1392065, 2340495, 3800305, 5984767,
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 8
+
+
+ 374:../../opus/celt/cwrs.c ****   9173505, 13726991, 20103025, 28875327, 40754369, 56610575, 77500017,
+ 375:../../opus/celt/cwrs.c ****   104692735, 139703809, 184327311, 240673265, 311207743, 398796225, 506750351,
+ 376:../../opus/celt/cwrs.c ****   638878193, 799538175, 993696769, 1226990095, 1505789553, 1837271615,
+ 377:../../opus/celt/cwrs.c ****   2229491905U,
+ 378:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 379:../../opus/celt/cwrs.c ****   /*...40:*/
+ 380:../../opus/celt/cwrs.c ****   2691463695U, 3233240945U, 3866006015U,
+ 381:../../opus/celt/cwrs.c **** #endif
+ 382:../../opus/celt/cwrs.c ****   /*N=9, K=9...28:*/
+ 383:../../opus/celt/cwrs.c ****   265729, 598417, 1256465, 2485825, 4673345, 8405905, 14546705, 24331777,
+ 384:../../opus/celt/cwrs.c ****   39490049, 62390545, 96220561, 145198913, 214828609, 312193553, 446304145,
+ 385:../../opus/celt/cwrs.c ****   628496897, 872893441, 1196924561, 1621925137, 2173806145U,
+ 386:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 387:../../opus/celt/cwrs.c ****   /*...29:*/
+ 388:../../opus/celt/cwrs.c ****   2883810113U,
+ 389:../../opus/celt/cwrs.c **** #endif
+ 390:../../opus/celt/cwrs.c ****   /*N=10, K=10...24:*/
+ 391:../../opus/celt/cwrs.c ****   1462563, 3317445, 7059735, 14218905, 27298155, 50250765, 89129247, 152951073,
+ 392:../../opus/celt/cwrs.c ****   254831667, 413442773, 654862247, 1014889769, 1541911931, 2300409629U,
+ 393:../../opus/celt/cwrs.c ****   3375210671U,
+ 394:../../opus/celt/cwrs.c ****   /*N=11, K=11...19:*/
+ 395:../../opus/celt/cwrs.c ****   8097453, 18474633, 39753273, 81270333, 158819253, 298199265, 540279585,
+ 396:../../opus/celt/cwrs.c ****   948062325, 1616336765,
+ 397:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 398:../../opus/celt/cwrs.c ****   /*...20:*/
+ 399:../../opus/celt/cwrs.c ****   2684641785U,
+ 400:../../opus/celt/cwrs.c **** #endif
+ 401:../../opus/celt/cwrs.c ****   /*N=12, K=12...18:*/
+ 402:../../opus/celt/cwrs.c ****   45046719, 103274625, 224298231, 464387817, 921406335, 1759885185,
+ 403:../../opus/celt/cwrs.c ****   3248227095U,
+ 404:../../opus/celt/cwrs.c ****   /*N=13, K=13...16:*/
+ 405:../../opus/celt/cwrs.c ****   251595969, 579168825, 1267854873, 2653649025U,
+ 406:../../opus/celt/cwrs.c ****   /*N=14, K=14:*/
+ 407:../../opus/celt/cwrs.c ****   1409933619
+ 408:../../opus/celt/cwrs.c **** };
+ 409:../../opus/celt/cwrs.c **** 
+ 410:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 411:../../opus/celt/cwrs.c **** static const opus_uint32 *const CELT_PVQ_U_ROW[15]={
+ 412:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+   0,CELT_PVQ_U_DATA+ 208,CELT_PVQ_U_DATA+ 415,
+ 413:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+ 621,CELT_PVQ_U_DATA+ 826,CELT_PVQ_U_DATA+1030,
+ 414:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+1233,CELT_PVQ_U_DATA+1336,CELT_PVQ_U_DATA+1389,
+ 415:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+1421,CELT_PVQ_U_DATA+1441,CELT_PVQ_U_DATA+1455,
+ 416:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+1464,CELT_PVQ_U_DATA+1470,CELT_PVQ_U_DATA+1473
+ 417:../../opus/celt/cwrs.c **** };
+ 418:../../opus/celt/cwrs.c **** #else
+ 419:../../opus/celt/cwrs.c **** static const opus_uint32 *const CELT_PVQ_U_ROW[15]={
+ 420:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+   0,CELT_PVQ_U_DATA+ 176,CELT_PVQ_U_DATA+ 351,
+ 421:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+ 525,CELT_PVQ_U_DATA+ 698,CELT_PVQ_U_DATA+ 870,
+ 422:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+1041,CELT_PVQ_U_DATA+1131,CELT_PVQ_U_DATA+1178,
+ 423:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+1207,CELT_PVQ_U_DATA+1226,CELT_PVQ_U_DATA+1240,
+ 424:../../opus/celt/cwrs.c ****   CELT_PVQ_U_DATA+1248,CELT_PVQ_U_DATA+1254,CELT_PVQ_U_DATA+1257
+ 425:../../opus/celt/cwrs.c **** };
+ 426:../../opus/celt/cwrs.c **** #endif
+ 427:../../opus/celt/cwrs.c **** 
+ 428:../../opus/celt/cwrs.c **** #if defined(CUSTOM_MODES)
+ 429:../../opus/celt/cwrs.c **** void get_required_bits(opus_int16 *_bits,int _n,int _maxk,int _frac){
+ 430:../../opus/celt/cwrs.c ****   int k;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 9
+
+
+ 431:../../opus/celt/cwrs.c ****   /*_maxk==0 => there's nothing to do.*/
+ 432:../../opus/celt/cwrs.c ****   celt_assert(_maxk>0);
+ 433:../../opus/celt/cwrs.c ****   _bits[0]=0;
+ 434:../../opus/celt/cwrs.c ****   for(k=1;k<=_maxk;k++)_bits[k]=log2_frac(CELT_PVQ_V(_n,k),_frac);
+ 435:../../opus/celt/cwrs.c **** }
+ 436:../../opus/celt/cwrs.c **** #endif
+ 437:../../opus/celt/cwrs.c **** 
+ 438:../../opus/celt/cwrs.c **** static opus_uint32 icwrs(int _n,const int *_y){
+  28              		.loc 1 438 47 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 438 47 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0646     		mov	r6, r0
+ 439:../../opus/celt/cwrs.c ****   opus_uint32 i;
+  41              		.loc 1 439 3 is_stmt 1 view .LVU2
+ 440:../../opus/celt/cwrs.c ****   int         j;
+  42              		.loc 1 440 3 view .LVU3
+ 441:../../opus/celt/cwrs.c ****   int         k;
+  43              		.loc 1 441 3 view .LVU4
+ 442:../../opus/celt/cwrs.c ****   celt_assert(_n>=2);
+  44              		.loc 1 442 21 view .LVU5
+ 443:../../opus/celt/cwrs.c ****   j=_n-1;
+  45              		.loc 1 443 3 view .LVU6
+  46              		.loc 1 443 4 is_stmt 0 view .LVU7
+  47 0004 421E     		subs	r2, r0, #1
+  48              	.LVL1:
+ 444:../../opus/celt/cwrs.c ****   i=_y[j]<0;
+  49              		.loc 1 444 3 is_stmt 1 view .LVU8
+  50              		.loc 1 444 7 is_stmt 0 view .LVU9
+  51 0006 51F82230 		ldr	r3, [r1, r2, lsl #2]
+  52              		.loc 1 444 10 view .LVU10
+  53 000a D80F     		lsrs	r0, r3, #31
+  54              	.LVL2:
+ 445:../../opus/celt/cwrs.c ****   k=abs(_y[j]);
+  55              		.loc 1 445 3 is_stmt 1 view .LVU11
+  56              		.loc 1 445 4 is_stmt 0 view .LVU12
+  57 000c 002B     		cmp	r3, #0
+  58 000e B8BF     		it	lt
+  59 0010 5B42     		rsblt	r3, r3, #0
+  60              	.LVL3:
+  61              		.loc 1 445 4 view .LVU13
+  62 0012 0DE0     		b	.L8
+  63              	.L2:
+ 446:../../opus/celt/cwrs.c ****   do{
+ 447:../../opus/celt/cwrs.c ****     j--;
+ 448:../../opus/celt/cwrs.c ****     i+=CELT_PVQ_U(_n-j,k);
+  64              		.loc 1 448 8 discriminator 2 view .LVU14
+  65 0014 9C00     		lsls	r4, r3, #2
+  66              	.L3:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 10
+
+
+  67              		.loc 1 448 8 discriminator 4 view .LVU15
+  68 0016 2C59     		ldr	r4, [r5, r4]
+  69              		.loc 1 448 6 discriminator 4 view .LVU16
+  70 0018 2044     		add	r0, r0, r4
+  71              	.LVL4:
+ 449:../../opus/celt/cwrs.c ****     k+=abs(_y[j]);
+  72              		.loc 1 449 5 is_stmt 1 view .LVU17
+  73              		.loc 1 449 14 is_stmt 0 view .LVU18
+  74 001a 51F82240 		ldr	r4, [r1, r2, lsl #2]
+  75              		.loc 1 449 8 view .LVU19
+  76 001e 84EAE47E 		eor	lr, r4, r4, asr #31
+  77 0022 AEEBE47E 		sub	lr, lr, r4, asr #31
+  78              		.loc 1 449 6 view .LVU20
+  79 0026 7344     		add	r3, r3, lr
+  80              	.LVL5:
+ 450:../../opus/celt/cwrs.c ****     if(_y[j]<0)i+=CELT_PVQ_U(_n-j,k+1);
+  81              		.loc 1 450 5 is_stmt 1 view .LVU21
+  82              		.loc 1 450 7 is_stmt 0 view .LVU22
+  83 0028 002C     		cmp	r4, #0
+  84 002a 10DB     		blt	.L11
+  85              	.L4:
+ 451:../../opus/celt/cwrs.c ****   }
+ 452:../../opus/celt/cwrs.c ****   while(j>0);
+  86              		.loc 1 452 10 is_stmt 1 view .LVU23
+  87 002c 002A     		cmp	r2, #0
+  88 002e 20DD     		ble	.L12
+  89              	.L8:
+ 446:../../opus/celt/cwrs.c ****     j--;
+  90              		.loc 1 446 3 view .LVU24
+ 447:../../opus/celt/cwrs.c ****     i+=CELT_PVQ_U(_n-j,k);
+  91              		.loc 1 447 5 view .LVU25
+ 447:../../opus/celt/cwrs.c ****     i+=CELT_PVQ_U(_n-j,k);
+  92              		.loc 1 447 6 is_stmt 0 view .LVU26
+  93 0030 013A     		subs	r2, r2, #1
+  94              	.LVL6:
+ 448:../../opus/celt/cwrs.c ****     k+=abs(_y[j]);
+  95              		.loc 1 448 5 is_stmt 1 view .LVU27
+ 448:../../opus/celt/cwrs.c ****     k+=abs(_y[j]);
+  96              		.loc 1 448 8 is_stmt 0 view .LVU28
+  97 0032 A6EB020C 		sub	ip, r6, r2
+  98 0036 6546     		mov	r5, ip
+  99 0038 9C45     		cmp	ip, r3
+ 100 003a A8BF     		it	ge
+ 101 003c 1D46     		movge	r5, r3
+ 102 003e 0D4C     		ldr	r4, .L13
+ 103 0040 54F82550 		ldr	r5, [r4, r5, lsl #2]
+ 104 0044 9C45     		cmp	ip, r3
+ 105 0046 E5DD     		ble	.L2
+ 448:../../opus/celt/cwrs.c ****     k+=abs(_y[j]);
+ 106              		.loc 1 448 8 discriminator 1 view .LVU29
+ 107 0048 4FEA8C04 		lsl	r4, ip, #2
+ 108 004c E3E7     		b	.L3
+ 109              	.L11:
+ 450:../../opus/celt/cwrs.c ****   }
+ 110              		.loc 1 450 16 is_stmt 1 discriminator 1 view .LVU30
+ 450:../../opus/celt/cwrs.c ****   }
+ 111              		.loc 1 450 19 is_stmt 0 discriminator 1 view .LVU31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 11
+
+
+ 112 004e 9C45     		cmp	ip, r3
+ 113 0050 0BDD     		ble	.L9
+ 450:../../opus/celt/cwrs.c ****   }
+ 114              		.loc 1 450 19 discriminator 3 view .LVU32
+ 115 0052 5D1C     		adds	r5, r3, #1
+ 116              	.L5:
+ 450:../../opus/celt/cwrs.c ****   }
+ 117              		.loc 1 450 19 discriminator 5 view .LVU33
+ 118 0054 074C     		ldr	r4, .L13
+ 119 0056 54F82550 		ldr	r5, [r4, r5, lsl #2]
+ 120 005a 5C1C     		adds	r4, r3, #1
+ 121 005c A445     		cmp	ip, r4
+ 122 005e 06DD     		ble	.L6
+ 450:../../opus/celt/cwrs.c ****   }
+ 123              		.loc 1 450 19 discriminator 6 view .LVU34
+ 124 0060 4FEA8C04 		lsl	r4, ip, #2
+ 125              	.L7:
+ 450:../../opus/celt/cwrs.c ****   }
+ 126              		.loc 1 450 19 discriminator 9 view .LVU35
+ 127 0064 2C59     		ldr	r4, [r5, r4]
+ 450:../../opus/celt/cwrs.c ****   }
+ 128              		.loc 1 450 17 discriminator 9 view .LVU36
+ 129 0066 2044     		add	r0, r0, r4
+ 130              	.LVL7:
+ 450:../../opus/celt/cwrs.c ****   }
+ 131              		.loc 1 450 17 discriminator 9 view .LVU37
+ 132 0068 E0E7     		b	.L4
+ 133              	.L9:
+ 450:../../opus/celt/cwrs.c ****   }
+ 134              		.loc 1 450 19 discriminator 2 view .LVU38
+ 135 006a 6546     		mov	r5, ip
+ 136 006c F2E7     		b	.L5
+ 137              	.L6:
+ 450:../../opus/celt/cwrs.c ****   }
+ 138              		.loc 1 450 19 discriminator 7 view .LVU39
+ 139 006e A400     		lsls	r4, r4, #2
+ 140 0070 F8E7     		b	.L7
+ 141              	.L12:
+ 453:../../opus/celt/cwrs.c ****   return i;
+ 142              		.loc 1 453 3 is_stmt 1 view .LVU40
+ 454:../../opus/celt/cwrs.c **** }
+ 143              		.loc 1 454 1 is_stmt 0 view .LVU41
+ 144 0072 70BD     		pop	{r4, r5, r6, pc}
+ 145              	.LVL8:
+ 146              	.L14:
+ 147              		.loc 1 454 1 view .LVU42
+ 148              		.align	2
+ 149              	.L13:
+ 150 0074 00000000 		.word	CELT_PVQ_U_ROW
+ 151              		.cfi_endproc
+ 152              	.LFE21:
+ 154              		.section	.text.cwrsi,"ax",%progbits
+ 155              		.align	1
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	cwrsi:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 12
+
+
+ 161              	.LVL9:
+ 162              	.LFB23:
+ 455:../../opus/celt/cwrs.c **** 
+ 456:../../opus/celt/cwrs.c **** void encode_pulses(const int *_y,int _n,int _k,ec_enc *_enc){
+ 457:../../opus/celt/cwrs.c ****   celt_assert(_k>0);
+ 458:../../opus/celt/cwrs.c ****   ec_enc_uint(_enc,icwrs(_n,_y),CELT_PVQ_V(_n,_k));
+ 459:../../opus/celt/cwrs.c **** }
+ 460:../../opus/celt/cwrs.c **** 
+ 461:../../opus/celt/cwrs.c **** static opus_val32 cwrsi(int _n,int _k,opus_uint32 _i,int *_y){
+ 163              		.loc 1 461 62 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167              		.loc 1 461 62 is_stmt 0 view .LVU44
+ 168 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 169              	.LCFI1:
+ 170              		.cfi_def_cfa_offset 20
+ 171              		.cfi_offset 4, -20
+ 172              		.cfi_offset 5, -16
+ 173              		.cfi_offset 6, -12
+ 174              		.cfi_offset 7, -8
+ 175              		.cfi_offset 14, -4
+ 462:../../opus/celt/cwrs.c ****   opus_uint32 p;
+ 176              		.loc 1 462 3 is_stmt 1 view .LVU45
+ 463:../../opus/celt/cwrs.c ****   int         s;
+ 177              		.loc 1 463 3 view .LVU46
+ 464:../../opus/celt/cwrs.c ****   int         k0;
+ 178              		.loc 1 464 3 view .LVU47
+ 465:../../opus/celt/cwrs.c ****   opus_int16  val;
+ 179              		.loc 1 465 3 view .LVU48
+ 466:../../opus/celt/cwrs.c ****   opus_val32  yy=0;
+ 180              		.loc 1 466 3 view .LVU49
+ 181              	.LVL10:
+ 467:../../opus/celt/cwrs.c ****   celt_assert(_k>0);
+ 182              		.loc 1 467 20 view .LVU50
+ 468:../../opus/celt/cwrs.c ****   celt_assert(_n>1);
+ 183              		.loc 1 468 20 view .LVU51
+ 469:../../opus/celt/cwrs.c ****   while(_n>2){
+ 184              		.loc 1 469 3 view .LVU52
+ 466:../../opus/celt/cwrs.c ****   celt_assert(_k>0);
+ 185              		.loc 1 466 15 is_stmt 0 view .LVU53
+ 186 0002 0025     		movs	r5, #0
+ 187              		.loc 1 469 8 view .LVU54
+ 188 0004 17E0     		b	.L16
+ 189              	.LVL11:
+ 190              	.L18:
+ 191              	.LBB2:
+ 192              	.LBB3:
+ 470:../../opus/celt/cwrs.c ****     opus_uint32 q;
+ 471:../../opus/celt/cwrs.c ****     /*Lots of pulses case:*/
+ 472:../../opus/celt/cwrs.c ****     if(_k>=_n){
+ 473:../../opus/celt/cwrs.c ****       const opus_uint32 *row;
+ 474:../../opus/celt/cwrs.c ****       row=CELT_PVQ_U_ROW[_n];
+ 475:../../opus/celt/cwrs.c ****       /*Are the pulses in this dimension negative?*/
+ 476:../../opus/celt/cwrs.c ****       p=row[_k+1];
+ 477:../../opus/celt/cwrs.c ****       s=-(_i>=p);
+ 478:../../opus/celt/cwrs.c ****       _i-=p&s;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 13
+
+
+ 479:../../opus/celt/cwrs.c ****       /*Count how many pulses were placed in this dimension.*/
+ 480:../../opus/celt/cwrs.c ****       k0=_k;
+ 481:../../opus/celt/cwrs.c ****       q=row[_n];
+ 482:../../opus/celt/cwrs.c ****       if(q>_i){
+ 483:../../opus/celt/cwrs.c ****         celt_sig_assert(p>q);
+ 484:../../opus/celt/cwrs.c ****         _k=_n;
+ 485:../../opus/celt/cwrs.c ****         do p=CELT_PVQ_U_ROW[--_k][_n];
+ 486:../../opus/celt/cwrs.c ****         while(p>_i);
+ 487:../../opus/celt/cwrs.c ****       }
+ 488:../../opus/celt/cwrs.c ****       else for(p=row[_k];p>_i;p=row[_k])_k--;
+ 193              		.loc 1 488 12 is_stmt 1 view .LVU55
+ 194              		.loc 1 488 17 is_stmt 0 view .LVU56
+ 195 0006 57F82120 		ldr	r2, [r7, r1, lsl #2]
+ 196              	.LVL12:
+ 197              		.loc 1 488 12 view .LVU57
+ 198 000a 8C46     		mov	ip, r1
+ 199 000c 03E0     		b	.L21
+ 200              	.LVL13:
+ 201              	.L22:
+ 202              		.loc 1 488 41 is_stmt 1 discriminator 3 view .LVU58
+ 203              		.loc 1 488 43 is_stmt 0 discriminator 3 view .LVU59
+ 204 000e 0CF1FF3C 		add	ip, ip, #-1
+ 205              	.LVL14:
+ 206              		.loc 1 488 32 is_stmt 1 discriminator 3 view .LVU60
+ 207 0012 57F82C20 		ldr	r2, [r7, ip, lsl #2]
+ 208              	.LVL15:
+ 209              	.L21:
+ 210              		.loc 1 488 27 discriminator 1 view .LVU61
+ 211 0016 7245     		cmp	r2, lr
+ 212 0018 F9D8     		bhi	.L22
+ 213              	.L20:
+ 489:../../opus/celt/cwrs.c ****       _i-=p;
+ 214              		.loc 1 489 7 view .LVU62
+ 215              		.loc 1 489 9 is_stmt 0 view .LVU63
+ 216 001a AEEB0202 		sub	r2, lr, r2
+ 217              	.LVL16:
+ 490:../../opus/celt/cwrs.c ****       val=(k0-_k+s)^s;
+ 218              		.loc 1 490 7 is_stmt 1 view .LVU64
+ 219              		.loc 1 490 14 is_stmt 0 view .LVU65
+ 220 001e A1EB0C01 		sub	r1, r1, ip
+ 221              	.LVL17:
+ 222              		.loc 1 490 17 view .LVU66
+ 223 0022 16FA81F1 		uxtah	r1, r6, r1
+ 224 0026 09B2     		sxth	r1, r1
+ 225              		.loc 1 490 10 view .LVU67
+ 226 0028 7140     		eors	r1, r1, r6
+ 227              	.LVL18:
+ 491:../../opus/celt/cwrs.c ****       *_y++=val;
+ 228              		.loc 1 491 7 is_stmt 1 view .LVU68
+ 229              		.loc 1 491 12 is_stmt 0 view .LVU69
+ 230 002a 43F8041B 		str	r1, [r3], #4
+ 231              	.LVL19:
+ 492:../../opus/celt/cwrs.c ****       yy=MAC16_16(yy,val,val);
+ 232              		.loc 1 492 7 is_stmt 1 view .LVU70
+ 233              		.loc 1 492 9 is_stmt 0 view .LVU71
+ 234 002e 01FB0155 		mla	r5, r1, r1, r5
+ 235              	.LVL20:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 14
+
+
+ 236              		.loc 1 492 9 view .LVU72
+ 237              	.LBE3:
+ 238 0032 6146     		mov	r1, ip
+ 239              	.LVL21:
+ 240              	.L23:
+ 493:../../opus/celt/cwrs.c ****     }
+ 494:../../opus/celt/cwrs.c ****     /*Lots of dimensions case:*/
+ 495:../../opus/celt/cwrs.c ****     else{
+ 496:../../opus/celt/cwrs.c ****       /*Are there any pulses in this dimension at all?*/
+ 497:../../opus/celt/cwrs.c ****       p=CELT_PVQ_U_ROW[_k][_n];
+ 498:../../opus/celt/cwrs.c ****       q=CELT_PVQ_U_ROW[_k+1][_n];
+ 499:../../opus/celt/cwrs.c ****       if(p<=_i&&_i<q){
+ 500:../../opus/celt/cwrs.c ****         _i-=p;
+ 501:../../opus/celt/cwrs.c ****         *_y++=0;
+ 502:../../opus/celt/cwrs.c ****       }
+ 503:../../opus/celt/cwrs.c ****       else{
+ 504:../../opus/celt/cwrs.c ****         /*Are the pulses in this dimension negative?*/
+ 505:../../opus/celt/cwrs.c ****         s=-(_i>=q);
+ 506:../../opus/celt/cwrs.c ****         _i-=q&s;
+ 507:../../opus/celt/cwrs.c ****         /*Count how many pulses were placed in this dimension.*/
+ 508:../../opus/celt/cwrs.c ****         k0=_k;
+ 509:../../opus/celt/cwrs.c ****         do p=CELT_PVQ_U_ROW[--_k][_n];
+ 510:../../opus/celt/cwrs.c ****         while(p>_i);
+ 511:../../opus/celt/cwrs.c ****         _i-=p;
+ 512:../../opus/celt/cwrs.c ****         val=(k0-_k+s)^s;
+ 513:../../opus/celt/cwrs.c ****         *_y++=val;
+ 514:../../opus/celt/cwrs.c ****         yy=MAC16_16(yy,val,val);
+ 515:../../opus/celt/cwrs.c ****       }
+ 516:../../opus/celt/cwrs.c ****     }
+ 517:../../opus/celt/cwrs.c ****     _n--;
+ 241              		.loc 1 517 5 is_stmt 1 view .LVU73
+ 242              		.loc 1 517 7 is_stmt 0 view .LVU74
+ 243 0034 0138     		subs	r0, r0, #1
+ 244              	.LVL22:
+ 245              	.L16:
+ 246              		.loc 1 517 7 view .LVU75
+ 247              	.LBE2:
+ 469:../../opus/celt/cwrs.c ****     opus_uint32 q;
+ 248              		.loc 1 469 11 is_stmt 1 view .LVU76
+ 249 0036 0228     		cmp	r0, #2
+ 250 0038 56DD     		ble	.L29
+ 251              	.LBB5:
+ 470:../../opus/celt/cwrs.c ****     /*Lots of pulses case:*/
+ 252              		.loc 1 470 5 view .LVU77
+ 472:../../opus/celt/cwrs.c ****       const opus_uint32 *row;
+ 253              		.loc 1 472 5 view .LVU78
+ 472:../../opus/celt/cwrs.c ****       const opus_uint32 *row;
+ 254              		.loc 1 472 7 is_stmt 0 view .LVU79
+ 255 003a 8842     		cmp	r0, r1
+ 256 003c 1DDC     		bgt	.L17
+ 257              	.LBB4:
+ 473:../../opus/celt/cwrs.c ****       row=CELT_PVQ_U_ROW[_n];
+ 258              		.loc 1 473 7 is_stmt 1 view .LVU80
+ 474:../../opus/celt/cwrs.c ****       /*Are the pulses in this dimension negative?*/
+ 259              		.loc 1 474 7 view .LVU81
+ 474:../../opus/celt/cwrs.c ****       /*Are the pulses in this dimension negative?*/
+ 260              		.loc 1 474 10 is_stmt 0 view .LVU82
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 15
+
+
+ 261 003e 3B4C     		ldr	r4, .L30
+ 262 0040 54F82070 		ldr	r7, [r4, r0, lsl #2]
+ 263              	.LVL23:
+ 476:../../opus/celt/cwrs.c ****       s=-(_i>=p);
+ 264              		.loc 1 476 7 is_stmt 1 view .LVU83
+ 476:../../opus/celt/cwrs.c ****       s=-(_i>=p);
+ 265              		.loc 1 476 12 is_stmt 0 view .LVU84
+ 266 0044 4C1C     		adds	r4, r1, #1
+ 476:../../opus/celt/cwrs.c ****       s=-(_i>=p);
+ 267              		.loc 1 476 8 view .LVU85
+ 268 0046 57F82440 		ldr	r4, [r7, r4, lsl #2]
+ 269              	.LVL24:
+ 477:../../opus/celt/cwrs.c ****       _i-=p&s;
+ 270              		.loc 1 477 7 is_stmt 1 view .LVU86
+ 477:../../opus/celt/cwrs.c ****       _i-=p&s;
+ 271              		.loc 1 477 8 is_stmt 0 view .LVU87
+ 272 004a A242     		cmp	r2, r4
+ 273 004c 4FF0FF36 		mov	r6, #-1
+ 274 0050 38BF     		it	cc
+ 275 0052 0026     		movcc	r6, #0
+ 276              	.LVL25:
+ 478:../../opus/celt/cwrs.c ****       /*Count how many pulses were placed in this dimension.*/
+ 277              		.loc 1 478 7 is_stmt 1 view .LVU88
+ 478:../../opus/celt/cwrs.c ****       /*Count how many pulses were placed in this dimension.*/
+ 278              		.loc 1 478 12 is_stmt 0 view .LVU89
+ 279 0054 06EA040E 		and	lr, r6, r4
+ 478:../../opus/celt/cwrs.c ****       /*Count how many pulses were placed in this dimension.*/
+ 280              		.loc 1 478 9 view .LVU90
+ 281 0058 A2EB0E0E 		sub	lr, r2, lr
+ 282              	.LVL26:
+ 480:../../opus/celt/cwrs.c ****       q=row[_n];
+ 283              		.loc 1 480 7 is_stmt 1 view .LVU91
+ 481:../../opus/celt/cwrs.c ****       if(q>_i){
+ 284              		.loc 1 481 7 view .LVU92
+ 481:../../opus/celt/cwrs.c ****       if(q>_i){
+ 285              		.loc 1 481 12 is_stmt 0 view .LVU93
+ 286 005c 8400     		lsls	r4, r0, #2
+ 287              	.LVL27:
+ 481:../../opus/celt/cwrs.c ****       if(q>_i){
+ 288              		.loc 1 481 8 view .LVU94
+ 289 005e 57F82020 		ldr	r2, [r7, r0, lsl #2]
+ 290              	.LVL28:
+ 482:../../opus/celt/cwrs.c ****         celt_sig_assert(p>q);
+ 291              		.loc 1 482 7 is_stmt 1 view .LVU95
+ 482:../../opus/celt/cwrs.c ****         celt_sig_assert(p>q);
+ 292              		.loc 1 482 9 is_stmt 0 view .LVU96
+ 293 0062 9645     		cmp	lr, r2
+ 294 0064 CFD2     		bcs	.L18
+ 484:../../opus/celt/cwrs.c ****         do p=CELT_PVQ_U_ROW[--_k][_n];
+ 295              		.loc 1 484 11 view .LVU97
+ 296 0066 8446     		mov	ip, r0
+ 297              	.LVL29:
+ 298              	.L19:
+ 485:../../opus/celt/cwrs.c ****         while(p>_i);
+ 299              		.loc 1 485 9 is_stmt 1 view .LVU98
+ 485:../../opus/celt/cwrs.c ****         while(p>_i);
+ 300              		.loc 1 485 12 view .LVU99
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 16
+
+
+ 485:../../opus/celt/cwrs.c ****         while(p>_i);
+ 301              		.loc 1 485 13 is_stmt 0 view .LVU100
+ 302 0068 0CF1FF3C 		add	ip, ip, #-1
+ 303              	.LVL30:
+ 485:../../opus/celt/cwrs.c ****         while(p>_i);
+ 304              		.loc 1 485 28 view .LVU101
+ 305 006c 2F4A     		ldr	r2, .L30
+ 306 006e 52F82C20 		ldr	r2, [r2, ip, lsl #2]
+ 485:../../opus/celt/cwrs.c ****         while(p>_i);
+ 307              		.loc 1 485 13 view .LVU102
+ 308 0072 1259     		ldr	r2, [r2, r4]
+ 309              	.LVL31:
+ 486:../../opus/celt/cwrs.c ****       }
+ 310              		.loc 1 486 16 is_stmt 1 discriminator 1 view .LVU103
+ 311 0074 9645     		cmp	lr, r2
+ 312 0076 F7D3     		bcc	.L19
+ 313 0078 CFE7     		b	.L20
+ 314              	.LVL32:
+ 315              	.L17:
+ 486:../../opus/celt/cwrs.c ****       }
+ 316              		.loc 1 486 16 is_stmt 0 discriminator 1 view .LVU104
+ 317              	.LBE4:
+ 497:../../opus/celt/cwrs.c ****       q=CELT_PVQ_U_ROW[_k+1][_n];
+ 318              		.loc 1 497 7 is_stmt 1 view .LVU105
+ 497:../../opus/celt/cwrs.c ****       q=CELT_PVQ_U_ROW[_k+1][_n];
+ 319              		.loc 1 497 23 is_stmt 0 view .LVU106
+ 320 007a 2C4C     		ldr	r4, .L30
+ 321 007c 54F82160 		ldr	r6, [r4, r1, lsl #2]
+ 497:../../opus/celt/cwrs.c ****       q=CELT_PVQ_U_ROW[_k+1][_n];
+ 322              		.loc 1 497 27 view .LVU107
+ 323 0080 8700     		lsls	r7, r0, #2
+ 497:../../opus/celt/cwrs.c ****       q=CELT_PVQ_U_ROW[_k+1][_n];
+ 324              		.loc 1 497 8 view .LVU108
+ 325 0082 56F820C0 		ldr	ip, [r6, r0, lsl #2]
+ 326              	.LVL33:
+ 498:../../opus/celt/cwrs.c ****       if(p<=_i&&_i<q){
+ 327              		.loc 1 498 7 is_stmt 1 view .LVU109
+ 498:../../opus/celt/cwrs.c ****       if(p<=_i&&_i<q){
+ 328              		.loc 1 498 26 is_stmt 0 view .LVU110
+ 329 0086 4E1C     		adds	r6, r1, #1
+ 498:../../opus/celt/cwrs.c ****       if(p<=_i&&_i<q){
+ 330              		.loc 1 498 23 view .LVU111
+ 331 0088 54F82640 		ldr	r4, [r4, r6, lsl #2]
+ 498:../../opus/celt/cwrs.c ****       if(p<=_i&&_i<q){
+ 332              		.loc 1 498 8 view .LVU112
+ 333 008c 54F82060 		ldr	r6, [r4, r0, lsl #2]
+ 334              	.LVL34:
+ 499:../../opus/celt/cwrs.c ****         _i-=p;
+ 335              		.loc 1 499 7 is_stmt 1 view .LVU113
+ 499:../../opus/celt/cwrs.c ****         _i-=p;
+ 336              		.loc 1 499 15 is_stmt 0 view .LVU114
+ 337 0090 6245     		cmp	r2, ip
+ 338 0092 34BF     		ite	cc
+ 339 0094 0024     		movcc	r4, #0
+ 340 0096 0124     		movcs	r4, #1
+ 341 0098 B242     		cmp	r2, r6
+ 342 009a 28BF     		it	cs
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 17
+
+
+ 343 009c 0024     		movcs	r4, #0
+ 499:../../opus/celt/cwrs.c ****         _i-=p;
+ 344              		.loc 1 499 9 view .LVU115
+ 345 009e 2CB1     		cbz	r4, .L24
+ 500:../../opus/celt/cwrs.c ****         *_y++=0;
+ 346              		.loc 1 500 9 is_stmt 1 view .LVU116
+ 500:../../opus/celt/cwrs.c ****         *_y++=0;
+ 347              		.loc 1 500 11 is_stmt 0 view .LVU117
+ 348 00a0 A2EB0C02 		sub	r2, r2, ip
+ 349              	.LVL35:
+ 501:../../opus/celt/cwrs.c ****       }
+ 350              		.loc 1 501 9 is_stmt 1 view .LVU118
+ 501:../../opus/celt/cwrs.c ****       }
+ 351              		.loc 1 501 14 is_stmt 0 view .LVU119
+ 352 00a4 0024     		movs	r4, #0
+ 353 00a6 43F8044B 		str	r4, [r3], #4
+ 354              	.LVL36:
+ 501:../../opus/celt/cwrs.c ****       }
+ 355              		.loc 1 501 14 view .LVU120
+ 356 00aa C3E7     		b	.L23
+ 357              	.L24:
+ 505:../../opus/celt/cwrs.c ****         _i-=q&s;
+ 358              		.loc 1 505 9 is_stmt 1 view .LVU121
+ 505:../../opus/celt/cwrs.c ****         _i-=q&s;
+ 359              		.loc 1 505 10 is_stmt 0 view .LVU122
+ 360 00ac B242     		cmp	r2, r6
+ 361 00ae 4FF0FF3C 		mov	ip, #-1
+ 362              	.LVL37:
+ 505:../../opus/celt/cwrs.c ****         _i-=q&s;
+ 363              		.loc 1 505 10 view .LVU123
+ 364 00b2 38BF     		it	cc
+ 365 00b4 4FF0000C 		movcc	ip, #0
+ 366              	.LVL38:
+ 506:../../opus/celt/cwrs.c ****         /*Count how many pulses were placed in this dimension.*/
+ 367              		.loc 1 506 9 is_stmt 1 view .LVU124
+ 506:../../opus/celt/cwrs.c ****         /*Count how many pulses were placed in this dimension.*/
+ 368              		.loc 1 506 14 is_stmt 0 view .LVU125
+ 369 00b8 0CEA0606 		and	r6, ip, r6
+ 370              	.LVL39:
+ 506:../../opus/celt/cwrs.c ****         /*Count how many pulses were placed in this dimension.*/
+ 371              		.loc 1 506 11 view .LVU126
+ 372 00bc 961B     		subs	r6, r2, r6
+ 373              	.LVL40:
+ 508:../../opus/celt/cwrs.c ****         do p=CELT_PVQ_U_ROW[--_k][_n];
+ 374              		.loc 1 508 9 is_stmt 1 view .LVU127
+ 506:../../opus/celt/cwrs.c ****         /*Count how many pulses were placed in this dimension.*/
+ 375              		.loc 1 506 11 is_stmt 0 view .LVU128
+ 376 00be 0C46     		mov	r4, r1
+ 377              	.LVL41:
+ 378              	.L25:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 379              		.loc 1 509 9 is_stmt 1 view .LVU129
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 380              		.loc 1 509 12 view .LVU130
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 381              		.loc 1 509 13 is_stmt 0 view .LVU131
+ 382 00c0 013C     		subs	r4, r4, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 18
+
+
+ 383              	.LVL42:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 384              		.loc 1 509 28 view .LVU132
+ 385 00c2 1A4A     		ldr	r2, .L30
+ 386              	.LVL43:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 387              		.loc 1 509 28 view .LVU133
+ 388 00c4 52F82420 		ldr	r2, [r2, r4, lsl #2]
+ 389              	.LVL44:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 390              		.loc 1 509 13 view .LVU134
+ 391 00c8 D259     		ldr	r2, [r2, r7]
+ 392              	.LVL45:
+ 510:../../opus/celt/cwrs.c ****         _i-=p;
+ 393              		.loc 1 510 16 is_stmt 1 discriminator 1 view .LVU135
+ 394 00ca 9642     		cmp	r6, r2
+ 395 00cc F8D3     		bcc	.L25
+ 511:../../opus/celt/cwrs.c ****         val=(k0-_k+s)^s;
+ 396              		.loc 1 511 9 view .LVU136
+ 511:../../opus/celt/cwrs.c ****         val=(k0-_k+s)^s;
+ 397              		.loc 1 511 11 is_stmt 0 view .LVU137
+ 398 00ce B21A     		subs	r2, r6, r2
+ 399              	.LVL46:
+ 512:../../opus/celt/cwrs.c ****         *_y++=val;
+ 400              		.loc 1 512 9 is_stmt 1 view .LVU138
+ 512:../../opus/celt/cwrs.c ****         *_y++=val;
+ 401              		.loc 1 512 16 is_stmt 0 view .LVU139
+ 402 00d0 091B     		subs	r1, r1, r4
+ 403              	.LVL47:
+ 512:../../opus/celt/cwrs.c ****         *_y++=val;
+ 404              		.loc 1 512 19 view .LVU140
+ 405 00d2 1CFA81F1 		uxtah	r1, ip, r1
+ 406 00d6 09B2     		sxth	r1, r1
+ 512:../../opus/celt/cwrs.c ****         *_y++=val;
+ 407              		.loc 1 512 12 view .LVU141
+ 408 00d8 8CEA0101 		eor	r1, ip, r1
+ 409              	.LVL48:
+ 513:../../opus/celt/cwrs.c ****         yy=MAC16_16(yy,val,val);
+ 410              		.loc 1 513 9 is_stmt 1 view .LVU142
+ 513:../../opus/celt/cwrs.c ****         yy=MAC16_16(yy,val,val);
+ 411              		.loc 1 513 14 is_stmt 0 view .LVU143
+ 412 00dc 43F8041B 		str	r1, [r3], #4
+ 413              	.LVL49:
+ 514:../../opus/celt/cwrs.c ****       }
+ 414              		.loc 1 514 9 is_stmt 1 view .LVU144
+ 514:../../opus/celt/cwrs.c ****       }
+ 415              		.loc 1 514 11 is_stmt 0 view .LVU145
+ 416 00e0 01FB0155 		mla	r5, r1, r1, r5
+ 417              	.LVL50:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 418              		.loc 1 509 13 view .LVU146
+ 419 00e4 2146     		mov	r1, r4
+ 420              	.LVL51:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 421              		.loc 1 509 13 view .LVU147
+ 422 00e6 A5E7     		b	.L23
+ 423              	.LVL52:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 19
+
+
+ 424              	.L29:
+ 509:../../opus/celt/cwrs.c ****         while(p>_i);
+ 425              		.loc 1 509 13 view .LVU148
+ 426              	.LBE5:
+ 518:../../opus/celt/cwrs.c ****   }
+ 519:../../opus/celt/cwrs.c ****   /*_n==2*/
+ 520:../../opus/celt/cwrs.c ****   p=2*_k+1;
+ 427              		.loc 1 520 3 is_stmt 1 view .LVU149
+ 428              		.loc 1 520 6 is_stmt 0 view .LVU150
+ 429 00e8 4C00     		lsls	r4, r1, #1
+ 430              		.loc 1 520 9 view .LVU151
+ 431 00ea 0134     		adds	r4, r4, #1
+ 432              	.LVL53:
+ 521:../../opus/celt/cwrs.c ****   s=-(_i>=p);
+ 433              		.loc 1 521 3 is_stmt 1 view .LVU152
+ 434              		.loc 1 521 4 is_stmt 0 view .LVU153
+ 435 00ec A242     		cmp	r2, r4
+ 436 00ee 4FF0FF30 		mov	r0, #-1
+ 437              	.LVL54:
+ 438              		.loc 1 521 4 view .LVU154
+ 439 00f2 38BF     		it	cc
+ 440 00f4 0020     		movcc	r0, #0
+ 441              	.LVL55:
+ 522:../../opus/celt/cwrs.c ****   _i-=p&s;
+ 442              		.loc 1 522 3 is_stmt 1 view .LVU155
+ 443              		.loc 1 522 8 is_stmt 0 view .LVU156
+ 444 00f6 0440     		ands	r4, r4, r0
+ 445              	.LVL56:
+ 446              		.loc 1 522 5 view .LVU157
+ 447 00f8 121B     		subs	r2, r2, r4
+ 448              	.LVL57:
+ 523:../../opus/celt/cwrs.c ****   k0=_k;
+ 449              		.loc 1 523 3 is_stmt 1 view .LVU158
+ 524:../../opus/celt/cwrs.c ****   _k=(_i+1)>>1;
+ 450              		.loc 1 524 3 view .LVU159
+ 451              		.loc 1 524 9 is_stmt 0 view .LVU160
+ 452 00fa 541C     		adds	r4, r2, #1
+ 453              	.LVL58:
+ 525:../../opus/celt/cwrs.c ****   if(_k)_i-=2*_k-1;
+ 454              		.loc 1 525 3 is_stmt 1 view .LVU161
+ 455              		.loc 1 525 5 is_stmt 0 view .LVU162
+ 456 00fc 6408     		lsrs	r4, r4, #1
+ 457              	.LVL59:
+ 458              		.loc 1 525 5 view .LVU163
+ 459 00fe 02D0     		beq	.L27
+ 460              		.loc 1 525 9 is_stmt 1 discriminator 1 view .LVU164
+ 461              		.loc 1 525 11 is_stmt 0 discriminator 1 view .LVU165
+ 462 0100 A2EB4402 		sub	r2, r2, r4, lsl #1
+ 463              	.LVL60:
+ 464              		.loc 1 525 11 discriminator 1 view .LVU166
+ 465 0104 0132     		adds	r2, r2, #1
+ 466              	.LVL61:
+ 467              	.L27:
+ 526:../../opus/celt/cwrs.c ****   val=(k0-_k+s)^s;
+ 468              		.loc 1 526 3 is_stmt 1 view .LVU167
+ 469              		.loc 1 526 10 is_stmt 0 view .LVU168
+ 470 0106 A4B2     		uxth	r4, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 20
+
+
+ 471              	.LVL62:
+ 472              		.loc 1 526 10 view .LVU169
+ 473 0108 091B     		subs	r1, r1, r4
+ 474              	.LVL63:
+ 475              		.loc 1 526 13 view .LVU170
+ 476 010a 10FA81F1 		uxtah	r1, r0, r1
+ 477 010e 09B2     		sxth	r1, r1
+ 478              		.loc 1 526 6 view .LVU171
+ 479 0110 4140     		eors	r1, r1, r0
+ 480              	.LVL64:
+ 527:../../opus/celt/cwrs.c ****   *_y++=val;
+ 481              		.loc 1 527 3 is_stmt 1 view .LVU172
+ 482              		.loc 1 527 8 is_stmt 0 view .LVU173
+ 483 0112 1960     		str	r1, [r3]
+ 528:../../opus/celt/cwrs.c ****   yy=MAC16_16(yy,val,val);
+ 484              		.loc 1 528 3 is_stmt 1 view .LVU174
+ 485              		.loc 1 528 5 is_stmt 0 view .LVU175
+ 486 0114 01FB0151 		mla	r1, r1, r1, r5
+ 487              	.LVL65:
+ 529:../../opus/celt/cwrs.c ****   /*_n==1*/
+ 530:../../opus/celt/cwrs.c ****   s=-(int)_i;
+ 488              		.loc 1 530 3 is_stmt 1 view .LVU176
+ 489              		.loc 1 530 4 is_stmt 0 view .LVU177
+ 490 0118 5542     		rsbs	r5, r2, #0
+ 491              	.LVL66:
+ 531:../../opus/celt/cwrs.c ****   val=(_k+s)^s;
+ 492              		.loc 1 531 3 is_stmt 1 view .LVU178
+ 493              		.loc 1 531 10 is_stmt 0 view .LVU179
+ 494 011a A01A     		subs	r0, r4, r2
+ 495 011c 00B2     		sxth	r0, r0
+ 496              		.loc 1 531 13 view .LVU180
+ 497 011e 2AB2     		sxth	r2, r5
+ 498              	.LVL67:
+ 499              		.loc 1 531 6 view .LVU181
+ 500 0120 5040     		eors	r0, r0, r2
+ 501              	.LVL68:
+ 532:../../opus/celt/cwrs.c ****   *_y=val;
+ 502              		.loc 1 532 3 is_stmt 1 view .LVU182
+ 503              		.loc 1 532 6 is_stmt 0 view .LVU183
+ 504 0122 5860     		str	r0, [r3, #4]
+ 533:../../opus/celt/cwrs.c ****   yy=MAC16_16(yy,val,val);
+ 505              		.loc 1 533 3 is_stmt 1 view .LVU184
+ 506              	.LVL69:
+ 534:../../opus/celt/cwrs.c ****   return yy;
+ 507              		.loc 1 534 3 view .LVU185
+ 535:../../opus/celt/cwrs.c **** }
+ 508              		.loc 1 535 1 is_stmt 0 view .LVU186
+ 509 0124 00FB0010 		mla	r0, r0, r0, r1
+ 510              	.LVL70:
+ 511              		.loc 1 535 1 view .LVU187
+ 512 0128 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 513              	.LVL71:
+ 514              	.L31:
+ 515              		.loc 1 535 1 view .LVU188
+ 516 012a 00BF     		.align	2
+ 517              	.L30:
+ 518 012c 00000000 		.word	CELT_PVQ_U_ROW
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 21
+
+
+ 519              		.cfi_endproc
+ 520              	.LFE23:
+ 522              		.section	.text.encode_pulses,"ax",%progbits
+ 523              		.align	1
+ 524              		.global	encode_pulses
+ 525              		.syntax unified
+ 526              		.thumb
+ 527              		.thumb_func
+ 529              	encode_pulses:
+ 530              	.LVL72:
+ 531              	.LFB22:
+ 456:../../opus/celt/cwrs.c ****   celt_assert(_k>0);
+ 532              		.loc 1 456 61 is_stmt 1 view -0
+ 533              		.cfi_startproc
+ 534              		@ args = 0, pretend = 0, frame = 0
+ 535              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456:../../opus/celt/cwrs.c ****   celt_assert(_k>0);
+ 536              		.loc 1 456 61 is_stmt 0 view .LVU190
+ 537 0000 70B5     		push	{r4, r5, r6, lr}
+ 538              	.LCFI2:
+ 539              		.cfi_def_cfa_offset 16
+ 540              		.cfi_offset 4, -16
+ 541              		.cfi_offset 5, -12
+ 542              		.cfi_offset 6, -8
+ 543              		.cfi_offset 14, -4
+ 544 0002 0C46     		mov	r4, r1
+ 545 0004 1546     		mov	r5, r2
+ 546 0006 1E46     		mov	r6, r3
+ 457:../../opus/celt/cwrs.c ****   ec_enc_uint(_enc,icwrs(_n,_y),CELT_PVQ_V(_n,_k));
+ 547              		.loc 1 457 20 is_stmt 1 view .LVU191
+ 458:../../opus/celt/cwrs.c **** }
+ 548              		.loc 1 458 3 view .LVU192
+ 549 0008 0146     		mov	r1, r0
+ 550              	.LVL73:
+ 458:../../opus/celt/cwrs.c **** }
+ 551              		.loc 1 458 3 is_stmt 0 view .LVU193
+ 552 000a 2046     		mov	r0, r4
+ 553              	.LVL74:
+ 458:../../opus/celt/cwrs.c **** }
+ 554              		.loc 1 458 3 view .LVU194
+ 555 000c FFF7FEFF 		bl	icwrs
+ 556              	.LVL75:
+ 458:../../opus/celt/cwrs.c **** }
+ 557              		.loc 1 458 3 view .LVU195
+ 558 0010 0146     		mov	r1, r0
+ 458:../../opus/celt/cwrs.c **** }
+ 559              		.loc 1 458 33 discriminator 1 view .LVU196
+ 560 0012 2246     		mov	r2, r4
+ 561 0014 AC42     		cmp	r4, r5
+ 562 0016 A8BF     		it	ge
+ 563 0018 2A46     		movge	r2, r5
+ 564 001a 0E4B     		ldr	r3, .L40
+ 565 001c 53F82220 		ldr	r2, [r3, r2, lsl #2]
+ 566 0020 AC42     		cmp	r4, r5
+ 567 0022 11DD     		ble	.L33
+ 568 0024 A300     		lsls	r3, r4, #2
+ 569              	.L34:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 22
+
+
+ 458:../../opus/celt/cwrs.c **** }
+ 570              		.loc 1 458 33 discriminator 4 view .LVU197
+ 571 0026 D258     		ldr	r2, [r2, r3]
+ 572 0028 AC42     		cmp	r4, r5
+ 573 002a 0FDD     		ble	.L38
+ 458:../../opus/celt/cwrs.c **** }
+ 574              		.loc 1 458 33 discriminator 5 view .LVU198
+ 575 002c 681C     		adds	r0, r5, #1
+ 576              	.L35:
+ 458:../../opus/celt/cwrs.c **** }
+ 577              		.loc 1 458 33 discriminator 8 view .LVU199
+ 578 002e 094B     		ldr	r3, .L40
+ 579 0030 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 580 0034 0135     		adds	r5, r5, #1
+ 581              	.LVL76:
+ 458:../../opus/celt/cwrs.c **** }
+ 582              		.loc 1 458 33 discriminator 8 view .LVU200
+ 583 0036 A542     		cmp	r5, r4
+ 584 0038 0ADB     		blt	.L36
+ 458:../../opus/celt/cwrs.c **** }
+ 585              		.loc 1 458 33 discriminator 9 view .LVU201
+ 586 003a AC00     		lsls	r4, r5, #2
+ 587              	.LVL77:
+ 588              	.L37:
+ 458:../../opus/celt/cwrs.c **** }
+ 589              		.loc 1 458 33 discriminator 12 view .LVU202
+ 590 003c 1B59     		ldr	r3, [r3, r4]
+ 458:../../opus/celt/cwrs.c **** }
+ 591              		.loc 1 458 3 discriminator 12 view .LVU203
+ 592 003e 1A44     		add	r2, r2, r3
+ 593 0040 3046     		mov	r0, r6
+ 594 0042 FFF7FEFF 		bl	ec_enc_uint
+ 595              	.LVL78:
+ 459:../../opus/celt/cwrs.c **** 
+ 596              		.loc 1 459 1 view .LVU204
+ 597 0046 70BD     		pop	{r4, r5, r6, pc}
+ 598              	.LVL79:
+ 599              	.L33:
+ 458:../../opus/celt/cwrs.c **** }
+ 600              		.loc 1 458 33 discriminator 2 view .LVU205
+ 601 0048 AB00     		lsls	r3, r5, #2
+ 602 004a ECE7     		b	.L34
+ 603              	.L38:
+ 458:../../opus/celt/cwrs.c **** }
+ 604              		.loc 1 458 33 discriminator 6 view .LVU206
+ 605 004c 2046     		mov	r0, r4
+ 606 004e EEE7     		b	.L35
+ 607              	.LVL80:
+ 608              	.L36:
+ 458:../../opus/celt/cwrs.c **** }
+ 609              		.loc 1 458 33 discriminator 10 view .LVU207
+ 610 0050 A400     		lsls	r4, r4, #2
+ 611              	.LVL81:
+ 458:../../opus/celt/cwrs.c **** }
+ 612              		.loc 1 458 33 discriminator 10 view .LVU208
+ 613 0052 F3E7     		b	.L37
+ 614              	.L41:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 23
+
+
+ 615              		.align	2
+ 616              	.L40:
+ 617 0054 00000000 		.word	CELT_PVQ_U_ROW
+ 618              		.cfi_endproc
+ 619              	.LFE22:
+ 621              		.section	.text.decode_pulses,"ax",%progbits
+ 622              		.align	1
+ 623              		.global	decode_pulses
+ 624              		.syntax unified
+ 625              		.thumb
+ 626              		.thumb_func
+ 628              	decode_pulses:
+ 629              	.LVL82:
+ 630              	.LFB24:
+ 536:../../opus/celt/cwrs.c **** 
+ 537:../../opus/celt/cwrs.c **** opus_val32 decode_pulses(int *_y,int _n,int _k,ec_dec *_dec){
+ 631              		.loc 1 537 61 is_stmt 1 view -0
+ 632              		.cfi_startproc
+ 633              		@ args = 0, pretend = 0, frame = 0
+ 634              		@ frame_needed = 0, uses_anonymous_args = 0
+ 635              		.loc 1 537 61 is_stmt 0 view .LVU210
+ 636 0000 70B5     		push	{r4, r5, r6, lr}
+ 637              	.LCFI3:
+ 638              		.cfi_def_cfa_offset 16
+ 639              		.cfi_offset 4, -16
+ 640              		.cfi_offset 5, -12
+ 641              		.cfi_offset 6, -8
+ 642              		.cfi_offset 14, -4
+ 643 0002 0646     		mov	r6, r0
+ 644 0004 0C46     		mov	r4, r1
+ 645 0006 1546     		mov	r5, r2
+ 646 0008 1846     		mov	r0, r3
+ 647              	.LVL83:
+ 538:../../opus/celt/cwrs.c ****   return cwrsi(_n,_k,ec_dec_uint(_dec,CELT_PVQ_V(_n,_k)),_y);
+ 648              		.loc 1 538 3 is_stmt 1 view .LVU211
+ 649              		.loc 1 538 39 is_stmt 0 view .LVU212
+ 650 000a 8A42     		cmp	r2, r1
+ 651 000c A8BF     		it	ge
+ 652 000e 0A46     		movge	r2, r1
+ 653              	.LVL84:
+ 654              		.loc 1 538 39 view .LVU213
+ 655 0010 104B     		ldr	r3, .L50
+ 656              	.LVL85:
+ 657              		.loc 1 538 39 view .LVU214
+ 658 0012 53F82220 		ldr	r2, [r3, r2, lsl #2]
+ 659 0016 8D42     		cmp	r5, r1
+ 660 0018 16DA     		bge	.L43
+ 661              		.loc 1 538 39 discriminator 1 view .LVU215
+ 662 001a 8B00     		lsls	r3, r1, #2
+ 663              	.L44:
+ 664              		.loc 1 538 39 discriminator 4 view .LVU216
+ 665 001c D158     		ldr	r1, [r2, r3]
+ 666              	.LVL86:
+ 667              		.loc 1 538 39 discriminator 4 view .LVU217
+ 668 001e A542     		cmp	r5, r4
+ 669 0020 14DA     		bge	.L48
+ 670              		.loc 1 538 39 discriminator 5 view .LVU218
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 24
+
+
+ 671 0022 6A1C     		adds	r2, r5, #1
+ 672              	.L45:
+ 673              		.loc 1 538 39 discriminator 8 view .LVU219
+ 674 0024 0B4B     		ldr	r3, .L50
+ 675 0026 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 676 002a 6A1C     		adds	r2, r5, #1
+ 677 002c A242     		cmp	r2, r4
+ 678 002e 0FDB     		blt	.L46
+ 679              		.loc 1 538 39 discriminator 9 view .LVU220
+ 680 0030 9200     		lsls	r2, r2, #2
+ 681              	.L47:
+ 682              		.loc 1 538 39 discriminator 12 view .LVU221
+ 683 0032 9B58     		ldr	r3, [r3, r2]
+ 684              		.loc 1 538 10 discriminator 12 view .LVU222
+ 685 0034 1944     		add	r1, r1, r3
+ 686 0036 FFF7FEFF 		bl	ec_dec_uint
+ 687              	.LVL87:
+ 688              		.loc 1 538 10 discriminator 12 view .LVU223
+ 689 003a 0246     		mov	r2, r0
+ 690              		.loc 1 538 10 discriminator 1 view .LVU224
+ 691 003c 3346     		mov	r3, r6
+ 692 003e 2946     		mov	r1, r5
+ 693 0040 2046     		mov	r0, r4
+ 694 0042 FFF7FEFF 		bl	cwrsi
+ 695              	.LVL88:
+ 539:../../opus/celt/cwrs.c **** }
+ 696              		.loc 1 539 1 view .LVU225
+ 697 0046 70BD     		pop	{r4, r5, r6, pc}
+ 698              	.LVL89:
+ 699              	.L43:
+ 538:../../opus/celt/cwrs.c ****   return cwrsi(_n,_k,ec_dec_uint(_dec,CELT_PVQ_V(_n,_k)),_y);
+ 700              		.loc 1 538 39 discriminator 2 view .LVU226
+ 701 0048 AB00     		lsls	r3, r5, #2
+ 702 004a E7E7     		b	.L44
+ 703              	.LVL90:
+ 704              	.L48:
+ 538:../../opus/celt/cwrs.c ****   return cwrsi(_n,_k,ec_dec_uint(_dec,CELT_PVQ_V(_n,_k)),_y);
+ 705              		.loc 1 538 39 discriminator 6 view .LVU227
+ 706 004c 2246     		mov	r2, r4
+ 707 004e E9E7     		b	.L45
+ 708              	.L46:
+ 538:../../opus/celt/cwrs.c ****   return cwrsi(_n,_k,ec_dec_uint(_dec,CELT_PVQ_V(_n,_k)),_y);
+ 709              		.loc 1 538 39 discriminator 10 view .LVU228
+ 710 0050 A200     		lsls	r2, r4, #2
+ 711 0052 EEE7     		b	.L47
+ 712              	.L51:
+ 713              		.align	2
+ 714              	.L50:
+ 715 0054 00000000 		.word	CELT_PVQ_U_ROW
+ 716              		.cfi_endproc
+ 717              	.LFE24:
+ 719              		.section	.rodata.CELT_PVQ_U_ROW,"a"
+ 720              		.align	2
+ 723              	CELT_PVQ_U_ROW:
+ 724 0000 00000000 		.word	CELT_PVQ_U_DATA
+ 725 0004 C0020000 		.word	CELT_PVQ_U_DATA+704
+ 726 0008 7C050000 		.word	CELT_PVQ_U_DATA+1404
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 25
+
+
+ 727 000c 34080000 		.word	CELT_PVQ_U_DATA+2100
+ 728 0010 E80A0000 		.word	CELT_PVQ_U_DATA+2792
+ 729 0014 980D0000 		.word	CELT_PVQ_U_DATA+3480
+ 730 0018 44100000 		.word	CELT_PVQ_U_DATA+4164
+ 731 001c AC110000 		.word	CELT_PVQ_U_DATA+4524
+ 732 0020 68120000 		.word	CELT_PVQ_U_DATA+4712
+ 733 0024 DC120000 		.word	CELT_PVQ_U_DATA+4828
+ 734 0028 28130000 		.word	CELT_PVQ_U_DATA+4904
+ 735 002c 60130000 		.word	CELT_PVQ_U_DATA+4960
+ 736 0030 80130000 		.word	CELT_PVQ_U_DATA+4992
+ 737 0034 98130000 		.word	CELT_PVQ_U_DATA+5016
+ 738 0038 A4130000 		.word	CELT_PVQ_U_DATA+5028
+ 739              		.section	.rodata.CELT_PVQ_U_DATA,"a"
+ 740              		.align	2
+ 743              	CELT_PVQ_U_DATA:
+ 744 0000 01000000 		.word	1
+ 745 0004 00000000 		.word	0
+ 746 0008 00000000 		.word	0
+ 747 000c 00000000 		.word	0
+ 748 0010 00000000 		.word	0
+ 749 0014 00000000 		.word	0
+ 750 0018 00000000 		.word	0
+ 751 001c 00000000 		.word	0
+ 752 0020 00000000 		.word	0
+ 753 0024 00000000 		.word	0
+ 754 0028 00000000 		.word	0
+ 755 002c 00000000 		.word	0
+ 756 0030 00000000 		.word	0
+ 757 0034 00000000 		.word	0
+ 758 0038 00000000 		.word	0
+ 759 003c 00000000 		.word	0
+ 760 0040 00000000 		.word	0
+ 761 0044 00000000 		.word	0
+ 762 0048 00000000 		.word	0
+ 763 004c 00000000 		.word	0
+ 764 0050 00000000 		.word	0
+ 765 0054 00000000 		.word	0
+ 766 0058 00000000 		.word	0
+ 767 005c 00000000 		.word	0
+ 768 0060 00000000 		.word	0
+ 769 0064 00000000 		.word	0
+ 770 0068 00000000 		.word	0
+ 771 006c 00000000 		.word	0
+ 772 0070 00000000 		.word	0
+ 773 0074 00000000 		.word	0
+ 774 0078 00000000 		.word	0
+ 775 007c 00000000 		.word	0
+ 776 0080 00000000 		.word	0
+ 777 0084 00000000 		.word	0
+ 778 0088 00000000 		.word	0
+ 779 008c 00000000 		.word	0
+ 780 0090 00000000 		.word	0
+ 781 0094 00000000 		.word	0
+ 782 0098 00000000 		.word	0
+ 783 009c 00000000 		.word	0
+ 784 00a0 00000000 		.word	0
+ 785 00a4 00000000 		.word	0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 26
+
+
+ 786 00a8 00000000 		.word	0
+ 787 00ac 00000000 		.word	0
+ 788 00b0 00000000 		.word	0
+ 789 00b4 00000000 		.word	0
+ 790 00b8 00000000 		.word	0
+ 791 00bc 00000000 		.word	0
+ 792 00c0 00000000 		.word	0
+ 793 00c4 00000000 		.word	0
+ 794 00c8 00000000 		.word	0
+ 795 00cc 00000000 		.word	0
+ 796 00d0 00000000 		.word	0
+ 797 00d4 00000000 		.word	0
+ 798 00d8 00000000 		.word	0
+ 799 00dc 00000000 		.word	0
+ 800 00e0 00000000 		.word	0
+ 801 00e4 00000000 		.word	0
+ 802 00e8 00000000 		.word	0
+ 803 00ec 00000000 		.word	0
+ 804 00f0 00000000 		.word	0
+ 805 00f4 00000000 		.word	0
+ 806 00f8 00000000 		.word	0
+ 807 00fc 00000000 		.word	0
+ 808 0100 00000000 		.word	0
+ 809 0104 00000000 		.word	0
+ 810 0108 00000000 		.word	0
+ 811 010c 00000000 		.word	0
+ 812 0110 00000000 		.word	0
+ 813 0114 00000000 		.word	0
+ 814 0118 00000000 		.word	0
+ 815 011c 00000000 		.word	0
+ 816 0120 00000000 		.word	0
+ 817 0124 00000000 		.word	0
+ 818 0128 00000000 		.word	0
+ 819 012c 00000000 		.word	0
+ 820 0130 00000000 		.word	0
+ 821 0134 00000000 		.word	0
+ 822 0138 00000000 		.word	0
+ 823 013c 00000000 		.word	0
+ 824 0140 00000000 		.word	0
+ 825 0144 00000000 		.word	0
+ 826 0148 00000000 		.word	0
+ 827 014c 00000000 		.word	0
+ 828 0150 00000000 		.word	0
+ 829 0154 00000000 		.word	0
+ 830 0158 00000000 		.word	0
+ 831 015c 00000000 		.word	0
+ 832 0160 00000000 		.word	0
+ 833 0164 00000000 		.word	0
+ 834 0168 00000000 		.word	0
+ 835 016c 00000000 		.word	0
+ 836 0170 00000000 		.word	0
+ 837 0174 00000000 		.word	0
+ 838 0178 00000000 		.word	0
+ 839 017c 00000000 		.word	0
+ 840 0180 00000000 		.word	0
+ 841 0184 00000000 		.word	0
+ 842 0188 00000000 		.word	0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 27
+
+
+ 843 018c 00000000 		.word	0
+ 844 0190 00000000 		.word	0
+ 845 0194 00000000 		.word	0
+ 846 0198 00000000 		.word	0
+ 847 019c 00000000 		.word	0
+ 848 01a0 00000000 		.word	0
+ 849 01a4 00000000 		.word	0
+ 850 01a8 00000000 		.word	0
+ 851 01ac 00000000 		.word	0
+ 852 01b0 00000000 		.word	0
+ 853 01b4 00000000 		.word	0
+ 854 01b8 00000000 		.word	0
+ 855 01bc 00000000 		.word	0
+ 856 01c0 00000000 		.word	0
+ 857 01c4 00000000 		.word	0
+ 858 01c8 00000000 		.word	0
+ 859 01cc 00000000 		.word	0
+ 860 01d0 00000000 		.word	0
+ 861 01d4 00000000 		.word	0
+ 862 01d8 00000000 		.word	0
+ 863 01dc 00000000 		.word	0
+ 864 01e0 00000000 		.word	0
+ 865 01e4 00000000 		.word	0
+ 866 01e8 00000000 		.word	0
+ 867 01ec 00000000 		.word	0
+ 868 01f0 00000000 		.word	0
+ 869 01f4 00000000 		.word	0
+ 870 01f8 00000000 		.word	0
+ 871 01fc 00000000 		.word	0
+ 872 0200 00000000 		.word	0
+ 873 0204 00000000 		.word	0
+ 874 0208 00000000 		.word	0
+ 875 020c 00000000 		.word	0
+ 876 0210 00000000 		.word	0
+ 877 0214 00000000 		.word	0
+ 878 0218 00000000 		.word	0
+ 879 021c 00000000 		.word	0
+ 880 0220 00000000 		.word	0
+ 881 0224 00000000 		.word	0
+ 882 0228 00000000 		.word	0
+ 883 022c 00000000 		.word	0
+ 884 0230 00000000 		.word	0
+ 885 0234 00000000 		.word	0
+ 886 0238 00000000 		.word	0
+ 887 023c 00000000 		.word	0
+ 888 0240 00000000 		.word	0
+ 889 0244 00000000 		.word	0
+ 890 0248 00000000 		.word	0
+ 891 024c 00000000 		.word	0
+ 892 0250 00000000 		.word	0
+ 893 0254 00000000 		.word	0
+ 894 0258 00000000 		.word	0
+ 895 025c 00000000 		.word	0
+ 896 0260 00000000 		.word	0
+ 897 0264 00000000 		.word	0
+ 898 0268 00000000 		.word	0
+ 899 026c 00000000 		.word	0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 28
+
+
+ 900 0270 00000000 		.word	0
+ 901 0274 00000000 		.word	0
+ 902 0278 00000000 		.word	0
+ 903 027c 00000000 		.word	0
+ 904 0280 00000000 		.word	0
+ 905 0284 00000000 		.word	0
+ 906 0288 00000000 		.word	0
+ 907 028c 00000000 		.word	0
+ 908 0290 00000000 		.word	0
+ 909 0294 00000000 		.word	0
+ 910 0298 00000000 		.word	0
+ 911 029c 00000000 		.word	0
+ 912 02a0 00000000 		.word	0
+ 913 02a4 00000000 		.word	0
+ 914 02a8 00000000 		.word	0
+ 915 02ac 00000000 		.word	0
+ 916 02b0 00000000 		.word	0
+ 917 02b4 00000000 		.word	0
+ 918 02b8 00000000 		.word	0
+ 919 02bc 00000000 		.word	0
+ 920 02c0 00000000 		.word	0
+ 921 02c4 01000000 		.word	1
+ 922 02c8 01000000 		.word	1
+ 923 02cc 01000000 		.word	1
+ 924 02d0 01000000 		.word	1
+ 925 02d4 01000000 		.word	1
+ 926 02d8 01000000 		.word	1
+ 927 02dc 01000000 		.word	1
+ 928 02e0 01000000 		.word	1
+ 929 02e4 01000000 		.word	1
+ 930 02e8 01000000 		.word	1
+ 931 02ec 01000000 		.word	1
+ 932 02f0 01000000 		.word	1
+ 933 02f4 01000000 		.word	1
+ 934 02f8 01000000 		.word	1
+ 935 02fc 01000000 		.word	1
+ 936 0300 01000000 		.word	1
+ 937 0304 01000000 		.word	1
+ 938 0308 01000000 		.word	1
+ 939 030c 01000000 		.word	1
+ 940 0310 01000000 		.word	1
+ 941 0314 01000000 		.word	1
+ 942 0318 01000000 		.word	1
+ 943 031c 01000000 		.word	1
+ 944 0320 01000000 		.word	1
+ 945 0324 01000000 		.word	1
+ 946 0328 01000000 		.word	1
+ 947 032c 01000000 		.word	1
+ 948 0330 01000000 		.word	1
+ 949 0334 01000000 		.word	1
+ 950 0338 01000000 		.word	1
+ 951 033c 01000000 		.word	1
+ 952 0340 01000000 		.word	1
+ 953 0344 01000000 		.word	1
+ 954 0348 01000000 		.word	1
+ 955 034c 01000000 		.word	1
+ 956 0350 01000000 		.word	1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 29
+
+
+ 957 0354 01000000 		.word	1
+ 958 0358 01000000 		.word	1
+ 959 035c 01000000 		.word	1
+ 960 0360 01000000 		.word	1
+ 961 0364 01000000 		.word	1
+ 962 0368 01000000 		.word	1
+ 963 036c 01000000 		.word	1
+ 964 0370 01000000 		.word	1
+ 965 0374 01000000 		.word	1
+ 966 0378 01000000 		.word	1
+ 967 037c 01000000 		.word	1
+ 968 0380 01000000 		.word	1
+ 969 0384 01000000 		.word	1
+ 970 0388 01000000 		.word	1
+ 971 038c 01000000 		.word	1
+ 972 0390 01000000 		.word	1
+ 973 0394 01000000 		.word	1
+ 974 0398 01000000 		.word	1
+ 975 039c 01000000 		.word	1
+ 976 03a0 01000000 		.word	1
+ 977 03a4 01000000 		.word	1
+ 978 03a8 01000000 		.word	1
+ 979 03ac 01000000 		.word	1
+ 980 03b0 01000000 		.word	1
+ 981 03b4 01000000 		.word	1
+ 982 03b8 01000000 		.word	1
+ 983 03bc 01000000 		.word	1
+ 984 03c0 01000000 		.word	1
+ 985 03c4 01000000 		.word	1
+ 986 03c8 01000000 		.word	1
+ 987 03cc 01000000 		.word	1
+ 988 03d0 01000000 		.word	1
+ 989 03d4 01000000 		.word	1
+ 990 03d8 01000000 		.word	1
+ 991 03dc 01000000 		.word	1
+ 992 03e0 01000000 		.word	1
+ 993 03e4 01000000 		.word	1
+ 994 03e8 01000000 		.word	1
+ 995 03ec 01000000 		.word	1
+ 996 03f0 01000000 		.word	1
+ 997 03f4 01000000 		.word	1
+ 998 03f8 01000000 		.word	1
+ 999 03fc 01000000 		.word	1
+ 1000 0400 01000000 		.word	1
+ 1001 0404 01000000 		.word	1
+ 1002 0408 01000000 		.word	1
+ 1003 040c 01000000 		.word	1
+ 1004 0410 01000000 		.word	1
+ 1005 0414 01000000 		.word	1
+ 1006 0418 01000000 		.word	1
+ 1007 041c 01000000 		.word	1
+ 1008 0420 01000000 		.word	1
+ 1009 0424 01000000 		.word	1
+ 1010 0428 01000000 		.word	1
+ 1011 042c 01000000 		.word	1
+ 1012 0430 01000000 		.word	1
+ 1013 0434 01000000 		.word	1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 30
+
+
+ 1014 0438 01000000 		.word	1
+ 1015 043c 01000000 		.word	1
+ 1016 0440 01000000 		.word	1
+ 1017 0444 01000000 		.word	1
+ 1018 0448 01000000 		.word	1
+ 1019 044c 01000000 		.word	1
+ 1020 0450 01000000 		.word	1
+ 1021 0454 01000000 		.word	1
+ 1022 0458 01000000 		.word	1
+ 1023 045c 01000000 		.word	1
+ 1024 0460 01000000 		.word	1
+ 1025 0464 01000000 		.word	1
+ 1026 0468 01000000 		.word	1
+ 1027 046c 01000000 		.word	1
+ 1028 0470 01000000 		.word	1
+ 1029 0474 01000000 		.word	1
+ 1030 0478 01000000 		.word	1
+ 1031 047c 01000000 		.word	1
+ 1032 0480 01000000 		.word	1
+ 1033 0484 01000000 		.word	1
+ 1034 0488 01000000 		.word	1
+ 1035 048c 01000000 		.word	1
+ 1036 0490 01000000 		.word	1
+ 1037 0494 01000000 		.word	1
+ 1038 0498 01000000 		.word	1
+ 1039 049c 01000000 		.word	1
+ 1040 04a0 01000000 		.word	1
+ 1041 04a4 01000000 		.word	1
+ 1042 04a8 01000000 		.word	1
+ 1043 04ac 01000000 		.word	1
+ 1044 04b0 01000000 		.word	1
+ 1045 04b4 01000000 		.word	1
+ 1046 04b8 01000000 		.word	1
+ 1047 04bc 01000000 		.word	1
+ 1048 04c0 01000000 		.word	1
+ 1049 04c4 01000000 		.word	1
+ 1050 04c8 01000000 		.word	1
+ 1051 04cc 01000000 		.word	1
+ 1052 04d0 01000000 		.word	1
+ 1053 04d4 01000000 		.word	1
+ 1054 04d8 01000000 		.word	1
+ 1055 04dc 01000000 		.word	1
+ 1056 04e0 01000000 		.word	1
+ 1057 04e4 01000000 		.word	1
+ 1058 04e8 01000000 		.word	1
+ 1059 04ec 01000000 		.word	1
+ 1060 04f0 01000000 		.word	1
+ 1061 04f4 01000000 		.word	1
+ 1062 04f8 01000000 		.word	1
+ 1063 04fc 01000000 		.word	1
+ 1064 0500 01000000 		.word	1
+ 1065 0504 01000000 		.word	1
+ 1066 0508 01000000 		.word	1
+ 1067 050c 01000000 		.word	1
+ 1068 0510 01000000 		.word	1
+ 1069 0514 01000000 		.word	1
+ 1070 0518 01000000 		.word	1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 31
+
+
+ 1071 051c 01000000 		.word	1
+ 1072 0520 01000000 		.word	1
+ 1073 0524 01000000 		.word	1
+ 1074 0528 01000000 		.word	1
+ 1075 052c 01000000 		.word	1
+ 1076 0530 01000000 		.word	1
+ 1077 0534 01000000 		.word	1
+ 1078 0538 01000000 		.word	1
+ 1079 053c 01000000 		.word	1
+ 1080 0540 01000000 		.word	1
+ 1081 0544 01000000 		.word	1
+ 1082 0548 01000000 		.word	1
+ 1083 054c 01000000 		.word	1
+ 1084 0550 01000000 		.word	1
+ 1085 0554 01000000 		.word	1
+ 1086 0558 01000000 		.word	1
+ 1087 055c 01000000 		.word	1
+ 1088 0560 01000000 		.word	1
+ 1089 0564 01000000 		.word	1
+ 1090 0568 01000000 		.word	1
+ 1091 056c 01000000 		.word	1
+ 1092 0570 01000000 		.word	1
+ 1093 0574 01000000 		.word	1
+ 1094 0578 01000000 		.word	1
+ 1095 057c 01000000 		.word	1
+ 1096 0580 01000000 		.word	1
+ 1097 0584 03000000 		.word	3
+ 1098 0588 05000000 		.word	5
+ 1099 058c 07000000 		.word	7
+ 1100 0590 09000000 		.word	9
+ 1101 0594 0B000000 		.word	11
+ 1102 0598 0D000000 		.word	13
+ 1103 059c 0F000000 		.word	15
+ 1104 05a0 11000000 		.word	17
+ 1105 05a4 13000000 		.word	19
+ 1106 05a8 15000000 		.word	21
+ 1107 05ac 17000000 		.word	23
+ 1108 05b0 19000000 		.word	25
+ 1109 05b4 1B000000 		.word	27
+ 1110 05b8 1D000000 		.word	29
+ 1111 05bc 1F000000 		.word	31
+ 1112 05c0 21000000 		.word	33
+ 1113 05c4 23000000 		.word	35
+ 1114 05c8 25000000 		.word	37
+ 1115 05cc 27000000 		.word	39
+ 1116 05d0 29000000 		.word	41
+ 1117 05d4 2B000000 		.word	43
+ 1118 05d8 2D000000 		.word	45
+ 1119 05dc 2F000000 		.word	47
+ 1120 05e0 31000000 		.word	49
+ 1121 05e4 33000000 		.word	51
+ 1122 05e8 35000000 		.word	53
+ 1123 05ec 37000000 		.word	55
+ 1124 05f0 39000000 		.word	57
+ 1125 05f4 3B000000 		.word	59
+ 1126 05f8 3D000000 		.word	61
+ 1127 05fc 3F000000 		.word	63
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 32
+
+
+ 1128 0600 41000000 		.word	65
+ 1129 0604 43000000 		.word	67
+ 1130 0608 45000000 		.word	69
+ 1131 060c 47000000 		.word	71
+ 1132 0610 49000000 		.word	73
+ 1133 0614 4B000000 		.word	75
+ 1134 0618 4D000000 		.word	77
+ 1135 061c 4F000000 		.word	79
+ 1136 0620 51000000 		.word	81
+ 1137 0624 53000000 		.word	83
+ 1138 0628 55000000 		.word	85
+ 1139 062c 57000000 		.word	87
+ 1140 0630 59000000 		.word	89
+ 1141 0634 5B000000 		.word	91
+ 1142 0638 5D000000 		.word	93
+ 1143 063c 5F000000 		.word	95
+ 1144 0640 61000000 		.word	97
+ 1145 0644 63000000 		.word	99
+ 1146 0648 65000000 		.word	101
+ 1147 064c 67000000 		.word	103
+ 1148 0650 69000000 		.word	105
+ 1149 0654 6B000000 		.word	107
+ 1150 0658 6D000000 		.word	109
+ 1151 065c 6F000000 		.word	111
+ 1152 0660 71000000 		.word	113
+ 1153 0664 73000000 		.word	115
+ 1154 0668 75000000 		.word	117
+ 1155 066c 77000000 		.word	119
+ 1156 0670 79000000 		.word	121
+ 1157 0674 7B000000 		.word	123
+ 1158 0678 7D000000 		.word	125
+ 1159 067c 7F000000 		.word	127
+ 1160 0680 81000000 		.word	129
+ 1161 0684 83000000 		.word	131
+ 1162 0688 85000000 		.word	133
+ 1163 068c 87000000 		.word	135
+ 1164 0690 89000000 		.word	137
+ 1165 0694 8B000000 		.word	139
+ 1166 0698 8D000000 		.word	141
+ 1167 069c 8F000000 		.word	143
+ 1168 06a0 91000000 		.word	145
+ 1169 06a4 93000000 		.word	147
+ 1170 06a8 95000000 		.word	149
+ 1171 06ac 97000000 		.word	151
+ 1172 06b0 99000000 		.word	153
+ 1173 06b4 9B000000 		.word	155
+ 1174 06b8 9D000000 		.word	157
+ 1175 06bc 9F000000 		.word	159
+ 1176 06c0 A1000000 		.word	161
+ 1177 06c4 A3000000 		.word	163
+ 1178 06c8 A5000000 		.word	165
+ 1179 06cc A7000000 		.word	167
+ 1180 06d0 A9000000 		.word	169
+ 1181 06d4 AB000000 		.word	171
+ 1182 06d8 AD000000 		.word	173
+ 1183 06dc AF000000 		.word	175
+ 1184 06e0 B1000000 		.word	177
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 33
+
+
+ 1185 06e4 B3000000 		.word	179
+ 1186 06e8 B5000000 		.word	181
+ 1187 06ec B7000000 		.word	183
+ 1188 06f0 B9000000 		.word	185
+ 1189 06f4 BB000000 		.word	187
+ 1190 06f8 BD000000 		.word	189
+ 1191 06fc BF000000 		.word	191
+ 1192 0700 C1000000 		.word	193
+ 1193 0704 C3000000 		.word	195
+ 1194 0708 C5000000 		.word	197
+ 1195 070c C7000000 		.word	199
+ 1196 0710 C9000000 		.word	201
+ 1197 0714 CB000000 		.word	203
+ 1198 0718 CD000000 		.word	205
+ 1199 071c CF000000 		.word	207
+ 1200 0720 D1000000 		.word	209
+ 1201 0724 D3000000 		.word	211
+ 1202 0728 D5000000 		.word	213
+ 1203 072c D7000000 		.word	215
+ 1204 0730 D9000000 		.word	217
+ 1205 0734 DB000000 		.word	219
+ 1206 0738 DD000000 		.word	221
+ 1207 073c DF000000 		.word	223
+ 1208 0740 E1000000 		.word	225
+ 1209 0744 E3000000 		.word	227
+ 1210 0748 E5000000 		.word	229
+ 1211 074c E7000000 		.word	231
+ 1212 0750 E9000000 		.word	233
+ 1213 0754 EB000000 		.word	235
+ 1214 0758 ED000000 		.word	237
+ 1215 075c EF000000 		.word	239
+ 1216 0760 F1000000 		.word	241
+ 1217 0764 F3000000 		.word	243
+ 1218 0768 F5000000 		.word	245
+ 1219 076c F7000000 		.word	247
+ 1220 0770 F9000000 		.word	249
+ 1221 0774 FB000000 		.word	251
+ 1222 0778 FD000000 		.word	253
+ 1223 077c FF000000 		.word	255
+ 1224 0780 01010000 		.word	257
+ 1225 0784 03010000 		.word	259
+ 1226 0788 05010000 		.word	261
+ 1227 078c 07010000 		.word	263
+ 1228 0790 09010000 		.word	265
+ 1229 0794 0B010000 		.word	267
+ 1230 0798 0D010000 		.word	269
+ 1231 079c 0F010000 		.word	271
+ 1232 07a0 11010000 		.word	273
+ 1233 07a4 13010000 		.word	275
+ 1234 07a8 15010000 		.word	277
+ 1235 07ac 17010000 		.word	279
+ 1236 07b0 19010000 		.word	281
+ 1237 07b4 1B010000 		.word	283
+ 1238 07b8 1D010000 		.word	285
+ 1239 07bc 1F010000 		.word	287
+ 1240 07c0 21010000 		.word	289
+ 1241 07c4 23010000 		.word	291
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 34
+
+
+ 1242 07c8 25010000 		.word	293
+ 1243 07cc 27010000 		.word	295
+ 1244 07d0 29010000 		.word	297
+ 1245 07d4 2B010000 		.word	299
+ 1246 07d8 2D010000 		.word	301
+ 1247 07dc 2F010000 		.word	303
+ 1248 07e0 31010000 		.word	305
+ 1249 07e4 33010000 		.word	307
+ 1250 07e8 35010000 		.word	309
+ 1251 07ec 37010000 		.word	311
+ 1252 07f0 39010000 		.word	313
+ 1253 07f4 3B010000 		.word	315
+ 1254 07f8 3D010000 		.word	317
+ 1255 07fc 3F010000 		.word	319
+ 1256 0800 41010000 		.word	321
+ 1257 0804 43010000 		.word	323
+ 1258 0808 45010000 		.word	325
+ 1259 080c 47010000 		.word	327
+ 1260 0810 49010000 		.word	329
+ 1261 0814 4B010000 		.word	331
+ 1262 0818 4D010000 		.word	333
+ 1263 081c 4F010000 		.word	335
+ 1264 0820 51010000 		.word	337
+ 1265 0824 53010000 		.word	339
+ 1266 0828 55010000 		.word	341
+ 1267 082c 57010000 		.word	343
+ 1268 0830 59010000 		.word	345
+ 1269 0834 5B010000 		.word	347
+ 1270 0838 5D010000 		.word	349
+ 1271 083c 5F010000 		.word	351
+ 1272 0840 0D000000 		.word	13
+ 1273 0844 19000000 		.word	25
+ 1274 0848 29000000 		.word	41
+ 1275 084c 3D000000 		.word	61
+ 1276 0850 55000000 		.word	85
+ 1277 0854 71000000 		.word	113
+ 1278 0858 91000000 		.word	145
+ 1279 085c B5000000 		.word	181
+ 1280 0860 DD000000 		.word	221
+ 1281 0864 09010000 		.word	265
+ 1282 0868 39010000 		.word	313
+ 1283 086c 6D010000 		.word	365
+ 1284 0870 A5010000 		.word	421
+ 1285 0874 E1010000 		.word	481
+ 1286 0878 21020000 		.word	545
+ 1287 087c 65020000 		.word	613
+ 1288 0880 AD020000 		.word	685
+ 1289 0884 F9020000 		.word	761
+ 1290 0888 49030000 		.word	841
+ 1291 088c 9D030000 		.word	925
+ 1292 0890 F5030000 		.word	1013
+ 1293 0894 51040000 		.word	1105
+ 1294 0898 B1040000 		.word	1201
+ 1295 089c 15050000 		.word	1301
+ 1296 08a0 7D050000 		.word	1405
+ 1297 08a4 E9050000 		.word	1513
+ 1298 08a8 59060000 		.word	1625
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 35
+
+
+ 1299 08ac CD060000 		.word	1741
+ 1300 08b0 45070000 		.word	1861
+ 1301 08b4 C1070000 		.word	1985
+ 1302 08b8 41080000 		.word	2113
+ 1303 08bc C5080000 		.word	2245
+ 1304 08c0 4D090000 		.word	2381
+ 1305 08c4 D9090000 		.word	2521
+ 1306 08c8 690A0000 		.word	2665
+ 1307 08cc FD0A0000 		.word	2813
+ 1308 08d0 950B0000 		.word	2965
+ 1309 08d4 310C0000 		.word	3121
+ 1310 08d8 D10C0000 		.word	3281
+ 1311 08dc 750D0000 		.word	3445
+ 1312 08e0 1D0E0000 		.word	3613
+ 1313 08e4 C90E0000 		.word	3785
+ 1314 08e8 790F0000 		.word	3961
+ 1315 08ec 2D100000 		.word	4141
+ 1316 08f0 E5100000 		.word	4325
+ 1317 08f4 A1110000 		.word	4513
+ 1318 08f8 61120000 		.word	4705
+ 1319 08fc 25130000 		.word	4901
+ 1320 0900 ED130000 		.word	5101
+ 1321 0904 B9140000 		.word	5305
+ 1322 0908 89150000 		.word	5513
+ 1323 090c 5D160000 		.word	5725
+ 1324 0910 35170000 		.word	5941
+ 1325 0914 11180000 		.word	6161
+ 1326 0918 F1180000 		.word	6385
+ 1327 091c D5190000 		.word	6613
+ 1328 0920 BD1A0000 		.word	6845
+ 1329 0924 A91B0000 		.word	7081
+ 1330 0928 991C0000 		.word	7321
+ 1331 092c 8D1D0000 		.word	7565
+ 1332 0930 851E0000 		.word	7813
+ 1333 0934 811F0000 		.word	8065
+ 1334 0938 81200000 		.word	8321
+ 1335 093c 85210000 		.word	8581
+ 1336 0940 8D220000 		.word	8845
+ 1337 0944 99230000 		.word	9113
+ 1338 0948 A9240000 		.word	9385
+ 1339 094c BD250000 		.word	9661
+ 1340 0950 D5260000 		.word	9941
+ 1341 0954 F1270000 		.word	10225
+ 1342 0958 11290000 		.word	10513
+ 1343 095c 352A0000 		.word	10805
+ 1344 0960 5D2B0000 		.word	11101
+ 1345 0964 892C0000 		.word	11401
+ 1346 0968 B92D0000 		.word	11705
+ 1347 096c ED2E0000 		.word	12013
+ 1348 0970 25300000 		.word	12325
+ 1349 0974 61310000 		.word	12641
+ 1350 0978 A1320000 		.word	12961
+ 1351 097c E5330000 		.word	13285
+ 1352 0980 2D350000 		.word	13613
+ 1353 0984 79360000 		.word	13945
+ 1354 0988 C9370000 		.word	14281
+ 1355 098c 1D390000 		.word	14621
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 36
+
+
+ 1356 0990 753A0000 		.word	14965
+ 1357 0994 D13B0000 		.word	15313
+ 1358 0998 313D0000 		.word	15665
+ 1359 099c 953E0000 		.word	16021
+ 1360 09a0 FD3F0000 		.word	16381
+ 1361 09a4 69410000 		.word	16745
+ 1362 09a8 D9420000 		.word	17113
+ 1363 09ac 4D440000 		.word	17485
+ 1364 09b0 C5450000 		.word	17861
+ 1365 09b4 41470000 		.word	18241
+ 1366 09b8 C1480000 		.word	18625
+ 1367 09bc 454A0000 		.word	19013
+ 1368 09c0 CD4B0000 		.word	19405
+ 1369 09c4 594D0000 		.word	19801
+ 1370 09c8 E94E0000 		.word	20201
+ 1371 09cc 7D500000 		.word	20605
+ 1372 09d0 15520000 		.word	21013
+ 1373 09d4 B1530000 		.word	21425
+ 1374 09d8 51550000 		.word	21841
+ 1375 09dc F5560000 		.word	22261
+ 1376 09e0 9D580000 		.word	22685
+ 1377 09e4 495A0000 		.word	23113
+ 1378 09e8 F95B0000 		.word	23545
+ 1379 09ec AD5D0000 		.word	23981
+ 1380 09f0 655F0000 		.word	24421
+ 1381 09f4 21610000 		.word	24865
+ 1382 09f8 E1620000 		.word	25313
+ 1383 09fc A5640000 		.word	25765
+ 1384 0a00 6D660000 		.word	26221
+ 1385 0a04 39680000 		.word	26681
+ 1386 0a08 096A0000 		.word	27145
+ 1387 0a0c DD6B0000 		.word	27613
+ 1388 0a10 B56D0000 		.word	28085
+ 1389 0a14 916F0000 		.word	28561
+ 1390 0a18 71710000 		.word	29041
+ 1391 0a1c 55730000 		.word	29525
+ 1392 0a20 3D750000 		.word	30013
+ 1393 0a24 29770000 		.word	30505
+ 1394 0a28 19790000 		.word	31001
+ 1395 0a2c 0D7B0000 		.word	31501
+ 1396 0a30 057D0000 		.word	32005
+ 1397 0a34 017F0000 		.word	32513
+ 1398 0a38 01810000 		.word	33025
+ 1399 0a3c 05830000 		.word	33541
+ 1400 0a40 0D850000 		.word	34061
+ 1401 0a44 19870000 		.word	34585
+ 1402 0a48 29890000 		.word	35113
+ 1403 0a4c 3D8B0000 		.word	35645
+ 1404 0a50 558D0000 		.word	36181
+ 1405 0a54 718F0000 		.word	36721
+ 1406 0a58 91910000 		.word	37265
+ 1407 0a5c B5930000 		.word	37813
+ 1408 0a60 DD950000 		.word	38365
+ 1409 0a64 09980000 		.word	38921
+ 1410 0a68 399A0000 		.word	39481
+ 1411 0a6c 6D9C0000 		.word	40045
+ 1412 0a70 A59E0000 		.word	40613
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 37
+
+
+ 1413 0a74 E1A00000 		.word	41185
+ 1414 0a78 21A30000 		.word	41761
+ 1415 0a7c 65A50000 		.word	42341
+ 1416 0a80 ADA70000 		.word	42925
+ 1417 0a84 F9A90000 		.word	43513
+ 1418 0a88 49AC0000 		.word	44105
+ 1419 0a8c 9DAE0000 		.word	44701
+ 1420 0a90 F5B00000 		.word	45301
+ 1421 0a94 51B30000 		.word	45905
+ 1422 0a98 B1B50000 		.word	46513
+ 1423 0a9c 15B80000 		.word	47125
+ 1424 0aa0 7DBA0000 		.word	47741
+ 1425 0aa4 E9BC0000 		.word	48361
+ 1426 0aa8 59BF0000 		.word	48985
+ 1427 0aac CDC10000 		.word	49613
+ 1428 0ab0 45C40000 		.word	50245
+ 1429 0ab4 C1C60000 		.word	50881
+ 1430 0ab8 41C90000 		.word	51521
+ 1431 0abc C5CB0000 		.word	52165
+ 1432 0ac0 4DCE0000 		.word	52813
+ 1433 0ac4 D9D00000 		.word	53465
+ 1434 0ac8 69D30000 		.word	54121
+ 1435 0acc FDD50000 		.word	54781
+ 1436 0ad0 95D80000 		.word	55445
+ 1437 0ad4 31DB0000 		.word	56113
+ 1438 0ad8 D1DD0000 		.word	56785
+ 1439 0adc 75E00000 		.word	57461
+ 1440 0ae0 1DE30000 		.word	58141
+ 1441 0ae4 C9E50000 		.word	58825
+ 1442 0ae8 79E80000 		.word	59513
+ 1443 0aec 2DEB0000 		.word	60205
+ 1444 0af0 E5ED0000 		.word	60901
+ 1445 0af4 A1F00000 		.word	61601
+ 1446 0af8 3F000000 		.word	63
+ 1447 0afc 81000000 		.word	129
+ 1448 0b00 E7000000 		.word	231
+ 1449 0b04 79010000 		.word	377
+ 1450 0b08 3F020000 		.word	575
+ 1451 0b0c 41030000 		.word	833
+ 1452 0b10 87040000 		.word	1159
+ 1453 0b14 19060000 		.word	1561
+ 1454 0b18 FF070000 		.word	2047
+ 1455 0b1c 410A0000 		.word	2625
+ 1456 0b20 E70C0000 		.word	3303
+ 1457 0b24 F90F0000 		.word	4089
+ 1458 0b28 7F130000 		.word	4991
+ 1459 0b2c 81170000 		.word	6017
+ 1460 0b30 071C0000 		.word	7175
+ 1461 0b34 19210000 		.word	8473
+ 1462 0b38 BF260000 		.word	9919
+ 1463 0b3c 012D0000 		.word	11521
+ 1464 0b40 E7330000 		.word	13287
+ 1465 0b44 793B0000 		.word	15225
+ 1466 0b48 BF430000 		.word	17343
+ 1467 0b4c C14C0000 		.word	19649
+ 1468 0b50 87560000 		.word	22151
+ 1469 0b54 19610000 		.word	24857
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 38
+
+
+ 1470 0b58 7F6C0000 		.word	27775
+ 1471 0b5c C1780000 		.word	30913
+ 1472 0b60 E7850000 		.word	34279
+ 1473 0b64 F9930000 		.word	37881
+ 1474 0b68 FFA20000 		.word	41727
+ 1475 0b6c 01B30000 		.word	45825
+ 1476 0b70 07C40000 		.word	50183
+ 1477 0b74 19D60000 		.word	54809
+ 1478 0b78 3FE90000 		.word	59711
+ 1479 0b7c 81FD0000 		.word	64897
+ 1480 0b80 E7120100 		.word	70375
+ 1481 0b84 79290100 		.word	76153
+ 1482 0b88 3F410100 		.word	82239
+ 1483 0b8c 415A0100 		.word	88641
+ 1484 0b90 87740100 		.word	95367
+ 1485 0b94 19900100 		.word	102425
+ 1486 0b98 FFAC0100 		.word	109823
+ 1487 0b9c 41CB0100 		.word	117569
+ 1488 0ba0 E7EA0100 		.word	125671
+ 1489 0ba4 F90B0200 		.word	134137
+ 1490 0ba8 7F2E0200 		.word	142975
+ 1491 0bac 81520200 		.word	152193
+ 1492 0bb0 07780200 		.word	161799
+ 1493 0bb4 199F0200 		.word	171801
+ 1494 0bb8 BFC70200 		.word	182207
+ 1495 0bbc 01F20200 		.word	193025
+ 1496 0bc0 E71D0300 		.word	204263
+ 1497 0bc4 794B0300 		.word	215929
+ 1498 0bc8 BF7A0300 		.word	228031
+ 1499 0bcc C1AB0300 		.word	240577
+ 1500 0bd0 87DE0300 		.word	253575
+ 1501 0bd4 19130400 		.word	267033
+ 1502 0bd8 7F490400 		.word	280959
+ 1503 0bdc C1810400 		.word	295361
+ 1504 0be0 E7BB0400 		.word	310247
+ 1505 0be4 F9F70400 		.word	325625
+ 1506 0be8 FF350500 		.word	341503
+ 1507 0bec 01760500 		.word	357889
+ 1508 0bf0 07B80500 		.word	374791
+ 1509 0bf4 19FC0500 		.word	392217
+ 1510 0bf8 3F420600 		.word	410175
+ 1511 0bfc 818A0600 		.word	428673
+ 1512 0c00 E7D40600 		.word	447719
+ 1513 0c04 79210700 		.word	467321
+ 1514 0c08 3F700700 		.word	487487
+ 1515 0c0c 41C10700 		.word	508225
+ 1516 0c10 87140800 		.word	529543
+ 1517 0c14 196A0800 		.word	551449
+ 1518 0c18 FFC10800 		.word	573951
+ 1519 0c1c 411C0900 		.word	597057
+ 1520 0c20 E7780900 		.word	620775
+ 1521 0c24 F9D70900 		.word	645113
+ 1522 0c28 7F390A00 		.word	670079
+ 1523 0c2c 819D0A00 		.word	695681
+ 1524 0c30 07040B00 		.word	721927
+ 1525 0c34 196D0B00 		.word	748825
+ 1526 0c38 BFD80B00 		.word	776383
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 39
+
+
+ 1527 0c3c 01470C00 		.word	804609
+ 1528 0c40 E7B70C00 		.word	833511
+ 1529 0c44 792B0D00 		.word	863097
+ 1530 0c48 BFA10D00 		.word	893375
+ 1531 0c4c C11A0E00 		.word	924353
+ 1532 0c50 87960E00 		.word	956039
+ 1533 0c54 19150F00 		.word	988441
+ 1534 0c58 7F960F00 		.word	1021567
+ 1535 0c5c C11A1000 		.word	1055425
+ 1536 0c60 E7A11000 		.word	1090023
+ 1537 0c64 F92B1100 		.word	1125369
+ 1538 0c68 FFB81100 		.word	1161471
+ 1539 0c6c 01491200 		.word	1198337
+ 1540 0c70 07DC1200 		.word	1235975
+ 1541 0c74 19721300 		.word	1274393
+ 1542 0c78 3F0B1400 		.word	1313599
+ 1543 0c7c 81A71400 		.word	1353601
+ 1544 0c80 E7461500 		.word	1394407
+ 1545 0c84 79E91500 		.word	1436025
+ 1546 0c88 3F8F1600 		.word	1478463
+ 1547 0c8c 41381700 		.word	1521729
+ 1548 0c90 87E41700 		.word	1565831
+ 1549 0c94 19941800 		.word	1610777
+ 1550 0c98 FF461900 		.word	1656575
+ 1551 0c9c 41FD1900 		.word	1703233
+ 1552 0ca0 E7B61A00 		.word	1750759
+ 1553 0ca4 F9731B00 		.word	1799161
+ 1554 0ca8 7F341C00 		.word	1848447
+ 1555 0cac 81F81C00 		.word	1898625
+ 1556 0cb0 07C01D00 		.word	1949703
+ 1557 0cb4 198B1E00 		.word	2001689
+ 1558 0cb8 BF591F00 		.word	2054591
+ 1559 0cbc 012C2000 		.word	2108417
+ 1560 0cc0 E7012100 		.word	2163175
+ 1561 0cc4 79DB2100 		.word	2218873
+ 1562 0cc8 BFB82200 		.word	2275519
+ 1563 0ccc C1992300 		.word	2333121
+ 1564 0cd0 877E2400 		.word	2391687
+ 1565 0cd4 19672500 		.word	2451225
+ 1566 0cd8 7F532600 		.word	2511743
+ 1567 0cdc C1432700 		.word	2573249
+ 1568 0ce0 E7372800 		.word	2635751
+ 1569 0ce4 F92F2900 		.word	2699257
+ 1570 0ce8 FF2B2A00 		.word	2763775
+ 1571 0cec 012C2B00 		.word	2829313
+ 1572 0cf0 07302C00 		.word	2895879
+ 1573 0cf4 19382D00 		.word	2963481
+ 1574 0cf8 3F442E00 		.word	3032127
+ 1575 0cfc 81542F00 		.word	3101825
+ 1576 0d00 E7683000 		.word	3172583
+ 1577 0d04 79813100 		.word	3244409
+ 1578 0d08 3F9E3200 		.word	3317311
+ 1579 0d0c 41BF3300 		.word	3391297
+ 1580 0d10 87E43400 		.word	3466375
+ 1581 0d14 190E3600 		.word	3542553
+ 1582 0d18 FF3B3700 		.word	3619839
+ 1583 0d1c 416E3800 		.word	3698241
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 40
+
+
+ 1584 0d20 E7A43900 		.word	3777767
+ 1585 0d24 F9DF3A00 		.word	3858425
+ 1586 0d28 7F1F3C00 		.word	3940223
+ 1587 0d2c 81633D00 		.word	4023169
+ 1588 0d30 07AC3E00 		.word	4107271
+ 1589 0d34 19F93F00 		.word	4192537
+ 1590 0d38 BF4A4100 		.word	4278975
+ 1591 0d3c 01A14200 		.word	4366593
+ 1592 0d40 E7FB4300 		.word	4455399
+ 1593 0d44 795B4500 		.word	4545401
+ 1594 0d48 BFBF4600 		.word	4636607
+ 1595 0d4c C1284800 		.word	4729025
+ 1596 0d50 87964900 		.word	4822663
+ 1597 0d54 19094B00 		.word	4917529
+ 1598 0d58 7F804C00 		.word	5013631
+ 1599 0d5c C1FC4D00 		.word	5110977
+ 1600 0d60 E77D4F00 		.word	5209575
+ 1601 0d64 F9035100 		.word	5309433
+ 1602 0d68 FF8E5200 		.word	5410559
+ 1603 0d6c 011F5400 		.word	5512961
+ 1604 0d70 07B45500 		.word	5616647
+ 1605 0d74 194E5700 		.word	5721625
+ 1606 0d78 3FED5800 		.word	5827903
+ 1607 0d7c 81915A00 		.word	5935489
+ 1608 0d80 E73A5C00 		.word	6044391
+ 1609 0d84 79E95D00 		.word	6154617
+ 1610 0d88 3F9D5F00 		.word	6266175
+ 1611 0d8c 41566100 		.word	6379073
+ 1612 0d90 87146300 		.word	6493319
+ 1613 0d94 19D86400 		.word	6608921
+ 1614 0d98 FFA06600 		.word	6725887
+ 1615 0d9c 416F6800 		.word	6844225
+ 1616 0da0 E7426A00 		.word	6963943
+ 1617 0da4 F91B6C00 		.word	7085049
+ 1618 0da8 7FFA6D00 		.word	7207551
+ 1619 0dac 41010000 		.word	321
+ 1620 0db0 A9020000 		.word	681
+ 1621 0db4 09050000 		.word	1289
+ 1622 0db8 C1080000 		.word	2241
+ 1623 0dbc 410E0000 		.word	3649
+ 1624 0dc0 09160000 		.word	5641
+ 1625 0dc4 A9200000 		.word	8361
+ 1626 0dc8 C12E0000 		.word	11969
+ 1627 0dcc 01410000 		.word	16641
+ 1628 0dd0 29580000 		.word	22569
+ 1629 0dd4 09750000 		.word	29961
+ 1630 0dd8 81980000 		.word	39041
+ 1631 0ddc 81C30000 		.word	50049
+ 1632 0de0 09F70000 		.word	63241
+ 1633 0de4 29340100 		.word	78889
+ 1634 0de8 017C0100 		.word	97281
+ 1635 0dec C1CF0100 		.word	118721
+ 1636 0df0 A9300200 		.word	143529
+ 1637 0df4 09A00200 		.word	172041
+ 1638 0df8 411F0300 		.word	204609
+ 1639 0dfc C1AF0300 		.word	241601
+ 1640 0e00 09530400 		.word	283401
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 41
+
+
+ 1641 0e04 A90A0500 		.word	330409
+ 1642 0e08 41D80500 		.word	383041
+ 1643 0e0c 81BD0600 		.word	441729
+ 1644 0e10 29BC0700 		.word	506921
+ 1645 0e14 09D60800 		.word	579081
+ 1646 0e18 010D0A00 		.word	658689
+ 1647 0e1c 01630B00 		.word	746241
+ 1648 0e20 09DA0C00 		.word	842249
+ 1649 0e24 29740E00 		.word	947241
+ 1650 0e28 81331000 		.word	1061761
+ 1651 0e2c 411A1200 		.word	1186369
+ 1652 0e30 A92A1400 		.word	1321641
+ 1653 0e34 09671600 		.word	1468169
+ 1654 0e38 C1D11800 		.word	1626561
+ 1655 0e3c 416D1B00 		.word	1797441
+ 1656 0e40 093C1E00 		.word	1981449
+ 1657 0e44 A9402100 		.word	2179241
+ 1658 0e48 C17D2400 		.word	2391489
+ 1659 0e4c 01F62700 		.word	2618881
+ 1660 0e50 29AC2B00 		.word	2862121
+ 1661 0e54 09A32F00 		.word	3121929
+ 1662 0e58 81DD3300 		.word	3399041
+ 1663 0e5c 815E3800 		.word	3694209
+ 1664 0e60 09293D00 		.word	4008201
+ 1665 0e64 29404200 		.word	4341801
+ 1666 0e68 01A74700 		.word	4695809
+ 1667 0e6c C1604D00 		.word	5071041
+ 1668 0e70 A9705300 		.word	5468329
+ 1669 0e74 09DA5900 		.word	5888521
+ 1670 0e78 41A06000 		.word	6332481
+ 1671 0e7c C1C66700 		.word	6801089
+ 1672 0e80 09516F00 		.word	7295241
+ 1673 0e84 A9427700 		.word	7815849
+ 1674 0e88 419F7F00 		.word	8363841
+ 1675 0e8c 816A8800 		.word	8940161
+ 1676 0e90 29A89100 		.word	9545769
+ 1677 0e94 095C9B00 		.word	10181641
+ 1678 0e98 018AA500 		.word	10848769
+ 1679 0e9c 0136B000 		.word	11548161
+ 1680 0ea0 0964BB00 		.word	12280841
+ 1681 0ea4 2918C700 		.word	13047849
+ 1682 0ea8 8156D300 		.word	13850241
+ 1683 0eac 4123E000 		.word	14689089
+ 1684 0eb0 A982ED00 		.word	15565481
+ 1685 0eb4 0979FB00 		.word	16480521
+ 1686 0eb8 C10A0A01 		.word	17435329
+ 1687 0ebc 413C1901 		.word	18431041
+ 1688 0ec0 09122901 		.word	19468809
+ 1689 0ec4 A9903901 		.word	20549801
+ 1690 0ec8 C1BC4A01 		.word	21675201
+ 1691 0ecc 019B5C01 		.word	22846209
+ 1692 0ed0 29306F01 		.word	24064041
+ 1693 0ed4 09818201 		.word	25329929
+ 1694 0ed8 81929601 		.word	26645121
+ 1695 0edc 8169AB01 		.word	28010881
+ 1696 0ee0 090BC101 		.word	29428489
+ 1697 0ee4 297CD701 		.word	30899241
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 42
+
+
+ 1698 0ee8 01C2EE01 		.word	32424449
+ 1699 0eec C1E10602 		.word	34005441
+ 1700 0ef0 A9E01F02 		.word	35643561
+ 1701 0ef4 09C43902 		.word	37340169
+ 1702 0ef8 41915402 		.word	39096641
+ 1703 0efc C14D7002 		.word	40914369
+ 1704 0f00 09FF8C02 		.word	42794761
+ 1705 0f04 A9AAAA02 		.word	44739241
+ 1706 0f08 4156C902 		.word	46749249
+ 1707 0f0c 8107E902 		.word	48826241
+ 1708 0f10 29C40903 		.word	50971689
+ 1709 0f14 09922B03 		.word	53187081
+ 1710 0f18 01774E03 		.word	55473921
+ 1711 0f1c 01797203 		.word	57833729
+ 1712 0f20 099E9703 		.word	60268041
+ 1713 0f24 29ECBD03 		.word	62778409
+ 1714 0f28 8169E503 		.word	65366401
+ 1715 0f2c 411C0E04 		.word	68033601
+ 1716 0f30 A90A3804 		.word	70781609
+ 1717 0f34 093B6304 		.word	73612041
+ 1718 0f38 C1B38F04 		.word	76526529
+ 1719 0f3c 417BBD04 		.word	79526721
+ 1720 0f40 0998EC04 		.word	82614281
+ 1721 0f44 A9101D05 		.word	85790889
+ 1722 0f48 C1EB4E05 		.word	89058241
+ 1723 0f4c 01308205 		.word	92418049
+ 1724 0f50 29E4B605 		.word	95872041
+ 1725 0f54 090FED05 		.word	99421961
+ 1726 0f58 81B72406 		.word	103069569
+ 1727 0f5c 81E45D06 		.word	106816641
+ 1728 0f60 099D9806 		.word	110664969
+ 1729 0f64 29E8D406 		.word	114616361
+ 1730 0f68 01CD1207 		.word	118672641
+ 1731 0f6c C1525207 		.word	122835649
+ 1732 0f70 A9809307 		.word	127107241
+ 1733 0f74 095ED607 		.word	131489289
+ 1734 0f78 41F21A08 		.word	135983681
+ 1735 0f7c C1446108 		.word	140592321
+ 1736 0f80 095DA908 		.word	145317129
+ 1737 0f84 A942F308 		.word	150160041
+ 1738 0f88 41FD3E09 		.word	155123009
+ 1739 0f8c 81948C09 		.word	160208001
+ 1740 0f90 2910DC09 		.word	165417001
+ 1741 0f94 09782D0A 		.word	170752009
+ 1742 0f98 01D4800A 		.word	176215041
+ 1743 0f9c 012CD60A 		.word	181808129
+ 1744 0fa0 09882D0B 		.word	187533321
+ 1745 0fa4 29F0860B 		.word	193392681
+ 1746 0fa8 816CE20B 		.word	199388289
+ 1747 0fac 4105400C 		.word	205522241
+ 1748 0fb0 A9C29F0C 		.word	211796649
+ 1749 0fb4 09AD010D 		.word	218213641
+ 1750 0fb8 C1CC650D 		.word	224775361
+ 1751 0fbc 412ACC0D 		.word	231483969
+ 1752 0fc0 09CE340E 		.word	238341641
+ 1753 0fc4 A9C09F0E 		.word	245350569
+ 1754 0fc8 C10A0D0F 		.word	252512961
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 43
+
+
+ 1755 0fcc 01B57C0F 		.word	259831041
+ 1756 0fd0 29C8EE0F 		.word	267307049
+ 1757 0fd4 094D6310 		.word	274943241
+ 1758 0fd8 814CDA10 		.word	282741889
+ 1759 0fdc 81CF5311 		.word	290705281
+ 1760 0fe0 09DFCF11 		.word	298835721
+ 1761 0fe4 29844E12 		.word	307135529
+ 1762 0fe8 01C8CF12 		.word	315607041
+ 1763 0fec C1B35313 		.word	324252609
+ 1764 0ff0 A950DA13 		.word	333074601
+ 1765 0ff4 09A86314 		.word	342075401
+ 1766 0ff8 41C3EF14 		.word	351257409
+ 1767 0ffc C1AB7E15 		.word	360623041
+ 1768 1000 096B1016 		.word	370174729
+ 1769 1004 A90AA516 		.word	379914921
+ 1770 1008 41943C17 		.word	389846081
+ 1771 100c 8111D717 		.word	399970689
+ 1772 1010 298C7418 		.word	410291241
+ 1773 1014 090E1519 		.word	420810249
+ 1774 1018 01A1B819 		.word	431530241
+ 1775 101c 014F5F1A 		.word	442453761
+ 1776 1020 0922091B 		.word	453583369
+ 1777 1024 2924B61B 		.word	464921641
+ 1778 1028 815F661C 		.word	476471169
+ 1779 102c 41DE191D 		.word	488234561
+ 1780 1030 A9AAD01D 		.word	500214441
+ 1781 1034 09CF8A1E 		.word	512413449
+ 1782 1038 C155481F 		.word	524834241
+ 1783 103c 41490920 		.word	537479489
+ 1784 1040 09B4CD20 		.word	550351881
+ 1785 1044 A9A09521 		.word	563454121
+ 1786 1048 C1196122 		.word	576788929
+ 1787 104c 012A3023 		.word	590359041
+ 1788 1050 29DC0224 		.word	604167209
+ 1789 1054 093BD924 		.word	618216201
+ 1790 1058 8151B325 		.word	632508801
+ 1791 105c 93060000 		.word	1683
+ 1792 1060 450E0000 		.word	3653
+ 1793 1064 0F1C0000 		.word	7183
+ 1794 1068 11330000 		.word	13073
+ 1795 106c 5B570000 		.word	22363
+ 1796 1070 0D8E0000 		.word	36365
+ 1797 1074 77DD0000 		.word	56695
+ 1798 1078 394D0100 		.word	85305
+ 1799 107c 63E60100 		.word	124515
+ 1800 1080 95B30200 		.word	177045
+ 1801 1084 1FC10300 		.word	246047
+ 1802 1088 211D0500 		.word	335137
+ 1803 108c ABD70600 		.word	448427
+ 1804 1090 DD020900 		.word	590557
+ 1805 1094 07B30B00 		.word	766727
+ 1806 1098 C9FE0E00 		.word	982729
+ 1807 109c 33FF1200 		.word	1244979
+ 1808 10a0 E5CF1700 		.word	1560549
+ 1809 10a4 2F8F1D00 		.word	1937199
+ 1810 10a8 315E2400 		.word	2383409
+ 1811 10ac FB602C00 		.word	2908411
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 44
+
+
+ 1812 10b0 ADBE3500 		.word	3522221
+ 1813 10b4 97A14000 		.word	4235671
+ 1814 10b8 59374D00 		.word	5060441
+ 1815 10bc 03B15B00 		.word	6009091
+ 1816 10c0 35436C00 		.word	7095093
+ 1817 10c4 3F267F00 		.word	8332863
+ 1818 10c8 41969400 		.word	9737793
+ 1819 10cc 4BD3AC00 		.word	11326283
+ 1820 10d0 7D21C800 		.word	13115773
+ 1821 10d4 27C9E600 		.word	15124775
+ 1822 10d8 E9160901 		.word	17372905
+ 1823 10dc D35B2F01 		.word	19880915
+ 1824 10e0 85ED5901 		.word	22670725
+ 1825 10e4 4F268901 		.word	25765455
+ 1826 10e8 5165BD01 		.word	29189457
+ 1827 10ec 9B0EF701 		.word	32968347
+ 1828 10f0 4D8B3602 		.word	37129037
+ 1829 10f4 B7497C02 		.word	41699767
+ 1830 10f8 79BDC802 		.word	46710137
+ 1831 10fc A35F1C03 		.word	52191139
+ 1832 1100 D5AE7703 		.word	58175189
+ 1833 1104 5F2FDB03 		.word	64696159
+ 1834 1108 616B4704 		.word	71789409
+ 1835 110c EBF2BC04 		.word	79491819
+ 1836 1110 1D5C3C05 		.word	87841821
+ 1837 1114 4743C605 		.word	96879431
+ 1838 1118 094B5B06 		.word	106646281
+ 1839 111c 731CFC06 		.word	117185651
+ 1840 1120 2567A907 		.word	128542501
+ 1841 1124 6FE16308 		.word	140763503
+ 1842 1128 71482C09 		.word	153897073
+ 1843 112c 3B60030A 		.word	167993403
+ 1844 1130 EDF3E90A 		.word	183104493
+ 1845 1134 D7D5E00B 		.word	199284183
+ 1846 1138 99DFE80C 		.word	216588185
+ 1847 113c 43F2020E 		.word	235074115
+ 1848 1140 75F62F0F 		.word	254801525
+ 1849 1144 7FDC7010 		.word	275831935
+ 1850 1148 819CC611 		.word	298228865
+ 1851 114c 8B363213 		.word	322057867
+ 1852 1150 BDB2B414 		.word	347386557
+ 1853 1154 67214F16 		.word	374284647
+ 1854 1158 299B0218 		.word	402823977
+ 1855 115c 1341D019 		.word	433078547
+ 1856 1160 C53CB91B 		.word	465124549
+ 1857 1164 8FC0BE1D 		.word	499040399
+ 1858 1168 9107E21F 		.word	534906769
+ 1859 116c DB552422 		.word	572806619
+ 1860 1170 8DF88624 		.word	612825229
+ 1861 1174 F7450B27 		.word	655050231
+ 1862 1178 B99DB229 		.word	699571641
+ 1863 117c E3687E2C 		.word	746481891
+ 1864 1180 151A702F 		.word	795875861
+ 1865 1184 9F2D8932 		.word	847850911
+ 1866 1188 A129CB35 		.word	902506913
+ 1867 118c 2B9E3739 		.word	959946283
+ 1868 1190 5D25D03C 		.word	1020274013
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 45
+
+
+ 1869 1194 87639640 		.word	1083597703
+ 1870 1198 49078C44 		.word	1150027593
+ 1871 119c B3C9B248 		.word	1219676595
+ 1872 11a0 656E0C4D 		.word	1292660325
+ 1873 11a4 AFC39A51 		.word	1369097135
+ 1874 11a8 B1A25F56 		.word	1449108145
+ 1875 11ac 7BEF5C5B 		.word	1532817275
+ 1876 11b0 2D999460 		.word	1620351277
+ 1877 11b4 179A0866 		.word	1711839767
+ 1878 11b8 D9F7BA6B 		.word	1807415257
+ 1879 11bc 83C3AD71 		.word	1907213187
+ 1880 11c0 B519E377 		.word	2011371957
+ 1881 11c4 BF225D7E 		.word	2120032959
+ 1882 11c8 1D230000 		.word	8989
+ 1883 11cc 714D0000 		.word	19825
+ 1884 11d0 919C0000 		.word	40081
+ 1885 11d4 FD260100 		.word	75517
+ 1886 11d8 650C0200 		.word	134245
+ 1887 11dc E9770300 		.word	227305
+ 1888 11e0 99A20500 		.word	369305
+ 1889 11e4 35D60800 		.word	579125
+ 1890 11e8 2D700D00 		.word	880685
+ 1891 11ec E1E41300 		.word	1303777
+ 1892 11f0 21C31C00 		.word	1884961
+ 1893 11f4 EDB72800 		.word	2668525
+ 1894 11f8 75923800 		.word	3707509
+ 1895 11fc 59484D00 		.word	5064793
+ 1896 1200 29FA6700 		.word	6814249
+ 1897 1204 25F88900 		.word	9041957
+ 1898 1208 3DC7B400 		.word	11847485
+ 1899 120c 5126EA00 		.word	15345233
+ 1900 1210 B1132C01 		.word	19665841
+ 1901 1214 DDD27C01 		.word	24957661
+ 1902 1218 85F2DE01 		.word	31388293
+ 1903 121c C9525502 		.word	39146185
+ 1904 1220 B92BE302 		.word	48442297
+ 1905 1224 15148C03 		.word	59511829
+ 1906 1228 4D085404 		.word	72616013
+ 1907 122c C1713F05 		.word	88043969
+ 1908 1230 412E5306 		.word	106114625
+ 1909 1234 CD979407 		.word	127178701
+ 1910 1238 958C0909 		.word	151620757
+ 1911 123c 3977B80A 		.word	179861305
+ 1912 1240 4957A80C 		.word	212358985
+ 1913 1244 05CAE00E 		.word	249612805
+ 1914 1248 5D136A11 		.word	292164445
+ 1915 124c 31274D14 		.word	340600625
+ 1916 1250 D1B29317 		.word	395555537
+ 1917 1254 BD26481B 		.word	457713341
+ 1918 1258 A5C0751F 		.word	527810725
+ 1919 125c A9952824 		.word	606639529
+ 1920 1260 D99C6D29 		.word	695049433
+ 1921 1264 F5B9522F 		.word	793950709
+ 1922 1268 6DC8E635 		.word	904317037
+ 1923 126c A1A6393D 		.word	1027188385
+ 1924 1270 61415C45 		.word	1163673953
+ 1925 1274 AD9F604E 		.word	1314955181
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 46
+
+
+ 1926 1278 B5EE5958 		.word	1482288821
+ 1927 127c 198E5C63 		.word	1667010073
+ 1928 1280 691C7E6F 		.word	1870535785
+ 1929 1284 E583D57C 		.word	2094367717
+ 1930 1288 FFBD0000 		.word	48639
+ 1931 128c 01A80100 		.word	108545
+ 1932 1290 8F6B0300 		.word	224143
+ 1933 1294 F19E0600 		.word	433905
+ 1934 1298 3F230C00 		.word	795455
+ 1935 129c C13D1500 		.word	1392065
+ 1936 12a0 8FB62300 		.word	2340495
+ 1937 12a4 F1FC3900 		.word	3800305
+ 1938 12a8 FF515B00 		.word	5984767
+ 1939 12ac 01FA8B00 		.word	9173505
+ 1940 12b0 0F75D100 		.word	13726991
+ 1941 12b4 71BF3201 		.word	20103025
+ 1942 12b8 3F9AB801 		.word	28875327
+ 1943 12bc C1DC6D02 		.word	40754369
+ 1944 12c0 0FCF5F03 		.word	56610575
+ 1945 12c4 718E9E04 		.word	77500017
+ 1946 12c8 FF7B3D06 		.word	104692735
+ 1947 12cc 01B65308 		.word	139703809
+ 1948 12d0 8F9CFC0A 		.word	184327311
+ 1949 12d4 F161580E 		.word	240673265
+ 1950 12d8 3FA78C12 		.word	311207743
+ 1951 12dc C125C517 		.word	398796225
+ 1952 12e0 8F65341E 		.word	506750351
+ 1953 12e4 F1811426 		.word	638878193
+ 1954 12e8 FFFBA72F 		.word	799538175
+ 1955 12ec 019C3A3B 		.word	993696769
+ 1956 12f0 0F622249 		.word	1226990095
+ 1957 12f4 7186C059 		.word	1505789553
+ 1958 12f8 3F8A826D 		.word	1837271615
+ 1959 12fc C158E384 		.word	-2065475391
+ 1960 1300 010E0400 		.word	265729
+ 1961 1304 91210900 		.word	598417
+ 1962 1308 112C1300 		.word	1256465
+ 1963 130c 41EE2500 		.word	2485825
+ 1964 1310 414F4700 		.word	4673345
+ 1965 1314 91438000 		.word	8405905
+ 1966 1318 11F7DD00 		.word	14546705
+ 1967 131c 01467301 		.word	24331777
+ 1968 1320 01925A02 		.word	39490049
+ 1969 1324 1101B803 		.word	62390545
+ 1970 1328 9135BC05 		.word	96220561
+ 1971 132c 418FA708 		.word	145198913
+ 1972 1330 4106CE0C 		.word	214828609
+ 1973 1334 11B29B12 		.word	312193553
+ 1974 1338 910F9A1A 		.word	446304145
+ 1975 133c 011A7625 		.word	628496897
+ 1976 1340 014C0734 		.word	872893441
+ 1977 1344 919E5747 		.word	1196924561
+ 1978 1348 119DAC60 		.word	1621925137
+ 1979 134c 41A69181 		.word	-2121161151
+ 1980 1350 23511600 		.word	1462563
+ 1981 1354 C59E3200 		.word	3317445
+ 1982 1358 17B96B00 		.word	7059735
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 47
+
+
+ 1983 135c 99F6D800 		.word	14218905
+ 1984 1360 6B89A001 		.word	27298155
+ 1985 1364 0DC4FE02 		.word	50250765
+ 1986 1368 1F015005 		.word	89129247
+ 1987 136c 21D91D09 		.word	152951073
+ 1988 1370 336C300F 		.word	254831667
+ 1989 1374 D5A2A418 		.word	413442773
+ 1990 1378 A7670827 		.word	654862247
+ 1991 137c 29FD7D3C 		.word	1014889769
+ 1992 1380 7BB5E75B 		.word	1541911931
+ 1993 1384 1D771D89 		.word	-1994557667
+ 1994 1388 AFA02DC9 		.word	-919756625
+ 1995 138c AD8E7B00 		.word	8097453
+ 1996 1390 89E61901 		.word	18474633
+ 1997 1394 39965E02 		.word	39753273
+ 1998 1398 3D16D804 		.word	81270333
+ 1999 139c B5637709 		.word	158819253
+ 2000 13a0 E128C611 		.word	298199265
+ 2001 13a4 21033420 		.word	540279585
+ 2002 13a8 75488238 		.word	948062325
+ 2003 13ac 7D575760 		.word	1616336765
+ 2004 13b0 BF5BAF02 		.word	45046719
+ 2005 13b4 81D82706 		.word	103274625
+ 2006 13b8 F7845E0D 		.word	224298231
+ 2007 13bc E9FEAD1B 		.word	464387817
+ 2008 13c0 7F8BEB36 		.word	921406335
+ 2009 13c4 81B7E568 		.word	1759885185
+ 2010 13c8 17039CC1 		.word	-1046740201
+ 2011 13cc C10CFF0E 		.word	251595969
+ 2012 13d0 396A8522 		.word	579168825
+ 2013 13d4 19EE914B 		.word	1267854873
+ 2014 13d8 81782B9E 		.word	-1641318271
+ 2015 13dc 33E10954 		.word	1409933619
+ 2016              		.text
+ 2017              	.Letext0:
+ 2018              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 2019              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 2020              		.file 4 "../../opus/include/opus_types.h"
+ 2021              		.file 5 "../../opus/celt/entcode.h"
+ 2022              		.file 6 "../../opus/celt/entdec.h"
+ 2023              		.file 7 "../../opus/celt/entenc.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 cwrs.c
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:20     .text.icwrs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:25     .text.icwrs:00000000 icwrs
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:150    .text.icwrs:00000074 $d
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:723    .rodata.CELT_PVQ_U_ROW:00000000 CELT_PVQ_U_ROW
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:155    .text.cwrsi:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:160    .text.cwrsi:00000000 cwrsi
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:518    .text.cwrsi:0000012c $d
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:523    .text.encode_pulses:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:529    .text.encode_pulses:00000000 encode_pulses
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:617    .text.encode_pulses:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:622    .text.decode_pulses:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:628    .text.decode_pulses:00000000 decode_pulses
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:715    .text.decode_pulses:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:720    .rodata.CELT_PVQ_U_ROW:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:743    .rodata.CELT_PVQ_U_DATA:00000000 CELT_PVQ_U_DATA
+C:\Users\oleg\AppData\Local\Temp\ccfyMG9S.s:740    .rodata.CELT_PVQ_U_DATA:00000000 $d
+
+UNDEFINED SYMBOLS
+ec_enc_uint
+ec_dec_uint

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
   28:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** //! are met: 
   29:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** //! 
   30:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** //!     * Redistributions of source code must retain the above copyright 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 2
 
 
   31:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** //! notice, this list of conditions and the following disclaimer. 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
   85:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #define DHCP_RELEASE             7        ///< RELEASE message in OPT of @ref RIP_MSG. No use
   86:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #define DHCP_INFORM              8        ///< INFORM message in OPT of @ref RIP_MSG. No use
   87:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 3
 
 
   88:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #define DHCP_HTYPE10MB           1        ///< Used in type of @ref RIP_MSG
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  142:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    tcpDefaultTTL           = 37,
  143:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    tcpKeepaliveInterval    = 38,
  144:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    tcpKeepaliveGarbage     = 39,
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 4
 
 
  145:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    nisDomainName           = 40,
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  199:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** uint8_t OLD_allocated_ip[4]   = {0, };    // Previous IP address
  200:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** uint8_t DHCP_allocated_ip[4]  = {0, };    // IP address from DHCP
  201:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** uint8_t DHCP_allocated_gw[4]  = {0, };    // Gateway address from DHCP
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 5
 
 
  202:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** uint8_t DHCP_allocated_sn[4]  = {0, };    // Subnet mask from DHCP
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  256:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** /* The default handler of ip assign first */
  257:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** void default_ip_assign(void)
  258:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 6
 
 
   29              		.loc 1 258 1 view -0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
   77              		.cfi_startproc
   78              		@ args = 0, pretend = 0, frame = 0
   79              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 7
 
 
   80 0000 08B5     		push	{r3, lr}
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  126              	.LCFI2:
  127              		.cfi_def_cfa_offset 8
  128              		.cfi_offset 3, -8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 8
 
 
  129              		.cfi_offset 14, -4
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  175              		.loc 1 286 21 is_stmt 0 view .LVU19
  176 0002 0B4B     		ldr	r3, .L18
  177 0004 0B4C     		ldr	r4, .L18+4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 9
 
 
  178 0006 1C60     		str	r4, [r3]
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  226 0030 00000000 		.word	dhcp_ip_assign
  227 0034 00000000 		.word	default_ip_assign
  228 0038 00000000 		.word	dhcp_ip_update
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 10
 
 
  229 003c 00000000 		.word	default_ip_update
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  275 001a 4B70     		strb	r3, [r1, #1]
  303:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->hlen    = DHCP_HLENETHERNET;
  276              		.loc 1 303 2 is_stmt 1 view .LVU49
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 11
 
 
  277              		.loc 1 303 10 is_stmt 0 view .LVU50
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  313:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	*(ptmp+1)         = (uint8_t)((DHCP_FLAGSBROADCAST & 0x00FF) >> 0);
  322              		.loc 1 313 2 is_stmt 1 view .LVU74
  323              		.loc 1 313 20 is_stmt 0 view .LVU75
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 12
 
 
  324 004e D172     		strb	r1, [r2, #11]
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  361              		.loc 1 330 2 is_stmt 1 view .LVU100
  362              		.loc 1 330 22 is_stmt 0 view .LVU101
  363 0068 1176     		strb	r1, [r2, #24]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 13
 
 
  331:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->giaddr[1] = 0;
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  406              		.loc 1 342 2 is_stmt 0 view .LVU127
  407 008e 04E0     		b	.L21
  408              	.LVL17:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 14
 
 
  409              	.L22:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  461              	.LVL26:
  462              		.loc 1 344 24 is_stmt 0 discriminator 3 view .LVU145
  463 00c0 DBB2     		uxtb	r3, r3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 15
 
 
  464              	.LVL27:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  508              		.syntax unified
  509              		.thumb
  510              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 16
 
 
  512              	send_DHCP_DECLINE:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  404:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = routersOnSubnet;
  405:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dns;
  406:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = domainName;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 17
 
 
  407:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dhcpT1value;
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  461:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = DHCP_REQUEST;
  462:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  463:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dhcpClientIdentifier;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 18
 
 
  464:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = 0x07;
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  518:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	ulog_fmt("> Send DHCP_REQUEST\r\n");
  519:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #endif
  520:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 19
 
 
  521:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	sendto(DHCP_SOCKET, (uint8_t *)pDHCPMSG, RIP_MSG_SIZE, ip, DHCP_SERVER_PORT);
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  541:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = 0x01;
  548              		.loc 1 541 2 is_stmt 1 view .LVU170
  549              	.LVL32:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 20
 
 
  550              		.loc 1 541 21 is_stmt 0 view .LVU171
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  595              		.loc 1 550 21 view .LVU191
  596 004a 80F8F910 		strb	r1, [r0, #249]
  551:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = DHCP_CHADDR[4];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 21
 
 
  597              		.loc 1 551 2 is_stmt 1 view .LVU192
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  560:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  561:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dhcpServerIdentifier;
  643              		.loc 1 561 2 is_stmt 1 view .LVU214
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 22
 
 
  644              	.LVL49:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  689              	.L32:
  690              		.loc 1 570 33 is_stmt 1 discriminator 3 view .LVU235
  691              		.loc 1 570 50 is_stmt 0 discriminator 3 view .LVU236
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 23
 
 
  692 00ac C218     		adds	r2, r0, r3
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  733 00ea 05B0     		add	sp, sp, #20
  734              	.LCFI10:
  735              		.cfi_def_cfa_offset 4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 24
 
 
  736              		@ sp needed
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  774              		@ args = 0, pretend = 0, frame = 16
  775              		@ frame_needed = 0, uses_anonymous_args = 0
  776 0000 30B5     		push	{r4, r5, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 25
 
 
  777              	.LCFI11:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  614:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****          return 0;
  615:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		}
  616:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****         //compare DHCP server ip address
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 26
 
 
  617:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****         if((DHCP_SIP[0]!=0) || (DHCP_SIP[1]!=0) || (DHCP_SIP[2]!=0) || (DHCP_SIP[3]!=0)){
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  671:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				break;
  672:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    			case dhcpIPaddrLeaseTime :
  673:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				p++;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 27
 
 
  674:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				opt_len = *p++;
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  826              	.LVL66:
  599:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    #ifdef _DHCP_DEBUG_   
  827              		.loc 1 599 11 view .LVU267
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 28
 
 
  828 0024 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  607:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		     (pDHCPMSG->chaddr[2] != DHCP_CHADDR[2]) || (pDHCPMSG->chaddr[3] != DHCP_CHADDR[3]) ||
  869              		.loc 1 607 25 view .LVU281
  870 005e 197F     		ldrb	r1, [r3, #28]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 29
 
 
  607:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		     (pDHCPMSG->chaddr[2] != DHCP_CHADDR[2]) || (pDHCPMSG->chaddr[3] != DHCP_CHADDR[3]) ||
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  910 0092 93F82110 		ldrb	r1, [r3, #33]	@ zero_extendqisi2
  609:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		{
  911              		.loc 1 609 86 view .LVU297
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 30
 
 
  912 0096 8E4A     		ldr	r2, .L67+12
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  618:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****                 ((svr_addr[0]!=DHCP_REAL_SIP[0])|| (svr_addr[1]!=DHCP_REAL_SIP[1])|| (svr_addr[2]!=
  951              		.loc 1 618 15 view .LVU313
  952 00c2 9142     		cmp	r1, r2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 31
 
 
  953 00c4 1AD0     		beq	.L66
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  993 00fa 89E7     		b	.L37
  994              	.L66:
  618:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****                 ((svr_addr[0]!=DHCP_REAL_SIP[0])|| (svr_addr[1]!=DHCP_REAL_SIP[1])|| (svr_addr[2]!=
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 32
 
 
  995              		.loc 1 618 56 discriminator 2 view .LVU328
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1033              		.loc 1 631 9 view .LVU344
  1034 0128 05E0     		b	.L56
  1035              	.LVL77:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 33
 
 
  1036              	.L46:
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1081 0184 25030000 		.word	.L47+1
  1082 0188 25030000 		.word	.L47+1
  1083 018c 25030000 		.word	.L47+1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 34
 
 
  1084 0190 25030000 		.word	.L47+1
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1132              		.loc 1 644 17 is_stmt 0 view .LVU359
  1133 022a 0332     		adds	r2, r2, #3
  1134              	.LVL83:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 35
 
 
  645:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    			case subnetMask :
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1171              	.L53:
  655:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				opt_len = *p++;       
  1172              		.loc 1 655 8 is_stmt 1 view .LVU378
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 36
 
 
  1173              	.LVL89:
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1210              	.L52:
  664:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				opt_len = *p++;       
  1211              		.loc 1 664 8 view .LVU396
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 37
 
 
  665:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				DHCP_allocated_dns[0] = *p++;
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  673:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				opt_len = *p++;
  1249              		.loc 1 673 8 view .LVU414
  674:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				dhcp_lease_time  = *p++;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 38
 
 
  1250              		.loc 1 674 8 view .LVU415
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  678:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****             #ifdef _DHCP_DEBUG_  
  1286              		.loc 1 678 54 is_stmt 0 view .LVU434
  1287 02be 0632     		adds	r2, r2, #6
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 39
 
 
  1288              	.LVL105:
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1329              	.LVL109:
  689:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****                 DHCP_REAL_SIP[0]=svr_addr[0];
  1330              		.loc 1 689 22 is_stmt 0 view .LVU448
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 40
 
 
  1331 0302 5479     		ldrb	r4, [r2, #5]	@ zero_extendqisi2
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1366 0324 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
  1367              	.LVL112:
  698:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    				break;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 41
 
 
  1368              		.loc 1 698 8 is_stmt 1 view .LVU468
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  732:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #endif
  733:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****             DHCP_allocated_ip[0] = pDHCPMSG->yiaddr[0];
  734:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****             DHCP_allocated_ip[1] = pDHCPMSG->yiaddr[1];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 42
 
 
  735:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****             DHCP_allocated_ip[2] = pDHCPMSG->yiaddr[2];
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  789:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				send_DHCP_REQUEST();
  790:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  791:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				reset_DHCP_timeout();
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 43
 
 
  792:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1402              		.cfi_offset 14, -4
  838:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    close(DHCP_SOCKET);
  1403              		.loc 1 838 4 view .LVU473
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 44
 
 
  1404 0002 044B     		ldr	r3, .L73
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  852:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 					send_DHCP_DISCOVER();
  853:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				break;
  854:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 45
 
 
  855:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				case STATE_DHCP_REQUEST :
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1451              		.cfi_def_cfa_offset 24
  897:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	uint8_t tmp;
  1452              		.loc 1 897 2 view .LVU478
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 46
 
 
  898:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	int32_t ret;
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  915:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		ulog_fmt("\r\n> Check leased IP - OK\r\n");
  916:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #endif
  917:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 47
 
 
  918:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		return 1;
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1530 005e F8E7     		b	.L77
  1531              	.L82:
  1532              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 48
 
 
  1533              	.L81:
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1551              		.loc 1 966 1 is_stmt 1 view -0
  1552              		.cfi_startproc
  1553              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 49
 
 
  1554              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1604              	.LCFI21:
  1605              		.cfi_def_cfa_offset 24
  1606 0004 0646     		mov	r6, r0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 50
 
 
  1607 0006 0D46     		mov	r5, r1
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  946:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG = (RIP_MSG*)buf;
  1646              		.loc 1 946 14 is_stmt 0 view .LVU526
  1647 0036 1E4B     		ldr	r3, .L90+4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 51
 
 
  1648 0038 1E70     		strb	r6, [r3]
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1685 0060 0422     		movs	r2, #4
  1686 0062 0DEB0201 		add	r1, sp, r2
  1687 0066 4FF47060 		mov	r0, #3840
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 52
 
 
  1688 006a FFF7FEFF 		bl	WIZCHIP_WRITE_BUF
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1729              		.loc 1 940 22 is_stmt 0 view .LVU556
  1730 0098 CB70     		strb	r3, [r1, #3]
  941:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****       DHCP_CHADDR[5] = 0x00; 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 53
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 53
 
 
  1731              		.loc 1 941 7 is_stmt 1 view .LVU557
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1778 000a 00BF     		.align	2
  1779              	.L93:
  1780 000c 00000000 		.word	dhcp_tick_1s
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 54
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 54
 
 
  1781              		.cfi_endproc
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1830              		.align	1
  1831              		.global	getGWfromDHCP
  1832              		.syntax unified
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 55
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 55
 
 
  1833              		.thumb
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1882              	.LVL139:
  1883              	.LFB153:
  992:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 56
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 56
 
 
  993:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** void getSNfromDHCP(uint8_t* ip)
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1930              		.cfi_startproc
  1931              		@ args = 0, pretend = 0, frame = 0
  1932              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 57
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 57
 
 
  1933              		@ link register save eliminated.
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  1979              		.loc 1 1012 1 is_stmt 0 view .LVU624
  1980 0000 014B     		ldr	r3, .L108
  1981 0002 1868     		ldr	r0, [r3]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 58
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 58
 
 
  1982 0004 7047     		bx	lr
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2030              		.section	.rodata.send_DHCP_DISCOVER.str1.4,"aMS",%progbits,1
  2031              		.align	2
  2032              	.LC6:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 59
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 59
 
 
  2033 0000 3E205365 		.ascii	"> Send DHCP_DISCOVER\015\012\000"
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2075              		.loc 1 362 15 is_stmt 0 view .LVU644
  2076 0010 5D70     		strb	r5, [r3, #1]
  363:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    DHCP_SIP[3]=0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 60
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 60
 
 
  2077              		.loc 1 363 4 is_stmt 1 view .LVU645
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  375:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	
  2113              		.loc 1 375 21 is_stmt 0 view .LVU664
  2114 0030 86F8F230 		strb	r3, [r6, #242]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 61
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 61
 
 
  378:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = 0x07;
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  384:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = DHCP_CHADDR[4];
  2152              		.loc 1 384 21 view .LVU682
  2153 005c 86F8F990 		strb	r9, [r6, #249]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 62
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 62
 
 
  385:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = DHCP_CHADDR[5];
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2191 0084 0135     		adds	r5, r5, #1
  2192              	.LVL166:
  391:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    	pDHCPMSG->OPT[k++] = HOST_NAME[i];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 63
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 63
 
 
  2193              		.loc 1 391 34 is_stmt 0 discriminator 3 view .LVU700
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2233 00bc 04F10309 		add	r9, r4, #3
  2234 00c0 1FFA89F9 		uxth	r9, r9
  2235              	.LVL173:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 64
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 64
 
 
  395:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = NibbleToHex(DHCP_CHADDR[4]);
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2276              		.loc 1 398 21 discriminator 1 view .LVU728
  2277 0108 B144     		add	r9, r9, r6
  2278 010a 89F8EC00 		strb	r0, [r9, #236]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 65
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 65
 
 
  399:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2317              	.LVL185:
  404:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dns;
  2318              		.loc 1 404 21 view .LVU745
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 66
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 66
 
 
  2319 0146 16FA82F2 		uxtah	r2, r6, r2
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2358              		.loc 1 409 21 view .LVU760
  2359 018a 16FA83F3 		uxtah	r3, r6, r3
  2360 018e FF22     		movs	r2, #255
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 67
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 67
 
 
  2361 0190 83F8EC20 		strb	r2, [r3, #236]
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2399              	.LVL195:
  423:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** }
  2400              		.loc 1 423 2 view .LVU777
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 68
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 68
 
 
  2401 01c0 4323     		movs	r3, #67
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2450              	.LCFI27:
  2451              		.cfi_def_cfa_offset 36
  2452              		.cfi_offset 4, -36
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 69
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 69
 
 
  2453              		.cfi_offset 5, -32
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2492 0024 8DF80F30 		strb	r3, [sp, #15]
  2493              	.L123:
  456:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 70
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 70
 
 
  2494              		.loc 1 456 4 is_stmt 1 view .LVU796
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  466:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = DHCP_CHADDR[1];
  2533              		.loc 1 466 21 view .LVU812
  2534 0052 85F8F620 		strb	r2, [r5, #246]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 71
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 71
 
 
  467:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = DHCP_CHADDR[2];
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  471:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  2571              		.loc 1 471 17 view .LVU831
  2572 0080 1024     		movs	r4, #16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 72
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 72
 
 
  2573              	.LVL213:
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2611              		.loc 1 439 25 view .LVU847
  2612 00a6 1973     		strb	r1, [r3, #12]
  440:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****    	pDHCPMSG->ciaddr[2] = DHCP_allocated_ip[2];
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 73
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 73
 
 
  2613              		.loc 1 440 5 is_stmt 1 view .LVU848
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2647              		.loc 1 446 11 view .LVU868
  2648 00ca 8DF80F30 		strb	r3, [sp, #15]
  2649 00ce ABE7     		b	.L123
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 74
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 74
 
 
  2650              	.LVL218:
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2687              	.LVL224:
  482:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 		pDHCPMSG->OPT[k++] = 0x04;
  2688              		.loc 1 482 22 is_stmt 0 view .LVU886
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 75
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 75
 
 
  2689 00f6 3623     		movs	r3, #54
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2726              		.loc 1 494 20 is_stmt 0 view .LVU903
  2727 011e 621C     		adds	r2, r4, #1
  2728              	.LVL231:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 76
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 76
 
 
  494:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = NibbleToHex(DHCP_CHADDR[3] >> 4); 
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2769 0158 8AF8EC00 		strb	r0, [r10, #236]
  497:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = NibbleToHex(DHCP_CHADDR[4]);
  2770              		.loc 1 497 2 is_stmt 1 view .LVU918
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 77
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 77
 
 
  497:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = NibbleToHex(DHCP_CHADDR[4]);
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2811              		.loc 1 500 23 view .LVU932
  2812 01a2 3846     		mov	r0, r7
  2813 01a4 FFF7FEFF 		bl	NibbleToHex
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 78
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 78
 
 
  2814              	.LVL245:
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  506:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dns;
  2853              		.loc 1 506 2 is_stmt 1 view .LVU948
  506:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = dns;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 79
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 79
 
 
  2854              		.loc 1 506 17 is_stmt 0 view .LVU949
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  511:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	pDHCPMSG->OPT[k++] = staticRoute;
  2894              		.loc 1 511 17 is_stmt 0 view .LVU964
  2895 0228 04F10F02 		add	r2, r4, #15
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 80
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 80
 
 
  2896              	.LVL255:
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2936 0262 F7DB     		blt	.L128
  518:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** #endif
  2937              		.loc 1 518 2 view .LVU979
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 81
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 81
 
 
  2938 0264 0E48     		ldr	r0, .L133+24
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  2990              		.cfi_offset 4, -8
  2991              		.cfi_offset 14, -4
  844:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 	
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 82
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 82
 
 
  2992              		.loc 1 844 2 view .LVU984
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3033 0030 184B     		ldr	r3, .L147+12
  3034 0032 1B68     		ldr	r3, [r3]
  847:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 83
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 83
 
 
  3035              		.loc 1 847 6 view .LVU998
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  859:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  3077              		.loc 1 859 5 view .LVU1011
  3078 006c EFE7     		b	.L140
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 84
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 84
 
 
  3079              	.L139:
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3120      65204448 
  3120      43505F41 
  3120      434B0D0A 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 85
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 85
 
 
  3121 002d 000000   		.align	2
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  709:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  3155              		.loc 1 709 2 view .LVU1022
  711:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 86
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 86
 
 
  3156              		.loc 1 711 2 view .LVU1023
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3200              	.L172:
  714:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  3201              		.loc 1 714 5 view .LVU1034
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 87
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 87
 
 
  3202 0040 0023     		movs	r3, #0
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  740:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****          break;
  3242              		.loc 1 740 11 is_stmt 1 view .LVU1049
  740:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****          break;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 88
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 88
 
 
  3243              		.loc 1 740 17 is_stmt 0 view .LVU1050
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  736:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
  3281              		.loc 1 736 34 view .LVU1067
  3282 008e DA70     		strb	r2, [r3, #3]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 89
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 89
 
 
  738:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				dhcp_state = STATE_DHCP_REQUEST;
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  749:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 					// Network info assignment from DHCP
  3322              		.loc 1 749 9 is_stmt 0 view .LVU1083
  3323 00b4 FFF7FEFF 		bl	check_DHCP_leasedIP
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 90
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 90
 
 
  3324              	.LVL293:
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3365              		.loc 1 764 5 is_stmt 0 view .LVU1096
  3366 00e4 FFF7FEFF 		bl	ulog_fmt
  3367              	.LVL300:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 91
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 91
 
 
  767:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3407 0114 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
  782:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				OLD_allocated_ip[1] = DHCP_allocated_ip[1];
  3408              		.loc 1 782 25 view .LVU1112
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 92
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 92
 
 
  3409 0116 394B     		ldr	r3, .L180+48
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  799:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				dhcp_retry_count = 0;
  3447              		.loc 1 799 4 view .LVU1129
  799:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				dhcp_retry_count = 0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 93
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 93
 
 
  3448              		.loc 1 799 7 is_stmt 0 view .LVU1130
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3488              	.LVL312:
  809:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c ****                #endif
  3489              		.loc 1 809 19 view .LVU1145
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 94
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 94
 
 
  3490 0166 2948     		ldr	r0, .L180+64
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  803:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 				    OLD_allocated_ip[3] != DHCP_allocated_ip[3]) 
  3532              		.loc 1 803 53 view .LVU1158
  3533 019a 9A42     		cmp	r2, r3
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 95
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 95
 
 
  3534 019c E0D1     		bne	.L163
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3576              	.LVL325:
  3577              	.L169:
  774:../../w5500/ioLibrary_driver/Internet/DHCP/dhcp.c **** 			if ((dhcp_lease_time != INFINITE_LEASETIME) && ((dhcp_lease_time/2) < dhcp_tick_1s)) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 96
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 96
 
 
  3578              		.loc 1 774 10 view .LVU1171
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3641              		.global	pDHCPMSG
  3642              		.section	.bss.pDHCPMSG,"aw",%nobits
  3643              		.align	2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 97
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 97
 
 
  3646              	pDHCPMSG:
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3722 0000 00000000 		.space	4
  3723              		.global	DHCP_REAL_SIP
  3724              		.section	.bss.DHCP_REAL_SIP,"aw",%nobits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 98
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 98
 
 
  3725              		.align	2
@@ -5841,135 +5841,135 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 1
  3748              		.file 5 "../../w5500/ioLibrary_driver/Ethernet/socket.h"
  3749              		.file 6 "../../w5500/ioLibrary_driver/Ethernet/W5500/w5500.h"
  3750              		.file 7 "../../util/stm_util.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 99
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 99
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 dhcp.c
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:21     .text.default_ip_assign:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:27     .text.default_ip_assign:00000000 default_ip_assign
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:61     .text.default_ip_assign:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3714   .bss.DHCP_allocated_ip:00000000 DHCP_allocated_ip
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3700   .bss.DHCP_allocated_sn:00000000 DHCP_allocated_sn
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3707   .bss.DHCP_allocated_gw:00000000 DHCP_allocated_gw
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:68     .text.default_ip_update:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:74     .text.default_ip_update:00000000 default_ip_update
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:108    .text.default_ip_update:00000024 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3632   .bss.DHCP_CHADDR:00000000 DHCP_CHADDR
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:113    .text.default_ip_conflict:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:119    .text.default_ip_conflict:00000000 default_ip_conflict
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:150    .text.default_ip_conflict:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:155    .text.reg_dhcp_cbfunc:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:161    .text.reg_dhcp_cbfunc:00000000 reg_dhcp_cbfunc
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:226    .text.reg_dhcp_cbfunc:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3625   .data.dhcp_ip_assign:00000000 dhcp_ip_assign
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3618   .data.dhcp_ip_update:00000000 dhcp_ip_update
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3611   .data.dhcp_ip_conflict:00000000 dhcp_ip_conflict
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:236    .text.makeDHCPMSG:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:242    .text.makeDHCPMSG:00000000 makeDHCPMSG
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:495    .text.makeDHCPMSG:000000e4 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3646   .bss.pDHCPMSG:00000000 pDHCPMSG
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3653   .bss.DHCP_XID:00000000 DHCP_XID
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:502    .rodata.send_DHCP_DECLINE.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:506    .text.send_DHCP_DECLINE:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:512    .text.send_DHCP_DECLINE:00000000 send_DHCP_DECLINE
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:741    .text.send_DHCP_DECLINE:000000f0 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3735   .bss.DHCP_SIP:00000000 DHCP_SIP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3741   .bss.DHCP_SOCKET:00000000 DHCP_SOCKET
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:751    .rodata.parseDHCPMSG.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:764    .text.parseDHCPMSG:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:770    .text.parseDHCPMSG:00000000 parseDHCPMSG
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1067   .text.parseDHCPMSG:0000014c $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1122   .text.parseDHCPMSG:00000228 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1294   .text.parseDHCPMSG:000002c4 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3728   .bss.DHCP_REAL_SIP:00000000 DHCP_REAL_SIP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3693   .bss.DHCP_allocated_dns:00000000 DHCP_allocated_dns
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3674   .data.dhcp_lease_time:00000000 dhcp_lease_time
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1312   .text.parseDHCPMSG:000002f4 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1380   .text.parseDHCPMSG:0000032c $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1386   .text.DHCP_stop:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1392   .text.DHCP_stop:00000000 DHCP_stop
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1418   .text.DHCP_stop:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3686   .bss.dhcp_state:00000000 dhcp_state
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1424   .rodata.check_DHCP_leasedIP.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1431   .text.check_DHCP_leasedIP:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1437   .text.check_DHCP_leasedIP:00000000 check_DHCP_leasedIP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1534   .text.check_DHCP_leasedIP:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3667   .bss.dhcp_tick_1s:00000000 dhcp_tick_1s
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1543   .text.reset_DHCP_timeout:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1549   .text.reset_DHCP_timeout:00000000 reset_DHCP_timeout
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1575   .text.reset_DHCP_timeout:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3660   .data.dhcp_tick_next:00000000 dhcp_tick_next
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3680   .bss.dhcp_retry_count:00000000 dhcp_retry_count
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 100
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:21     .text.default_ip_assign:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:27     .text.default_ip_assign:00000000 default_ip_assign
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:61     .text.default_ip_assign:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3714   .bss.DHCP_allocated_ip:00000000 DHCP_allocated_ip
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3700   .bss.DHCP_allocated_sn:00000000 DHCP_allocated_sn
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3707   .bss.DHCP_allocated_gw:00000000 DHCP_allocated_gw
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:68     .text.default_ip_update:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:74     .text.default_ip_update:00000000 default_ip_update
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:108    .text.default_ip_update:00000024 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3632   .bss.DHCP_CHADDR:00000000 DHCP_CHADDR
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:113    .text.default_ip_conflict:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:119    .text.default_ip_conflict:00000000 default_ip_conflict
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:150    .text.default_ip_conflict:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:155    .text.reg_dhcp_cbfunc:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:161    .text.reg_dhcp_cbfunc:00000000 reg_dhcp_cbfunc
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:226    .text.reg_dhcp_cbfunc:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3625   .data.dhcp_ip_assign:00000000 dhcp_ip_assign
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3618   .data.dhcp_ip_update:00000000 dhcp_ip_update
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3611   .data.dhcp_ip_conflict:00000000 dhcp_ip_conflict
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:236    .text.makeDHCPMSG:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:242    .text.makeDHCPMSG:00000000 makeDHCPMSG
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:495    .text.makeDHCPMSG:000000e4 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3646   .bss.pDHCPMSG:00000000 pDHCPMSG
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3653   .bss.DHCP_XID:00000000 DHCP_XID
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:502    .rodata.send_DHCP_DECLINE.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:506    .text.send_DHCP_DECLINE:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:512    .text.send_DHCP_DECLINE:00000000 send_DHCP_DECLINE
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:741    .text.send_DHCP_DECLINE:000000f0 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3735   .bss.DHCP_SIP:00000000 DHCP_SIP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3741   .bss.DHCP_SOCKET:00000000 DHCP_SOCKET
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:751    .rodata.parseDHCPMSG.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:764    .text.parseDHCPMSG:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:770    .text.parseDHCPMSG:00000000 parseDHCPMSG
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1067   .text.parseDHCPMSG:0000014c $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1122   .text.parseDHCPMSG:00000228 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1294   .text.parseDHCPMSG:000002c4 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3728   .bss.DHCP_REAL_SIP:00000000 DHCP_REAL_SIP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3693   .bss.DHCP_allocated_dns:00000000 DHCP_allocated_dns
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3674   .data.dhcp_lease_time:00000000 dhcp_lease_time
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1312   .text.parseDHCPMSG:000002f4 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1380   .text.parseDHCPMSG:0000032c $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1386   .text.DHCP_stop:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1392   .text.DHCP_stop:00000000 DHCP_stop
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1418   .text.DHCP_stop:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3686   .bss.dhcp_state:00000000 dhcp_state
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1424   .rodata.check_DHCP_leasedIP.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1431   .text.check_DHCP_leasedIP:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1437   .text.check_DHCP_leasedIP:00000000 check_DHCP_leasedIP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1534   .text.check_DHCP_leasedIP:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3667   .bss.dhcp_tick_1s:00000000 dhcp_tick_1s
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1543   .text.reset_DHCP_timeout:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1549   .text.reset_DHCP_timeout:00000000 reset_DHCP_timeout
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1575   .text.reset_DHCP_timeout:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3660   .data.dhcp_tick_next:00000000 dhcp_tick_next
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3680   .bss.dhcp_retry_count:00000000 dhcp_retry_count
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 100
 
 
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1582   .text.DHCP_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1588   .text.DHCP_init:00000000 DHCP_init
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1746   .text.DHCP_init:000000ac $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1756   .text.DHCP_time_handler:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1762   .text.DHCP_time_handler:00000000 DHCP_time_handler
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1780   .text.DHCP_time_handler:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1785   .text.getIPfromDHCP:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1791   .text.getIPfromDHCP:00000000 getIPfromDHCP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1825   .text.getIPfromDHCP:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1830   .text.getGWfromDHCP:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1836   .text.getGWfromDHCP:00000000 getGWfromDHCP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1870   .text.getGWfromDHCP:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1875   .text.getSNfromDHCP:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1881   .text.getSNfromDHCP:00000000 getSNfromDHCP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1915   .text.getSNfromDHCP:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1920   .text.getDNSfromDHCP:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1926   .text.getDNSfromDHCP:00000000 getDNSfromDHCP
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1960   .text.getDNSfromDHCP:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1965   .text.getDHCPLeasetime:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1971   .text.getDHCPLeasetime:00000000 getDHCPLeasetime
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1986   .text.getDHCPLeasetime:00000008 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1991   .text.NibbleToHex:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:1997   .text.NibbleToHex:00000000 NibbleToHex
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2031   .rodata.send_DHCP_DISCOVER.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2035   .text.send_DHCP_DISCOVER:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2041   .text.send_DHCP_DISCOVER:00000000 send_DHCP_DISCOVER
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2422   .text.send_DHCP_DISCOVER:000001dc $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3639   .data.HOST_NAME:00000000 HOST_NAME
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2433   .rodata.send_DHCP_REQUEST.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2437   .text.send_DHCP_REQUEST:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2443   .text.send_DHCP_REQUEST:00000000 send_DHCP_REQUEST
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2963   .text.send_DHCP_REQUEST:00000288 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2975   .text.check_DHCP_timeout:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:2981   .text.check_DHCP_timeout:00000000 check_DHCP_timeout
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3107   .text.check_DHCP_timeout:00000088 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3115   .rodata.DHCP_run.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3137   .text.DHCP_run:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3143   .text.DHCP_run:00000000 DHCP_run
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3193   .text.DHCP_run:0000003a $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3584   .text.DHCP_run:000001cc $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3721   .bss.OLD_allocated_ip:00000000 OLD_allocated_ip
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3608   .data.dhcp_ip_conflict:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3615   .data.dhcp_ip_update:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3622   .data.dhcp_ip_assign:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3629   .bss.DHCP_CHADDR:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3636   .data.HOST_NAME:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3643   .bss.pDHCPMSG:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3650   .bss.DHCP_XID:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3657   .data.dhcp_tick_next:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3664   .bss.dhcp_tick_1s:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3671   .data.dhcp_lease_time:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3681   .bss.dhcp_retry_count:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3687   .bss.dhcp_state:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3690   .bss.DHCP_allocated_dns:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3697   .bss.DHCP_allocated_sn:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3704   .bss.DHCP_allocated_gw:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3711   .bss.DHCP_allocated_ip:00000000 $d
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s 			page 101
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1582   .text.DHCP_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1588   .text.DHCP_init:00000000 DHCP_init
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1746   .text.DHCP_init:000000ac $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1756   .text.DHCP_time_handler:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1762   .text.DHCP_time_handler:00000000 DHCP_time_handler
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1780   .text.DHCP_time_handler:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1785   .text.getIPfromDHCP:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1791   .text.getIPfromDHCP:00000000 getIPfromDHCP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1825   .text.getIPfromDHCP:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1830   .text.getGWfromDHCP:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1836   .text.getGWfromDHCP:00000000 getGWfromDHCP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1870   .text.getGWfromDHCP:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1875   .text.getSNfromDHCP:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1881   .text.getSNfromDHCP:00000000 getSNfromDHCP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1915   .text.getSNfromDHCP:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1920   .text.getDNSfromDHCP:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1926   .text.getDNSfromDHCP:00000000 getDNSfromDHCP
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1960   .text.getDNSfromDHCP:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1965   .text.getDHCPLeasetime:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1971   .text.getDHCPLeasetime:00000000 getDHCPLeasetime
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1986   .text.getDHCPLeasetime:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1991   .text.NibbleToHex:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:1997   .text.NibbleToHex:00000000 NibbleToHex
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2031   .rodata.send_DHCP_DISCOVER.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2035   .text.send_DHCP_DISCOVER:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2041   .text.send_DHCP_DISCOVER:00000000 send_DHCP_DISCOVER
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2422   .text.send_DHCP_DISCOVER:000001dc $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3639   .data.HOST_NAME:00000000 HOST_NAME
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2433   .rodata.send_DHCP_REQUEST.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2437   .text.send_DHCP_REQUEST:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2443   .text.send_DHCP_REQUEST:00000000 send_DHCP_REQUEST
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2963   .text.send_DHCP_REQUEST:00000288 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2975   .text.check_DHCP_timeout:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:2981   .text.check_DHCP_timeout:00000000 check_DHCP_timeout
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3107   .text.check_DHCP_timeout:00000088 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3115   .rodata.DHCP_run.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3137   .text.DHCP_run:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3143   .text.DHCP_run:00000000 DHCP_run
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3193   .text.DHCP_run:0000003a $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3584   .text.DHCP_run:000001cc $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3721   .bss.OLD_allocated_ip:00000000 OLD_allocated_ip
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3608   .data.dhcp_ip_conflict:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3615   .data.dhcp_ip_update:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3622   .data.dhcp_ip_assign:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3629   .bss.DHCP_CHADDR:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3636   .data.HOST_NAME:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3643   .bss.pDHCPMSG:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3650   .bss.DHCP_XID:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3657   .data.dhcp_tick_next:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3664   .bss.dhcp_tick_1s:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3671   .data.dhcp_lease_time:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3681   .bss.dhcp_retry_count:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3687   .bss.dhcp_state:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3690   .bss.DHCP_allocated_dns:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3697   .bss.DHCP_allocated_sn:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3704   .bss.DHCP_allocated_gw:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3711   .bss.DHCP_allocated_ip:00000000 $d
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s 			page 101
 
 
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3718   .bss.OLD_allocated_ip:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3725   .bss.DHCP_REAL_SIP:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3732   .bss.DHCP_SIP:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3742   .bss.DHCP_SOCKET:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3199   .text.DHCP_run:0000003f $d
-C:\Users\oleg\AppData\Local\Temp\ccX0OfIc.s:3199   .text.DHCP_run:00000040 $t
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3718   .bss.OLD_allocated_ip:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3725   .bss.DHCP_REAL_SIP:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3732   .bss.DHCP_SIP:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3742   .bss.DHCP_SOCKET:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3199   .text.DHCP_run:0000003f $d
+C:\Users\oleg\AppData\Local\Temp\cc6c7hxe.s:3199   .text.DHCP_run:00000040 $t
 
 UNDEFINED SYMBOLS
 WIZCHIP_WRITE_BUF

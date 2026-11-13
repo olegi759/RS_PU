@@ -1,0 +1,3061 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"math_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/math_util.c"
+  19              		.section	.text.ullbestlength,"ax",%progbits
+  20              		.align	1
+  21              		.global	ullbestlength
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	ullbestlength:
+  27              	.LVL0:
+  28              	.LFB0:
+   1:../../util/math_util.c **** #include "math_util.h"
+   2:../../util/math_util.c **** #include <math.h>
+   3:../../util/math_util.c **** 
+   4:../../util/math_util.c **** 
+   5:../../util/math_util.c **** const short sin_const_20_2047[20] =  { 0, 632, 1203, 1656, 1946, 2047, 1946, 1656, 1203, 632, 0, -6
+   6:../../util/math_util.c **** 
+   7:../../util/math_util.c **** const short sin_const_100_2047[100] =  { 0, 128, 256, 383, 509, 632, 753, 871, 986, 1096, 1203, 130
+   8:../../util/math_util.c **** //лучшая длина
+   9:../../util/math_util.c **** unsigned char ullbestlength(unsigned long long val)
+  10:../../util/math_util.c **** {
+  29              		.loc 1 10 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  11:../../util/math_util.c ****   if (val <= 0xFF) return 1;
+  34              		.loc 1 11 3 view .LVU1
+  35              		.loc 1 11 6 is_stmt 0 view .LVU2
+  36 0000 B0F5807F 		cmp	r0, #256
+  37 0004 71F10003 		sbcs	r3, r1, #0
+  38 0008 27D3     		bcc	.L3
+  12:../../util/math_util.c ****   else if (val <= 0xFFFF) return 2;
+  39              		.loc 1 12 8 is_stmt 1 view .LVU3
+  40              		.loc 1 12 11 is_stmt 0 view .LVU4
+  41 000a B0F5803F 		cmp	r0, #65536
+  42 000e 71F10003 		sbcs	r3, r1, #0
+  43 0012 24D3     		bcc	.L4
+  13:../../util/math_util.c ****   else if (val <= 0xFFFFFF) return 3;
+  44              		.loc 1 13 8 is_stmt 1 view .LVU5
+  45              		.loc 1 13 11 is_stmt 0 view .LVU6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 2
+
+
+  46 0014 B0F1807F 		cmp	r0, #16777216
+  47 0018 71F10003 		sbcs	r3, r1, #0
+  48 001c 21D3     		bcc	.L5
+  14:../../util/math_util.c ****   else if (val <= 0xFFFFFFFF) return 4;
+  49              		.loc 1 14 8 is_stmt 1 view .LVU7
+  50              		.loc 1 14 11 is_stmt 0 view .LVU8
+  51 001e 4FF0FF33 		mov	r3, #-1
+  52 0022 8342     		cmp	r3, r0
+  53 0024 4FF00003 		mov	r3, #0
+  54 0028 8B41     		sbcs	r3, r3, r1
+  55 002a 1CD2     		bcs	.L6
+  15:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFF) return 5;
+  56              		.loc 1 15 8 is_stmt 1 view .LVU9
+  57              		.loc 1 15 11 is_stmt 0 view .LVU10
+  58 002c 4FF0FF33 		mov	r3, #-1
+  59 0030 8342     		cmp	r3, r0
+  60 0032 4FF0FF03 		mov	r3, #255
+  61 0036 8B41     		sbcs	r3, r3, r1
+  62 0038 17D2     		bcs	.L7
+  16:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFFFF) return 6;
+  63              		.loc 1 16 8 is_stmt 1 view .LVU11
+  64              		.loc 1 16 11 is_stmt 0 view .LVU12
+  65 003a 4FF0FF33 		mov	r3, #-1
+  66 003e 8342     		cmp	r3, r0
+  67 0040 4FF6FF73 		movw	r3, #65535
+  68 0044 8B41     		sbcs	r3, r3, r1
+  69 0046 12D2     		bcs	.L8
+  17:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFFFFFF) return 7;
+  70              		.loc 1 17 8 is_stmt 1 view .LVU13
+  71              		.loc 1 17 11 is_stmt 0 view .LVU14
+  72 0048 4FF0FF33 		mov	r3, #-1
+  73 004c 8342     		cmp	r3, r0
+  74 004e 6FF07F43 		mvn	r3, #-16777216
+  75 0052 8B41     		sbcs	r3, r3, r1
+  76 0054 0DD3     		bcc	.L9
+  77              		.loc 1 17 44 discriminator 1 view .LVU15
+  78 0056 0720     		movs	r0, #7
+  79              	.LVL1:
+  80              		.loc 1 17 44 discriminator 1 view .LVU16
+  81 0058 7047     		bx	lr
+  82              	.LVL2:
+  83              	.L3:
+  11:../../util/math_util.c ****   else if (val <= 0xFFFF) return 2;
+  84              		.loc 1 11 27 discriminator 1 view .LVU17
+  85 005a 0120     		movs	r0, #1
+  86              	.LVL3:
+  11:../../util/math_util.c ****   else if (val <= 0xFFFF) return 2;
+  87              		.loc 1 11 27 discriminator 1 view .LVU18
+  88 005c 7047     		bx	lr
+  89              	.LVL4:
+  90              	.L4:
+  12:../../util/math_util.c ****   else if (val <= 0xFFFFFF) return 3;
+  91              		.loc 1 12 34 discriminator 1 view .LVU19
+  92 005e 0220     		movs	r0, #2
+  93              	.LVL5:
+  12:../../util/math_util.c ****   else if (val <= 0xFFFFFF) return 3;
+  94              		.loc 1 12 34 discriminator 1 view .LVU20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 3
+
+
+  95 0060 7047     		bx	lr
+  96              	.LVL6:
+  97              	.L5:
+  13:../../util/math_util.c ****   else if (val <= 0xFFFFFFFF) return 4;
+  98              		.loc 1 13 36 discriminator 1 view .LVU21
+  99 0062 0320     		movs	r0, #3
+ 100              	.LVL7:
+  13:../../util/math_util.c ****   else if (val <= 0xFFFFFFFF) return 4;
+ 101              		.loc 1 13 36 discriminator 1 view .LVU22
+ 102 0064 7047     		bx	lr
+ 103              	.LVL8:
+ 104              	.L6:
+  14:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFF) return 5;
+ 105              		.loc 1 14 38 discriminator 1 view .LVU23
+ 106 0066 0420     		movs	r0, #4
+ 107              	.LVL9:
+  14:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFF) return 5;
+ 108              		.loc 1 14 38 discriminator 1 view .LVU24
+ 109 0068 7047     		bx	lr
+ 110              	.LVL10:
+ 111              	.L7:
+  15:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFFFF) return 6;
+ 112              		.loc 1 15 40 discriminator 1 view .LVU25
+ 113 006a 0520     		movs	r0, #5
+ 114              	.LVL11:
+  15:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFFFF) return 6;
+ 115              		.loc 1 15 40 discriminator 1 view .LVU26
+ 116 006c 7047     		bx	lr
+ 117              	.LVL12:
+ 118              	.L8:
+  16:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFFFFFF) return 7;
+ 119              		.loc 1 16 42 discriminator 1 view .LVU27
+ 120 006e 0620     		movs	r0, #6
+ 121              	.LVL13:
+  16:../../util/math_util.c ****   else if (val <= 0xFFFFFFFFFFFFFF) return 7;
+ 122              		.loc 1 16 42 discriminator 1 view .LVU28
+ 123 0070 7047     		bx	lr
+ 124              	.LVL14:
+ 125              	.L9:
+  18:../../util/math_util.c ****   else return 8;
+ 126              		.loc 1 18 15 view .LVU29
+ 127 0072 0820     		movs	r0, #8
+ 128              	.LVL15:
+  19:../../util/math_util.c **** }
+ 129              		.loc 1 19 1 view .LVU30
+ 130 0074 7047     		bx	lr
+ 131              		.cfi_endproc
+ 132              	.LFE0:
+ 134              		.section	.text.Crc16,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	Crc16
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	Crc16:
+ 142              	.LVL16:
+ 143              	.LFB1:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 4
+
+
+  20:../../util/math_util.c **** 
+  21:../../util/math_util.c **** //взято отсюда
+  22:../../util/math_util.c **** //https://ru.wikibooks.org/wiki/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8_%D0%B0
+  23:../../util/math_util.c **** const unsigned short Crc16Table[256] = {
+  24:../../util/math_util.c ****     0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
+  25:../../util/math_util.c ****     0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
+  26:../../util/math_util.c ****     0x1231, 0x0210, 0x3273, 0x2252, 0x52B5, 0x4294, 0x72F7, 0x62D6,
+  27:../../util/math_util.c ****     0x9339, 0x8318, 0xB37B, 0xA35A, 0xD3BD, 0xC39C, 0xF3FF, 0xE3DE,
+  28:../../util/math_util.c ****     0x2462, 0x3443, 0x0420, 0x1401, 0x64E6, 0x74C7, 0x44A4, 0x5485,
+  29:../../util/math_util.c ****     0xA56A, 0xB54B, 0x8528, 0x9509, 0xE5EE, 0xF5CF, 0xC5AC, 0xD58D,
+  30:../../util/math_util.c ****     0x3653, 0x2672, 0x1611, 0x0630, 0x76D7, 0x66F6, 0x5695, 0x46B4,
+  31:../../util/math_util.c ****     0xB75B, 0xA77A, 0x9719, 0x8738, 0xF7DF, 0xE7FE, 0xD79D, 0xC7BC,
+  32:../../util/math_util.c ****     0x48C4, 0x58E5, 0x6886, 0x78A7, 0x0840, 0x1861, 0x2802, 0x3823,
+  33:../../util/math_util.c ****     0xC9CC, 0xD9ED, 0xE98E, 0xF9AF, 0x8948, 0x9969, 0xA90A, 0xB92B,
+  34:../../util/math_util.c ****     0x5AF5, 0x4AD4, 0x7AB7, 0x6A96, 0x1A71, 0x0A50, 0x3A33, 0x2A12,
+  35:../../util/math_util.c ****     0xDBFD, 0xCBDC, 0xFBBF, 0xEB9E, 0x9B79, 0x8B58, 0xBB3B, 0xAB1A,
+  36:../../util/math_util.c ****     0x6CA6, 0x7C87, 0x4CE4, 0x5CC5, 0x2C22, 0x3C03, 0x0C60, 0x1C41,
+  37:../../util/math_util.c ****     0xEDAE, 0xFD8F, 0xCDEC, 0xDDCD, 0xAD2A, 0xBD0B, 0x8D68, 0x9D49,
+  38:../../util/math_util.c ****     0x7E97, 0x6EB6, 0x5ED5, 0x4EF4, 0x3E13, 0x2E32, 0x1E51, 0x0E70,
+  39:../../util/math_util.c ****     0xFF9F, 0xEFBE, 0xDFDD, 0xCFFC, 0xBF1B, 0xAF3A, 0x9F59, 0x8F78,
+  40:../../util/math_util.c ****     0x9188, 0x81A9, 0xB1CA, 0xA1EB, 0xD10C, 0xC12D, 0xF14E, 0xE16F,
+  41:../../util/math_util.c ****     0x1080, 0x00A1, 0x30C2, 0x20E3, 0x5004, 0x4025, 0x7046, 0x6067,
+  42:../../util/math_util.c ****     0x83B9, 0x9398, 0xA3FB, 0xB3DA, 0xC33D, 0xD31C, 0xE37F, 0xF35E,
+  43:../../util/math_util.c ****     0x02B1, 0x1290, 0x22F3, 0x32D2, 0x4235, 0x5214, 0x6277, 0x7256,
+  44:../../util/math_util.c ****     0xB5EA, 0xA5CB, 0x95A8, 0x8589, 0xF56E, 0xE54F, 0xD52C, 0xC50D,
+  45:../../util/math_util.c ****     0x34E2, 0x24C3, 0x14A0, 0x0481, 0x7466, 0x6447, 0x5424, 0x4405,
+  46:../../util/math_util.c ****     0xA7DB, 0xB7FA, 0x8799, 0x97B8, 0xE75F, 0xF77E, 0xC71D, 0xD73C,
+  47:../../util/math_util.c ****     0x26D3, 0x36F2, 0x0691, 0x16B0, 0x6657, 0x7676, 0x4615, 0x5634,
+  48:../../util/math_util.c ****     0xD94C, 0xC96D, 0xF90E, 0xE92F, 0x99C8, 0x89E9, 0xB98A, 0xA9AB,
+  49:../../util/math_util.c ****     0x5844, 0x4865, 0x7806, 0x6827, 0x18C0, 0x08E1, 0x3882, 0x28A3,
+  50:../../util/math_util.c ****     0xCB7D, 0xDB5C, 0xEB3F, 0xFB1E, 0x8BF9, 0x9BD8, 0xABBB, 0xBB9A,
+  51:../../util/math_util.c ****     0x4A75, 0x5A54, 0x6A37, 0x7A16, 0x0AF1, 0x1AD0, 0x2AB3, 0x3A92,
+  52:../../util/math_util.c ****     0xFD2E, 0xED0F, 0xDD6C, 0xCD4D, 0xBDAA, 0xAD8B, 0x9DE8, 0x8DC9,
+  53:../../util/math_util.c ****     0x7C26, 0x6C07, 0x5C64, 0x4C45, 0x3CA2, 0x2C83, 0x1CE0, 0x0CC1,
+  54:../../util/math_util.c ****     0xEF1F, 0xFF3E, 0xCF5D, 0xDF7C, 0xAF9B, 0xBFBA, 0x8FD9, 0x9FF8,
+  55:../../util/math_util.c ****     0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0
+  56:../../util/math_util.c **** };
+  57:../../util/math_util.c **** 
+  58:../../util/math_util.c **** unsigned short Crc16(unsigned char * pcBlock, unsigned short len)
+  59:../../util/math_util.c **** {
+ 144              		.loc 1 59 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+ 149              		.loc 1 59 1 is_stmt 0 view .LVU32
+ 150 0000 0346     		mov	r3, r0
+  60:../../util/math_util.c ****     unsigned short crc = 0xFFFF;
+ 151              		.loc 1 60 5 is_stmt 1 view .LVU33
+ 152              	.LVL17:
+  61:../../util/math_util.c **** 
+  62:../../util/math_util.c ****     while (len--)
+ 153              		.loc 1 62 5 view .LVU34
+  60:../../util/math_util.c ****     unsigned short crc = 0xFFFF;
+ 154              		.loc 1 60 20 is_stmt 0 view .LVU35
+ 155 0002 4FF6FF70 		movw	r0, #65535
+ 156              	.LVL18:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 5
+
+
+ 157              		.loc 1 62 12 is_stmt 1 view .LVU36
+ 158              		.loc 1 62 15 is_stmt 0 view .LVU37
+ 159 0006 4A1E     		subs	r2, r1, #1
+ 160 0008 92B2     		uxth	r2, r2
+ 161              	.LVL19:
+ 162              		.loc 1 62 12 view .LVU38
+ 163 000a 91B1     		cbz	r1, .L17
+  59:../../util/math_util.c ****     unsigned short crc = 0xFFFF;
+ 164              		.loc 1 59 1 view .LVU39
+ 165 000c 10B4     		push	{r4}
+ 166              	.LCFI0:
+ 167              		.cfi_def_cfa_offset 4
+ 168              		.cfi_offset 4, -4
+ 169              	.L12:
+  63:../../util/math_util.c ****         crc = (crc << 8) ^ Crc16Table[(crc >> 8) ^ *pcBlock++];
+ 170              		.loc 1 63 9 is_stmt 1 view .LVU40
+ 171              	.LVL20:
+ 172              		.loc 1 63 52 is_stmt 0 view .LVU41
+ 173 000e 13F8011B 		ldrb	r1, [r3], #1	@ zero_extendqisi2
+ 174              	.LVL21:
+ 175              		.loc 1 63 50 view .LVU42
+ 176 0012 81EA1021 		eor	r1, r1, r0, lsr #8
+ 177              		.loc 1 63 38 view .LVU43
+ 178 0016 074C     		ldr	r4, .L18
+ 179 0018 34F81110 		ldrh	r1, [r4, r1, lsl #1]
+ 180 001c 0002     		lsls	r0, r0, #8
+ 181              	.LVL22:
+ 182              		.loc 1 63 38 view .LVU44
+ 183 001e 80B2     		uxth	r0, r0
+ 184              		.loc 1 63 13 view .LVU45
+ 185 0020 4840     		eors	r0, r0, r1
+ 186              	.LVL23:
+  62:../../util/math_util.c ****         crc = (crc << 8) ^ Crc16Table[(crc >> 8) ^ *pcBlock++];
+ 187              		.loc 1 62 15 view .LVU46
+ 188 0022 1146     		mov	r1, r2
+  62:../../util/math_util.c ****         crc = (crc << 8) ^ Crc16Table[(crc >> 8) ^ *pcBlock++];
+ 189              		.loc 1 62 12 is_stmt 1 view .LVU47
+  62:../../util/math_util.c ****         crc = (crc << 8) ^ Crc16Table[(crc >> 8) ^ *pcBlock++];
+ 190              		.loc 1 62 15 is_stmt 0 view .LVU48
+ 191 0024 013A     		subs	r2, r2, #1
+ 192              	.LVL24:
+  62:../../util/math_util.c ****         crc = (crc << 8) ^ Crc16Table[(crc >> 8) ^ *pcBlock++];
+ 193              		.loc 1 62 15 view .LVU49
+ 194 0026 92B2     		uxth	r2, r2
+ 195              	.LVL25:
+  62:../../util/math_util.c ****         crc = (crc << 8) ^ Crc16Table[(crc >> 8) ^ *pcBlock++];
+ 196              		.loc 1 62 12 view .LVU50
+ 197 0028 0029     		cmp	r1, #0
+ 198 002a F0D1     		bne	.L12
+  64:../../util/math_util.c **** 
+  65:../../util/math_util.c ****     return crc;
+ 199              		.loc 1 65 5 is_stmt 1 view .LVU51
+  66:../../util/math_util.c **** }
+ 200              		.loc 1 66 1 is_stmt 0 view .LVU52
+ 201 002c 5DF8044B 		ldr	r4, [sp], #4
+ 202              	.LCFI1:
+ 203              		.cfi_restore 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 6
+
+
+ 204              		.cfi_def_cfa_offset 0
+ 205 0030 7047     		bx	lr
+ 206              	.L17:
+ 207              		.loc 1 66 1 view .LVU53
+ 208 0032 7047     		bx	lr
+ 209              	.L19:
+ 210              		.align	2
+ 211              	.L18:
+ 212 0034 00000000 		.word	Crc16Table
+ 213              		.cfi_endproc
+ 214              	.LFE1:
+ 216              		.section	.text.CrcSum,"ax",%progbits
+ 217              		.align	1
+ 218              		.global	CrcSum
+ 219              		.syntax unified
+ 220              		.thumb
+ 221              		.thumb_func
+ 223              	CrcSum:
+ 224              	.LVL26:
+ 225              	.LFB2:
+  67:../../util/math_util.c **** 
+  68:../../util/math_util.c **** unsigned int CrcSum(unsigned char * pcBlock, unsigned short len)
+  69:../../util/math_util.c **** {
+ 226              		.loc 1 69 1 is_stmt 1 view -0
+ 227              		.cfi_startproc
+ 228              		@ args = 0, pretend = 0, frame = 0
+ 229              		@ frame_needed = 0, uses_anonymous_args = 0
+ 230              		@ link register save eliminated.
+ 231              		.loc 1 69 1 is_stmt 0 view .LVU55
+ 232 0000 8446     		mov	ip, r0
+  70:../../util/math_util.c **** 	unsigned short i;
+ 233              		.loc 1 70 2 is_stmt 1 view .LVU56
+  71:../../util/math_util.c **** 	unsigned int res;
+ 234              		.loc 1 71 2 view .LVU57
+  72:../../util/math_util.c **** 
+  73:../../util/math_util.c **** 	res = 0;
+ 235              		.loc 1 73 2 view .LVU58
+ 236              	.LVL27:
+  74:../../util/math_util.c **** 
+  75:../../util/math_util.c **** 	for (i = 0; i < len ; ++i) res += pcBlock[i];
+ 237              		.loc 1 75 2 view .LVU59
+  73:../../util/math_util.c **** 
+ 238              		.loc 1 73 6 is_stmt 0 view .LVU60
+ 239 0002 0020     		movs	r0, #0
+ 240              	.LVL28:
+ 241              		.loc 1 75 9 view .LVU61
+ 242 0004 0346     		mov	r3, r0
+ 243              		.loc 1 75 2 view .LVU62
+ 244 0006 04E0     		b	.L21
+ 245              	.LVL29:
+ 246              	.L22:
+ 247              		.loc 1 75 29 is_stmt 1 discriminator 3 view .LVU63
+ 248              		.loc 1 75 43 is_stmt 0 discriminator 3 view .LVU64
+ 249 0008 1CF80320 		ldrb	r2, [ip, r3]	@ zero_extendqisi2
+ 250              		.loc 1 75 33 discriminator 3 view .LVU65
+ 251 000c 1044     		add	r0, r0, r2
+ 252              	.LVL30:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 7
+
+
+ 253              		.loc 1 75 24 is_stmt 1 discriminator 3 view .LVU66
+ 254 000e 0133     		adds	r3, r3, #1
+ 255              	.LVL31:
+ 256              		.loc 1 75 24 is_stmt 0 discriminator 3 view .LVU67
+ 257 0010 9BB2     		uxth	r3, r3
+ 258              	.LVL32:
+ 259              	.L21:
+ 260              		.loc 1 75 16 is_stmt 1 discriminator 1 view .LVU68
+ 261 0012 8B42     		cmp	r3, r1
+ 262 0014 F8D3     		bcc	.L22
+  76:../../util/math_util.c **** 	return res;
+ 263              		.loc 1 76 2 view .LVU69
+  77:../../util/math_util.c **** }
+ 264              		.loc 1 77 1 is_stmt 0 view .LVU70
+ 265 0016 7047     		bx	lr
+ 266              		.cfi_endproc
+ 267              	.LFE2:
+ 269              		.section	.text.ulCrcSum,"ax",%progbits
+ 270              		.align	1
+ 271              		.global	ulCrcSum
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 276              	ulCrcSum:
+ 277              	.LVL33:
+ 278              	.LFB3:
+  78:../../util/math_util.c **** 
+  79:../../util/math_util.c **** unsigned long long ulCrcSum(unsigned char * pcBlock, unsigned long len)
+  80:../../util/math_util.c **** {
+ 279              		.loc 1 80 1 is_stmt 1 view -0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 0
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283              		.loc 1 80 1 is_stmt 0 view .LVU72
+ 284 0000 00B5     		push	{lr}
+ 285              	.LCFI2:
+ 286              		.cfi_def_cfa_offset 4
+ 287              		.cfi_offset 14, -4
+ 288 0002 8646     		mov	lr, r0
+ 289 0004 8C46     		mov	ip, r1
+  81:../../util/math_util.c **** 	unsigned long i;
+ 290              		.loc 1 81 2 is_stmt 1 view .LVU73
+  82:../../util/math_util.c **** 	unsigned long long res;
+ 291              		.loc 1 82 2 view .LVU74
+  83:../../util/math_util.c **** 
+  84:../../util/math_util.c **** 	res = 0;
+ 292              		.loc 1 84 2 view .LVU75
+ 293              	.LVL34:
+  85:../../util/math_util.c **** 
+  86:../../util/math_util.c **** 	for (i = 0; i < len ; ++i) res += pcBlock[i];
+ 294              		.loc 1 86 2 view .LVU76
+  84:../../util/math_util.c **** 
+ 295              		.loc 1 84 6 is_stmt 0 view .LVU77
+ 296 0006 0020     		movs	r0, #0
+ 297              	.LVL35:
+  84:../../util/math_util.c **** 
+ 298              		.loc 1 84 6 view .LVU78
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 8
+
+
+ 299 0008 0146     		mov	r1, r0
+ 300              	.LVL36:
+ 301              		.loc 1 86 9 view .LVU79
+ 302 000a 0346     		mov	r3, r0
+ 303              		.loc 1 86 2 view .LVU80
+ 304 000c 05E0     		b	.L24
+ 305              	.LVL37:
+ 306              	.L25:
+ 307              		.loc 1 86 29 is_stmt 1 discriminator 3 view .LVU81
+ 308              		.loc 1 86 43 is_stmt 0 discriminator 3 view .LVU82
+ 309 000e 1EF80320 		ldrb	r2, [lr, r3]	@ zero_extendqisi2
+ 310              		.loc 1 86 33 discriminator 3 view .LVU83
+ 311 0012 1018     		adds	r0, r2, r0
+ 312              	.LVL38:
+ 313              		.loc 1 86 33 discriminator 3 view .LVU84
+ 314 0014 41F10001 		adc	r1, r1, #0
+ 315              	.LVL39:
+ 316              		.loc 1 86 24 is_stmt 1 discriminator 3 view .LVU85
+ 317 0018 0133     		adds	r3, r3, #1
+ 318              	.LVL40:
+ 319              	.L24:
+ 320              		.loc 1 86 16 discriminator 1 view .LVU86
+ 321 001a 6345     		cmp	r3, ip
+ 322 001c F7D3     		bcc	.L25
+  87:../../util/math_util.c **** 	return res;
+ 323              		.loc 1 87 2 view .LVU87
+  88:../../util/math_util.c **** }
+ 324              		.loc 1 88 1 is_stmt 0 view .LVU88
+ 325 001e 5DF804FB 		ldr	pc, [sp], #4
+ 326              		.cfi_endproc
+ 327              	.LFE3:
+ 329              		.section	.text.CrcSum16,"ax",%progbits
+ 330              		.align	1
+ 331              		.global	CrcSum16
+ 332              		.syntax unified
+ 333              		.thumb
+ 334              		.thumb_func
+ 336              	CrcSum16:
+ 337              	.LVL41:
+ 338              	.LFB4:
+  89:../../util/math_util.c **** 
+  90:../../util/math_util.c **** unsigned int CrcSum16(unsigned short * pcBlock, unsigned short len)
+  91:../../util/math_util.c **** {
+ 339              		.loc 1 91 1 is_stmt 1 view -0
+ 340              		.cfi_startproc
+ 341              		@ args = 0, pretend = 0, frame = 0
+ 342              		@ frame_needed = 0, uses_anonymous_args = 0
+ 343              		@ link register save eliminated.
+ 344              		.loc 1 91 1 is_stmt 0 view .LVU90
+ 345 0000 8446     		mov	ip, r0
+  92:../../util/math_util.c **** 	unsigned short i;
+ 346              		.loc 1 92 2 is_stmt 1 view .LVU91
+  93:../../util/math_util.c **** 	unsigned int res;
+ 347              		.loc 1 93 2 view .LVU92
+  94:../../util/math_util.c **** 
+  95:../../util/math_util.c **** 	res = 0;
+ 348              		.loc 1 95 2 view .LVU93
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 9
+
+
+ 349              	.LVL42:
+  96:../../util/math_util.c **** 
+  97:../../util/math_util.c **** 	for (i = 0; i < len ; ++i) res += pcBlock[i];
+ 350              		.loc 1 97 2 view .LVU94
+  95:../../util/math_util.c **** 
+ 351              		.loc 1 95 6 is_stmt 0 view .LVU95
+ 352 0002 0020     		movs	r0, #0
+ 353              	.LVL43:
+ 354              		.loc 1 97 9 view .LVU96
+ 355 0004 0346     		mov	r3, r0
+ 356              		.loc 1 97 2 view .LVU97
+ 357 0006 04E0     		b	.L28
+ 358              	.LVL44:
+ 359              	.L29:
+ 360              		.loc 1 97 29 is_stmt 1 discriminator 3 view .LVU98
+ 361              		.loc 1 97 43 is_stmt 0 discriminator 3 view .LVU99
+ 362 0008 3CF81320 		ldrh	r2, [ip, r3, lsl #1]
+ 363              		.loc 1 97 33 discriminator 3 view .LVU100
+ 364 000c 1044     		add	r0, r0, r2
+ 365              	.LVL45:
+ 366              		.loc 1 97 24 is_stmt 1 discriminator 3 view .LVU101
+ 367 000e 0133     		adds	r3, r3, #1
+ 368              	.LVL46:
+ 369              		.loc 1 97 24 is_stmt 0 discriminator 3 view .LVU102
+ 370 0010 9BB2     		uxth	r3, r3
+ 371              	.LVL47:
+ 372              	.L28:
+ 373              		.loc 1 97 16 is_stmt 1 discriminator 1 view .LVU103
+ 374 0012 8B42     		cmp	r3, r1
+ 375 0014 F8D3     		bcc	.L29
+  98:../../util/math_util.c **** 	return res;
+ 376              		.loc 1 98 2 view .LVU104
+  99:../../util/math_util.c **** }
+ 377              		.loc 1 99 1 is_stmt 0 view .LVU105
+ 378 0016 7047     		bx	lr
+ 379              		.cfi_endproc
+ 380              	.LFE4:
+ 382              		.section	.text.crc32,"ax",%progbits
+ 383              		.align	1
+ 384              		.global	crc32
+ 385              		.syntax unified
+ 386              		.thumb
+ 387              		.thumb_func
+ 389              	crc32:
+ 390              	.LVL48:
+ 391              	.LFB5:
+ 100:../../util/math_util.c **** 
+ 101:../../util/math_util.c **** //----- Gloabl variables ------------------------------------------------------
+ 102:../../util/math_util.c **** const unsigned int crc32_table[]=       // Table of 8-bit remainders
+ 103:../../util/math_util.c **** {
+ 104:../../util/math_util.c **** 0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9, 0x130476DC, 0x17C56B6B, 0x1A864DB2, 0x1E475005,
+ 105:../../util/math_util.c **** 0x2608EDB8, 0x22C9F00F, 0x2F8AD6D6, 0x2B4BCB61, 0x350C9B64, 0x31CD86D3, 0x3C8EA00A, 0x384FBDBD,
+ 106:../../util/math_util.c **** 0x4C11DB70, 0x48D0C6C7, 0x4593E01E, 0x4152FDA9, 0x5F15ADAC, 0x5BD4B01B, 0x569796C2, 0x52568B75,
+ 107:../../util/math_util.c **** 0x6A1936C8, 0x6ED82B7F, 0x639B0DA6, 0x675A1011, 0x791D4014, 0x7DDC5DA3, 0x709F7B7A, 0x745E66CD,
+ 108:../../util/math_util.c **** 0x9823B6E0, 0x9CE2AB57, 0x91A18D8E, 0x95609039, 0x8B27C03C, 0x8FE6DD8B, 0x82A5FB52, 0x8664E6E5,
+ 109:../../util/math_util.c **** 0xBE2B5B58, 0xBAEA46EF, 0xB7A96036, 0xB3687D81, 0xAD2F2D84, 0xA9EE3033, 0xA4AD16EA, 0xA06C0B5D,
+ 110:../../util/math_util.c **** 0xD4326D90, 0xD0F37027, 0xDDB056FE, 0xD9714B49, 0xC7361B4C, 0xC3F706FB, 0xCEB42022, 0xCA753D95,
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 10
+
+
+ 111:../../util/math_util.c **** 0xF23A8028, 0xF6FB9D9F, 0xFBB8BB46, 0xFF79A6F1, 0xE13EF6F4, 0xE5FFEB43, 0xE8BCCD9A, 0xEC7DD02D,
+ 112:../../util/math_util.c **** 0x34867077, 0x30476DC0, 0x3D044B19, 0x39C556AE, 0x278206AB, 0x23431B1C, 0x2E003DC5, 0x2AC12072,
+ 113:../../util/math_util.c **** 0x128E9DCF, 0x164F8078, 0x1B0CA6A1, 0x1FCDBB16, 0x018AEB13, 0x054BF6A4, 0x0808D07D, 0x0CC9CDCA,
+ 114:../../util/math_util.c **** 0x7897AB07, 0x7C56B6B0, 0x71159069, 0x75D48DDE, 0x6B93DDDB, 0x6F52C06C, 0x6211E6B5, 0x66D0FB02,
+ 115:../../util/math_util.c **** 0x5E9F46BF, 0x5A5E5B08, 0x571D7DD1, 0x53DC6066, 0x4D9B3063, 0x495A2DD4, 0x44190B0D, 0x40D816BA,
+ 116:../../util/math_util.c **** 0xACA5C697, 0xA864DB20, 0xA527FDF9, 0xA1E6E04E, 0xBFA1B04B, 0xBB60ADFC, 0xB6238B25, 0xB2E29692,
+ 117:../../util/math_util.c **** 0x8AAD2B2F, 0x8E6C3698, 0x832F1041, 0x87EE0DF6, 0x99A95DF3, 0x9D684044, 0x902B669D, 0x94EA7B2A,
+ 118:../../util/math_util.c **** 0xE0B41DE7, 0xE4750050, 0xE9362689, 0xEDF73B3E, 0xF3B06B3B, 0xF771768C, 0xFA325055, 0xFEF34DE2,
+ 119:../../util/math_util.c **** 0xC6BCF05F, 0xC27DEDE8, 0xCF3ECB31, 0xCBFFD686, 0xD5B88683, 0xD1799B34, 0xDC3ABDED, 0xD8FBA05A,
+ 120:../../util/math_util.c **** 0x690CE0EE, 0x6DCDFD59, 0x608EDB80, 0x644FC637, 0x7A089632, 0x7EC98B85, 0x738AAD5C, 0x774BB0EB,
+ 121:../../util/math_util.c **** 0x4F040D56, 0x4BC510E1, 0x46863638, 0x42472B8F, 0x5C007B8A, 0x58C1663D, 0x558240E4, 0x51435D53,
+ 122:../../util/math_util.c **** 0x251D3B9E, 0x21DC2629, 0x2C9F00F0, 0x285E1D47, 0x36194D42, 0x32D850F5, 0x3F9B762C, 0x3B5A6B9B,
+ 123:../../util/math_util.c **** 0x0315D626, 0x07D4CB91, 0x0A97ED48, 0x0E56F0FF, 0x1011A0FA, 0x14D0BD4D, 0x19939B94, 0x1D528623,
+ 124:../../util/math_util.c **** 0xF12F560E, 0xF5EE4BB9, 0xF8AD6D60, 0xFC6C70D7, 0xE22B20D2, 0xE6EA3D65, 0xEBA91BBC, 0xEF68060B,
+ 125:../../util/math_util.c **** 0xD727BBB6, 0xD3E6A601, 0xDEA580D8, 0xDA649D6F, 0xC423CD6A, 0xC0E2D0DD, 0xCDA1F604, 0xC960EBB3,
+ 126:../../util/math_util.c **** 0xBD3E8D7E, 0xB9FF90C9, 0xB4BCB610, 0xB07DABA7, 0xAE3AFBA2, 0xAAFBE615, 0xA7B8C0CC, 0xA379DD7B,
+ 127:../../util/math_util.c **** 0x9B3660C6, 0x9FF77D71, 0x92B45BA8, 0x9675461F, 0x8832161A, 0x8CF30BAD, 0x81B02D74, 0x857130C3,
+ 128:../../util/math_util.c **** 0x5D8A9099, 0x594B8D2E, 0x5408ABF7, 0x50C9B640, 0x4E8EE645, 0x4A4FFBF2, 0x470CDD2B, 0x43CDC09C,
+ 129:../../util/math_util.c **** 0x7B827D21, 0x7F436096, 0x7200464F, 0x76C15BF8, 0x68860BFD, 0x6C47164A, 0x61043093, 0x65C52D24,
+ 130:../../util/math_util.c **** 0x119B4BE9, 0x155A565E, 0x18197087, 0x1CD86D30, 0x029F3D35, 0x065E2082, 0x0B1D065B, 0x0FDC1BEC,
+ 131:../../util/math_util.c **** 0x3793A651, 0x3352BBE6, 0x3E119D3F, 0x3AD08088, 0x2497D08D, 0x2056CD3A, 0x2D15EBE3, 0x29D4F654,
+ 132:../../util/math_util.c **** 0xC5A92679, 0xC1683BCE, 0xCC2B1D17, 0xC8EA00A0, 0xD6AD50A5, 0xD26C4D12, 0xDF2F6BCB, 0xDBEE767C,
+ 133:../../util/math_util.c **** 0xE3A1CBC1, 0xE760D676, 0xEA23F0AF, 0xEEE2ED18, 0xF0A5BD1D, 0xF464A0AA, 0xF9278673, 0xFDE69BC4,
+ 134:../../util/math_util.c **** 0x89B8FD09, 0x8D79E0BE, 0x803AC667, 0x84FBDBD0, 0x9ABC8BD5, 0x9E7D9662, 0x933EB0BB, 0x97FFAD0C,
+ 135:../../util/math_util.c **** 0xAFB010B1, 0xAB710D06, 0xA6322BDF, 0xA2F33668, 0xBCB4666D, 0xB8757BDA, 0xB5365D03, 0xB1F740B4
+ 136:../../util/math_util.c **** };
+ 137:../../util/math_util.c **** 
+ 138:../../util/math_util.c **** //=============================================================================
+ 139:../../util/math_util.c **** //=  CRC32 generation                                                         =
+ 140:../../util/math_util.c **** //=============================================================================
+ 141:../../util/math_util.c **** unsigned int crc32(unsigned int crc_accum, unsigned char * data_blk_ptr, unsigned int data_blk_size
+ 142:../../util/math_util.c **** {
+ 392              		.loc 1 142 1 is_stmt 1 view -0
+ 393              		.cfi_startproc
+ 394              		@ args = 0, pretend = 0, frame = 0
+ 395              		@ frame_needed = 0, uses_anonymous_args = 0
+ 396              		@ link register save eliminated.
+ 143:../../util/math_util.c ****    register unsigned int i, j;
+ 397              		.loc 1 143 4 view .LVU107
+ 144:../../util/math_util.c **** 
+ 145:../../util/math_util.c ****    for (j = 0; j < data_blk_size; j++) {
+ 398              		.loc 1 145 4 view .LVU108
+ 399              		.loc 1 145 11 is_stmt 0 view .LVU109
+ 400 0000 4FF0000C 		mov	ip, #0
+ 401              	.LVL49:
+ 402              		.loc 1 145 18 is_stmt 1 discriminator 1 view .LVU110
+ 403 0004 9445     		cmp	ip, r2
+ 404 0006 10D2     		bcs	.L37
+ 142:../../util/math_util.c ****    register unsigned int i, j;
+ 405              		.loc 1 142 1 is_stmt 0 view .LVU111
+ 406 0008 10B4     		push	{r4}
+ 407              	.LCFI3:
+ 408              		.cfi_def_cfa_offset 4
+ 409              		.cfi_offset 4, -4
+ 410              	.L32:
+ 146:../../util/math_util.c ****      i = ((int) (crc_accum >> 24) ^ *data_blk_ptr++) & 0xFF;
+ 411              		.loc 1 146 6 is_stmt 1 view .LVU112
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 11
+
+
+ 412              	.LVL50:
+ 413              		.loc 1 146 37 is_stmt 0 view .LVU113
+ 414 000a 11F8013B 		ldrb	r3, [r1], #1	@ zero_extendqisi2
+ 415              	.LVL51:
+ 416              		.loc 1 146 8 view .LVU114
+ 417 000e 83EA1063 		eor	r3, r3, r0, lsr #24
+ 418              	.LVL52:
+ 147:../../util/math_util.c ****      crc_accum = (crc_accum << 8) ^ crc32_table[i];
+ 419              		.loc 1 147 6 is_stmt 1 view .LVU115
+ 420              		.loc 1 147 48 is_stmt 0 view .LVU116
+ 421 0012 064C     		ldr	r4, .L38
+ 422 0014 54F82330 		ldr	r3, [r4, r3, lsl #2]
+ 423              	.LVL53:
+ 424              		.loc 1 147 16 view .LVU117
+ 425 0018 83EA0020 		eor	r0, r3, r0, lsl #8
+ 426              	.LVL54:
+ 145:../../util/math_util.c ****      i = ((int) (crc_accum >> 24) ^ *data_blk_ptr++) & 0xFF;
+ 427              		.loc 1 145 36 is_stmt 1 discriminator 3 view .LVU118
+ 428 001c 0CF1010C 		add	ip, ip, #1
+ 429              	.LVL55:
+ 145:../../util/math_util.c ****      i = ((int) (crc_accum >> 24) ^ *data_blk_ptr++) & 0xFF;
+ 430              		.loc 1 145 18 discriminator 1 view .LVU119
+ 431 0020 9445     		cmp	ip, r2
+ 432 0022 F2D3     		bcc	.L32
+ 148:../../util/math_util.c ****    }
+ 149:../../util/math_util.c ****    crc_accum = ~crc_accum;
+ 433              		.loc 1 149 4 view .LVU120
+ 434              	.LVL56:
+ 150:../../util/math_util.c **** 
+ 151:../../util/math_util.c **** 
+ 152:../../util/math_util.c ****    return crc_accum ^ 0xFFFFFFFF;
+ 435              		.loc 1 152 4 view .LVU121
+ 153:../../util/math_util.c **** }
+ 436              		.loc 1 153 1 is_stmt 0 view .LVU122
+ 437 0024 5DF8044B 		ldr	r4, [sp], #4
+ 438              	.LCFI4:
+ 439              		.cfi_restore 4
+ 440              		.cfi_def_cfa_offset 0
+ 441 0028 7047     		bx	lr
+ 442              	.LVL57:
+ 443              	.L37:
+ 444              		.loc 1 153 1 view .LVU123
+ 445 002a 7047     		bx	lr
+ 446              	.L39:
+ 447              		.align	2
+ 448              	.L38:
+ 449 002c 00000000 		.word	crc32_table
+ 450              		.cfi_endproc
+ 451              	.LFE5:
+ 453              		.section	.text.goertzel_get_coeff,"ax",%progbits
+ 454              		.align	1
+ 455              		.global	goertzel_get_coeff
+ 456              		.syntax unified
+ 457              		.thumb
+ 458              		.thumb_func
+ 460              	goertzel_get_coeff:
+ 461              	.LVL58:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 12
+
+
+ 462              	.LFB6:
+ 154:../../util/math_util.c **** 
+ 155:../../util/math_util.c **** //------------------------------  Герцель  ---------------------------------------------
+ 156:../../util/math_util.c **** //numSamples - кол-во точек для расчета, target_frequency необходима�
+ 157:../../util/math_util.c **** void goertzel_get_coeff(int numSamples,int target_frequency, int sampling_rate, goertzel_coeff_t * 
+ 158:../../util/math_util.c **** {
+ 463              		.loc 1 158 1 is_stmt 1 view -0
+ 464              		.cfi_startproc
+ 465              		@ args = 0, pretend = 0, frame = 0
+ 466              		@ frame_needed = 0, uses_anonymous_args = 0
+ 467              		.loc 1 158 1 is_stmt 0 view .LVU125
+ 468 0000 10B5     		push	{r4, lr}
+ 469              	.LCFI5:
+ 470              		.cfi_def_cfa_offset 8
+ 471              		.cfi_offset 4, -8
+ 472              		.cfi_offset 14, -4
+ 473 0002 2DED028B 		vpush.64	{d8}
+ 474              	.LCFI6:
+ 475              		.cfi_def_cfa_offset 16
+ 476              		.cfi_offset 80, -16
+ 477              		.cfi_offset 81, -12
+ 478 0006 06EE100A 		vmov	s12, r0	@ int
+ 479 000a 07EE901A 		vmov	s15, r1	@ int
+ 480 000e 06EE902A 		vmov	s13, r2	@ int
+ 481 0012 1C46     		mov	r4, r3
+ 159:../../util/math_util.c ****     int     k;
+ 482              		.loc 1 159 5 is_stmt 1 view .LVU126
+ 160:../../util/math_util.c ****     float   floatnumSamples;
+ 483              		.loc 1 160 5 view .LVU127
+ 161:../../util/math_util.c ****     float omega;
+ 484              		.loc 1 161 5 view .LVU128
+ 162:../../util/math_util.c **** 
+ 163:../../util/math_util.c **** 
+ 164:../../util/math_util.c ****     pgoertzel_coeff->numSamples = numSamples;
+ 485              		.loc 1 164 5 view .LVU129
+ 486              		.loc 1 164 33 is_stmt 0 view .LVU130
+ 487 0014 1861     		str	r0, [r3, #16]
+ 165:../../util/math_util.c ****     pgoertzel_coeff->scalingFactor = numSamples / 2.0;
+ 488              		.loc 1 165 5 is_stmt 1 view .LVU131
+ 489              		.loc 1 165 49 is_stmt 0 view .LVU132
+ 490 0016 B8EEC65B 		vcvt.f64.s32	d5, s12
+ 491 001a B6EE004B 		vmov.f64	d4, #5.0e-1
+ 492 001e 25EE045B 		vmul.f64	d5, d5, d4
+ 493 0022 B7EEC55B 		vcvt.f32.f64	s10, d5
+ 494              		.loc 1 165 36 view .LVU133
+ 495 0026 83ED035A 		vstr.32	s10, [r3, #12]
+ 166:../../util/math_util.c ****     floatnumSamples = (float) numSamples;
+ 496              		.loc 1 166 5 is_stmt 1 view .LVU134
+ 497              		.loc 1 166 21 is_stmt 0 view .LVU135
+ 498 002a B8EEC66A 		vcvt.f32.s32	s12, s12
+ 499              	.LVL59:
+ 167:../../util/math_util.c ****     k = (int) (0.5 + ((floatnumSamples * target_frequency) / sampling_rate));
+ 500              		.loc 1 167 5 is_stmt 1 view .LVU136
+ 501              		.loc 1 167 40 is_stmt 0 view .LVU137
+ 502 002e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 503 0032 67EE867A 		vmul.f32	s15, s15, s12
+ 504              		.loc 1 167 60 view .LVU138
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 13
+
+
+ 505 0036 F8EEE66A 		vcvt.f32.s32	s13, s13
+ 506 003a 87EEA67A 		vdiv.f32	s14, s15, s13
+ 507 003e B7EEC77A 		vcvt.f64.f32	d7, s14
+ 508              		.loc 1 167 20 view .LVU139
+ 509 0042 37EE047B 		vadd.f64	d7, d7, d4
+ 510              		.loc 1 167 7 view .LVU140
+ 511 0046 BDEEC77B 		vcvt.s32.f64	s14, d7
+ 512              	.LVL60:
+ 168:../../util/math_util.c ****     omega = (2.0 * M_PI * k) / floatnumSamples;
+ 513              		.loc 1 168 5 is_stmt 1 view .LVU141
+ 514              		.loc 1 168 25 is_stmt 0 view .LVU142
+ 515 004a B8EEC77B 		vcvt.f64.s32	d7, s14
+ 516              	.LVL61:
+ 517              		.loc 1 168 25 view .LVU143
+ 518 004e 9FED125B 		vldr.64	d5, .L42
+ 519 0052 27EE057B 		vmul.f64	d7, d7, d5
+ 520              		.loc 1 168 30 view .LVU144
+ 521 0056 B7EEC66A 		vcvt.f64.f32	d6, s12
+ 522              	.LVL62:
+ 523              		.loc 1 168 30 view .LVU145
+ 524 005a 87EE068B 		vdiv.f64	d8, d7, d6
+ 525              		.loc 1 168 11 view .LVU146
+ 526 005e B7EEC88B 		vcvt.f32.f64	s16, d8
+ 527              	.LVL63:
+ 169:../../util/math_util.c ****     pgoertzel_coeff->sine = sin(omega);
+ 528              		.loc 1 169 5 is_stmt 1 view .LVU147
+ 529              		.loc 1 169 29 is_stmt 0 view .LVU148
+ 530 0062 B7EEC88A 		vcvt.f64.f32	d8, s16
+ 531              	.LVL64:
+ 532              		.loc 1 169 29 view .LVU149
+ 533 0066 B0EE480B 		vmov.f64	d0, d8
+ 534 006a FFF7FEFF 		bl	sin
+ 535              	.LVL65:
+ 536              		.loc 1 169 29 discriminator 1 view .LVU150
+ 537 006e B7EEC00B 		vcvt.f32.f64	s0, d0
+ 538              		.loc 1 169 27 discriminator 1 view .LVU151
+ 539 0072 84ED000A 		vstr.32	s0, [r4]
+ 170:../../util/math_util.c ****     pgoertzel_coeff->cosine = cos(omega);
+ 540              		.loc 1 170 5 is_stmt 1 view .LVU152
+ 541              		.loc 1 170 31 is_stmt 0 view .LVU153
+ 542 0076 B0EE480B 		vmov.f64	d0, d8
+ 543 007a FFF7FEFF 		bl	cos
+ 544              	.LVL66:
+ 545              		.loc 1 170 31 discriminator 1 view .LVU154
+ 546 007e B7EEC00B 		vcvt.f32.f64	s0, d0
+ 547              		.loc 1 170 29 discriminator 1 view .LVU155
+ 548 0082 84ED010A 		vstr.32	s0, [r4, #4]
+ 171:../../util/math_util.c ****     pgoertzel_coeff->coeff = 2.0 * pgoertzel_coeff->cosine;
+ 549              		.loc 1 171 5 is_stmt 1 view .LVU156
+ 550              		.loc 1 171 34 is_stmt 0 view .LVU157
+ 551 0086 30EE000A 		vadd.f32	s0, s0, s0
+ 552              		.loc 1 171 28 view .LVU158
+ 553 008a 84ED020A 		vstr.32	s0, [r4, #8]
+ 172:../../util/math_util.c **** }
+ 554              		.loc 1 172 1 view .LVU159
+ 555 008e BDEC028B 		vldm	sp!, {d8}
+ 556              	.LCFI7:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 14
+
+
+ 557              		.cfi_restore 80
+ 558              		.cfi_restore 81
+ 559              		.cfi_def_cfa_offset 8
+ 560 0092 10BD     		pop	{r4, pc}
+ 561              	.LVL67:
+ 562              	.L43:
+ 563              		.loc 1 172 1 view .LVU160
+ 564 0094 AFF30080 		.align	3
+ 565              	.L42:
+ 566 0098 182D4454 		.word	1413754136
+ 567 009c FB211940 		.word	1075388923
+ 568              		.cfi_endproc
+ 569              	.LFE6:
+ 571              		.section	.text.goertzel_get_mag,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	goertzel_get_mag
+ 574              		.syntax unified
+ 575              		.thumb
+ 576              		.thumb_func
+ 578              	goertzel_get_mag:
+ 579              	.LVL68:
+ 580              	.LFB7:
+ 173:../../util/math_util.c **** 
+ 174:../../util/math_util.c **** //data - данные, pgoertzel_coeff - коэф-ты Герцеля
+ 175:../../util/math_util.c **** float goertzel_get_mag(unsigned short * data, goertzel_coeff_t * pgoertzel_coeff)
+ 176:../../util/math_util.c **** {
+ 581              		.loc 1 176 1 is_stmt 1 view -0
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 0
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              		.loc 1 176 1 is_stmt 0 view .LVU162
+ 586 0000 08B5     		push	{r3, lr}
+ 587              	.LCFI8:
+ 588              		.cfi_def_cfa_offset 8
+ 589              		.cfi_offset 3, -8
+ 590              		.cfi_offset 14, -4
+ 177:../../util/math_util.c ****   int i;
+ 591              		.loc 1 177 3 is_stmt 1 view .LVU163
+ 178:../../util/math_util.c ****   float q0,q1,q2,magnitude,real,imag;
+ 592              		.loc 1 178 3 view .LVU164
+ 179:../../util/math_util.c **** 
+ 180:../../util/math_util.c ****   q0 = 0;
+ 593              		.loc 1 180 3 view .LVU165
+ 594              	.LVL69:
+ 181:../../util/math_util.c ****   q1 = 0;
+ 595              		.loc 1 181 3 view .LVU166
+ 182:../../util/math_util.c ****   q2 = 0;
+ 596              		.loc 1 182 3 view .LVU167
+ 183:../../util/math_util.c **** 
+ 184:../../util/math_util.c ****   for(i = 0; i < pgoertzel_coeff->numSamples; i++)
+ 597              		.loc 1 184 3 view .LVU168
+ 181:../../util/math_util.c ****   q2 = 0;
+ 598              		.loc 1 181 6 is_stmt 0 view .LVU169
+ 599 0002 9FED1B6A 		vldr.32	s12, .L48
+ 180:../../util/math_util.c ****   q1 = 0;
+ 600              		.loc 1 180 6 view .LVU170
+ 601 0006 F0EE466A 		vmov.f32	s13, s12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 15
+
+
+ 602              		.loc 1 184 9 view .LVU171
+ 603 000a 0023     		movs	r3, #0
+ 604              		.loc 1 184 3 view .LVU172
+ 605 000c 10E0     		b	.L45
+ 606              	.LVL70:
+ 607              	.L46:
+ 185:../../util/math_util.c ****   {
+ 186:../../util/math_util.c ****     q2 = q1;
+ 608              		.loc 1 186 5 is_stmt 1 view .LVU173
+ 187:../../util/math_util.c ****     q1 = q0;
+ 609              		.loc 1 187 5 view .LVU174
+ 188:../../util/math_util.c ****     q0 = pgoertzel_coeff->coeff * q1 - q2 + data[i];
+ 610              		.loc 1 188 5 view .LVU175
+ 611              		.loc 1 188 25 is_stmt 0 view .LVU176
+ 612 000e D1ED027A 		vldr.32	s15, [r1, #8]
+ 613              		.loc 1 188 33 view .LVU177
+ 614 0012 67EEA67A 		vmul.f32	s15, s15, s13
+ 615              		.loc 1 188 38 view .LVU178
+ 616 0016 77EEC67A 		vsub.f32	s15, s15, s12
+ 617              		.loc 1 188 49 view .LVU179
+ 618 001a 30F81320 		ldrh	r2, [r0, r3, lsl #1]
+ 619 001e 07EE102A 		vmov	s14, r2	@ int
+ 620              		.loc 1 188 43 view .LVU180
+ 621 0022 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 622              	.LVL71:
+ 184:../../util/math_util.c ****   {
+ 623              		.loc 1 184 48 is_stmt 1 discriminator 3 view .LVU181
+ 624 0026 0133     		adds	r3, r3, #1
+ 625              	.LVL72:
+ 187:../../util/math_util.c ****     q1 = q0;
+ 626              		.loc 1 187 8 is_stmt 0 view .LVU182
+ 627 0028 B0EE666A 		vmov.f32	s12, s13
+ 628              	.LVL73:
+ 629              		.loc 1 188 8 view .LVU183
+ 630 002c 77EE876A 		vadd.f32	s13, s15, s14
+ 631              	.LVL74:
+ 632              	.L45:
+ 184:../../util/math_util.c ****   {
+ 633              		.loc 1 184 16 is_stmt 1 discriminator 1 view .LVU184
+ 184:../../util/math_util.c ****   {
+ 634              		.loc 1 184 33 is_stmt 0 discriminator 1 view .LVU185
+ 635 0030 0A69     		ldr	r2, [r1, #16]
+ 184:../../util/math_util.c ****   {
+ 636              		.loc 1 184 16 discriminator 1 view .LVU186
+ 637 0032 9A42     		cmp	r2, r3
+ 638 0034 EBDC     		bgt	.L46
+ 189:../../util/math_util.c ****   }
+ 190:../../util/math_util.c **** 
+ 191:../../util/math_util.c ****   // calculate the real and imaginary results
+ 192:../../util/math_util.c ****   // scaling appropriately
+ 193:../../util/math_util.c ****   real = (q0 - q1 * pgoertzel_coeff->cosine) / pgoertzel_coeff->scalingFactor;
+ 639              		.loc 1 193 3 is_stmt 1 view .LVU187
+ 640              		.loc 1 193 36 is_stmt 0 view .LVU188
+ 641 0036 D1ED017A 		vldr.32	s15, [r1, #4]
+ 642              		.loc 1 193 19 view .LVU189
+ 643 003a 67EE867A 		vmul.f32	s15, s15, s12
+ 644              		.loc 1 193 14 view .LVU190
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 16
+
+
+ 645 003e 76EEE76A 		vsub.f32	s13, s13, s15
+ 646              	.LVL75:
+ 647              		.loc 1 193 63 view .LVU191
+ 648 0042 91ED037A 		vldr.32	s14, [r1, #12]
+ 649              		.loc 1 193 8 view .LVU192
+ 650 0046 86EE870A 		vdiv.f32	s0, s13, s14
+ 651              	.LVL76:
+ 194:../../util/math_util.c ****   imag = (-q1 * pgoertzel_coeff->sine) / pgoertzel_coeff->scalingFactor;
+ 652              		.loc 1 194 3 is_stmt 1 view .LVU193
+ 653              		.loc 1 194 32 is_stmt 0 view .LVU194
+ 654 004a D1ED007A 		vldr.32	s15, [r1]
+ 655              		.loc 1 194 15 view .LVU195
+ 656 004e 26EE676A 		vnmul.f32	s12, s12, s15
+ 657              	.LVL77:
+ 658              		.loc 1 194 8 view .LVU196
+ 659 0052 C6EE077A 		vdiv.f32	s15, s12, s14
+ 660              	.LVL78:
+ 195:../../util/math_util.c **** 
+ 196:../../util/math_util.c ****   magnitude = sqrt(real*real + imag*imag);
+ 661              		.loc 1 196 3 is_stmt 1 view .LVU197
+ 662              		.loc 1 196 24 is_stmt 0 view .LVU198
+ 663 0056 20EE000A 		vmul.f32	s0, s0, s0
+ 664              	.LVL79:
+ 665              		.loc 1 196 36 view .LVU199
+ 666 005a 67EEA77A 		vmul.f32	s15, s15, s15
+ 667              	.LVL80:
+ 668              		.loc 1 196 30 view .LVU200
+ 669 005e 30EE270A 		vadd.f32	s0, s0, s15
+ 670              		.loc 1 196 15 view .LVU201
+ 671 0062 B7EEC00A 		vcvt.f64.f32	d0, s0
+ 672 0066 FFF7FEFF 		bl	sqrt
+ 673              	.LVL81:
+ 197:../../util/math_util.c ****   return magnitude;
+ 674              		.loc 1 197 3 is_stmt 1 view .LVU202
+ 198:../../util/math_util.c **** }
+ 675              		.loc 1 198 1 is_stmt 0 view .LVU203
+ 676 006a B7EEC00B 		vcvt.f32.f64	s0, d0
+ 677              	.LVL82:
+ 678              		.loc 1 198 1 view .LVU204
+ 679 006e 08BD     		pop	{r3, pc}
+ 680              	.L49:
+ 681              		.align	2
+ 682              	.L48:
+ 683 0070 00000000 		.word	0
+ 684              		.cfi_endproc
+ 685              	.LFE7:
+ 687              		.section	.text.words_sum,"ax",%progbits
+ 688              		.align	1
+ 689              		.global	words_sum
+ 690              		.syntax unified
+ 691              		.thumb
+ 692              		.thumb_func
+ 694              	words_sum:
+ 695              	.LVL83:
+ 696              	.LFB8:
+ 199:../../util/math_util.c **** 
+ 200:../../util/math_util.c **** unsigned int words_sum(unsigned short * data,  unsigned short data_size)
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 17
+
+
+ 201:../../util/math_util.c **** {
+ 697              		.loc 1 201 1 is_stmt 1 view -0
+ 698              		.cfi_startproc
+ 699              		@ args = 0, pretend = 0, frame = 0
+ 700              		@ frame_needed = 0, uses_anonymous_args = 0
+ 701              		@ link register save eliminated.
+ 702              		.loc 1 201 1 is_stmt 0 view .LVU206
+ 703 0000 8446     		mov	ip, r0
+ 202:../../util/math_util.c **** 	unsigned int res;
+ 704              		.loc 1 202 2 is_stmt 1 view .LVU207
+ 203:../../util/math_util.c **** 	unsigned short i;
+ 705              		.loc 1 203 2 view .LVU208
+ 204:../../util/math_util.c **** 
+ 205:../../util/math_util.c **** 	res = data[0];
+ 706              		.loc 1 205 2 view .LVU209
+ 707              		.loc 1 205 12 is_stmt 0 view .LVU210
+ 708 0002 0088     		ldrh	r0, [r0]
+ 709              	.LVL84:
+ 206:../../util/math_util.c **** 	for (i = 1; i < data_size; ++i) res += data[i];
+ 710              		.loc 1 206 2 is_stmt 1 view .LVU211
+ 711              		.loc 1 206 9 is_stmt 0 view .LVU212
+ 712 0004 0123     		movs	r3, #1
+ 713              		.loc 1 206 2 view .LVU213
+ 714 0006 04E0     		b	.L51
+ 715              	.LVL85:
+ 716              	.L52:
+ 717              		.loc 1 206 34 is_stmt 1 discriminator 3 view .LVU214
+ 718              		.loc 1 206 45 is_stmt 0 discriminator 3 view .LVU215
+ 719 0008 3CF81320 		ldrh	r2, [ip, r3, lsl #1]
+ 720              		.loc 1 206 38 discriminator 3 view .LVU216
+ 721 000c 1044     		add	r0, r0, r2
+ 722              	.LVL86:
+ 723              		.loc 1 206 29 is_stmt 1 discriminator 3 view .LVU217
+ 724 000e 0133     		adds	r3, r3, #1
+ 725              	.LVL87:
+ 726              		.loc 1 206 29 is_stmt 0 discriminator 3 view .LVU218
+ 727 0010 9BB2     		uxth	r3, r3
+ 728              	.LVL88:
+ 729              	.L51:
+ 730              		.loc 1 206 16 is_stmt 1 discriminator 1 view .LVU219
+ 731 0012 8B42     		cmp	r3, r1
+ 732 0014 F8D3     		bcc	.L52
+ 207:../../util/math_util.c **** 	return res;
+ 733              		.loc 1 207 2 view .LVU220
+ 208:../../util/math_util.c **** }
+ 734              		.loc 1 208 1 is_stmt 0 view .LVU221
+ 735 0016 7047     		bx	lr
+ 736              		.cfi_endproc
+ 737              	.LFE8:
+ 739              		.section	.text.shorts_sum,"ax",%progbits
+ 740              		.align	1
+ 741              		.global	shorts_sum
+ 742              		.syntax unified
+ 743              		.thumb
+ 744              		.thumb_func
+ 746              	shorts_sum:
+ 747              	.LVL89:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 18
+
+
+ 748              	.LFB9:
+ 209:../../util/math_util.c **** 
+ 210:../../util/math_util.c **** int shorts_sum(short * data,  unsigned short data_size)
+ 211:../../util/math_util.c **** {
+ 749              		.loc 1 211 1 is_stmt 1 view -0
+ 750              		.cfi_startproc
+ 751              		@ args = 0, pretend = 0, frame = 0
+ 752              		@ frame_needed = 0, uses_anonymous_args = 0
+ 753              		@ link register save eliminated.
+ 754              		.loc 1 211 1 is_stmt 0 view .LVU223
+ 755 0000 8446     		mov	ip, r0
+ 212:../../util/math_util.c **** 	int res;
+ 756              		.loc 1 212 2 is_stmt 1 view .LVU224
+ 213:../../util/math_util.c **** 	short i;
+ 757              		.loc 1 213 2 view .LVU225
+ 214:../../util/math_util.c **** 
+ 215:../../util/math_util.c **** 	res = data[0];
+ 758              		.loc 1 215 2 view .LVU226
+ 759              		.loc 1 215 12 is_stmt 0 view .LVU227
+ 760 0002 B0F90000 		ldrsh	r0, [r0]
+ 761              	.LVL90:
+ 216:../../util/math_util.c **** 	for (i = 1; i < data_size; ++i) res += data[i];
+ 762              		.loc 1 216 2 is_stmt 1 view .LVU228
+ 763              		.loc 1 216 9 is_stmt 0 view .LVU229
+ 764 0006 0123     		movs	r3, #1
+ 765              		.loc 1 216 2 view .LVU230
+ 766 0008 04E0     		b	.L54
+ 767              	.LVL91:
+ 768              	.L55:
+ 769              		.loc 1 216 34 is_stmt 1 discriminator 3 view .LVU231
+ 770              		.loc 1 216 45 is_stmt 0 discriminator 3 view .LVU232
+ 771 000a 3CF91320 		ldrsh	r2, [ip, r3, lsl #1]
+ 772              		.loc 1 216 38 discriminator 3 view .LVU233
+ 773 000e 1044     		add	r0, r0, r2
+ 774              	.LVL92:
+ 775              		.loc 1 216 29 is_stmt 1 discriminator 3 view .LVU234
+ 776 0010 0133     		adds	r3, r3, #1
+ 777              	.LVL93:
+ 778              		.loc 1 216 29 is_stmt 0 discriminator 3 view .LVU235
+ 779 0012 1BB2     		sxth	r3, r3
+ 780              	.LVL94:
+ 781              	.L54:
+ 782              		.loc 1 216 16 is_stmt 1 discriminator 1 view .LVU236
+ 783 0014 8B42     		cmp	r3, r1
+ 784 0016 F8DB     		blt	.L55
+ 217:../../util/math_util.c **** 	return res;
+ 785              		.loc 1 217 2 view .LVU237
+ 218:../../util/math_util.c **** 
+ 219:../../util/math_util.c **** }
+ 786              		.loc 1 219 1 is_stmt 0 view .LVU238
+ 787 0018 7047     		bx	lr
+ 788              		.cfi_endproc
+ 789              	.LFE9:
+ 791              		.section	.text.bytes_sum,"ax",%progbits
+ 792              		.align	1
+ 793              		.global	bytes_sum
+ 794              		.syntax unified
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 19
+
+
+ 795              		.thumb
+ 796              		.thumb_func
+ 798              	bytes_sum:
+ 799              	.LVL95:
+ 800              	.LFB10:
+ 220:../../util/math_util.c **** 
+ 221:../../util/math_util.c **** unsigned int bytes_sum(unsigned char * data,  unsigned short data_size)
+ 222:../../util/math_util.c **** {
+ 801              		.loc 1 222 1 is_stmt 1 view -0
+ 802              		.cfi_startproc
+ 803              		@ args = 0, pretend = 0, frame = 0
+ 804              		@ frame_needed = 0, uses_anonymous_args = 0
+ 805              		@ link register save eliminated.
+ 806              		.loc 1 222 1 is_stmt 0 view .LVU240
+ 807 0000 8446     		mov	ip, r0
+ 223:../../util/math_util.c **** 	unsigned int res;
+ 808              		.loc 1 223 2 is_stmt 1 view .LVU241
+ 224:../../util/math_util.c **** 	unsigned short i;
+ 809              		.loc 1 224 2 view .LVU242
+ 225:../../util/math_util.c **** 
+ 226:../../util/math_util.c **** 	res = data[0];
+ 810              		.loc 1 226 2 view .LVU243
+ 811              		.loc 1 226 12 is_stmt 0 view .LVU244
+ 812 0002 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 813              	.LVL96:
+ 227:../../util/math_util.c **** 	for (i = 1; i < data_size; ++i) res += data[i];
+ 814              		.loc 1 227 2 is_stmt 1 view .LVU245
+ 815              		.loc 1 227 9 is_stmt 0 view .LVU246
+ 816 0004 0123     		movs	r3, #1
+ 817              		.loc 1 227 2 view .LVU247
+ 818 0006 04E0     		b	.L57
+ 819              	.LVL97:
+ 820              	.L58:
+ 821              		.loc 1 227 34 is_stmt 1 discriminator 3 view .LVU248
+ 822              		.loc 1 227 45 is_stmt 0 discriminator 3 view .LVU249
+ 823 0008 1CF80320 		ldrb	r2, [ip, r3]	@ zero_extendqisi2
+ 824              		.loc 1 227 38 discriminator 3 view .LVU250
+ 825 000c 1044     		add	r0, r0, r2
+ 826              	.LVL98:
+ 827              		.loc 1 227 29 is_stmt 1 discriminator 3 view .LVU251
+ 828 000e 0133     		adds	r3, r3, #1
+ 829              	.LVL99:
+ 830              		.loc 1 227 29 is_stmt 0 discriminator 3 view .LVU252
+ 831 0010 9BB2     		uxth	r3, r3
+ 832              	.LVL100:
+ 833              	.L57:
+ 834              		.loc 1 227 16 is_stmt 1 discriminator 1 view .LVU253
+ 835 0012 8B42     		cmp	r3, r1
+ 836 0014 F8D3     		bcc	.L58
+ 228:../../util/math_util.c **** 	return res;
+ 837              		.loc 1 228 2 view .LVU254
+ 229:../../util/math_util.c **** }
+ 838              		.loc 1 229 1 is_stmt 0 view .LVU255
+ 839 0016 7047     		bx	lr
+ 840              		.cfi_endproc
+ 841              	.LFE10:
+ 843              		.section	.text.med,"ax",%progbits
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 20
+
+
+ 844              		.align	1
+ 845              		.global	med
+ 846              		.syntax unified
+ 847              		.thumb
+ 848              		.thumb_func
+ 850              	med:
+ 851              	.LVL101:
+ 852              	.LFB11:
+ 230:../../util/math_util.c **** 
+ 231:../../util/math_util.c **** 
+ 232:../../util/math_util.c **** void med(unsigned short *a, unsigned short *b, unsigned short n){
+ 853              		.loc 1 232 65 is_stmt 1 view -0
+ 854              		.cfi_startproc
+ 855              		@ args = 0, pretend = 0, frame = 0
+ 856              		@ frame_needed = 0, uses_anonymous_args = 0
+ 857              		.loc 1 232 65 is_stmt 0 view .LVU257
+ 858 0000 00B5     		push	{lr}
+ 859              	.LCFI9:
+ 860              		.cfi_def_cfa_offset 4
+ 861              		.cfi_offset 14, -4
+ 233:../../util/math_util.c **** 	unsigned short x;
+ 862              		.loc 1 233 2 is_stmt 1 view .LVU258
+ 234:../../util/math_util.c **** 
+ 235:../../util/math_util.c ****     if ((a[n] > a[n+1]) && (a[n] > a[n+2])) {
+ 863              		.loc 1 235 5 view .LVU259
+ 864              		.loc 1 235 11 is_stmt 0 view .LVU260
+ 865 0002 30F81230 		ldrh	r3, [r0, r2, lsl #1]
+ 866              		.loc 1 235 18 view .LVU261
+ 867 0006 02F1010C 		add	ip, r2, #1
+ 868 000a 30F81CC0 		ldrh	ip, [r0, ip, lsl #1]
+ 869              		.loc 1 235 8 view .LVU262
+ 870 000e 6345     		cmp	r3, ip
+ 871 0010 0CD9     		bls	.L60
+ 872              		.loc 1 235 37 discriminator 1 view .LVU263
+ 873 0012 02F1020E 		add	lr, r2, #2
+ 874 0016 30F81EE0 		ldrh	lr, [r0, lr, lsl #1]
+ 875              		.loc 1 235 25 discriminator 1 view .LVU264
+ 876 001a 7345     		cmp	r3, lr
+ 877 001c 06D9     		bls	.L60
+ 236:../../util/math_util.c ****         if(a[n+2] < a[n+1])
+ 878              		.loc 1 236 9 is_stmt 1 view .LVU265
+ 879              		.loc 1 236 11 is_stmt 0 view .LVU266
+ 880 001e F445     		cmp	ip, lr
+ 881 0020 1CD9     		bls	.L63
+ 237:../../util/math_util.c ****             x = a[n+1];
+ 882              		.loc 1 237 15 view .LVU267
+ 883 0022 6346     		mov	r3, ip
+ 884              	.LVL102:
+ 885              	.L61:
+ 238:../../util/math_util.c ****         else x = a[n+2];
+ 239:../../util/math_util.c **** 	}
+ 240:../../util/math_util.c ****     else if((a[n+1] > a[n]) && (a[n+1] > a[n+2])) {
+ 241:../../util/math_util.c ****         if(a[n+2] < a[n])
+ 242:../../util/math_util.c ****             x = a[n];
+ 243:../../util/math_util.c ****         else x = a[n+2];
+ 244:../../util/math_util.c ****     }
+ 245:../../util/math_util.c ****     else if((a[n+2] > a[n]) && (a[n+2] > a[n+1])) {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 21
+
+
+ 246:../../util/math_util.c ****         if(a[n] < a[n+1])
+ 247:../../util/math_util.c ****             x = a[n+1];
+ 248:../../util/math_util.c ****         else x = a[n];
+ 249:../../util/math_util.c ****     }
+ 250:../../util/math_util.c ****     else x = a[n];
+ 251:../../util/math_util.c ****     b[n] = x;
+ 886              		.loc 1 251 5 is_stmt 1 view .LVU268
+ 887              		.loc 1 251 10 is_stmt 0 view .LVU269
+ 888 0024 21F81230 		strh	r3, [r1, r2, lsl #1]	@ movhi
+ 252:../../util/math_util.c **** }
+ 889              		.loc 1 252 1 view .LVU270
+ 890 0028 5DF804FB 		ldr	pc, [sp], #4
+ 891              	.LVL103:
+ 892              	.L60:
+ 240:../../util/math_util.c ****         if(a[n+2] < a[n])
+ 893              		.loc 1 240 10 is_stmt 1 view .LVU271
+ 240:../../util/math_util.c ****         if(a[n+2] < a[n])
+ 894              		.loc 1 240 12 is_stmt 0 view .LVU272
+ 895 002c 6345     		cmp	r3, ip
+ 896 002e 09D2     		bcs	.L62
+ 240:../../util/math_util.c ****         if(a[n+2] < a[n])
+ 897              		.loc 1 240 43 discriminator 1 view .LVU273
+ 898 0030 02F1020E 		add	lr, r2, #2
+ 899 0034 30F81EE0 		ldrh	lr, [r0, lr, lsl #1]
+ 240:../../util/math_util.c ****         if(a[n+2] < a[n])
+ 900              		.loc 1 240 29 discriminator 1 view .LVU274
+ 901 0038 F445     		cmp	ip, lr
+ 902 003a 03D9     		bls	.L62
+ 241:../../util/math_util.c ****             x = a[n];
+ 903              		.loc 1 241 9 is_stmt 1 view .LVU275
+ 241:../../util/math_util.c ****             x = a[n];
+ 904              		.loc 1 241 11 is_stmt 0 view .LVU276
+ 905 003c 7345     		cmp	r3, lr
+ 906 003e F1D8     		bhi	.L61
+ 243:../../util/math_util.c ****     }
+ 907              		.loc 1 243 16 view .LVU277
+ 908 0040 7346     		mov	r3, lr
+ 909 0042 EFE7     		b	.L61
+ 910              	.L62:
+ 245:../../util/math_util.c ****         if(a[n] < a[n+1])
+ 911              		.loc 1 245 10 is_stmt 1 view .LVU278
+ 245:../../util/math_util.c ****         if(a[n] < a[n+1])
+ 912              		.loc 1 245 15 is_stmt 0 view .LVU279
+ 913 0044 02F1020E 		add	lr, r2, #2
+ 914 0048 30F81E00 		ldrh	r0, [r0, lr, lsl #1]
+ 915              	.LVL104:
+ 245:../../util/math_util.c ****         if(a[n] < a[n+1])
+ 916              		.loc 1 245 12 view .LVU280
+ 917 004c 8342     		cmp	r3, r0
+ 918 004e E9D2     		bcs	.L61
+ 245:../../util/math_util.c ****         if(a[n] < a[n+1])
+ 919              		.loc 1 245 29 discriminator 1 view .LVU281
+ 920 0050 8445     		cmp	ip, r0
+ 921 0052 E7D2     		bcs	.L61
+ 246:../../util/math_util.c ****             x = a[n+1];
+ 922              		.loc 1 246 9 is_stmt 1 view .LVU282
+ 246:../../util/math_util.c ****             x = a[n+1];
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 22
+
+
+ 923              		.loc 1 246 11 is_stmt 0 view .LVU283
+ 924 0054 6345     		cmp	r3, ip
+ 925 0056 E5D2     		bcs	.L61
+ 247:../../util/math_util.c ****         else x = a[n];
+ 926              		.loc 1 247 15 view .LVU284
+ 927 0058 6346     		mov	r3, ip
+ 928 005a E3E7     		b	.L61
+ 929              	.LVL105:
+ 930              	.L63:
+ 238:../../util/math_util.c **** 	}
+ 931              		.loc 1 238 16 view .LVU285
+ 932 005c 7346     		mov	r3, lr
+ 933 005e E1E7     		b	.L61
+ 934              		.cfi_endproc
+ 935              	.LFE11:
+ 937              		.section	.text.noise_filter_median,"ax",%progbits
+ 938              		.align	1
+ 939              		.global	noise_filter_median
+ 940              		.syntax unified
+ 941              		.thumb
+ 942              		.thumb_func
+ 944              	noise_filter_median:
+ 945              	.LVL106:
+ 946              	.LFB12:
+ 253:../../util/math_util.c **** 
+ 254:../../util/math_util.c **** void noise_filter_median(unsigned short * data, unsigned short data_size)
+ 255:../../util/math_util.c **** {
+ 947              		.loc 1 255 1 is_stmt 1 view -0
+ 948              		.cfi_startproc
+ 949              		@ args = 0, pretend = 0, frame = 0
+ 950              		@ frame_needed = 0, uses_anonymous_args = 0
+ 951              		.loc 1 255 1 is_stmt 0 view .LVU287
+ 952 0000 70B5     		push	{r4, r5, r6, lr}
+ 953              	.LCFI10:
+ 954              		.cfi_def_cfa_offset 16
+ 955              		.cfi_offset 4, -16
+ 956              		.cfi_offset 5, -12
+ 957              		.cfi_offset 6, -8
+ 958              		.cfi_offset 14, -4
+ 959 0002 0546     		mov	r5, r0
+ 960 0004 0E46     		mov	r6, r1
+ 256:../../util/math_util.c **** 	unsigned short i;
+ 961              		.loc 1 256 2 is_stmt 1 view .LVU288
+ 257:../../util/math_util.c **** 
+ 258:../../util/math_util.c **** 	for (i = 0; i < data_size - 2; ++i)  med(data, data, i);
+ 962              		.loc 1 258 2 view .LVU289
+ 963              	.LVL107:
+ 964              		.loc 1 258 9 is_stmt 0 view .LVU290
+ 965 0006 0024     		movs	r4, #0
+ 966              		.loc 1 258 2 view .LVU291
+ 967 0008 06E0     		b	.L67
+ 968              	.LVL108:
+ 969              	.L68:
+ 970              		.loc 1 258 39 is_stmt 1 discriminator 3 view .LVU292
+ 971 000a 2246     		mov	r2, r4
+ 972 000c 2946     		mov	r1, r5
+ 973 000e 2846     		mov	r0, r5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 23
+
+
+ 974 0010 FFF7FEFF 		bl	med
+ 975              	.LVL109:
+ 976              		.loc 1 258 33 discriminator 3 view .LVU293
+ 977 0014 0134     		adds	r4, r4, #1
+ 978              	.LVL110:
+ 979              		.loc 1 258 33 is_stmt 0 discriminator 3 view .LVU294
+ 980 0016 A4B2     		uxth	r4, r4
+ 981              	.LVL111:
+ 982              	.L67:
+ 983              		.loc 1 258 16 is_stmt 1 discriminator 2 view .LVU295
+ 984              		.loc 1 258 28 is_stmt 0 discriminator 2 view .LVU296
+ 985 0018 B31E     		subs	r3, r6, #2
+ 986              		.loc 1 258 16 discriminator 2 view .LVU297
+ 987 001a 9C42     		cmp	r4, r3
+ 988 001c F5DB     		blt	.L68
+ 259:../../util/math_util.c **** 	data[data_size - 2] = data[data_size - 3];
+ 989              		.loc 1 259 2 is_stmt 1 view .LVU298
+ 990              		.loc 1 259 6 is_stmt 0 view .LVU299
+ 991 001e 074B     		ldr	r3, .L70
+ 992 0020 3344     		add	r3, r3, r6
+ 993              		.loc 1 259 28 view .LVU300
+ 994 0022 074A     		ldr	r2, .L70+4
+ 995 0024 3244     		add	r2, r2, r6
+ 996 0026 35F81220 		ldrh	r2, [r5, r2, lsl #1]
+ 997              		.loc 1 259 22 view .LVU301
+ 998 002a 25F81320 		strh	r2, [r5, r3, lsl #1]	@ movhi
+ 260:../../util/math_util.c **** 	data[data_size - 1] = data[data_size - 2];
+ 999              		.loc 1 260 2 is_stmt 1 view .LVU302
+ 1000              		.loc 1 260 6 is_stmt 0 view .LVU303
+ 1001 002e 6FF00043 		mvn	r3, #-2147483648
+ 1002 0032 3344     		add	r3, r3, r6
+ 1003              		.loc 1 260 22 view .LVU304
+ 1004 0034 25F81320 		strh	r2, [r5, r3, lsl #1]	@ movhi
+ 261:../../util/math_util.c **** }
+ 1005              		.loc 1 261 1 view .LVU305
+ 1006 0038 70BD     		pop	{r4, r5, r6, pc}
+ 1007              	.LVL112:
+ 1008              	.L71:
+ 1009              		.loc 1 261 1 view .LVU306
+ 1010 003a 00BF     		.align	2
+ 1011              	.L70:
+ 1012 003c FEFFFF7F 		.word	2147483646
+ 1013 0040 FDFFFF7F 		.word	2147483645
+ 1014              		.cfi_endproc
+ 1015              	.LFE12:
+ 1017              		.section	.text.noise_filter_normalised,"ax",%progbits
+ 1018              		.align	1
+ 1019              		.global	noise_filter_normalised
+ 1020              		.syntax unified
+ 1021              		.thumb
+ 1022              		.thumb_func
+ 1024              	noise_filter_normalised:
+ 1025              	.LVL113:
+ 1026              	.LFB13:
+ 262:../../util/math_util.c **** 
+ 263:../../util/math_util.c **** 
+ 264:../../util/math_util.c **** unsigned short noise_filter_normalised(unsigned short * data, unsigned short data_size, unsigned sh
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 24
+
+
+ 265:../../util/math_util.c **** {
+ 1027              		.loc 1 265 1 is_stmt 1 view -0
+ 1028              		.cfi_startproc
+ 1029              		@ args = 0, pretend = 0, frame = 0
+ 1030              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1031              		@ link register save eliminated.
+ 1032              		.loc 1 265 1 is_stmt 0 view .LVU308
+ 1033 0000 8446     		mov	ip, r0
+ 1034 0002 1046     		mov	r0, r2
+ 1035              	.LVL114:
+ 266:../../util/math_util.c **** 	unsigned short i;
+ 1036              		.loc 1 266 2 is_stmt 1 view .LVU309
+ 267:../../util/math_util.c **** 
+ 268:../../util/math_util.c **** 	for (i = 0; i < data_size; ++i)  {
+ 1037              		.loc 1 268 2 view .LVU310
+ 1038              		.loc 1 268 9 is_stmt 0 view .LVU311
+ 1039 0004 0022     		movs	r2, #0
+ 1040              	.LVL115:
+ 1041              		.loc 1 268 2 view .LVU312
+ 1042 0006 17E0     		b	.L73
+ 1043              	.LVL116:
+ 1044              	.L74:
+ 269:../../util/math_util.c **** 		val += (data[i] - val) * noise_coeff;
+ 1045              		.loc 1 269 3 is_stmt 1 view .LVU313
+ 1046              		.loc 1 269 15 is_stmt 0 view .LVU314
+ 1047 0008 3CF81230 		ldrh	r3, [ip, r2, lsl #1]
+ 1048              		.loc 1 269 19 view .LVU315
+ 1049 000c 1B1A     		subs	r3, r3, r0
+ 1050 000e 07EE103A 		vmov	s14, r3	@ int
+ 1051              		.loc 1 269 26 view .LVU316
+ 1052 0012 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1053 0016 27EE007A 		vmul.f32	s14, s14, s0
+ 1054              		.loc 1 269 7 view .LVU317
+ 1055 001a 07EE900A 		vmov	s15, r0	@ int
+ 1056 001e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1057 0022 77EE877A 		vadd.f32	s15, s15, s14
+ 1058 0026 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 1059 002a 17EE903A 		vmov	r3, s15	@ int
+ 1060 002e 98B2     		uxth	r0, r3
+ 1061              	.LVL117:
+ 270:../../util/math_util.c **** 		data[i] = val;
+ 1062              		.loc 1 270 3 is_stmt 1 view .LVU318
+ 1063              		.loc 1 270 11 is_stmt 0 view .LVU319
+ 1064 0030 2CF81200 		strh	r0, [ip, r2, lsl #1]	@ movhi
+ 268:../../util/math_util.c **** 		val += (data[i] - val) * noise_coeff;
+ 1065              		.loc 1 268 29 is_stmt 1 discriminator 3 view .LVU320
+ 1066 0034 0132     		adds	r2, r2, #1
+ 1067              	.LVL118:
+ 268:../../util/math_util.c **** 		val += (data[i] - val) * noise_coeff;
+ 1068              		.loc 1 268 29 is_stmt 0 discriminator 3 view .LVU321
+ 1069 0036 92B2     		uxth	r2, r2
+ 1070              	.LVL119:
+ 1071              	.L73:
+ 268:../../util/math_util.c **** 		val += (data[i] - val) * noise_coeff;
+ 1072              		.loc 1 268 16 is_stmt 1 discriminator 1 view .LVU322
+ 1073 0038 8A42     		cmp	r2, r1
+ 1074 003a E5D3     		bcc	.L74
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 25
+
+
+ 271:../../util/math_util.c **** 	}
+ 272:../../util/math_util.c **** 
+ 273:../../util/math_util.c **** 	return val;
+ 1075              		.loc 1 273 2 view .LVU323
+ 274:../../util/math_util.c **** }
+ 1076              		.loc 1 274 1 is_stmt 0 view .LVU324
+ 1077 003c 7047     		bx	lr
+ 1078              		.cfi_endproc
+ 1079              	.LFE13:
+ 1081              		.section	.text.ABfilter,"ax",%progbits
+ 1082              		.align	1
+ 1083              		.global	ABfilter
+ 1084              		.syntax unified
+ 1085              		.thumb
+ 1086              		.thumb_func
+ 1088              	ABfilter:
+ 1089              	.LVL120:
+ 1090              	.LFB14:
+ 275:../../util/math_util.c **** 
+ 276:../../util/math_util.c **** 
+ 277:../../util/math_util.c **** float ABfilter_dt = 0.05;
+ 278:../../util/math_util.c **** float ABfilter_sigma_process = 3.0;
+ 279:../../util/math_util.c **** float ABfilter_sigma_noise = 0.7;
+ 280:../../util/math_util.c **** 
+ 281:../../util/math_util.c **** unsigned short ABfilter(unsigned short newVal)
+ 282:../../util/math_util.c **** {
+ 1091              		.loc 1 282 1 is_stmt 1 view -0
+ 1092              		.cfi_startproc
+ 1093              		@ args = 0, pretend = 0, frame = 0
+ 1094              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1095              		.loc 1 282 1 is_stmt 0 view .LVU326
+ 1096 0000 10B5     		push	{r4, lr}
+ 1097              	.LCFI11:
+ 1098              		.cfi_def_cfa_offset 8
+ 1099              		.cfi_offset 4, -8
+ 1100              		.cfi_offset 14, -4
+ 1101 0002 2DED068B 		vpush.64	{d8, d9, d10}
+ 1102              	.LCFI12:
+ 1103              		.cfi_def_cfa_offset 32
+ 1104              		.cfi_offset 80, -32
+ 1105              		.cfi_offset 81, -28
+ 1106              		.cfi_offset 82, -24
+ 1107              		.cfi_offset 83, -20
+ 1108              		.cfi_offset 84, -16
+ 1109              		.cfi_offset 85, -12
+ 1110 0006 09EE900A 		vmov	s19, r0	@ int
+ 283:../../util/math_util.c ****   static float xk_1, vk_1, a, b;
+ 1111              		.loc 1 283 3 is_stmt 1 view .LVU327
+ 284:../../util/math_util.c ****   static float xk, vk, rk;
+ 1112              		.loc 1 284 3 view .LVU328
+ 285:../../util/math_util.c ****   static float xm;
+ 1113              		.loc 1 285 3 view .LVU329
+ 286:../../util/math_util.c ****   float lambda = (float)ABfilter_sigma_process * ABfilter_dt * ABfilter_dt / ABfilter_sigma_noise;
+ 1114              		.loc 1 286 3 view .LVU330
+ 1115              		.loc 1 286 48 is_stmt 0 view .LVU331
+ 1116 000a 3C4B     		ldr	r3, .L77
+ 1117 000c 93ED009A 		vldr.32	s18, [r3]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 26
+
+
+ 1118 0010 3B4B     		ldr	r3, .L77+4
+ 1119 0012 93ED007A 		vldr.32	s14, [r3]
+ 1120 0016 29EE077A 		vmul.f32	s14, s18, s14
+ 1121              		.loc 1 286 62 view .LVU332
+ 1122 001a 29EE077A 		vmul.f32	s14, s18, s14
+ 1123              		.loc 1 286 76 view .LVU333
+ 1124 001e 394B     		ldr	r3, .L77+8
+ 1125 0020 D3ED006A 		vldr.32	s13, [r3]
+ 1126              		.loc 1 286 9 view .LVU334
+ 1127 0024 C7EE267A 		vdiv.f32	s15, s14, s13
+ 1128              	.LVL121:
+ 287:../../util/math_util.c ****   float r = (4 + lambda - (float)sqrt(8 * lambda + lambda * lambda)) / 4;
+ 1129              		.loc 1 287 3 is_stmt 1 view .LVU335
+ 1130              		.loc 1 287 16 is_stmt 0 view .LVU336
+ 1131 0028 B1EE00AA 		vmov.f32	s20, #4.0e+0
+ 1132 002c 37EE8A8A 		vadd.f32	s16, s15, s20
+ 1133              		.loc 1 287 41 view .LVU337
+ 1134 0030 B2EE000A 		vmov.f32	s0, #8.0e+0
+ 1135 0034 27EE800A 		vmul.f32	s0, s15, s0
+ 1136              		.loc 1 287 59 view .LVU338
+ 1137 0038 67EEA77A 		vmul.f32	s15, s15, s15
+ 1138              	.LVL122:
+ 1139              		.loc 1 287 50 view .LVU339
+ 1140 003c 30EE270A 		vadd.f32	s0, s0, s15
+ 1141              		.loc 1 287 34 view .LVU340
+ 1142 0040 B7EEC00A 		vcvt.f64.f32	d0, s0
+ 1143 0044 FFF7FEFF 		bl	sqrt
+ 1144              	.LVL123:
+ 1145              		.loc 1 287 27 discriminator 1 view .LVU341
+ 1146 0048 B7EEC00B 		vcvt.f32.f64	s0, d0
+ 1147              		.loc 1 287 25 discriminator 1 view .LVU342
+ 1148 004c 38EE408A 		vsub.f32	s16, s16, s0
+ 1149              		.loc 1 287 9 discriminator 1 view .LVU343
+ 1150 0050 F5EE007A 		vmov.f32	s15, #2.5e-1
+ 1151 0054 28EE278A 		vmul.f32	s16, s16, s15
+ 1152              	.LVL124:
+ 288:../../util/math_util.c ****   a = (float)1 - r * r;
+ 1153              		.loc 1 288 3 is_stmt 1 view .LVU344
+ 1154              		.loc 1 288 20 is_stmt 0 view .LVU345
+ 1155 0058 28EE088A 		vmul.f32	s16, s16, s16
+ 1156              	.LVL125:
+ 1157              		.loc 1 288 16 view .LVU346
+ 1158 005c B7EE000A 		vmov.f32	s0, #1.0e+0
+ 1159 0060 30EE488A 		vsub.f32	s16, s0, s16
+ 1160              		.loc 1 288 5 view .LVU347
+ 1161 0064 284B     		ldr	r3, .L77+12
+ 1162 0066 83ED008A 		vstr.32	s16, [r3]
+ 289:../../util/math_util.c ****   b = (float)2 * (2 - a) - 4 * (float)sqrt(1 - a);
+ 1163              		.loc 1 289 3 is_stmt 1 view .LVU348
+ 1164              		.loc 1 289 21 is_stmt 0 view .LVU349
+ 1165 006a B0EE007A 		vmov.f32	s14, #2.0e+0
+ 1166 006e 37EE487A 		vsub.f32	s14, s14, s16
+ 1167              		.loc 1 289 16 view .LVU350
+ 1168 0072 77EE078A 		vadd.f32	s17, s14, s14
+ 1169              		.loc 1 289 46 view .LVU351
+ 1170 0076 30EE480A 		vsub.f32	s0, s0, s16
+ 1171              		.loc 1 289 39 view .LVU352
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 27
+
+
+ 1172 007a B7EEC00A 		vcvt.f64.f32	d0, s0
+ 1173 007e FFF7FEFF 		bl	sqrt
+ 1174              	.LVL126:
+ 1175              		.loc 1 289 32 discriminator 1 view .LVU353
+ 1176 0082 B7EEC00B 		vcvt.f32.f64	s0, d0
+ 1177              		.loc 1 289 30 discriminator 1 view .LVU354
+ 1178 0086 20EE0A0A 		vmul.f32	s0, s0, s20
+ 1179              		.loc 1 289 26 discriminator 1 view .LVU355
+ 1180 008a 38EEC07A 		vsub.f32	s14, s17, s0
+ 1181              		.loc 1 289 5 discriminator 1 view .LVU356
+ 1182 008e 1F4B     		ldr	r3, .L77+16
+ 1183 0090 83ED007A 		vstr.32	s14, [r3]
+ 290:../../util/math_util.c ****   xm = newVal;
+ 1184              		.loc 1 290 3 is_stmt 1 view .LVU357
+ 1185              		.loc 1 290 6 is_stmt 0 view .LVU358
+ 1186 0094 F8EE696A 		vcvt.f32.u32	s13, s19
+ 1187 0098 1D4B     		ldr	r3, .L77+20
+ 1188 009a C3ED006A 		vstr.32	s13, [r3]
+ 291:../../util/math_util.c ****   xk = xk_1 + ((float) vk_1 * ABfilter_dt );
+ 1189              		.loc 1 291 3 is_stmt 1 view .LVU359
+ 1190              		.loc 1 291 29 is_stmt 0 view .LVU360
+ 1191 009e 1D4B     		ldr	r3, .L77+24
+ 1192 00a0 93ED006A 		vldr.32	s12, [r3]
+ 1193 00a4 69EE067A 		vmul.f32	s15, s18, s12
+ 1194              		.loc 1 291 13 view .LVU361
+ 1195 00a8 1B4A     		ldr	r2, .L77+28
+ 1196 00aa D2ED005A 		vldr.32	s11, [r2]
+ 1197 00ae 77EEA57A 		vadd.f32	s15, s15, s11
+ 1198              		.loc 1 291 6 view .LVU362
+ 1199 00b2 1A48     		ldr	r0, .L77+32
+ 1200 00b4 C0ED007A 		vstr.32	s15, [r0]
+ 292:../../util/math_util.c ****   vk = vk_1;
+ 1201              		.loc 1 292 3 is_stmt 1 view .LVU363
+ 1202              		.loc 1 292 6 is_stmt 0 view .LVU364
+ 1203 00b8 1949     		ldr	r1, .L77+36
+ 1204 00ba 81ED006A 		vstr.32	s12, [r1]
+ 293:../../util/math_util.c ****   rk = xm - xk;
+ 1205              		.loc 1 293 3 is_stmt 1 view .LVU365
+ 1206              		.loc 1 293 11 is_stmt 0 view .LVU366
+ 1207 00be 76EEE76A 		vsub.f32	s13, s13, s15
+ 1208              		.loc 1 293 6 view .LVU367
+ 1209 00c2 184C     		ldr	r4, .L77+40
+ 1210 00c4 C4ED006A 		vstr.32	s13, [r4]
+ 294:../../util/math_util.c ****   xk += (float)a * rk;
+ 1211              		.loc 1 294 3 is_stmt 1 view .LVU368
+ 1212              		.loc 1 294 18 is_stmt 0 view .LVU369
+ 1213 00c8 28EE268A 		vmul.f32	s16, s16, s13
+ 1214              		.loc 1 294 6 view .LVU370
+ 1215 00cc 37EE888A 		vadd.f32	s16, s15, s16
+ 1216 00d0 80ED008A 		vstr.32	s16, [r0]
+ 295:../../util/math_util.c ****   vk += (float)( b * rk ) / ABfilter_dt;
+ 1217              		.loc 1 295 3 is_stmt 1 view .LVU371
+ 1218              		.loc 1 295 9 is_stmt 0 view .LVU372
+ 1219 00d4 27EE267A 		vmul.f32	s14, s14, s13
+ 1220              		.loc 1 295 27 view .LVU373
+ 1221 00d8 C7EE097A 		vdiv.f32	s15, s14, s18
+ 1222              		.loc 1 295 6 view .LVU374
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 28
+
+
+ 1223 00dc 36EE276A 		vadd.f32	s12, s12, s15
+ 1224 00e0 81ED006A 		vstr.32	s12, [r1]
+ 296:../../util/math_util.c ****   xk_1 = xk;
+ 1225              		.loc 1 296 3 is_stmt 1 view .LVU375
+ 1226              		.loc 1 296 8 is_stmt 0 view .LVU376
+ 1227 00e4 82ED008A 		vstr.32	s16, [r2]
+ 297:../../util/math_util.c ****   vk_1 = vk;
+ 1228              		.loc 1 297 3 is_stmt 1 view .LVU377
+ 1229              		.loc 1 297 8 is_stmt 0 view .LVU378
+ 1230 00e8 83ED006A 		vstr.32	s12, [r3]
+ 298:../../util/math_util.c ****   return xk_1;
+ 1231              		.loc 1 298 3 is_stmt 1 view .LVU379
+ 1232              		.loc 1 298 10 is_stmt 0 view .LVU380
+ 1233 00ec BCEEC88A 		vcvt.u32.f32	s16, s16
+ 299:../../util/math_util.c **** }
+ 1234              		.loc 1 299 1 view .LVU381
+ 1235 00f0 18EE103A 		vmov	r3, s16	@ int
+ 1236 00f4 98B2     		uxth	r0, r3
+ 1237 00f6 BDEC068B 		vldm	sp!, {d8-d10}
+ 1238              	.LCFI13:
+ 1239              		.cfi_restore 84
+ 1240              		.cfi_restore 85
+ 1241              		.cfi_restore 82
+ 1242              		.cfi_restore 83
+ 1243              		.cfi_restore 80
+ 1244              		.cfi_restore 81
+ 1245              		.cfi_def_cfa_offset 8
+ 1246              		.loc 1 299 1 view .LVU382
+ 1247 00fa 10BD     		pop	{r4, pc}
+ 1248              	.L78:
+ 1249              		.align	2
+ 1250              	.L77:
+ 1251 00fc 00000000 		.word	ABfilter_dt
+ 1252 0100 00000000 		.word	ABfilter_sigma_process
+ 1253 0104 00000000 		.word	ABfilter_sigma_noise
+ 1254 0108 00000000 		.word	a.7
+ 1255 010c 00000000 		.word	b.6
+ 1256 0110 00000000 		.word	xm.5
+ 1257 0114 00000000 		.word	vk_1.4
+ 1258 0118 00000000 		.word	xk_1.3
+ 1259 011c 00000000 		.word	xk.2
+ 1260 0120 00000000 		.word	vk.1
+ 1261 0124 00000000 		.word	rk.0
+ 1262              		.cfi_endproc
+ 1263              	.LFE14:
+ 1265              		.section	.text.kih_filter,"ax",%progbits
+ 1266              		.align	1
+ 1267              		.global	kih_filter
+ 1268              		.syntax unified
+ 1269              		.thumb
+ 1270              		.thumb_func
+ 1272              	kih_filter:
+ 1273              	.LVL127:
+ 1274              	.LFB15:
+ 300:../../util/math_util.c **** 
+ 301:../../util/math_util.c **** 
+ 302:../../util/math_util.c **** #define KIH_COEF_SIZE   5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 29
+
+
+ 303:../../util/math_util.c **** const float kih_coef[KIH_COEF_SIZE] = { 0.021, 0.096, 0.146, 0.096, 0.021};
+ 304:../../util/math_util.c **** int kih_index; //k сохраняет индекс текущего массива, считанн�
+ 305:../../util/math_util.c **** float kih_gain; //объявляем коэффициент усиления, чтобы масшт
+ 306:../../util/math_util.c **** 
+ 307:../../util/math_util.c **** unsigned short kih_filter(unsigned short in, unsigned short * values)
+ 308:../../util/math_util.c **** {
+ 1275              		.loc 1 308 1 is_stmt 1 view -0
+ 1276              		.cfi_startproc
+ 1277              		@ args = 0, pretend = 0, frame = 0
+ 1278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1279              		@ link register save eliminated.
+ 309:../../util/math_util.c ****   unsigned short out;
+ 1280              		.loc 1 309 3 view .LVU384
+ 310:../../util/math_util.c ****   int i;
+ 1281              		.loc 1 310 3 view .LVU385
+ 311:../../util/math_util.c **** 
+ 312:../../util/math_util.c ****   out = 0; //out — это возвращаемая переменная. Он устанавли�
+ 1282              		.loc 1 312 3 view .LVU386
+ 313:../../util/math_util.c **** 
+ 314:../../util/math_util.c ****   values[kih_index] = in; //cохраняем ввод подпрограммы (содержимо
+ 1283              		.loc 1 314 3 view .LVU387
+ 1284              		.loc 1 314 9 is_stmt 0 view .LVU388
+ 1285 0000 244B     		ldr	r3, .L82
+ 1286 0002 1B68     		ldr	r3, [r3]
+ 1287              		.loc 1 314 21 view .LVU389
+ 1288 0004 21F81300 		strh	r0, [r1, r3, lsl #1]	@ movhi
+ 315:../../util/math_util.c **** 
+ 316:../../util/math_util.c ****   for (i = 1; i <= KIH_COEF_SIZE; i++) { //шагаем по массиву
+ 1289              		.loc 1 316 3 is_stmt 1 view .LVU390
+ 1290              	.LVL128:
+ 1291              		.loc 1 316 10 is_stmt 0 view .LVU391
+ 1292 0008 0120     		movs	r0, #1
+ 1293              	.LVL129:
+ 312:../../util/math_util.c **** 
+ 1294              		.loc 1 312 7 view .LVU392
+ 1295 000a DFED237A 		vldr.32	s15, .L82+4	@ int
+ 1296              		.loc 1 316 3 view .LVU393
+ 1297 000e 25E0     		b	.L80
+ 1298              	.LVL130:
+ 1299              	.L81:
+ 317:../../util/math_util.c ****     //... и складываем и умножаем каждое значение для нако
+ 318:../../util/math_util.c ****     //(i + kih_index) % filterTaps создает циклический способ прохож�
+ 319:../../util/math_util.c ****     out += kih_coef[i - 1] * values[(i + kih_index) % KIH_COEF_SIZE];
+ 1300              		.loc 1 319 5 is_stmt 1 view .LVU394
+ 1301              		.loc 1 319 23 is_stmt 0 view .LVU395
+ 1302 0010 421E     		subs	r2, r0, #1
+ 1303              		.loc 1 319 20 view .LVU396
+ 1304 0012 224B     		ldr	r3, .L82+8
+ 1305 0014 03EB8203 		add	r3, r3, r2, lsl #2
+ 1306 0018 D3ED006A 		vldr.32	s13, [r3]
+ 1307              		.loc 1 319 40 view .LVU397
+ 1308 001c 1D4B     		ldr	r3, .L82
+ 1309 001e 1A68     		ldr	r2, [r3]
+ 1310 0020 0244     		add	r2, r2, r0
+ 1311              		.loc 1 319 53 view .LVU398
+ 1312 0022 1F4B     		ldr	r3, .L82+12
+ 1313 0024 83FB023C 		smull	r3, ip, r3, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 30
+
+
+ 1314 0028 D317     		asrs	r3, r2, #31
+ 1315 002a C3EB6C03 		rsb	r3, r3, ip, asr #1
+ 1316 002e 03EB8303 		add	r3, r3, r3, lsl #2
+ 1317 0032 D31A     		subs	r3, r2, r3
+ 1318              		.loc 1 319 36 view .LVU399
+ 1319 0034 31F81330 		ldrh	r3, [r1, r3, lsl #1]
+ 1320 0038 07EE103A 		vmov	s14, r3	@ int
+ 1321              		.loc 1 319 28 view .LVU400
+ 1322 003c B8EEC77A 		vcvt.f32.s32	s14, s14
+ 1323 0040 27EE267A 		vmul.f32	s14, s14, s13
+ 1324              		.loc 1 319 9 view .LVU401
+ 1325 0044 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1326              	.LVL131:
+ 1327              		.loc 1 319 9 view .LVU402
+ 1328 0048 77EE877A 		vadd.f32	s15, s15, s14
+ 1329 004c FCEEE77A 		vcvt.u32.f32	s15, s15
+ 1330 0050 17EE903A 		vmov	r3, s15	@ int
+ 1331 0054 9BB2     		uxth	r3, r3
+ 1332 0056 07EE903A 		vmov	s15, r3	@ int
+ 1333              	.LVL132:
+ 316:../../util/math_util.c ****     //... и складываем и умножаем каждое значение для нако
+ 1334              		.loc 1 316 36 is_stmt 1 discriminator 3 view .LVU403
+ 1335 005a 0130     		adds	r0, r0, #1
+ 1336              	.LVL133:
+ 1337              	.L80:
+ 316:../../util/math_util.c ****     //... и складываем и умножаем каждое значение для нако
+ 1338              		.loc 1 316 17 discriminator 1 view .LVU404
+ 1339 005c 0528     		cmp	r0, #5
+ 1340 005e D7DD     		ble	.L81
+ 320:../../util/math_util.c **** 
+ 321:../../util/math_util.c ****   }
+ 322:../../util/math_util.c **** 
+ 323:../../util/math_util.c ****   out /= kih_gain; //Нам нужно масштабировать вывод (если тольк
+ 1341              		.loc 1 323 3 view .LVU405
+ 1342              		.loc 1 323 7 is_stmt 0 view .LVU406
+ 1343 0060 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1344              	.LVL134:
+ 1345              		.loc 1 323 7 view .LVU407
+ 1346 0064 0F4B     		ldr	r3, .L82+16
+ 1347 0066 D3ED006A 		vldr.32	s13, [r3]
+ 1348 006a 87EEA67A 		vdiv.f32	s14, s15, s13
+ 1349 006e FCEEC77A 		vcvt.u32.f32	s15, s14
+ 1350              	.LVL135:
+ 324:../../util/math_util.c **** 
+ 325:../../util/math_util.c ****   kih_index = (kih_index + 1) % KIH_COEF_SIZE; // k увеличивается и обходит fi
+ 1351              		.loc 1 325 3 is_stmt 1 view .LVU408
+ 1352              		.loc 1 325 26 is_stmt 0 view .LVU409
+ 1353 0072 0848     		ldr	r0, .L82
+ 1354              	.LVL136:
+ 1355              		.loc 1 325 26 view .LVU410
+ 1356 0074 0268     		ldr	r2, [r0]
+ 1357 0076 0132     		adds	r2, r2, #1
+ 1358              		.loc 1 325 31 view .LVU411
+ 1359 0078 0949     		ldr	r1, .L82+12
+ 1360              	.LVL137:
+ 1361              		.loc 1 325 31 view .LVU412
+ 1362 007a 81FB0231 		smull	r3, r1, r1, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 31
+
+
+ 1363 007e D317     		asrs	r3, r2, #31
+ 1364 0080 C3EB6103 		rsb	r3, r3, r1, asr #1
+ 1365 0084 03EB8303 		add	r3, r3, r3, lsl #2
+ 1366 0088 D31A     		subs	r3, r2, r3
+ 1367              		.loc 1 325 13 view .LVU413
+ 1368 008a 0360     		str	r3, [r0]
+ 326:../../util/math_util.c **** 
+ 327:../../util/math_util.c ****   return out; //мы отправляем выходное значение обратно тому
+ 1369              		.loc 1 327 3 is_stmt 1 view .LVU414
+ 328:../../util/math_util.c **** }
+ 1370              		.loc 1 328 1 is_stmt 0 view .LVU415
+ 1371 008c 17EE903A 		vmov	r3, s15	@ int
+ 1372 0090 98B2     		uxth	r0, r3
+ 1373 0092 7047     		bx	lr
+ 1374              	.L83:
+ 1375              		.align	2
+ 1376              	.L82:
+ 1377 0094 00000000 		.word	kih_index
+ 1378 0098 00000000 		.word	0
+ 1379 009c 00000000 		.word	kih_coef
+ 1380 00a0 67666666 		.word	1717986919
+ 1381 00a4 00000000 		.word	kih_gain
+ 1382              		.cfi_endproc
+ 1383              	.LFE15:
+ 1385              		.section	.text.period_us2frequency,"ax",%progbits
+ 1386              		.align	1
+ 1387              		.global	period_us2frequency
+ 1388              		.syntax unified
+ 1389              		.thumb
+ 1390              		.thumb_func
+ 1392              	period_us2frequency:
+ 1393              	.LVL138:
+ 1394              	.LFB16:
+ 329:../../util/math_util.c **** 
+ 330:../../util/math_util.c **** 
+ 331:../../util/math_util.c **** //период в микросекундах в Герцы
+ 332:../../util/math_util.c **** unsigned long period_us2frequency(unsigned long period_us)
+ 333:../../util/math_util.c **** {
+ 1395              		.loc 1 333 1 is_stmt 1 view -0
+ 1396              		.cfi_startproc
+ 1397              		@ args = 0, pretend = 0, frame = 0
+ 1398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1399              		@ link register save eliminated.
+ 334:../../util/math_util.c **** 	if (!period_us) return 0;
+ 1400              		.loc 1 334 2 view .LVU417
+ 1401              		.loc 1 334 5 is_stmt 0 view .LVU418
+ 1402 0000 0346     		mov	r3, r0
+ 1403 0002 18B1     		cbz	r0, .L86
+ 335:../../util/math_util.c **** 
+ 336:../../util/math_util.c **** 	return 1000000  / period_us;
+ 1404              		.loc 1 336 2 is_stmt 1 view .LVU419
+ 1405              		.loc 1 336 18 is_stmt 0 view .LVU420
+ 1406 0004 0248     		ldr	r0, .L87
+ 1407              	.LVL139:
+ 1408              		.loc 1 336 18 view .LVU421
+ 1409 0006 B0FBF3F0 		udiv	r0, r0, r3
+ 1410 000a 7047     		bx	lr
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 32
+
+
+ 1411              	.LVL140:
+ 1412              	.L86:
+ 337:../../util/math_util.c **** }
+ 1413              		.loc 1 337 1 view .LVU422
+ 1414 000c 7047     		bx	lr
+ 1415              	.L88:
+ 1416 000e 00BF     		.align	2
+ 1417              	.L87:
+ 1418 0010 40420F00 		.word	1000000
+ 1419              		.cfi_endproc
+ 1420              	.LFE16:
+ 1422              		.section	.text.bitget,"ax",%progbits
+ 1423              		.align	1
+ 1424              		.global	bitget
+ 1425              		.syntax unified
+ 1426              		.thumb
+ 1427              		.thumb_func
+ 1429              	bitget:
+ 1430              	.LVL141:
+ 1431              	.LFB17:
+ 338:../../util/math_util.c **** 
+ 339:../../util/math_util.c **** 
+ 340:../../util/math_util.c **** unsigned char bitget(void * mem, int num)
+ 341:../../util/math_util.c **** {
+ 1432              		.loc 1 341 1 is_stmt 1 view -0
+ 1433              		.cfi_startproc
+ 1434              		@ args = 0, pretend = 0, frame = 0
+ 1435              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1436              		@ link register save eliminated.
+ 342:../../util/math_util.c **** 	int byte_num, bit_num;
+ 1437              		.loc 1 342 2 view .LVU424
+ 343:../../util/math_util.c **** 	unsigned char * bytes;
+ 1438              		.loc 1 343 2 view .LVU425
+ 344:../../util/math_util.c **** 
+ 345:../../util/math_util.c **** 	byte_num  = num / 8;
+ 1439              		.loc 1 345 2 view .LVU426
+ 1440              		.loc 1 345 12 is_stmt 0 view .LVU427
+ 1441 0000 0B46     		mov	r3, r1
+ 1442 0002 0029     		cmp	r1, #0
+ 1443 0004 07DB     		blt	.L91
+ 1444              	.L90:
+ 1445              		.loc 1 345 12 view .LVU428
+ 1446 0006 DB10     		asrs	r3, r3, #3
+ 1447              	.LVL142:
+ 346:../../util/math_util.c **** 	bit_num = num - byte_num * 8;
+ 1448              		.loc 1 346 2 is_stmt 1 view .LVU429
+ 347:../../util/math_util.c **** 	bytes = (unsigned char *)mem;
+ 1449              		.loc 1 347 2 view .LVU430
+ 348:../../util/math_util.c **** 
+ 349:../../util/math_util.c **** 	return bytes[byte_num] & (1 << bit_num) ? 1u : 0u;
+ 1450              		.loc 1 349 2 view .LVU431
+ 1451              		.loc 1 349 14 is_stmt 0 view .LVU432
+ 1452 0008 C05C     		ldrb	r0, [r0, r3]	@ zero_extendqisi2
+ 1453              	.LVL143:
+ 1454              		.loc 1 349 42 view .LVU433
+ 1455 000a 01F00701 		and	r1, r1, #7
+ 1456              	.LVL144:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 33
+
+
+ 1457              		.loc 1 349 42 view .LVU434
+ 1458 000e 0841     		asrs	r0, r0, r1
+ 350:../../util/math_util.c **** }
+ 1459              		.loc 1 350 1 view .LVU435
+ 1460 0010 00F00100 		and	r0, r0, #1
+ 1461 0014 7047     		bx	lr
+ 1462              	.LVL145:
+ 1463              	.L91:
+ 345:../../util/math_util.c **** 	bit_num = num - byte_num * 8;
+ 1464              		.loc 1 345 12 view .LVU436
+ 1465 0016 CB1D     		adds	r3, r1, #7
+ 1466 0018 F5E7     		b	.L90
+ 1467              		.cfi_endproc
+ 1468              	.LFE17:
+ 1470              		.section	.text.bitis1cnt,"ax",%progbits
+ 1471              		.align	1
+ 1472              		.global	bitis1cnt
+ 1473              		.syntax unified
+ 1474              		.thumb
+ 1475              		.thumb_func
+ 1477              	bitis1cnt:
+ 1478              	.LVL146:
+ 1479              	.LFB18:
+ 351:../../util/math_util.c **** 
+ 352:../../util/math_util.c **** 
+ 353:../../util/math_util.c **** int bitis1cnt(void * mem, int max_num)
+ 354:../../util/math_util.c **** {
+ 1480              		.loc 1 354 1 is_stmt 1 view -0
+ 1481              		.cfi_startproc
+ 1482              		@ args = 0, pretend = 0, frame = 0
+ 1483              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1484              		.loc 1 354 1 is_stmt 0 view .LVU438
+ 1485 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1486              	.LCFI14:
+ 1487              		.cfi_def_cfa_offset 24
+ 1488              		.cfi_offset 3, -24
+ 1489              		.cfi_offset 4, -20
+ 1490              		.cfi_offset 5, -16
+ 1491              		.cfi_offset 6, -12
+ 1492              		.cfi_offset 7, -8
+ 1493              		.cfi_offset 14, -4
+ 1494 0002 0746     		mov	r7, r0
+ 1495 0004 0D46     		mov	r5, r1
+ 355:../../util/math_util.c **** 	int i, res;
+ 1496              		.loc 1 355 2 is_stmt 1 view .LVU439
+ 356:../../util/math_util.c **** 
+ 357:../../util/math_util.c **** 	res = 0;
+ 1497              		.loc 1 357 2 view .LVU440
+ 1498              	.LVL147:
+ 358:../../util/math_util.c **** 	for (i = 0; i < max_num; ++i) {
+ 1499              		.loc 1 358 2 view .LVU441
+ 357:../../util/math_util.c **** 	for (i = 0; i < max_num; ++i) {
+ 1500              		.loc 1 357 6 is_stmt 0 view .LVU442
+ 1501 0006 0026     		movs	r6, #0
+ 1502              		.loc 1 358 9 view .LVU443
+ 1503 0008 3446     		mov	r4, r6
+ 1504              		.loc 1 358 2 view .LVU444
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 34
+
+
+ 1505 000a 00E0     		b	.L93
+ 1506              	.LVL148:
+ 1507              	.L94:
+ 1508              		.loc 1 358 27 is_stmt 1 discriminator 2 view .LVU445
+ 1509 000c 0134     		adds	r4, r4, #1
+ 1510              	.LVL149:
+ 1511              	.L93:
+ 1512              		.loc 1 358 16 discriminator 1 view .LVU446
+ 1513 000e AC42     		cmp	r4, r5
+ 1514 0010 07DA     		bge	.L97
+ 359:../../util/math_util.c **** 		if (bitget(mem, i)) res++;
+ 1515              		.loc 1 359 3 view .LVU447
+ 1516              		.loc 1 359 7 is_stmt 0 view .LVU448
+ 1517 0012 2146     		mov	r1, r4
+ 1518 0014 3846     		mov	r0, r7
+ 1519 0016 FFF7FEFF 		bl	bitget
+ 1520              	.LVL150:
+ 1521              		.loc 1 359 6 discriminator 1 view .LVU449
+ 1522 001a 0028     		cmp	r0, #0
+ 1523 001c F6D0     		beq	.L94
+ 1524              		.loc 1 359 23 is_stmt 1 discriminator 1 view .LVU450
+ 1525              		.loc 1 359 26 is_stmt 0 discriminator 1 view .LVU451
+ 1526 001e 0136     		adds	r6, r6, #1
+ 1527              	.LVL151:
+ 1528              		.loc 1 359 26 discriminator 1 view .LVU452
+ 1529 0020 F4E7     		b	.L94
+ 1530              	.L97:
+ 360:../../util/math_util.c **** 	}
+ 361:../../util/math_util.c **** 	return res;
+ 1531              		.loc 1 361 2 is_stmt 1 view .LVU453
+ 362:../../util/math_util.c **** }
+ 1532              		.loc 1 362 1 is_stmt 0 view .LVU454
+ 1533 0022 3046     		mov	r0, r6
+ 1534 0024 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1535              		.loc 1 362 1 view .LVU455
+ 1536              		.cfi_endproc
+ 1537              	.LFE18:
+ 1539              		.section	.text.bitset,"ax",%progbits
+ 1540              		.align	1
+ 1541              		.global	bitset
+ 1542              		.syntax unified
+ 1543              		.thumb
+ 1544              		.thumb_func
+ 1546              	bitset:
+ 1547              	.LVL152:
+ 1548              	.LFB19:
+ 363:../../util/math_util.c **** 
+ 364:../../util/math_util.c **** 
+ 365:../../util/math_util.c **** 
+ 366:../../util/math_util.c **** void bitset(void * mem, int num, unsigned char value)
+ 367:../../util/math_util.c **** {
+ 1549              		.loc 1 367 1 is_stmt 1 view -0
+ 1550              		.cfi_startproc
+ 1551              		@ args = 0, pretend = 0, frame = 0
+ 1552              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1553              		@ link register save eliminated.
+ 368:../../util/math_util.c **** 	int byte_num, bit_num;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 35
+
+
+ 1554              		.loc 1 368 2 view .LVU457
+ 369:../../util/math_util.c **** 	unsigned char * bytes;
+ 1555              		.loc 1 369 2 view .LVU458
+ 370:../../util/math_util.c **** 
+ 371:../../util/math_util.c **** 	byte_num  = num / 8;
+ 1556              		.loc 1 371 2 view .LVU459
+ 1557              		.loc 1 371 12 is_stmt 0 view .LVU460
+ 1558 0000 0B46     		mov	r3, r1
+ 1559 0002 0029     		cmp	r1, #0
+ 1560 0004 0BDB     		blt	.L102
+ 1561              	.L99:
+ 1562              		.loc 1 371 12 view .LVU461
+ 1563 0006 DB10     		asrs	r3, r3, #3
+ 1564              	.LVL153:
+ 372:../../util/math_util.c **** 	bit_num = num - byte_num * 8;
+ 1565              		.loc 1 372 2 is_stmt 1 view .LVU462
+ 373:../../util/math_util.c **** 	bytes = (unsigned char *)mem;
+ 1566              		.loc 1 373 2 view .LVU463
+ 374:../../util/math_util.c **** 
+ 375:../../util/math_util.c **** 	if (value) bytes[byte_num] |= (1 << bit_num);
+ 1567              		.loc 1 375 2 view .LVU464
+ 1568              		.loc 1 375 5 is_stmt 0 view .LVU465
+ 1569 0008 5AB1     		cbz	r2, .L100
+ 1570              		.loc 1 375 13 is_stmt 1 discriminator 1 view .LVU466
+ 1571              		.loc 1 375 18 is_stmt 0 discriminator 1 view .LVU467
+ 1572 000a C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+ 1573              	.LVL154:
+ 1574              		.loc 1 375 35 discriminator 1 view .LVU468
+ 1575 000c 01F00701 		and	r1, r1, #7
+ 1576              	.LVL155:
+ 1577              		.loc 1 375 35 discriminator 1 view .LVU469
+ 1578 0010 4FF0010C 		mov	ip, #1
+ 1579 0014 0CFA01F1 		lsl	r1, ip, r1
+ 1580              		.loc 1 375 29 discriminator 1 view .LVU470
+ 1581 0018 0A43     		orrs	r2, r2, r1
+ 1582 001a C254     		strb	r2, [r0, r3]
+ 1583 001c 7047     		bx	lr
+ 1584              	.LVL156:
+ 1585              	.L102:
+ 371:../../util/math_util.c **** 	bit_num = num - byte_num * 8;
+ 1586              		.loc 1 371 12 view .LVU471
+ 1587 001e CB1D     		adds	r3, r1, #7
+ 1588 0020 F1E7     		b	.L99
+ 1589              	.LVL157:
+ 1590              	.L100:
+ 376:../../util/math_util.c **** 	else bytes[byte_num] &=  ~(1 << bit_num);
+ 1591              		.loc 1 376 7 is_stmt 1 view .LVU472
+ 1592              		.loc 1 376 12 is_stmt 0 view .LVU473
+ 1593 0022 10F803C0 		ldrb	ip, [r0, r3]	@ zero_extendqisi2
+ 1594              		.loc 1 376 31 view .LVU474
+ 1595 0026 01F00701 		and	r1, r1, #7
+ 1596              	.LVL158:
+ 1597              		.loc 1 376 31 view .LVU475
+ 1598 002a 0122     		movs	r2, #1
+ 1599              	.LVL159:
+ 1600              		.loc 1 376 31 view .LVU476
+ 1601 002c 8A40     		lsls	r2, r2, r1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 36
+
+
+ 1602              		.loc 1 376 23 view .LVU477
+ 1603 002e D243     		mvns	r2, r2
+ 1604 0030 52B2     		sxtb	r2, r2
+ 1605 0032 0CEA0202 		and	r2, ip, r2
+ 1606 0036 C254     		strb	r2, [r0, r3]
+ 377:../../util/math_util.c **** }
+ 1607              		.loc 1 377 1 view .LVU478
+ 1608 0038 7047     		bx	lr
+ 1609              		.cfi_endproc
+ 1610              	.LFE19:
+ 1612              		.section	.text.ushort_array_get_min_max_value,"ax",%progbits
+ 1613              		.align	1
+ 1614              		.global	ushort_array_get_min_max_value
+ 1615              		.syntax unified
+ 1616              		.thumb
+ 1617              		.thumb_func
+ 1619              	ushort_array_get_min_max_value:
+ 1620              	.LVL160:
+ 1621              	.LFB20:
+ 378:../../util/math_util.c **** 
+ 379:../../util/math_util.c **** 
+ 380:../../util/math_util.c **** 
+ 381:../../util/math_util.c **** void ushort_array_get_min_max_value(unsigned short * array, unsigned int array_count, unsigned shor
+ 382:../../util/math_util.c **** {
+ 1622              		.loc 1 382 1 is_stmt 1 view -0
+ 1623              		.cfi_startproc
+ 1624              		@ args = 0, pretend = 0, frame = 0
+ 1625              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1626              		.loc 1 382 1 is_stmt 0 view .LVU480
+ 1627 0000 30B5     		push	{r4, r5, lr}
+ 1628              	.LCFI15:
+ 1629              		.cfi_def_cfa_offset 12
+ 1630              		.cfi_offset 4, -12
+ 1631              		.cfi_offset 5, -8
+ 1632              		.cfi_offset 14, -4
+ 383:../../util/math_util.c **** 	unsigned int i;
+ 1633              		.loc 1 383 2 is_stmt 1 view .LVU481
+ 384:../../util/math_util.c **** 
+ 385:../../util/math_util.c **** 	*min_value = array[0];
+ 1634              		.loc 1 385 2 view .LVU482
+ 1635              		.loc 1 385 20 is_stmt 0 view .LVU483
+ 1636 0002 0488     		ldrh	r4, [r0]
+ 1637              		.loc 1 385 13 view .LVU484
+ 1638 0004 1480     		strh	r4, [r2]	@ movhi
+ 386:../../util/math_util.c **** 	*max_value = array[0];
+ 1639              		.loc 1 386 2 is_stmt 1 view .LVU485
+ 1640              		.loc 1 386 13 is_stmt 0 view .LVU486
+ 1641 0006 1C80     		strh	r4, [r3]	@ movhi
+ 387:../../util/math_util.c **** 
+ 388:../../util/math_util.c **** 	for (i = 1; i < array_count; ++i) {
+ 1642              		.loc 1 388 2 is_stmt 1 view .LVU487
+ 1643              	.LVL161:
+ 1644              		.loc 1 388 9 is_stmt 0 view .LVU488
+ 1645 0008 4FF0010C 		mov	ip, #1
+ 1646              		.loc 1 388 2 view .LVU489
+ 1647 000c 01E0     		b	.L104
+ 1648              	.LVL162:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 37
+
+
+ 1649              	.L106:
+ 1650              		.loc 1 388 31 is_stmt 1 discriminator 2 view .LVU490
+ 1651 000e 0CF1010C 		add	ip, ip, #1
+ 1652              	.LVL163:
+ 1653              	.L104:
+ 1654              		.loc 1 388 16 discriminator 1 view .LVU491
+ 1655 0012 8C45     		cmp	ip, r1
+ 1656 0014 10D2     		bcs	.L109
+ 389:../../util/math_util.c **** 		if (array[i] > *max_value) *max_value = array[i];
+ 1657              		.loc 1 389 3 view .LVU492
+ 1658              		.loc 1 389 12 is_stmt 0 view .LVU493
+ 1659 0016 4FEA4C04 		lsl	r4, ip, #1
+ 1660 001a 30F81CE0 		ldrh	lr, [r0, ip, lsl #1]
+ 1661              		.loc 1 389 18 view .LVU494
+ 1662 001e 1D88     		ldrh	r5, [r3]
+ 1663              		.loc 1 389 6 view .LVU495
+ 1664 0020 AE45     		cmp	lr, r5
+ 1665 0022 01D9     		bls	.L105
+ 1666              		.loc 1 389 30 is_stmt 1 discriminator 1 view .LVU496
+ 1667              		.loc 1 389 41 is_stmt 0 discriminator 1 view .LVU497
+ 1668 0024 A3F800E0 		strh	lr, [r3]	@ movhi
+ 1669              	.L105:
+ 390:../../util/math_util.c **** 		if (array[i] < *min_value) *min_value = array[i];
+ 1670              		.loc 1 390 3 is_stmt 1 view .LVU498
+ 1671              		.loc 1 390 12 is_stmt 0 view .LVU499
+ 1672 0028 30F804E0 		ldrh	lr, [r0, r4]
+ 1673              		.loc 1 390 18 view .LVU500
+ 1674 002c 1488     		ldrh	r4, [r2]
+ 1675              		.loc 1 390 6 view .LVU501
+ 1676 002e A645     		cmp	lr, r4
+ 1677 0030 EDD2     		bcs	.L106
+ 1678              		.loc 1 390 30 is_stmt 1 discriminator 1 view .LVU502
+ 1679              		.loc 1 390 41 is_stmt 0 discriminator 1 view .LVU503
+ 1680 0032 A2F800E0 		strh	lr, [r2]	@ movhi
+ 1681 0036 EAE7     		b	.L106
+ 1682              	.L109:
+ 391:../../util/math_util.c **** 	}
+ 392:../../util/math_util.c **** }
+ 1683              		.loc 1 392 1 view .LVU504
+ 1684 0038 30BD     		pop	{r4, r5, pc}
+ 1685              		.cfi_endproc
+ 1686              	.LFE20:
+ 1688              		.section	.bss.rk.0,"aw",%nobits
+ 1689              		.align	2
+ 1692              	rk.0:
+ 1693 0000 00000000 		.space	4
+ 1694              		.section	.bss.vk.1,"aw",%nobits
+ 1695              		.align	2
+ 1698              	vk.1:
+ 1699 0000 00000000 		.space	4
+ 1700              		.section	.bss.xk.2,"aw",%nobits
+ 1701              		.align	2
+ 1704              	xk.2:
+ 1705 0000 00000000 		.space	4
+ 1706              		.section	.bss.xk_1.3,"aw",%nobits
+ 1707              		.align	2
+ 1710              	xk_1.3:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 38
+
+
+ 1711 0000 00000000 		.space	4
+ 1712              		.section	.bss.vk_1.4,"aw",%nobits
+ 1713              		.align	2
+ 1716              	vk_1.4:
+ 1717 0000 00000000 		.space	4
+ 1718              		.section	.bss.xm.5,"aw",%nobits
+ 1719              		.align	2
+ 1722              	xm.5:
+ 1723 0000 00000000 		.space	4
+ 1724              		.section	.bss.b.6,"aw",%nobits
+ 1725              		.align	2
+ 1728              	b.6:
+ 1729 0000 00000000 		.space	4
+ 1730              		.section	.bss.a.7,"aw",%nobits
+ 1731              		.align	2
+ 1734              	a.7:
+ 1735 0000 00000000 		.space	4
+ 1736              		.global	kih_gain
+ 1737              		.section	.bss.kih_gain,"aw",%nobits
+ 1738              		.align	2
+ 1741              	kih_gain:
+ 1742 0000 00000000 		.space	4
+ 1743              		.global	kih_index
+ 1744              		.section	.bss.kih_index,"aw",%nobits
+ 1745              		.align	2
+ 1748              	kih_index:
+ 1749 0000 00000000 		.space	4
+ 1750              		.global	kih_coef
+ 1751              		.section	.rodata.kih_coef,"a"
+ 1752              		.align	2
+ 1755              	kih_coef:
+ 1756 0000 3108AC3C 		.word	1017907249
+ 1757 0004 A69BC43D 		.word	1036295078
+ 1758 0008 0681153E 		.word	1041596678
+ 1759 000c A69BC43D 		.word	1036295078
+ 1760 0010 3108AC3C 		.word	1017907249
+ 1761              		.global	ABfilter_sigma_noise
+ 1762              		.section	.data.ABfilter_sigma_noise,"aw"
+ 1763              		.align	2
+ 1766              	ABfilter_sigma_noise:
+ 1767 0000 3333333F 		.word	1060320051
+ 1768              		.global	ABfilter_sigma_process
+ 1769              		.section	.data.ABfilter_sigma_process,"aw"
+ 1770              		.align	2
+ 1773              	ABfilter_sigma_process:
+ 1774 0000 00004040 		.word	1077936128
+ 1775              		.global	ABfilter_dt
+ 1776              		.section	.data.ABfilter_dt,"aw"
+ 1777              		.align	2
+ 1780              	ABfilter_dt:
+ 1781 0000 CDCC4C3D 		.word	1028443341
+ 1782              		.global	crc32_table
+ 1783              		.section	.rodata.crc32_table,"a"
+ 1784              		.align	2
+ 1787              	crc32_table:
+ 1788 0000 00000000 		.word	0
+ 1789 0004 B71DC104 		.word	79764919
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 39
+
+
+ 1790 0008 6E3B8209 		.word	159529838
+ 1791 000c D926430D 		.word	222504665
+ 1792 0010 DC760413 		.word	319059676
+ 1793 0014 6B6BC517 		.word	398814059
+ 1794 0018 B24D861A 		.word	445009330
+ 1795 001c 0550471E 		.word	507990021
+ 1796 0020 B8ED0826 		.word	638119352
+ 1797 0024 0FF0C922 		.word	583659535
+ 1798 0028 D6D68A2F 		.word	797628118
+ 1799 002c 61CB4B2B 		.word	726387553
+ 1800 0030 649B0C35 		.word	890018660
+ 1801 0034 D386CD31 		.word	835552979
+ 1802 0038 0AA08E3C 		.word	1015980042
+ 1803 003c BDBD4F38 		.word	944750013
+ 1804 0040 70DB114C 		.word	1276238704
+ 1805 0044 C7C6D048 		.word	1221641927
+ 1806 0048 1EE09345 		.word	1167319070
+ 1807 004c A9FD5241 		.word	1095957929
+ 1808 0050 ACAD155F 		.word	1595256236
+ 1809 0054 1BB0D45B 		.word	1540665371
+ 1810 0058 C2969756 		.word	1452775106
+ 1811 005c 758B5652 		.word	1381403509
+ 1812 0060 C836196A 		.word	1780037320
+ 1813 0064 7F2BD86E 		.word	1859660671
+ 1814 0068 A60D9B63 		.word	1671105958
+ 1815 006c 11105A67 		.word	1733955601
+ 1816 0070 14401D79 		.word	2031960084
+ 1817 0074 A35DDC7D 		.word	2111593891
+ 1818 0078 7A7B9F70 		.word	1889500026
+ 1819 007c CD665E74 		.word	1952343757
+ 1820 0080 E0B62398 		.word	-1742489888
+ 1821 0084 57ABE29C 		.word	-1662866601
+ 1822 0088 8E8DA191 		.word	-1851683442
+ 1823 008c 39906095 		.word	-1788833735
+ 1824 0090 3CC0278B 		.word	-1960329156
+ 1825 0094 8BDDE68F 		.word	-1880695413
+ 1826 0098 52FBA582 		.word	-2103051438
+ 1827 009c E5E66486 		.word	-2040207643
+ 1828 00a0 585B2BBE 		.word	-1104454824
+ 1829 00a4 EF46EABA 		.word	-1159051537
+ 1830 00a8 3660A9B7 		.word	-1213636554
+ 1831 00ac 817D68B3 		.word	-1284997759
+ 1832 00b0 842D2FAD 		.word	-1389417084
+ 1833 00b4 3330EEA9 		.word	-1444007885
+ 1834 00b8 EA16ADA4 		.word	-1532160278
+ 1835 00bc 5D0B6CA0 		.word	-1603531939
+ 1836 00c0 906D32D4 		.word	-734892656
+ 1837 00c4 2770F3D0 		.word	-789352409
+ 1838 00c8 FE56B0DD 		.word	-575645954
+ 1839 00cc 494B71D9 		.word	-646886583
+ 1840 00d0 4C1B36C7 		.word	-952755380
+ 1841 00d4 FB06F7C3 		.word	-1007220997
+ 1842 00d8 2220B4CE 		.word	-827056094
+ 1843 00dc 953D75CA 		.word	-898286187
+ 1844 00e0 28803AF2 		.word	-231047128
+ 1845 00e4 9F9DFBF6 		.word	-151282273
+ 1846 00e8 46BBB8FB 		.word	-71779514
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 40
+
+
+ 1847 00ec F1A679FF 		.word	-8804623
+ 1848 00f0 F4F63EE1 		.word	-515967244
+ 1849 00f4 43EBFFE5 		.word	-436212925
+ 1850 00f8 9ACDBCE8 		.word	-390279782
+ 1851 00fc 2DD07DEC 		.word	-327299027
+ 1852 0100 77708634 		.word	881225847
+ 1853 0104 C06D4730 		.word	809987520
+ 1854 0108 194B043D 		.word	1023691545
+ 1855 010c AE56C539 		.word	969234094
+ 1856 0110 AB068227 		.word	662832811
+ 1857 0114 1C1B4323 		.word	591600412
+ 1858 0118 C53D002E 		.word	771767749
+ 1859 011c 7220C12A 		.word	717299826
+ 1860 0120 CF9D8E12 		.word	311336399
+ 1861 0124 78804F16 		.word	374308984
+ 1862 0128 A1A60C1B 		.word	453813921
+ 1863 012c 16BBCD1F 		.word	533576470
+ 1864 0130 13EB8A01 		.word	25881363
+ 1865 0134 A4F64B05 		.word	88864420
+ 1866 0138 7DD00808 		.word	134795389
+ 1867 013c CACDC90C 		.word	214552010
+ 1868 0140 07AB9778 		.word	2023205639
+ 1869 0144 B0B6567C 		.word	2086057648
+ 1870 0148 69901571 		.word	1897238633
+ 1871 014c DE8DD475 		.word	1976864222
+ 1872 0150 DBDD936B 		.word	1804852699
+ 1873 0154 6CC0526F 		.word	1867694188
+ 1874 0158 B5E61162 		.word	1645340341
+ 1875 015c 02FBD066 		.word	1724971778
+ 1876 0160 BF469F5E 		.word	1587496639
+ 1877 0164 085B5E5A 		.word	1516133128
+ 1878 0168 D17D1D57 		.word	1461550545
+ 1879 016c 6660DC53 		.word	1406951526
+ 1880 0170 63309B4D 		.word	1302016099
+ 1881 0174 D42D5A49 		.word	1230646740
+ 1882 0178 0D0B1944 		.word	1142491917
+ 1883 017c BA16D840 		.word	1087903418
+ 1884 0180 97C6A5AC 		.word	-1398421865
+ 1885 0184 20DB64A8 		.word	-1469785312
+ 1886 0188 F9FD27A5 		.word	-1524105735
+ 1887 018c 4EE0E6A1 		.word	-1578704818
+ 1888 0190 4BB0A1BF 		.word	-1079922613
+ 1889 0194 FCAD60BB 		.word	-1151291908
+ 1890 0198 258B23B6 		.word	-1239184603
+ 1891 019c 9296E2B2 		.word	-1293773166
+ 1892 01a0 2F2BAD8A 		.word	-1968362705
+ 1893 01a4 98366C8E 		.word	-1905510760
+ 1894 01a8 41102F83 		.word	-2094067647
+ 1895 01ac F60DEE87 		.word	-2014441994
+ 1896 01b0 F35DA999 		.word	-1716953613
+ 1897 01b4 4440689D 		.word	-1654112188
+ 1898 01b8 9D662B90 		.word	-1876203875
+ 1899 01bc 2A7BEA94 		.word	-1796572374
+ 1900 01c0 E71DB4E0 		.word	-525066777
+ 1901 01c4 500075E4 		.word	-462094256
+ 1902 01c8 892636E9 		.word	-382327159
+ 1903 01cc 3E3BF7ED 		.word	-302564546
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 41
+
+
+ 1904 01d0 3B6BB0F3 		.word	-206542021
+ 1905 01d4 8C7671F7 		.word	-143559028
+ 1906 01d8 555032FA 		.word	-97365931
+ 1907 01dc E24DF3FE 		.word	-17609246
+ 1908 01e0 5FF0BCC6 		.word	-960696225
+ 1909 01e4 E8ED7DC2 		.word	-1031934488
+ 1910 01e8 31CB3ECF 		.word	-817968335
+ 1911 01ec 86D6FFCB 		.word	-872425850
+ 1912 01f0 8386B8D5 		.word	-709327229
+ 1913 01f4 349B79D1 		.word	-780559564
+ 1914 01f8 EDBD3ADC 		.word	-600130067
+ 1915 01fc 5AA0FBD8 		.word	-654598054
+ 1916 0200 EEE00C69 		.word	1762451694
+ 1917 0204 59FDCD6D 		.word	1842216281
+ 1918 0208 80DB8E60 		.word	1619975040
+ 1919 020c 37C64F64 		.word	1682949687
+ 1920 0210 3296087A 		.word	2047383090
+ 1921 0214 858BC97E 		.word	2127137669
+ 1922 0218 5CAD8A73 		.word	1938468188
+ 1923 021c EBB04B77 		.word	2001449195
+ 1924 0220 560D044F 		.word	1325665622
+ 1925 0224 E110C54B 		.word	1271206113
+ 1926 0228 38368646 		.word	1183200824
+ 1927 022c 8F2B4742 		.word	1111960463
+ 1928 0230 8A7B005C 		.word	1543535498
+ 1929 0234 3D66C158 		.word	1489069629
+ 1930 0238 E4408255 		.word	1434599652
+ 1931 023c 535D4351 		.word	1363369299
+ 1932 0240 9E3B1D25 		.word	622672798
+ 1933 0244 2926DC21 		.word	568075817
+ 1934 0248 F0009F2C 		.word	748617968
+ 1935 024c 471D5E28 		.word	677256519
+ 1936 0250 424D1936 		.word	907627842
+ 1937 0254 F550D832 		.word	853037301
+ 1938 0258 2C769B3F 		.word	1067152940
+ 1939 025c 9B6B5A3B 		.word	995781531
+ 1940 0260 26D61503 		.word	51762726
+ 1941 0264 91CBD407 		.word	131386257
+ 1942 0268 48ED970A 		.word	177728840
+ 1943 026c FFF0560E 		.word	240578815
+ 1944 0270 FAA01110 		.word	269590778
+ 1945 0274 4DBDD014 		.word	349224269
+ 1946 0278 949B9319 		.word	429104020
+ 1947 027c 2386521D 		.word	491947555
+ 1948 0280 0E562FF1 		.word	-248556018
+ 1949 0284 B94BEEF5 		.word	-168932423
+ 1950 0288 606DADF8 		.word	-122852000
+ 1951 028c D7706CFC 		.word	-60002089
+ 1952 0290 D2202BE2 		.word	-500490030
+ 1953 0294 653DEAE6 		.word	-420856475
+ 1954 0298 BC1BA9EB 		.word	-341238852
+ 1955 029c 0B0668EF 		.word	-278395381
+ 1956 02a0 B6BB27D7 		.word	-685261898
+ 1957 02a4 01A6E6D3 		.word	-739858943
+ 1958 02a8 D880A5DE 		.word	-559578920
+ 1959 02ac 6F9D64DA 		.word	-630940305
+ 1960 02b0 6ACD23C4 		.word	-1004286614
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 42
+
+
+ 1961 02b4 DDD0E2C0 		.word	-1058877219
+ 1962 02b8 04F6A1CD 		.word	-845023740
+ 1963 02bc B3EB60C9 		.word	-916395085
+ 1964 02c0 7E8D3EBD 		.word	-1119974018
+ 1965 02c4 C990FFB9 		.word	-1174433591
+ 1966 02c8 10B6BCB4 		.word	-1262701040
+ 1967 02cc A7AB7DB0 		.word	-1333941337
+ 1968 02d0 A2FB3AAE 		.word	-1371866206
+ 1969 02d4 15E6FBAA 		.word	-1426332139
+ 1970 02d8 CCC0B8A7 		.word	-1481064244
+ 1971 02dc 7BDD79A3 		.word	-1552294533
+ 1972 02e0 C660369B 		.word	-1690935098
+ 1973 02e4 717DF79F 		.word	-1611170447
+ 1974 02e8 A85BB492 		.word	-1833673816
+ 1975 02ec 1F467596 		.word	-1770699233
+ 1976 02f0 1A163288 		.word	-2009983462
+ 1977 02f4 AD0BF38C 		.word	-1930228819
+ 1978 02f8 742DB081 		.word	-2119160460
+ 1979 02fc C3307185 		.word	-2056179517
+ 1980 0300 99908A5D 		.word	1569362073
+ 1981 0304 2E8D4B59 		.word	1498123566
+ 1982 0308 F7AB0854 		.word	1409854455
+ 1983 030c 40B6C950 		.word	1355396672
+ 1984 0310 45E68E4E 		.word	1317987909
+ 1985 0314 F2FB4F4A 		.word	1246755826
+ 1986 0318 2BDD0C47 		.word	1192025387
+ 1987 031c 9CC0CD43 		.word	1137557660
+ 1988 0320 217D827B 		.word	2072149281
+ 1989 0324 9660437F 		.word	2135122070
+ 1990 0328 4F460072 		.word	1912620623
+ 1991 032c F85BC176 		.word	1992383480
+ 1992 0330 FD0B8668 		.word	1753615357
+ 1993 0334 4A16476C 		.word	1816598090
+ 1994 0338 93300461 		.word	1627664531
+ 1995 033c 242DC565 		.word	1707420964
+ 1996 0340 E94B9B11 		.word	295390185
+ 1997 0344 5E565A15 		.word	358241886
+ 1998 0348 87701918 		.word	404320391
+ 1999 034c 306DD81C 		.word	483945776
+ 2000 0350 353D9F02 		.word	43990325
+ 2001 0354 82205E06 		.word	106832002
+ 2002 0358 5B061D0B 		.word	186451547
+ 2003 035c EC1BDC0F 		.word	266083308
+ 2004 0360 51A69337 		.word	932423249
+ 2005 0364 E6BB5233 		.word	861060070
+ 2006 0368 3F9D113E 		.word	1041341759
+ 2007 036c 8880D03A 		.word	986742920
+ 2008 0370 8DD09724 		.word	613929101
+ 2009 0374 3ACD5620 		.word	542559546
+ 2010 0378 E3EB152D 		.word	756411363
+ 2011 037c 54F6D429 		.word	701822548
+ 2012 0380 7926A9C5 		.word	-978770311
+ 2013 0384 CE3B68C1 		.word	-1050133554
+ 2014 0388 171D2BCC 		.word	-869589737
+ 2015 038c A000EAC8 		.word	-924188512
+ 2016 0390 A550ADD6 		.word	-693284699
+ 2017 0394 124D6CD2 		.word	-764654318
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 43
+
+
+ 2018 0398 CB6B2FDF 		.word	-550540341
+ 2019 039c 7C76EEDB 		.word	-605129092
+ 2020 03a0 C1CBA1E3 		.word	-475935807
+ 2021 03a4 76D660E7 		.word	-413084042
+ 2022 03a8 AFF023EA 		.word	-366743377
+ 2023 03ac 18EDE2EE 		.word	-287118056
+ 2024 03b0 1DBDA5F0 		.word	-257573603
+ 2025 03b4 AAA064F4 		.word	-194731862
+ 2026 03b8 738627F9 		.word	-114850189
+ 2027 03bc C49BE6FD 		.word	-35218492
+ 2028 03c0 09FDB889 		.word	-1984365303
+ 2029 03c4 BEE0798D 		.word	-1921392450
+ 2030 03c8 67C63A80 		.word	-2143631769
+ 2031 03cc D0DBFB84 		.word	-2063868976
+ 2032 03d0 D58BBC9A 		.word	-1698919467
+ 2033 03d4 62967D9E 		.word	-1635936670
+ 2034 03d8 BBB03E93 		.word	-1824608069
+ 2035 03dc 0CADFF97 		.word	-1744851700
+ 2036 03e0 B110B0AF 		.word	-1347415887
+ 2037 03e4 060D71AB 		.word	-1418654458
+ 2038 03e8 DF2B32A6 		.word	-1506661409
+ 2039 03ec 6836F3A2 		.word	-1561119128
+ 2040 03f0 6D66B4BC 		.word	-1129027987
+ 2041 03f4 DA7B75B8 		.word	-1200260134
+ 2042 03f8 035D36B5 		.word	-1254728445
+ 2043 03fc B440F7B1 		.word	-1309196108
+ 2044              		.global	Crc16Table
+ 2045              		.section	.rodata.Crc16Table,"a"
+ 2046              		.align	2
+ 2049              	Crc16Table:
+ 2050 0000 0000     		.short	0
+ 2051 0002 2110     		.short	4129
+ 2052 0004 4220     		.short	8258
+ 2053 0006 6330     		.short	12387
+ 2054 0008 8440     		.short	16516
+ 2055 000a A550     		.short	20645
+ 2056 000c C660     		.short	24774
+ 2057 000e E770     		.short	28903
+ 2058 0010 0881     		.short	-32504
+ 2059 0012 2991     		.short	-28375
+ 2060 0014 4AA1     		.short	-24246
+ 2061 0016 6BB1     		.short	-20117
+ 2062 0018 8CC1     		.short	-15988
+ 2063 001a ADD1     		.short	-11859
+ 2064 001c CEE1     		.short	-7730
+ 2065 001e EFF1     		.short	-3601
+ 2066 0020 3112     		.short	4657
+ 2067 0022 1002     		.short	528
+ 2068 0024 7332     		.short	12915
+ 2069 0026 5222     		.short	8786
+ 2070 0028 B552     		.short	21173
+ 2071 002a 9442     		.short	17044
+ 2072 002c F772     		.short	29431
+ 2073 002e D662     		.short	25302
+ 2074 0030 3993     		.short	-27847
+ 2075 0032 1883     		.short	-31976
+ 2076 0034 7BB3     		.short	-19589
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 44
+
+
+ 2077 0036 5AA3     		.short	-23718
+ 2078 0038 BDD3     		.short	-11331
+ 2079 003a 9CC3     		.short	-15460
+ 2080 003c FFF3     		.short	-3073
+ 2081 003e DEE3     		.short	-7202
+ 2082 0040 6224     		.short	9314
+ 2083 0042 4334     		.short	13379
+ 2084 0044 2004     		.short	1056
+ 2085 0046 0114     		.short	5121
+ 2086 0048 E664     		.short	25830
+ 2087 004a C774     		.short	29895
+ 2088 004c A444     		.short	17572
+ 2089 004e 8554     		.short	21637
+ 2090 0050 6AA5     		.short	-23190
+ 2091 0052 4BB5     		.short	-19125
+ 2092 0054 2885     		.short	-31448
+ 2093 0056 0995     		.short	-27383
+ 2094 0058 EEE5     		.short	-6674
+ 2095 005a CFF5     		.short	-2609
+ 2096 005c ACC5     		.short	-14932
+ 2097 005e 8DD5     		.short	-10867
+ 2098 0060 5336     		.short	13907
+ 2099 0062 7226     		.short	9842
+ 2100 0064 1116     		.short	5649
+ 2101 0066 3006     		.short	1584
+ 2102 0068 D776     		.short	30423
+ 2103 006a F666     		.short	26358
+ 2104 006c 9556     		.short	22165
+ 2105 006e B446     		.short	18100
+ 2106 0070 5BB7     		.short	-18597
+ 2107 0072 7AA7     		.short	-22662
+ 2108 0074 1997     		.short	-26855
+ 2109 0076 3887     		.short	-30920
+ 2110 0078 DFF7     		.short	-2081
+ 2111 007a FEE7     		.short	-6146
+ 2112 007c 9DD7     		.short	-10339
+ 2113 007e BCC7     		.short	-14404
+ 2114 0080 C448     		.short	18628
+ 2115 0082 E558     		.short	22757
+ 2116 0084 8668     		.short	26758
+ 2117 0086 A778     		.short	30887
+ 2118 0088 4008     		.short	2112
+ 2119 008a 6118     		.short	6241
+ 2120 008c 0228     		.short	10242
+ 2121 008e 2338     		.short	14371
+ 2122 0090 CCC9     		.short	-13876
+ 2123 0092 EDD9     		.short	-9747
+ 2124 0094 8EE9     		.short	-5746
+ 2125 0096 AFF9     		.short	-1617
+ 2126 0098 4889     		.short	-30392
+ 2127 009a 6999     		.short	-26263
+ 2128 009c 0AA9     		.short	-22262
+ 2129 009e 2BB9     		.short	-18133
+ 2130 00a0 F55A     		.short	23285
+ 2131 00a2 D44A     		.short	19156
+ 2132 00a4 B77A     		.short	31415
+ 2133 00a6 966A     		.short	27286
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 45
+
+
+ 2134 00a8 711A     		.short	6769
+ 2135 00aa 500A     		.short	2640
+ 2136 00ac 333A     		.short	14899
+ 2137 00ae 122A     		.short	10770
+ 2138 00b0 FDDB     		.short	-9219
+ 2139 00b2 DCCB     		.short	-13348
+ 2140 00b4 BFFB     		.short	-1089
+ 2141 00b6 9EEB     		.short	-5218
+ 2142 00b8 799B     		.short	-25735
+ 2143 00ba 588B     		.short	-29864
+ 2144 00bc 3BBB     		.short	-17605
+ 2145 00be 1AAB     		.short	-21734
+ 2146 00c0 A66C     		.short	27814
+ 2147 00c2 877C     		.short	31879
+ 2148 00c4 E44C     		.short	19684
+ 2149 00c6 C55C     		.short	23749
+ 2150 00c8 222C     		.short	11298
+ 2151 00ca 033C     		.short	15363
+ 2152 00cc 600C     		.short	3168
+ 2153 00ce 411C     		.short	7233
+ 2154 00d0 AEED     		.short	-4690
+ 2155 00d2 8FFD     		.short	-625
+ 2156 00d4 ECCD     		.short	-12820
+ 2157 00d6 CDDD     		.short	-8755
+ 2158 00d8 2AAD     		.short	-21206
+ 2159 00da 0BBD     		.short	-17141
+ 2160 00dc 688D     		.short	-29336
+ 2161 00de 499D     		.short	-25271
+ 2162 00e0 977E     		.short	32407
+ 2163 00e2 B66E     		.short	28342
+ 2164 00e4 D55E     		.short	24277
+ 2165 00e6 F44E     		.short	20212
+ 2166 00e8 133E     		.short	15891
+ 2167 00ea 322E     		.short	11826
+ 2168 00ec 511E     		.short	7761
+ 2169 00ee 700E     		.short	3696
+ 2170 00f0 9FFF     		.short	-97
+ 2171 00f2 BEEF     		.short	-4162
+ 2172 00f4 DDDF     		.short	-8227
+ 2173 00f6 FCCF     		.short	-12292
+ 2174 00f8 1BBF     		.short	-16613
+ 2175 00fa 3AAF     		.short	-20678
+ 2176 00fc 599F     		.short	-24743
+ 2177 00fe 788F     		.short	-28808
+ 2178 0100 8891     		.short	-28280
+ 2179 0102 A981     		.short	-32343
+ 2180 0104 CAB1     		.short	-20022
+ 2181 0106 EBA1     		.short	-24085
+ 2182 0108 0CD1     		.short	-12020
+ 2183 010a 2DC1     		.short	-16083
+ 2184 010c 4EF1     		.short	-3762
+ 2185 010e 6FE1     		.short	-7825
+ 2186 0110 8010     		.short	4224
+ 2187 0112 A100     		.short	161
+ 2188 0114 C230     		.short	12482
+ 2189 0116 E320     		.short	8419
+ 2190 0118 0450     		.short	20484
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 46
+
+
+ 2191 011a 2540     		.short	16421
+ 2192 011c 4670     		.short	28742
+ 2193 011e 6760     		.short	24679
+ 2194 0120 B983     		.short	-31815
+ 2195 0122 9893     		.short	-27752
+ 2196 0124 FBA3     		.short	-23557
+ 2197 0126 DAB3     		.short	-19494
+ 2198 0128 3DC3     		.short	-15555
+ 2199 012a 1CD3     		.short	-11492
+ 2200 012c 7FE3     		.short	-7297
+ 2201 012e 5EF3     		.short	-3234
+ 2202 0130 B102     		.short	689
+ 2203 0132 9012     		.short	4752
+ 2204 0134 F322     		.short	8947
+ 2205 0136 D232     		.short	13010
+ 2206 0138 3542     		.short	16949
+ 2207 013a 1452     		.short	21012
+ 2208 013c 7762     		.short	25207
+ 2209 013e 5672     		.short	29270
+ 2210 0140 EAB5     		.short	-18966
+ 2211 0142 CBA5     		.short	-23093
+ 2212 0144 A895     		.short	-27224
+ 2213 0146 8985     		.short	-31351
+ 2214 0148 6EF5     		.short	-2706
+ 2215 014a 4FE5     		.short	-6833
+ 2216 014c 2CD5     		.short	-10964
+ 2217 014e 0DC5     		.short	-15091
+ 2218 0150 E234     		.short	13538
+ 2219 0152 C324     		.short	9411
+ 2220 0154 A014     		.short	5280
+ 2221 0156 8104     		.short	1153
+ 2222 0158 6674     		.short	29798
+ 2223 015a 4764     		.short	25671
+ 2224 015c 2454     		.short	21540
+ 2225 015e 0544     		.short	17413
+ 2226 0160 DBA7     		.short	-22565
+ 2227 0162 FAB7     		.short	-18438
+ 2228 0164 9987     		.short	-30823
+ 2229 0166 B897     		.short	-26696
+ 2230 0168 5FE7     		.short	-6305
+ 2231 016a 7EF7     		.short	-2178
+ 2232 016c 1DC7     		.short	-14563
+ 2233 016e 3CD7     		.short	-10436
+ 2234 0170 D326     		.short	9939
+ 2235 0172 F236     		.short	14066
+ 2236 0174 9106     		.short	1681
+ 2237 0176 B016     		.short	5808
+ 2238 0178 5766     		.short	26199
+ 2239 017a 7676     		.short	30326
+ 2240 017c 1546     		.short	17941
+ 2241 017e 3456     		.short	22068
+ 2242 0180 4CD9     		.short	-9908
+ 2243 0182 6DC9     		.short	-13971
+ 2244 0184 0EF9     		.short	-1778
+ 2245 0186 2FE9     		.short	-5841
+ 2246 0188 C899     		.short	-26168
+ 2247 018a E989     		.short	-30231
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 47
+
+
+ 2248 018c 8AB9     		.short	-18038
+ 2249 018e ABA9     		.short	-22101
+ 2250 0190 4458     		.short	22596
+ 2251 0192 6548     		.short	18533
+ 2252 0194 0678     		.short	30726
+ 2253 0196 2768     		.short	26663
+ 2254 0198 C018     		.short	6336
+ 2255 019a E108     		.short	2273
+ 2256 019c 8238     		.short	14466
+ 2257 019e A328     		.short	10403
+ 2258 01a0 7DCB     		.short	-13443
+ 2259 01a2 5CDB     		.short	-9380
+ 2260 01a4 3FEB     		.short	-5313
+ 2261 01a6 1EFB     		.short	-1250
+ 2262 01a8 F98B     		.short	-29703
+ 2263 01aa D89B     		.short	-25640
+ 2264 01ac BBAB     		.short	-21573
+ 2265 01ae 9ABB     		.short	-17510
+ 2266 01b0 754A     		.short	19061
+ 2267 01b2 545A     		.short	23124
+ 2268 01b4 376A     		.short	27191
+ 2269 01b6 167A     		.short	31254
+ 2270 01b8 F10A     		.short	2801
+ 2271 01ba D01A     		.short	6864
+ 2272 01bc B32A     		.short	10931
+ 2273 01be 923A     		.short	14994
+ 2274 01c0 2EFD     		.short	-722
+ 2275 01c2 0FED     		.short	-4849
+ 2276 01c4 6CDD     		.short	-8852
+ 2277 01c6 4DCD     		.short	-12979
+ 2278 01c8 AABD     		.short	-16982
+ 2279 01ca 8BAD     		.short	-21109
+ 2280 01cc E89D     		.short	-25112
+ 2281 01ce C98D     		.short	-29239
+ 2282 01d0 267C     		.short	31782
+ 2283 01d2 076C     		.short	27655
+ 2284 01d4 645C     		.short	23652
+ 2285 01d6 454C     		.short	19525
+ 2286 01d8 A23C     		.short	15522
+ 2287 01da 832C     		.short	11395
+ 2288 01dc E01C     		.short	7392
+ 2289 01de C10C     		.short	3265
+ 2290 01e0 1FEF     		.short	-4321
+ 2291 01e2 3EFF     		.short	-194
+ 2292 01e4 5DCF     		.short	-12451
+ 2293 01e6 7CDF     		.short	-8324
+ 2294 01e8 9BAF     		.short	-20581
+ 2295 01ea BABF     		.short	-16454
+ 2296 01ec D98F     		.short	-28711
+ 2297 01ee F89F     		.short	-24584
+ 2298 01f0 176E     		.short	28183
+ 2299 01f2 367E     		.short	32310
+ 2300 01f4 554E     		.short	20053
+ 2301 01f6 745E     		.short	24180
+ 2302 01f8 932E     		.short	11923
+ 2303 01fa B23E     		.short	16050
+ 2304 01fc D10E     		.short	3793
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 48
+
+
+ 2305 01fe F01E     		.short	7920
+ 2306              		.global	sin_const_100_2047
+ 2307              		.section	.rodata.sin_const_100_2047,"a"
+ 2308              		.align	2
+ 2311              	sin_const_100_2047:
+ 2312 0000 0000     		.short	0
+ 2313 0002 8000     		.short	128
+ 2314 0004 0001     		.short	256
+ 2315 0006 7F01     		.short	383
+ 2316 0008 FD01     		.short	509
+ 2317 000a 7802     		.short	632
+ 2318 000c F102     		.short	753
+ 2319 000e 6703     		.short	871
+ 2320 0010 DA03     		.short	986
+ 2321 0012 4804     		.short	1096
+ 2322 0014 B304     		.short	1203
+ 2323 0016 1805     		.short	1304
+ 2324 0018 7905     		.short	1401
+ 2325 001a D405     		.short	1492
+ 2326 001c 2906     		.short	1577
+ 2327 001e 7806     		.short	1656
+ 2328 0020 C006     		.short	1728
+ 2329 0022 0107     		.short	1793
+ 2330 0024 3C07     		.short	1852
+ 2331 0026 6F07     		.short	1903
+ 2332 0028 9A07     		.short	1946
+ 2333 002a BE07     		.short	1982
+ 2334 002c DA07     		.short	2010
+ 2335 002e EE07     		.short	2030
+ 2336 0030 FA07     		.short	2042
+ 2337 0032 FF07     		.short	2047
+ 2338 0034 FA07     		.short	2042
+ 2339 0036 EE07     		.short	2030
+ 2340 0038 DA07     		.short	2010
+ 2341 003a BE07     		.short	1982
+ 2342 003c 9A07     		.short	1946
+ 2343 003e 6F07     		.short	1903
+ 2344 0040 3C07     		.short	1852
+ 2345 0042 0107     		.short	1793
+ 2346 0044 C006     		.short	1728
+ 2347 0046 7806     		.short	1656
+ 2348 0048 2906     		.short	1577
+ 2349 004a D405     		.short	1492
+ 2350 004c 7905     		.short	1401
+ 2351 004e 1805     		.short	1304
+ 2352 0050 B304     		.short	1203
+ 2353 0052 4804     		.short	1096
+ 2354 0054 DA03     		.short	986
+ 2355 0056 6703     		.short	871
+ 2356 0058 F102     		.short	753
+ 2357 005a 7802     		.short	632
+ 2358 005c FD01     		.short	509
+ 2359 005e 7F01     		.short	383
+ 2360 0060 0001     		.short	256
+ 2361 0062 8000     		.short	128
+ 2362 0064 0000     		.short	0
+ 2363 0066 80FF     		.short	-128
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 49
+
+
+ 2364 0068 00FF     		.short	-256
+ 2365 006a 81FE     		.short	-383
+ 2366 006c 03FE     		.short	-509
+ 2367 006e 88FD     		.short	-632
+ 2368 0070 0FFD     		.short	-753
+ 2369 0072 99FC     		.short	-871
+ 2370 0074 26FC     		.short	-986
+ 2371 0076 B8FB     		.short	-1096
+ 2372 0078 4DFB     		.short	-1203
+ 2373 007a E8FA     		.short	-1304
+ 2374 007c 87FA     		.short	-1401
+ 2375 007e 2CFA     		.short	-1492
+ 2376 0080 D7F9     		.short	-1577
+ 2377 0082 88F9     		.short	-1656
+ 2378 0084 40F9     		.short	-1728
+ 2379 0086 FFF8     		.short	-1793
+ 2380 0088 C4F8     		.short	-1852
+ 2381 008a 91F8     		.short	-1903
+ 2382 008c 66F8     		.short	-1946
+ 2383 008e 42F8     		.short	-1982
+ 2384 0090 26F8     		.short	-2010
+ 2385 0092 12F8     		.short	-2030
+ 2386 0094 06F8     		.short	-2042
+ 2387 0096 01F8     		.short	-2047
+ 2388 0098 06F8     		.short	-2042
+ 2389 009a 12F8     		.short	-2030
+ 2390 009c 26F8     		.short	-2010
+ 2391 009e 42F8     		.short	-1982
+ 2392 00a0 66F8     		.short	-1946
+ 2393 00a2 91F8     		.short	-1903
+ 2394 00a4 C4F8     		.short	-1852
+ 2395 00a6 FFF8     		.short	-1793
+ 2396 00a8 40F9     		.short	-1728
+ 2397 00aa 88F9     		.short	-1656
+ 2398 00ac D7F9     		.short	-1577
+ 2399 00ae 2CFA     		.short	-1492
+ 2400 00b0 87FA     		.short	-1401
+ 2401 00b2 E8FA     		.short	-1304
+ 2402 00b4 4DFB     		.short	-1203
+ 2403 00b6 B8FB     		.short	-1096
+ 2404 00b8 26FC     		.short	-986
+ 2405 00ba 99FC     		.short	-871
+ 2406 00bc 0FFD     		.short	-753
+ 2407 00be 88FD     		.short	-632
+ 2408 00c0 03FE     		.short	-509
+ 2409 00c2 81FE     		.short	-383
+ 2410 00c4 00FF     		.short	-256
+ 2411 00c6 80FF     		.short	-128
+ 2412              		.global	sin_const_20_2047
+ 2413              		.section	.rodata.sin_const_20_2047,"a"
+ 2414              		.align	2
+ 2417              	sin_const_20_2047:
+ 2418 0000 0000     		.short	0
+ 2419 0002 7802     		.short	632
+ 2420 0004 B304     		.short	1203
+ 2421 0006 7806     		.short	1656
+ 2422 0008 9A07     		.short	1946
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 50
+
+
+ 2423 000a FF07     		.short	2047
+ 2424 000c 9A07     		.short	1946
+ 2425 000e 7806     		.short	1656
+ 2426 0010 B304     		.short	1203
+ 2427 0012 7802     		.short	632
+ 2428 0014 0000     		.short	0
+ 2429 0016 88FD     		.short	-632
+ 2430 0018 4DFB     		.short	-1203
+ 2431 001a 88F9     		.short	-1656
+ 2432 001c 66F8     		.short	-1946
+ 2433 001e 01F8     		.short	-2047
+ 2434 0020 66F8     		.short	-1946
+ 2435 0022 88F9     		.short	-1656
+ 2436 0024 4DFB     		.short	-1203
+ 2437 0026 88FD     		.short	-632
+ 2438              		.text
+ 2439              	.Letext0:
+ 2440              		.file 2 "../../util/math_util.h"
+ 2441              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/math.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 51
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 math_util.c
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:20     .text.ullbestlength:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:26     .text.ullbestlength:00000000 ullbestlength
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:135    .text.Crc16:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:141    .text.Crc16:00000000 Crc16
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:212    .text.Crc16:00000034 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:2049   .rodata.Crc16Table:00000000 Crc16Table
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:217    .text.CrcSum:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:223    .text.CrcSum:00000000 CrcSum
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:270    .text.ulCrcSum:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:276    .text.ulCrcSum:00000000 ulCrcSum
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:330    .text.CrcSum16:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:336    .text.CrcSum16:00000000 CrcSum16
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:383    .text.crc32:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:389    .text.crc32:00000000 crc32
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:449    .text.crc32:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1787   .rodata.crc32_table:00000000 crc32_table
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:454    .text.goertzel_get_coeff:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:460    .text.goertzel_get_coeff:00000000 goertzel_get_coeff
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:566    .text.goertzel_get_coeff:00000098 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:572    .text.goertzel_get_mag:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:578    .text.goertzel_get_mag:00000000 goertzel_get_mag
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:683    .text.goertzel_get_mag:00000070 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:688    .text.words_sum:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:694    .text.words_sum:00000000 words_sum
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:740    .text.shorts_sum:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:746    .text.shorts_sum:00000000 shorts_sum
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:792    .text.bytes_sum:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:798    .text.bytes_sum:00000000 bytes_sum
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:844    .text.med:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:850    .text.med:00000000 med
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:938    .text.noise_filter_median:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:944    .text.noise_filter_median:00000000 noise_filter_median
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1012   .text.noise_filter_median:0000003c $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1018   .text.noise_filter_normalised:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1024   .text.noise_filter_normalised:00000000 noise_filter_normalised
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1082   .text.ABfilter:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1088   .text.ABfilter:00000000 ABfilter
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1251   .text.ABfilter:000000fc $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1780   .data.ABfilter_dt:00000000 ABfilter_dt
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1773   .data.ABfilter_sigma_process:00000000 ABfilter_sigma_process
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1766   .data.ABfilter_sigma_noise:00000000 ABfilter_sigma_noise
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1734   .bss.a.7:00000000 a.7
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1728   .bss.b.6:00000000 b.6
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1722   .bss.xm.5:00000000 xm.5
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1716   .bss.vk_1.4:00000000 vk_1.4
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1710   .bss.xk_1.3:00000000 xk_1.3
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1704   .bss.xk.2:00000000 xk.2
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1698   .bss.vk.1:00000000 vk.1
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1692   .bss.rk.0:00000000 rk.0
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1266   .text.kih_filter:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1272   .text.kih_filter:00000000 kih_filter
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1377   .text.kih_filter:00000094 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1748   .bss.kih_index:00000000 kih_index
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1755   .rodata.kih_coef:00000000 kih_coef
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1741   .bss.kih_gain:00000000 kih_gain
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s 			page 52
+
+
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1386   .text.period_us2frequency:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1392   .text.period_us2frequency:00000000 period_us2frequency
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1418   .text.period_us2frequency:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1423   .text.bitget:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1429   .text.bitget:00000000 bitget
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1471   .text.bitis1cnt:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1477   .text.bitis1cnt:00000000 bitis1cnt
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1540   .text.bitset:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1546   .text.bitset:00000000 bitset
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1613   .text.ushort_array_get_min_max_value:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1619   .text.ushort_array_get_min_max_value:00000000 ushort_array_get_min_max_value
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1689   .bss.rk.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1695   .bss.vk.1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1701   .bss.xk.2:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1707   .bss.xk_1.3:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1713   .bss.vk_1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1719   .bss.xm.5:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1725   .bss.b.6:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1731   .bss.a.7:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1738   .bss.kih_gain:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1745   .bss.kih_index:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1752   .rodata.kih_coef:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1763   .data.ABfilter_sigma_noise:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1770   .data.ABfilter_sigma_process:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1777   .data.ABfilter_dt:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:1784   .rodata.crc32_table:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:2046   .rodata.Crc16Table:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:2311   .rodata.sin_const_100_2047:00000000 sin_const_100_2047
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:2308   .rodata.sin_const_100_2047:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:2417   .rodata.sin_const_20_2047:00000000 sin_const_20_2047
+C:\Users\oleg\AppData\Local\Temp\ccgNSikF.s:2414   .rodata.sin_const_20_2047:00000000 $d
+
+UNDEFINED SYMBOLS
+sin
+cos
+sqrt

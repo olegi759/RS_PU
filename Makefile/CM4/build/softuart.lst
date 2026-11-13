@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
   27:../../softuart/softuart.c **** static uint8_t DV,PCount;
   28:../../softuart/softuart.c **** 
   29:../../softuart/softuart.c **** // Read RX single Pin Value
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 2
 
 
   30:../../softuart/softuart.c **** GPIO_PinState SoftUartGpioReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
   77              		.section	.text.SoftUartInit,"ax",%progbits
   78              		.align	1
   79              		.global	SoftUartInit
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 3
 
 
   80              		.syntax unified
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  121              		.loc 1 52 32 is_stmt 0 view .LVU23
  122 0022 8CF801E0 		strb	lr, [ip, #1]
   53:../../softuart/softuart.c **** 	SUart[SoftUartNumber].RxEnable=0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 4
 
 
  123              		.loc 1 53 2 is_stmt 1 view .LVU24
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  161              		.loc 1 69 36 is_stmt 0 view .LVU47
  162 005c 8CF81EE0 		strb	lr, [ip, #30]
   70:../../softuart/softuart.c **** 	SUart[SoftUartNumber].RxBitOffset=0;
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 5
 
 
  163              		.loc 1 70 2 is_stmt 1 view .LVU48
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  211 0002 0A46     		mov	r2, r1
   78:../../softuart/softuart.c **** 	SoftUartGpioWritePin(SU->TxPort,SU->TxPin,(GPIO_PinState)Bit0_1);
  212              		.loc 1 78 2 is_stmt 1 view .LVU57
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 6
 
 
  213 0004 818A     		ldrh	r1, [r0, #20]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  259              	.L20:
  260 0012 00BF     		.align	2
  261              	.L19:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 7
 
 
  262 0014 00000000 		.word	SUart
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  310              		.thumb
  311              		.thumb_func
  313              	SoftUartRxAlavailable:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 8
 
 
  314              	.LVL17:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  355              		.loc 1 107 1 view .LVU88
  356 0002 10B5     		push	{r4, lr}
  357              	.LCFI5:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 9
 
 
  358              		.cfi_def_cfa_offset 8
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  403 003a 81F80004 		strb	r0, [r1, #1024]
  114:../../softuart/softuart.c **** 	{
  404              		.loc 1 114 43 is_stmt 1 discriminator 3 view .LVU103
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 10
 
 
  405 003e 0133     		adds	r3, r3, #1
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  452              		.thumb_func
  454              	SoftUartTxProcess:
  455              	.LVL28:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 11
 
 
  456              	.LFB140:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  147:../../softuart/softuart.c **** 		else if(SU->TxBitCounter<SoftUart_IDEF_LEN_C1)
  484              		.loc 1 147 8 is_stmt 1 view .LVU125
  148:../../softuart/softuart.c **** 		{
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 12
 
 
  149:../../softuart/softuart.c **** 			// Check Even or Odd
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  510              		.loc 1 177 5 is_stmt 1 view .LVU138
  511              		.loc 1 177 21 is_stmt 0 view .LVU139
  512 002a 0123     		movs	r3, #1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 13
 
 
  513 002c 0370     		strb	r3, [r0]
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  545              	.LVL31:
  546              	.L50:
  139:../../softuart/softuart.c **** 			SoftUartTransmitBit(SU,DV);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 14
 
 
  547              		.loc 1 139 4 is_stmt 1 view .LVU153
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  144:../../softuart/softuart.c **** 		}
  584              		.loc 1 144 10 is_stmt 1 discriminator 1 view .LVU171
  144:../../softuart/softuart.c **** 		}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 15
 
 
  585              		.loc 1 144 16 is_stmt 0 discriminator 1 view .LVU172
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  630              		.thumb
  631              		.thumb_func
  633              	SoftUartRxDataBitProcess:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 16
 
 
  634              	.LVL36:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  673              	.L56:
  205:../../softuart/softuart.c **** 		}
  206:../../softuart/softuart.c **** 		// Data
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 17
 
 
  207:../../softuart/softuart.c **** 		else if(SU->RxBitCounter<(SoftUart_DATA_LEN+1))
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  713              		.loc 1 221 10 is_stmt 0 view .LVU219
  714 004c 092B     		cmp	r3, #9
  715 004e 08D8     		bhi	.L54
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 18
 
 
  222:../../softuart/softuart.c **** 		{
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  752              		.cfi_startproc
  753              		@ args = 0, pretend = 0, frame = 0
  754              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 19
 
 
  755              		@ link register save eliminated.
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  804              	.LFE143:
  806              		.section	.text.SoftUartPuts,"ax",%progbits
  807              		.align	1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 20
 
 
  808              		.global	SoftUartPuts
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  252:../../softuart/softuart.c **** /*
  824              		.loc 1 252 1 view .LVU246
  825 0002 10B5     		push	{r4, lr}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 21
 
 
  826              	.LCFI8:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  870 0034 F3DC     		bgt	.L68
  296:../../softuart/softuart.c **** 	}
  297:../../softuart/softuart.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 22
 
 
  298:../../softuart/softuart.c **** 	SUart[SoftUartNumber].TxNComplated=1;
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  916 0054 00000000 		.word	SUart
  917              		.cfi_endproc
  918              	.LFE144:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 23
 
 
  920              		.section	.text.SoftUartScanRxPorts,"ax",%progbits
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  326:../../softuart/softuart.c **** 		}
  327:../../softuart/softuart.c **** 
  328:../../softuart/softuart.c **** 		// Add all RX GPIO State to Buffer
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 24
 
 
  329:../../softuart/softuart.c **** 		Buffer|=((Bit&0x01)<<i);
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  325:../../softuart/softuart.c **** 		}
  991              		.loc 1 325 4 is_stmt 1 view .LVU297
  325:../../softuart/softuart.c **** 		}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 25
 
 
  992              		.loc 1 325 25 is_stmt 0 view .LVU298
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  1037              		.cfi_offset 4, -12
  1038              		.cfi_offset 5, -8
  1039              		.cfi_offset 14, -4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 26
 
 
  338:../../softuart/softuart.c **** 	int     	i;
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  1067 0018 0133     		adds	r3, r3, #1
  1068 001a DBB2     		uxtb	r3, r3
  1069 001c 1370     		strb	r3, [r2]
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 27
 
 
  365:../../softuart/softuart.c **** 	if(SU_Timer >= 5)SU_Timer=0;
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  1113 0052 FFF7FEFF 		bl	SoftUartRxDataBitProcess
  1114              	.LVL68:
  1115 0056 F3E7     		b	.L86
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 28
 
 
  1116              	.L92:
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  1171      00000000 
  1171      00000000 
  1171      00000000 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 29
 
 
  1171      00000000 
@@ -1689,66 +1689,66 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 1
  1176              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
  1177              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
  1178              		.file 6 "../../softuart/softuart.h"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 30
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 softuart.c
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:21     .text.SoftUartGpioReadPin:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:27     .text.SoftUartGpioReadPin:00000000 SoftUartGpioReadPin
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:50     .text.SoftUartGpioWritePin:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:56     .text.SoftUartGpioWritePin:00000000 SoftUartGpioWritePin
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:78     .text.SoftUartInit:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:84     .text.SoftUartInit:00000000 SoftUartInit
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:186    .text.SoftUartInit:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1170   .bss.SUart:00000000 SUart
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1163   .bss.SUBuffer:00000000 SUBuffer
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:192    .text.SoftUartTransmitBit:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:198    .text.SoftUartTransmitBit:00000000 SoftUartTransmitBit
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:227    .text.SoftUartEnableRx:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:233    .text.SoftUartEnableRx:00000000 SoftUartEnableRx
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:262    .text.SoftUartEnableRx:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:267    .text.SoftUartDisableRx:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:273    .text.SoftUartDisableRx:00000000 SoftUartDisableRx
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:302    .text.SoftUartDisableRx:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:307    .text.SoftUartRxAlavailable:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:313    .text.SoftUartRxAlavailable:00000000 SoftUartRxAlavailable
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:333    .text.SoftUartRxAlavailable:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:338    .text.SoftUartReadRxBuffer:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:344    .text.SoftUartReadRxBuffer:00000000 SoftUartReadRxBuffer
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:443    .text.SoftUartReadRxBuffer:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:448    .text.SoftUartTxProcess:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:454    .text.SoftUartTxProcess:00000000 SoftUartTxProcess
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:621    .text.SoftUartTxProcess:00000098 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1145   .bss.PCount:00000000 PCount
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1150   .bss.DV:00000000 DV
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:627    .text.SoftUartRxDataBitProcess:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:633    .text.SoftUartRxDataBitProcess:00000000 SoftUartRxDataBitProcess
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:743    .text.SoftUartWaitUntilTxComplate:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:749    .text.SoftUartWaitUntilTxComplate:00000000 SoftUartWaitUntilTxComplate
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:771    .text.SoftUartWaitUntilTxComplate:0000000c $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:776    .text.SoftUartGetTxNComplated:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:782    .text.SoftUartGetTxNComplated:00000000 SoftUartGetTxNComplated
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:802    .text.SoftUartGetTxNComplated:00000008 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:807    .text.SoftUartPuts:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:813    .text.SoftUartPuts:00000000 SoftUartPuts
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:916    .text.SoftUartPuts:00000054 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:921    .text.SoftUartScanRxPorts:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:927    .text.SoftUartScanRxPorts:00000000 SoftUartScanRxPorts
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1014   .text.SoftUartScanRxPorts:00000050 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1156   .bss.SU_Timer:00000000 SU_Timer
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1021   .text.SoftUartHandler:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1027   .text.SoftUartHandler:00000000 SoftUartHandler
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1137   .text.SoftUartHandler:0000006c $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1146   .bss.PCount:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1151   .bss.DV:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1157   .bss.SU_Timer:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1160   .bss.SUBuffer:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s:1167   .bss.SUart:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:21     .text.SoftUartGpioReadPin:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:27     .text.SoftUartGpioReadPin:00000000 SoftUartGpioReadPin
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:50     .text.SoftUartGpioWritePin:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:56     .text.SoftUartGpioWritePin:00000000 SoftUartGpioWritePin
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:78     .text.SoftUartInit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:84     .text.SoftUartInit:00000000 SoftUartInit
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:186    .text.SoftUartInit:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1170   .bss.SUart:00000000 SUart
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1163   .bss.SUBuffer:00000000 SUBuffer
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:192    .text.SoftUartTransmitBit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:198    .text.SoftUartTransmitBit:00000000 SoftUartTransmitBit
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:227    .text.SoftUartEnableRx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:233    .text.SoftUartEnableRx:00000000 SoftUartEnableRx
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:262    .text.SoftUartEnableRx:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:267    .text.SoftUartDisableRx:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:273    .text.SoftUartDisableRx:00000000 SoftUartDisableRx
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:302    .text.SoftUartDisableRx:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:307    .text.SoftUartRxAlavailable:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:313    .text.SoftUartRxAlavailable:00000000 SoftUartRxAlavailable
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:333    .text.SoftUartRxAlavailable:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:338    .text.SoftUartReadRxBuffer:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:344    .text.SoftUartReadRxBuffer:00000000 SoftUartReadRxBuffer
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:443    .text.SoftUartReadRxBuffer:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:448    .text.SoftUartTxProcess:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:454    .text.SoftUartTxProcess:00000000 SoftUartTxProcess
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:621    .text.SoftUartTxProcess:00000098 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1145   .bss.PCount:00000000 PCount
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1150   .bss.DV:00000000 DV
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:627    .text.SoftUartRxDataBitProcess:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:633    .text.SoftUartRxDataBitProcess:00000000 SoftUartRxDataBitProcess
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:743    .text.SoftUartWaitUntilTxComplate:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:749    .text.SoftUartWaitUntilTxComplate:00000000 SoftUartWaitUntilTxComplate
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:771    .text.SoftUartWaitUntilTxComplate:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:776    .text.SoftUartGetTxNComplated:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:782    .text.SoftUartGetTxNComplated:00000000 SoftUartGetTxNComplated
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:802    .text.SoftUartGetTxNComplated:00000008 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:807    .text.SoftUartPuts:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:813    .text.SoftUartPuts:00000000 SoftUartPuts
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:916    .text.SoftUartPuts:00000054 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:921    .text.SoftUartScanRxPorts:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:927    .text.SoftUartScanRxPorts:00000000 SoftUartScanRxPorts
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1014   .text.SoftUartScanRxPorts:00000050 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1156   .bss.SU_Timer:00000000 SU_Timer
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1021   .text.SoftUartHandler:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1027   .text.SoftUartHandler:00000000 SoftUartHandler
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1137   .text.SoftUartHandler:0000006c $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1146   .bss.PCount:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1151   .bss.DV:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1157   .bss.SU_Timer:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1160   .bss.SUBuffer:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s:1167   .bss.SUart:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_ReadPin
 HAL_GPIO_WritePin
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccQQTPfj.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccx0pW4n.s 			page 31
 
 

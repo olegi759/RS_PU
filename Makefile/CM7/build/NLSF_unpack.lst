@@ -1,0 +1,215 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"NLSF_unpack.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/NLSF_unpack.c"
+  19              		.section	.text.silk_NLSF_unpack,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_NLSF_unpack
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_NLSF_unpack:
+  27              	.LVL0:
+  28              	.LFB25:
+   1:../../opus/silk/NLSF_unpack.c **** /***********************************************************************
+   2:../../opus/silk/NLSF_unpack.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/NLSF_unpack.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/NLSF_unpack.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/NLSF_unpack.c **** are met:
+   6:../../opus/silk/NLSF_unpack.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/NLSF_unpack.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/NLSF_unpack.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/NLSF_unpack.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/NLSF_unpack.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/NLSF_unpack.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/NLSF_unpack.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/NLSF_unpack.c **** products derived from this software without specific prior written
+  14:../../opus/silk/NLSF_unpack.c **** permission.
+  15:../../opus/silk/NLSF_unpack.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/NLSF_unpack.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/NLSF_unpack.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/NLSF_unpack.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/NLSF_unpack.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/NLSF_unpack.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/NLSF_unpack.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/NLSF_unpack.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/NLSF_unpack.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/NLSF_unpack.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/NLSF_unpack.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/NLSF_unpack.c **** ***********************************************************************/
+  27:../../opus/silk/NLSF_unpack.c **** 
+  28:../../opus/silk/NLSF_unpack.c **** #include "opus_config.h"
+  29:../../opus/silk/NLSF_unpack.c **** 
+  30:../../opus/silk/NLSF_unpack.c **** #include "main.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s 			page 2
+
+
+  31:../../opus/silk/NLSF_unpack.c **** 
+  32:../../opus/silk/NLSF_unpack.c **** /* Unpack predictor values and indices for entropy coding tables */
+  33:../../opus/silk/NLSF_unpack.c **** void silk_NLSF_unpack(
+  34:../../opus/silk/NLSF_unpack.c ****           opus_int16            ec_ix[],                        /* O    Indices to entropy tables [
+  35:../../opus/silk/NLSF_unpack.c ****           opus_uint8            pred_Q8[],                      /* O    LSF predictor [ LPC_ORDER ]
+  36:../../opus/silk/NLSF_unpack.c ****     const silk_NLSF_CB_struct   *psNLSF_CB,                     /* I    Codebook object            
+  37:../../opus/silk/NLSF_unpack.c ****     const opus_int              CB1_index                       /* I    Index of vector in first LS
+  38:../../opus/silk/NLSF_unpack.c **** )
+  39:../../opus/silk/NLSF_unpack.c **** {
+  29              		.loc 1 39 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 39 1 is_stmt 0 view .LVU1
+  34 0000 70B5     		push	{r4, r5, r6, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+  40:../../opus/silk/NLSF_unpack.c ****     opus_int   i;
+  41              		.loc 1 40 5 is_stmt 1 view .LVU2
+  41:../../opus/silk/NLSF_unpack.c ****     opus_uint8 entry;
+  42              		.loc 1 41 5 view .LVU3
+  42:../../opus/silk/NLSF_unpack.c ****     const opus_uint8 *ec_sel_ptr;
+  43              		.loc 1 42 5 view .LVU4
+  43:../../opus/silk/NLSF_unpack.c **** 
+  44:../../opus/silk/NLSF_unpack.c ****     ec_sel_ptr = &psNLSF_CB->ec_sel[ CB1_index * psNLSF_CB->order / 2 ];
+  44              		.loc 1 44 5 view .LVU5
+  45              		.loc 1 44 28 is_stmt 0 view .LVU6
+  46 0002 9469     		ldr	r4, [r2, #24]
+  47              		.loc 1 44 59 view .LVU7
+  48 0004 B2F90250 		ldrsh	r5, [r2, #2]
+  49              		.loc 1 44 48 view .LVU8
+  50 0008 05FB03F3 		mul	r3, r5, r3
+  51              	.LVL1:
+  52              		.loc 1 44 67 view .LVU9
+  53 000c 002B     		cmp	r3, #0
+  54 000e 04DB     		blt	.L6
+  55              	.L2:
+  56              		.loc 1 44 16 view .LVU10
+  57 0010 04EB630E 		add	lr, r4, r3, asr #1
+  58              	.LVL2:
+  45:../../opus/silk/NLSF_unpack.c ****     for( i = 0; i < psNLSF_CB->order; i += 2 ) {
+  59              		.loc 1 45 5 is_stmt 1 view .LVU11
+  60              		.loc 1 45 12 is_stmt 0 view .LVU12
+  61 0014 4FF0000C 		mov	ip, #0
+  62              		.loc 1 45 5 view .LVU13
+  63 0018 28E0     		b	.L3
+  64              	.LVL3:
+  65              	.L6:
+  44:../../opus/silk/NLSF_unpack.c ****     for( i = 0; i < psNLSF_CB->order; i += 2 ) {
+  66              		.loc 1 44 67 view .LVU14
+  67 001a 0133     		adds	r3, r3, #1
+  68 001c F8E7     		b	.L2
+  69              	.LVL4:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s 			page 3
+
+
+  70              	.L4:
+  46:../../opus/silk/NLSF_unpack.c ****         entry = *ec_sel_ptr++;
+  71              		.loc 1 46 9 is_stmt 1 view .LVU15
+  72              		.loc 1 46 15 is_stmt 0 view .LVU16
+  73 001e 1EF8013B 		ldrb	r3, [lr], #1	@ zero_extendqisi2
+  74              	.LVL5:
+  47:../../opus/silk/NLSF_unpack.c ****         ec_ix  [ i     ] = silk_SMULBB( silk_RSHIFT( entry, 1 ) & 7, 2 * NLSF_QUANT_MAX_AMPLITUDE +
+  75              		.loc 1 47 9 is_stmt 1 view .LVU17
+  76              		.loc 1 47 26 is_stmt 0 view .LVU18
+  77 0022 C3F34204 		ubfx	r4, r3, #1, #3
+  78 0026 04EBC404 		add	r4, r4, r4, lsl #3
+  79 002a 20F81C40 		strh	r4, [r0, ip, lsl #1]	@ movhi
+  48:../../opus/silk/NLSF_unpack.c ****         pred_Q8[ i     ] = psNLSF_CB->pred_Q8[ i + ( entry & 1 ) * ( psNLSF_CB->order - 1 ) ];
+  80              		.loc 1 48 9 is_stmt 1 view .LVU19
+  81              		.loc 1 48 37 is_stmt 0 view .LVU20
+  82 002e 5569     		ldr	r5, [r2, #20]
+  83              		.loc 1 48 60 view .LVU21
+  84 0030 03F00104 		and	r4, r3, #1
+  85              		.loc 1 48 79 view .LVU22
+  86 0034 B2F90260 		ldrsh	r6, [r2, #2]
+  87              		.loc 1 48 87 view .LVU23
+  88 0038 013E     		subs	r6, r6, #1
+  89              		.loc 1 48 50 view .LVU24
+  90 003a 06FB04C4 		mla	r4, r6, r4, ip
+  91              		.loc 1 48 46 view .LVU25
+  92 003e 2C5D     		ldrb	r4, [r5, r4]	@ zero_extendqisi2
+  93              		.loc 1 48 26 view .LVU26
+  94 0040 01F80C40 		strb	r4, [r1, ip]
+  49:../../opus/silk/NLSF_unpack.c ****         ec_ix  [ i + 1 ] = silk_SMULBB( silk_RSHIFT( entry, 5 ) & 7, 2 * NLSF_QUANT_MAX_AMPLITUDE +
+  95              		.loc 1 49 9 is_stmt 1 view .LVU27
+  96              		.loc 1 49 16 is_stmt 0 view .LVU28
+  97 0044 0CF10106 		add	r6, ip, #1
+  98              		.loc 1 49 26 view .LVU29
+  99 0048 5C09     		lsrs	r4, r3, #5
+ 100 004a 04EBC404 		add	r4, r4, r4, lsl #3
+ 101 004e 20F81640 		strh	r4, [r0, r6, lsl #1]	@ movhi
+  50:../../opus/silk/NLSF_unpack.c ****         pred_Q8[ i + 1 ] = psNLSF_CB->pred_Q8[ i + ( silk_RSHIFT( entry, 4 ) & 1 ) * ( psNLSF_CB->o
+ 102              		.loc 1 50 9 is_stmt 1 view .LVU30
+ 103              		.loc 1 50 37 is_stmt 0 view .LVU31
+ 104 0052 5469     		ldr	r4, [r2, #20]
+ 105              		.loc 1 50 78 view .LVU32
+ 106 0054 C3F30013 		ubfx	r3, r3, #4, #1
+ 107              	.LVL6:
+ 108              		.loc 1 50 97 view .LVU33
+ 109 0058 B2F90250 		ldrsh	r5, [r2, #2]
+ 110              		.loc 1 50 105 view .LVU34
+ 111 005c 013D     		subs	r5, r5, #1
+ 112              		.loc 1 50 50 view .LVU35
+ 113 005e 05FB03C3 		mla	r3, r5, r3, ip
+ 114              		.loc 1 50 46 view .LVU36
+ 115 0062 1C44     		add	r4, r4, r3
+ 116 0064 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 117              		.loc 1 50 26 view .LVU37
+ 118 0066 8B55     		strb	r3, [r1, r6]
+  45:../../opus/silk/NLSF_unpack.c ****         entry = *ec_sel_ptr++;
+ 119              		.loc 1 45 41 is_stmt 1 discriminator 3 view .LVU38
+ 120 0068 0CF1020C 		add	ip, ip, #2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s 			page 4
+
+
+ 121              	.LVL7:
+ 122              	.L3:
+  45:../../opus/silk/NLSF_unpack.c ****         entry = *ec_sel_ptr++;
+ 123              		.loc 1 45 19 discriminator 1 view .LVU39
+  45:../../opus/silk/NLSF_unpack.c ****         entry = *ec_sel_ptr++;
+ 124              		.loc 1 45 30 is_stmt 0 discriminator 1 view .LVU40
+ 125 006c B2F90230 		ldrsh	r3, [r2, #2]
+  45:../../opus/silk/NLSF_unpack.c ****         entry = *ec_sel_ptr++;
+ 126              		.loc 1 45 19 discriminator 1 view .LVU41
+ 127 0070 6345     		cmp	r3, ip
+ 128 0072 D4DC     		bgt	.L4
+  51:../../opus/silk/NLSF_unpack.c ****     }
+  52:../../opus/silk/NLSF_unpack.c **** }
+ 129              		.loc 1 52 1 view .LVU42
+ 130 0074 70BD     		pop	{r4, r5, r6, pc}
+ 131              		.cfi_endproc
+ 132              	.LFE25:
+ 134              		.text
+ 135              	.Letext0:
+ 136              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 137              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 138              		.file 4 "../../opus/include/opus_types.h"
+ 139              		.file 5 "../../opus/silk/structs.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 NLSF_unpack.c
+C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s:20     .text.silk_NLSF_unpack:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccMm8AMz.s:26     .text.silk_NLSF_unpack:00000000 silk_NLSF_unpack
+
+NO UNDEFINED SYMBOLS

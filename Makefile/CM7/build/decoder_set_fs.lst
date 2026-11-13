@@ -1,0 +1,460 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"decoder_set_fs.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/decoder_set_fs.c"
+  19              		.section	.text.silk_decoder_set_fs,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_decoder_set_fs
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_decoder_set_fs:
+  27              	.LVL0:
+  28              	.LFB25:
+   1:../../opus/silk/decoder_set_fs.c **** /***********************************************************************
+   2:../../opus/silk/decoder_set_fs.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/decoder_set_fs.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/decoder_set_fs.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/decoder_set_fs.c **** are met:
+   6:../../opus/silk/decoder_set_fs.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/decoder_set_fs.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/decoder_set_fs.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/decoder_set_fs.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/decoder_set_fs.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/decoder_set_fs.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/decoder_set_fs.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/decoder_set_fs.c **** products derived from this software without specific prior written
+  14:../../opus/silk/decoder_set_fs.c **** permission.
+  15:../../opus/silk/decoder_set_fs.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/decoder_set_fs.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/decoder_set_fs.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/decoder_set_fs.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/decoder_set_fs.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/decoder_set_fs.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/decoder_set_fs.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/decoder_set_fs.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/decoder_set_fs.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/decoder_set_fs.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/decoder_set_fs.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/decoder_set_fs.c **** ***********************************************************************/
+  27:../../opus/silk/decoder_set_fs.c **** 
+  28:../../opus/silk/decoder_set_fs.c **** #include "opus_config.h"
+  29:../../opus/silk/decoder_set_fs.c **** 
+  30:../../opus/silk/decoder_set_fs.c **** #include "main.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 2
+
+
+  31:../../opus/silk/decoder_set_fs.c **** 
+  32:../../opus/silk/decoder_set_fs.c **** /* Set decoder sampling rate */
+  33:../../opus/silk/decoder_set_fs.c **** opus_int silk_decoder_set_fs(
+  34:../../opus/silk/decoder_set_fs.c ****     silk_decoder_state          *psDec,                         /* I/O  Decoder state pointer      
+  35:../../opus/silk/decoder_set_fs.c ****     opus_int                    fs_kHz,                         /* I    Sampling frequency (kHz)   
+  36:../../opus/silk/decoder_set_fs.c ****     opus_int32                  fs_API_Hz                       /* I    API Sampling frequency (Hz)
+  37:../../opus/silk/decoder_set_fs.c **** )
+  38:../../opus/silk/decoder_set_fs.c **** {
+  29              		.loc 1 38 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 38 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 3, -32
+  38              		.cfi_offset 4, -28
+  39              		.cfi_offset 5, -24
+  40              		.cfi_offset 6, -20
+  41              		.cfi_offset 7, -16
+  42              		.cfi_offset 8, -12
+  43              		.cfi_offset 9, -8
+  44              		.cfi_offset 14, -4
+  45 0004 0446     		mov	r4, r0
+  46 0006 0D46     		mov	r5, r1
+  47 0008 1746     		mov	r7, r2
+  39:../../opus/silk/decoder_set_fs.c ****     opus_int frame_length, ret = 0;
+  48              		.loc 1 39 5 is_stmt 1 view .LVU2
+  49              	.LVL1:
+  40:../../opus/silk/decoder_set_fs.c **** 
+  41:../../opus/silk/decoder_set_fs.c ****     celt_assert( fs_kHz == 8 || fs_kHz == 12 || fs_kHz == 16 );
+  50              		.loc 1 41 63 view .LVU3
+  42:../../opus/silk/decoder_set_fs.c ****     celt_assert( psDec->nb_subfr == MAX_NB_SUBFR || psDec->nb_subfr == MAX_NB_SUBFR/2 );
+  51              		.loc 1 42 88 view .LVU4
+  43:../../opus/silk/decoder_set_fs.c **** 
+  44:../../opus/silk/decoder_set_fs.c ****     /* New (sub)frame length */
+  45:../../opus/silk/decoder_set_fs.c ****     psDec->subfr_length = silk_SMULBB( SUB_FRAME_LENGTH_MS, fs_kHz );
+  52              		.loc 1 45 5 view .LVU5
+  53              		.loc 1 45 27 is_stmt 0 view .LVU6
+  54 000a 0EB2     		sxth	r6, r1
+  55 000c 06EB8603 		add	r3, r6, r6, lsl #2
+  56              		.loc 1 45 25 view .LVU7
+  57 0010 C0F81C39 		str	r3, [r0, #2332]
+  46:../../opus/silk/decoder_set_fs.c ****     frame_length = silk_SMULBB( psDec->nb_subfr, psDec->subfr_length );
+  58              		.loc 1 46 5 is_stmt 1 view .LVU8
+  59              		.loc 1 46 20 is_stmt 0 view .LVU9
+  60 0014 B0F91489 		ldrsh	r8, [r0, #2324]
+  61 0018 1BB2     		sxth	r3, r3
+  62              		.loc 1 46 18 view .LVU10
+  63 001a 03FB08F8 		mul	r8, r3, r8
+  64              	.LVL2:
+  47:../../opus/silk/decoder_set_fs.c **** 
+  48:../../opus/silk/decoder_set_fs.c ****     /* Initialize resampler when switching internal or external sampling frequency */
+  49:../../opus/silk/decoder_set_fs.c ****     if( psDec->fs_kHz != fs_kHz || psDec->fs_API_hz != fs_API_Hz ) {
+  65              		.loc 1 49 5 is_stmt 1 view .LVU11
+  66              		.loc 1 49 14 is_stmt 0 view .LVU12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 3
+
+
+  67 001e D0F80C39 		ldr	r3, [r0, #2316]
+  68              		.loc 1 49 7 view .LVU13
+  69 0022 8B42     		cmp	r3, r1
+  70 0024 03D1     		bne	.L2
+  71              		.loc 1 49 41 discriminator 1 view .LVU14
+  72 0026 D0F81039 		ldr	r3, [r0, #2320]
+  73              		.loc 1 49 33 discriminator 1 view .LVU15
+  74 002a 9342     		cmp	r3, r2
+  75 002c 34D0     		beq	.L16
+  76              	.L2:
+  50:../../opus/silk/decoder_set_fs.c ****         /* Initialize the resampler for dec_API.c preparing resampling from fs_kHz to API_fs_Hz */
+  51:../../opus/silk/decoder_set_fs.c ****         ret += silk_resampler_init( &psDec->resampler_state, silk_SMULBB( fs_kHz, 1000 ), fs_API_Hz
+  77              		.loc 1 51 9 is_stmt 1 view .LVU16
+  78              		.loc 1 51 16 is_stmt 0 view .LVU17
+  79 002e 0023     		movs	r3, #0
+  80 0030 3A46     		mov	r2, r7
+  81              	.LVL3:
+  82              		.loc 1 51 16 view .LVU18
+  83 0032 4FF47A71 		mov	r1, #1000
+  84              	.LVL4:
+  85              		.loc 1 51 16 view .LVU19
+  86 0036 06FB01F1 		mul	r1, r6, r1
+  87 003a 04F51860 		add	r0, r4, #2432
+  88              	.LVL5:
+  89              		.loc 1 51 16 view .LVU20
+  90 003e FFF7FEFF 		bl	silk_resampler_init
+  91              	.LVL6:
+  92 0042 8146     		mov	r9, r0
+  93              	.LVL7:
+  52:../../opus/silk/decoder_set_fs.c **** 
+  53:../../opus/silk/decoder_set_fs.c ****         psDec->fs_API_hz = fs_API_Hz;
+  94              		.loc 1 53 9 is_stmt 1 view .LVU21
+  95              		.loc 1 53 26 is_stmt 0 view .LVU22
+  96 0044 C4F81079 		str	r7, [r4, #2320]
+  97              	.LVL8:
+  98              	.L3:
+  54:../../opus/silk/decoder_set_fs.c ****     }
+  55:../../opus/silk/decoder_set_fs.c **** 
+  56:../../opus/silk/decoder_set_fs.c ****     if( psDec->fs_kHz != fs_kHz || frame_length != psDec->frame_length ) {
+  99              		.loc 1 56 5 is_stmt 1 view .LVU23
+ 100              		.loc 1 56 14 is_stmt 0 view .LVU24
+ 101 0048 D4F80C39 		ldr	r3, [r4, #2316]
+ 102              		.loc 1 56 7 view .LVU25
+ 103 004c AB42     		cmp	r3, r5
+ 104 004e 26D0     		beq	.L18
+ 105              	.L4:
+  57:../../opus/silk/decoder_set_fs.c ****         if( fs_kHz == 8 ) {
+ 106              		.loc 1 57 9 is_stmt 1 view .LVU26
+ 107              		.loc 1 57 11 is_stmt 0 view .LVU27
+ 108 0050 082D     		cmp	r5, #8
+ 109 0052 29D0     		beq	.L19
+  58:../../opus/silk/decoder_set_fs.c ****             if( psDec->nb_subfr == MAX_NB_SUBFR ) {
+  59:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_NB_iCDF;
+  60:../../opus/silk/decoder_set_fs.c ****             } else {
+  61:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_10_ms_NB_iCDF;
+  62:../../opus/silk/decoder_set_fs.c ****             }
+  63:../../opus/silk/decoder_set_fs.c ****         } else {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 4
+
+
+  64:../../opus/silk/decoder_set_fs.c ****             if( psDec->nb_subfr == MAX_NB_SUBFR ) {
+ 110              		.loc 1 64 13 is_stmt 1 view .LVU28
+ 111              		.loc 1 64 22 is_stmt 0 view .LVU29
+ 112 0054 D4F81429 		ldr	r2, [r4, #2324]
+ 113              		.loc 1 64 15 view .LVU30
+ 114 0058 042A     		cmp	r2, #4
+ 115 005a 31D0     		beq	.L20
+  65:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_iCDF;
+  66:../../opus/silk/decoder_set_fs.c ****             } else {
+  67:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_10_ms_iCDF;
+ 116              		.loc 1 67 17 is_stmt 1 view .LVU31
+ 117              		.loc 1 67 43 is_stmt 0 view .LVU32
+ 118 005c 324A     		ldr	r2, .L24
+ 119 005e C4F85029 		str	r2, [r4, #2384]
+ 120              	.L8:
+  68:../../opus/silk/decoder_set_fs.c ****             }
+  69:../../opus/silk/decoder_set_fs.c ****         }
+  70:../../opus/silk/decoder_set_fs.c ****         if( psDec->fs_kHz != fs_kHz ) {
+ 121              		.loc 1 70 9 is_stmt 1 view .LVU33
+ 122              		.loc 1 70 11 is_stmt 0 view .LVU34
+ 123 0062 AB42     		cmp	r3, r5
+ 124 0064 54D0     		beq	.L10
+  71:../../opus/silk/decoder_set_fs.c ****             psDec->ltp_mem_length = silk_SMULBB( LTP_MEM_LENGTH_MS, fs_kHz );
+ 125              		.loc 1 71 13 is_stmt 1 view .LVU35
+ 126              		.loc 1 71 37 is_stmt 0 view .LVU36
+ 127 0066 06EB8606 		add	r6, r6, r6, lsl #2
+ 128 006a B600     		lsls	r6, r6, #2
+ 129              		.loc 1 71 35 view .LVU37
+ 130 006c C4F82069 		str	r6, [r4, #2336]
+  72:../../opus/silk/decoder_set_fs.c ****             if( fs_kHz == 8 || fs_kHz == 12 ) {
+ 131              		.loc 1 72 13 is_stmt 1 view .LVU38
+ 132              		.loc 1 72 15 is_stmt 0 view .LVU39
+ 133 0070 0C2D     		cmp	r5, #12
+ 134 0072 18BF     		it	ne
+ 135 0074 082D     		cmpne	r5, #8
+ 136 0076 27D1     		bne	.L11
+  73:../../opus/silk/decoder_set_fs.c ****                 psDec->LPC_order = MIN_LPC_ORDER;
+ 137              		.loc 1 73 17 is_stmt 1 view .LVU40
+ 138              		.loc 1 73 34 is_stmt 0 view .LVU41
+ 139 0078 0A23     		movs	r3, #10
+ 140 007a C4F82439 		str	r3, [r4, #2340]
+  74:../../opus/silk/decoder_set_fs.c ****                 psDec->psNLSF_CB = &silk_NLSF_CB_NB_MB;
+ 141              		.loc 1 74 17 is_stmt 1 view .LVU42
+ 142              		.loc 1 74 34 is_stmt 0 view .LVU43
+ 143 007e 2B4B     		ldr	r3, .L24+4
+ 144 0080 C4F8AC3A 		str	r3, [r4, #2732]
+ 145              	.L12:
+  75:../../opus/silk/decoder_set_fs.c ****             } else {
+  76:../../opus/silk/decoder_set_fs.c ****                 psDec->LPC_order = MAX_LPC_ORDER;
+  77:../../opus/silk/decoder_set_fs.c ****                 psDec->psNLSF_CB = &silk_NLSF_CB_WB;
+  78:../../opus/silk/decoder_set_fs.c ****             }
+  79:../../opus/silk/decoder_set_fs.c ****             if( fs_kHz == 16 ) {
+ 146              		.loc 1 79 13 is_stmt 1 view .LVU44
+ 147              		.loc 1 79 15 is_stmt 0 view .LVU45
+ 148 0084 102D     		cmp	r5, #16
+ 149 0086 26D0     		beq	.L21
+  80:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_lag_low_bits_iCDF = silk_uniform8_iCDF;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 5
+
+
+  81:../../opus/silk/decoder_set_fs.c ****             } else if( fs_kHz == 12 ) {
+ 150              		.loc 1 81 20 is_stmt 1 view .LVU46
+ 151              		.loc 1 81 22 is_stmt 0 view .LVU47
+ 152 0088 0C2D     		cmp	r5, #12
+ 153 008a 48D0     		beq	.L22
+  82:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_lag_low_bits_iCDF = silk_uniform6_iCDF;
+  83:../../opus/silk/decoder_set_fs.c ****             } else if( fs_kHz == 8 ) {
+ 154              		.loc 1 83 20 is_stmt 1 view .LVU48
+ 155              		.loc 1 83 22 is_stmt 0 view .LVU49
+ 156 008c 082D     		cmp	r5, #8
+ 157 008e 25D1     		bne	.L14
+  84:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_lag_low_bits_iCDF = silk_uniform4_iCDF;
+ 158              		.loc 1 84 17 is_stmt 1 view .LVU50
+ 159              		.loc 1 84 48 is_stmt 0 view .LVU51
+ 160 0090 274B     		ldr	r3, .L24+8
+ 161 0092 C4F84C39 		str	r3, [r4, #2380]
+ 162 0096 21E0     		b	.L14
+ 163              	.LVL9:
+ 164              	.L16:
+  39:../../opus/silk/decoder_set_fs.c **** 
+ 165              		.loc 1 39 28 view .LVU52
+ 166 0098 4FF00009 		mov	r9, #0
+ 167 009c D4E7     		b	.L3
+ 168              	.LVL10:
+ 169              	.L18:
+  56:../../opus/silk/decoder_set_fs.c ****         if( fs_kHz == 8 ) {
+ 170              		.loc 1 56 57 discriminator 1 view .LVU53
+ 171 009e D4F81829 		ldr	r2, [r4, #2328]
+  56:../../opus/silk/decoder_set_fs.c ****         if( fs_kHz == 8 ) {
+ 172              		.loc 1 56 33 discriminator 1 view .LVU54
+ 173 00a2 4245     		cmp	r2, r8
+ 174 00a4 D4D1     		bne	.L4
+ 175 00a6 37E0     		b	.L1
+ 176              	.L19:
+  58:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_NB_iCDF;
+ 177              		.loc 1 58 13 is_stmt 1 view .LVU55
+  58:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_NB_iCDF;
+ 178              		.loc 1 58 22 is_stmt 0 view .LVU56
+ 179 00a8 D4F81429 		ldr	r2, [r4, #2324]
+  58:../../opus/silk/decoder_set_fs.c ****                 psDec->pitch_contour_iCDF = silk_pitch_contour_NB_iCDF;
+ 180              		.loc 1 58 15 view .LVU57
+ 181 00ac 042A     		cmp	r2, #4
+ 182 00ae 03D0     		beq	.L23
+  61:../../opus/silk/decoder_set_fs.c ****             }
+ 183              		.loc 1 61 17 is_stmt 1 view .LVU58
+  61:../../opus/silk/decoder_set_fs.c ****             }
+ 184              		.loc 1 61 43 is_stmt 0 view .LVU59
+ 185 00b0 204A     		ldr	r2, .L24+12
+ 186 00b2 C4F85029 		str	r2, [r4, #2384]
+ 187 00b6 D4E7     		b	.L8
+ 188              	.L23:
+  59:../../opus/silk/decoder_set_fs.c ****             } else {
+ 189              		.loc 1 59 17 is_stmt 1 view .LVU60
+  59:../../opus/silk/decoder_set_fs.c ****             } else {
+ 190              		.loc 1 59 43 is_stmt 0 view .LVU61
+ 191 00b8 1F4A     		ldr	r2, .L24+16
+ 192 00ba C4F85029 		str	r2, [r4, #2384]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 6
+
+
+ 193 00be D0E7     		b	.L8
+ 194              	.L20:
+  65:../../opus/silk/decoder_set_fs.c ****             } else {
+ 195              		.loc 1 65 17 is_stmt 1 view .LVU62
+  65:../../opus/silk/decoder_set_fs.c ****             } else {
+ 196              		.loc 1 65 43 is_stmt 0 view .LVU63
+ 197 00c0 1E4A     		ldr	r2, .L24+20
+ 198 00c2 C4F85029 		str	r2, [r4, #2384]
+ 199 00c6 CCE7     		b	.L8
+ 200              	.L11:
+  76:../../opus/silk/decoder_set_fs.c ****                 psDec->psNLSF_CB = &silk_NLSF_CB_WB;
+ 201              		.loc 1 76 17 is_stmt 1 view .LVU64
+  76:../../opus/silk/decoder_set_fs.c ****                 psDec->psNLSF_CB = &silk_NLSF_CB_WB;
+ 202              		.loc 1 76 34 is_stmt 0 view .LVU65
+ 203 00c8 1023     		movs	r3, #16
+ 204 00ca C4F82439 		str	r3, [r4, #2340]
+  77:../../opus/silk/decoder_set_fs.c ****             }
+ 205              		.loc 1 77 17 is_stmt 1 view .LVU66
+  77:../../opus/silk/decoder_set_fs.c ****             }
+ 206              		.loc 1 77 34 is_stmt 0 view .LVU67
+ 207 00ce 1C4B     		ldr	r3, .L24+24
+ 208 00d0 C4F8AC3A 		str	r3, [r4, #2732]
+ 209 00d4 D6E7     		b	.L12
+ 210              	.L21:
+  80:../../opus/silk/decoder_set_fs.c ****             } else if( fs_kHz == 12 ) {
+ 211              		.loc 1 80 17 is_stmt 1 view .LVU68
+  80:../../opus/silk/decoder_set_fs.c ****             } else if( fs_kHz == 12 ) {
+ 212              		.loc 1 80 48 is_stmt 0 view .LVU69
+ 213 00d6 1B4B     		ldr	r3, .L24+28
+ 214 00d8 C4F84C39 		str	r3, [r4, #2380]
+ 215              	.L14:
+  85:../../opus/silk/decoder_set_fs.c ****             } else {
+  86:../../opus/silk/decoder_set_fs.c ****                 /* unsupported sampling rate */
+  87:../../opus/silk/decoder_set_fs.c ****                 celt_assert( 0 );
+ 216              		.loc 1 87 33 is_stmt 1 view .LVU70
+  88:../../opus/silk/decoder_set_fs.c ****             }
+  89:../../opus/silk/decoder_set_fs.c ****             psDec->first_frame_after_reset = 1;
+ 217              		.loc 1 89 13 view .LVU71
+ 218              		.loc 1 89 44 is_stmt 0 view .LVU72
+ 219 00dc 0123     		movs	r3, #1
+ 220 00de C4F84839 		str	r3, [r4, #2376]
+  90:../../opus/silk/decoder_set_fs.c ****             psDec->lagPrev                 = 100;
+ 221              		.loc 1 90 13 is_stmt 1 view .LVU73
+ 222              		.loc 1 90 44 is_stmt 0 view .LVU74
+ 223 00e2 6423     		movs	r3, #100
+ 224 00e4 C4F80439 		str	r3, [r4, #2308]
+  91:../../opus/silk/decoder_set_fs.c ****             psDec->LastGainIndex           = 10;
+ 225              		.loc 1 91 13 is_stmt 1 view .LVU75
+ 226              		.loc 1 91 44 is_stmt 0 view .LVU76
+ 227 00e8 0A23     		movs	r3, #10
+ 228 00ea 84F80839 		strb	r3, [r4, #2312]
+  92:../../opus/silk/decoder_set_fs.c ****             psDec->prevSignalType          = TYPE_NO_VOICE_ACTIVITY;
+ 229              		.loc 1 92 13 is_stmt 1 view .LVU77
+ 230              		.loc 1 92 44 is_stmt 0 view .LVU78
+ 231 00ee 04F58053 		add	r3, r4, #4096
+ 232 00f2 0026     		movs	r6, #0
+ 233 00f4 5E64     		str	r6, [r3, #68]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 7
+
+
+  93:../../opus/silk/decoder_set_fs.c ****             silk_memset( psDec->outBuf, 0, sizeof(psDec->outBuf));
+ 234              		.loc 1 93 13 is_stmt 1 view .LVU79
+ 235 00f6 4FF47072 		mov	r2, #960
+ 236 00fa 3146     		mov	r1, r6
+ 237 00fc 04F24450 		addw	r0, r4, #1348
+ 238 0100 FFF7FEFF 		bl	memset
+ 239              	.LVL11:
+  94:../../opus/silk/decoder_set_fs.c ****             silk_memset( psDec->sLPC_Q14_buf, 0, sizeof(psDec->sLPC_Q14_buf) );
+ 240              		.loc 1 94 13 view .LVU80
+ 241 0104 4022     		movs	r2, #64
+ 242 0106 3146     		mov	r1, r6
+ 243 0108 04F20450 		addw	r0, r4, #1284
+ 244 010c FFF7FEFF 		bl	memset
+ 245              	.LVL12:
+ 246              	.L10:
+  95:../../opus/silk/decoder_set_fs.c ****         }
+  96:../../opus/silk/decoder_set_fs.c **** 
+  97:../../opus/silk/decoder_set_fs.c ****         psDec->fs_kHz       = fs_kHz;
+ 247              		.loc 1 97 9 view .LVU81
+ 248              		.loc 1 97 29 is_stmt 0 view .LVU82
+ 249 0110 C4F80C59 		str	r5, [r4, #2316]
+  98:../../opus/silk/decoder_set_fs.c ****         psDec->frame_length = frame_length;
+ 250              		.loc 1 98 9 is_stmt 1 view .LVU83
+ 251              		.loc 1 98 29 is_stmt 0 view .LVU84
+ 252 0114 C4F81889 		str	r8, [r4, #2328]
+  99:../../opus/silk/decoder_set_fs.c ****     }
+ 100:../../opus/silk/decoder_set_fs.c **** 
+ 101:../../opus/silk/decoder_set_fs.c ****     /* Check that settings are valid */
+ 102:../../opus/silk/decoder_set_fs.c ****     celt_assert( psDec->frame_length > 0 && psDec->frame_length <= MAX_FRAME_LENGTH );
+ 253              		.loc 1 102 86 is_stmt 1 view .LVU85
+ 103:../../opus/silk/decoder_set_fs.c **** 
+ 104:../../opus/silk/decoder_set_fs.c ****     return ret;
+ 254              		.loc 1 104 5 view .LVU86
+ 255              	.L1:
+ 105:../../opus/silk/decoder_set_fs.c **** }
+ 256              		.loc 1 105 1 is_stmt 0 view .LVU87
+ 257 0118 4846     		mov	r0, r9
+ 258 011a BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 259              	.LVL13:
+ 260              	.L22:
+  82:../../opus/silk/decoder_set_fs.c ****             } else if( fs_kHz == 8 ) {
+ 261              		.loc 1 82 17 is_stmt 1 view .LVU88
+  82:../../opus/silk/decoder_set_fs.c ****             } else if( fs_kHz == 8 ) {
+ 262              		.loc 1 82 48 is_stmt 0 view .LVU89
+ 263 011e 0A4B     		ldr	r3, .L24+32
+ 264 0120 C4F84C39 		str	r3, [r4, #2380]
+ 265 0124 DAE7     		b	.L14
+ 266              	.L25:
+ 267 0126 00BF     		.align	2
+ 268              	.L24:
+ 269 0128 00000000 		.word	silk_pitch_contour_10_ms_iCDF
+ 270 012c 00000000 		.word	silk_NLSF_CB_NB_MB
+ 271 0130 00000000 		.word	silk_uniform4_iCDF
+ 272 0134 00000000 		.word	silk_pitch_contour_10_ms_NB_iCDF
+ 273 0138 00000000 		.word	silk_pitch_contour_NB_iCDF
+ 274 013c 00000000 		.word	silk_pitch_contour_iCDF
+ 275 0140 00000000 		.word	silk_NLSF_CB_WB
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 8
+
+
+ 276 0144 00000000 		.word	silk_uniform8_iCDF
+ 277 0148 00000000 		.word	silk_uniform6_iCDF
+ 278              		.cfi_endproc
+ 279              	.LFE25:
+ 281              		.text
+ 282              	.Letext0:
+ 283              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 284              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 285              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 286              		.file 5 "../../opus/include/opus_types.h"
+ 287              		.file 6 "../../opus/silk/resampler_structs.h"
+ 288              		.file 7 "../../opus/silk/structs.h"
+ 289              		.file 8 "../../opus/silk/tables.h"
+ 290              		.file 9 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 291              		.file 10 "../../opus/silk/SigProc_FIX.h"
+ 292              		.file 11 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 decoder_set_fs.c
+C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s:20     .text.silk_decoder_set_fs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s:26     .text.silk_decoder_set_fs:00000000 silk_decoder_set_fs
+C:\Users\oleg\AppData\Local\Temp\ccv1wIjH.s:269    .text.silk_decoder_set_fs:00000128 $d
+
+UNDEFINED SYMBOLS
+silk_resampler_init
+memset
+silk_pitch_contour_10_ms_iCDF
+silk_NLSF_CB_NB_MB
+silk_uniform4_iCDF
+silk_pitch_contour_10_ms_NB_iCDF
+silk_pitch_contour_NB_iCDF
+silk_pitch_contour_iCDF
+silk_NLSF_CB_WB
+silk_uniform8_iCDF
+silk_uniform6_iCDF

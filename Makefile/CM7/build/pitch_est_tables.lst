@@ -1,0 +1,157 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"pitch_est_tables.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/pitch_est_tables.c"
+  19              		.global	silk_nb_cbk_searchs_stage3
+  20              		.section	.rodata.silk_nb_cbk_searchs_stage3,"a"
+  21              		.align	2
+  24              	silk_nb_cbk_searchs_stage3:
+  25 0000 101822   		.ascii	"\020\030\""
+  26              		.global	silk_Lag_range_stage3
+  27              		.section	.rodata.silk_Lag_range_stage3,"a"
+  28              		.align	2
+  31              	silk_Lag_range_stage3:
+  32 0000 FB08     		.ascii	"\373\010"
+  33 0002 FF06     		.ascii	"\377\006"
+  34 0004 FF06     		.ascii	"\377\006"
+  35 0006 FC0A     		.ascii	"\374\012"
+  36 0008 FA0A     		.ascii	"\372\012"
+  37 000a FE06     		.ascii	"\376\006"
+  38 000c FF06     		.ascii	"\377\006"
+  39 000e FB0A     		.ascii	"\373\012"
+  40 0010 F70C     		.ascii	"\367\014"
+  41 0012 FD07     		.ascii	"\375\007"
+  42 0014 FE07     		.ascii	"\376\007"
+  43 0016 F90D     		.ascii	"\371\015"
+  44              		.global	silk_CB_lags_stage3
+  45              		.section	.rodata.silk_CB_lags_stage3,"a"
+  46              		.align	2
+  49              	silk_CB_lags_stage3:
+  50 0000 000001FF 		.ascii	"\000\000\001\377\000\001\377\000\377\001\376\002\376"
+  50      0001FF00 
+  50      FF01FE02 
+  50      FE
+  51 000d FE02FD02 		.ascii	"\376\002\375\002\003\375\374\003\374\004\004\373\005"
+  51      03FDFC03 
+  51      FC0404FB 
+  51      05
+  52 001a FAFB06F9 		.ascii	"\372\373\006\371\006\005\010\367"
+  52      060508F7 
+  53 0022 00000100 		.ascii	"\000\000\001\000\000\000\000\000\000\000\377\001\000"
+  53      00000000 
+  53      0000FF01 
+  53      00
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s 			page 2
+
+
+  54 002f 0001FF00 		.ascii	"\000\001\377\000\001\377\377\001\377\002\001\377\002"
+  54      01FFFF01 
+  54      FF0201FF 
+  54      02
+  55 003c FEFE02FE 		.ascii	"\376\376\002\376\002\002\003\375"
+  55      020203FD 
+  56 0044 00010000 		.ascii	"\000\001\000\000\000\000\000\000\001\000\001\000\000"
+  56      00000000 
+  56      01000100 
+  56      00
+  57 0051 01FF0100 		.ascii	"\001\377\001\000\000\002\001\377\002\377\377\002\377"
+  57      000201FF 
+  57      02FFFF02 
+  57      FF
+  58 005e 0202FF03 		.ascii	"\002\002\377\003\376\376\376\003"
+  58      FEFEFE03 
+  59 0066 00010000 		.ascii	"\000\001\000\000\001\000\001\377\002\377\002\377\002"
+  59      010001FF 
+  59      02FF02FF 
+  59      02
+  60 0073 03FE03FE 		.ascii	"\003\376\003\376\376\004\004\375\005\375\374\006\374"
+  60      FE0404FD 
+  60      05FDFC06 
+  60      FC
+  61 0080 0605FB08 		.ascii	"\006\005\373\010\372\373\371\011"
+  61      FAFBF909 
+  62              		.global	silk_CB_lags_stage2
+  63              		.section	.rodata.silk_CB_lags_stage2,"a"
+  64              		.align	2
+  67              	silk_CB_lags_stage2:
+  68 0000 0002FFFF 		.ascii	"\000\002\377\377\377\000\000\001\001\000\001"
+  68      FF000001 
+  68      010001
+  69 000b 00010000 		.ascii	"\000\001\000\000\000\000\000\001\000\000\000"
+  69      00000001 
+  69      000000
+  70 0016 00000100 		.ascii	"\000\000\001\000\000\000\001\000\000\000\000"
+  70      00000100 
+  70      000000
+  71 0021 00FF0201 		.ascii	"\000\377\002\001\000\001\001\000\000\377\377"
+  71      00010100 
+  71      00FFFF
+  72              		.global	silk_Lag_range_stage3_10_ms
+  73              		.section	.rodata.silk_Lag_range_stage3_10_ms,"a"
+  74              		.align	2
+  77              	silk_Lag_range_stage3_10_ms:
+  78 0000 FD07     		.ascii	"\375\007"
+  79 0002 FE07     		.ascii	"\376\007"
+  80              		.global	silk_CB_lags_stage3_10_ms
+  81              		.section	.rodata.silk_CB_lags_stage3_10_ms,"a"
+  82              		.align	2
+  85              	silk_CB_lags_stage3_10_ms:
+  86 0000 000001FF 		.ascii	"\000\000\001\377\001\377\002\376\002\376\003\375"
+  86      01FF02FE 
+  86      02FE03FD 
+  87 000c 00010001 		.ascii	"\000\001\000\001\377\002\377\002\376\003\376\003"
+  87      FF02FF02 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s 			page 3
+
+
+  87      FE03FE03 
+  88              		.global	silk_CB_lags_stage2_10_ms
+  89              		.section	.rodata.silk_CB_lags_stage2_10_ms,"a"
+  90              		.align	2
+  93              	silk_CB_lags_stage2_10_ms:
+  94 0000 000100   		.ascii	"\000\001\000"
+  95 0003 000001   		.ascii	"\000\000\001"
+  96              		.text
+  97              	.Letext0:
+  98              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+  99              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 100              		.file 4 "../../opus/include/opus_types.h"
+ 101              		.file 5 "../../opus/silk/pitch_est_defines.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pitch_est_tables.c
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:24     .rodata.silk_nb_cbk_searchs_stage3:00000000 silk_nb_cbk_searchs_stage3
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:21     .rodata.silk_nb_cbk_searchs_stage3:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:31     .rodata.silk_Lag_range_stage3:00000000 silk_Lag_range_stage3
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:28     .rodata.silk_Lag_range_stage3:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:49     .rodata.silk_CB_lags_stage3:00000000 silk_CB_lags_stage3
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:46     .rodata.silk_CB_lags_stage3:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:67     .rodata.silk_CB_lags_stage2:00000000 silk_CB_lags_stage2
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:64     .rodata.silk_CB_lags_stage2:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:77     .rodata.silk_Lag_range_stage3_10_ms:00000000 silk_Lag_range_stage3_10_ms
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:74     .rodata.silk_Lag_range_stage3_10_ms:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:85     .rodata.silk_CB_lags_stage3_10_ms:00000000 silk_CB_lags_stage3_10_ms
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:82     .rodata.silk_CB_lags_stage3_10_ms:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:93     .rodata.silk_CB_lags_stage2_10_ms:00000000 silk_CB_lags_stage2_10_ms
+C:\Users\oleg\AppData\Local\Temp\ccg5eGU5.s:90     .rodata.silk_CB_lags_stage2_10_ms:00000000 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,461 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"LPC_fit.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/LPC_fit.c"
+  19              		.section	.text.silk_LPC_fit,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_LPC_fit
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_LPC_fit:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/LPC_fit.c **** /***********************************************************************
+   2:../../opus/silk/LPC_fit.c **** Copyright (c) 2013, Koen Vos. All rights reserved.
+   3:../../opus/silk/LPC_fit.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/LPC_fit.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/LPC_fit.c **** are met:
+   6:../../opus/silk/LPC_fit.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/LPC_fit.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/LPC_fit.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/LPC_fit.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/LPC_fit.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/LPC_fit.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/LPC_fit.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/LPC_fit.c **** products derived from this software without specific prior written
+  14:../../opus/silk/LPC_fit.c **** permission.
+  15:../../opus/silk/LPC_fit.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/LPC_fit.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/LPC_fit.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/LPC_fit.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/LPC_fit.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/LPC_fit.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/LPC_fit.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/LPC_fit.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/LPC_fit.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/LPC_fit.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/LPC_fit.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/LPC_fit.c **** ***********************************************************************/
+  27:../../opus/silk/LPC_fit.c **** 
+  28:../../opus/silk/LPC_fit.c **** #include "opus_config.h"
+  29:../../opus/silk/LPC_fit.c **** 
+  30:../../opus/silk/LPC_fit.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 2
+
+
+  31:../../opus/silk/LPC_fit.c **** 
+  32:../../opus/silk/LPC_fit.c **** /* Convert int32 coefficients to int16 coefs and make sure there's no wrap-around.
+  33:../../opus/silk/LPC_fit.c ****    This logic is reused in _celt_lpc(). Any bug fixes should also be applied there. */
+  34:../../opus/silk/LPC_fit.c **** void silk_LPC_fit(
+  35:../../opus/silk/LPC_fit.c ****     opus_int16                  *a_QOUT,            /* O    Output signal                          
+  36:../../opus/silk/LPC_fit.c ****     opus_int32                    *a_QIN,             /* I/O  Input signal                         
+  37:../../opus/silk/LPC_fit.c ****     const opus_int              QOUT,               /* I    Input Q domain                         
+  38:../../opus/silk/LPC_fit.c ****     const opus_int              QIN,                /* I    Input Q domain                         
+  39:../../opus/silk/LPC_fit.c ****     const opus_int              d                   /* I    Filter order                           
+  40:../../opus/silk/LPC_fit.c **** )
+  41:../../opus/silk/LPC_fit.c **** {
+  29              		.loc 1 41 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 41 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 4, -32
+  38              		.cfi_offset 5, -28
+  39              		.cfi_offset 6, -24
+  40              		.cfi_offset 7, -20
+  41              		.cfi_offset 8, -16
+  42              		.cfi_offset 9, -12
+  43              		.cfi_offset 10, -8
+  44              		.cfi_offset 14, -4
+  45 0004 8246     		mov	r10, r0
+  46 0006 0D46     		mov	r5, r1
+  47 0008 9046     		mov	r8, r2
+  48 000a 9946     		mov	r9, r3
+  49 000c 089C     		ldr	r4, [sp, #32]
+  42:../../opus/silk/LPC_fit.c ****     opus_int    i, k, idx = 0;
+  50              		.loc 1 42 5 is_stmt 1 view .LVU2
+  51              	.LVL1:
+  43:../../opus/silk/LPC_fit.c ****     opus_int32    maxabs, absval, chirp_Q16;
+  52              		.loc 1 43 5 view .LVU3
+  44:../../opus/silk/LPC_fit.c **** 
+  45:../../opus/silk/LPC_fit.c ****     /* Limit the maximum absolute value of the prediction coefficients, so that they'll fit in int1
+  46:../../opus/silk/LPC_fit.c ****     for( i = 0; i < 10; i++ ) {
+  53              		.loc 1 46 5 view .LVU4
+  42:../../opus/silk/LPC_fit.c ****     opus_int32    maxabs, absval, chirp_Q16;
+  54              		.loc 1 42 23 is_stmt 0 view .LVU5
+  55 000e 0026     		movs	r6, #0
+  56              		.loc 1 46 12 view .LVU6
+  57 0010 3746     		mov	r7, r6
+  58              		.loc 1 46 5 view .LVU7
+  59 0012 2CE0     		b	.L2
+  60              	.LVL2:
+  61              	.L3:
+  47:../../opus/silk/LPC_fit.c ****         /* Find maximum absolute value and its index */
+  48:../../opus/silk/LPC_fit.c ****         maxabs = 0;
+  49:../../opus/silk/LPC_fit.c ****         for( k = 0; k < d; k++ ) {
+  62              		.loc 1 49 29 is_stmt 1 discriminator 2 view .LVU8
+  63 0014 0CF1010C 		add	ip, ip, #1
+  64              	.LVL3:
+  65              	.L8:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 3
+
+
+  66              		.loc 1 49 23 discriminator 1 view .LVU9
+  67 0018 A445     		cmp	ip, r4
+  68 001a 09DA     		bge	.L28
+  50:../../opus/silk/LPC_fit.c ****             absval = silk_abs( a_QIN[k] );
+  69              		.loc 1 50 13 view .LVU10
+  70              		.loc 1 50 22 is_stmt 0 view .LVU11
+  71 001c 55F82C30 		ldr	r3, [r5, ip, lsl #2]
+  72              		.loc 1 50 20 view .LVU12
+  73 0020 002B     		cmp	r3, #0
+  74 0022 B8BF     		it	lt
+  75 0024 5B42     		rsblt	r3, r3, #0
+  76              	.LVL4:
+  51:../../opus/silk/LPC_fit.c ****             if( absval > maxabs ) {
+  77              		.loc 1 51 13 is_stmt 1 view .LVU13
+  78              		.loc 1 51 15 is_stmt 0 view .LVU14
+  79 0026 9A42     		cmp	r2, r3
+  80 0028 F4DA     		bge	.L3
+  52:../../opus/silk/LPC_fit.c ****                 maxabs = absval;
+  81              		.loc 1 52 24 view .LVU15
+  82 002a 1A46     		mov	r2, r3
+  83              	.LVL5:
+  53:../../opus/silk/LPC_fit.c ****                 idx    = k;
+  84              		.loc 1 53 24 view .LVU16
+  85 002c 6646     		mov	r6, ip
+  86              	.LVL6:
+  87              		.loc 1 53 24 view .LVU17
+  88 002e F1E7     		b	.L3
+  89              	.LVL7:
+  90              	.L28:
+  54:../../opus/silk/LPC_fit.c ****             }
+  55:../../opus/silk/LPC_fit.c ****         }
+  56:../../opus/silk/LPC_fit.c ****         maxabs = silk_RSHIFT_ROUND( maxabs, QIN - QOUT );
+  91              		.loc 1 56 9 is_stmt 1 view .LVU18
+  92              		.loc 1 56 18 is_stmt 0 view .LVU19
+  93 0030 A9EB0803 		sub	r3, r9, r8
+  94 0034 012B     		cmp	r3, #1
+  95 0036 1FD0     		beq	.L29
+  96              		.loc 1 56 18 discriminator 2 view .LVU20
+  97 0038 013B     		subs	r3, r3, #1
+  98 003a 1A41     		asrs	r2, r2, r3
+  99              	.LVL8:
+ 100              		.loc 1 56 18 discriminator 2 view .LVU21
+ 101 003c 0132     		adds	r2, r2, #1
+ 102 003e 5210     		asrs	r2, r2, #1
+ 103              	.L6:
+ 104              	.LVL9:
+  57:../../opus/silk/LPC_fit.c **** 
+  58:../../opus/silk/LPC_fit.c ****         if( maxabs > silk_int16_MAX ) {
+ 105              		.loc 1 58 9 is_stmt 1 view .LVU22
+ 106              		.loc 1 58 11 is_stmt 0 view .LVU23
+ 107 0040 B2F5004F 		cmp	r2, #32768
+ 108 0044 1DDB     		blt	.L7
+  59:../../opus/silk/LPC_fit.c ****             /* Reduce magnitude of prediction coefficients */
+  60:../../opus/silk/LPC_fit.c ****             maxabs = silk_min( maxabs, 163838 );  /* ( silk_int32_MAX >> 14 ) + silk_int16_MAX = 16
+ 109              		.loc 1 60 13 is_stmt 1 view .LVU24
+ 110              		.loc 1 60 20 is_stmt 0 view .LVU25
+ 111 0046 484B     		ldr	r3, .L34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 4
+
+
+ 112 0048 9A42     		cmp	r2, r3
+ 113 004a A8BF     		it	ge
+ 114 004c 1A46     		movge	r2, r3
+ 115              	.LVL10:
+  61:../../opus/silk/LPC_fit.c ****             chirp_Q16 = SILK_FIX_CONST( 0.999, 16 ) - silk_DIV32( silk_LSHIFT( maxabs - silk_int16_
+ 116              		.loc 1 61 13 is_stmt 1 view .LVU26
+ 117              		.loc 1 61 55 is_stmt 0 view .LVU27
+ 118 004e 474B     		ldr	r3, .L34+4
+ 119 0050 1344     		add	r3, r3, r2
+ 120 0052 9B03     		lsls	r3, r3, #14
+ 121 0054 06FB0222 		mla	r2, r6, r2, r2
+ 122              	.LVL11:
+ 123              		.loc 1 61 55 view .LVU28
+ 124 0058 9210     		asrs	r2, r2, #2
+ 125 005a 93FBF2F3 		sdiv	r3, r3, r2
+ 126              	.LVL12:
+  62:../../opus/silk/LPC_fit.c ****                                         silk_RSHIFT32( silk_MUL( maxabs, idx + 1), 2 ) );
+  63:../../opus/silk/LPC_fit.c ****             silk_bwexpander_32( a_QIN, d, chirp_Q16 );
+ 127              		.loc 1 63 13 is_stmt 1 view .LVU29
+ 128 005e 4FF6BE72 		movw	r2, #65470
+ 129 0062 D21A     		subs	r2, r2, r3
+ 130              	.LVL13:
+ 131              		.loc 1 63 13 is_stmt 0 view .LVU30
+ 132 0064 2146     		mov	r1, r4
+ 133 0066 2846     		mov	r0, r5
+ 134 0068 FFF7FEFF 		bl	silk_bwexpander_32
+ 135              	.LVL14:
+  46:../../opus/silk/LPC_fit.c ****         /* Find maximum absolute value and its index */
+ 136              		.loc 1 46 26 is_stmt 1 discriminator 2 view .LVU31
+ 137 006c 0137     		adds	r7, r7, #1
+ 138              	.LVL15:
+ 139              	.L2:
+  46:../../opus/silk/LPC_fit.c ****         /* Find maximum absolute value and its index */
+ 140              		.loc 1 46 19 discriminator 1 view .LVU32
+ 141 006e 092F     		cmp	r7, #9
+ 142 0070 07DC     		bgt	.L7
+  48:../../opus/silk/LPC_fit.c ****         for( k = 0; k < d; k++ ) {
+ 143              		.loc 1 48 16 is_stmt 0 view .LVU33
+ 144 0072 0022     		movs	r2, #0
+  49:../../opus/silk/LPC_fit.c ****             absval = silk_abs( a_QIN[k] );
+ 145              		.loc 1 49 16 view .LVU34
+ 146 0074 9446     		mov	ip, r2
+ 147 0076 CFE7     		b	.L8
+ 148              	.LVL16:
+ 149              	.L29:
+  56:../../opus/silk/LPC_fit.c **** 
+ 150              		.loc 1 56 18 discriminator 1 view .LVU35
+ 151 0078 02F00103 		and	r3, r2, #1
+ 152 007c 03EB6202 		add	r2, r3, r2, asr #1
+ 153              	.LVL17:
+  56:../../opus/silk/LPC_fit.c **** 
+ 154              		.loc 1 56 18 discriminator 1 view .LVU36
+ 155 0080 DEE7     		b	.L6
+ 156              	.LVL18:
+ 157              	.L7:
+  64:../../opus/silk/LPC_fit.c ****         } else {
+  65:../../opus/silk/LPC_fit.c ****             break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 5
+
+
+  66:../../opus/silk/LPC_fit.c ****         }
+  67:../../opus/silk/LPC_fit.c ****     }
+  68:../../opus/silk/LPC_fit.c **** 
+  69:../../opus/silk/LPC_fit.c ****     if( i == 10 ) {
+ 158              		.loc 1 69 5 is_stmt 1 view .LVU37
+ 159              		.loc 1 69 7 is_stmt 0 view .LVU38
+ 160 0082 0A2F     		cmp	r7, #10
+ 161 0084 54D0     		beq	.L24
+  70:../../opus/silk/LPC_fit.c ****         /* Reached the last iteration, clip the coefficients */
+  71:../../opus/silk/LPC_fit.c ****         for( k = 0; k < d; k++ ) {
+  72:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT ) );
+  73:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+  74:../../opus/silk/LPC_fit.c ****         }
+  75:../../opus/silk/LPC_fit.c ****     } else {
+  76:../../opus/silk/LPC_fit.c ****         for( k = 0; k < d; k++ ) {
+ 162              		.loc 1 76 16 view .LVU39
+ 163 0086 0022     		movs	r2, #0
+ 164 0088 5EE0     		b	.L10
+ 165              	.LVL19:
+ 166              	.L30:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 167              		.loc 1 72 39 discriminator 1 view .LVU40
+ 168 008a 55F82200 		ldr	r0, [r5, r2, lsl #2]
+ 169 008e 00F00103 		and	r3, r0, #1
+ 170 0092 03EB6003 		add	r3, r3, r0, asr #1
+ 171 0096 B3F5004F 		cmp	r3, #32768
+ 172 009a ACBF     		ite	ge
+ 173 009c 0023     		movge	r3, #0
+ 174 009e 0123     		movlt	r3, #1
+ 175 00a0 2BE0     		b	.L12
+ 176              	.L31:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 177              		.loc 1 72 39 discriminator 7 view .LVU41
+ 178 00a2 55F82200 		ldr	r0, [r5, r2, lsl #2]
+ 179 00a6 00F00103 		and	r3, r0, #1
+ 180 00aa 03EB6003 		add	r3, r3, r0, asr #1
+ 181 00ae 13F5004F 		cmn	r3, #32768
+ 182 00b2 B4BF     		ite	lt
+ 183 00b4 0023     		movlt	r3, #0
+ 184 00b6 0123     		movge	r3, #1
+ 185 00b8 2DE0     		b	.L15
+ 186              	.L32:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 187              		.loc 1 72 39 discriminator 13 view .LVU42
+ 188 00ba 55F82200 		ldr	r0, [r5, r2, lsl #2]
+ 189 00be 00F00103 		and	r3, r0, #1
+ 190 00c2 03EB6003 		add	r3, r3, r0, asr #1
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 191              		.loc 1 72 27 discriminator 13 view .LVU43
+ 192 00c6 1BB2     		sxth	r3, r3
+ 193 00c8 01E0     		b	.L13
+ 194              	.L25:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 195              		.loc 1 72 27 discriminator 6 view .LVU44
+ 196 00ca 47F6FF73 		movw	r3, #32767
+ 197              	.L13:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 6
+
+
+ 198              		.loc 1 72 25 discriminator 20 view .LVU45
+ 199 00ce 2AF81230 		strh	r3, [r10, r2, lsl #1]	@ movhi
+  73:../../opus/silk/LPC_fit.c ****         }
+ 200              		.loc 1 73 13 is_stmt 1 view .LVU46
+  73:../../opus/silk/LPC_fit.c ****         }
+ 201              		.loc 1 73 26 is_stmt 0 view .LVU47
+ 202 00d2 8B40     		lsls	r3, r3, r1
+  73:../../opus/silk/LPC_fit.c ****         }
+ 203              		.loc 1 73 24 view .LVU48
+ 204 00d4 45F82230 		str	r3, [r5, r2, lsl #2]
+  71:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT ) );
+ 205              		.loc 1 71 29 is_stmt 1 discriminator 2 view .LVU49
+ 206 00d8 0132     		adds	r2, r2, #1
+ 207              	.LVL20:
+ 208              	.L9:
+  71:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT ) );
+ 209              		.loc 1 71 23 discriminator 1 view .LVU50
+ 210 00da A242     		cmp	r2, r4
+ 211 00dc 42DA     		bge	.L1
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 212              		.loc 1 72 13 view .LVU51
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 213              		.loc 1 72 39 is_stmt 0 view .LVU52
+ 214 00de A9EB0801 		sub	r1, r9, r8
+ 215 00e2 0129     		cmp	r1, #1
+ 216 00e4 D1D0     		beq	.L30
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 217              		.loc 1 72 39 discriminator 2 view .LVU53
+ 218 00e6 55F82230 		ldr	r3, [r5, r2, lsl #2]
+ 219 00ea 481E     		subs	r0, r1, #1
+ 220 00ec 0341     		asrs	r3, r3, r0
+ 221 00ee 0133     		adds	r3, r3, #1
+ 222 00f0 B3F5803F 		cmp	r3, #65536
+ 223 00f4 ACBF     		ite	ge
+ 224 00f6 0023     		movge	r3, #0
+ 225 00f8 0123     		movlt	r3, #1
+ 226              	.L12:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 227              		.loc 1 72 27 discriminator 4 view .LVU54
+ 228 00fa 002B     		cmp	r3, #0
+ 229 00fc E5D0     		beq	.L25
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 230              		.loc 1 72 39 discriminator 5 view .LVU55
+ 231 00fe 0129     		cmp	r1, #1
+ 232 0100 CFD0     		beq	.L31
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 233              		.loc 1 72 39 discriminator 8 view .LVU56
+ 234 0102 55F82230 		ldr	r3, [r5, r2, lsl #2]
+ 235 0106 481E     		subs	r0, r1, #1
+ 236 0108 0341     		asrs	r3, r3, r0
+ 237 010a 0133     		adds	r3, r3, #1
+ 238 010c 13F5803F 		cmn	r3, #65536
+ 239 0110 B4BF     		ite	lt
+ 240 0112 0023     		movlt	r3, #0
+ 241 0114 0123     		movge	r3, #1
+ 242              	.L15:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 7
+
+
+ 243              		.loc 1 72 27 discriminator 10 view .LVU57
+ 244 0116 4BB1     		cbz	r3, .L26
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 245              		.loc 1 72 27 discriminator 11 view .LVU58
+ 246 0118 0129     		cmp	r1, #1
+ 247 011a CED0     		beq	.L32
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 248              		.loc 1 72 39 discriminator 14 view .LVU59
+ 249 011c 55F82230 		ldr	r3, [r5, r2, lsl #2]
+ 250 0120 481E     		subs	r0, r1, #1
+ 251 0122 0341     		asrs	r3, r3, r0
+ 252 0124 0133     		adds	r3, r3, #1
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 253              		.loc 1 72 27 discriminator 14 view .LVU60
+ 254 0126 43F34F03 		sbfx	r3, r3, #1, #16
+ 255 012a D0E7     		b	.L13
+ 256              	.L26:
+  72:../../opus/silk/LPC_fit.c ****             a_QIN[ k ] = silk_LSHIFT( (opus_int32)a_QOUT[ k ], QIN - QOUT );
+ 257              		.loc 1 72 27 discriminator 12 view .LVU61
+ 258 012c 104B     		ldr	r3, .L34+8
+ 259 012e CEE7     		b	.L13
+ 260              	.LVL21:
+ 261              	.L24:
+  71:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT ) );
+ 262              		.loc 1 71 16 view .LVU62
+ 263 0130 0022     		movs	r2, #0
+ 264 0132 D2E7     		b	.L9
+ 265              	.LVL22:
+ 266              	.L33:
+  77:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT );
+ 267              		.loc 1 77 39 discriminator 1 view .LVU63
+ 268 0134 55F82210 		ldr	r1, [r5, r2, lsl #2]
+ 269 0138 01F00103 		and	r3, r1, #1
+ 270 013c 03EB6103 		add	r3, r3, r1, asr #1
+ 271              		.loc 1 77 27 discriminator 1 view .LVU64
+ 272 0140 1BB2     		sxth	r3, r3
+ 273              	.L20:
+ 274              		.loc 1 77 25 discriminator 4 view .LVU65
+ 275 0142 2AF81230 		strh	r3, [r10, r2, lsl #1]	@ movhi
+  76:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT );
+ 276              		.loc 1 76 29 is_stmt 1 discriminator 2 view .LVU66
+ 277 0146 0132     		adds	r2, r2, #1
+ 278              	.LVL23:
+ 279              	.L10:
+  76:../../opus/silk/LPC_fit.c ****             a_QOUT[ k ] = (opus_int16)silk_RSHIFT_ROUND( a_QIN[ k ], QIN - QOUT );
+ 280              		.loc 1 76 23 discriminator 1 view .LVU67
+ 281 0148 A242     		cmp	r2, r4
+ 282 014a 0BDA     		bge	.L1
+ 283              		.loc 1 77 13 view .LVU68
+ 284              		.loc 1 77 39 is_stmt 0 view .LVU69
+ 285 014c A9EB0801 		sub	r1, r9, r8
+ 286              		.loc 1 77 27 view .LVU70
+ 287 0150 0129     		cmp	r1, #1
+ 288 0152 EFD0     		beq	.L33
+ 289              		.loc 1 77 39 discriminator 2 view .LVU71
+ 290 0154 55F82230 		ldr	r3, [r5, r2, lsl #2]
+ 291 0158 0139     		subs	r1, r1, #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 8
+
+
+ 292 015a 0B41     		asrs	r3, r3, r1
+ 293 015c 0133     		adds	r3, r3, #1
+ 294              		.loc 1 77 27 discriminator 2 view .LVU72
+ 295 015e 43F34F03 		sbfx	r3, r3, #1, #16
+ 296 0162 EEE7     		b	.L20
+ 297              	.L1:
+  78:../../opus/silk/LPC_fit.c ****         }
+  79:../../opus/silk/LPC_fit.c ****     }
+  80:../../opus/silk/LPC_fit.c **** }
+ 298              		.loc 1 80 1 view .LVU73
+ 299 0164 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 300              	.LVL24:
+ 301              	.L35:
+ 302              		.loc 1 80 1 view .LVU74
+ 303              		.align	2
+ 304              	.L34:
+ 305 0168 FE7F0200 		.word	163838
+ 306 016c 0180FFFF 		.word	-32767
+ 307 0170 0080FFFF 		.word	-32768
+ 308              		.cfi_endproc
+ 309              	.LFE19:
+ 311              		.text
+ 312              	.Letext0:
+ 313              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 314              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 315              		.file 4 "../../opus/include/opus_types.h"
+ 316              		.file 5 "../../opus/silk/SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 LPC_fit.c
+C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s:20     .text.silk_LPC_fit:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s:26     .text.silk_LPC_fit:00000000 silk_LPC_fit
+C:\Users\oleg\AppData\Local\Temp\cccMZtOM.s:305    .text.silk_LPC_fit:00000168 $d
+
+UNDEFINED SYMBOLS
+silk_bwexpander_32

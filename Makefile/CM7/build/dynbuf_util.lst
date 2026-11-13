@@ -1,0 +1,1616 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"dynbuf_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/dynbuf_util.c"
+  19              		.section	.text.dynamic_buf_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	dynamic_buf_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	dynamic_buf_init:
+  27              	.LVL0:
+  28              	.LFB0:
+   1:../../util/dynbuf_util.c **** /*
+   2:../../util/dynbuf_util.c ****  * dynbuf_util.h
+   3:../../util/dynbuf_util.c ****  *
+   4:../../util/dynbuf_util.c ****  *  Created on: 28 мар. 2024 г.
+   5:../../util/dynbuf_util.c ****  *      Author: Rafael Boltachev
+   6:../../util/dynbuf_util.c ****  *
+   7:../../util/dynbuf_util.c ****  *      Библиотека динамического буфера
+   8:../../util/dynbuf_util.c ****  */
+   9:../../util/dynbuf_util.c **** 
+  10:../../util/dynbuf_util.c **** #include "dynbuf_util.h"
+  11:../../util/dynbuf_util.c **** #include <string.h>
+  12:../../util/dynbuf_util.c **** 
+  13:../../util/dynbuf_util.c **** 
+  14:../../util/dynbuf_util.c **** 
+  15:../../util/dynbuf_util.c **** void dynamic_buf_init(dynamic_buf_t * dynamic_buf, size_t max_alloc_size)
+  16:../../util/dynbuf_util.c **** {
+  29              		.loc 1 16 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  17:../../util/dynbuf_util.c ****   dynamic_buf->first = NULL;
+  34              		.loc 1 17 3 view .LVU1
+  35              		.loc 1 17 22 is_stmt 0 view .LVU2
+  36 0000 0023     		movs	r3, #0
+  37 0002 0370     		strb	r3, [r0]
+  38 0004 4370     		strb	r3, [r0, #1]
+  39 0006 8370     		strb	r3, [r0, #2]
+  40 0008 C370     		strb	r3, [r0, #3]
+  18:../../util/dynbuf_util.c ****   dynamic_buf->busy = FALSE;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 2
+
+
+  41              		.loc 1 18 3 is_stmt 1 view .LVU3
+  42              		.loc 1 18 21 is_stmt 0 view .LVU4
+  43 000a 0371     		strb	r3, [r0, #4]
+  19:../../util/dynbuf_util.c ****   dynamic_buf->max_alloc_size = max_alloc_size;
+  44              		.loc 1 19 3 is_stmt 1 view .LVU5
+  45              		.loc 1 19 31 is_stmt 0 view .LVU6
+  46 000c C0F80510 		str	r1, [r0, #5]	@ unaligned
+  20:../../util/dynbuf_util.c ****   dynamic_buf->alloc_size = 0;
+  47              		.loc 1 20 3 is_stmt 1 view .LVU7
+  48              		.loc 1 20 27 is_stmt 0 view .LVU8
+  49 0010 4372     		strb	r3, [r0, #9]
+  50 0012 8372     		strb	r3, [r0, #10]
+  51 0014 C372     		strb	r3, [r0, #11]
+  52 0016 0373     		strb	r3, [r0, #12]
+  21:../../util/dynbuf_util.c ****   dynamic_buf->data_size = 0;
+  53              		.loc 1 21 3 is_stmt 1 view .LVU9
+  54              		.loc 1 21 26 is_stmt 0 view .LVU10
+  55 0018 4373     		strb	r3, [r0, #13]
+  56 001a 8373     		strb	r3, [r0, #14]
+  57 001c C373     		strb	r3, [r0, #15]
+  58 001e 0374     		strb	r3, [r0, #16]
+  22:../../util/dynbuf_util.c ****   dynamic_buf->count = 0;
+  59              		.loc 1 22 3 is_stmt 1 view .LVU11
+  60              		.loc 1 22 22 is_stmt 0 view .LVU12
+  61 0020 4374     		strb	r3, [r0, #17]
+  62 0022 8374     		strb	r3, [r0, #18]
+  63 0024 C374     		strb	r3, [r0, #19]
+  64 0026 0375     		strb	r3, [r0, #20]
+  23:../../util/dynbuf_util.c **** }
+  65              		.loc 1 23 1 view .LVU13
+  66 0028 7047     		bx	lr
+  67              		.cfi_endproc
+  68              	.LFE0:
+  70              		.section	.text.dynamic_buf_push,"ax",%progbits
+  71              		.align	1
+  72              		.global	dynamic_buf_push
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	dynamic_buf_push:
+  78              	.LVL1:
+  79              	.LFB1:
+  24:../../util/dynbuf_util.c **** 
+  25:../../util/dynbuf_util.c **** BOOL dynamic_buf_push(dynamic_buf_t * dynamic_buf, void * data, size_t data_len)
+  26:../../util/dynbuf_util.c **** {
+  80              		.loc 1 26 1 is_stmt 1 view -0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		.loc 1 26 1 is_stmt 0 view .LVU15
+  85 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  86              	.LCFI0:
+  87              		.cfi_def_cfa_offset 32
+  88              		.cfi_offset 3, -32
+  89              		.cfi_offset 4, -28
+  90              		.cfi_offset 5, -24
+  91              		.cfi_offset 6, -20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 3
+
+
+  92              		.cfi_offset 7, -16
+  93              		.cfi_offset 8, -12
+  94              		.cfi_offset 9, -8
+  95              		.cfi_offset 14, -4
+  96 0004 1646     		mov	r6, r2
+  27:../../util/dynbuf_util.c ****   dynamic_buf_item_t  * item;
+  97              		.loc 1 27 3 is_stmt 1 view .LVU16
+  28:../../util/dynbuf_util.c ****   size_t alloc_size;
+  98              		.loc 1 28 3 view .LVU17
+  29:../../util/dynbuf_util.c **** 
+  30:../../util/dynbuf_util.c ****   alloc_size = sizeof(dynamic_buf_item_t) + data_len;
+  99              		.loc 1 30 3 view .LVU18
+ 100              		.loc 1 30 14 is_stmt 0 view .LVU19
+ 101 0006 02F10808 		add	r8, r2, #8
+ 102              	.LVL2:
+  31:../../util/dynbuf_util.c **** 
+  32:../../util/dynbuf_util.c **** 
+  33:../../util/dynbuf_util.c ****   if (dynamic_buf->alloc_size + alloc_size > dynamic_buf->max_alloc_size) return FALSE;
+ 103              		.loc 1 33 3 is_stmt 1 view .LVU20
+ 104              		.loc 1 33 18 is_stmt 0 view .LVU21
+ 105 000a D0F80930 		ldr	r3, [r0, #9]	@ unaligned
+ 106              		.loc 1 33 31 view .LVU22
+ 107 000e 4344     		add	r3, r3, r8
+ 108              		.loc 1 33 57 view .LVU23
+ 109 0010 D0F80520 		ldr	r2, [r0, #5]	@ unaligned
+ 110              	.LVL3:
+ 111              		.loc 1 33 6 view .LVU24
+ 112 0014 9342     		cmp	r3, r2
+ 113 0016 32D8     		bhi	.L7
+ 114 0018 0446     		mov	r4, r0
+ 115 001a 0F46     		mov	r7, r1
+  34:../../util/dynbuf_util.c **** 
+  35:../../util/dynbuf_util.c ****   if (dynamic_buf->first) {
+ 116              		.loc 1 35 3 is_stmt 1 view .LVU25
+ 117              		.loc 1 35 18 is_stmt 0 view .LVU26
+ 118 001c 0368     		ldr	r3, [r0]	@ unaligned
+ 119              		.loc 1 35 6 view .LVU27
+ 120 001e 43B3     		cbz	r3, .L4
+ 121              	.L5:
+ 122              	.LVL4:
+  36:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+  37:../../util/dynbuf_util.c ****      while (item->next) {
+ 123              		.loc 1 37 13 is_stmt 1 view .LVU28
+ 124 0020 9946     		mov	r9, r3
+ 125              		.loc 1 37 17 is_stmt 0 view .LVU29
+ 126 0022 1B68     		ldr	r3, [r3]	@ unaligned
+ 127              	.LVL5:
+ 128              		.loc 1 37 13 view .LVU30
+ 129 0024 002B     		cmp	r3, #0
+ 130 0026 FBD1     		bne	.L5
+  38:../../util/dynbuf_util.c ****        item = item->next;
+  39:../../util/dynbuf_util.c ****      }
+  40:../../util/dynbuf_util.c ****      item->next = (dynamic_buf_item_t  *)malloc(alloc_size);
+ 131              		.loc 1 40 6 is_stmt 1 view .LVU31
+ 132              		.loc 1 40 42 is_stmt 0 view .LVU32
+ 133 0028 4046     		mov	r0, r8
+ 134              	.LVL6:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 4
+
+
+ 135              		.loc 1 40 42 view .LVU33
+ 136 002a FFF7FEFF 		bl	malloc
+ 137              	.LVL7:
+ 138              		.loc 1 40 42 view .LVU34
+ 139 002e 0546     		mov	r5, r0
+ 140              		.loc 1 40 17 discriminator 1 view .LVU35
+ 141 0030 C9F80000 		str	r0, [r9]	@ unaligned
+  41:../../util/dynbuf_util.c ****      item = item->next;
+ 142              		.loc 1 41 6 is_stmt 1 view .LVU36
+ 143              	.LVL8:
+ 144              	.L6:
+  42:../../util/dynbuf_util.c ****   }
+  43:../../util/dynbuf_util.c ****   else {
+  44:../../util/dynbuf_util.c ****      dynamic_buf->first = (dynamic_buf_item_t  *)malloc(alloc_size);
+  45:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+  46:../../util/dynbuf_util.c ****   }
+  47:../../util/dynbuf_util.c **** 
+  48:../../util/dynbuf_util.c ****   if (!item) {
+ 145              		.loc 1 48 3 view .LVU37
+ 146              		.loc 1 48 6 is_stmt 0 view .LVU38
+ 147 0034 2DB3     		cbz	r5, .L8
+  49:../../util/dynbuf_util.c ****        return FALSE;
+  50:../../util/dynbuf_util.c ****   }
+  51:../../util/dynbuf_util.c **** 
+  52:../../util/dynbuf_util.c ****   memcpy(item->data, data, data_len);
+ 148              		.loc 1 52 3 is_stmt 1 view .LVU39
+ 149 0036 3246     		mov	r2, r6
+ 150 0038 3946     		mov	r1, r7
+ 151 003a 05F10800 		add	r0, r5, #8
+ 152              	.LVL9:
+ 153              		.loc 1 52 3 is_stmt 0 view .LVU40
+ 154 003e FFF7FEFF 		bl	memcpy
+ 155              	.LVL10:
+  53:../../util/dynbuf_util.c ****   item->data_len = data_len;
+ 156              		.loc 1 53 3 is_stmt 1 view .LVU41
+ 157              		.loc 1 53 18 is_stmt 0 view .LVU42
+ 158 0042 6E60     		str	r6, [r5, #4]	@ unaligned
+  54:../../util/dynbuf_util.c ****   item->next = NULL;
+ 159              		.loc 1 54 3 is_stmt 1 view .LVU43
+ 160              		.loc 1 54 14 is_stmt 0 view .LVU44
+ 161 0044 0023     		movs	r3, #0
+ 162 0046 2B70     		strb	r3, [r5]
+ 163 0048 6B70     		strb	r3, [r5, #1]
+ 164 004a AB70     		strb	r3, [r5, #2]
+ 165 004c EB70     		strb	r3, [r5, #3]
+  55:../../util/dynbuf_util.c ****   dynamic_buf->alloc_size += alloc_size;
+ 166              		.loc 1 55 3 is_stmt 1 view .LVU45
+ 167              		.loc 1 55 14 is_stmt 0 view .LVU46
+ 168 004e D4F80930 		ldr	r3, [r4, #9]	@ unaligned
+ 169              		.loc 1 55 27 view .LVU47
+ 170 0052 4344     		add	r3, r3, r8
+ 171 0054 C4F80930 		str	r3, [r4, #9]	@ unaligned
+  56:../../util/dynbuf_util.c ****   dynamic_buf->data_size += data_len;
+ 172              		.loc 1 56 3 is_stmt 1 view .LVU48
+ 173              		.loc 1 56 14 is_stmt 0 view .LVU49
+ 174 0058 D4F80D30 		ldr	r3, [r4, #13]	@ unaligned
+ 175              		.loc 1 56 26 view .LVU50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 5
+
+
+ 176 005c 3344     		add	r3, r3, r6
+ 177 005e C4F80D30 		str	r3, [r4, #13]	@ unaligned
+  57:../../util/dynbuf_util.c ****   dynamic_buf->count++;
+ 178              		.loc 1 57 3 is_stmt 1 view .LVU51
+ 179              		.loc 1 57 14 is_stmt 0 view .LVU52
+ 180 0062 D4F81130 		ldr	r3, [r4, #17]	@ unaligned
+ 181              		.loc 1 57 21 view .LVU53
+ 182 0066 0133     		adds	r3, r3, #1
+ 183 0068 C4F81130 		str	r3, [r4, #17]	@ unaligned
+  58:../../util/dynbuf_util.c ****   return TRUE;
+ 184              		.loc 1 58 3 is_stmt 1 view .LVU54
+ 185              		.loc 1 58 10 is_stmt 0 view .LVU55
+ 186 006c 0120     		movs	r0, #1
+ 187              	.LVL11:
+ 188              	.L3:
+  59:../../util/dynbuf_util.c **** }
+ 189              		.loc 1 59 1 view .LVU56
+ 190 006e BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 191              	.LVL12:
+ 192              	.L4:
+  44:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+ 193              		.loc 1 44 6 is_stmt 1 view .LVU57
+  44:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+ 194              		.loc 1 44 50 is_stmt 0 view .LVU58
+ 195 0072 4046     		mov	r0, r8
+ 196              	.LVL13:
+  44:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+ 197              		.loc 1 44 50 view .LVU59
+ 198 0074 FFF7FEFF 		bl	malloc
+ 199              	.LVL14:
+  44:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+ 200              		.loc 1 44 50 view .LVU60
+ 201 0078 0546     		mov	r5, r0
+  44:../../util/dynbuf_util.c ****      item = dynamic_buf->first;
+ 202              		.loc 1 44 25 discriminator 1 view .LVU61
+ 203 007a 2060     		str	r0, [r4]	@ unaligned
+  45:../../util/dynbuf_util.c ****   }
+ 204              		.loc 1 45 6 is_stmt 1 view .LVU62
+ 205              	.LVL15:
+  45:../../util/dynbuf_util.c ****   }
+ 206              		.loc 1 45 6 is_stmt 0 view .LVU63
+ 207 007c DAE7     		b	.L6
+ 208              	.LVL16:
+ 209              	.L7:
+  33:../../util/dynbuf_util.c **** 
+ 210              		.loc 1 33 82 discriminator 1 view .LVU64
+ 211 007e 0020     		movs	r0, #0
+ 212              	.LVL17:
+  33:../../util/dynbuf_util.c **** 
+ 213              		.loc 1 33 82 discriminator 1 view .LVU65
+ 214 0080 F5E7     		b	.L3
+ 215              	.LVL18:
+ 216              	.L8:
+  49:../../util/dynbuf_util.c ****   }
+ 217              		.loc 1 49 15 view .LVU66
+ 218 0082 0020     		movs	r0, #0
+ 219              	.LVL19:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 6
+
+
+  49:../../util/dynbuf_util.c ****   }
+ 220              		.loc 1 49 15 view .LVU67
+ 221 0084 F3E7     		b	.L3
+ 222              		.cfi_endproc
+ 223              	.LFE1:
+ 225              		.section	.text.dynamic_buf_push_io,"ax",%progbits
+ 226              		.align	1
+ 227              		.global	dynamic_buf_push_io
+ 228              		.syntax unified
+ 229              		.thumb
+ 230              		.thumb_func
+ 232              	dynamic_buf_push_io:
+ 233              	.LVL20:
+ 234              	.LFB2:
+  60:../../util/dynbuf_util.c **** 
+  61:../../util/dynbuf_util.c **** size_t dynamic_buf_push_io(dynamic_buf_t * dynamic_buf, void * data, size_t data_len)
+  62:../../util/dynbuf_util.c **** {
+ 235              		.loc 1 62 1 is_stmt 1 view -0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		.loc 1 62 1 is_stmt 0 view .LVU69
+ 240 0000 10B5     		push	{r4, lr}
+ 241              	.LCFI1:
+ 242              		.cfi_def_cfa_offset 8
+ 243              		.cfi_offset 4, -8
+ 244              		.cfi_offset 14, -4
+ 245 0002 1446     		mov	r4, r2
+  63:../../util/dynbuf_util.c **** 	return dynamic_buf_push(dynamic_buf, data, data_len) ? data_len : 0;
+ 246              		.loc 1 63 2 is_stmt 1 view .LVU70
+ 247              		.loc 1 63 9 is_stmt 0 view .LVU71
+ 248 0004 FFF7FEFF 		bl	dynamic_buf_push
+ 249              	.LVL21:
+ 250              		.loc 1 63 66 discriminator 1 view .LVU72
+ 251 0008 08B1     		cbz	r0, .L12
+ 252 000a 2046     		mov	r0, r4
+ 253              	.L10:
+  64:../../util/dynbuf_util.c **** }
+ 254              		.loc 1 64 1 view .LVU73
+ 255 000c 10BD     		pop	{r4, pc}
+ 256              	.LVL22:
+ 257              	.L12:
+  63:../../util/dynbuf_util.c **** 	return dynamic_buf_push(dynamic_buf, data, data_len) ? data_len : 0;
+ 258              		.loc 1 63 66 discriminator 2 view .LVU74
+ 259 000e 0020     		movs	r0, #0
+  63:../../util/dynbuf_util.c **** 	return dynamic_buf_push(dynamic_buf, data, data_len) ? data_len : 0;
+ 260              		.loc 1 63 66 view .LVU75
+ 261 0010 FCE7     		b	.L10
+ 262              		.cfi_endproc
+ 263              	.LFE2:
+ 265              		.section	.text.dynamic_buf_pop,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	dynamic_buf_pop
+ 268              		.syntax unified
+ 269              		.thumb
+ 270              		.thumb_func
+ 272              	dynamic_buf_pop:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 7
+
+
+ 273              	.LVL23:
+ 274              	.LFB3:
+  65:../../util/dynbuf_util.c **** 
+  66:../../util/dynbuf_util.c **** 
+  67:../../util/dynbuf_util.c **** BOOL dynamic_buf_pop(dynamic_buf_t * dynamic_buf, void * buf, size_t buf_size, size_t * data_len)
+  68:../../util/dynbuf_util.c **** {
+ 275              		.loc 1 68 1 is_stmt 1 view -0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 0
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279              		.loc 1 68 1 is_stmt 0 view .LVU77
+ 280 0000 70B5     		push	{r4, r5, r6, lr}
+ 281              	.LCFI2:
+ 282              		.cfi_def_cfa_offset 16
+ 283              		.cfi_offset 4, -16
+ 284              		.cfi_offset 5, -12
+ 285              		.cfi_offset 6, -8
+ 286              		.cfi_offset 14, -4
+ 287 0002 0446     		mov	r4, r0
+ 288 0004 9446     		mov	ip, r2
+  69:../../util/dynbuf_util.c ****   dynamic_buf_item_t  * item;
+ 289              		.loc 1 69 3 is_stmt 1 view .LVU78
+  70:../../util/dynbuf_util.c ****   size_t alloc_size;
+ 290              		.loc 1 70 3 view .LVU79
+  71:../../util/dynbuf_util.c **** 
+  72:../../util/dynbuf_util.c **** 
+  73:../../util/dynbuf_util.c ****   *data_len = 0;
+ 291              		.loc 1 73 3 view .LVU80
+ 292              		.loc 1 73 13 is_stmt 0 view .LVU81
+ 293 0006 0022     		movs	r2, #0
+ 294              	.LVL24:
+ 295              		.loc 1 73 13 view .LVU82
+ 296 0008 1A60     		str	r2, [r3]
+  74:../../util/dynbuf_util.c **** 
+  75:../../util/dynbuf_util.c ****   if (!dynamic_buf->first) return FALSE;
+ 297              		.loc 1 75 3 is_stmt 1 view .LVU83
+ 298              		.loc 1 75 19 is_stmt 0 view .LVU84
+ 299 000a 0268     		ldr	r2, [r0]	@ unaligned
+ 300              		.loc 1 75 6 view .LVU85
+ 301 000c 12B3     		cbz	r2, .L16
+ 302 000e 0846     		mov	r0, r1
+ 303              	.LVL25:
+  76:../../util/dynbuf_util.c **** 
+  77:../../util/dynbuf_util.c ****   alloc_size = sizeof(dynamic_buf_item_t) + dynamic_buf->first->data_len;
+ 304              		.loc 1 77 3 is_stmt 1 view .LVU86
+ 305              		.loc 1 77 63 is_stmt 0 view .LVU87
+ 306 0010 5268     		ldr	r2, [r2, #4]	@ unaligned
+ 307              		.loc 1 77 14 view .LVU88
+ 308 0012 02F10805 		add	r5, r2, #8
+ 309              	.LVL26:
+  78:../../util/dynbuf_util.c **** 
+  79:../../util/dynbuf_util.c **** 
+  80:../../util/dynbuf_util.c ****   *data_len = dynamic_buf->first->data_len > buf_size ? buf_size : dynamic_buf->first->data_len;
+ 310              		.loc 1 80 3 is_stmt 1 view .LVU89
+ 311              		.loc 1 80 66 is_stmt 0 view .LVU90
+ 312 0016 6245     		cmp	r2, ip
+ 313 0018 28BF     		it	cs
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 8
+
+
+ 314 001a 6246     		movcs	r2, ip
+ 315              		.loc 1 80 13 view .LVU91
+ 316 001c 1A60     		str	r2, [r3]
+  81:../../util/dynbuf_util.c ****   memcpy(buf, dynamic_buf->first->data, *data_len);
+ 317              		.loc 1 81 3 is_stmt 1 view .LVU92
+ 318              		.loc 1 81 26 is_stmt 0 view .LVU93
+ 319 001e 2168     		ldr	r1, [r4]	@ unaligned
+ 320              	.LVL27:
+ 321              		.loc 1 81 3 view .LVU94
+ 322 0020 0831     		adds	r1, r1, #8
+ 323 0022 FFF7FEFF 		bl	memcpy
+ 324              	.LVL28:
+  82:../../util/dynbuf_util.c ****   item = dynamic_buf->first->next;
+ 325              		.loc 1 82 3 is_stmt 1 view .LVU95
+ 326              		.loc 1 82 21 is_stmt 0 view .LVU96
+ 327 0026 2068     		ldr	r0, [r4]	@ unaligned
+ 328              		.loc 1 82 8 view .LVU97
+ 329 0028 0668     		ldr	r6, [r0]	@ unaligned
+ 330              	.LVL29:
+  83:../../util/dynbuf_util.c ****   dynamic_buf->data_size -= dynamic_buf->first->data_len;
+ 331              		.loc 1 83 3 is_stmt 1 view .LVU98
+ 332              		.loc 1 83 14 is_stmt 0 view .LVU99
+ 333 002a D4F80D30 		ldr	r3, [r4, #13]	@ unaligned
+ 334              		.loc 1 83 47 view .LVU100
+ 335 002e 4268     		ldr	r2, [r0, #4]	@ unaligned
+ 336              		.loc 1 83 26 view .LVU101
+ 337 0030 9B1A     		subs	r3, r3, r2
+ 338 0032 C4F80D30 		str	r3, [r4, #13]	@ unaligned
+  84:../../util/dynbuf_util.c ****   free(dynamic_buf->first);
+ 339              		.loc 1 84 3 is_stmt 1 view .LVU102
+ 340 0036 FFF7FEFF 		bl	free
+ 341              	.LVL30:
+  85:../../util/dynbuf_util.c ****   dynamic_buf->first = item;
+ 342              		.loc 1 85 3 view .LVU103
+ 343              		.loc 1 85 22 is_stmt 0 view .LVU104
+ 344 003a 2660     		str	r6, [r4]	@ unaligned
+  86:../../util/dynbuf_util.c ****   dynamic_buf->alloc_size -= alloc_size;
+ 345              		.loc 1 86 3 is_stmt 1 view .LVU105
+ 346              		.loc 1 86 14 is_stmt 0 view .LVU106
+ 347 003c D4F80930 		ldr	r3, [r4, #9]	@ unaligned
+ 348              		.loc 1 86 27 view .LVU107
+ 349 0040 5B1B     		subs	r3, r3, r5
+ 350 0042 C4F80930 		str	r3, [r4, #9]	@ unaligned
+  87:../../util/dynbuf_util.c ****   dynamic_buf->count--;
+ 351              		.loc 1 87 3 is_stmt 1 view .LVU108
+ 352              		.loc 1 87 14 is_stmt 0 view .LVU109
+ 353 0046 D4F81130 		ldr	r3, [r4, #17]	@ unaligned
+ 354              		.loc 1 87 21 view .LVU110
+ 355 004a 013B     		subs	r3, r3, #1
+ 356 004c C4F81130 		str	r3, [r4, #17]	@ unaligned
+  88:../../util/dynbuf_util.c ****   return TRUE;
+ 357              		.loc 1 88 3 is_stmt 1 view .LVU111
+ 358              		.loc 1 88 10 is_stmt 0 view .LVU112
+ 359 0050 0120     		movs	r0, #1
+ 360              	.LVL31:
+ 361              	.L15:
+  89:../../util/dynbuf_util.c **** }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 9
+
+
+ 362              		.loc 1 89 1 view .LVU113
+ 363 0052 70BD     		pop	{r4, r5, r6, pc}
+ 364              	.LVL32:
+ 365              	.L16:
+  75:../../util/dynbuf_util.c **** 
+ 366              		.loc 1 75 35 discriminator 1 view .LVU114
+ 367 0054 0020     		movs	r0, #0
+ 368              	.LVL33:
+  75:../../util/dynbuf_util.c **** 
+ 369              		.loc 1 75 35 discriminator 1 view .LVU115
+ 370 0056 FCE7     		b	.L15
+ 371              		.cfi_endproc
+ 372              	.LFE3:
+ 374              		.section	.text.dynamic_buf_pop_io,"ax",%progbits
+ 375              		.align	1
+ 376              		.global	dynamic_buf_pop_io
+ 377              		.syntax unified
+ 378              		.thumb
+ 379              		.thumb_func
+ 381              	dynamic_buf_pop_io:
+ 382              	.LVL34:
+ 383              	.LFB4:
+  90:../../util/dynbuf_util.c **** 
+  91:../../util/dynbuf_util.c **** 
+  92:../../util/dynbuf_util.c **** size_t dynamic_buf_pop_io(dynamic_buf_t * dynamic_buf, void * buf, size_t buf_size)
+  93:../../util/dynbuf_util.c **** {
+ 384              		.loc 1 93 1 is_stmt 1 view -0
+ 385              		.cfi_startproc
+ 386              		@ args = 0, pretend = 0, frame = 8
+ 387              		@ frame_needed = 0, uses_anonymous_args = 0
+ 388              		.loc 1 93 1 is_stmt 0 view .LVU117
+ 389 0000 00B5     		push	{lr}
+ 390              	.LCFI3:
+ 391              		.cfi_def_cfa_offset 4
+ 392              		.cfi_offset 14, -4
+ 393 0002 83B0     		sub	sp, sp, #12
+ 394              	.LCFI4:
+ 395              		.cfi_def_cfa_offset 16
+  94:../../util/dynbuf_util.c **** 	size_t data_len;
+ 396              		.loc 1 94 2 is_stmt 1 view .LVU118
+  95:../../util/dynbuf_util.c **** 
+  96:../../util/dynbuf_util.c **** 	if (!dynamic_buf_pop(dynamic_buf, buf, buf_size, &data_len)) return 0;
+ 397              		.loc 1 96 2 view .LVU119
+ 398              		.loc 1 96 7 is_stmt 0 view .LVU120
+ 399 0004 01AB     		add	r3, sp, #4
+ 400 0006 FFF7FEFF 		bl	dynamic_buf_pop
+ 401              	.LVL35:
+ 402              		.loc 1 96 5 discriminator 1 view .LVU121
+ 403 000a 18B1     		cbz	r0, .L20
+  97:../../util/dynbuf_util.c **** 
+  98:../../util/dynbuf_util.c **** 	return data_len;
+ 404              		.loc 1 98 2 is_stmt 1 view .LVU122
+ 405              		.loc 1 98 9 is_stmt 0 view .LVU123
+ 406 000c 0198     		ldr	r0, [sp, #4]
+ 407              	.L18:
+  99:../../util/dynbuf_util.c **** }
+ 408              		.loc 1 99 1 view .LVU124
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 10
+
+
+ 409 000e 03B0     		add	sp, sp, #12
+ 410              	.LCFI5:
+ 411              		.cfi_remember_state
+ 412              		.cfi_def_cfa_offset 4
+ 413              		@ sp needed
+ 414 0010 5DF804FB 		ldr	pc, [sp], #4
+ 415              	.L20:
+ 416              	.LCFI6:
+ 417              		.cfi_restore_state
+  96:../../util/dynbuf_util.c **** 
+ 418              		.loc 1 96 70 discriminator 1 view .LVU125
+ 419 0014 0020     		movs	r0, #0
+ 420 0016 FAE7     		b	.L18
+ 421              		.cfi_endproc
+ 422              	.LFE4:
+ 424              		.section	.text.dynamic_buf_clear,"ax",%progbits
+ 425              		.align	1
+ 426              		.global	dynamic_buf_clear
+ 427              		.syntax unified
+ 428              		.thumb
+ 429              		.thumb_func
+ 431              	dynamic_buf_clear:
+ 432              	.LVL36:
+ 433              	.LFB5:
+ 100:../../util/dynbuf_util.c **** 
+ 101:../../util/dynbuf_util.c **** 
+ 102:../../util/dynbuf_util.c **** void dynamic_buf_clear(dynamic_buf_t * dynamic_buf)
+ 103:../../util/dynbuf_util.c **** {
+ 434              		.loc 1 103 1 is_stmt 1 view -0
+ 435              		.cfi_startproc
+ 436              		@ args = 0, pretend = 0, frame = 0
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+ 438              		.loc 1 103 1 is_stmt 0 view .LVU127
+ 439 0000 38B5     		push	{r3, r4, r5, lr}
+ 440              	.LCFI7:
+ 441              		.cfi_def_cfa_offset 16
+ 442              		.cfi_offset 3, -16
+ 443              		.cfi_offset 4, -12
+ 444              		.cfi_offset 5, -8
+ 445              		.cfi_offset 14, -4
+ 446 0002 0446     		mov	r4, r0
+ 104:../../util/dynbuf_util.c ****   dynamic_buf_item_t  * item, * next;
+ 447              		.loc 1 104 3 is_stmt 1 view .LVU128
+ 105:../../util/dynbuf_util.c **** 
+ 106:../../util/dynbuf_util.c ****   //if (!dynamic_buf->first) return;
+ 107:../../util/dynbuf_util.c **** 
+ 108:../../util/dynbuf_util.c ****   item = dynamic_buf->first;
+ 448              		.loc 1 108 3 view .LVU129
+ 449              		.loc 1 108 8 is_stmt 0 view .LVU130
+ 450 0004 0068     		ldr	r0, [r0]	@ unaligned
+ 451              	.LVL37:
+ 109:../../util/dynbuf_util.c ****   while (item) {
+ 452              		.loc 1 109 3 is_stmt 1 view .LVU131
+ 453              		.loc 1 109 9 is_stmt 0 view .LVU132
+ 454 0006 03E0     		b	.L23
+ 455              	.L24:
+ 110:../../util/dynbuf_util.c ****      next = item->next;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 11
+
+
+ 456              		.loc 1 110 6 is_stmt 1 view .LVU133
+ 457              		.loc 1 110 11 is_stmt 0 view .LVU134
+ 458 0008 0568     		ldr	r5, [r0]	@ unaligned
+ 459              	.LVL38:
+ 111:../../util/dynbuf_util.c ****      free(item);
+ 460              		.loc 1 111 6 is_stmt 1 view .LVU135
+ 461 000a FFF7FEFF 		bl	free
+ 462              	.LVL39:
+ 112:../../util/dynbuf_util.c ****      item = next;
+ 463              		.loc 1 112 6 view .LVU136
+ 464              		.loc 1 112 11 is_stmt 0 view .LVU137
+ 465 000e 2846     		mov	r0, r5
+ 466              	.LVL40:
+ 467              	.L23:
+ 109:../../util/dynbuf_util.c ****      next = item->next;
+ 468              		.loc 1 109 10 is_stmt 1 view .LVU138
+ 469 0010 0028     		cmp	r0, #0
+ 470 0012 F9D1     		bne	.L24
+ 113:../../util/dynbuf_util.c ****   }
+ 114:../../util/dynbuf_util.c ****   dynamic_buf->first = NULL;
+ 471              		.loc 1 114 3 view .LVU139
+ 472              		.loc 1 114 22 is_stmt 0 view .LVU140
+ 473 0014 0023     		movs	r3, #0
+ 474 0016 2370     		strb	r3, [r4]
+ 475 0018 6370     		strb	r3, [r4, #1]
+ 476 001a A370     		strb	r3, [r4, #2]
+ 477 001c E370     		strb	r3, [r4, #3]
+ 115:../../util/dynbuf_util.c ****   dynamic_buf->alloc_size = 0;
+ 478              		.loc 1 115 3 is_stmt 1 view .LVU141
+ 479              		.loc 1 115 27 is_stmt 0 view .LVU142
+ 480 001e 6372     		strb	r3, [r4, #9]
+ 481 0020 A372     		strb	r3, [r4, #10]
+ 482 0022 E372     		strb	r3, [r4, #11]
+ 483 0024 2373     		strb	r3, [r4, #12]
+ 116:../../util/dynbuf_util.c ****   dynamic_buf->data_size = 0;
+ 484              		.loc 1 116 3 is_stmt 1 view .LVU143
+ 485              		.loc 1 116 26 is_stmt 0 view .LVU144
+ 486 0026 6373     		strb	r3, [r4, #13]
+ 487 0028 A373     		strb	r3, [r4, #14]
+ 488 002a E373     		strb	r3, [r4, #15]
+ 489 002c 2374     		strb	r3, [r4, #16]
+ 117:../../util/dynbuf_util.c ****   dynamic_buf->count = 0;
+ 490              		.loc 1 117 3 is_stmt 1 view .LVU145
+ 491              		.loc 1 117 22 is_stmt 0 view .LVU146
+ 492 002e 6374     		strb	r3, [r4, #17]
+ 493 0030 A374     		strb	r3, [r4, #18]
+ 494 0032 E374     		strb	r3, [r4, #19]
+ 495 0034 2375     		strb	r3, [r4, #20]
+ 118:../../util/dynbuf_util.c **** }
+ 496              		.loc 1 118 1 view .LVU147
+ 497 0036 38BD     		pop	{r3, r4, r5, pc}
+ 498              		.loc 1 118 1 view .LVU148
+ 499              		.cfi_endproc
+ 500              	.LFE5:
+ 502              		.section	.text.dynamic_buf_is_empty,"ax",%progbits
+ 503              		.align	1
+ 504              		.global	dynamic_buf_is_empty
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 12
+
+
+ 505              		.syntax unified
+ 506              		.thumb
+ 507              		.thumb_func
+ 509              	dynamic_buf_is_empty:
+ 510              	.LVL41:
+ 511              	.LFB6:
+ 119:../../util/dynbuf_util.c **** 
+ 120:../../util/dynbuf_util.c **** 
+ 121:../../util/dynbuf_util.c **** BOOL dynamic_buf_is_empty(dynamic_buf_t * dynamic_buf)
+ 122:../../util/dynbuf_util.c **** {
+ 512              		.loc 1 122 1 is_stmt 1 view -0
+ 513              		.cfi_startproc
+ 514              		@ args = 0, pretend = 0, frame = 0
+ 515              		@ frame_needed = 0, uses_anonymous_args = 0
+ 516              		@ link register save eliminated.
+ 123:../../util/dynbuf_util.c ****    return dynamic_buf->first == NULL;
+ 517              		.loc 1 123 4 view .LVU150
+ 518              		.loc 1 123 22 is_stmt 0 view .LVU151
+ 519 0000 0068     		ldr	r0, [r0]	@ unaligned
+ 520              	.LVL42:
+ 124:../../util/dynbuf_util.c **** }
+ 521              		.loc 1 124 1 view .LVU152
+ 522 0002 B0FA80F0 		clz	r0, r0
+ 523 0006 4009     		lsrs	r0, r0, #5
+ 524 0008 7047     		bx	lr
+ 525              		.cfi_endproc
+ 526              	.LFE6:
+ 528              		.section	.text.dynamic_buf_get_busy,"ax",%progbits
+ 529              		.align	1
+ 530              		.global	dynamic_buf_get_busy
+ 531              		.syntax unified
+ 532              		.thumb
+ 533              		.thumb_func
+ 535              	dynamic_buf_get_busy:
+ 536              	.LVL43:
+ 537              	.LFB7:
+ 125:../../util/dynbuf_util.c **** 
+ 126:../../util/dynbuf_util.c **** BOOL dynamic_buf_get_busy(dynamic_buf_t * dynamic_buf)
+ 127:../../util/dynbuf_util.c **** {
+ 538              		.loc 1 127 1 is_stmt 1 view -0
+ 539              		.cfi_startproc
+ 540              		@ args = 0, pretend = 0, frame = 0
+ 541              		@ frame_needed = 0, uses_anonymous_args = 0
+ 542              		@ link register save eliminated.
+ 128:../../util/dynbuf_util.c ****    return dynamic_buf->busy;
+ 543              		.loc 1 128 4 view .LVU154
+ 129:../../util/dynbuf_util.c **** }
+ 544              		.loc 1 129 1 is_stmt 0 view .LVU155
+ 545 0000 0079     		ldrb	r0, [r0, #4]	@ zero_extendqisi2
+ 546              	.LVL44:
+ 547              		.loc 1 129 1 view .LVU156
+ 548 0002 7047     		bx	lr
+ 549              		.cfi_endproc
+ 550              	.LFE7:
+ 552              		.section	.text.dynamic_buf_set_busy,"ax",%progbits
+ 553              		.align	1
+ 554              		.global	dynamic_buf_set_busy
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 13
+
+
+ 555              		.syntax unified
+ 556              		.thumb
+ 557              		.thumb_func
+ 559              	dynamic_buf_set_busy:
+ 560              	.LVL45:
+ 561              	.LFB8:
+ 130:../../util/dynbuf_util.c **** 
+ 131:../../util/dynbuf_util.c **** void dynamic_buf_set_busy(dynamic_buf_t * dynamic_buf, BOOL value)
+ 132:../../util/dynbuf_util.c **** {
+ 562              		.loc 1 132 1 is_stmt 1 view -0
+ 563              		.cfi_startproc
+ 564              		@ args = 0, pretend = 0, frame = 0
+ 565              		@ frame_needed = 0, uses_anonymous_args = 0
+ 566              		@ link register save eliminated.
+ 133:../../util/dynbuf_util.c **** 	dynamic_buf->busy = value;
+ 567              		.loc 1 133 2 view .LVU158
+ 568              		.loc 1 133 20 is_stmt 0 view .LVU159
+ 569 0000 0171     		strb	r1, [r0, #4]
+ 134:../../util/dynbuf_util.c **** }
+ 570              		.loc 1 134 1 view .LVU160
+ 571 0002 7047     		bx	lr
+ 572              		.cfi_endproc
+ 573              	.LFE8:
+ 575              		.section	.text.dynamic_buf_get_data_size,"ax",%progbits
+ 576              		.align	1
+ 577              		.global	dynamic_buf_get_data_size
+ 578              		.syntax unified
+ 579              		.thumb
+ 580              		.thumb_func
+ 582              	dynamic_buf_get_data_size:
+ 583              	.LVL46:
+ 584              	.LFB9:
+ 135:../../util/dynbuf_util.c **** 
+ 136:../../util/dynbuf_util.c **** size_t dynamic_buf_get_data_size(dynamic_buf_t * dynamic_buf)
+ 137:../../util/dynbuf_util.c **** {
+ 585              		.loc 1 137 1 is_stmt 1 view -0
+ 586              		.cfi_startproc
+ 587              		@ args = 0, pretend = 0, frame = 0
+ 588              		@ frame_needed = 0, uses_anonymous_args = 0
+ 589              		@ link register save eliminated.
+ 138:../../util/dynbuf_util.c **** 	return dynamic_buf->data_size;
+ 590              		.loc 1 138 2 view .LVU162
+ 139:../../util/dynbuf_util.c **** }
+ 591              		.loc 1 139 1 is_stmt 0 view .LVU163
+ 592 0000 D0F80D00 		ldr	r0, [r0, #13]	@ unaligned
+ 593              	.LVL47:
+ 594              		.loc 1 139 1 view .LVU164
+ 595 0004 7047     		bx	lr
+ 596              		.cfi_endproc
+ 597              	.LFE9:
+ 599              		.section	.text.dynamic_buf_get_free_size,"ax",%progbits
+ 600              		.align	1
+ 601              		.global	dynamic_buf_get_free_size
+ 602              		.syntax unified
+ 603              		.thumb
+ 604              		.thumb_func
+ 606              	dynamic_buf_get_free_size:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 14
+
+
+ 607              	.LVL48:
+ 608              	.LFB10:
+ 140:../../util/dynbuf_util.c **** 
+ 141:../../util/dynbuf_util.c **** size_t dynamic_buf_get_free_size(dynamic_buf_t * dynamic_buf)
+ 142:../../util/dynbuf_util.c **** {
+ 609              		.loc 1 142 1 is_stmt 1 view -0
+ 610              		.cfi_startproc
+ 611              		@ args = 0, pretend = 0, frame = 0
+ 612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 613              		@ link register save eliminated.
+ 143:../../util/dynbuf_util.c **** 	return dynamic_buf->max_alloc_size - dynamic_buf->alloc_size;
+ 614              		.loc 1 143 2 view .LVU166
+ 615              		.loc 1 143 20 is_stmt 0 view .LVU167
+ 616 0000 D0F80520 		ldr	r2, [r0, #5]	@ unaligned
+ 617              		.loc 1 143 50 view .LVU168
+ 618 0004 D0F80900 		ldr	r0, [r0, #9]	@ unaligned
+ 619              	.LVL49:
+ 144:../../util/dynbuf_util.c **** }
+ 620              		.loc 1 144 1 view .LVU169
+ 621 0008 101A     		subs	r0, r2, r0
+ 622 000a 7047     		bx	lr
+ 623              		.cfi_endproc
+ 624              	.LFE10:
+ 626              		.section	.text.dynamic_buf_get_max_alloc_size,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	dynamic_buf_get_max_alloc_size
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	dynamic_buf_get_max_alloc_size:
+ 634              	.LVL50:
+ 635              	.LFB11:
+ 145:../../util/dynbuf_util.c **** 
+ 146:../../util/dynbuf_util.c **** size_t dynamic_buf_get_max_alloc_size(dynamic_buf_t * dynamic_buf)
+ 147:../../util/dynbuf_util.c **** {
+ 636              		.loc 1 147 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 640              		@ link register save eliminated.
+ 148:../../util/dynbuf_util.c **** 	return dynamic_buf->max_alloc_size;
+ 641              		.loc 1 148 2 view .LVU171
+ 149:../../util/dynbuf_util.c **** }
+ 642              		.loc 1 149 1 is_stmt 0 view .LVU172
+ 643 0000 D0F80500 		ldr	r0, [r0, #5]	@ unaligned
+ 644              	.LVL51:
+ 645              		.loc 1 149 1 view .LVU173
+ 646 0004 7047     		bx	lr
+ 647              		.cfi_endproc
+ 648              	.LFE11:
+ 650              		.section	.text.dynamic_buf_set_max_alloc_size,"ax",%progbits
+ 651              		.align	1
+ 652              		.global	dynamic_buf_set_max_alloc_size
+ 653              		.syntax unified
+ 654              		.thumb
+ 655              		.thumb_func
+ 657              	dynamic_buf_set_max_alloc_size:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 15
+
+
+ 658              	.LVL52:
+ 659              	.LFB12:
+ 150:../../util/dynbuf_util.c **** 
+ 151:../../util/dynbuf_util.c **** void dynamic_buf_set_max_alloc_size(dynamic_buf_t * dynamic_buf, size_t size)
+ 152:../../util/dynbuf_util.c **** {
+ 660              		.loc 1 152 1 is_stmt 1 view -0
+ 661              		.cfi_startproc
+ 662              		@ args = 0, pretend = 0, frame = 0
+ 663              		@ frame_needed = 0, uses_anonymous_args = 0
+ 664              		@ link register save eliminated.
+ 153:../../util/dynbuf_util.c **** 	dynamic_buf->max_alloc_size = size;
+ 665              		.loc 1 153 2 view .LVU175
+ 666              		.loc 1 153 30 is_stmt 0 view .LVU176
+ 667 0000 C0F80510 		str	r1, [r0, #5]	@ unaligned
+ 154:../../util/dynbuf_util.c **** }
+ 668              		.loc 1 154 1 view .LVU177
+ 669 0004 7047     		bx	lr
+ 670              		.cfi_endproc
+ 671              	.LFE12:
+ 673              		.section	.text.dynamic_buf_get_count,"ax",%progbits
+ 674              		.align	1
+ 675              		.global	dynamic_buf_get_count
+ 676              		.syntax unified
+ 677              		.thumb
+ 678              		.thumb_func
+ 680              	dynamic_buf_get_count:
+ 681              	.LVL53:
+ 682              	.LFB13:
+ 155:../../util/dynbuf_util.c **** 
+ 156:../../util/dynbuf_util.c **** size_t dynamic_buf_get_count(dynamic_buf_t * dynamic_buf)
+ 157:../../util/dynbuf_util.c **** {
+ 683              		.loc 1 157 1 is_stmt 1 view -0
+ 684              		.cfi_startproc
+ 685              		@ args = 0, pretend = 0, frame = 0
+ 686              		@ frame_needed = 0, uses_anonymous_args = 0
+ 687              		@ link register save eliminated.
+ 158:../../util/dynbuf_util.c **** 	return dynamic_buf->count;
+ 688              		.loc 1 158 2 view .LVU179
+ 159:../../util/dynbuf_util.c **** }
+ 689              		.loc 1 159 1 is_stmt 0 view .LVU180
+ 690 0000 D0F81100 		ldr	r0, [r0, #17]	@ unaligned
+ 691              	.LVL54:
+ 692              		.loc 1 159 1 view .LVU181
+ 693 0004 7047     		bx	lr
+ 694              		.cfi_endproc
+ 695              	.LFE13:
+ 697              		.section	.text.dynamic_buf_get_at,"ax",%progbits
+ 698              		.align	1
+ 699              		.global	dynamic_buf_get_at
+ 700              		.syntax unified
+ 701              		.thumb
+ 702              		.thumb_func
+ 704              	dynamic_buf_get_at:
+ 705              	.LVL55:
+ 706              	.LFB14:
+ 160:../../util/dynbuf_util.c **** 
+ 161:../../util/dynbuf_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 16
+
+
+ 162:../../util/dynbuf_util.c **** void * dynamic_buf_get_at(dynamic_buf_t * dynamic_buf, size_t index, size_t * data_len)
+ 163:../../util/dynbuf_util.c **** {
+ 707              		.loc 1 163 1 is_stmt 1 view -0
+ 708              		.cfi_startproc
+ 709              		@ args = 0, pretend = 0, frame = 0
+ 710              		@ frame_needed = 0, uses_anonymous_args = 0
+ 711              		@ link register save eliminated.
+ 164:../../util/dynbuf_util.c **** 	  dynamic_buf_item_t  * item;
+ 712              		.loc 1 164 4 view .LVU183
+ 165:../../util/dynbuf_util.c **** 	  size_t i;
+ 713              		.loc 1 165 4 view .LVU184
+ 166:../../util/dynbuf_util.c **** 
+ 167:../../util/dynbuf_util.c **** 	  i = 0;
+ 714              		.loc 1 167 4 view .LVU185
+ 168:../../util/dynbuf_util.c **** 	  item = dynamic_buf->first;
+ 715              		.loc 1 168 4 view .LVU186
+ 716              		.loc 1 168 9 is_stmt 0 view .LVU187
+ 717 0000 0068     		ldr	r0, [r0]	@ unaligned
+ 718              	.LVL56:
+ 169:../../util/dynbuf_util.c **** 	  while (item) {
+ 719              		.loc 1 169 4 is_stmt 1 view .LVU188
+ 167:../../util/dynbuf_util.c **** 	  item = dynamic_buf->first;
+ 720              		.loc 1 167 6 is_stmt 0 view .LVU189
+ 721 0002 0023     		movs	r3, #0
+ 722              		.loc 1 169 10 view .LVU190
+ 723 0004 01E0     		b	.L35
+ 724              	.LVL57:
+ 725              	.L36:
+ 170:../../util/dynbuf_util.c **** 		 if (index == i) {
+ 171:../../util/dynbuf_util.c **** 			 *data_len = item->data_len;
+ 172:../../util/dynbuf_util.c **** 			 return item->data;
+ 173:../../util/dynbuf_util.c **** 		 }
+ 174:../../util/dynbuf_util.c **** 	     item = item->next;
+ 726              		.loc 1 174 7 is_stmt 1 view .LVU191
+ 727              		.loc 1 174 12 is_stmt 0 view .LVU192
+ 728 0006 0068     		ldr	r0, [r0]	@ unaligned
+ 729              	.LVL58:
+ 175:../../util/dynbuf_util.c **** 	     i++;
+ 730              		.loc 1 175 7 is_stmt 1 view .LVU193
+ 731              		.loc 1 175 8 is_stmt 0 view .LVU194
+ 732 0008 0133     		adds	r3, r3, #1
+ 733              	.LVL59:
+ 734              	.L35:
+ 169:../../util/dynbuf_util.c **** 		 if (index == i) {
+ 735              		.loc 1 169 11 is_stmt 1 view .LVU195
+ 736 000a 28B1     		cbz	r0, .L39
+ 170:../../util/dynbuf_util.c **** 		 if (index == i) {
+ 737              		.loc 1 170 4 view .LVU196
+ 170:../../util/dynbuf_util.c **** 		 if (index == i) {
+ 738              		.loc 1 170 7 is_stmt 0 view .LVU197
+ 739 000c 8B42     		cmp	r3, r1
+ 740 000e FAD1     		bne	.L36
+ 171:../../util/dynbuf_util.c **** 			 return item->data;
+ 741              		.loc 1 171 5 is_stmt 1 view .LVU198
+ 171:../../util/dynbuf_util.c **** 			 return item->data;
+ 742              		.loc 1 171 21 is_stmt 0 view .LVU199
+ 743 0010 4368     		ldr	r3, [r0, #4]	@ unaligned
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 17
+
+
+ 744              	.LVL60:
+ 171:../../util/dynbuf_util.c **** 			 return item->data;
+ 745              		.loc 1 171 15 view .LVU200
+ 746 0012 1360     		str	r3, [r2]
+ 172:../../util/dynbuf_util.c **** 		 }
+ 747              		.loc 1 172 5 is_stmt 1 view .LVU201
+ 172:../../util/dynbuf_util.c **** 		 }
+ 748              		.loc 1 172 12 is_stmt 0 view .LVU202
+ 749 0014 0830     		adds	r0, r0, #8
+ 750              	.LVL61:
+ 172:../../util/dynbuf_util.c **** 		 }
+ 751              		.loc 1 172 12 view .LVU203
+ 752 0016 7047     		bx	lr
+ 753              	.LVL62:
+ 754              	.L39:
+ 176:../../util/dynbuf_util.c **** 	  }
+ 177:../../util/dynbuf_util.c **** 
+ 178:../../util/dynbuf_util.c **** 	  *data_len = 0;
+ 755              		.loc 1 178 4 is_stmt 1 view .LVU204
+ 756              		.loc 1 178 14 is_stmt 0 view .LVU205
+ 757 0018 0023     		movs	r3, #0
+ 758              	.LVL63:
+ 759              		.loc 1 178 14 view .LVU206
+ 760 001a 1360     		str	r3, [r2]
+ 179:../../util/dynbuf_util.c **** 	  return NULL;
+ 761              		.loc 1 179 4 is_stmt 1 view .LVU207
+ 180:../../util/dynbuf_util.c **** }
+ 762              		.loc 1 180 1 is_stmt 0 view .LVU208
+ 763 001c 7047     		bx	lr
+ 764              		.cfi_endproc
+ 765              	.LFE14:
+ 767              		.section	.text.dynamic_buf_delete_at,"ax",%progbits
+ 768              		.align	1
+ 769              		.global	dynamic_buf_delete_at
+ 770              		.syntax unified
+ 771              		.thumb
+ 772              		.thumb_func
+ 774              	dynamic_buf_delete_at:
+ 775              	.LVL64:
+ 776              	.LFB15:
+ 181:../../util/dynbuf_util.c **** 
+ 182:../../util/dynbuf_util.c **** BOOL dynamic_buf_delete_at(dynamic_buf_t * dynamic_buf, size_t index)
+ 183:../../util/dynbuf_util.c **** {
+ 777              		.loc 1 183 1 is_stmt 1 view -0
+ 778              		.cfi_startproc
+ 779              		@ args = 0, pretend = 0, frame = 0
+ 780              		@ frame_needed = 0, uses_anonymous_args = 0
+ 781              		.loc 1 183 1 is_stmt 0 view .LVU210
+ 782 0000 70B5     		push	{r4, r5, r6, lr}
+ 783              	.LCFI8:
+ 784              		.cfi_def_cfa_offset 16
+ 785              		.cfi_offset 4, -16
+ 786              		.cfi_offset 5, -12
+ 787              		.cfi_offset 6, -8
+ 788              		.cfi_offset 14, -4
+ 789 0002 0546     		mov	r5, r0
+ 184:../../util/dynbuf_util.c **** 	  dynamic_buf_item_t  * item, * next, * prev;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 18
+
+
+ 790              		.loc 1 184 4 is_stmt 1 view .LVU211
+ 185:../../util/dynbuf_util.c **** 	  size_t i;
+ 791              		.loc 1 185 4 view .LVU212
+ 186:../../util/dynbuf_util.c **** 
+ 187:../../util/dynbuf_util.c **** 	  i = 0;
+ 792              		.loc 1 187 4 view .LVU213
+ 793              	.LVL65:
+ 188:../../util/dynbuf_util.c **** 	  item = dynamic_buf->first;
+ 794              		.loc 1 188 4 view .LVU214
+ 795              		.loc 1 188 9 is_stmt 0 view .LVU215
+ 796 0004 0068     		ldr	r0, [r0]	@ unaligned
+ 797              	.LVL66:
+ 189:../../util/dynbuf_util.c **** 	  prev = NULL;
+ 798              		.loc 1 189 4 is_stmt 1 view .LVU216
+ 190:../../util/dynbuf_util.c **** 	  while (item) {
+ 799              		.loc 1 190 4 view .LVU217
+ 187:../../util/dynbuf_util.c **** 	  item = dynamic_buf->first;
+ 800              		.loc 1 187 6 is_stmt 0 view .LVU218
+ 801 0006 0023     		movs	r3, #0
+ 189:../../util/dynbuf_util.c **** 	  prev = NULL;
+ 802              		.loc 1 189 9 view .LVU219
+ 803 0008 1C46     		mov	r4, r3
+ 804              		.loc 1 190 10 view .LVU220
+ 805 000a 04E0     		b	.L41
+ 806              	.LVL67:
+ 807              	.L43:
+ 191:../../util/dynbuf_util.c **** 		 if (index == i) {
+ 192:../../util/dynbuf_util.c **** 			 next = item->next;
+ 193:../../util/dynbuf_util.c **** 			 dynamic_buf->data_size -= item->data_len;
+ 194:../../util/dynbuf_util.c **** 			 dynamic_buf->alloc_size -= (sizeof(dynamic_buf_item_t) + item->data_len);
+ 195:../../util/dynbuf_util.c **** 			 free(item);
+ 196:../../util/dynbuf_util.c **** 			 if (prev) prev->next = next;
+ 197:../../util/dynbuf_util.c **** 			 else dynamic_buf->first = next;
+ 808              		.loc 1 197 10 is_stmt 1 view .LVU221
+ 809              		.loc 1 197 29 is_stmt 0 view .LVU222
+ 810 000c 2E60     		str	r6, [r5]	@ unaligned
+ 811 000e 18E0     		b	.L44
+ 812              	.LVL68:
+ 813              	.L42:
+ 198:../../util/dynbuf_util.c **** 			 dynamic_buf->count--;
+ 199:../../util/dynbuf_util.c **** 			 return TRUE;
+ 200:../../util/dynbuf_util.c **** 		 }
+ 201:../../util/dynbuf_util.c **** 	     prev = item;
+ 814              		.loc 1 201 7 is_stmt 1 view .LVU223
+ 202:../../util/dynbuf_util.c **** 	     item = item->next;
+ 815              		.loc 1 202 7 view .LVU224
+ 203:../../util/dynbuf_util.c **** 	     i++;
+ 816              		.loc 1 203 7 view .LVU225
+ 817              		.loc 1 203 8 is_stmt 0 view .LVU226
+ 818 0010 0133     		adds	r3, r3, #1
+ 819              	.LVL69:
+ 201:../../util/dynbuf_util.c **** 	     item = item->next;
+ 820              		.loc 1 201 12 view .LVU227
+ 821 0012 0446     		mov	r4, r0
+ 202:../../util/dynbuf_util.c **** 	     item = item->next;
+ 822              		.loc 1 202 12 view .LVU228
+ 823 0014 0068     		ldr	r0, [r0]	@ unaligned
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 19
+
+
+ 824              	.LVL70:
+ 825              	.L41:
+ 190:../../util/dynbuf_util.c **** 		 if (index == i) {
+ 826              		.loc 1 190 11 is_stmt 1 view .LVU229
+ 827 0016 D0B1     		cbz	r0, .L45
+ 191:../../util/dynbuf_util.c **** 			 next = item->next;
+ 828              		.loc 1 191 4 view .LVU230
+ 191:../../util/dynbuf_util.c **** 			 next = item->next;
+ 829              		.loc 1 191 7 is_stmt 0 view .LVU231
+ 830 0018 8B42     		cmp	r3, r1
+ 831 001a F9D1     		bne	.L42
+ 192:../../util/dynbuf_util.c **** 			 dynamic_buf->data_size -= item->data_len;
+ 832              		.loc 1 192 5 is_stmt 1 view .LVU232
+ 192:../../util/dynbuf_util.c **** 			 dynamic_buf->data_size -= item->data_len;
+ 833              		.loc 1 192 10 is_stmt 0 view .LVU233
+ 834 001c 0668     		ldr	r6, [r0]	@ unaligned
+ 835              	.LVL71:
+ 193:../../util/dynbuf_util.c **** 			 dynamic_buf->alloc_size -= (sizeof(dynamic_buf_item_t) + item->data_len);
+ 836              		.loc 1 193 5 is_stmt 1 view .LVU234
+ 193:../../util/dynbuf_util.c **** 			 dynamic_buf->alloc_size -= (sizeof(dynamic_buf_item_t) + item->data_len);
+ 837              		.loc 1 193 16 is_stmt 0 view .LVU235
+ 838 001e D5F80D30 		ldr	r3, [r5, #13]	@ unaligned
+ 839              	.LVL72:
+ 193:../../util/dynbuf_util.c **** 			 dynamic_buf->alloc_size -= (sizeof(dynamic_buf_item_t) + item->data_len);
+ 840              		.loc 1 193 35 view .LVU236
+ 841 0022 4268     		ldr	r2, [r0, #4]	@ unaligned
+ 193:../../util/dynbuf_util.c **** 			 dynamic_buf->alloc_size -= (sizeof(dynamic_buf_item_t) + item->data_len);
+ 842              		.loc 1 193 28 view .LVU237
+ 843 0024 9B1A     		subs	r3, r3, r2
+ 844 0026 C5F80D30 		str	r3, [r5, #13]	@ unaligned
+ 194:../../util/dynbuf_util.c **** 			 free(item);
+ 845              		.loc 1 194 5 is_stmt 1 view .LVU238
+ 194:../../util/dynbuf_util.c **** 			 free(item);
+ 846              		.loc 1 194 16 is_stmt 0 view .LVU239
+ 847 002a D5F80930 		ldr	r3, [r5, #9]	@ unaligned
+ 194:../../util/dynbuf_util.c **** 			 free(item);
+ 848              		.loc 1 194 66 view .LVU240
+ 849 002e 4268     		ldr	r2, [r0, #4]	@ unaligned
+ 194:../../util/dynbuf_util.c **** 			 free(item);
+ 850              		.loc 1 194 29 view .LVU241
+ 851 0030 9B1A     		subs	r3, r3, r2
+ 852 0032 083B     		subs	r3, r3, #8
+ 853 0034 C5F80930 		str	r3, [r5, #9]	@ unaligned
+ 195:../../util/dynbuf_util.c **** 			 if (prev) prev->next = next;
+ 854              		.loc 1 195 5 is_stmt 1 view .LVU242
+ 855 0038 FFF7FEFF 		bl	free
+ 856              	.LVL73:
+ 196:../../util/dynbuf_util.c **** 			 else dynamic_buf->first = next;
+ 857              		.loc 1 196 5 view .LVU243
+ 196:../../util/dynbuf_util.c **** 			 else dynamic_buf->first = next;
+ 858              		.loc 1 196 8 is_stmt 0 view .LVU244
+ 859 003c 002C     		cmp	r4, #0
+ 860 003e E5D0     		beq	.L43
+ 196:../../util/dynbuf_util.c **** 			 else dynamic_buf->first = next;
+ 861              		.loc 1 196 15 is_stmt 1 discriminator 1 view .LVU245
+ 196:../../util/dynbuf_util.c **** 			 else dynamic_buf->first = next;
+ 862              		.loc 1 196 26 is_stmt 0 discriminator 1 view .LVU246
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 20
+
+
+ 863 0040 2660     		str	r6, [r4]	@ unaligned
+ 864              	.L44:
+ 198:../../util/dynbuf_util.c **** 			 return TRUE;
+ 865              		.loc 1 198 5 is_stmt 1 view .LVU247
+ 198:../../util/dynbuf_util.c **** 			 return TRUE;
+ 866              		.loc 1 198 16 is_stmt 0 view .LVU248
+ 867 0042 D5F81130 		ldr	r3, [r5, #17]	@ unaligned
+ 198:../../util/dynbuf_util.c **** 			 return TRUE;
+ 868              		.loc 1 198 23 view .LVU249
+ 869 0046 013B     		subs	r3, r3, #1
+ 870 0048 C5F81130 		str	r3, [r5, #17]	@ unaligned
+ 199:../../util/dynbuf_util.c **** 		 }
+ 871              		.loc 1 199 5 is_stmt 1 view .LVU250
+ 199:../../util/dynbuf_util.c **** 		 }
+ 872              		.loc 1 199 12 is_stmt 0 view .LVU251
+ 873 004c 0120     		movs	r0, #1
+ 874              	.LVL74:
+ 875              	.L45:
+ 204:../../util/dynbuf_util.c **** 	  }
+ 205:../../util/dynbuf_util.c **** 
+ 206:../../util/dynbuf_util.c **** 	  return FALSE;
+ 207:../../util/dynbuf_util.c **** }
+ 876              		.loc 1 207 1 view .LVU252
+ 877 004e 70BD     		pop	{r4, r5, r6, pc}
+ 878              		.loc 1 207 1 view .LVU253
+ 879              		.cfi_endproc
+ 880              	.LFE15:
+ 882              		.section	.text.dynamic_buf_pop_line,"ax",%progbits
+ 883              		.align	1
+ 884              		.global	dynamic_buf_pop_line
+ 885              		.syntax unified
+ 886              		.thumb
+ 887              		.thumb_func
+ 889              	dynamic_buf_pop_line:
+ 890              	.LVL75:
+ 891              	.LFB16:
+ 208:../../util/dynbuf_util.c **** 
+ 209:../../util/dynbuf_util.c **** BOOL dynamic_buf_pop_line(dynamic_buf_t * dynamic_buf, void * buf, size_t buf_size, size_t * data_l
+ 210:../../util/dynbuf_util.c **** {
+ 892              		.loc 1 210 1 is_stmt 1 view -0
+ 893              		.cfi_startproc
+ 894              		@ args = 0, pretend = 0, frame = 8
+ 895              		@ frame_needed = 0, uses_anonymous_args = 0
+ 896              		.loc 1 210 1 is_stmt 0 view .LVU255
+ 897 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 898              	.LCFI9:
+ 899              		.cfi_def_cfa_offset 28
+ 900              		.cfi_offset 4, -28
+ 901              		.cfi_offset 5, -24
+ 902              		.cfi_offset 6, -20
+ 903              		.cfi_offset 7, -16
+ 904              		.cfi_offset 8, -12
+ 905              		.cfi_offset 9, -8
+ 906              		.cfi_offset 14, -4
+ 907 0004 83B0     		sub	sp, sp, #12
+ 908              	.LCFI10:
+ 909              		.cfi_def_cfa_offset 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 21
+
+
+ 910 0006 9846     		mov	r8, r3
+ 211:../../util/dynbuf_util.c ****   size_t size;
+ 911              		.loc 1 211 3 is_stmt 1 view .LVU256
+ 212:../../util/dynbuf_util.c ****   unsigned char * ptr;
+ 912              		.loc 1 212 3 view .LVU257
+ 213:../../util/dynbuf_util.c ****   size_t dl;
+ 913              		.loc 1 213 3 view .LVU258
+ 214:../../util/dynbuf_util.c ****   size_t alloc_size;
+ 914              		.loc 1 214 3 view .LVU259
+ 215:../../util/dynbuf_util.c ****   dynamic_buf_item_t  * item;
+ 915              		.loc 1 215 3 view .LVU260
+ 216:../../util/dynbuf_util.c **** 
+ 217:../../util/dynbuf_util.c ****   *data_len = 0;
+ 916              		.loc 1 217 3 view .LVU261
+ 917              		.loc 1 217 13 is_stmt 0 view .LVU262
+ 918 0008 0023     		movs	r3, #0
+ 919              	.LVL76:
+ 920              		.loc 1 217 13 view .LVU263
+ 921 000a C8F80030 		str	r3, [r8]
+ 218:../../util/dynbuf_util.c **** 
+ 219:../../util/dynbuf_util.c ****   if (!dynamic_buf->first) return FALSE;
+ 922              		.loc 1 219 3 is_stmt 1 view .LVU264
+ 923              		.loc 1 219 19 is_stmt 0 view .LVU265
+ 924 000e 0368     		ldr	r3, [r0]	@ unaligned
+ 925              		.loc 1 219 6 view .LVU266
+ 926 0010 002B     		cmp	r3, #0
+ 927 0012 6DD0     		beq	.L56
+ 928 0014 0646     		mov	r6, r0
+ 929 0016 0F46     		mov	r7, r1
+ 930 0018 9146     		mov	r9, r2
+ 220:../../util/dynbuf_util.c **** 
+ 221:../../util/dynbuf_util.c ****   size = buf_size;
+ 931              		.loc 1 221 8 view .LVU267
+ 932 001a 1446     		mov	r4, r2
+ 933 001c 1FE0     		b	.L50
+ 934              	.LVL77:
+ 935              	.L59:
+ 222:../../util/dynbuf_util.c ****   ptr = buf;
+ 223:../../util/dynbuf_util.c **** 
+ 224:../../util/dynbuf_util.c **** 
+ 225:../../util/dynbuf_util.c ****   while (size) {
+ 226:../../util/dynbuf_util.c **** 
+ 227:../../util/dynbuf_util.c ****     if (!dynamic_buf->first) {
+ 228:../../util/dynbuf_util.c ****        return buf_size > size;
+ 936              		.loc 1 228 8 is_stmt 1 view .LVU268
+ 937              		.loc 1 228 24 is_stmt 0 view .LVU269
+ 938 001e 4C45     		cmp	r4, r9
+ 939 0020 2CBF     		ite	cs
+ 940 0022 0020     		movcs	r0, #0
+ 941 0024 0120     		movcc	r0, #1
+ 942 0026 60E0     		b	.L49
+ 943              	.L60:
+ 229:../../util/dynbuf_util.c ****     }
+ 230:../../util/dynbuf_util.c **** 
+ 231:../../util/dynbuf_util.c ****     if (size == dynamic_buf->first->data_len) {
+ 232:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, size, &dl);
+ 944              		.loc 1 232 7 is_stmt 1 view .LVU270
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 22
+
+
+ 945 0028 01AB     		add	r3, sp, #4
+ 946 002a 2246     		mov	r2, r4
+ 947 002c 3946     		mov	r1, r7
+ 948 002e 3046     		mov	r0, r6
+ 949 0030 FFF7FEFF 		bl	dynamic_buf_pop
+ 950              	.LVL78:
+ 233:../../util/dynbuf_util.c ****       *data_len += dl;
+ 951              		.loc 1 233 7 view .LVU271
+ 952 0034 D8F80020 		ldr	r2, [r8]
+ 953              		.loc 1 233 17 is_stmt 0 view .LVU272
+ 954 0038 019B     		ldr	r3, [sp, #4]
+ 955 003a 1344     		add	r3, r3, r2
+ 956 003c C8F80030 		str	r3, [r8]
+ 234:../../util/dynbuf_util.c ****       return TRUE;
+ 957              		.loc 1 234 7 is_stmt 1 view .LVU273
+ 958              		.loc 1 234 14 is_stmt 0 view .LVU274
+ 959 0040 0120     		movs	r0, #1
+ 960 0042 52E0     		b	.L49
+ 961              	.L61:
+ 235:../../util/dynbuf_util.c ****     }
+ 236:../../util/dynbuf_util.c ****     else if (size > dynamic_buf->first->data_len) {
+ 237:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, dynamic_buf->first->data_len, &dl);
+ 962              		.loc 1 237 7 is_stmt 1 view .LVU275
+ 963 0044 01AB     		add	r3, sp, #4
+ 964 0046 3946     		mov	r1, r7
+ 965 0048 3046     		mov	r0, r6
+ 966 004a FFF7FEFF 		bl	dynamic_buf_pop
+ 967              	.LVL79:
+ 238:../../util/dynbuf_util.c ****       *data_len += dl;
+ 968              		.loc 1 238 7 view .LVU276
+ 969 004e D8F80030 		ldr	r3, [r8]
+ 970              		.loc 1 238 17 is_stmt 0 view .LVU277
+ 971 0052 0199     		ldr	r1, [sp, #4]
+ 972 0054 0B44     		add	r3, r3, r1
+ 973 0056 C8F80030 		str	r3, [r8]
+ 239:../../util/dynbuf_util.c ****       ptr += dl;
+ 974              		.loc 1 239 7 is_stmt 1 view .LVU278
+ 975              		.loc 1 239 11 is_stmt 0 view .LVU279
+ 976 005a 0F44     		add	r7, r7, r1
+ 977              	.LVL80:
+ 240:../../util/dynbuf_util.c ****       size -= dl;
+ 978              		.loc 1 240 7 is_stmt 1 view .LVU280
+ 979              		.loc 1 240 12 is_stmt 0 view .LVU281
+ 980 005c 641A     		subs	r4, r4, r1
+ 981              	.LVL81:
+ 982              	.L50:
+ 225:../../util/dynbuf_util.c **** 
+ 983              		.loc 1 225 10 is_stmt 1 view .LVU282
+ 984 005e 002C     		cmp	r4, #0
+ 985 0060 3FD0     		beq	.L58
+ 227:../../util/dynbuf_util.c ****        return buf_size > size;
+ 986              		.loc 1 227 5 view .LVU283
+ 227:../../util/dynbuf_util.c ****        return buf_size > size;
+ 987              		.loc 1 227 21 is_stmt 0 view .LVU284
+ 988 0062 3568     		ldr	r5, [r6]	@ unaligned
+ 227:../../util/dynbuf_util.c ****        return buf_size > size;
+ 989              		.loc 1 227 8 view .LVU285
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 23
+
+
+ 990 0064 002D     		cmp	r5, #0
+ 991 0066 DAD0     		beq	.L59
+ 231:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, size, &dl);
+ 992              		.loc 1 231 5 is_stmt 1 view .LVU286
+ 231:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, size, &dl);
+ 993              		.loc 1 231 35 is_stmt 0 view .LVU287
+ 994 0068 6A68     		ldr	r2, [r5, #4]	@ unaligned
+ 231:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, size, &dl);
+ 995              		.loc 1 231 8 view .LVU288
+ 996 006a A242     		cmp	r2, r4
+ 997 006c DCD0     		beq	.L60
+ 236:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, dynamic_buf->first->data_len, &dl);
+ 998              		.loc 1 236 10 is_stmt 1 view .LVU289
+ 236:../../util/dynbuf_util.c ****       dynamic_buf_pop(dynamic_buf, ptr, dynamic_buf->first->data_len, &dl);
+ 999              		.loc 1 236 13 is_stmt 0 view .LVU290
+ 1000 006e A242     		cmp	r2, r4
+ 1001 0070 E8D3     		bcc	.L61
+ 241:../../util/dynbuf_util.c ****     }
+ 242:../../util/dynbuf_util.c ****     else if (size < dynamic_buf->first->data_len) {
+ 1002              		.loc 1 242 10 is_stmt 1 view .LVU291
+ 1003              		.loc 1 242 13 is_stmt 0 view .LVU292
+ 1004 0072 A242     		cmp	r2, r4
+ 1005 0074 F3D9     		bls	.L50
+ 243:../../util/dynbuf_util.c **** 
+ 244:../../util/dynbuf_util.c ****       alloc_size = sizeof(dynamic_buf_item_t) + dynamic_buf->first->data_len - size;
+ 1006              		.loc 1 244 7 is_stmt 1 view .LVU293
+ 1007              		.loc 1 244 78 is_stmt 0 view .LVU294
+ 1008 0076 101B     		subs	r0, r2, r4
+ 1009              		.loc 1 244 18 view .LVU295
+ 1010 0078 0830     		adds	r0, r0, #8
+ 1011              	.LVL82:
+ 245:../../util/dynbuf_util.c ****       dynamic_buf->alloc_size -= (sizeof(dynamic_buf_item_t) + dynamic_buf->first->data_len);
+ 1012              		.loc 1 245 7 is_stmt 1 view .LVU296
+ 1013              		.loc 1 245 18 is_stmt 0 view .LVU297
+ 1014 007a D6F80930 		ldr	r3, [r6, #9]	@ unaligned
+ 1015              		.loc 1 245 31 view .LVU298
+ 1016 007e 9B1A     		subs	r3, r3, r2
+ 1017 0080 083B     		subs	r3, r3, #8
+ 1018 0082 C6F80930 		str	r3, [r6, #9]	@ unaligned
+ 246:../../util/dynbuf_util.c ****       dynamic_buf->alloc_size += alloc_size;
+ 1019              		.loc 1 246 7 is_stmt 1 view .LVU299
+ 1020              		.loc 1 246 31 is_stmt 0 view .LVU300
+ 1021 0086 0344     		add	r3, r3, r0
+ 1022 0088 C6F80930 		str	r3, [r6, #9]	@ unaligned
+ 247:../../util/dynbuf_util.c **** 
+ 248:../../util/dynbuf_util.c ****       item = (dynamic_buf_item_t  *)malloc(alloc_size);
+ 1023              		.loc 1 248 7 is_stmt 1 view .LVU301
+ 1024              		.loc 1 248 37 is_stmt 0 view .LVU302
+ 1025 008c FFF7FEFF 		bl	malloc
+ 1026              	.LVL83:
+ 1027              		.loc 1 248 37 view .LVU303
+ 1028 0090 8146     		mov	r9, r0
+ 1029              	.LVL84:
+ 249:../../util/dynbuf_util.c **** 
+ 250:../../util/dynbuf_util.c **** 
+ 251:../../util/dynbuf_util.c **** 
+ 252:../../util/dynbuf_util.c ****       memcpy(ptr, dynamic_buf->first->data, size);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 24
+
+
+ 1030              		.loc 1 252 7 is_stmt 1 view .LVU304
+ 1031 0092 2246     		mov	r2, r4
+ 1032 0094 05F10801 		add	r1, r5, #8
+ 1033 0098 3846     		mov	r0, r7
+ 1034              	.LVL85:
+ 1035              		.loc 1 252 7 is_stmt 0 view .LVU305
+ 1036 009a FFF7FEFF 		bl	memcpy
+ 1037              	.LVL86:
+ 253:../../util/dynbuf_util.c ****       *data_len += size;
+ 1038              		.loc 1 253 7 is_stmt 1 view .LVU306
+ 1039 009e D8F80030 		ldr	r3, [r8]
+ 1040              		.loc 1 253 17 is_stmt 0 view .LVU307
+ 1041 00a2 2344     		add	r3, r3, r4
+ 1042 00a4 C8F80030 		str	r3, [r8]
+ 254:../../util/dynbuf_util.c ****       memcpy(item->data, dynamic_buf->first->data + size, dynamic_buf->first->data_len - size);
+ 1043              		.loc 1 254 7 is_stmt 1 view .LVU308
+ 1044              		.loc 1 254 37 is_stmt 0 view .LVU309
+ 1045 00a8 3368     		ldr	r3, [r6]	@ unaligned
+ 1046              		.loc 1 254 26 view .LVU310
+ 1047 00aa 03F10801 		add	r1, r3, #8
+ 1048              		.loc 1 254 77 view .LVU311
+ 1049 00ae 5A68     		ldr	r2, [r3, #4]	@ unaligned
+ 1050              		.loc 1 254 7 view .LVU312
+ 1051 00b0 121B     		subs	r2, r2, r4
+ 1052 00b2 2144     		add	r1, r1, r4
+ 1053 00b4 09F10800 		add	r0, r9, #8
+ 1054 00b8 FFF7FEFF 		bl	memcpy
+ 1055              	.LVL87:
+ 255:../../util/dynbuf_util.c ****       item->data_len = dynamic_buf->first->data_len - size;
+ 1056              		.loc 1 255 7 is_stmt 1 view .LVU313
+ 1057              		.loc 1 255 35 is_stmt 0 view .LVU314
+ 1058 00bc 3068     		ldr	r0, [r6]	@ unaligned
+ 1059              		.loc 1 255 42 view .LVU315
+ 1060 00be 4368     		ldr	r3, [r0, #4]	@ unaligned
+ 1061              		.loc 1 255 53 view .LVU316
+ 1062 00c0 1B1B     		subs	r3, r3, r4
+ 1063              		.loc 1 255 22 view .LVU317
+ 1064 00c2 C9F80430 		str	r3, [r9, #4]	@ unaligned
+ 256:../../util/dynbuf_util.c ****       item->next = dynamic_buf->first->next;
+ 1065              		.loc 1 256 7 is_stmt 1 view .LVU318
+ 1066              		.loc 1 256 38 is_stmt 0 view .LVU319
+ 1067 00c6 0368     		ldr	r3, [r0]	@ unaligned
+ 1068              		.loc 1 256 18 view .LVU320
+ 1069 00c8 C9F80030 		str	r3, [r9]	@ unaligned
+ 257:../../util/dynbuf_util.c ****       free(dynamic_buf->first);
+ 1070              		.loc 1 257 7 is_stmt 1 view .LVU321
+ 1071 00cc FFF7FEFF 		bl	free
+ 1072              	.LVL88:
+ 258:../../util/dynbuf_util.c ****       dynamic_buf->first = item;
+ 1073              		.loc 1 258 7 view .LVU322
+ 1074              		.loc 1 258 26 is_stmt 0 view .LVU323
+ 1075 00d0 C6F80090 		str	r9, [r6]	@ unaligned
+ 259:../../util/dynbuf_util.c ****       dynamic_buf->data_size -= size;
+ 1076              		.loc 1 259 7 is_stmt 1 view .LVU324
+ 1077              		.loc 1 259 18 is_stmt 0 view .LVU325
+ 1078 00d4 D6F80D30 		ldr	r3, [r6, #13]	@ unaligned
+ 1079              		.loc 1 259 30 view .LVU326
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 25
+
+
+ 1080 00d8 1B1B     		subs	r3, r3, r4
+ 1081 00da C6F80D30 		str	r3, [r6, #13]	@ unaligned
+ 260:../../util/dynbuf_util.c ****       return TRUE;
+ 1082              		.loc 1 260 7 is_stmt 1 view .LVU327
+ 1083              		.loc 1 260 14 is_stmt 0 view .LVU328
+ 1084 00de 0120     		movs	r0, #1
+ 1085 00e0 03E0     		b	.L49
+ 1086              	.LVL89:
+ 1087              	.L58:
+ 261:../../util/dynbuf_util.c ****     }
+ 262:../../util/dynbuf_util.c **** 
+ 263:../../util/dynbuf_util.c **** 
+ 264:../../util/dynbuf_util.c ****   }
+ 265:../../util/dynbuf_util.c **** 
+ 266:../../util/dynbuf_util.c ****   return buf_size > size;
+ 1088              		.loc 1 266 3 is_stmt 1 view .LVU329
+ 1089              		.loc 1 266 19 is_stmt 0 view .LVU330
+ 1090 00e2 4C45     		cmp	r4, r9
+ 1091 00e4 2CBF     		ite	cs
+ 1092 00e6 0020     		movcs	r0, #0
+ 1093 00e8 0120     		movcc	r0, #1
+ 1094              	.LVL90:
+ 1095              	.L49:
+ 267:../../util/dynbuf_util.c **** }
+ 1096              		.loc 1 267 1 view .LVU331
+ 1097 00ea 03B0     		add	sp, sp, #12
+ 1098              	.LCFI11:
+ 1099              		.cfi_remember_state
+ 1100              		.cfi_def_cfa_offset 28
+ 1101              		@ sp needed
+ 1102 00ec BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1103              	.LVL91:
+ 1104              	.L56:
+ 1105              	.LCFI12:
+ 1106              		.cfi_restore_state
+ 219:../../util/dynbuf_util.c **** 
+ 1107              		.loc 1 219 35 discriminator 1 view .LVU332
+ 1108 00f0 0020     		movs	r0, #0
+ 1109              	.LVL92:
+ 219:../../util/dynbuf_util.c **** 
+ 1110              		.loc 1 219 35 discriminator 1 view .LVU333
+ 1111 00f2 FAE7     		b	.L49
+ 1112              		.cfi_endproc
+ 1113              	.LFE16:
+ 1115              		.section	.text.dynamic_buf_pop_line_io,"ax",%progbits
+ 1116              		.align	1
+ 1117              		.global	dynamic_buf_pop_line_io
+ 1118              		.syntax unified
+ 1119              		.thumb
+ 1120              		.thumb_func
+ 1122              	dynamic_buf_pop_line_io:
+ 1123              	.LVL93:
+ 1124              	.LFB17:
+ 268:../../util/dynbuf_util.c **** 
+ 269:../../util/dynbuf_util.c **** size_t dynamic_buf_pop_line_io(dynamic_buf_t * dynamic_buf, void * buf, size_t buf_size)
+ 270:../../util/dynbuf_util.c **** {
+ 1125              		.loc 1 270 1 is_stmt 1 view -0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 26
+
+
+ 1126              		.cfi_startproc
+ 1127              		@ args = 0, pretend = 0, frame = 8
+ 1128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1129              		.loc 1 270 1 is_stmt 0 view .LVU335
+ 1130 0000 00B5     		push	{lr}
+ 1131              	.LCFI13:
+ 1132              		.cfi_def_cfa_offset 4
+ 1133              		.cfi_offset 14, -4
+ 1134 0002 83B0     		sub	sp, sp, #12
+ 1135              	.LCFI14:
+ 1136              		.cfi_def_cfa_offset 16
+ 271:../../util/dynbuf_util.c **** 	size_t data_len;
+ 1137              		.loc 1 271 2 is_stmt 1 view .LVU336
+ 272:../../util/dynbuf_util.c **** 
+ 273:../../util/dynbuf_util.c **** 	if (!dynamic_buf_pop_line(dynamic_buf, buf, buf_size, &data_len)) return 0;
+ 1138              		.loc 1 273 2 view .LVU337
+ 1139              		.loc 1 273 7 is_stmt 0 view .LVU338
+ 1140 0004 01AB     		add	r3, sp, #4
+ 1141 0006 FFF7FEFF 		bl	dynamic_buf_pop_line
+ 1142              	.LVL94:
+ 1143              		.loc 1 273 5 discriminator 1 view .LVU339
+ 1144 000a 18B1     		cbz	r0, .L64
+ 274:../../util/dynbuf_util.c **** 
+ 275:../../util/dynbuf_util.c **** 	return data_len;
+ 1145              		.loc 1 275 2 is_stmt 1 view .LVU340
+ 1146              		.loc 1 275 9 is_stmt 0 view .LVU341
+ 1147 000c 0198     		ldr	r0, [sp, #4]
+ 1148              	.L62:
+ 276:../../util/dynbuf_util.c **** }
+ 1149              		.loc 1 276 1 view .LVU342
+ 1150 000e 03B0     		add	sp, sp, #12
+ 1151              	.LCFI15:
+ 1152              		.cfi_remember_state
+ 1153              		.cfi_def_cfa_offset 4
+ 1154              		@ sp needed
+ 1155 0010 5DF804FB 		ldr	pc, [sp], #4
+ 1156              	.L64:
+ 1157              	.LCFI16:
+ 1158              		.cfi_restore_state
+ 273:../../util/dynbuf_util.c **** 
+ 1159              		.loc 1 273 75 discriminator 1 view .LVU343
+ 1160 0014 0020     		movs	r0, #0
+ 1161 0016 FAE7     		b	.L62
+ 1162              		.cfi_endproc
+ 1163              	.LFE17:
+ 1165              		.global	global_dynamic_buf
+ 1166              		.section	.data.global_dynamic_buf,"aw"
+ 1167              		.align	2
+ 1170              	global_dynamic_buf:
+ 1171 0000 00000000 		.word	0
+ 1172 0004 00       		.byte	0
+ 1173 0005 00000100 		.4byte	65536
+ 1174 0009 00000000 		.4byte	0
+ 1175 000d 00000000 		.4byte	0
+ 1176 0011 00000000 		.4byte	0
+ 1177              		.text
+ 1178              	.Letext0:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 27
+
+
+ 1179              		.file 2 "../../util/dynbuf_util.h"
+ 1180              		.file 3 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 1181              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 1182              		.file 5 "C:/msys64/ucrt64/arm-none-eabi/include/stdlib.h"
+ 1183              		.file 6 "<built-in>"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc722d3y.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dynbuf_util.c
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:20     .text.dynamic_buf_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:26     .text.dynamic_buf_init:00000000 dynamic_buf_init
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:71     .text.dynamic_buf_push:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:77     .text.dynamic_buf_push:00000000 dynamic_buf_push
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:226    .text.dynamic_buf_push_io:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:232    .text.dynamic_buf_push_io:00000000 dynamic_buf_push_io
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:266    .text.dynamic_buf_pop:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:272    .text.dynamic_buf_pop:00000000 dynamic_buf_pop
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:375    .text.dynamic_buf_pop_io:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:381    .text.dynamic_buf_pop_io:00000000 dynamic_buf_pop_io
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:425    .text.dynamic_buf_clear:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:431    .text.dynamic_buf_clear:00000000 dynamic_buf_clear
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:503    .text.dynamic_buf_is_empty:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:509    .text.dynamic_buf_is_empty:00000000 dynamic_buf_is_empty
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:529    .text.dynamic_buf_get_busy:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:535    .text.dynamic_buf_get_busy:00000000 dynamic_buf_get_busy
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:553    .text.dynamic_buf_set_busy:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:559    .text.dynamic_buf_set_busy:00000000 dynamic_buf_set_busy
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:576    .text.dynamic_buf_get_data_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:582    .text.dynamic_buf_get_data_size:00000000 dynamic_buf_get_data_size
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:600    .text.dynamic_buf_get_free_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:606    .text.dynamic_buf_get_free_size:00000000 dynamic_buf_get_free_size
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:627    .text.dynamic_buf_get_max_alloc_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:633    .text.dynamic_buf_get_max_alloc_size:00000000 dynamic_buf_get_max_alloc_size
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:651    .text.dynamic_buf_set_max_alloc_size:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:657    .text.dynamic_buf_set_max_alloc_size:00000000 dynamic_buf_set_max_alloc_size
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:674    .text.dynamic_buf_get_count:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:680    .text.dynamic_buf_get_count:00000000 dynamic_buf_get_count
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:698    .text.dynamic_buf_get_at:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:704    .text.dynamic_buf_get_at:00000000 dynamic_buf_get_at
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:768    .text.dynamic_buf_delete_at:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:774    .text.dynamic_buf_delete_at:00000000 dynamic_buf_delete_at
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:883    .text.dynamic_buf_pop_line:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:889    .text.dynamic_buf_pop_line:00000000 dynamic_buf_pop_line
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:1116   .text.dynamic_buf_pop_line_io:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:1122   .text.dynamic_buf_pop_line_io:00000000 dynamic_buf_pop_line_io
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:1170   .data.global_dynamic_buf:00000000 global_dynamic_buf
+C:\Users\oleg\AppData\Local\Temp\cc722d3y.s:1167   .data.global_dynamic_buf:00000000 $d
+
+UNDEFINED SYMBOLS
+malloc
+memcpy
+free

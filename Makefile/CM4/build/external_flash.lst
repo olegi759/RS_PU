@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
   35      426D6F64 
   36              		.section	.text.external_flash_init,"ax",%progbits
   37              		.align	1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 2
 
 
   38              		.global	external_flash_init
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
   64 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
   65              	.LVL0:
   30:../../CM4/Core/Src/external_flash.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 3
 
 
   31:../../CM4/Core/Src/external_flash.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  105 0050 FFF7FEFF 		bl	HAL_Delay
  106              	.LVL9:
   46:../../CM4/Core/Src/external_flash.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 4
 
 
   47:../../CM4/Core/Src/external_flash.c **** 	//ch378_setSd0Int(0x10);
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
   58:../../CM4/Core/Src/external_flash.c **** 
   59:../../CM4/Core/Src/external_flash.c **** 	if (res != 0x55) {
  148              		.loc 1 59 2 is_stmt 1 view .LVU27
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 5
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 5
 
 
  149              		.loc 1 59 5 is_stmt 0 view .LVU28
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  188 00ac 18000000 		.word	.LC1
  189 00b0 5C000000 		.word	.LC3
  190 00b4 7C000000 		.word	.LC4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 6
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 6
 
 
  191 00b8 40000000 		.word	.LC2
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  235              	.LVL31:
  236              	.L11:
   80:../../CM4/Core/Src/external_flash.c **** 		status_now = ch378_getStatus();
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 7
 
 
  237              		.loc 1 80 9 is_stmt 1 view .LVU46
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  279 0000 10B5     		push	{r4, lr}
  280              	.LCFI2:
  281              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 8
 
 
  282              		.cfi_offset 4, -8
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  323              		@ sp needed
  324 0030 10BD     		pop	{r4, pc}
  325              	.LVL41:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 9
 
 
  326              	.L20:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  112:../../CM4/Core/Src/external_flash.c **** 		ulog(CONM"external_flash_open_file not mount"CRLF);
  113:../../CM4/Core/Src/external_flash.c **** 		return FALSE;
  114:../../CM4/Core/Src/external_flash.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 10
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 10
 
 
  115:../../CM4/Core/Src/external_flash.c **** 
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  408              		.cfi_endproc
  409              	.LFE135:
  411              		.section	.text.external_flash_open_enum,"ax",%progbits
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 11
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 11
 
 
  412              		.align	1
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  455 001e FFF7FEFF 		bl	ch378_setFileName
  456              	.LVL55:
  139:../../CM4/Core/Src/external_flash.c **** 	res = ch378_openFile();
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 12
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 12
 
 
  457              		.loc 1 139 2 view .LVU96
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  151:../../CM4/Core/Src/external_flash.c **** //The command used to close the file or directory which has been open. Need one input data, to noti
  152:../../CM4/Core/Src/external_flash.c **** //whether updata file length, 0 means forbid update file length, 1 means automatically update file 
  153:../../CM4/Core/Src/external_flash.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 13
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 13
 
 
  154:../../CM4/Core/Src/external_flash.c **** BOOL external_flash_close_file(uint8_t update)
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  173:../../CM4/Core/Src/external_flash.c **** }
  533              		.loc 1 173 1 view .LVU116
  534 001c 2046     		mov	r0, r4
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 14
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 14
 
 
  535 001e 10BD     		pop	{r4, pc}
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  573              		.loc 1 187 1 is_stmt 0 view .LVU122
  574 0000 30B5     		push	{r4, r5, lr}
  575              	.LCFI11:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 15
 
 
  576              		.cfi_def_cfa_offset 12
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  621              	.LVL72:
  197:../../CM4/Core/Src/external_flash.c ****     strcat_s(file_name_oem, sizeof(file_name_oem), Extension);
  622              		.loc 1 197 5 view .LVU136
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 16
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 16
 
 
  623 0036 05AA     		add	r2, sp, #20
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  668              	.LCFI14:
  669              		.cfi_def_cfa_offset 8
  670              		.cfi_offset 3, -8
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 17
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 17
 
 
  671              		.cfi_offset 14, -4
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  716 0000 70B5     		push	{r4, r5, r6, lr}
  717              	.LCFI15:
  718              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 18
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 18
 
 
  719              		.cfi_offset 4, -16
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  230:../../CM4/Core/Src/external_flash.c **** 
  231:../../CM4/Core/Src/external_flash.c **** 
  232:../../CM4/Core/Src/external_flash.c ****     while (TRUE) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 19
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 19
 
 
  754              		.loc 1 232 5 is_stmt 1 view .LVU165
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  784 0032 6946     		mov	r1, sp
  785 0034 0AA8     		add	r0, sp, #40
  786              	.LVL92:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 20
 
 
  787              		.loc 1 256 6 is_stmt 0 view .LVU179
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  827              	.LCFI17:
  828              		.cfi_remember_state
  829              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 21
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 21
 
 
  830              		@ sp needed
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  873              		.loc 1 274 6 is_stmt 0 view .LVU198
  874 0002 074B     		ldr	r3, .L61
  875 0004 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 22
 
 
  876              		.loc 1 274 5 view .LVU199
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  916              		.syntax unified
  917              		.thumb
  918              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 23
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 23
 
 
  920              	external_flash_read_file:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  951              		.loc 1 308 2 is_stmt 1 view .LVU218
  309:../../CM4/Core/Src/external_flash.c **** }
  952              		.loc 1 309 1 is_stmt 0 view .LVU219
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 24
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 24
 
 
  953 0018 10BD     		pop	{r4, pc}
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  988 0012 0020     		movs	r0, #0
  989 0014 FFF7FEFF 		bl	external_flash_wait_status
  990              	.LVL117:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 25
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 25
 
 
  331:../../CM4/Core/Src/external_flash.c **** 	//ulog_fmt("ch378: byteWrite external_flash_wait_status=0x%02"CRLF, res);
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  996              		.cfi_endproc
  997              	.LFE143:
  999              		.section	.rodata.external_flash_status_usb_int_connect.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 26
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 26
 
 
  1000              		.align	2
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1026              		.syntax unified
  1027              		.thumb
  1028              		.thumb_func
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 27
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 27
 
 
  1030              	external_flash_status_usb_int_connect:
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1066              		.loc 1 397 2 view .LVU237
  398:../../CM4/Core/Src/external_flash.c **** 
  399:../../CM4/Core/Src/external_flash.c **** 	while (i--) {
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 28
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 28
 
 
  1067              		.loc 1 399 2 view .LVU238
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  414:../../CM4/Core/Src/external_flash.c **** 		ch378_setUSBmode(0x07);
  415:../../CM4/Core/Src/external_flash.c **** 		return;
  416:../../CM4/Core/Src/external_flash.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 29
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 29
 
 
  417:../../CM4/Core/Src/external_flash.c **** 
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1146              	.LVL140:
  1147              	.L73:
  426:../../CM4/Core/Src/external_flash.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 30
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 30
 
 
  427:../../CM4/Core/Src/external_flash.c **** 	ulog_fmt(CONM"ch378: mount=0x%02X"CRLF, res);
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1181              	.L80:
  1182              		.align	2
  1183              	.L79:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 31
 
 
  1184 0090 00000000 		.word	.LC11
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1230              	.LVL147:
  451:../../CM4/Core/Src/external_flash.c **** }
  1231              		.loc 1 451 1 is_stmt 0 view .LVU282
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 32
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 32
 
 
  1232 0014 08BD     		pop	{r3, pc}
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1276              	.L86:
  464:../../CM4/Core/Src/external_flash.c **** 		external_flash_status_usb_int_connect();
  465:../../CM4/Core/Src/external_flash.c **** 	}
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 33
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 33
 
 
  466:../../CM4/Core/Src/external_flash.c **** 	else if ((ch378_status_old != USB_INT_DISCONNECT) && (ch378_status_now == USB_INT_DISCONNECT)) {
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1322              	.LFB147:
  473:../../CM4/Core/Src/external_flash.c **** 
  474:../../CM4/Core/Src/external_flash.c **** 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 34
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 34
 
 
  475:../../CM4/Core/Src/external_flash.c **** 
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  491:../../CM4/Core/Src/external_flash.c **** 		len = data_len - br;
  1355              		.loc 1 491 12 is_stmt 1 view .LVU313
  1356 000c AC42     		cmp	r4, r5
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 35
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 35
 
 
  1357 000e 0AD2     		bcs	.L93
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1394      65787465 
  1394      726E616C 
  1394      5F666C61 
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 36
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 36
 
 
  1394      73685F63 
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  505:../../CM4/Core/Src/external_flash.c **** 
  506:../../CM4/Core/Src/external_flash.c **** 	FIL file;
  1433              		.loc 1 506 2 is_stmt 1 view .LVU326
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 37
 
 
  507:../../CM4/Core/Src/external_flash.c **** 	uint8_t buf[250], rd;
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1469 0030 FFF7FEFF 		bl	external_flash_close_file
  1470              	.LVL169:
  526:../../CM4/Core/Src/external_flash.c **** 		ulog_fmt(CONM"external_flash_copy_to_local error open 2 (%s)"CRLF, file_name);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 38
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 38
 
 
  1471              		.loc 1 526 3 view .LVU341
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1512 005c 1148     		ldr	r0, .L108+20
  1513 005e FFF7FEFF 		bl	HAL_IWDG_Refresh
  1514              	.LVL179:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 39
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 39
 
 
  1515              	.L103:
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1556 0090 00000000 		.word	external_flash_is_mount
  1557 0094 30000000 		.word	.LC20
  1558 0098 98000000 		.word	.LC22
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 40
 
 
  1559 009c 00000000 		.word	.LC19
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1599              		.loc 1 550 5 view .LVU369
  1600 0006 7CB1     		cbz	r4, .L114
  551:../../CM4/Core/Src/external_flash.c **** 		ulog(CONM"external_flash_file_delete not mount"CRLF);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 41
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 41
 
 
  552:../../CM4/Core/Src/external_flash.c **** 		return FALSE;
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  552:../../CM4/Core/Src/external_flash.c **** 	}
  1637              		.loc 1 552 10 is_stmt 0 view .LVU382
  1638 002e F9E7     		b	.L112
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 42
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 42
 
 
  1639              	.L116:
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1681              		.loc 1 572 5 view .LVU388
  1682 0006 7CB1     		cbz	r4, .L121
  573:../../CM4/Core/Src/external_flash.c **** 		ulog(CONM"external_flash_file_create not mount"CRLF);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 43
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 43
 
 
  574:../../CM4/Core/Src/external_flash.c **** 		return FALSE;
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1719              		.loc 1 574 10 is_stmt 0 view .LVU401
  1720 002e F9E7     		b	.L119
  1721              	.L123:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 44
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 44
 
 
  1722              		.align	2
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  592:../../CM4/Core/Src/external_flash.c **** {
  1757              		.loc 1 592 1 is_stmt 1 view -0
  1758              		.cfi_startproc
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 45
 
 
  1759              		@ args = 0, pretend = 0, frame = 4400
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1798              		.loc 1 607 7 is_stmt 0 view .LVU415
  1799 001e 0122     		movs	r2, #1
  1800 0020 3946     		mov	r1, r7
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 46
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 46
 
 
  1801 0022 42A8     		add	r0, sp, #264
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1838              		.loc 1 623 3 is_stmt 1 view .LVU430
  1839              		.loc 1 623 9 is_stmt 0 view .LVU431
  1840 004c C9B2     		uxtb	r1, r1
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 47
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 47
 
 
  1841 004e 02A8     		add	r0, sp, #8
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1885 007c 13E0     		b	.L126
  1886              	.LVL224:
  1887              	.L129:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 48
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 48
 
 
  627:../../CM4/Core/Src/external_flash.c **** 	}
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1930 00b8 00000000 		.word	hiwdg2
  1931 00bc 00000000 		.word	.LC28
  1932 00c0 68000000 		.word	.LC30
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 49
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 49
 
 
  1933 00c4 A0000000 		.word	.LC31
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  1980              	.LVL236:
  1981              	.L138:
  648:../../CM4/Core/Src/external_flash.c **** 		HAL_IWDG_Refresh(&hiwdg2);
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 50
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 50
 
 
  1982              		.loc 1 648 3 is_stmt 1 view .LVU465
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  2034 0000 00       		.space	1
  2035              		.text
  2036              	.Letext0:
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 51
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 51
 
 
  2037              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
@@ -3019,88 +3019,88 @@ ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 1
  2052              		.file 17 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
  2053              		.file 18 "../../util/stm_util.h"
  2054              		.file 19 "<built-in>"
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 52
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 52
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 external_flash.c
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:21     .rodata.external_flash_init.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:37     .text.external_flash_init:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:43     .text.external_flash_init:00000000 external_flash_init
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:186    .text.external_flash_init:000000a4 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:196    .text.external_flash_wait_status:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:202    .text.external_flash_wait_status:00000000 external_flash_wait_status
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:265    .text.external_flash_set_file_name:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:271    .text.external_flash_set_file_name:00000000 external_flash_set_file_name
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:340    .rodata.external_flash_open_file.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:344    .text.external_flash_open_file:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:350    .text.external_flash_open_file:00000000 external_flash_open_file
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:406    .text.external_flash_open_file:0000002c $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:2028   .bss.external_flash_is_mount:00000000 external_flash_is_mount
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:412    .text.external_flash_open_enum:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:418    .text.external_flash_open_enum:00000000 external_flash_open_enum
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:485    .rodata.external_flash_close_file.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:489    .text.external_flash_close_file:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:495    .text.external_flash_close_file:00000000 external_flash_close_file
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:550    .text.external_flash_close_file:00000028 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:556    .rodata.get_file_name_from_ch378_file_info.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:560    .text.get_file_name_from_ch378_file_info:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:566    .text.get_file_name_from_ch378_file_info:00000000 get_file_name_from_ch378_file_info
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:644    .text.get_file_name_from_ch378_file_info:0000004c $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:649    .rodata.external_flash_get_file_list_item_func_log.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:653    .text.external_flash_get_file_list_item_func_log:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:659    .text.external_flash_get_file_list_item_func_log:00000000 external_flash_get_file_list_item_func_log
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:693    .text.external_flash_get_file_list_item_func_log:00000014 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:698    .rodata.external_flash_enum_files.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:702    .text.external_flash_enum_files:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:708    .text.external_flash_enum_files:00000000 external_flash_enum_files
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:842    .text.external_flash_enum_files:00000060 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:848    .rodata.external_flash_file_exist.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:852    .text.external_flash_file_exist:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:858    .text.external_flash_file_exist:00000000 external_flash_file_exist
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:908    .text.external_flash_file_exist:00000020 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:914    .text.external_flash_read_file:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:920    .text.external_flash_read_file:00000000 external_flash_read_file
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:959    .text.external_flash_write_file:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:965    .text.external_flash_write_file:00000000 external_flash_write_file
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1000   .rodata.external_flash_status_usb_int_connect.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1024   .text.external_flash_status_usb_int_connect:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1030   .text.external_flash_status_usb_int_connect:00000000 external_flash_status_usb_int_connect
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1184   .text.external_flash_status_usb_int_connect:00000090 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1196   .rodata.external_flash_status_usb_int_disconnect.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1201   .text.external_flash_status_usb_int_disconnect:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1207   .text.external_flash_status_usb_int_disconnect:00000000 external_flash_status_usb_int_disconnect
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1236   .text.external_flash_status_usb_int_disconnect:00000018 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1242   .text.external_flash_task:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1248   .text.external_flash_task:00000000 external_flash_task
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1309   .text.external_flash_task:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:2033   .bss.ch378_status_old:00000000 ch378_status_old
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1314   .text.external_flash_stream_read:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1320   .text.external_flash_stream_read:00000000 external_flash_stream_read
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1389   .rodata.external_flash_copy_to_local.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1407   .text.external_flash_copy_to_local:00000000 $t
-ARM GAS  C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s 			page 53
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:21     .rodata.external_flash_init.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:37     .text.external_flash_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:43     .text.external_flash_init:00000000 external_flash_init
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:186    .text.external_flash_init:000000a4 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:196    .text.external_flash_wait_status:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:202    .text.external_flash_wait_status:00000000 external_flash_wait_status
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:265    .text.external_flash_set_file_name:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:271    .text.external_flash_set_file_name:00000000 external_flash_set_file_name
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:340    .rodata.external_flash_open_file.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:344    .text.external_flash_open_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:350    .text.external_flash_open_file:00000000 external_flash_open_file
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:406    .text.external_flash_open_file:0000002c $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:2028   .bss.external_flash_is_mount:00000000 external_flash_is_mount
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:412    .text.external_flash_open_enum:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:418    .text.external_flash_open_enum:00000000 external_flash_open_enum
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:485    .rodata.external_flash_close_file.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:489    .text.external_flash_close_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:495    .text.external_flash_close_file:00000000 external_flash_close_file
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:550    .text.external_flash_close_file:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:556    .rodata.get_file_name_from_ch378_file_info.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:560    .text.get_file_name_from_ch378_file_info:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:566    .text.get_file_name_from_ch378_file_info:00000000 get_file_name_from_ch378_file_info
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:644    .text.get_file_name_from_ch378_file_info:0000004c $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:649    .rodata.external_flash_get_file_list_item_func_log.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:653    .text.external_flash_get_file_list_item_func_log:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:659    .text.external_flash_get_file_list_item_func_log:00000000 external_flash_get_file_list_item_func_log
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:693    .text.external_flash_get_file_list_item_func_log:00000014 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:698    .rodata.external_flash_enum_files.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:702    .text.external_flash_enum_files:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:708    .text.external_flash_enum_files:00000000 external_flash_enum_files
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:842    .text.external_flash_enum_files:00000060 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:848    .rodata.external_flash_file_exist.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:852    .text.external_flash_file_exist:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:858    .text.external_flash_file_exist:00000000 external_flash_file_exist
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:908    .text.external_flash_file_exist:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:914    .text.external_flash_read_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:920    .text.external_flash_read_file:00000000 external_flash_read_file
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:959    .text.external_flash_write_file:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:965    .text.external_flash_write_file:00000000 external_flash_write_file
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1000   .rodata.external_flash_status_usb_int_connect.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1024   .text.external_flash_status_usb_int_connect:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1030   .text.external_flash_status_usb_int_connect:00000000 external_flash_status_usb_int_connect
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1184   .text.external_flash_status_usb_int_connect:00000090 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1196   .rodata.external_flash_status_usb_int_disconnect.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1201   .text.external_flash_status_usb_int_disconnect:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1207   .text.external_flash_status_usb_int_disconnect:00000000 external_flash_status_usb_int_disconnect
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1236   .text.external_flash_status_usb_int_disconnect:00000018 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1242   .text.external_flash_task:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1248   .text.external_flash_task:00000000 external_flash_task
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1309   .text.external_flash_task:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:2033   .bss.ch378_status_old:00000000 ch378_status_old
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1314   .text.external_flash_stream_read:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1320   .text.external_flash_stream_read:00000000 external_flash_stream_read
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1389   .rodata.external_flash_copy_to_local.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1407   .text.external_flash_copy_to_local:00000000 $t
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s 			page 53
 
 
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1413   .text.external_flash_copy_to_local:00000000 external_flash_copy_to_local
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1556   .text.external_flash_copy_to_local:00000090 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1567   .rodata.external_flash_file_delete.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1575   .text.external_flash_file_delete:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1581   .text.external_flash_file_delete:00000000 external_flash_file_delete
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1642   .text.external_flash_file_delete:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1649   .rodata.external_flash_file_create.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1657   .text.external_flash_file_create:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1663   .text.external_flash_file_create:00000000 external_flash_file_create
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1724   .text.external_flash_file_create:00000030 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1731   .rodata.external_flash_copy_from_local.str1.4:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1748   .text.external_flash_copy_from_local:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1754   .text.external_flash_copy_from_local:00000000 external_flash_copy_from_local
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1928   .text.external_flash_copy_from_local:000000b0 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1938   .text.external_flash_test:00000000 $t
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:1944   .text.external_flash_test:00000000 external_flash_test
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:2020   .text.external_flash_test:00000038 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:2029   .bss.external_flash_is_mount:00000000 $d
-C:\Users\oleg\AppData\Local\Temp\cc93PqGN.s:2034   .bss.ch378_status_old:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1413   .text.external_flash_copy_to_local:00000000 external_flash_copy_to_local
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1556   .text.external_flash_copy_to_local:00000090 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1567   .rodata.external_flash_file_delete.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1575   .text.external_flash_file_delete:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1581   .text.external_flash_file_delete:00000000 external_flash_file_delete
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1642   .text.external_flash_file_delete:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1649   .rodata.external_flash_file_create.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1657   .text.external_flash_file_create:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1663   .text.external_flash_file_create:00000000 external_flash_file_create
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1724   .text.external_flash_file_create:00000030 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1731   .rodata.external_flash_copy_from_local.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1748   .text.external_flash_copy_from_local:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1754   .text.external_flash_copy_from_local:00000000 external_flash_copy_from_local
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1928   .text.external_flash_copy_from_local:000000b0 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1938   .text.external_flash_test:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:1944   .text.external_flash_test:00000000 external_flash_test
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:2020   .text.external_flash_test:00000038 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:2029   .bss.external_flash_is_mount:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccM3f4AV.s:2034   .bss.ch378_status_old:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

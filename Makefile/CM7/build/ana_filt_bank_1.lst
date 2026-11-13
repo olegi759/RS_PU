@@ -1,0 +1,339 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"ana_filt_bank_1.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/silk/ana_filt_bank_1.c"
+  19              		.section	.text.silk_ana_filt_bank_1,"ax",%progbits
+  20              		.align	1
+  21              		.global	silk_ana_filt_bank_1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	silk_ana_filt_bank_1:
+  27              	.LVL0:
+  28              	.LFB19:
+   1:../../opus/silk/ana_filt_bank_1.c **** /***********************************************************************
+   2:../../opus/silk/ana_filt_bank_1.c **** Copyright (c) 2006-2011, Skype Limited. All rights reserved.
+   3:../../opus/silk/ana_filt_bank_1.c **** Redistribution and use in source and binary forms, with or without
+   4:../../opus/silk/ana_filt_bank_1.c **** modification, are permitted provided that the following conditions
+   5:../../opus/silk/ana_filt_bank_1.c **** are met:
+   6:../../opus/silk/ana_filt_bank_1.c **** - Redistributions of source code must retain the above copyright notice,
+   7:../../opus/silk/ana_filt_bank_1.c **** this list of conditions and the following disclaimer.
+   8:../../opus/silk/ana_filt_bank_1.c **** - Redistributions in binary form must reproduce the above copyright
+   9:../../opus/silk/ana_filt_bank_1.c **** notice, this list of conditions and the following disclaimer in the
+  10:../../opus/silk/ana_filt_bank_1.c **** documentation and/or other materials provided with the distribution.
+  11:../../opus/silk/ana_filt_bank_1.c **** - Neither the name of Internet Society, IETF or IETF Trust, nor the
+  12:../../opus/silk/ana_filt_bank_1.c **** names of specific contributors, may be used to endorse or promote
+  13:../../opus/silk/ana_filt_bank_1.c **** products derived from this software without specific prior written
+  14:../../opus/silk/ana_filt_bank_1.c **** permission.
+  15:../../opus/silk/ana_filt_bank_1.c **** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  16:../../opus/silk/ana_filt_bank_1.c **** AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  17:../../opus/silk/ana_filt_bank_1.c **** IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  18:../../opus/silk/ana_filt_bank_1.c **** ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  19:../../opus/silk/ana_filt_bank_1.c **** LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  20:../../opus/silk/ana_filt_bank_1.c **** CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  21:../../opus/silk/ana_filt_bank_1.c **** SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  22:../../opus/silk/ana_filt_bank_1.c **** INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  23:../../opus/silk/ana_filt_bank_1.c **** CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  24:../../opus/silk/ana_filt_bank_1.c **** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  25:../../opus/silk/ana_filt_bank_1.c **** POSSIBILITY OF SUCH DAMAGE.
+  26:../../opus/silk/ana_filt_bank_1.c **** ***********************************************************************/
+  27:../../opus/silk/ana_filt_bank_1.c **** 
+  28:../../opus/silk/ana_filt_bank_1.c **** #include "opus_config.h"
+  29:../../opus/silk/ana_filt_bank_1.c **** 
+  30:../../opus/silk/ana_filt_bank_1.c **** #include "SigProc_FIX.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 2
+
+
+  31:../../opus/silk/ana_filt_bank_1.c **** 
+  32:../../opus/silk/ana_filt_bank_1.c **** /* Coefficients for 2-band filter bank based on first-order allpass filters */
+  33:../../opus/silk/ana_filt_bank_1.c **** static opus_int16 A_fb1_20 = 5394 << 1;
+  34:../../opus/silk/ana_filt_bank_1.c **** static opus_int16 A_fb1_21 = -24290; /* (opus_int16)(20623 << 1) */
+  35:../../opus/silk/ana_filt_bank_1.c **** 
+  36:../../opus/silk/ana_filt_bank_1.c **** /* Split signal into two decimated bands using first-order allpass filters */
+  37:../../opus/silk/ana_filt_bank_1.c **** void silk_ana_filt_bank_1(
+  38:../../opus/silk/ana_filt_bank_1.c ****     const opus_int16            *in,                /* I    Input signal [N]                       
+  39:../../opus/silk/ana_filt_bank_1.c ****     opus_int32                  *S,                 /* I/O  State vector [2]                       
+  40:../../opus/silk/ana_filt_bank_1.c ****     opus_int16                  *outL,              /* O    Low band [N/2]                         
+  41:../../opus/silk/ana_filt_bank_1.c ****     opus_int16                  *outH,              /* O    High band [N/2]                        
+  42:../../opus/silk/ana_filt_bank_1.c ****     const opus_int32            N                   /* I    Number of input samples                
+  43:../../opus/silk/ana_filt_bank_1.c **** )
+  44:../../opus/silk/ana_filt_bank_1.c **** {
+  29              		.loc 1 44 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 44 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 4, -32
+  38              		.cfi_offset 5, -28
+  39              		.cfi_offset 6, -24
+  40              		.cfi_offset 7, -20
+  41              		.cfi_offset 8, -16
+  42              		.cfi_offset 9, -12
+  43              		.cfi_offset 10, -8
+  44              		.cfi_offset 14, -4
+  45:../../opus/silk/ana_filt_bank_1.c ****     opus_int      k, N2 = silk_RSHIFT( N, 1 );
+  45              		.loc 1 45 5 is_stmt 1 view .LVU2
+  46              		.loc 1 45 22 is_stmt 0 view .LVU3
+  47 0004 089C     		ldr	r4, [sp, #32]
+  48 0006 4FEA6408 		asr	r8, r4, #1
+  49              	.LVL1:
+  46:../../opus/silk/ana_filt_bank_1.c ****     opus_int32    in32, X, Y, out_1, out_2;
+  50              		.loc 1 46 5 is_stmt 1 view .LVU4
+  47:../../opus/silk/ana_filt_bank_1.c **** 
+  48:../../opus/silk/ana_filt_bank_1.c ****     /* Internal variables and state are in Q10 format */
+  49:../../opus/silk/ana_filt_bank_1.c ****     for( k = 0; k < N2; k++ ) {
+  51              		.loc 1 49 5 view .LVU5
+  52              		.loc 1 49 12 is_stmt 0 view .LVU6
+  53 000a 4FF0000E 		mov	lr, #0
+  54              		.loc 1 49 5 view .LVU7
+  55 000e 18E0     		b	.L2
+  56              	.LVL2:
+  57              	.L6:
+  50:../../opus/silk/ana_filt_bank_1.c ****         /* Convert to Q10 */
+  51:../../opus/silk/ana_filt_bank_1.c ****         in32 = silk_LSHIFT( (opus_int32)in[ 2 * k ], 10 );
+  52:../../opus/silk/ana_filt_bank_1.c **** 
+  53:../../opus/silk/ana_filt_bank_1.c ****         /* All-pass section for even input sample */
+  54:../../opus/silk/ana_filt_bank_1.c ****         Y      = silk_SUB32( in32, S[ 0 ] );
+  55:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMLAWB( Y, Y, A_fb1_21 );
+  56:../../opus/silk/ana_filt_bank_1.c ****         out_1  = silk_ADD32( S[ 0 ], X );
+  57:../../opus/silk/ana_filt_bank_1.c ****         S[ 0 ] = silk_ADD32( in32, X );
+  58:../../opus/silk/ana_filt_bank_1.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 3
+
+
+  59:../../opus/silk/ana_filt_bank_1.c ****         /* Convert to Q10 */
+  60:../../opus/silk/ana_filt_bank_1.c ****         in32 = silk_LSHIFT( (opus_int32)in[ 2 * k + 1 ], 10 );
+  61:../../opus/silk/ana_filt_bank_1.c **** 
+  62:../../opus/silk/ana_filt_bank_1.c ****         /* All-pass section for odd input sample, and add to output of previous section */
+  63:../../opus/silk/ana_filt_bank_1.c ****         Y      = silk_SUB32( in32, S[ 1 ] );
+  64:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMULWB( Y, A_fb1_20 );
+  65:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+  66:../../opus/silk/ana_filt_bank_1.c ****         S[ 1 ] = silk_ADD32( in32, X );
+  67:../../opus/silk/ana_filt_bank_1.c **** 
+  68:../../opus/silk/ana_filt_bank_1.c ****         /* Add/subtract, convert back to int16 and store to output */
+  69:../../opus/silk/ana_filt_bank_1.c ****         outL[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_ADD32( out_2, out_1 ), 11 ) );
+  58              		.loc 1 69 21 discriminator 2 view .LVU8
+  59 0010 47F6FF77 		movw	r7, #32767
+  60              	.L3:
+  61              		.loc 1 69 19 discriminator 8 view .LVU9
+  62 0014 22F81670 		strh	r7, [r2, r6, lsl #1]	@ movhi
+  70:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+  63              		.loc 1 70 9 is_stmt 1 view .LVU10
+  64              		.loc 1 70 33 is_stmt 0 view .LVU11
+  65 0018 A9EB0504 		sub	r4, r9, r5
+  66 001c A412     		asrs	r4, r4, #10
+  67 001e 0134     		adds	r4, r4, #1
+  68 0020 6510     		asrs	r5, r4, #1
+  69              	.LVL3:
+  70              		.loc 1 70 21 view .LVU12
+  71 0022 B4F5803F 		cmp	r4, #65536
+  72 0026 06DA     		bge	.L8
+  73              		.loc 1 70 21 discriminator 1 view .LVU13
+  74 0028 15F5004F 		cmn	r5, #32768
+  75 002c 45DB     		blt	.L9
+  76              		.loc 1 70 21 discriminator 3 view .LVU14
+  77 002e 2DB2     		sxth	r5, r5
+  78 0030 03E0     		b	.L4
+  79              	.LVL4:
+  80              	.L7:
+  69:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+  81              		.loc 1 69 21 discriminator 4 view .LVU15
+  82 0032 244F     		ldr	r7, .L12
+  83 0034 EEE7     		b	.L3
+  84              	.LVL5:
+  85              	.L8:
+  86              		.loc 1 70 21 discriminator 2 view .LVU16
+  87 0036 47F6FF75 		movw	r5, #32767
+  88              	.L4:
+  89              		.loc 1 70 19 discriminator 8 view .LVU17
+  90 003a 23F81650 		strh	r5, [r3, r6, lsl #1]	@ movhi
+  49:../../opus/silk/ana_filt_bank_1.c ****         /* Convert to Q10 */
+  91              		.loc 1 49 26 is_stmt 1 discriminator 2 view .LVU18
+  92 003e 0EF1010E 		add	lr, lr, #1
+  93              	.LVL6:
+  94              	.L2:
+  49:../../opus/silk/ana_filt_bank_1.c ****         /* Convert to Q10 */
+  95              		.loc 1 49 19 discriminator 1 view .LVU19
+  96 0042 C645     		cmp	lr, r8
+  97 0044 3BDA     		bge	.L11
+  51:../../opus/silk/ana_filt_bank_1.c **** 
+  98              		.loc 1 51 9 view .LVU20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 4
+
+
+  51:../../opus/silk/ana_filt_bank_1.c **** 
+  99              		.loc 1 51 16 is_stmt 0 view .LVU21
+ 100 0046 7646     		mov	r6, lr
+ 101 0048 30F92EC0 		ldrsh	ip, [r0, lr, lsl #2]
+ 102              	.LVL7:
+  54:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMLAWB( Y, Y, A_fb1_21 );
+ 103              		.loc 1 54 9 is_stmt 1 view .LVU22
+  54:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMLAWB( Y, Y, A_fb1_21 );
+ 104              		.loc 1 54 18 is_stmt 0 view .LVU23
+ 105 004c 0D68     		ldr	r5, [r1]
+  54:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMLAWB( Y, Y, A_fb1_21 );
+ 106              		.loc 1 54 16 view .LVU24
+ 107 004e C5EB8C27 		rsb	r7, r5, ip, lsl #10
+ 108              	.LVL8:
+  55:../../opus/silk/ana_filt_bank_1.c ****         out_1  = silk_ADD32( S[ 0 ], X );
+ 109              		.loc 1 55 9 is_stmt 1 view .LVU25
+  55:../../opus/silk/ana_filt_bank_1.c ****         out_1  = silk_ADD32( S[ 0 ], X );
+ 110              		.loc 1 55 18 is_stmt 0 view .LVU26
+ 111 0052 4FEA274A 		asr	r10, r7, #16
+ 112 0056 DFF87090 		ldr	r9, .L12+4
+ 113 005a BCB2     		uxth	r4, r7
+ 114 005c 09FB04F4 		mul	r4, r9, r4
+ 115 0060 2414     		asrs	r4, r4, #16
+ 116 0062 09FB0A44 		mla	r4, r9, r10, r4
+  55:../../opus/silk/ana_filt_bank_1.c ****         out_1  = silk_ADD32( S[ 0 ], X );
+ 117              		.loc 1 55 16 view .LVU27
+ 118 0066 3C44     		add	r4, r4, r7
+ 119              	.LVL9:
+  56:../../opus/silk/ana_filt_bank_1.c ****         S[ 0 ] = silk_ADD32( in32, X );
+ 120              		.loc 1 56 9 is_stmt 1 view .LVU28
+  56:../../opus/silk/ana_filt_bank_1.c ****         S[ 0 ] = silk_ADD32( in32, X );
+ 121              		.loc 1 56 16 is_stmt 0 view .LVU29
+ 122 0068 2544     		add	r5, r5, r4
+ 123              	.LVL10:
+  57:../../opus/silk/ana_filt_bank_1.c **** 
+ 124              		.loc 1 57 9 is_stmt 1 view .LVU30
+  57:../../opus/silk/ana_filt_bank_1.c **** 
+ 125              		.loc 1 57 18 is_stmt 0 view .LVU31
+ 126 006a 04EB8C24 		add	r4, r4, ip, lsl #10
+ 127              	.LVL11:
+  57:../../opus/silk/ana_filt_bank_1.c **** 
+ 128              		.loc 1 57 16 view .LVU32
+ 129 006e 0C60     		str	r4, [r1]
+  60:../../opus/silk/ana_filt_bank_1.c **** 
+ 130              		.loc 1 60 9 is_stmt 1 view .LVU33
+  60:../../opus/silk/ana_filt_bank_1.c **** 
+ 131              		.loc 1 60 16 is_stmt 0 view .LVU34
+ 132 0070 00EB8E04 		add	r4, r0, lr, lsl #2
+ 133 0074 B4F90270 		ldrsh	r7, [r4, #2]
+ 134              	.LVL12:
+  63:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMULWB( Y, A_fb1_20 );
+ 135              		.loc 1 63 9 is_stmt 1 view .LVU35
+  63:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMULWB( Y, A_fb1_20 );
+ 136              		.loc 1 63 18 is_stmt 0 view .LVU36
+ 137 0078 4C68     		ldr	r4, [r1, #4]
+  63:../../opus/silk/ana_filt_bank_1.c ****         X      = silk_SMULWB( Y, A_fb1_20 );
+ 138              		.loc 1 63 16 view .LVU37
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 5
+
+
+ 139 007a C4EB872C 		rsb	ip, r4, r7, lsl #10
+ 140              	.LVL13:
+  64:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+ 141              		.loc 1 64 9 is_stmt 1 view .LVU38
+  64:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+ 142              		.loc 1 64 18 is_stmt 0 view .LVU39
+ 143 007e 4FEA2C4A 		asr	r10, ip, #16
+  64:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+ 144              		.loc 1 64 18 view .LVU40
+ 145 0082 42F62429 		movw	r9, #10788
+  64:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+ 146              		.loc 1 64 18 view .LVU41
+ 147 0086 1FFA8CFC 		uxth	ip, ip
+ 148              	.LVL14:
+  64:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+ 149              		.loc 1 64 18 view .LVU42
+ 150 008a 09FB0CFC 		mul	ip, r9, ip
+ 151 008e 4FEA2C4C 		asr	ip, ip, #16
+  64:../../opus/silk/ana_filt_bank_1.c ****         out_2  = silk_ADD32( S[ 1 ], X );
+ 152              		.loc 1 64 16 view .LVU43
+ 153 0092 09FB0ACC 		mla	ip, r9, r10, ip
+ 154              	.LVL15:
+  65:../../opus/silk/ana_filt_bank_1.c ****         S[ 1 ] = silk_ADD32( in32, X );
+ 155              		.loc 1 65 9 is_stmt 1 view .LVU44
+  65:../../opus/silk/ana_filt_bank_1.c ****         S[ 1 ] = silk_ADD32( in32, X );
+ 156              		.loc 1 65 16 is_stmt 0 view .LVU45
+ 157 0096 04EB0C09 		add	r9, r4, ip
+ 158              	.LVL16:
+  66:../../opus/silk/ana_filt_bank_1.c **** 
+ 159              		.loc 1 66 9 is_stmt 1 view .LVU46
+  66:../../opus/silk/ana_filt_bank_1.c **** 
+ 160              		.loc 1 66 18 is_stmt 0 view .LVU47
+ 161 009a 0CEB8727 		add	r7, ip, r7, lsl #10
+ 162              	.LVL17:
+  66:../../opus/silk/ana_filt_bank_1.c **** 
+ 163              		.loc 1 66 16 view .LVU48
+ 164 009e 4F60     		str	r7, [r1, #4]
+ 165              	.LVL18:
+  69:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+ 166              		.loc 1 69 9 is_stmt 1 view .LVU49
+  69:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+ 167              		.loc 1 69 33 is_stmt 0 view .LVU50
+ 168 00a0 05EB0904 		add	r4, r5, r9
+ 169 00a4 A412     		asrs	r4, r4, #10
+ 170 00a6 0134     		adds	r4, r4, #1
+ 171 00a8 6710     		asrs	r7, r4, #1
+  69:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+ 172              		.loc 1 69 21 view .LVU51
+ 173 00aa B4F5803F 		cmp	r4, #65536
+ 174 00ae AFDA     		bge	.L6
+  69:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+ 175              		.loc 1 69 21 discriminator 1 view .LVU52
+ 176 00b0 17F5004F 		cmn	r7, #32768
+ 177 00b4 BDDB     		blt	.L7
+  69:../../opus/silk/ana_filt_bank_1.c ****         outH[ k ] = (opus_int16)silk_SAT16( silk_RSHIFT_ROUND( silk_SUB32( out_2, out_1 ), 11 ) );
+ 178              		.loc 1 69 21 discriminator 3 view .LVU53
+ 179 00b6 3FB2     		sxth	r7, r7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 6
+
+
+ 180 00b8 ACE7     		b	.L3
+ 181              	.LVL19:
+ 182              	.L9:
+ 183              		.loc 1 70 21 discriminator 4 view .LVU54
+ 184 00ba 024D     		ldr	r5, .L12
+ 185 00bc BDE7     		b	.L4
+ 186              	.LVL20:
+ 187              	.L11:
+  71:../../opus/silk/ana_filt_bank_1.c ****     }
+  72:../../opus/silk/ana_filt_bank_1.c **** }
+ 188              		.loc 1 72 1 view .LVU55
+ 189 00be BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 190              	.LVL21:
+ 191              	.L13:
+ 192              		.loc 1 72 1 view .LVU56
+ 193 00c2 00BF     		.align	2
+ 194              	.L12:
+ 195 00c4 0080FFFF 		.word	-32768
+ 196 00c8 1EA1FFFF 		.word	-24290
+ 197              		.cfi_endproc
+ 198              	.LFE19:
+ 200              		.text
+ 201              	.Letext0:
+ 202              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 203              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 204              		.file 4 "../../opus/include/opus_types.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ana_filt_bank_1.c
+C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s:20     .text.silk_ana_filt_bank_1:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s:26     .text.silk_ana_filt_bank_1:00000000 silk_ana_filt_bank_1
+C:\Users\oleg\AppData\Local\Temp\ccd0l4MG.s:195    .text.silk_ana_filt_bank_1:000000c4 $d
+
+NO UNDEFINED SYMBOLS

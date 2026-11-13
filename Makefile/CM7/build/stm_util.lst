@@ -1,0 +1,2650 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"stm_util.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../util/stm_util.c"
+  19              		.section	.text.delay_us_cycle,"ax",%progbits
+  20              		.align	1
+  21              		.global	delay_us_cycle
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	delay_us_cycle:
+  27              	.LFB338:
+   1:../../util/stm_util.c **** #include "stm_util.h"
+   2:../../util/stm_util.c **** #include <stdio.h>
+   3:../../util/stm_util.c **** #include <string.h>
+   4:../../util/stm_util.c **** #include <stdarg.h>
+   5:../../util/stm_util.c **** //#include <stm32f2xx_hal_flash_ex.h>
+   6:../../util/stm_util.c **** //#include <stm32f205xx.h>
+   7:../../util/stm_util.c **** #include "str_util.h"
+   8:../../util/stm_util.c **** 
+   9:../../util/stm_util.c **** const portpin_t portpin_NULL = {NULL, 0};
+  10:../../util/stm_util.c **** 
+  11:../../util/stm_util.c **** #pragma GCC push_options
+  12:../../util/stm_util.c **** #pragma GCC optimize ("O0")
+  13:../../util/stm_util.c **** void delay_us_cycle(uint32_t us) {
+  28              		.loc 1 13 34 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 16
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 85B0     		sub	sp, sp, #20
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 24
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 7860     		str	r0, [r7, #4]
+  14:../../util/stm_util.c **** 	volatile uint32_t counter = DELAY_US_CYCLE_TIME * us;
+  44              		.loc 1 14 50 view .LVU1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 2
+
+
+  45 0008 7A68     		ldr	r2, [r7, #4]
+  46 000a 1346     		mov	r3, r2
+  47 000c DB00     		lsls	r3, r3, #3
+  48 000e 1344     		add	r3, r3, r2
+  49 0010 5B00     		lsls	r3, r3, #1
+  50 0012 1344     		add	r3, r3, r2
+  51              		.loc 1 14 20 view .LVU2
+  52 0014 FB60     		str	r3, [r7, #12]
+  15:../../util/stm_util.c **** 	while(counter--);
+  53              		.loc 1 15 7 view .LVU3
+  54 0016 00BF     		nop
+  55              	.L2:
+  56              		.loc 1 15 15 discriminator 1 view .LVU4
+  57 0018 FB68     		ldr	r3, [r7, #12]
+  58 001a 5A1E     		subs	r2, r3, #1
+  59 001c FA60     		str	r2, [r7, #12]
+  60              		.loc 1 15 8 discriminator 1 view .LVU5
+  61 001e 002B     		cmp	r3, #0
+  62 0020 FAD1     		bne	.L2
+  16:../../util/stm_util.c **** }
+  63              		.loc 1 16 1 view .LVU6
+  64 0022 00BF     		nop
+  65 0024 00BF     		nop
+  66 0026 1437     		adds	r7, r7, #20
+  67              	.LCFI3:
+  68              		.cfi_def_cfa_offset 4
+  69 0028 BD46     		mov	sp, r7
+  70              	.LCFI4:
+  71              		.cfi_def_cfa_register 13
+  72              		@ sp needed
+  73 002a 5DF8047B 		ldr	r7, [sp], #4
+  74              	.LCFI5:
+  75              		.cfi_restore 7
+  76              		.cfi_def_cfa_offset 0
+  77 002e 7047     		bx	lr
+  78              		.cfi_endproc
+  79              	.LFE338:
+  81              		.section	.text._delay_us_tim,"ax",%progbits
+  82              		.align	1
+  83              		.global	_delay_us_tim
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  88              	_delay_us_tim:
+  89              	.LVL0:
+  90              	.LFB339:
+  17:../../util/stm_util.c **** #pragma GCC pop_options
+  18:../../util/stm_util.c **** 
+  19:../../util/stm_util.c **** #ifdef USE_RCC
+  20:../../util/stm_util.c **** 
+  21:../../util/stm_util.c **** uint32_t PCLK1TIM(void)                // F4 Example
+  22:../../util/stm_util.c **** {
+  23:../../util/stm_util.c ****     /* Get PCLK1 frequency */
+  24:../../util/stm_util.c ****     uint32_t pclk1 = HAL_RCC_GetPCLK1Freq();
+  25:../../util/stm_util.c **** 
+  26:../../util/stm_util.c ****     /* Get PCLK1 prescaler */
+  27:../../util/stm_util.c ****     if ((RCC->CFGR & RCC_CFGR_PPRE1) == 0) {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 3
+
+
+  28:../../util/stm_util.c ****         /* PCLK1 prescaler equal to 1 => TIMCLK = PCLK1 */
+  29:../../util/stm_util.c ****         return (pclk1);
+  30:../../util/stm_util.c ****     } else {
+  31:../../util/stm_util.c ****         /* PCLK1 prescaler different from 1 => TIMCLK = 2 * PCLK1 */
+  32:../../util/stm_util.c ****         return (2 * pclk1);
+  33:../../util/stm_util.c ****     }
+  34:../../util/stm_util.c **** }
+  35:../../util/stm_util.c **** #endif
+  36:../../util/stm_util.c **** 
+  37:../../util/stm_util.c **** #ifdef HAL_TIM_MODULE_ENABLED
+  38:../../util/stm_util.c **** void _delay_us_tim(TIM_HandleTypeDef * htim, uint32_t us)
+  39:../../util/stm_util.c **** {
+  91              		.loc 1 39 1 view -0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              		@ link register save eliminated.
+  40:../../util/stm_util.c ****     __HAL_TIM_SET_COUNTER(htim, 0); // set the counter value a 0
+  96              		.loc 1 40 5 view .LVU8
+  97 0000 0368     		ldr	r3, [r0]
+  98 0002 0022     		movs	r2, #0
+  99 0004 5A62     		str	r2, [r3, #36]
+  41:../../util/stm_util.c ****     while (__HAL_TIM_GET_COUNTER(htim) < us);        // wait for the counter to reach the us input 
+ 100              		.loc 1 41 5 view .LVU9
+ 101              	.L4:
+ 102              		.loc 1 41 40 discriminator 1 view .LVU10
+ 103              		.loc 1 41 12 is_stmt 0 discriminator 1 view .LVU11
+ 104 0006 0368     		ldr	r3, [r0]
+ 105 0008 5B6A     		ldr	r3, [r3, #36]
+ 106              		.loc 1 41 40 discriminator 1 view .LVU12
+ 107 000a 8B42     		cmp	r3, r1
+ 108 000c FBD3     		bcc	.L4
+  42:../../util/stm_util.c **** }
+ 109              		.loc 1 42 1 view .LVU13
+ 110 000e 7047     		bx	lr
+ 111              		.cfi_endproc
+ 112              	.LFE339:
+ 114              		.section	.text.OutPinIsSetted,"ax",%progbits
+ 115              		.align	1
+ 116              		.global	OutPinIsSetted
+ 117              		.syntax unified
+ 118              		.thumb
+ 119              		.thumb_func
+ 121              	OutPinIsSetted:
+ 122              	.LVL1:
+ 123              	.LFB340:
+  43:../../util/stm_util.c **** #endif
+  44:../../util/stm_util.c **** 
+  45:../../util/stm_util.c **** //установлен ли выход
+  46:../../util/stm_util.c **** GPIO_PinState OutPinIsSetted(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+  47:../../util/stm_util.c **** {
+ 124              		.loc 1 47 1 is_stmt 1 view -0
+ 125              		.cfi_startproc
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128              		@ link register save eliminated.
+  48:../../util/stm_util.c **** 	  GPIO_PinState bitstatus;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 4
+
+
+ 129              		.loc 1 48 4 view .LVU15
+  49:../../util/stm_util.c **** 
+  50:../../util/stm_util.c **** 	  /* Check the parameters */
+  51:../../util/stm_util.c **** 	  assert_param(IS_GPIO_PIN(GPIO_Pin));
+ 130              		.loc 1 51 4 view .LVU16
+  52:../../util/stm_util.c **** 
+  53:../../util/stm_util.c **** 	  if((GPIOx->ODR & GPIO_Pin) != (uint32_t)GPIO_PIN_RESET)
+ 131              		.loc 1 53 4 view .LVU17
+ 132              		.loc 1 53 13 is_stmt 0 view .LVU18
+ 133 0000 4369     		ldr	r3, [r0, #20]
+ 134              		.loc 1 53 6 view .LVU19
+ 135 0002 1942     		tst	r1, r3
+ 136 0004 01D0     		beq	.L7
+  54:../../util/stm_util.c **** 	  {
+  55:../../util/stm_util.c **** 	    bitstatus = GPIO_PIN_SET;
+ 137              		.loc 1 55 16 view .LVU20
+ 138 0006 0120     		movs	r0, #1
+ 139              	.LVL2:
+ 140              		.loc 1 55 16 view .LVU21
+ 141 0008 7047     		bx	lr
+ 142              	.LVL3:
+ 143              	.L7:
+  56:../../util/stm_util.c **** 	  }
+  57:../../util/stm_util.c **** 	  else
+  58:../../util/stm_util.c **** 	  {
+  59:../../util/stm_util.c **** 	    bitstatus = GPIO_PIN_RESET;
+ 144              		.loc 1 59 16 view .LVU22
+ 145 000a 0020     		movs	r0, #0
+ 146              	.LVL4:
+  60:../../util/stm_util.c **** 	  }
+  61:../../util/stm_util.c **** 	  return bitstatus;
+ 147              		.loc 1 61 4 is_stmt 1 view .LVU23
+  62:../../util/stm_util.c **** 
+  63:../../util/stm_util.c **** }
+ 148              		.loc 1 63 1 is_stmt 0 view .LVU24
+ 149 000c 7047     		bx	lr
+ 150              		.cfi_endproc
+ 151              	.LFE340:
+ 153              		.section	.text.get_stm32_tim_freq_param,"ax",%progbits
+ 154              		.align	1
+ 155              		.global	get_stm32_tim_freq_param
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	get_stm32_tim_freq_param:
+ 161              	.LVL5:
+ 162              	.LFB341:
+  64:../../util/stm_util.c **** 
+  65:../../util/stm_util.c **** void get_stm32_tim_freq_param(uint32_t base_freq, uint32_t required_freq, uint16_t * prescaler, uin
+  66:../../util/stm_util.c **** {
+ 163              		.loc 1 66 1 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167              		.loc 1 66 1 is_stmt 0 view .LVU26
+ 168 0000 70B5     		push	{r4, r5, r6, lr}
+ 169              	.LCFI6:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 5
+
+
+ 170              		.cfi_def_cfa_offset 16
+ 171              		.cfi_offset 4, -16
+ 172              		.cfi_offset 5, -12
+ 173              		.cfi_offset 6, -8
+ 174              		.cfi_offset 14, -4
+ 175 0002 1446     		mov	r4, r2
+ 176 0004 1D46     		mov	r5, r3
+  67:../../util/stm_util.c ****   uint16_t p, c;
+ 177              		.loc 1 67 3 is_stmt 1 view .LVU27
+  68:../../util/stm_util.c ****   uint32_t freq;
+ 178              		.loc 1 68 3 view .LVU28
+  69:../../util/stm_util.c ****   uint32_t min_diff_freq = 0xFFFFFFFF;
+ 179              		.loc 1 69 3 view .LVU29
+ 180              	.LVL6:
+  70:../../util/stm_util.c ****   uint32_t diff_freq;
+ 181              		.loc 1 70 3 view .LVU30
+  71:../../util/stm_util.c ****   uint16_t min_diff_p_c = 0xFFFF;
+ 182              		.loc 1 71 3 view .LVU31
+  72:../../util/stm_util.c ****   uint16_t diff_p_c;
+ 183              		.loc 1 72 3 view .LVU32
+  73:../../util/stm_util.c **** 
+  74:../../util/stm_util.c ****   for (c = 2; c < 0xFFFF; c++) {
+ 184              		.loc 1 74 3 view .LVU33
+  71:../../util/stm_util.c ****   uint16_t diff_p_c;
+ 185              		.loc 1 71 12 is_stmt 0 view .LVU34
+ 186 0006 4FF6FF72 		movw	r2, #65535
+ 187              	.LVL7:
+  69:../../util/stm_util.c ****   uint32_t diff_freq;
+ 188              		.loc 1 69 12 view .LVU35
+ 189 000a 4FF0FF33 		mov	r3, #-1
+ 190              	.LVL8:
+ 191              		.loc 1 74 10 view .LVU36
+ 192 000e 4FF0020E 		mov	lr, #2
+ 193              		.loc 1 74 3 view .LVU37
+ 194 0012 0BE0     		b	.L9
+ 195              	.LVL9:
+ 196              	.L11:
+  75:../../util/stm_util.c ****     p = base_freq / (c * required_freq);
+  76:../../util/stm_util.c ****     if (p < 2) continue;
+  77:../../util/stm_util.c ****     freq = (base_freq  / p) / c;
+  78:../../util/stm_util.c **** 
+  79:../../util/stm_util.c ****     if (freq > required_freq) diff_freq = freq - required_freq;
+  80:../../util/stm_util.c ****     else diff_freq = required_freq - freq;
+ 197              		.loc 1 80 10 is_stmt 1 view .LVU38
+ 198              		.loc 1 80 20 is_stmt 0 view .LVU39
+ 199 0014 A1EB0C0C 		sub	ip, r1, ip
+ 200              	.LVL10:
+ 201              		.loc 1 80 20 view .LVU40
+ 202 0018 1CE0     		b	.L12
+ 203              	.LVL11:
+ 204              	.L13:
+  81:../../util/stm_util.c **** 
+  82:../../util/stm_util.c ****     if (diff_freq <= min_diff_freq) {
+  83:../../util/stm_util.c ****         min_diff_freq = diff_freq;
+  84:../../util/stm_util.c **** 
+  85:../../util/stm_util.c ****         if (p > c) diff_p_c = p - c;
+  86:../../util/stm_util.c ****         else diff_p_c = c - p;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 6
+
+
+ 205              		.loc 1 86 14 is_stmt 1 view .LVU41
+ 206              		.loc 1 86 23 is_stmt 0 view .LVU42
+ 207 001a AEEB0603 		sub	r3, lr, r6
+ 208 001e 9BB2     		uxth	r3, r3
+ 209              	.LVL12:
+ 210              		.loc 1 86 23 view .LVU43
+ 211 0020 1FE0     		b	.L14
+ 212              	.L16:
+  83:../../util/stm_util.c **** 
+ 213              		.loc 1 83 23 view .LVU44
+ 214 0022 6346     		mov	r3, ip
+ 215              	.LVL13:
+ 216              	.L10:
+  74:../../util/stm_util.c ****     p = base_freq / (c * required_freq);
+ 217              		.loc 1 74 28 is_stmt 1 discriminator 2 view .LVU45
+ 218 0024 0EF1010E 		add	lr, lr, #1
+ 219              	.LVL14:
+  74:../../util/stm_util.c ****     p = base_freq / (c * required_freq);
+ 220              		.loc 1 74 28 is_stmt 0 discriminator 2 view .LVU46
+ 221 0028 1FFA8EFE 		uxth	lr, lr
+ 222              	.LVL15:
+ 223              	.L9:
+  74:../../util/stm_util.c ****     p = base_freq / (c * required_freq);
+ 224              		.loc 1 74 17 is_stmt 1 discriminator 1 view .LVU47
+ 225 002c 4FF6FF76 		movw	r6, #65535
+ 226 0030 B645     		cmp	lr, r6
+ 227 0032 1ED0     		beq	.L18
+  75:../../util/stm_util.c ****     if (p < 2) continue;
+ 228              		.loc 1 75 5 view .LVU48
+  75:../../util/stm_util.c ****     if (p < 2) continue;
+ 229              		.loc 1 75 24 is_stmt 0 view .LVU49
+ 230 0034 01FB0EFC 		mul	ip, r1, lr
+  75:../../util/stm_util.c ****     if (p < 2) continue;
+ 231              		.loc 1 75 19 view .LVU50
+ 232 0038 B0FBFCFC 		udiv	ip, r0, ip
+  75:../../util/stm_util.c ****     if (p < 2) continue;
+ 233              		.loc 1 75 7 view .LVU51
+ 234 003c 1FFA8CF6 		uxth	r6, ip
+ 235              	.LVL16:
+  76:../../util/stm_util.c ****     freq = (base_freq  / p) / c;
+ 236              		.loc 1 76 5 is_stmt 1 view .LVU52
+  76:../../util/stm_util.c ****     freq = (base_freq  / p) / c;
+ 237              		.loc 1 76 8 is_stmt 0 view .LVU53
+ 238 0040 012E     		cmp	r6, #1
+ 239 0042 EFD9     		bls	.L10
+  77:../../util/stm_util.c **** 
+ 240              		.loc 1 77 5 is_stmt 1 view .LVU54
+  77:../../util/stm_util.c **** 
+ 241              		.loc 1 77 24 is_stmt 0 view .LVU55
+ 242 0044 B0FBF6FC 		udiv	ip, r0, r6
+  77:../../util/stm_util.c **** 
+ 243              		.loc 1 77 10 view .LVU56
+ 244 0048 BCFBFEFC 		udiv	ip, ip, lr
+ 245              	.LVL17:
+  79:../../util/stm_util.c ****     else diff_freq = required_freq - freq;
+ 246              		.loc 1 79 5 is_stmt 1 view .LVU57
+  79:../../util/stm_util.c ****     else diff_freq = required_freq - freq;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 7
+
+
+ 247              		.loc 1 79 8 is_stmt 0 view .LVU58
+ 248 004c 6145     		cmp	r1, ip
+ 249 004e E1D2     		bcs	.L11
+  79:../../util/stm_util.c ****     else diff_freq = required_freq - freq;
+ 250              		.loc 1 79 31 is_stmt 1 discriminator 1 view .LVU59
+  79:../../util/stm_util.c ****     else diff_freq = required_freq - freq;
+ 251              		.loc 1 79 41 is_stmt 0 discriminator 1 view .LVU60
+ 252 0050 ACEB010C 		sub	ip, ip, r1
+ 253              	.LVL18:
+ 254              	.L12:
+  82:../../util/stm_util.c ****         min_diff_freq = diff_freq;
+ 255              		.loc 1 82 5 is_stmt 1 view .LVU61
+  82:../../util/stm_util.c ****         min_diff_freq = diff_freq;
+ 256              		.loc 1 82 8 is_stmt 0 view .LVU62
+ 257 0054 6345     		cmp	r3, ip
+ 258 0056 E5D3     		bcc	.L10
+  83:../../util/stm_util.c **** 
+ 259              		.loc 1 83 9 is_stmt 1 view .LVU63
+ 260              	.LVL19:
+  85:../../util/stm_util.c ****         else diff_p_c = c - p;
+ 261              		.loc 1 85 9 view .LVU64
+  85:../../util/stm_util.c ****         else diff_p_c = c - p;
+ 262              		.loc 1 85 12 is_stmt 0 view .LVU65
+ 263 0058 B645     		cmp	lr, r6
+ 264 005a DED2     		bcs	.L13
+  85:../../util/stm_util.c ****         else diff_p_c = c - p;
+ 265              		.loc 1 85 20 is_stmt 1 discriminator 1 view .LVU66
+  85:../../util/stm_util.c ****         else diff_p_c = c - p;
+ 266              		.loc 1 85 29 is_stmt 0 discriminator 1 view .LVU67
+ 267 005c A6EB0E03 		sub	r3, r6, lr
+ 268 0060 9BB2     		uxth	r3, r3
+ 269              	.LVL20:
+ 270              	.L14:
+  87:../../util/stm_util.c **** 
+  88:../../util/stm_util.c ****         if (diff_p_c <= min_diff_p_c) {
+ 271              		.loc 1 88 9 is_stmt 1 view .LVU68
+ 272              		.loc 1 88 12 is_stmt 0 view .LVU69
+ 273 0062 9A42     		cmp	r2, r3
+ 274 0064 DDD3     		bcc	.L16
+  89:../../util/stm_util.c ****            min_diff_p_c = diff_p_c;
+ 275              		.loc 1 89 12 is_stmt 1 view .LVU70
+ 276              	.LVL21:
+  90:../../util/stm_util.c ****            *prescaler = p;
+ 277              		.loc 1 90 12 view .LVU71
+ 278              		.loc 1 90 23 is_stmt 0 view .LVU72
+ 279 0066 2680     		strh	r6, [r4]	@ movhi
+  91:../../util/stm_util.c ****            *counter_period = c;
+ 280              		.loc 1 91 12 is_stmt 1 view .LVU73
+ 281              		.loc 1 91 28 is_stmt 0 view .LVU74
+ 282 0068 A5F800E0 		strh	lr, [r5]	@ movhi
+  89:../../util/stm_util.c ****            min_diff_p_c = diff_p_c;
+ 283              		.loc 1 89 25 view .LVU75
+ 284 006c 1A46     		mov	r2, r3
+  83:../../util/stm_util.c **** 
+ 285              		.loc 1 83 23 view .LVU76
+ 286 006e 6346     		mov	r3, ip
+ 287              	.LVL22:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 8
+
+
+  83:../../util/stm_util.c **** 
+ 288              		.loc 1 83 23 view .LVU77
+ 289 0070 D8E7     		b	.L10
+ 290              	.LVL23:
+ 291              	.L18:
+  92:../../util/stm_util.c ****         }
+  93:../../util/stm_util.c ****     }
+  94:../../util/stm_util.c ****   }
+  95:../../util/stm_util.c **** }
+ 292              		.loc 1 95 1 view .LVU78
+ 293 0072 70BD     		pop	{r4, r5, r6, pc}
+ 294              		.loc 1 95 1 view .LVU79
+ 295              		.cfi_endproc
+ 296              	.LFE341:
+ 298              		.section	.text.set_tim_frequency,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	set_tim_frequency
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 305              	set_tim_frequency:
+ 306              	.LVL24:
+ 307              	.LFB342:
+  96:../../util/stm_util.c **** 
+  97:../../util/stm_util.c **** 
+  98:../../util/stm_util.c **** 
+  99:../../util/stm_util.c **** 
+ 100:../../util/stm_util.c **** #ifdef HAL_TIM_MODULE_ENABLED
+ 101:../../util/stm_util.c **** void set_tim_frequency(TIM_TypeDef * ptim, uint32_t frequency, uint32_t base_frequency)
+ 102:../../util/stm_util.c **** {
+ 308              		.loc 1 102 1 is_stmt 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 8
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		.loc 1 102 1 is_stmt 0 view .LVU81
+ 313 0000 10B5     		push	{r4, lr}
+ 314              	.LCFI7:
+ 315              		.cfi_def_cfa_offset 8
+ 316              		.cfi_offset 4, -8
+ 317              		.cfi_offset 14, -4
+ 318 0002 82B0     		sub	sp, sp, #8
+ 319              	.LCFI8:
+ 320              		.cfi_def_cfa_offset 16
+ 321 0004 0446     		mov	r4, r0
+ 322 0006 1046     		mov	r0, r2
+ 323              	.LVL25:
+ 103:../../util/stm_util.c **** 	uint16_t prescaler;
+ 324              		.loc 1 103 2 is_stmt 1 view .LVU82
+ 104:../../util/stm_util.c **** 	uint16_t counter_period;
+ 325              		.loc 1 104 2 view .LVU83
+ 105:../../util/stm_util.c **** 
+ 106:../../util/stm_util.c **** 	get_stm32_tim_freq_param(base_frequency, frequency, &prescaler, &counter_period);
+ 326              		.loc 1 106 2 view .LVU84
+ 327 0008 01AB     		add	r3, sp, #4
+ 328 000a 0DF10602 		add	r2, sp, #6
+ 329              	.LVL26:
+ 330              		.loc 1 106 2 is_stmt 0 view .LVU85
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 9
+
+
+ 331 000e FFF7FEFF 		bl	get_stm32_tim_freq_param
+ 332              	.LVL27:
+ 107:../../util/stm_util.c **** 
+ 108:../../util/stm_util.c **** 	ptim->PSC = prescaler - 1;
+ 333              		.loc 1 108 2 is_stmt 1 view .LVU86
+ 334              		.loc 1 108 24 is_stmt 0 view .LVU87
+ 335 0012 BDF80630 		ldrh	r3, [sp, #6]
+ 336 0016 013B     		subs	r3, r3, #1
+ 337              		.loc 1 108 12 view .LVU88
+ 338 0018 A362     		str	r3, [r4, #40]
+ 109:../../util/stm_util.c **** 	ptim->ARR = counter_period - 1;
+ 339              		.loc 1 109 2 is_stmt 1 view .LVU89
+ 340              		.loc 1 109 29 is_stmt 0 view .LVU90
+ 341 001a BDF80430 		ldrh	r3, [sp, #4]
+ 342 001e 013B     		subs	r3, r3, #1
+ 343              		.loc 1 109 12 view .LVU91
+ 344 0020 E362     		str	r3, [r4, #44]
+ 110:../../util/stm_util.c **** 	ptim->EGR |= TIM_EGR_UG;
+ 345              		.loc 1 110 2 is_stmt 1 view .LVU92
+ 346              		.loc 1 110 6 is_stmt 0 view .LVU93
+ 347 0022 6369     		ldr	r3, [r4, #20]
+ 348              		.loc 1 110 12 view .LVU94
+ 349 0024 43F00103 		orr	r3, r3, #1
+ 350 0028 6361     		str	r3, [r4, #20]
+ 111:../../util/stm_util.c **** }
+ 351              		.loc 1 111 1 view .LVU95
+ 352 002a 02B0     		add	sp, sp, #8
+ 353              	.LCFI9:
+ 354              		.cfi_def_cfa_offset 8
+ 355              		@ sp needed
+ 356 002c 10BD     		pop	{r4, pc}
+ 357              		.loc 1 111 1 view .LVU96
+ 358              		.cfi_endproc
+ 359              	.LFE342:
+ 361              		.section	.text.set_tim_frequency2,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	set_tim_frequency2
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	set_tim_frequency2:
+ 369              	.LVL28:
+ 370              	.LFB343:
+ 112:../../util/stm_util.c **** 
+ 113:../../util/stm_util.c **** void set_tim_frequency2(TIM_HandleTypeDef * htim, uint32_t frequency, uint32_t base_frequency)
+ 114:../../util/stm_util.c **** {
+ 371              		.loc 1 114 1 is_stmt 1 view -0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		.loc 1 114 1 is_stmt 0 view .LVU98
+ 376 0000 08B5     		push	{r3, lr}
+ 377              	.LCFI10:
+ 378              		.cfi_def_cfa_offset 8
+ 379              		.cfi_offset 3, -8
+ 380              		.cfi_offset 14, -4
+ 115:../../util/stm_util.c **** 	set_tim_frequency(htim->Instance, frequency, base_frequency);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 10
+
+
+ 381              		.loc 1 115 2 is_stmt 1 view .LVU99
+ 382 0002 0068     		ldr	r0, [r0]
+ 383              	.LVL29:
+ 384              		.loc 1 115 2 is_stmt 0 view .LVU100
+ 385 0004 FFF7FEFF 		bl	set_tim_frequency
+ 386              	.LVL30:
+ 116:../../util/stm_util.c **** }
+ 387              		.loc 1 116 1 view .LVU101
+ 388 0008 08BD     		pop	{r3, pc}
+ 389              		.cfi_endproc
+ 390              	.LFE343:
+ 392              		.section	.text.get_tim_frequency,"ax",%progbits
+ 393              		.align	1
+ 394              		.global	get_tim_frequency
+ 395              		.syntax unified
+ 396              		.thumb
+ 397              		.thumb_func
+ 399              	get_tim_frequency:
+ 400              	.LVL31:
+ 401              	.LFB344:
+ 117:../../util/stm_util.c **** 
+ 118:../../util/stm_util.c **** 
+ 119:../../util/stm_util.c **** uint32_t get_tim_frequency(TIM_TypeDef * ptim, uint32_t base_frequency)
+ 120:../../util/stm_util.c **** {
+ 402              		.loc 1 120 1 is_stmt 1 view -0
+ 403              		.cfi_startproc
+ 404              		@ args = 0, pretend = 0, frame = 0
+ 405              		@ frame_needed = 0, uses_anonymous_args = 0
+ 406              		@ link register save eliminated.
+ 121:../../util/stm_util.c ****   return (base_frequency / (ptim->PSC + 1)) / (ptim->ARR + 1);
+ 407              		.loc 1 121 3 view .LVU103
+ 408              		.loc 1 121 33 is_stmt 0 view .LVU104
+ 409 0000 836A     		ldr	r3, [r0, #40]
+ 410              		.loc 1 121 39 view .LVU105
+ 411 0002 0133     		adds	r3, r3, #1
+ 412              		.loc 1 121 26 view .LVU106
+ 413 0004 B1FBF3F1 		udiv	r1, r1, r3
+ 414              	.LVL32:
+ 415              		.loc 1 121 52 view .LVU107
+ 416 0008 C36A     		ldr	r3, [r0, #44]
+ 417              		.loc 1 121 58 view .LVU108
+ 418 000a 0133     		adds	r3, r3, #1
+ 122:../../util/stm_util.c **** }
+ 419              		.loc 1 122 1 view .LVU109
+ 420 000c B1FBF3F0 		udiv	r0, r1, r3
+ 421              	.LVL33:
+ 422              		.loc 1 122 1 view .LVU110
+ 423 0010 7047     		bx	lr
+ 424              		.cfi_endproc
+ 425              	.LFE344:
+ 427              		.section	.text.get_tim_frequency2,"ax",%progbits
+ 428              		.align	1
+ 429              		.global	get_tim_frequency2
+ 430              		.syntax unified
+ 431              		.thumb
+ 432              		.thumb_func
+ 434              	get_tim_frequency2:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 11
+
+
+ 435              	.LVL34:
+ 436              	.LFB345:
+ 123:../../util/stm_util.c **** 
+ 124:../../util/stm_util.c **** uint32_t get_tim_frequency2(TIM_HandleTypeDef * htim,  uint32_t base_frequency)
+ 125:../../util/stm_util.c **** {
+ 437              		.loc 1 125 1 is_stmt 1 view -0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 0
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441              		.loc 1 125 1 is_stmt 0 view .LVU112
+ 442 0000 08B5     		push	{r3, lr}
+ 443              	.LCFI11:
+ 444              		.cfi_def_cfa_offset 8
+ 445              		.cfi_offset 3, -8
+ 446              		.cfi_offset 14, -4
+ 126:../../util/stm_util.c **** 	return get_tim_frequency(htim->Instance, base_frequency);
+ 447              		.loc 1 126 2 is_stmt 1 view .LVU113
+ 448              		.loc 1 126 9 is_stmt 0 view .LVU114
+ 449 0002 0068     		ldr	r0, [r0]
+ 450              	.LVL35:
+ 451              		.loc 1 126 9 view .LVU115
+ 452 0004 FFF7FEFF 		bl	get_tim_frequency
+ 453              	.LVL36:
+ 127:../../util/stm_util.c **** }
+ 454              		.loc 1 127 1 view .LVU116
+ 455 0008 08BD     		pop	{r3, pc}
+ 456              		.cfi_endproc
+ 457              	.LFE345:
+ 459              		.section	.text.set_tim_frequency2_and_start,"ax",%progbits
+ 460              		.align	1
+ 461              		.global	set_tim_frequency2_and_start
+ 462              		.syntax unified
+ 463              		.thumb
+ 464              		.thumb_func
+ 466              	set_tim_frequency2_and_start:
+ 467              	.LVL37:
+ 468              	.LFB346:
+ 128:../../util/stm_util.c **** 
+ 129:../../util/stm_util.c **** void set_tim_frequency2_and_start(TIM_HandleTypeDef * htim, uint32_t frequency, uint32_t base_frequ
+ 130:../../util/stm_util.c **** {
+ 469              		.loc 1 130 1 is_stmt 1 view -0
+ 470              		.cfi_startproc
+ 471              		@ args = 0, pretend = 0, frame = 0
+ 472              		@ frame_needed = 0, uses_anonymous_args = 0
+ 473              		.loc 1 130 1 is_stmt 0 view .LVU118
+ 474 0000 70B5     		push	{r4, r5, r6, lr}
+ 475              	.LCFI12:
+ 476              		.cfi_def_cfa_offset 16
+ 477              		.cfi_offset 4, -16
+ 478              		.cfi_offset 5, -12
+ 479              		.cfi_offset 6, -8
+ 480              		.cfi_offset 14, -4
+ 481 0002 0446     		mov	r4, r0
+ 482 0004 0D46     		mov	r5, r1
+ 483 0006 1646     		mov	r6, r2
+ 131:../../util/stm_util.c **** 	if (get_tim_frequency2(htim, base_frequency) != frequency) {
+ 484              		.loc 1 131 2 is_stmt 1 view .LVU119
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 12
+
+
+ 485              		.loc 1 131 6 is_stmt 0 view .LVU120
+ 486 0008 1146     		mov	r1, r2
+ 487              	.LVL38:
+ 488              		.loc 1 131 6 view .LVU121
+ 489 000a FFF7FEFF 		bl	get_tim_frequency2
+ 490              	.LVL39:
+ 491              		.loc 1 131 5 discriminator 1 view .LVU122
+ 492 000e A842     		cmp	r0, r5
+ 493 0010 05D1     		bne	.L30
+ 494              	.L27:
+ 132:../../util/stm_util.c **** 		//HAL_TIM_Base_Stop(htim);
+ 133:../../util/stm_util.c **** 		set_tim_frequency2(htim, frequency, base_frequency);
+ 134:../../util/stm_util.c **** 	}
+ 135:../../util/stm_util.c **** 	if (htim->State == HAL_TIM_STATE_READY) HAL_TIM_Base_Start(htim);
+ 495              		.loc 1 135 2 is_stmt 1 view .LVU123
+ 496              		.loc 1 135 10 is_stmt 0 view .LVU124
+ 497 0012 94F83D30 		ldrb	r3, [r4, #61]	@ zero_extendqisi2
+ 498 0016 DBB2     		uxtb	r3, r3
+ 499              		.loc 1 135 5 view .LVU125
+ 500 0018 012B     		cmp	r3, #1
+ 501 001a 06D0     		beq	.L31
+ 502              	.L26:
+ 136:../../util/stm_util.c **** }
+ 503              		.loc 1 136 1 view .LVU126
+ 504 001c 70BD     		pop	{r4, r5, r6, pc}
+ 505              	.LVL40:
+ 506              	.L30:
+ 133:../../util/stm_util.c **** 	}
+ 507              		.loc 1 133 3 is_stmt 1 view .LVU127
+ 508 001e 3246     		mov	r2, r6
+ 509 0020 2946     		mov	r1, r5
+ 510 0022 2046     		mov	r0, r4
+ 511 0024 FFF7FEFF 		bl	set_tim_frequency2
+ 512              	.LVL41:
+ 513 0028 F3E7     		b	.L27
+ 514              	.L31:
+ 135:../../util/stm_util.c **** }
+ 515              		.loc 1 135 42 discriminator 1 view .LVU128
+ 516 002a 2046     		mov	r0, r4
+ 517 002c FFF7FEFF 		bl	HAL_TIM_Base_Start
+ 518              	.LVL42:
+ 519              		.loc 1 136 1 is_stmt 0 view .LVU129
+ 520 0030 F4E7     		b	.L26
+ 521              		.cfi_endproc
+ 522              	.LFE346:
+ 524              		.section	.text.HAL_GetTickUs,"ax",%progbits
+ 525              		.align	1
+ 526              		.global	HAL_GetTickUs
+ 527              		.syntax unified
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	HAL_GetTickUs:
+ 532              	.LVL43:
+ 533              	.LFB347:
+ 137:../../util/stm_util.c **** 
+ 138:../../util/stm_util.c **** uint64_t HAL_GetTickUs(TIM_HandleTypeDef * htim)
+ 139:../../util/stm_util.c **** {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 13
+
+
+ 534              		.loc 1 139 1 is_stmt 1 view -0
+ 535              		.cfi_startproc
+ 536              		@ args = 0, pretend = 0, frame = 0
+ 537              		@ frame_needed = 0, uses_anonymous_args = 0
+ 538              		.loc 1 139 1 is_stmt 0 view .LVU131
+ 539 0000 10B5     		push	{r4, lr}
+ 540              	.LCFI13:
+ 541              		.cfi_def_cfa_offset 8
+ 542              		.cfi_offset 4, -8
+ 543              		.cfi_offset 14, -4
+ 544 0002 0446     		mov	r4, r0
+ 140:../../util/stm_util.c **** 	return 1000 * HAL_GetTick() + __HAL_TIM_GET_COUNTER(htim);
+ 545              		.loc 1 140 2 is_stmt 1 view .LVU132
+ 546              		.loc 1 140 16 is_stmt 0 view .LVU133
+ 547 0004 FFF7FEFF 		bl	HAL_GetTick
+ 548              	.LVL44:
+ 549              		.loc 1 140 32 discriminator 1 view .LVU134
+ 550 0008 2368     		ldr	r3, [r4]
+ 551 000a 5B6A     		ldr	r3, [r3, #36]
+ 141:../../util/stm_util.c **** }
+ 552              		.loc 1 141 1 view .LVU135
+ 553 000c 4FF47A72 		mov	r2, #1000
+ 554 0010 02FB0030 		mla	r0, r2, r0, r3
+ 555 0014 0021     		movs	r1, #0
+ 556 0016 10BD     		pop	{r4, pc}
+ 557              		.loc 1 141 1 view .LVU136
+ 558              		.cfi_endproc
+ 559              	.LFE347:
+ 561              		.section	.text.HAL_DiffTickUs,"ax",%progbits
+ 562              		.align	1
+ 563              		.global	HAL_DiffTickUs
+ 564              		.syntax unified
+ 565              		.thumb
+ 566              		.thumb_func
+ 568              	HAL_DiffTickUs:
+ 569              	.LVL45:
+ 570              	.LFB348:
+ 142:../../util/stm_util.c **** 
+ 143:../../util/stm_util.c **** 
+ 144:../../util/stm_util.c **** uint64_t HAL_DiffTickUs(uint64_t told, TIM_HandleTypeDef * htim)
+ 145:../../util/stm_util.c **** {
+ 571              		.loc 1 145 1 is_stmt 1 view -0
+ 572              		.cfi_startproc
+ 573              		@ args = 0, pretend = 0, frame = 0
+ 574              		@ frame_needed = 0, uses_anonymous_args = 0
+ 575              		.loc 1 145 1 is_stmt 0 view .LVU138
+ 576 0000 38B5     		push	{r3, r4, r5, lr}
+ 577              	.LCFI14:
+ 578              		.cfi_def_cfa_offset 16
+ 579              		.cfi_offset 3, -16
+ 580              		.cfi_offset 4, -12
+ 581              		.cfi_offset 5, -8
+ 582              		.cfi_offset 14, -4
+ 583 0002 0546     		mov	r5, r0
+ 584 0004 0C46     		mov	r4, r1
+ 146:../../util/stm_util.c **** 	uint64_t tnew = HAL_GetTickUs(htim);
+ 585              		.loc 1 146 2 is_stmt 1 view .LVU139
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 14
+
+
+ 586              		.loc 1 146 18 is_stmt 0 view .LVU140
+ 587 0006 1046     		mov	r0, r2
+ 588              	.LVL46:
+ 589              		.loc 1 146 18 view .LVU141
+ 590 0008 FFF7FEFF 		bl	HAL_GetTickUs
+ 591              	.LVL47:
+ 147:../../util/stm_util.c **** 
+ 148:../../util/stm_util.c **** 	return DIFF_TICKU64(told, tnew);
+ 592              		.loc 1 148 2 is_stmt 1 view .LVU142
+ 593              		.loc 1 148 9 is_stmt 0 view .LVU143
+ 594 000c A842     		cmp	r0, r5
+ 595 000e 71EB0403 		sbcs	r3, r1, r4
+ 596 0012 06D2     		bcs	.L35
+ 597              		.loc 1 148 9 discriminator 1 view .LVU144
+ 598 0014 401B     		subs	r0, r0, r5
+ 599              	.LVL48:
+ 600              		.loc 1 148 9 discriminator 1 view .LVU145
+ 601 0016 61EB0401 		sbc	r1, r1, r4
+ 602 001a 0138     		subs	r0, r0, #1
+ 603 001c 41F1FF31 		adc	r1, r1, #-1
+ 604              	.L34:
+ 149:../../util/stm_util.c **** }
+ 605              		.loc 1 149 1 view .LVU146
+ 606 0020 38BD     		pop	{r3, r4, r5, pc}
+ 607              	.LVL49:
+ 608              	.L35:
+ 148:../../util/stm_util.c **** }
+ 609              		.loc 1 148 9 discriminator 2 view .LVU147
+ 610 0022 401B     		subs	r0, r0, r5
+ 611              	.LVL50:
+ 148:../../util/stm_util.c **** }
+ 612              		.loc 1 148 9 discriminator 2 view .LVU148
+ 613 0024 61EB0401 		sbc	r1, r1, r4
+ 148:../../util/stm_util.c **** }
+ 614              		.loc 1 148 9 view .LVU149
+ 615 0028 FAE7     		b	.L34
+ 616              		.cfi_endproc
+ 617              	.LFE348:
+ 619              		.section	.text.HAL_DelayUs,"ax",%progbits
+ 620              		.align	1
+ 621              		.global	HAL_DelayUs
+ 622              		.syntax unified
+ 623              		.thumb
+ 624              		.thumb_func
+ 626              	HAL_DelayUs:
+ 627              	.LVL51:
+ 628              	.LFB349:
+ 150:../../util/stm_util.c **** 
+ 151:../../util/stm_util.c **** 
+ 152:../../util/stm_util.c **** void HAL_DelayUs(uint64_t Delay, TIM_HandleTypeDef * htim)
+ 153:../../util/stm_util.c **** {
+ 629              		.loc 1 153 1 is_stmt 1 view -0
+ 630              		.cfi_startproc
+ 631              		@ args = 0, pretend = 0, frame = 0
+ 632              		@ frame_needed = 0, uses_anonymous_args = 0
+ 633              		.loc 1 153 1 is_stmt 0 view .LVU151
+ 634 0000 2DE97043 		push	{r4, r5, r6, r8, r9, lr}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 15
+
+
+ 635              	.LCFI15:
+ 636              		.cfi_def_cfa_offset 24
+ 637              		.cfi_offset 4, -24
+ 638              		.cfi_offset 5, -20
+ 639              		.cfi_offset 6, -16
+ 640              		.cfi_offset 8, -12
+ 641              		.cfi_offset 9, -8
+ 642              		.cfi_offset 14, -4
+ 643 0004 8146     		mov	r9, r0
+ 644 0006 8846     		mov	r8, r1
+ 645 0008 1646     		mov	r6, r2
+ 154:../../util/stm_util.c **** 	uint64_t tnew, told;
+ 646              		.loc 1 154 2 is_stmt 1 view .LVU152
+ 155:../../util/stm_util.c **** 
+ 156:../../util/stm_util.c **** 	told = HAL_GetTickUs(htim);
+ 647              		.loc 1 156 2 view .LVU153
+ 648              		.loc 1 156 9 is_stmt 0 view .LVU154
+ 649 000a 1046     		mov	r0, r2
+ 650              	.LVL52:
+ 651              		.loc 1 156 9 view .LVU155
+ 652 000c FFF7FEFF 		bl	HAL_GetTickUs
+ 653              	.LVL53:
+ 654              		.loc 1 156 9 view .LVU156
+ 655 0010 0446     		mov	r4, r0
+ 656 0012 0D46     		mov	r5, r1
+ 657              	.LVL54:
+ 658              		.loc 1 156 9 view .LVU157
+ 659 0014 09E0     		b	.L41
+ 660              	.LVL55:
+ 661              	.L44:
+ 157:../../util/stm_util.c **** 
+ 158:../../util/stm_util.c **** 	do {
+ 159:../../util/stm_util.c **** 		tnew = HAL_GetTickUs(htim);
+ 160:../../util/stm_util.c **** 	}
+ 161:../../util/stm_util.c **** 	while (DIFF_TICKU64(told, tnew) < Delay);
+ 662              		.loc 1 161 9 discriminator 1 view .LVU158
+ 663 0016 001B     		subs	r0, r0, r4
+ 664              	.LVL56:
+ 665              		.loc 1 161 9 discriminator 1 view .LVU159
+ 666 0018 61EB0501 		sbc	r1, r1, r5
+ 667 001c 0138     		subs	r0, r0, #1
+ 668 001e 41F1FF31 		adc	r1, r1, #-1
+ 669              	.L40:
+ 670              		.loc 1 161 34 discriminator 4 view .LVU160
+ 671 0022 4845     		cmp	r0, r9
+ 672 0024 71EB0801 		sbcs	r1, r1, r8
+ 673 0028 0AD2     		bcs	.L43
+ 674              	.LVL57:
+ 675              	.L41:
+ 158:../../util/stm_util.c **** 		tnew = HAL_GetTickUs(htim);
+ 676              		.loc 1 158 2 is_stmt 1 view .LVU161
+ 159:../../util/stm_util.c **** 	}
+ 677              		.loc 1 159 3 view .LVU162
+ 159:../../util/stm_util.c **** 	}
+ 678              		.loc 1 159 10 is_stmt 0 view .LVU163
+ 679 002a 3046     		mov	r0, r6
+ 680 002c FFF7FEFF 		bl	HAL_GetTickUs
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 16
+
+
+ 681              	.LVL58:
+ 682              		.loc 1 161 34 is_stmt 1 discriminator 5 view .LVU164
+ 683              		.loc 1 161 9 is_stmt 0 discriminator 5 view .LVU165
+ 684 0030 A042     		cmp	r0, r4
+ 685 0032 71EB0503 		sbcs	r3, r1, r5
+ 686 0036 EED3     		bcc	.L44
+ 687              		.loc 1 161 9 discriminator 2 view .LVU166
+ 688 0038 001B     		subs	r0, r0, r4
+ 689              	.LVL59:
+ 690              		.loc 1 161 9 discriminator 2 view .LVU167
+ 691 003a 61EB0501 		sbc	r1, r1, r5
+ 692 003e F0E7     		b	.L40
+ 693              	.L43:
+ 162:../../util/stm_util.c **** 
+ 163:../../util/stm_util.c **** }
+ 694              		.loc 1 163 1 view .LVU168
+ 695 0040 BDE87083 		pop	{r4, r5, r6, r8, r9, pc}
+ 696              		.loc 1 163 1 view .LVU169
+ 697              		.cfi_endproc
+ 698              	.LFE349:
+ 700              		.section	.text.HAL_GetTickNoZero,"ax",%progbits
+ 701              		.align	1
+ 702              		.global	HAL_GetTickNoZero
+ 703              		.syntax unified
+ 704              		.thumb
+ 705              		.thumb_func
+ 707              	HAL_GetTickNoZero:
+ 708              	.LFB350:
+ 164:../../util/stm_util.c **** 
+ 165:../../util/stm_util.c **** 
+ 166:../../util/stm_util.c **** #endif
+ 167:../../util/stm_util.c **** 
+ 168:../../util/stm_util.c **** 
+ 169:../../util/stm_util.c **** 
+ 170:../../util/stm_util.c **** uint32_t HAL_GetTickNoZero(void)
+ 171:../../util/stm_util.c **** {
+ 709              		.loc 1 171 1 is_stmt 1 view -0
+ 710              		.cfi_startproc
+ 711              		@ args = 0, pretend = 0, frame = 0
+ 712              		@ frame_needed = 0, uses_anonymous_args = 0
+ 713 0000 08B5     		push	{r3, lr}
+ 714              	.LCFI16:
+ 715              		.cfi_def_cfa_offset 8
+ 716              		.cfi_offset 3, -8
+ 717              		.cfi_offset 14, -4
+ 172:../../util/stm_util.c **** 	uint32_t res;
+ 718              		.loc 1 172 2 view .LVU171
+ 173:../../util/stm_util.c **** 
+ 174:../../util/stm_util.c **** 	res = HAL_GetTick();
+ 719              		.loc 1 174 2 view .LVU172
+ 720              		.loc 1 174 8 is_stmt 0 view .LVU173
+ 721 0002 FFF7FEFF 		bl	HAL_GetTick
+ 722              	.LVL60:
+ 175:../../util/stm_util.c **** 	if (!res) res = 1;
+ 723              		.loc 1 175 2 is_stmt 1 view .LVU174
+ 724              		.loc 1 175 5 is_stmt 0 view .LVU175
+ 725 0006 00B9     		cbnz	r0, .L45
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 17
+
+
+ 726              		.loc 1 175 16 discriminator 1 view .LVU176
+ 727 0008 0120     		movs	r0, #1
+ 728              	.LVL61:
+ 176:../../util/stm_util.c **** 	return res;
+ 729              		.loc 1 176 2 is_stmt 1 view .LVU177
+ 730              	.L45:
+ 177:../../util/stm_util.c **** }
+ 731              		.loc 1 177 1 is_stmt 0 view .LVU178
+ 732 000a 08BD     		pop	{r3, pc}
+ 733              		.cfi_endproc
+ 734              	.LFE350:
+ 736              		.section	.text.HAL_DelayTick,"ax",%progbits
+ 737              		.align	1
+ 738              		.global	HAL_DelayTick
+ 739              		.syntax unified
+ 740              		.thumb
+ 741              		.thumb_func
+ 743              	HAL_DelayTick:
+ 744              	.LVL62:
+ 745              	.LFB351:
+ 178:../../util/stm_util.c **** 
+ 179:../../util/stm_util.c **** void HAL_DelayTick(uint32_t Delay)
+ 180:../../util/stm_util.c **** {
+ 746              		.loc 1 180 1 is_stmt 1 view -0
+ 747              		.cfi_startproc
+ 748              		@ args = 0, pretend = 0, frame = 0
+ 749              		@ frame_needed = 0, uses_anonymous_args = 0
+ 750              		.loc 1 180 1 is_stmt 0 view .LVU180
+ 751 0000 38B5     		push	{r3, r4, r5, lr}
+ 752              	.LCFI17:
+ 753              		.cfi_def_cfa_offset 16
+ 754              		.cfi_offset 3, -16
+ 755              		.cfi_offset 4, -12
+ 756              		.cfi_offset 5, -8
+ 757              		.cfi_offset 14, -4
+ 758 0002 0546     		mov	r5, r0
+ 181:../../util/stm_util.c **** 	uint32_t tnew, told;
+ 759              		.loc 1 181 2 is_stmt 1 view .LVU181
+ 182:../../util/stm_util.c **** 
+ 183:../../util/stm_util.c **** 	told = HAL_GetTick();
+ 760              		.loc 1 183 2 view .LVU182
+ 761              		.loc 1 183 9 is_stmt 0 view .LVU183
+ 762 0004 FFF7FEFF 		bl	HAL_GetTick
+ 763              	.LVL63:
+ 764              		.loc 1 183 9 view .LVU184
+ 765 0008 0446     		mov	r4, r0
+ 766              	.LVL64:
+ 767              		.loc 1 183 9 view .LVU185
+ 768 000a 03E0     		b	.L52
+ 769              	.LVL65:
+ 770              	.L55:
+ 184:../../util/stm_util.c **** 
+ 185:../../util/stm_util.c **** 	do {
+ 186:../../util/stm_util.c **** 		tnew = HAL_GetTick();
+ 187:../../util/stm_util.c **** 	}
+ 188:../../util/stm_util.c **** 	while (DIFF_TICKU32(told, tnew) < Delay);
+ 771              		.loc 1 188 9 discriminator 1 view .LVU186
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 18
+
+
+ 772 000c 001B     		subs	r0, r0, r4
+ 773              	.LVL66:
+ 774              		.loc 1 188 9 discriminator 1 view .LVU187
+ 775 000e 0138     		subs	r0, r0, #1
+ 776              	.L51:
+ 777              		.loc 1 188 34 discriminator 4 view .LVU188
+ 778 0010 A842     		cmp	r0, r5
+ 779 0012 05D2     		bcs	.L54
+ 780              	.LVL67:
+ 781              	.L52:
+ 185:../../util/stm_util.c **** 		tnew = HAL_GetTick();
+ 782              		.loc 1 185 2 is_stmt 1 view .LVU189
+ 186:../../util/stm_util.c **** 	}
+ 783              		.loc 1 186 3 view .LVU190
+ 186:../../util/stm_util.c **** 	}
+ 784              		.loc 1 186 10 is_stmt 0 view .LVU191
+ 785 0014 FFF7FEFF 		bl	HAL_GetTick
+ 786              	.LVL68:
+ 787              		.loc 1 188 34 is_stmt 1 discriminator 5 view .LVU192
+ 788              		.loc 1 188 9 is_stmt 0 discriminator 5 view .LVU193
+ 789 0018 8442     		cmp	r4, r0
+ 790 001a F7D8     		bhi	.L55
+ 791              		.loc 1 188 9 discriminator 2 view .LVU194
+ 792 001c 001B     		subs	r0, r0, r4
+ 793              	.LVL69:
+ 794              		.loc 1 188 9 discriminator 2 view .LVU195
+ 795 001e F7E7     		b	.L51
+ 796              	.L54:
+ 189:../../util/stm_util.c **** }
+ 797              		.loc 1 189 1 view .LVU196
+ 798 0020 38BD     		pop	{r3, r4, r5, pc}
+ 799              		.loc 1 189 1 view .LVU197
+ 800              		.cfi_endproc
+ 801              	.LFE351:
+ 803              		.section	.text.tick2time,"ax",%progbits
+ 804              		.align	1
+ 805              		.global	tick2time
+ 806              		.syntax unified
+ 807              		.thumb
+ 808              		.thumb_func
+ 810              	tick2time:
+ 811              	.LVL70:
+ 812              	.LFB352:
+ 190:../../util/stm_util.c **** 
+ 191:../../util/stm_util.c **** 
+ 192:../../util/stm_util.c **** void tick2time(uint32_t tick, uint8_t * hour, uint8_t * minunte, uint8_t * sec, uint16_t * milisec)
+ 193:../../util/stm_util.c **** {
+ 813              		.loc 1 193 1 is_stmt 1 view -0
+ 814              		.cfi_startproc
+ 815              		@ args = 4, pretend = 0, frame = 0
+ 816              		@ frame_needed = 0, uses_anonymous_args = 0
+ 817              		.loc 1 193 1 is_stmt 0 view .LVU199
+ 818 0000 30B5     		push	{r4, r5, lr}
+ 819              	.LCFI18:
+ 820              		.cfi_def_cfa_offset 12
+ 821              		.cfi_offset 4, -12
+ 822              		.cfi_offset 5, -8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 19
+
+
+ 823              		.cfi_offset 14, -4
+ 194:../../util/stm_util.c **** 	uint32_t s, m;
+ 824              		.loc 1 194 2 is_stmt 1 view .LVU200
+ 195:../../util/stm_util.c **** 
+ 196:../../util/stm_util.c **** 	s = (tick / 1000);
+ 825              		.loc 1 196 2 view .LVU201
+ 826              		.loc 1 196 4 is_stmt 0 view .LVU202
+ 827 0002 124C     		ldr	r4, .L58
+ 828 0004 A4FB004C 		umull	r4, ip, r4, r0
+ 829 0008 4FEA9C1C 		lsr	ip, ip, #6
+ 830              	.LVL71:
+ 197:../../util/stm_util.c **** 	*milisec = tick - s * 1000;
+ 831              		.loc 1 197 2 is_stmt 1 view .LVU203
+ 832              		.loc 1 197 18 is_stmt 0 view .LVU204
+ 833 000c CCEB4C14 		rsb	r4, ip, ip, lsl #5
+ 834 0010 0CEB8404 		add	r4, ip, r4, lsl #2
+ 835 0014 A0EBC404 		sub	r4, r0, r4, lsl #3
+ 836              		.loc 1 197 11 view .LVU205
+ 837 0018 039D     		ldr	r5, [sp, #12]
+ 838 001a 2C80     		strh	r4, [r5]	@ movhi
+ 198:../../util/stm_util.c **** 	m = s / 60;
+ 839              		.loc 1 198 2 is_stmt 1 view .LVU206
+ 840              		.loc 1 198 4 is_stmt 0 view .LVU207
+ 841 001c 0C4C     		ldr	r4, .L58+4
+ 842 001e A4FB004E 		umull	r4, lr, r4, r0
+ 843              	.LVL72:
+ 199:../../util/stm_util.c **** 	*sec = s - m * 60;
+ 844              		.loc 1 199 2 is_stmt 1 view .LVU208
+ 845              		.loc 1 199 11 is_stmt 0 view .LVU209
+ 846 0022 CEF3873E 		ubfx	lr, lr, #14, #8
+ 847              	.LVL73:
+ 848              		.loc 1 199 11 view .LVU210
+ 849 0026 CEEB0E14 		rsb	r4, lr, lr, lsl #4
+ 850 002a ACEB840C 		sub	ip, ip, r4, lsl #2
+ 851              	.LVL74:
+ 852              		.loc 1 199 7 view .LVU211
+ 853 002e 83F800C0 		strb	ip, [r3]
+ 200:../../util/stm_util.c **** 	*hour = m / 60;
+ 854              		.loc 1 200 2 is_stmt 1 view .LVU212
+ 855              		.loc 1 200 12 is_stmt 0 view .LVU213
+ 856 0032 084B     		ldr	r3, .L58+8
+ 857              	.LVL75:
+ 858              		.loc 1 200 12 view .LVU214
+ 859 0034 A3FB0030 		umull	r3, r0, r3, r0
+ 860              	.LVL76:
+ 861              		.loc 1 200 8 view .LVU215
+ 862 0038 C0F34750 		ubfx	r0, r0, #21, #8
+ 863 003c 0870     		strb	r0, [r1]
+ 201:../../util/stm_util.c **** 	*minunte = m - *hour * 60;
+ 864              		.loc 1 201 2 is_stmt 1 view .LVU216
+ 865              		.loc 1 201 15 is_stmt 0 view .LVU217
+ 866 003e C0EB0010 		rsb	r0, r0, r0, lsl #4
+ 867 0042 AEEB800E 		sub	lr, lr, r0, lsl #2
+ 868              		.loc 1 201 11 view .LVU218
+ 869 0046 82F800E0 		strb	lr, [r2]
+ 202:../../util/stm_util.c **** }
+ 870              		.loc 1 202 1 view .LVU219
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 20
+
+
+ 871 004a 30BD     		pop	{r4, r5, pc}
+ 872              	.LVL77:
+ 873              	.L59:
+ 874              		.loc 1 202 1 view .LVU220
+ 875              		.align	2
+ 876              	.L58:
+ 877 004c D34D6210 		.word	274877907
+ 878 0050 73B2E745 		.word	1172812403
+ 879 0054 B17C2195 		.word	-1792967503
+ 880              		.cfi_endproc
+ 881              	.LFE352:
+ 883              		.section	.text.get_adc_value,"ax",%progbits
+ 884              		.align	1
+ 885              		.global	get_adc_value
+ 886              		.syntax unified
+ 887              		.thumb
+ 888              		.thumb_func
+ 890              	get_adc_value:
+ 891              	.LVL78:
+ 892              	.LFB353:
+ 203:../../util/stm_util.c **** 
+ 204:../../util/stm_util.c **** #ifdef HAL_ADC_MODULE_ENABLED
+ 205:../../util/stm_util.c **** uint32_t get_adc_value(ADC_HandleTypeDef* hadc, uint32_t Timeout)
+ 206:../../util/stm_util.c **** {
+ 893              		.loc 1 206 1 is_stmt 1 view -0
+ 894              		.cfi_startproc
+ 895              		@ args = 0, pretend = 0, frame = 0
+ 896              		@ frame_needed = 0, uses_anonymous_args = 0
+ 897              		.loc 1 206 1 is_stmt 0 view .LVU222
+ 898 0000 38B5     		push	{r3, r4, r5, lr}
+ 899              	.LCFI19:
+ 900              		.cfi_def_cfa_offset 16
+ 901              		.cfi_offset 3, -16
+ 902              		.cfi_offset 4, -12
+ 903              		.cfi_offset 5, -8
+ 904              		.cfi_offset 14, -4
+ 905 0002 0446     		mov	r4, r0
+ 906 0004 0D46     		mov	r5, r1
+ 207:../../util/stm_util.c **** 	uint32_t adc;
+ 907              		.loc 1 207 2 is_stmt 1 view .LVU223
+ 208:../../util/stm_util.c **** 
+ 209:../../util/stm_util.c **** 	HAL_ADC_Start(hadc); // запускаем преобразование сигнала АЦП
+ 908              		.loc 1 209 2 view .LVU224
+ 909 0006 FFF7FEFF 		bl	HAL_ADC_Start
+ 910              	.LVL79:
+ 210:../../util/stm_util.c ****     HAL_ADC_PollForConversion(hadc, Timeout); // ожидаем окончания преобраз
+ 911              		.loc 1 210 5 view .LVU225
+ 912 000a 2946     		mov	r1, r5
+ 913 000c 2046     		mov	r0, r4
+ 914 000e FFF7FEFF 		bl	HAL_ADC_PollForConversion
+ 915              	.LVL80:
+ 211:../../util/stm_util.c ****     adc = HAL_ADC_GetValue(hadc); // читаем полученное значение в пере
+ 916              		.loc 1 211 5 view .LVU226
+ 917              		.loc 1 211 11 is_stmt 0 view .LVU227
+ 918 0012 2046     		mov	r0, r4
+ 919 0014 FFF7FEFF 		bl	HAL_ADC_GetValue
+ 920              	.LVL81:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 21
+
+
+ 921 0018 0546     		mov	r5, r0
+ 922              	.LVL82:
+ 212:../../util/stm_util.c ****     HAL_ADC_Stop(hadc); // останавливаем АЦП
+ 923              		.loc 1 212 5 is_stmt 1 view .LVU228
+ 924 001a 2046     		mov	r0, r4
+ 925              	.LVL83:
+ 926              		.loc 1 212 5 is_stmt 0 view .LVU229
+ 927 001c FFF7FEFF 		bl	HAL_ADC_Stop
+ 928              	.LVL84:
+ 213:../../util/stm_util.c **** 	return adc;
+ 929              		.loc 1 213 2 is_stmt 1 view .LVU230
+ 214:../../util/stm_util.c **** }
+ 930              		.loc 1 214 1 is_stmt 0 view .LVU231
+ 931 0020 2846     		mov	r0, r5
+ 932 0022 38BD     		pop	{r3, r4, r5, pc}
+ 933              		.loc 1 214 1 view .LVU232
+ 934              		.cfi_endproc
+ 935              	.LFE353:
+ 937              		.section	.text.ulog_fmt,"ax",%progbits
+ 938              		.align	1
+ 939              		.global	ulog_fmt
+ 940              		.syntax unified
+ 941              		.thumb
+ 942              		.thumb_func
+ 944              	ulog_fmt:
+ 945              	.LVL85:
+ 946              	.LFB354:
+ 215:../../util/stm_util.c **** 
+ 216:../../util/stm_util.c **** #ifdef HAL_ADC_IJECTED_ENABLED
+ 217:../../util/stm_util.c **** uint32_t get_injected_adc_value(ADC_HandleTypeDef* hadc, uint32_t InjectedRank, uint32_t Timeout)
+ 218:../../util/stm_util.c **** {
+ 219:../../util/stm_util.c **** 	uint32_t res;
+ 220:../../util/stm_util.c **** 
+ 221:../../util/stm_util.c **** 	HAL_ADCEx_InjectedStart(hadc); // запускаем опрос инжект. каналов
+ 222:../../util/stm_util.c **** 	HAL_ADC_PollForConversion(hadc, Timeout); // ждём окончания
+ 223:../../util/stm_util.c **** 	res = HAL_ADCEx_InjectedGetValue(hadc, InjectedRank);
+ 224:../../util/stm_util.c **** 	HAL_ADCEx_InjectedStop(hadc);
+ 225:../../util/stm_util.c **** 	return res;
+ 226:../../util/stm_util.c **** }
+ 227:../../util/stm_util.c **** #endif
+ 228:../../util/stm_util.c **** #endif
+ 229:../../util/stm_util.c **** 
+ 230:../../util/stm_util.c **** 
+ 231:../../util/stm_util.c **** 
+ 232:../../util/stm_util.c **** void ulog_fmt(const char * fmt, ... )
+ 233:../../util/stm_util.c **** {
+ 947              		.loc 1 233 1 is_stmt 1 view -0
+ 948              		.cfi_startproc
+ 949              		@ args = 4, pretend = 16, frame = 1032
+ 950              		@ frame_needed = 0, uses_anonymous_args = 1
+ 951              		.loc 1 233 1 is_stmt 0 view .LVU234
+ 952 0000 0FB4     		push	{r0, r1, r2, r3}
+ 953              	.LCFI20:
+ 954              		.cfi_def_cfa_offset 16
+ 955              		.cfi_offset 0, -16
+ 956              		.cfi_offset 1, -12
+ 957              		.cfi_offset 2, -8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 22
+
+
+ 958              		.cfi_offset 3, -4
+ 959 0002 00B5     		push	{lr}
+ 960              	.LCFI21:
+ 961              		.cfi_def_cfa_offset 20
+ 962              		.cfi_offset 14, -20
+ 963 0004 ADF20C4D 		subw	sp, sp, #1036
+ 964              	.LCFI22:
+ 965              		.cfi_def_cfa_offset 1056
+ 966 0008 0DF58263 		add	r3, sp, #1040
+ 967 000c 53F8042B 		ldr	r2, [r3], #4
+ 234:../../util/stm_util.c **** 
+ 235:../../util/stm_util.c **** 	char buf[MAX_STR_SIZE];
+ 968              		.loc 1 235 2 is_stmt 1 view .LVU235
+ 236:../../util/stm_util.c **** 
+ 237:../../util/stm_util.c **** 	va_list arg;
+ 969              		.loc 1 237 2 view .LVU236
+ 238:../../util/stm_util.c **** 
+ 239:../../util/stm_util.c **** 	va_start(arg, fmt);
+ 970              		.loc 1 239 2 view .LVU237
+ 971 0010 0193     		str	r3, [sp, #4]
+ 240:../../util/stm_util.c **** 
+ 241:../../util/stm_util.c **** 	vsnprintf(buf, sizeof(buf), fmt, arg);
+ 972              		.loc 1 241 2 view .LVU238
+ 973 0012 4FF48061 		mov	r1, #1024
+ 974 0016 02A8     		add	r0, sp, #8
+ 975 0018 FFF7FEFF 		bl	vsnprintf
+ 976              	.LVL86:
+ 242:../../util/stm_util.c **** 
+ 243:../../util/stm_util.c **** 	va_end(arg);
+ 977              		.loc 1 243 2 view .LVU239
+ 244:../../util/stm_util.c **** 
+ 245:../../util/stm_util.c **** 	buf[sizeof(buf) - 1] = 0;
+ 978              		.loc 1 245 2 view .LVU240
+ 979              		.loc 1 245 23 is_stmt 0 view .LVU241
+ 980 001c 0023     		movs	r3, #0
+ 981 001e 8DF80734 		strb	r3, [sp, #1031]
+ 246:../../util/stm_util.c **** 	ulog(buf);
+ 982              		.loc 1 246 2 is_stmt 1 view .LVU242
+ 983 0022 02A8     		add	r0, sp, #8
+ 984 0024 FFF7FEFF 		bl	ulog
+ 985              	.LVL87:
+ 247:../../util/stm_util.c **** }
+ 986              		.loc 1 247 1 is_stmt 0 view .LVU243
+ 987 0028 0DF20C4D 		addw	sp, sp, #1036
+ 988              	.LCFI23:
+ 989              		.cfi_def_cfa_offset 20
+ 990              		@ sp needed
+ 991 002c 5DF804EB 		ldr	lr, [sp], #4
+ 992              	.LCFI24:
+ 993              		.cfi_restore 14
+ 994              		.cfi_def_cfa_offset 16
+ 995 0030 04B0     		add	sp, sp, #16
+ 996              	.LCFI25:
+ 997              		.cfi_restore 3
+ 998              		.cfi_restore 2
+ 999              		.cfi_restore 1
+ 1000              		.cfi_restore 0
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 23
+
+
+ 1001              		.cfi_def_cfa_offset 0
+ 1002 0032 7047     		bx	lr
+ 1003              		.cfi_endproc
+ 1004              	.LFE354:
+ 1006              		.section	.text.fulog,"ax",%progbits
+ 1007              		.align	1
+ 1008              		.global	fulog
+ 1009              		.syntax unified
+ 1010              		.thumb
+ 1011              		.thumb_func
+ 1013              	fulog:
+ 1014              	.LVL88:
+ 1015              	.LFB355:
+ 248:../../util/stm_util.c **** 
+ 249:../../util/stm_util.c **** 
+ 250:../../util/stm_util.c **** char fulog_buf[MAX_STR_SIZE] = {0};
+ 251:../../util/stm_util.c **** 
+ 252:../../util/stm_util.c **** 
+ 253:../../util/stm_util.c **** void fulog(char * str)
+ 254:../../util/stm_util.c **** {
+ 1016              		.loc 1 254 1 is_stmt 1 view -0
+ 1017              		.cfi_startproc
+ 1018              		@ args = 0, pretend = 0, frame = 0
+ 1019              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1020              		.loc 1 254 1 is_stmt 0 view .LVU245
+ 1021 0000 08B5     		push	{r3, lr}
+ 1022              	.LCFI26:
+ 1023              		.cfi_def_cfa_offset 8
+ 1024              		.cfi_offset 3, -8
+ 1025              		.cfi_offset 14, -4
+ 1026 0002 0246     		mov	r2, r0
+ 255:../../util/stm_util.c **** 	strcat_s(fulog_buf, sizeof(fulog_buf), str);
+ 1027              		.loc 1 255 2 is_stmt 1 view .LVU246
+ 1028 0004 4FF48061 		mov	r1, #1024
+ 1029 0008 0148     		ldr	r0, .L66
+ 1030              	.LVL89:
+ 1031              		.loc 1 255 2 is_stmt 0 view .LVU247
+ 1032 000a FFF7FEFF 		bl	strcat_s
+ 1033              	.LVL90:
+ 256:../../util/stm_util.c **** }
+ 1034              		.loc 1 256 1 view .LVU248
+ 1035 000e 08BD     		pop	{r3, pc}
+ 1036              	.L67:
+ 1037              		.align	2
+ 1038              	.L66:
+ 1039 0010 00000000 		.word	fulog_buf
+ 1040              		.cfi_endproc
+ 1041              	.LFE355:
+ 1043              		.section	.text.fulog_fmt,"ax",%progbits
+ 1044              		.align	1
+ 1045              		.global	fulog_fmt
+ 1046              		.syntax unified
+ 1047              		.thumb
+ 1048              		.thumb_func
+ 1050              	fulog_fmt:
+ 1051              	.LVL91:
+ 1052              	.LFB356:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 24
+
+
+ 257:../../util/stm_util.c **** 
+ 258:../../util/stm_util.c **** void fulog_fmt(const char * fmt, ... )
+ 259:../../util/stm_util.c **** {
+ 1053              		.loc 1 259 1 is_stmt 1 view -0
+ 1054              		.cfi_startproc
+ 1055              		@ args = 4, pretend = 16, frame = 1032
+ 1056              		@ frame_needed = 0, uses_anonymous_args = 1
+ 1057              		.loc 1 259 1 is_stmt 0 view .LVU250
+ 1058 0000 0FB4     		push	{r0, r1, r2, r3}
+ 1059              	.LCFI27:
+ 1060              		.cfi_def_cfa_offset 16
+ 1061              		.cfi_offset 0, -16
+ 1062              		.cfi_offset 1, -12
+ 1063              		.cfi_offset 2, -8
+ 1064              		.cfi_offset 3, -4
+ 1065 0002 00B5     		push	{lr}
+ 1066              	.LCFI28:
+ 1067              		.cfi_def_cfa_offset 20
+ 1068              		.cfi_offset 14, -20
+ 1069 0004 ADF20C4D 		subw	sp, sp, #1036
+ 1070              	.LCFI29:
+ 1071              		.cfi_def_cfa_offset 1056
+ 1072 0008 0DF58263 		add	r3, sp, #1040
+ 1073 000c 53F8042B 		ldr	r2, [r3], #4
+ 260:../../util/stm_util.c **** 
+ 261:../../util/stm_util.c **** 	char buf[MAX_STR_SIZE];
+ 1074              		.loc 1 261 2 is_stmt 1 view .LVU251
+ 262:../../util/stm_util.c **** 
+ 263:../../util/stm_util.c **** 	va_list arg;
+ 1075              		.loc 1 263 2 view .LVU252
+ 264:../../util/stm_util.c **** 
+ 265:../../util/stm_util.c **** 	va_start(arg, fmt);
+ 1076              		.loc 1 265 2 view .LVU253
+ 1077 0010 0193     		str	r3, [sp, #4]
+ 266:../../util/stm_util.c **** 
+ 267:../../util/stm_util.c **** 	vsnprintf(buf, sizeof(buf), fmt, arg);
+ 1078              		.loc 1 267 2 view .LVU254
+ 1079 0012 4FF48061 		mov	r1, #1024
+ 1080 0016 02A8     		add	r0, sp, #8
+ 1081 0018 FFF7FEFF 		bl	vsnprintf
+ 1082              	.LVL92:
+ 268:../../util/stm_util.c **** 
+ 269:../../util/stm_util.c **** 	va_end(arg);
+ 1083              		.loc 1 269 2 view .LVU255
+ 270:../../util/stm_util.c **** 
+ 271:../../util/stm_util.c **** 	buf[sizeof(buf) - 1] = 0;
+ 1084              		.loc 1 271 2 view .LVU256
+ 1085              		.loc 1 271 23 is_stmt 0 view .LVU257
+ 1086 001c 0023     		movs	r3, #0
+ 1087 001e 8DF80734 		strb	r3, [sp, #1031]
+ 272:../../util/stm_util.c **** 	fulog(buf);
+ 1088              		.loc 1 272 2 is_stmt 1 view .LVU258
+ 1089 0022 02A8     		add	r0, sp, #8
+ 1090 0024 FFF7FEFF 		bl	fulog
+ 1091              	.LVL93:
+ 273:../../util/stm_util.c **** }
+ 1092              		.loc 1 273 1 is_stmt 0 view .LVU259
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 25
+
+
+ 1093 0028 0DF20C4D 		addw	sp, sp, #1036
+ 1094              	.LCFI30:
+ 1095              		.cfi_def_cfa_offset 20
+ 1096              		@ sp needed
+ 1097 002c 5DF804EB 		ldr	lr, [sp], #4
+ 1098              	.LCFI31:
+ 1099              		.cfi_restore 14
+ 1100              		.cfi_def_cfa_offset 16
+ 1101 0030 04B0     		add	sp, sp, #16
+ 1102              	.LCFI32:
+ 1103              		.cfi_restore 3
+ 1104              		.cfi_restore 2
+ 1105              		.cfi_restore 1
+ 1106              		.cfi_restore 0
+ 1107              		.cfi_def_cfa_offset 0
+ 1108 0032 7047     		bx	lr
+ 1109              		.cfi_endproc
+ 1110              	.LFE356:
+ 1112              		.section	.text.stm_uid,"ax",%progbits
+ 1113              		.align	1
+ 1114              		.global	stm_uid
+ 1115              		.syntax unified
+ 1116              		.thumb
+ 1117              		.thumb_func
+ 1119              	stm_uid:
+ 1120              	.LFB357:
+ 274:../../util/stm_util.c **** 
+ 275:../../util/stm_util.c **** 
+ 276:../../util/stm_util.c **** #ifdef HAL_USE_FLASH
+ 277:../../util/stm_util.c **** 
+ 278:../../util/stm_util.c **** 
+ 279:../../util/stm_util.c **** //переход к Application (файл bin)
+ 280:../../util/stm_util.c **** void go_to_application(uint32_t ApplicationAddr)
+ 281:../../util/stm_util.c **** {
+ 282:../../util/stm_util.c ****     uint32_t app_jump_address;
+ 283:../../util/stm_util.c **** 
+ 284:../../util/stm_util.c ****     typedef void(*pFunction)(void);//объявляем пользовательский тип
+ 285:../../util/stm_util.c ****     pFunction Jump_To_Application;//и создаём переменную этого типа
+ 286:../../util/stm_util.c **** 
+ 287:../../util/stm_util.c **** 
+ 288:../../util/stm_util.c ****     app_jump_address = *( uint32_t *) (ApplicationAddr + 4);    //извлекаем адрес п�
+ 289:../../util/stm_util.c **** 	Jump_To_Application = (pFunction)app_jump_address;            //приводим его к пол�
+ 290:../../util/stm_util.c **** 
+ 291:../../util/stm_util.c **** 	//__disable_interrupt();
+ 292:../../util/stm_util.c **** 	__disable_irq();
+ 293:../../util/stm_util.c **** 
+ 294:../../util/stm_util.c ****     SysTick->CTRL =0;
+ 295:../../util/stm_util.c **** 	SysTick->LOAD=0;
+ 296:../../util/stm_util.c **** 	SysTick->VAL=0;
+ 297:../../util/stm_util.c **** 
+ 298:../../util/stm_util.c **** 	//Set the clock to the default state
+ 299:../../util/stm_util.c **** 	HAL_RCC_DeInit();
+ 300:../../util/stm_util.c **** 
+ 301:../../util/stm_util.c **** 
+ 302:../../util/stm_util.c **** 	// отключаем все прерывания в NVIC, очищаем все pending bit
+ 303:../../util/stm_util.c **** 	for (int i=0;i<5;i++)  {
+ 304:../../util/stm_util.c **** 		NVIC->ICER[i]=0xFFFFFFFF;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 26
+
+
+ 305:../../util/stm_util.c **** 		NVIC->ICPR[i]=0xFFFFFFFF;
+ 306:../../util/stm_util.c **** 	}
+ 307:../../util/stm_util.c **** 
+ 308:../../util/stm_util.c **** 
+ 309:../../util/stm_util.c **** 	//Peripheral  risit disable
+ 310:../../util/stm_util.c **** 	RCC->AHB1RSTR = 0;
+ 311:../../util/stm_util.c **** 	RCC->AHB2RSTR = 0;
+ 312:../../util/stm_util.c **** 	RCC->AHB3RSTR = 0;
+ 313:../../util/stm_util.c **** 	//RCC->APB1RSTR = 0;
+ 314:../../util/stm_util.c **** 	RCC->APB2RSTR = 0;
+ 315:../../util/stm_util.c **** 	//Peripheral  disable clock
+ 316:../../util/stm_util.c **** 	//RCC->AHB1ENR = 0x00100000;
+ 317:../../util/stm_util.c **** 	RCC->AHB2ENR = 0;
+ 318:../../util/stm_util.c **** 	RCC->AHB3ENR = 0;
+ 319:../../util/stm_util.c **** 	//RCC->APB1ENR = 0;
+ 320:../../util/stm_util.c **** 	RCC->APB2ENR = 0;
+ 321:../../util/stm_util.c **** 
+ 322:../../util/stm_util.c **** 	NVIC_SetVector(ApplicationAddr, 0);
+ 323:../../util/stm_util.c **** 	SCB->VTOR = ApplicationAddr;
+ 324:../../util/stm_util.c ****     __set_MSP(*(__IO uint32_t*)ApplicationAddr);          //устанавливаем SP прил�
+ 325:../../util/stm_util.c ****     __set_CONTROL(0x00000000);
+ 326:../../util/stm_util.c ****     __enable_irq();
+ 327:../../util/stm_util.c **** 
+ 328:../../util/stm_util.c ****     Jump_To_Application();		                        //запускаем приложение
+ 329:../../util/stm_util.c **** }
+ 330:../../util/stm_util.c **** 
+ 331:../../util/stm_util.c **** 
+ 332:../../util/stm_util.c **** 
+ 333:../../util/stm_util.c **** 
+ 334:../../util/stm_util.c **** void go_to_application2(uint32_t ApplicationAddr)
+ 335:../../util/stm_util.c **** {
+ 336:../../util/stm_util.c **** 	SCB->VTOR = ApplicationAddr;
+ 337:../../util/stm_util.c **** 	__set_MSP(*(__IO uint32_t*)ApplicationAddr);
+ 338:../../util/stm_util.c **** 	NVIC_SystemReset();
+ 339:../../util/stm_util.c **** }
+ 340:../../util/stm_util.c **** 
+ 341:../../util/stm_util.c **** //загружена ли программа по адресу
+ 342:../../util/stm_util.c **** BOOL is_programm_download(uint32_t addr, uint32_t size)
+ 343:../../util/stm_util.c **** {
+ 344:../../util/stm_util.c **** 	uint32_t addr_jump = *( uint32_t *)(addr + 4);    //извлекаем адрес перехода
+ 345:../../util/stm_util.c **** 	//ulog_fmt("is_programm_download addr=%x addr_jump=%x\n", (unsigned int)addr, (unsigned int)addr_j
+ 346:../../util/stm_util.c **** 	return (addr_jump > addr) && (addr_jump < addr + size);
+ 347:../../util/stm_util.c **** }
+ 348:../../util/stm_util.c **** 
+ 349:../../util/stm_util.c **** #endif
+ 350:../../util/stm_util.c **** 
+ 351:../../util/stm_util.c **** uint8_t * stm_uid(void)
+ 352:../../util/stm_util.c **** {
+ 1121              		.loc 1 352 1 is_stmt 1 view -0
+ 1122              		.cfi_startproc
+ 1123              		@ args = 0, pretend = 0, frame = 0
+ 1124              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1125              		@ link register save eliminated.
+ 353:../../util/stm_util.c **** 	static uint8_t _stm_uid_buf[12];
+ 1126              		.loc 1 353 2 view .LVU261
+ 354:../../util/stm_util.c **** 	memcpy(_stm_uid_buf, (uint8_t*)(UID_BASE), sizeof(_stm_uid_buf));
+ 1127              		.loc 1 354 2 view .LVU262
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 27
+
+
+ 1128 0000 034B     		ldr	r3, .L71
+ 1129 0002 044A     		ldr	r2, .L71+4
+ 1130 0004 07CA     		ldm	r2, {r0, r1, r2}
+ 1131 0006 83E80700 		stm	r3, {r0, r1, r2}
+ 355:../../util/stm_util.c **** 	return _stm_uid_buf;
+ 1132              		.loc 1 355 2 view .LVU263
+ 356:../../util/stm_util.c **** }
+ 1133              		.loc 1 356 1 is_stmt 0 view .LVU264
+ 1134 000a 1846     		mov	r0, r3
+ 1135 000c 7047     		bx	lr
+ 1136              	.L72:
+ 1137 000e 00BF     		.align	2
+ 1138              	.L71:
+ 1139 0010 00000000 		.word	_stm_uid_buf.1
+ 1140 0014 00E8F11F 		.word	535947264
+ 1141              		.cfi_endproc
+ 1142              	.LFE357:
+ 1144              		.section	.text.get_stm_uid,"ax",%progbits
+ 1145              		.align	1
+ 1146              		.global	get_stm_uid
+ 1147              		.syntax unified
+ 1148              		.thumb
+ 1149              		.thumb_func
+ 1151              	get_stm_uid:
+ 1152              	.LFB358:
+ 357:../../util/stm_util.c **** 
+ 358:../../util/stm_util.c **** 
+ 359:../../util/stm_util.c **** char * get_stm_uid(void)
+ 360:../../util/stm_util.c **** {
+ 1153              		.loc 1 360 1 is_stmt 1 view -0
+ 1154              		.cfi_startproc
+ 1155              		@ args = 0, pretend = 0, frame = 0
+ 1156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1157 0000 10B5     		push	{r4, lr}
+ 1158              	.LCFI33:
+ 1159              		.cfi_def_cfa_offset 8
+ 1160              		.cfi_offset 4, -8
+ 1161              		.cfi_offset 14, -4
+ 1162 0002 82B0     		sub	sp, sp, #8
+ 1163              	.LCFI34:
+ 1164              		.cfi_def_cfa_offset 16
+ 361:../../util/stm_util.c **** 	static char get_stm_uid_buf[64] = {0,};
+ 1165              		.loc 1 361 2 view .LVU266
+ 362:../../util/stm_util.c **** 	uint16_t *idBase0 = (uint16_t*)(UID_BASE);
+ 1166              		.loc 1 362 2 view .LVU267
+ 1167              	.LVL94:
+ 363:../../util/stm_util.c **** 	uint16_t *idBase1 = (uint16_t*)(UID_BASE + 0x02);
+ 1168              		.loc 1 363 2 view .LVU268
+ 364:../../util/stm_util.c **** 	uint32_t *idBase2 = (uint32_t*)(UID_BASE + 0x04);
+ 1169              		.loc 1 364 2 view .LVU269
+ 365:../../util/stm_util.c **** 	uint32_t *idBase3 = (uint32_t*)(UID_BASE + 0x08);
+ 1170              		.loc 1 365 2 view .LVU270
+ 366:../../util/stm_util.c **** 
+ 367:../../util/stm_util.c **** 
+ 368:../../util/stm_util.c **** 	sprintf(get_stm_uid_buf, "%x-%x-%lx-%lx\n", *idBase0, *idBase1, *idBase2, *idBase3);
+ 1171              		.loc 1 368 2 view .LVU271
+ 1172              		.loc 1 368 46 is_stmt 0 view .LVU272
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 28
+
+
+ 1173 0004 084B     		ldr	r3, .L75
+ 1174 0006 1A88     		ldrh	r2, [r3]
+ 1175              		.loc 1 368 56 view .LVU273
+ 1176 0008 5B88     		ldrh	r3, [r3, #2]
+ 1177              		.loc 1 368 2 view .LVU274
+ 1178 000a 084C     		ldr	r4, .L75+4
+ 1179 000c 0849     		ldr	r1, .L75+8
+ 1180 000e D1F80808 		ldr	r0, [r1, #2056]
+ 1181 0012 0190     		str	r0, [sp, #4]
+ 1182 0014 D1F80418 		ldr	r1, [r1, #2052]
+ 1183 0018 0091     		str	r1, [sp]
+ 1184 001a 0649     		ldr	r1, .L75+12
+ 1185 001c 2046     		mov	r0, r4
+ 1186 001e FFF7FEFF 		bl	sprintf
+ 1187              	.LVL95:
+ 369:../../util/stm_util.c **** 	return get_stm_uid_buf;
+ 1188              		.loc 1 369 2 is_stmt 1 view .LVU275
+ 370:../../util/stm_util.c **** }
+ 1189              		.loc 1 370 1 is_stmt 0 view .LVU276
+ 1190 0022 2046     		mov	r0, r4
+ 1191 0024 02B0     		add	sp, sp, #8
+ 1192              	.LCFI35:
+ 1193              		.cfi_def_cfa_offset 8
+ 1194              		@ sp needed
+ 1195 0026 10BD     		pop	{r4, pc}
+ 1196              	.L76:
+ 1197              		.align	2
+ 1198              	.L75:
+ 1199 0028 00E8F11F 		.word	535947264
+ 1200 002c 00000000 		.word	get_stm_uid_buf.0
+ 1201 0030 00E0F11F 		.word	535945216
+ 1202 0034 00000000 		.word	.LANCHOR0
+ 1203              		.cfi_endproc
+ 1204              	.LFE358:
+ 1206              		.section	.text.HAL_DiffTick,"ax",%progbits
+ 1207              		.align	1
+ 1208              		.global	HAL_DiffTick
+ 1209              		.syntax unified
+ 1210              		.thumb
+ 1211              		.thumb_func
+ 1213              	HAL_DiffTick:
+ 1214              	.LVL96:
+ 1215              	.LFB359:
+ 371:../../util/stm_util.c **** 
+ 372:../../util/stm_util.c **** #ifdef HAL_USE_FLASH
+ 373:../../util/stm_util.c **** 
+ 374:../../util/stm_util.c **** #ifndef FLASH_TIMEOUT_VALUE
+ 375:../../util/stm_util.c **** #define FLASH_TIMEOUT_VALUE       50000U   /* 50 s */
+ 376:../../util/stm_util.c **** #endif
+ 377:../../util/stm_util.c **** 
+ 378:../../util/stm_util.c **** 
+ 379:../../util/stm_util.c **** void hal_flash_wait_for_last_operation(void)
+ 380:../../util/stm_util.c **** {
+ 381:../../util/stm_util.c **** #ifdef FLASH_WAIT_IS_USE_BANK
+ 382:../../util/stm_util.c **** 	FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE, FLASH_BANK_1);
+ 383:../../util/stm_util.c **** #else
+ 384:../../util/stm_util.c **** 	FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 29
+
+
+ 385:../../util/stm_util.c **** #endif
+ 386:../../util/stm_util.c **** }
+ 387:../../util/stm_util.c **** 
+ 388:../../util/stm_util.c **** void hal_flash_unlocked(void)
+ 389:../../util/stm_util.c **** {
+ 390:../../util/stm_util.c **** 	HAL_FLASH_Unlock(); // Разблокируем флеш память
+ 391:../../util/stm_util.c **** 	hal_flash_wait_for_last_operation();
+ 392:../../util/stm_util.c **** 
+ 393:../../util/stm_util.c **** }
+ 394:../../util/stm_util.c **** 
+ 395:../../util/stm_util.c **** void hal_flash_locked(void)
+ 396:../../util/stm_util.c **** {
+ 397:../../util/stm_util.c **** 	HAL_FLASH_Lock();  // Блокируем флеш память
+ 398:../../util/stm_util.c **** 	hal_flash_wait_for_last_operation();
+ 399:../../util/stm_util.c **** }
+ 400:../../util/stm_util.c **** 
+ 401:../../util/stm_util.c **** HAL_StatusTypeDef hal_write_data_to_flash(uint32_t address, uint8_t * data, uint32_t data_len)
+ 402:../../util/stm_util.c **** {
+ 403:../../util/stm_util.c **** 	uint32_t i;
+ 404:../../util/stm_util.c **** 	HAL_StatusTypeDef res;
+ 405:../../util/stm_util.c **** 	uint32_t flash_address;
+ 406:../../util/stm_util.c **** 
+ 407:../../util/stm_util.c **** 	flash_address = address;
+ 408:../../util/stm_util.c **** 	res = HAL_OK;
+ 409:../../util/stm_util.c **** 
+ 410:../../util/stm_util.c **** 
+ 411:../../util/stm_util.c **** 	hal_flash_unlocked();
+ 412:../../util/stm_util.c **** 
+ 413:../../util/stm_util.c **** #ifdef FLASH_TYPEPROGRAM_BYTE
+ 414:../../util/stm_util.c **** 	for (i = 0; i < data_len; ++i) {
+ 415:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, flash_address, data[i]);
+ 416:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ 417:../../util/stm_util.c **** 		if (res != HAL_OK) break;
+ 418:../../util/stm_util.c **** 		flash_address++;
+ 419:../../util/stm_util.c **** 	}
+ 420:../../util/stm_util.c **** #else
+ 421:../../util/stm_util.c **** 
+ 422:../../util/stm_util.c **** #ifdef FLASH_TYPEPROGRAM_HALFWORD
+ 423:../../util/stm_util.c **** 
+ 424:../../util/stm_util.c **** 	uint16_t * pval, val;
+ 425:../../util/stm_util.c **** 
+ 426:../../util/stm_util.c **** 	i = 0;
+ 427:../../util/stm_util.c **** 	pval = (uint32_t *)data;
+ 428:../../util/stm_util.c **** 	while (data_len > 1) {
+ 429:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_address, pval[i]);
+ 430:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ 431:../../util/stm_util.c **** 		if (res != HAL_OK) 	break;
+ 432:../../util/stm_util.c **** 		data_len -= 2;
+ 433:../../util/stm_util.c **** 		flash_address += 2;
+ 434:../../util/stm_util.c **** 		i++;
+ 435:../../util/stm_util.c **** 	}
+ 436:../../util/stm_util.c **** 
+ 437:../../util/stm_util.c **** 	if (data_len) {
+ 438:../../util/stm_util.c **** 		val = 0;
+ 439:../../util/stm_util.c **** 		memcpy(&val, &pval[i], data_len);
+ 440:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_address, val);
+ 441:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 30
+
+
+ 442:../../util/stm_util.c **** 	}
+ 443:../../util/stm_util.c **** 
+ 444:../../util/stm_util.c **** #else
+ 445:../../util/stm_util.c **** 
+ 446:../../util/stm_util.c **** #ifdef FLASH_TYPEPROGRAM_WORD
+ 447:../../util/stm_util.c **** 
+ 448:../../util/stm_util.c **** 
+ 449:../../util/stm_util.c **** 
+ 450:../../util/stm_util.c **** 	uint32_t * pval, val;
+ 451:../../util/stm_util.c **** 
+ 452:../../util/stm_util.c **** 	i = 0;
+ 453:../../util/stm_util.c **** 	pval = (uint32_t *)data;
+ 454:../../util/stm_util.c **** 	while (data_len > 3) {
+ 455:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_address, pval[i]);
+ 456:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ 457:../../util/stm_util.c **** 		if (res != HAL_OK) 	break;
+ 458:../../util/stm_util.c **** 		data_len -= 4;
+ 459:../../util/stm_util.c **** 		flash_address += 4;
+ 460:../../util/stm_util.c **** 		i++;
+ 461:../../util/stm_util.c **** 	}
+ 462:../../util/stm_util.c **** 
+ 463:../../util/stm_util.c **** 	if (data_len) {
+ 464:../../util/stm_util.c **** 		val = 0;
+ 465:../../util/stm_util.c **** 		memcpy(&val, &pval[i], data_len);
+ 466:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_address, val);
+ 467:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ 468:../../util/stm_util.c **** 	}
+ 469:../../util/stm_util.c **** 
+ 470:../../util/stm_util.c **** 
+ 471:../../util/stm_util.c **** #else
+ 472:../../util/stm_util.c **** 
+ 473:../../util/stm_util.c **** #ifdef FLASH_TYPEPROGRAM_DOUBLEWORD
+ 474:../../util/stm_util.c **** 
+ 475:../../util/stm_util.c **** 
+ 476:../../util/stm_util.c **** 	uint64_t * pval, val;
+ 477:../../util/stm_util.c **** 
+ 478:../../util/stm_util.c **** 	i = 0;
+ 479:../../util/stm_util.c **** 	pval = (uint64_t *)data;
+ 480:../../util/stm_util.c **** 	while (data_len > 7) {
+ 481:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_address, pval[i]);
+ 482:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ 483:../../util/stm_util.c **** 		if (res != HAL_OK) 	break;
+ 484:../../util/stm_util.c **** 		data_len -= 8;
+ 485:../../util/stm_util.c **** 		flash_address += 8;
+ 486:../../util/stm_util.c **** 		i++;
+ 487:../../util/stm_util.c **** 	}
+ 488:../../util/stm_util.c **** 
+ 489:../../util/stm_util.c **** 	if (data_len) {
+ 490:../../util/stm_util.c **** 		val = 0;
+ 491:../../util/stm_util.c **** 		memcpy(&val, &pval[i], data_len);
+ 492:../../util/stm_util.c **** 		res = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, flash_address, val);
+ 493:../../util/stm_util.c **** 		hal_flash_wait_for_last_operation();
+ 494:../../util/stm_util.c **** 	}
+ 495:../../util/stm_util.c **** #else
+ 496:../../util/stm_util.c **** #error Not supported other type program
+ 497:../../util/stm_util.c **** #endif //FLASH_TYPEPROGRAM_DOUBLEWORD
+ 498:../../util/stm_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 31
+
+
+ 499:../../util/stm_util.c **** #endif //FLASH_TYPEPROGRAM_WORD
+ 500:../../util/stm_util.c **** 
+ 501:../../util/stm_util.c **** #endif //FLASH_TYPEPROGRAM_HALFWORD
+ 502:../../util/stm_util.c **** 
+ 503:../../util/stm_util.c **** #endif
+ 504:../../util/stm_util.c **** 
+ 505:../../util/stm_util.c **** 
+ 506:../../util/stm_util.c **** 	if (res != HAL_OK) 	ulog_fmt("hal_write_data_to_flash: error write to address:0x%s"CRLF, ul2hexstr
+ 507:../../util/stm_util.c **** 
+ 508:../../util/stm_util.c **** 	hal_flash_locked();
+ 509:../../util/stm_util.c **** 
+ 510:../../util/stm_util.c **** 	return res;
+ 511:../../util/stm_util.c **** }
+ 512:../../util/stm_util.c **** 
+ 513:../../util/stm_util.c **** typedef struct __stm32_type_flash_part {
+ 514:../../util/stm_util.c **** 	uint32_t number;
+ 515:../../util/stm_util.c **** 	uint32_t count;
+ 516:../../util/stm_util.c **** 	uint32_t size;
+ 517:../../util/stm_util.c **** } stm32_type_flash_part_t;
+ 518:../../util/stm_util.c **** 
+ 519:../../util/stm_util.c **** void stm32_get_bank_sector_page(uint8_t stm32flashtype, uint32_t address, stm32_type_flash_part_t *
+ 520:../../util/stm_util.c **** {
+ 521:../../util/stm_util.c **** 
+ 522:../../util/stm_util.c **** 	 uint32_t addr_diff_base;
+ 523:../../util/stm_util.c **** 
+ 524:../../util/stm_util.c **** 	 memset(bank, 0xFF, sizeof(stm32_type_flash_part_t));
+ 525:../../util/stm_util.c **** 	 memset(sector, 0xFF, sizeof(stm32_type_flash_part_t));
+ 526:../../util/stm_util.c **** 	 memset(page, 0xFF, sizeof(stm32_type_flash_part_t));
+ 527:../../util/stm_util.c **** 
+ 528:../../util/stm_util.c **** 	 addr_diff_base = address - FLASH_BASE;
+ 529:../../util/stm_util.c **** 
+ 530:../../util/stm_util.c **** 	switch (stm32flashtype) {
+ 531:../../util/stm_util.c **** 		case STM32F1XX_LOW_FLASH_TYPE:
+ 532:../../util/stm_util.c **** 			bank->number = 1;
+ 533:../../util/stm_util.c **** 			page->size = 1024;
+ 534:../../util/stm_util.c **** 			if (addr_diff_base < 32 * 1024) page->number = addr_diff_base / page->size;
+ 535:../../util/stm_util.c **** 			page->count = 32;
+ 536:../../util/stm_util.c **** 			break;
+ 537:../../util/stm_util.c **** 		case STM32F1XX_MEDIUM_FLASH_TYPE:
+ 538:../../util/stm_util.c **** 			bank->number = 1;
+ 539:../../util/stm_util.c **** 			page->size = 1024;
+ 540:../../util/stm_util.c **** 			if (addr_diff_base < 128 * 1024) page->number = addr_diff_base / page->size;
+ 541:../../util/stm_util.c **** 			page->count = 128;
+ 542:../../util/stm_util.c **** 			break;
+ 543:../../util/stm_util.c **** 		case STM32F1XX_HIGH_FLASH_TYPE:
+ 544:../../util/stm_util.c **** 			bank->number = 1;
+ 545:../../util/stm_util.c **** 			page->size = 2 * 1024;
+ 546:../../util/stm_util.c **** 			if (addr_diff_base < 512 * 1024) page->number = addr_diff_base / page->size;
+ 547:../../util/stm_util.c **** 			page->count = 256;
+ 548:../../util/stm_util.c **** 			break;
+ 549:../../util/stm_util.c **** 		case STM32F1XX_CONNECT_FLASH_TYPE:
+ 550:../../util/stm_util.c **** 			bank->number = 1;
+ 551:../../util/stm_util.c **** 			page->size = 2 * 1024;
+ 552:../../util/stm_util.c **** 			if (addr_diff_base < 256 * 1024) page->number = addr_diff_base / page->size;
+ 553:../../util/stm_util.c **** 			page->count = 128;
+ 554:../../util/stm_util.c **** 			break;
+ 555:../../util/stm_util.c **** 		case STM32F2XX_FLASH_TYPE:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 32
+
+
+ 556:../../util/stm_util.c **** 			bank->number = 1;
+ 557:../../util/stm_util.c **** 			//sector->size dinamic
+ 558:../../util/stm_util.c **** 			sector->count = 12;
+ 559:../../util/stm_util.c **** 			if (address < 0x08010000) {
+ 560:../../util/stm_util.c **** 				//sector->size = 16 * 1024;
+ 561:../../util/stm_util.c **** 				sector->number = addr_diff_base / (16 * 1024);
+ 562:../../util/stm_util.c **** 			}
+ 563:../../util/stm_util.c **** 			else if (address < 0x08020000) {
+ 564:../../util/stm_util.c **** 				//sector->size = 64 * 1024;
+ 565:../../util/stm_util.c **** 				sector->number = 4;
+ 566:../../util/stm_util.c **** 			}
+ 567:../../util/stm_util.c **** 			else if (address < 0x08100000) {
+ 568:../../util/stm_util.c **** 				//sector->size = 128 * 1024;
+ 569:../../util/stm_util.c **** 				sector->number = (address - 0x08020000) / (128 * 1024);
+ 570:../../util/stm_util.c **** 			}
+ 571:../../util/stm_util.c **** 			break;
+ 572:../../util/stm_util.c **** 		case STM32G4XX_SINGLE_BANK_FLASH_TYPE:
+ 573:../../util/stm_util.c **** 			bank->number = 1;
+ 574:../../util/stm_util.c **** 			page->size = 4 * 1024;
+ 575:../../util/stm_util.c **** 			if (addr_diff_base < 512 * 1024) page->number = addr_diff_base / page->size;
+ 576:../../util/stm_util.c **** 			page->count = 128;
+ 577:../../util/stm_util.c **** 			break;
+ 578:../../util/stm_util.c **** 		case STM32G4XX_DUAL_BANK_FLASH_TYPE:
+ 579:../../util/stm_util.c **** 			page->size = 2 * 1024;
+ 580:../../util/stm_util.c **** 			if (address < 0x08040000) {
+ 581:../../util/stm_util.c **** 				bank->number = 1;
+ 582:../../util/stm_util.c **** 				page->number = addr_diff_base / page->size;
+ 583:../../util/stm_util.c **** 			}
+ 584:../../util/stm_util.c **** 			else if (address < 0x08080000) {
+ 585:../../util/stm_util.c **** 				bank->number = 2;
+ 586:../../util/stm_util.c **** 				page->number = (address - 0x08040000) / page->size;
+ 587:../../util/stm_util.c **** 			}
+ 588:../../util/stm_util.c **** 			page->count = 128;
+ 589:../../util/stm_util.c **** 			break;
+ 590:../../util/stm_util.c **** 		case STM32H7XX_FLASH_TYPE: //не точно
+ 591:../../util/stm_util.c **** 			page->size = 4 * 1024;
+ 592:../../util/stm_util.c **** 			if (address < 0x08100000) {
+ 593:../../util/stm_util.c **** 				bank->number = 1;
+ 594:../../util/stm_util.c **** 				page->number = addr_diff_base / page->size;
+ 595:../../util/stm_util.c **** 			}
+ 596:../../util/stm_util.c **** 			else if (address < 0x08200000) {
+ 597:../../util/stm_util.c **** 				bank->number = 2;
+ 598:../../util/stm_util.c **** 				page->number = (address - 0x08040000) / page->size;
+ 599:../../util/stm_util.c **** 			}
+ 600:../../util/stm_util.c **** 			page->count = 256;
+ 601:../../util/stm_util.c **** 			break;
+ 602:../../util/stm_util.c **** 	}
+ 603:../../util/stm_util.c **** 
+ 604:../../util/stm_util.c **** 
+ 605:../../util/stm_util.c **** }
+ 606:../../util/stm_util.c **** 
+ 607:../../util/stm_util.c **** 
+ 608:../../util/stm_util.c **** uint32_t stm32_get_bank(uint8_t stm32flashtype, uint32_t address)
+ 609:../../util/stm_util.c **** {
+ 610:../../util/stm_util.c **** 	switch (stm32flashtype) {
+ 611:../../util/stm_util.c **** 		case STM32F1XX_LOW_FLASH_TYPE: return 1;
+ 612:../../util/stm_util.c **** 		case STM32F1XX_MEDIUM_FLASH_TYPE: return 1;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 33
+
+
+ 613:../../util/stm_util.c **** 		case STM32F1XX_HIGH_FLASH_TYPE: return 1;
+ 614:../../util/stm_util.c **** 		case STM32F1XX_CONNECT_FLASH_TYPE: return 1;
+ 615:../../util/stm_util.c **** 		case STM32F2XX_FLASH_TYPE: return 1;
+ 616:../../util/stm_util.c **** 		case STM32G4XX_SINGLE_BANK_FLASH_TYPE: return 1;
+ 617:../../util/stm_util.c **** 		case STM32G4XX_DUAL_BANK_FLASH_TYPE: return address < 0x08040000 ? 1 : 2;
+ 618:../../util/stm_util.c **** 		case STM32H7XX_FLASH_TYPE: return address < 0x08100000 ? 1 : 2; //не точно
+ 619:../../util/stm_util.c **** 	}
+ 620:../../util/stm_util.c **** 	return 0;
+ 621:../../util/stm_util.c **** }
+ 622:../../util/stm_util.c **** 
+ 623:../../util/stm_util.c **** uint32_t stm32_get_sector_or_page_count(uint8_t stm32flashtype)
+ 624:../../util/stm_util.c **** {
+ 625:../../util/stm_util.c **** 	switch (stm32flashtype) {
+ 626:../../util/stm_util.c **** 		case STM32F1XX_LOW_FLASH_TYPE: return 32;
+ 627:../../util/stm_util.c **** 		case STM32F1XX_MEDIUM_FLASH_TYPE: return 128;
+ 628:../../util/stm_util.c **** 		case STM32F1XX_HIGH_FLASH_TYPE: return 256;
+ 629:../../util/stm_util.c **** 		case STM32F1XX_CONNECT_FLASH_TYPE: return 128;
+ 630:../../util/stm_util.c **** 		case STM32F2XX_FLASH_TYPE: return 12;
+ 631:../../util/stm_util.c **** 		case STM32G4XX_SINGLE_BANK_FLASH_TYPE: return 128;
+ 632:../../util/stm_util.c **** 		case STM32G4XX_DUAL_BANK_FLASH_TYPE: return 256;
+ 633:../../util/stm_util.c **** 		case STM32H7XX_FLASH_TYPE: return 256; //не точно
+ 634:../../util/stm_util.c **** 	}
+ 635:../../util/stm_util.c **** 	return 0;
+ 636:../../util/stm_util.c **** }
+ 637:../../util/stm_util.c **** 
+ 638:../../util/stm_util.c **** 
+ 639:../../util/stm_util.c **** uint32_t stm32_get_sector_or_page_size(uint8_t stm32flashtype, uint32_t number)
+ 640:../../util/stm_util.c **** {
+ 641:../../util/stm_util.c **** 
+ 642:../../util/stm_util.c **** 	if (number >= stm32_get_sector_or_page_count(stm32flashtype)) return 0;
+ 643:../../util/stm_util.c **** 
+ 644:../../util/stm_util.c **** 	switch (stm32flashtype) {
+ 645:../../util/stm_util.c **** 		case STM32F1XX_LOW_FLASH_TYPE: return 1024;
+ 646:../../util/stm_util.c **** 		case STM32F1XX_MEDIUM_FLASH_TYPE: return 1024;
+ 647:../../util/stm_util.c **** 		case STM32F1XX_HIGH_FLASH_TYPE: return 2 * 1024;
+ 648:../../util/stm_util.c **** 		case STM32F1XX_CONNECT_FLASH_TYPE: return 2 * 1024;
+ 649:../../util/stm_util.c **** 		case STM32F2XX_FLASH_TYPE:
+ 650:../../util/stm_util.c **** 			switch(number) {
+ 651:../../util/stm_util.c **** 				case 0:
+ 652:../../util/stm_util.c **** 				case 1:
+ 653:../../util/stm_util.c **** 				case 2:
+ 654:../../util/stm_util.c **** 				case 3:
+ 655:../../util/stm_util.c **** 					return 16 * 1024;
+ 656:../../util/stm_util.c **** 				case 4:
+ 657:../../util/stm_util.c **** 					return 64 * 1024;
+ 658:../../util/stm_util.c **** 				default:
+ 659:../../util/stm_util.c **** 					return 128 * 1024;
+ 660:../../util/stm_util.c **** 			}
+ 661:../../util/stm_util.c **** 		case STM32G4XX_SINGLE_BANK_FLASH_TYPE:	return 4 * 1024;
+ 662:../../util/stm_util.c **** 		case STM32G4XX_DUAL_BANK_FLASH_TYPE:	return 2 * 1024;
+ 663:../../util/stm_util.c **** 		case STM32H7XX_FLASH_TYPE: return 4 * 1024; //не точно
+ 664:../../util/stm_util.c **** 	}
+ 665:../../util/stm_util.c **** 	return 0;
+ 666:../../util/stm_util.c **** }
+ 667:../../util/stm_util.c **** 
+ 668:../../util/stm_util.c **** 
+ 669:../../util/stm_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 34
+
+
+ 670:../../util/stm_util.c **** int stm32_get_sector_or_page_number(uint32_t address, uint8_t stm32flashtype)
+ 671:../../util/stm_util.c **** {
+ 672:../../util/stm_util.c ****   uint32_t addr_begin, addr_end, i;
+ 673:../../util/stm_util.c ****   uint32_t sector_or_page_count, sector_or_page_size;
+ 674:../../util/stm_util.c **** 
+ 675:../../util/stm_util.c ****   sector_or_page_count = stm32_get_sector_or_page_count(stm32flashtype);
+ 676:../../util/stm_util.c ****   if (!sector_or_page_count) return -1;
+ 677:../../util/stm_util.c **** 
+ 678:../../util/stm_util.c **** 
+ 679:../../util/stm_util.c ****   addr_begin = FLASH_BASE;
+ 680:../../util/stm_util.c **** 
+ 681:../../util/stm_util.c ****   for (i = 0; i < sector_or_page_count; ++i) {
+ 682:../../util/stm_util.c **** 	  sector_or_page_size = stm32_get_sector_or_page_size(stm32flashtype, i);
+ 683:../../util/stm_util.c **** 	  addr_end = addr_begin + sector_or_page_size;
+ 684:../../util/stm_util.c **** 	  if ((address >= addr_begin) && (address < addr_end)) return i;
+ 685:../../util/stm_util.c **** 	  addr_begin += sector_or_page_size;
+ 686:../../util/stm_util.c ****   }
+ 687:../../util/stm_util.c **** 
+ 688:../../util/stm_util.c **** 
+ 689:../../util/stm_util.c ****   return -1;
+ 690:../../util/stm_util.c **** }
+ 691:../../util/stm_util.c **** 
+ 692:../../util/stm_util.c **** #ifdef	HAL_USE_SECTOR_NUMBER_ERASE
+ 693:../../util/stm_util.c **** 
+ 694:../../util/stm_util.c **** HAL_StatusTypeDef hal_erase_sectors(uint32_t Banks, uint32_t Sector, uint32_t NbSectors)
+ 695:../../util/stm_util.c **** {
+ 696:../../util/stm_util.c **** 	FLASH_EraseInitTypeDef EraseInitStruct;
+ 697:../../util/stm_util.c **** 	uint32_t SectorError;
+ 698:../../util/stm_util.c **** 	HAL_StatusTypeDef res;
+ 699:../../util/stm_util.c **** 
+ 700:../../util/stm_util.c **** 	SectorError = 0;
+ 701:../../util/stm_util.c **** 	EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
+ 702:../../util/stm_util.c **** 	EraseInitStruct.Banks = Banks;
+ 703:../../util/stm_util.c **** 	EraseInitStruct.Sector = Sector;
+ 704:../../util/stm_util.c **** 	EraseInitStruct.NbSectors = NbSectors;
+ 705:../../util/stm_util.c **** 	EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_1;
+ 706:../../util/stm_util.c **** 
+ 707:../../util/stm_util.c **** 	hal_flash_unlocked();
+ 708:../../util/stm_util.c **** 	res = HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError);
+ 709:../../util/stm_util.c **** 	hal_flash_wait_for_last_operation();
+ 710:../../util/stm_util.c **** 	hal_flash_locked();
+ 711:../../util/stm_util.c **** 
+ 712:../../util/stm_util.c **** 
+ 713:../../util/stm_util.c **** 	return res;
+ 714:../../util/stm_util.c **** }
+ 715:../../util/stm_util.c **** 
+ 716:../../util/stm_util.c **** #endif
+ 717:../../util/stm_util.c **** 
+ 718:../../util/stm_util.c **** 
+ 719:../../util/stm_util.c **** 
+ 720:../../util/stm_util.c **** #ifdef	HAL_USE_PAGE_NUMBER_ERASE
+ 721:../../util/stm_util.c **** 
+ 722:../../util/stm_util.c **** HAL_StatusTypeDef hal_erase_pages_number(uint32_t Banks, uint32_t PageNumber, uint32_t NbPages)
+ 723:../../util/stm_util.c **** {
+ 724:../../util/stm_util.c **** 	FLASH_EraseInitTypeDef EraseInitStruct;
+ 725:../../util/stm_util.c **** 	uint32_t PAGEError = 0;
+ 726:../../util/stm_util.c **** 	HAL_StatusTypeDef res;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 35
+
+
+ 727:../../util/stm_util.c **** 
+ 728:../../util/stm_util.c **** 	EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+ 729:../../util/stm_util.c **** 	EraseInitStruct.Banks = Banks;
+ 730:../../util/stm_util.c **** 	EraseInitStruct.Page = PageNumber;
+ 731:../../util/stm_util.c **** 	EraseInitStruct.NbPages = NbPages;
+ 732:../../util/stm_util.c **** 
+ 733:../../util/stm_util.c **** 	hal_flash_unlocked();
+ 734:../../util/stm_util.c **** 	res = HAL_FLASHEx_Erase(&EraseInitStruct, &PAGEError);
+ 735:../../util/stm_util.c **** 	FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+ 736:../../util/stm_util.c **** 	hal_flash_locked();
+ 737:../../util/stm_util.c **** 
+ 738:../../util/stm_util.c **** 	return res;
+ 739:../../util/stm_util.c **** }
+ 740:../../util/stm_util.c **** 
+ 741:../../util/stm_util.c **** 
+ 742:../../util/stm_util.c **** #endif
+ 743:../../util/stm_util.c **** 
+ 744:../../util/stm_util.c **** 
+ 745:../../util/stm_util.c **** #ifdef	HAL_USE_PAGE_ADDR_ERASE
+ 746:../../util/stm_util.c **** 
+ 747:../../util/stm_util.c **** HAL_StatusTypeDef hal_erase_pages_address(uint32_t PageAddress, uint32_t NbPages)
+ 748:../../util/stm_util.c **** {
+ 749:../../util/stm_util.c **** 	FLASH_EraseInitTypeDef EraseInitStruct;
+ 750:../../util/stm_util.c **** 	uint32_t PAGEError = 0;
+ 751:../../util/stm_util.c **** 	HAL_StatusTypeDef res;
+ 752:../../util/stm_util.c **** 
+ 753:../../util/stm_util.c **** 	EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+ 754:../../util/stm_util.c **** 	EraseInitStruct.PageAddress = PageAddress;
+ 755:../../util/stm_util.c **** 	EraseInitStruct.NbPages     = NbPages;
+ 756:../../util/stm_util.c **** 
+ 757:../../util/stm_util.c **** 	hal_flash_unlocked();
+ 758:../../util/stm_util.c **** 	res = HAL_FLASHEx_Erase(&EraseInitStruct, &PAGEError);
+ 759:../../util/stm_util.c **** 	FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);  // Ожидаем окончания опера�
+ 760:../../util/stm_util.c **** 	hal_flash_locked();
+ 761:../../util/stm_util.c **** 
+ 762:../../util/stm_util.c **** 	return res;
+ 763:../../util/stm_util.c **** }
+ 764:../../util/stm_util.c **** 
+ 765:../../util/stm_util.c **** #endif
+ 766:../../util/stm_util.c **** 
+ 767:../../util/stm_util.c **** 
+ 768:../../util/stm_util.c **** HAL_StatusTypeDef hal_erase_by_address(uint32_t address_begin, uint32_t address_end, uint8_t stm32f
+ 769:../../util/stm_util.c **** {
+ 770:../../util/stm_util.c **** 	int erase_begin, erase_end;
+ 771:../../util/stm_util.c **** 	HAL_StatusTypeDef res;
+ 772:../../util/stm_util.c **** 	uint32_t bank;
+ 773:../../util/stm_util.c **** 
+ 774:../../util/stm_util.c **** 	erase_begin = stm32_get_sector_or_page_number(address_begin, stm32flashtype);
+ 775:../../util/stm_util.c **** 	erase_end = stm32_get_sector_or_page_number(address_end, stm32flashtype);
+ 776:../../util/stm_util.c **** 
+ 777:../../util/stm_util.c **** 	if ((erase_begin < 0) || (erase_end < 0)) {
+ 778:../../util/stm_util.c **** 	    ulog("hal_erase_by_address: error invalid page or sector to erase"CRLF);
+ 779:../../util/stm_util.c **** 	    return HAL_ERROR;
+ 780:../../util/stm_util.c **** 	}
+ 781:../../util/stm_util.c **** 
+ 782:../../util/stm_util.c **** 	bank = stm32_get_bank(stm32flashtype, address_begin);
+ 783:../../util/stm_util.c **** 	if (!bank) {
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 36
+
+
+ 784:../../util/stm_util.c **** 	    ulog("hal_erase_by_address: error invalid bank"CRLF);
+ 785:../../util/stm_util.c **** 	    return HAL_ERROR;
+ 786:../../util/stm_util.c **** 	}
+ 787:../../util/stm_util.c **** 
+ 788:../../util/stm_util.c **** #ifdef	HAL_USE_SECTOR_NUMBER_ERASE
+ 789:../../util/stm_util.c ****     ulog_fmt("hal_erase_by_address: erase bank %lu, from %d to %d sector"CRLF, bank, erase_begin, e
+ 790:../../util/stm_util.c **** 	res = hal_erase_sectors(bank, erase_begin, erase_end - erase_begin + 1);
+ 791:../../util/stm_util.c **** #else
+ 792:../../util/stm_util.c **** 
+ 793:../../util/stm_util.c **** #ifdef	HAL_USE_PAGE_NUMBER_ERASE
+ 794:../../util/stm_util.c **** 	if (stm32flashtype == STM32G4XX_DUAL_BANK_FLASH_TYPE) {
+ 795:../../util/stm_util.c **** 		if (erase_begin > 127) erase_begin -= 128;
+ 796:../../util/stm_util.c **** 		if (erase_end > 127) erase_end -= 128;
+ 797:../../util/stm_util.c **** 	}
+ 798:../../util/stm_util.c ****     ulog_fmt("hal_erase_by_address: erase bank %lu, from %d to %d page"CRLF, bank, erase_begin, era
+ 799:../../util/stm_util.c **** 	res = hal_erase_pages_number(bank, erase_begin,  erase_end - erase_begin + 1);
+ 800:../../util/stm_util.c **** #else
+ 801:../../util/stm_util.c **** 
+ 802:../../util/stm_util.c **** #ifdef	HAL_USE_PAGE_ADDR_ERASE
+ 803:../../util/stm_util.c **** 	ulog_fmt("hal_erase_by_address: erase from %lu to %lu"CRLF, address_begin, address_end);
+ 804:../../util/stm_util.c **** 	int page_size = stm32_get_sector_or_page_size(stm32flashtype, 0);
+ 805:../../util/stm_util.c ****     res = hal_erase_pages_address(FLASH_BASE + erase_begin * page_size, erase_end - erase_begin + 1
+ 806:../../util/stm_util.c **** #else
+ 807:../../util/stm_util.c **** #error Not supported other type erase
+ 808:../../util/stm_util.c **** #endif //HAL_USE_PAGE_ADDR_ERASE
+ 809:../../util/stm_util.c **** 
+ 810:../../util/stm_util.c **** #endif //HAL_USE_PAGE_NUMBER_ERASE
+ 811:../../util/stm_util.c **** 
+ 812:../../util/stm_util.c **** #endif  //HAL_USE_SECTOR_NUMBER_ERASE
+ 813:../../util/stm_util.c ****     return res;
+ 814:../../util/stm_util.c **** }
+ 815:../../util/stm_util.c **** 
+ 816:../../util/stm_util.c **** 
+ 817:../../util/stm_util.c **** 
+ 818:../../util/stm_util.c **** 
+ 819:../../util/stm_util.c **** #ifdef	HAL_USE_PAGE_NUMBER_ERASE
+ 820:../../util/stm_util.c **** 
+ 821:../../util/stm_util.c **** 
+ 822:../../util/stm_util.c **** #define GET_FLASH_PAGE_NUMBER(addr) (uint32_t)((addr - FLASH_BASE) / FLASH_PAGE_SIZE)
+ 823:../../util/stm_util.c **** #define GET_FLASH_PAGE_ADDRESS(addr) (FLASH_BASE + GET_FLASH_PAGE_NUMBER(addr) * FLASH_PAGE_SIZE)
+ 824:../../util/stm_util.c **** 
+ 825:../../util/stm_util.c **** static char  __flash_buf[FLASH_PAGE_SIZE]; //буфер под страницу
+ 826:../../util/stm_util.c **** 
+ 827:../../util/stm_util.c **** 
+ 828:../../util/stm_util.c **** HAL_StatusTypeDef hal_erase_pages(uint32_t PageAddress, uint32_t NbPages)
+ 829:../../util/stm_util.c **** {
+ 830:../../util/stm_util.c **** 	FLASH_EraseInitTypeDef EraseInitStruct;
+ 831:../../util/stm_util.c **** 	uint32_t PAGEError = 0;
+ 832:../../util/stm_util.c **** 	HAL_StatusTypeDef res;
+ 833:../../util/stm_util.c **** 
+ 834:../../util/stm_util.c **** 	EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+ 835:../../util/stm_util.c **** 	EraseInitStruct.Banks = FLASH_BANK_1;
+ 836:../../util/stm_util.c **** 	EraseInitStruct.Page = GET_FLASH_PAGE_NUMBER(PageAddress);
+ 837:../../util/stm_util.c **** 	EraseInitStruct.NbPages = NbPages;
+ 838:../../util/stm_util.c **** 
+ 839:../../util/stm_util.c **** 	res = HAL_FLASHEx_Erase(&EraseInitStruct, &PAGEError);
+ 840:../../util/stm_util.c **** 	FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 37
+
+
+ 841:../../util/stm_util.c **** 
+ 842:../../util/stm_util.c **** 	return res;
+ 843:../../util/stm_util.c **** 
+ 844:../../util/stm_util.c **** }
+ 845:../../util/stm_util.c **** 
+ 846:../../util/stm_util.c **** //запись во флэш
+ 847:../../util/stm_util.c **** uint32_t  hal_write_to_flash(uint32_t Address, char * data, uint32_t  data_len)
+ 848:../../util/stm_util.c **** {
+ 849:../../util/stm_util.c **** 	if (data_len == 0) return 0;
+ 850:../../util/stm_util.c **** 
+ 851:../../util/stm_util.c **** 	char * ptr = data;
+ 852:../../util/stm_util.c **** 	uint32_t ptr_Address = Address;
+ 853:../../util/stm_util.c **** 	uint32_t offset;
+ 854:../../util/stm_util.c **** 	uint32_t byte_to_write;
+ 855:../../util/stm_util.c **** 	uint32_t page_address;
+ 856:../../util/stm_util.c **** 	HAL_StatusTypeDef erase_error, prog;
+ 857:../../util/stm_util.c **** 	uint64_t Data;
+ 858:../../util/stm_util.c **** 
+ 859:../../util/stm_util.c **** 	hal_flash_unlocked();
+ 860:../../util/stm_util.c **** 
+ 861:../../util/stm_util.c **** 	while (data_len > 0) {
+ 862:../../util/stm_util.c **** 
+ 863:../../util/stm_util.c **** 		page_address = GET_FLASH_PAGE_ADDRESS(ptr_Address);
+ 864:../../util/stm_util.c **** 
+ 865:../../util/stm_util.c **** 		//копируем страницу в буфер
+ 866:../../util/stm_util.c **** 		memcpy((void *)__flash_buf, (void *)page_address, FLASH_PAGE_SIZE);
+ 867:../../util/stm_util.c **** 
+ 868:../../util/stm_util.c **** 		//очищаем страницу
+ 869:../../util/stm_util.c **** 		erase_error = hal_erase_pages(page_address, 1);
+ 870:../../util/stm_util.c **** 		if (erase_error == HAL_ERROR) break;
+ 871:../../util/stm_util.c **** 
+ 872:../../util/stm_util.c **** 		offset = ptr_Address - page_address; //смещение в странице
+ 873:../../util/stm_util.c **** 		byte_to_write = FLASH_PAGE_SIZE - offset; //кол-во байтов для записи
+ 874:../../util/stm_util.c **** 		if (data_len < byte_to_write) byte_to_write = data_len;
+ 875:../../util/stm_util.c **** 
+ 876:../../util/stm_util.c **** 		//копируем данные в буфер
+ 877:../../util/stm_util.c **** 		memcpy((void *)(__flash_buf + offset), (void *)ptr, byte_to_write);
+ 878:../../util/stm_util.c **** 
+ 879:../../util/stm_util.c **** 		prog = HAL_OK;
+ 880:../../util/stm_util.c **** 		//записываем страницу во флэш
+ 881:../../util/stm_util.c **** 		for (uint16_t j = 0; j < FLASH_PAGE_SIZE / 8; j++) {
+ 882:../../util/stm_util.c **** 			Data = *(uint64_t *)(__flash_buf + j * 8);
+ 883:../../util/stm_util.c **** 			prog = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, page_address  + j * 8, Data);
+ 884:../../util/stm_util.c **** 			FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);  // Ожидаем окончания опер�
+ 885:../../util/stm_util.c **** 			if (prog != HAL_OK) break;
+ 886:../../util/stm_util.c **** 		}
+ 887:../../util/stm_util.c **** 		if (prog != HAL_OK) break;
+ 888:../../util/stm_util.c **** 
+ 889:../../util/stm_util.c **** 		data_len -= byte_to_write;
+ 890:../../util/stm_util.c **** 		ptr += byte_to_write;
+ 891:../../util/stm_util.c **** 		ptr_Address += byte_to_write;
+ 892:../../util/stm_util.c **** 	}
+ 893:../../util/stm_util.c **** 
+ 894:../../util/stm_util.c **** 	hal_flash_locked();
+ 895:../../util/stm_util.c **** 
+ 896:../../util/stm_util.c **** 	return ptr_Address - Address;
+ 897:../../util/stm_util.c **** }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 38
+
+
+ 898:../../util/stm_util.c **** 
+ 899:../../util/stm_util.c **** 
+ 900:../../util/stm_util.c **** //запись страницы из буфера __flash_buf
+ 901:../../util/stm_util.c **** BOOL hal_write_flash_buf_to_flash_page(uint32_t pageAddress)
+ 902:../../util/stm_util.c **** {
+ 903:../../util/stm_util.c **** 	uint64_t Data;
+ 904:../../util/stm_util.c **** 	BOOL res;
+ 905:../../util/stm_util.c **** 	HAL_StatusTypeDef erase_error;
+ 906:../../util/stm_util.c **** 
+ 907:../../util/stm_util.c **** 
+ 908:../../util/stm_util.c **** 	res = FALSE;
+ 909:../../util/stm_util.c **** 
+ 910:../../util/stm_util.c **** 	hal_flash_unlocked();
+ 911:../../util/stm_util.c **** 
+ 912:../../util/stm_util.c **** 	erase_error = hal_erase_pages(pageAddress, 1);
+ 913:../../util/stm_util.c **** 
+ 914:../../util/stm_util.c **** 
+ 915:../../util/stm_util.c **** 	if (erase_error != HAL_ERROR) {
+ 916:../../util/stm_util.c **** 
+ 917:../../util/stm_util.c **** 		//записываем страницу во флэш
+ 918:../../util/stm_util.c **** 		for (uint16_t j = 0; j < FLASH_PAGE_SIZE / 8; j++) {
+ 919:../../util/stm_util.c **** 			Data = *(uint64_t *)(__flash_buf + j * 8);
+ 920:../../util/stm_util.c **** 			HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, pageAddress  + j * 8, Data);
+ 921:../../util/stm_util.c **** 			FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);  // Ожидаем окончания опер�
+ 922:../../util/stm_util.c **** 		}
+ 923:../../util/stm_util.c **** 		res = TRUE;
+ 924:../../util/stm_util.c **** 	}
+ 925:../../util/stm_util.c **** 
+ 926:../../util/stm_util.c **** 	hal_flash_locked();
+ 927:../../util/stm_util.c **** 
+ 928:../../util/stm_util.c **** 	return res;
+ 929:../../util/stm_util.c **** }
+ 930:../../util/stm_util.c **** 
+ 931:../../util/stm_util.c **** static uint16_t __flash_buf_pos = 0;
+ 932:../../util/stm_util.c **** static uint32_t __flash_buf_address = 0;
+ 933:../../util/stm_util.c **** 
+ 934:../../util/stm_util.c **** //сделать перед flash_buf_put
+ 935:../../util/stm_util.c **** void flash_buf_put_begin(uint32_t pageAddress)
+ 936:../../util/stm_util.c **** {
+ 937:../../util/stm_util.c ****   __flash_buf_address = pageAddress;
+ 938:../../util/stm_util.c ****   __flash_buf_pos = 0;
+ 939:../../util/stm_util.c **** }
+ 940:../../util/stm_util.c **** 
+ 941:../../util/stm_util.c **** //запись в __flash_buf
+ 942:../../util/stm_util.c **** void flash_buf_put(char * buf, uint16_t len)
+ 943:../../util/stm_util.c **** {
+ 944:../../util/stm_util.c ****   uint16_t ost, byte_write;
+ 945:../../util/stm_util.c ****   char * ptr = buf;
+ 946:../../util/stm_util.c **** 
+ 947:../../util/stm_util.c ****   while (len > 0)
+ 948:../../util/stm_util.c ****   {
+ 949:../../util/stm_util.c ****     ost = FLASH_PAGE_SIZE - __flash_buf_pos; //остаток байт в буфере
+ 950:../../util/stm_util.c ****     byte_write = ( len > ost ? ost : len ); //кол-во байт для записм
+ 951:../../util/stm_util.c ****     memcpy(__flash_buf + __flash_buf_pos, ptr, byte_write); //копирум данные в буф
+ 952:../../util/stm_util.c ****     len -= byte_write;
+ 953:../../util/stm_util.c ****     __flash_buf_pos += byte_write;
+ 954:../../util/stm_util.c ****     ptr += byte_write;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 39
+
+
+ 955:../../util/stm_util.c ****     if (__flash_buf_pos >= FLASH_PAGE_SIZE) //вышли за пределы страницы
+ 956:../../util/stm_util.c ****     {
+ 957:../../util/stm_util.c ****       //записать во флэш
+ 958:../../util/stm_util.c ****  	  //ulog_fmt("hal_write_flash_buf_to_flash_page (addr %x, len %d)\r\n", (unsigned int)__flash_buf
+ 959:../../util/stm_util.c ****       hal_write_flash_buf_to_flash_page(__flash_buf_address); //запись буфера во фл
+ 960:../../util/stm_util.c ****       __flash_buf_address += FLASH_PAGE_SIZE; //к следуюей странице
+ 961:../../util/stm_util.c ****       __flash_buf_pos -= FLASH_PAGE_SIZE; //позиция для записи
+ 962:../../util/stm_util.c ****     }
+ 963:../../util/stm_util.c ****   }
+ 964:../../util/stm_util.c **** }
+ 965:../../util/stm_util.c **** 
+ 966:../../util/stm_util.c **** //сделать после flash_buf_put
+ 967:../../util/stm_util.c **** void flash_buf_put_end(void)
+ 968:../../util/stm_util.c **** {
+ 969:../../util/stm_util.c ****   if (__flash_buf_pos > 0) {
+ 970:../../util/stm_util.c ****   	  //ulog_fmt("flash_buf_put_end (addr %x, len %d)\r\n", (unsigned int)__flash_buf_address, __fla
+ 971:../../util/stm_util.c ****       hal_write_flash_buf_to_flash_page(__flash_buf_address); //запись буфера во фл
+ 972:../../util/stm_util.c **** 	  __flash_buf_pos = 0;
+ 973:../../util/stm_util.c ****   }
+ 974:../../util/stm_util.c **** }
+ 975:../../util/stm_util.c **** 
+ 976:../../util/stm_util.c **** #endif //HAL_USE_PAGE_NUMBER_ERASE
+ 977:../../util/stm_util.c **** 
+ 978:../../util/stm_util.c **** 
+ 979:../../util/stm_util.c **** 
+ 980:../../util/stm_util.c **** 
+ 981:../../util/stm_util.c **** void HAL_GPIO_ChangeMode(GPIO_TypeDef  * GPIOx, uint16_t GPIO_Pin, uint32_t Mode)
+ 982:../../util/stm_util.c **** {
+ 983:../../util/stm_util.c **** 	GPIO_InitTypeDef GPIO_InitStruct = {0};
+ 984:../../util/stm_util.c **** 
+ 985:../../util/stm_util.c **** 	//HAL_GPIO_DeInit(GPIOx, GPIO_Pin);
+ 986:../../util/stm_util.c **** 
+ 987:../../util/stm_util.c **** 	GPIO_InitStruct.Pin = GPIO_Pin;
+ 988:../../util/stm_util.c **** 	GPIO_InitStruct.Mode = Mode;
+ 989:../../util/stm_util.c **** 	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+ 990:../../util/stm_util.c **** 
+ 991:../../util/stm_util.c **** 	//GPIOx->MODER |= GPIO_MODER
+ 992:../../util/stm_util.c **** 	//GPIOx->MODER &= ~(GPIO_MODER_MODER);
+ 993:../../util/stm_util.c **** }
+ 994:../../util/stm_util.c **** 
+ 995:../../util/stm_util.c **** /*
+ 996:../../util/stm_util.c **** 
+ 997:../../util/stm_util.c **** //https://community.st.com/t5/stm32-mcus/how-to-jump-to-system-bootloader-from-application-code-on-
+ 998:../../util/stm_util.c **** //STM32CubeProg
+ 999:../../util/stm_util.c ****  Set the enumeration of the STM32 Microcontrollers Series/
+1000:../../util/stm_util.c **** enum{C0, F030x8, F030xC, F03xx, F05, F07, F09, F10xx, F105, F107, F10XL, F2, F3, F4, F7, G0, G4, H5
+1001:../../util/stm_util.c **** 
+1002:../../util/stm_util.c **** #define MCU			H7x		//Define here the MCU being used
+1003:../../util/stm_util.c **** 
+1004:../../util/stm_util.c **** void JumpToBootloader (void)
+1005:../../util/stm_util.c **** {
+1006:../../util/stm_util.c **** uint32_t i=0;
+1007:../../util/stm_util.c **** void (*SysMemBootJump)(void);
+1008:../../util/stm_util.c **** 
+1009:../../util/stm_util.c **** 
+1010:../../util/stm_util.c **** //Set a vector addressed with STM32 Microcontrollers names
+1011:../../util/stm_util.c **** //Each vector position contains an address to the boot loader entry point
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 40
+
+
+1012:../../util/stm_util.c **** 
+1013:../../util/stm_util.c **** 	volatile uint32_t BootAddr[33];
+1014:../../util/stm_util.c **** 
+1015:../../util/stm_util.c **** 	BootAddr[C0]     = 0x1FFF0000;
+1016:../../util/stm_util.c **** 	BootAddr[F030x8] = 0x1FFFEC00;
+1017:../../util/stm_util.c **** 	BootAddr[F030xC] = 0x1FFFD800;
+1018:../../util/stm_util.c **** 	BootAddr[F03xx]  = 0x1FFFEC00;
+1019:../../util/stm_util.c **** 	BootAddr[F05]    = 0x1FFFEC00;
+1020:../../util/stm_util.c **** 	BootAddr[F07]    = 0x1FFFC800;
+1021:../../util/stm_util.c **** 	BootAddr[F09]    = 0x1FFFD800;
+1022:../../util/stm_util.c **** 	BootAddr[F10xx]  = 0x1FFFF000;
+1023:../../util/stm_util.c **** 	BootAddr[F105]   = 0x1FFFB000;
+1024:../../util/stm_util.c **** 	BootAddr[F107]   = 0x1FFFB000;
+1025:../../util/stm_util.c **** 	BootAddr[F10XL]  = 0x1FFFE000;
+1026:../../util/stm_util.c **** 	BootAddr[F2]     = 0x1FFF0000;
+1027:../../util/stm_util.c **** 	BootAddr[F3]     = 0x1FFFD800;
+1028:../../util/stm_util.c **** 	BootAddr[F4]     = 0x1FFF0000;
+1029:../../util/stm_util.c **** 	BootAddr[F7]     = 0x1FF00000;
+1030:../../util/stm_util.c **** 	BootAddr[G0]     = 0x1FFF0000;
+1031:../../util/stm_util.c **** 	BootAddr[G4]     = 0x1FFF0000;
+1032:../../util/stm_util.c **** 	BootAddr[H503]   = 0x0BF87000;
+1033:../../util/stm_util.c **** 	BootAddr[H563]   = 0x0BF97000;
+1034:../../util/stm_util.c **** 	BootAddr[H573]   = 0x0BF97000;
+1035:../../util/stm_util.c **** 	BootAddr[H7x]    = 0x1FF09800;
+1036:../../util/stm_util.c **** 	BootAddr[H7A]    = 0x1FF0A800;
+1037:../../util/stm_util.c **** 	BootAddr[H7B]    = 0x1FF0A000;
+1038:../../util/stm_util.c **** 	BootAddr[L0]     = 0x1FF00000;
+1039:../../util/stm_util.c **** 	BootAddr[L1]     = 0x1FF00000;
+1040:../../util/stm_util.c **** 	BootAddr[L4]     = 0x1FFF0000;
+1041:../../util/stm_util.c **** 	BootAddr[L5]     = 0x0BF90000;
+1042:../../util/stm_util.c **** 	BootAddr[WBA]    = 0x0BF88000;
+1043:../../util/stm_util.c **** 	BootAddr[WBX]    = 0x1FFF0000;
+1044:../../util/stm_util.c **** 	BootAddr[WL]     = 0x1FFF0000;
+1045:../../util/stm_util.c **** 	BootAddr[U5]     = 0x0BF90000;
+1046:../../util/stm_util.c **** 
+1047:../../util/stm_util.c **** 	// Disable all interrupts
+1048:../../util/stm_util.c **** 	__disable_irq();
+1049:../../util/stm_util.c **** 
+1050:../../util/stm_util.c **** 	// Disable Systick timer
+1051:../../util/stm_util.c **** 	SysTick->CTRL = 0;
+1052:../../util/stm_util.c **** 
+1053:../../util/stm_util.c **** 	//Set the clock to the default state
+1054:../../util/stm_util.c **** 	HAL_RCC_DeInit();
+1055:../../util/stm_util.c **** 
+1056:../../util/stm_util.c **** 	//Clear Interrupt Enable Register & Interrupt Pending Register
+1057:../../util/stm_util.c **** 	for (i=0;i<5;i++)
+1058:../../util/stm_util.c **** 	{
+1059:../../util/stm_util.c **** 		NVIC->ICER[i]=0xFFFFFFFF;
+1060:../../util/stm_util.c **** 		NVIC->ICPR[i]=0xFFFFFFFF;
+1061:../../util/stm_util.c **** 	}
+1062:../../util/stm_util.c **** 
+1063:../../util/stm_util.c **** 	//Re-enable all interrupts
+1064:../../util/stm_util.c **** 	__enable_irq();
+1065:../../util/stm_util.c **** 
+1066:../../util/stm_util.c **** 	//Set up the jump to boot loader address + 4
+1067:../../util/stm_util.c **** 	SysMemBootJump = (void (*)(void)) (*((uint32_t *) ((BootAddr[MCU] + 4))));
+1068:../../util/stm_util.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 41
+
+
+1069:../../util/stm_util.c **** 	//Set the main stack pointer to the boot loader stack
+1070:../../util/stm_util.c **** 	__set_MSP(*(uint32_t *)BootAddr[MCU]);
+1071:../../util/stm_util.c **** 
+1072:../../util/stm_util.c **** 	//Call the function to jump to boot loader location/
+1073:../../util/stm_util.c **** 	SysMemBootJump();
+1074:../../util/stm_util.c **** 
+1075:../../util/stm_util.c **** 	//Jump is done successfully/
+1076:../../util/stm_util.c **** 	while (1)
+1077:../../util/stm_util.c **** 	{
+1078:../../util/stm_util.c **** 		// Code should never reach this loop
+1079:../../util/stm_util.c **** 	}
+1080:../../util/stm_util.c **** }
+1081:../../util/stm_util.c **** */
+1082:../../util/stm_util.c **** 
+1083:../../util/stm_util.c **** #endif //HAL_USE_FLASH
+1084:../../util/stm_util.c **** 
+1085:../../util/stm_util.c **** /*
+1086:../../util/stm_util.c **** 
+1087:../../util/stm_util.c **** #define SYSTEM_MEMORY_ADDR                                      0x1FFFC400
+1088:../../util/stm_util.c **** 
+1089:../../util/stm_util.c **** void JumpToBootloader(void)
+1090:../../util/stm_util.c **** {
+1091:../../util/stm_util.c ****   HAL_DeInit();
+1092:../../util/stm_util.c ****   HAL_RCC_DeInit();
+1093:../../util/stm_util.c ****   __disable_irq();
+1094:../../util/stm_util.c **** 
+1095:../../util/stm_util.c ****   hal_flash_unlocked();
+1096:../../util/stm_util.c ****   hal_erase_pages(FLASH_BASE, 1);
+1097:../../util/stm_util.c ****   hal_flash_locked();
+1098:../../util/stm_util.c **** 
+1099:../../util/stm_util.c **** 
+1100:../../util/stm_util.c ****   const uint32_t ptr = (*((uint32_t *) SYSTEM_MEMORY_ADDR));
+1101:../../util/stm_util.c ****   void (*JumpToSystemMemory)(void);
+1102:../../util/stm_util.c **** 
+1103:../../util/stm_util.c ****   JumpToSystemMemory = (void (*)(void)) (*((uint32_t *) SYSTEM_MEMORY_ADDR + 4));
+1104:../../util/stm_util.c ****   __set_MSP(ptr);
+1105:../../util/stm_util.c ****   JumpToSystemMemory();
+1106:../../util/stm_util.c **** 
+1107:../../util/stm_util.c ****   while(1);
+1108:../../util/stm_util.c **** }
+1109:../../util/stm_util.c **** /
+1110:../../util/stm_util.c **** 
+1111:../../util/stm_util.c **** void UART_flush(UART_HandleTypeDef *huart) {
+1112:../../util/stm_util.c ****   // Flush UART RX buffer if RXNE is set
+1113:../../util/stm_util.c ****   if READ_BIT(huart->Instance->ISR, UART_FLAG_RXNE) {
+1114:../../util/stm_util.c ****     SET_BIT(huart->Instance->RQR, UART_RXDATA_FLUSH_REQUEST);
+1115:../../util/stm_util.c ****   }
+1116:../../util/stm_util.c **** 
+1117:../../util/stm_util.c ****   // Not available on F030xx devices!
+1118:../../util/stm_util.c ****   // SET_BIT(huart1.Instance->RQR, UART_TXDATA_FLUSH_REQUEST);
+1119:../../util/stm_util.c **** 
+1120:../../util/stm_util.c ****   // Clear All Errors (if needed)
+1121:../../util/stm_util.c ****   if (READ_BIT(huart->Instance->ISR, UART_FLAG_ORE | UART_FLAG_FE | UART_FLAG_NE)) {
+1122:../../util/stm_util.c **** 
+1123:../../util/stm_util.c **** 	__HAL_UART_CLEAR_PEFLAG(huart);
+1124:../../util/stm_util.c **** 	__HAL_UART_CLEAR_OREFLAG(huart);
+1125:../../util/stm_util.c **** 	__HAL_UART_CLEAR_FEFLAG(huart);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 42
+
+
+1126:../../util/stm_util.c **** 	__HAL_UART_CLEAR_NEFLAG(huart);
+1127:../../util/stm_util.c **** 	__HAL_UART_CLEAR_IDLEFLAG(huart);
+1128:../../util/stm_util.c **** 	__HAL_UART_CLEAR_TXFECF(huart);
+1129:../../util/stm_util.c **** 
+1130:../../util/stm_util.c ****   }
+1131:../../util/stm_util.c **** }
+1132:../../util/stm_util.c **** */
+1133:../../util/stm_util.c **** 
+1134:../../util/stm_util.c **** uint32_t HAL_DiffTick(uint32_t told)
+1135:../../util/stm_util.c **** {
+ 1216              		.loc 1 1135 1 is_stmt 1 view -0
+ 1217              		.cfi_startproc
+ 1218              		@ args = 0, pretend = 0, frame = 0
+ 1219              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1220              		.loc 1 1135 1 is_stmt 0 view .LVU278
+ 1221 0000 10B5     		push	{r4, lr}
+ 1222              	.LCFI36:
+ 1223              		.cfi_def_cfa_offset 8
+ 1224              		.cfi_offset 4, -8
+ 1225              		.cfi_offset 14, -4
+ 1226 0002 0446     		mov	r4, r0
+1136:../../util/stm_util.c **** 	uint32_t tnew = HAL_GetTick();
+ 1227              		.loc 1 1136 2 is_stmt 1 view .LVU279
+ 1228              		.loc 1 1136 18 is_stmt 0 view .LVU280
+ 1229 0004 FFF7FEFF 		bl	HAL_GetTick
+ 1230              	.LVL97:
+1137:../../util/stm_util.c **** 
+1138:../../util/stm_util.c **** 	return DIFF_TICKU32(told, tnew);
+ 1231              		.loc 1 1138 2 is_stmt 1 view .LVU281
+ 1232              		.loc 1 1138 9 is_stmt 0 view .LVU282
+ 1233 0008 A042     		cmp	r0, r4
+ 1234 000a 02D2     		bcs	.L78
+ 1235              		.loc 1 1138 9 discriminator 1 view .LVU283
+ 1236 000c 001B     		subs	r0, r0, r4
+ 1237              	.LVL98:
+ 1238              		.loc 1 1138 9 discriminator 1 view .LVU284
+ 1239 000e 0138     		subs	r0, r0, #1
+ 1240              	.L77:
+1139:../../util/stm_util.c **** }...
+ 1241              		.loc 1 1139 1 view .LVU285
+ 1242 0010 10BD     		pop	{r4, pc}
+ 1243              	.LVL99:
+ 1244              	.L78:
+1138:../../util/stm_util.c **** 	return DIFF_TICKU32(told, tnew);
+ 1245              		.loc 1 1138 9 discriminator 2 view .LVU286
+ 1246 0012 001B     		subs	r0, r0, r4
+ 1247              	.LVL100:
+1138:../../util/stm_util.c **** 	return DIFF_TICKU32(told, tnew);
+ 1248              		.loc 1 1138 9 view .LVU287
+ 1249 0014 FCE7     		b	.L77
+ 1250              		.cfi_endproc
+ 1251              	.LFE359:
+ 1253              		.section	.bss.get_stm_uid_buf.0,"aw",%nobits
+ 1254              		.align	2
+ 1257              	get_stm_uid_buf.0:
+ 1258 0000 00000000 		.space	64
+ 1258      00000000 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 43
+
+
+ 1258      00000000 
+ 1258      00000000 
+ 1258      00000000 
+ 1259              		.section	.bss._stm_uid_buf.1,"aw",%nobits
+ 1260              		.align	2
+ 1263              	_stm_uid_buf.1:
+ 1264 0000 00000000 		.space	12
+ 1264      00000000 
+ 1264      00000000 
+ 1265              		.global	fulog_buf
+ 1266              		.section	.bss.fulog_buf,"aw",%nobits
+ 1267              		.align	2
+ 1270              	fulog_buf:
+ 1271 0000 00000000 		.space	1024
+ 1271      00000000 
+ 1271      00000000 
+ 1271      00000000 
+ 1271      00000000 
+ 1272              		.global	portpin_NULL
+ 1273              		.section	.rodata.portpin_NULL,"a"
+ 1274              		.align	2
+ 1277              	portpin_NULL:
+ 1278 0000 00000000 		.space	8
+ 1278      00000000 
+ 1279              		.section	.rodata
+ 1280              		.align	2
+ 1281              		.set	.LANCHOR0,. + 0
+ 1282              	.LC0:
+ 1283 0000 25782D25 		.ascii	"%x-%x-%lx-%lx\012\000"
+ 1283      782D256C 
+ 1283      782D256C 
+ 1283      780A00
+ 1284              		.text
+ 1285              	.Letext0:
+ 1286              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 1287              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 1288              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 1289              		.file 5 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 1290              		.file 6 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h"
+ 1291              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 1292              		.file 8 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 1293              		.file 9 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 1294              		.file 10 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h"
+ 1295              		.file 11 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h"
+ 1296              		.file 12 "../../util/stm_util.h"
+ 1297              		.file 13 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stdarg.h"
+ 1298              		.file 14 "C:/msys64/ucrt64/arm-none-eabi/include/stdio.h"
+ 1299              		.file 15 "../../util/str_util.h"
+ 1300              		.file 16 "<built-in>"
+ 1301              		.file 17 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm_util.c
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:20     .text.delay_us_cycle:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:26     .text.delay_us_cycle:00000000 delay_us_cycle
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:82     .text._delay_us_tim:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:88     .text._delay_us_tim:00000000 _delay_us_tim
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:115    .text.OutPinIsSetted:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:121    .text.OutPinIsSetted:00000000 OutPinIsSetted
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:154    .text.get_stm32_tim_freq_param:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:160    .text.get_stm32_tim_freq_param:00000000 get_stm32_tim_freq_param
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:299    .text.set_tim_frequency:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:305    .text.set_tim_frequency:00000000 set_tim_frequency
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:362    .text.set_tim_frequency2:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:368    .text.set_tim_frequency2:00000000 set_tim_frequency2
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:393    .text.get_tim_frequency:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:399    .text.get_tim_frequency:00000000 get_tim_frequency
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:428    .text.get_tim_frequency2:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:434    .text.get_tim_frequency2:00000000 get_tim_frequency2
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:460    .text.set_tim_frequency2_and_start:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:466    .text.set_tim_frequency2_and_start:00000000 set_tim_frequency2_and_start
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:525    .text.HAL_GetTickUs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:531    .text.HAL_GetTickUs:00000000 HAL_GetTickUs
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:562    .text.HAL_DiffTickUs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:568    .text.HAL_DiffTickUs:00000000 HAL_DiffTickUs
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:620    .text.HAL_DelayUs:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:626    .text.HAL_DelayUs:00000000 HAL_DelayUs
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:701    .text.HAL_GetTickNoZero:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:707    .text.HAL_GetTickNoZero:00000000 HAL_GetTickNoZero
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:737    .text.HAL_DelayTick:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:743    .text.HAL_DelayTick:00000000 HAL_DelayTick
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:804    .text.tick2time:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:810    .text.tick2time:00000000 tick2time
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:877    .text.tick2time:0000004c $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:884    .text.get_adc_value:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:890    .text.get_adc_value:00000000 get_adc_value
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:938    .text.ulog_fmt:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:944    .text.ulog_fmt:00000000 ulog_fmt
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1007   .text.fulog:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1013   .text.fulog:00000000 fulog
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1039   .text.fulog:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1270   .bss.fulog_buf:00000000 fulog_buf
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1044   .text.fulog_fmt:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1050   .text.fulog_fmt:00000000 fulog_fmt
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1113   .text.stm_uid:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1119   .text.stm_uid:00000000 stm_uid
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1139   .text.stm_uid:00000010 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1263   .bss._stm_uid_buf.1:00000000 _stm_uid_buf.1
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1145   .text.get_stm_uid:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1151   .text.get_stm_uid:00000000 get_stm_uid
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1199   .text.get_stm_uid:00000028 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1257   .bss.get_stm_uid_buf.0:00000000 get_stm_uid_buf.0
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1207   .text.HAL_DiffTick:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1213   .text.HAL_DiffTick:00000000 HAL_DiffTick
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1254   .bss.get_stm_uid_buf.0:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1260   .bss._stm_uid_buf.1:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1267   .bss.fulog_buf:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1277   .rodata.portpin_NULL:00000000 portpin_NULL
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s 			page 45
+
+
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1274   .rodata.portpin_NULL:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccl6htcc.s:1280   .rodata:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_TIM_Base_Start
+HAL_GetTick
+HAL_ADC_Start
+HAL_ADC_PollForConversion
+HAL_ADC_GetValue
+HAL_ADC_Stop
+vsnprintf
+ulog
+strcat_s
+sprintf

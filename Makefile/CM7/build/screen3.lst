@@ -1,0 +1,566 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"screen3.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/Screens/screen3.c"
+  19              		.section	.rodata.screen3_paint.str1.4,"aMS",%progbits,1
+  20              		.align	2
+  21              	.LC0:
+  22 0000 D092D092 		.ascii	"\320\222\320\222\320\225\320\224\320\230\320\242\320"
+  22      D095D094 
+  22      D098D0A2 
+  22      D0
+  23 000d 95205049 		.ascii	"\225 PIN \320\232\320\236\320\224\000"
+  23      4E20D09A 
+  23      D09ED094 
+  23      00
+  24              		.section	.text.screen3_paint,"ax",%progbits
+  25              		.align	1
+  26              		.global	screen3_paint
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	screen3_paint:
+  32              	.LFB335:
+   1:../../CM7/Core/Src/Screens/screen3.c **** /*
+   2:../../CM7/Core/Src/Screens/screen3.c ****  * screen3.c
+   3:../../CM7/Core/Src/Screens/screen3.c ****  *
+   4:../../CM7/Core/Src/Screens/screen3.c ****  *  Created on: 20 авг. 2025 г.
+   5:../../CM7/Core/Src/Screens/screen3.c ****  *      Author: Rafael Boltachev
+   6:../../CM7/Core/Src/Screens/screen3.c ****  */
+   7:../../CM7/Core/Src/Screens/screen3.c **** 
+   8:../../CM7/Core/Src/Screens/screen3.c **** 
+   9:../../CM7/Core/Src/Screens/screen3.c **** #include "screen3.h"
+  10:../../CM7/Core/Src/Screens/screen3.c **** #include "screens.h"
+  11:../../CM7/Core/Src/Screens/screen3.c **** #include "str_util.h"
+  12:../../CM7/Core/Src/Screens/screen3.c **** #include "mki_data.h"
+  13:../../CM7/Core/Src/Screens/screen3.c **** #include "stm_util.h"
+  14:../../CM7/Core/Src/Screens/screen3.c **** #include "display.h"
+  15:../../CM7/Core/Src/Screens/screen3.c **** #include "cm7core.h"
+  16:../../CM7/Core/Src/Screens/screen3.c **** #include "shared_memory.h"
+  17:../../CM7/Core/Src/Screens/screen3.c **** #include "common.h"
+  18:../../CM7/Core/Src/Screens/screen3.c **** 
+  19:../../CM7/Core/Src/Screens/screen3.c **** //--------------- ВВОД ПИН КОДА --------------------
+  20:../../CM7/Core/Src/Screens/screen3.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 2
+
+
+  21:../../CM7/Core/Src/Screens/screen3.c **** //Тайминг ввода пин кода
+  22:../../CM7/Core/Src/Screens/screen3.c **** uint32_t screen3_pin_code_enter_tick = 0;
+  23:../../CM7/Core/Src/Screens/screen3.c **** static char screen3_safety_pin_code[sizeof(safety_pin_code)] = {'\0'};
+  24:../../CM7/Core/Src/Screens/screen3.c **** 
+  25:../../CM7/Core/Src/Screens/screen3.c **** void screen3_paint(void)
+  26:../../CM7/Core/Src/Screens/screen3.c **** {
+  33              		.loc 1 26 1 view -0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 0
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37 0000 08B5     		push	{r3, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 8
+  40              		.cfi_offset 3, -8
+  41              		.cfi_offset 14, -4
+  27:../../CM7/Core/Src/Screens/screen3.c **** 	clear_display();
+  42              		.loc 1 27 2 view .LVU1
+  43 0002 FFF7FEFF 		bl	clear_display
+  44              	.LVL0:
+  28:../../CM7/Core/Src/Screens/screen3.c **** 	set_display(0, 0, "ВВЕДИТЕ PIN КОД");
+  45              		.loc 1 28 2 view .LVU2
+  46 0006 064A     		ldr	r2, .L3
+  47 0008 0021     		movs	r1, #0
+  48 000a 0846     		mov	r0, r1
+  49 000c FFF7FEFF 		bl	set_display
+  50              	.LVL1:
+  29:../../CM7/Core/Src/Screens/screen3.c **** 	set_display(2, 0, screen3_safety_pin_code);
+  51              		.loc 1 29 2 view .LVU3
+  52 0010 044A     		ldr	r2, .L3+4
+  53 0012 0021     		movs	r1, #0
+  54 0014 0220     		movs	r0, #2
+  55 0016 FFF7FEFF 		bl	set_display
+  56              	.LVL2:
+  30:../../CM7/Core/Src/Screens/screen3.c **** 	send_display();
+  57              		.loc 1 30 2 view .LVU4
+  58 001a FFF7FEFF 		bl	send_display
+  59              	.LVL3:
+  31:../../CM7/Core/Src/Screens/screen3.c **** }
+  60              		.loc 1 31 1 is_stmt 0 view .LVU5
+  61 001e 08BD     		pop	{r3, pc}
+  62              	.L4:
+  63              		.align	2
+  64              	.L3:
+  65 0020 00000000 		.word	.LC0
+  66 0024 00000000 		.word	screen3_safety_pin_code
+  67              		.cfi_endproc
+  68              	.LFE335:
+  70              		.section	.text.screen3_init,"ax",%progbits
+  71              		.align	1
+  72              		.global	screen3_init
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	screen3_init:
+  78              	.LFB336:
+  32:../../CM7/Core/Src/Screens/screen3.c **** 
+  33:../../CM7/Core/Src/Screens/screen3.c **** void screen3_init(void)
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 3
+
+
+  34:../../CM7/Core/Src/Screens/screen3.c **** {
+  79              		.loc 1 34 1 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  35:../../CM7/Core/Src/Screens/screen3.c **** 	memset(screen3_safety_pin_code, 0, sizeof(screen3_safety_pin_code));
+  84              		.loc 1 35 2 view .LVU7
+  85 0000 024B     		ldr	r3, .L6
+  86 0002 0022     		movs	r2, #0
+  87 0004 1A60     		str	r2, [r3]
+  88 0006 5A60     		str	r2, [r3, #4]
+  89 0008 1A72     		strb	r2, [r3, #8]
+  36:../../CM7/Core/Src/Screens/screen3.c **** 	//memset(safety_pin_code, 0, sizeof(safety_pin_code));
+  37:../../CM7/Core/Src/Screens/screen3.c **** 	//cm7core_send_to_CM4_cmd(CORE_CMD_SAFETY_PINCODE_CHANGE, (uint8_t *)safety_pin_code, strlen(safet
+  38:../../CM7/Core/Src/Screens/screen3.c **** }
+  90              		.loc 1 38 1 is_stmt 0 view .LVU8
+  91 000a 7047     		bx	lr
+  92              	.L7:
+  93              		.align	2
+  94              	.L6:
+  95 000c 00000000 		.word	screen3_safety_pin_code
+  96              		.cfi_endproc
+  97              	.LFE336:
+  99              		.section	.rodata.screen3_button_press.str1.4,"aMS",%progbits,1
+ 100              		.align	2
+ 101              	.LC1:
+ 102 0000 3000     		.ascii	"0\000"
+ 103 0002 0000     		.align	2
+ 104              	.LC2:
+ 105 0004 D09FD0BE 		.ascii	"\320\237\320\276\320\273\321\214\320\267\320\276\320"
+ 105      D0BBD18C 
+ 105      D0B7D0BE 
+ 105      D0
+ 106 0011 B2D0B0D1 		.ascii	"\262\320\260\321\202\320\265\320\273\321\214 '%s' \320"
+ 106      82D0B5D0 
+ 106      BBD18C20 
+ 106      27257327 
+ 106      20D0
+ 107 0023 BED182D0 		.ascii	"\276\321\202\320\272\321\200\321\213\320\273 \321\201"
+ 107      BAD180D1 
+ 107      8BD0BB20 
+ 107      D181
+ 108 0031 D0B5D181 		.ascii	"\320\265\321\201\321\201\320\270\321\216\000"
+ 108      D181D0B8 
+ 108      D18E00
+ 109              		.align	2
+ 110              	.LC3:
+ 111 003c 434D372E 		.ascii	"CM7.safety_get_level_from_pin_code=%d name=%s\015\012"
+ 111      73616665 
+ 111      74795F67 
+ 111      65745F6C 
+ 111      6576656C 
+ 112 006b 00       		.ascii	"\000"
+ 113              		.section	.text.screen3_button_press,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	screen3_button_press
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 4
+
+
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	screen3_button_press:
+ 121              	.LVL4:
+ 122              	.LFB337:
+  39:../../CM7/Core/Src/Screens/screen3.c **** 
+  40:../../CM7/Core/Src/Screens/screen3.c **** void screen3_button_press(uint8_t key)
+  41:../../CM7/Core/Src/Screens/screen3.c **** {
+ 123              		.loc 1 41 1 is_stmt 1 view -0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127              		.loc 1 41 1 is_stmt 0 view .LVU10
+ 128 0000 10B5     		push	{r4, lr}
+ 129              	.LCFI1:
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 4, -8
+ 132              		.cfi_offset 14, -4
+  42:../../CM7/Core/Src/Screens/screen3.c **** 	switch (key) {
+ 133              		.loc 1 42 2 is_stmt 1 view .LVU11
+ 134 0002 431E     		subs	r3, r0, #1
+ 135 0004 232B     		cmp	r3, #35
+ 136 0006 1ED8     		bhi	.L8
+ 137 0008 DFE803F0 		tbb	[pc, r3]
+ 138              	.L11:
+ 139 000c 12       		.byte	(.L14-.L11)/2
+ 140 000d 12       		.byte	(.L14-.L11)/2
+ 141 000e 12       		.byte	(.L14-.L11)/2
+ 142 000f 12       		.byte	(.L14-.L11)/2
+ 143 0010 12       		.byte	(.L14-.L11)/2
+ 144 0011 12       		.byte	(.L14-.L11)/2
+ 145 0012 12       		.byte	(.L14-.L11)/2
+ 146 0013 12       		.byte	(.L14-.L11)/2
+ 147 0014 12       		.byte	(.L14-.L11)/2
+ 148 0015 12       		.byte	(.L14-.L11)/2
+ 149 0016 1D       		.byte	(.L8-.L11)/2
+ 150 0017 1D       		.byte	(.L8-.L11)/2
+ 151 0018 1D       		.byte	(.L8-.L11)/2
+ 152 0019 1D       		.byte	(.L8-.L11)/2
+ 153 001a 1D       		.byte	(.L8-.L11)/2
+ 154 001b 1D       		.byte	(.L8-.L11)/2
+ 155 001c 1D       		.byte	(.L8-.L11)/2
+ 156 001d 1D       		.byte	(.L8-.L11)/2
+ 157 001e 1D       		.byte	(.L8-.L11)/2
+ 158 001f 1D       		.byte	(.L8-.L11)/2
+ 159 0020 1D       		.byte	(.L8-.L11)/2
+ 160 0021 1D       		.byte	(.L8-.L11)/2
+ 161 0022 1D       		.byte	(.L8-.L11)/2
+ 162 0023 1D       		.byte	(.L8-.L11)/2
+ 163 0024 1D       		.byte	(.L8-.L11)/2
+ 164 0025 1D       		.byte	(.L8-.L11)/2
+ 165 0026 32       		.byte	(.L13-.L11)/2
+ 166 0027 1D       		.byte	(.L8-.L11)/2
+ 167 0028 32       		.byte	(.L13-.L11)/2
+ 168 0029 1D       		.byte	(.L8-.L11)/2
+ 169 002a 1D       		.byte	(.L8-.L11)/2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 5
+
+
+ 170 002b 1D       		.byte	(.L8-.L11)/2
+ 171 002c 24       		.byte	(.L12-.L11)/2
+ 172 002d 1D       		.byte	(.L8-.L11)/2
+ 173 002e 1D       		.byte	(.L8-.L11)/2
+ 174 002f 36       		.byte	(.L10-.L11)/2
+ 175              		.p2align 1
+ 176              	.L14:
+  43:../../CM7/Core/Src/Screens/screen3.c **** 
+  44:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_1:
+  45:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_2:
+  46:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_3:
+  47:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_4:
+  48:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_5:
+  49:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_6:
+  50:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_7:
+  51:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_8:
+  52:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_9:
+  53:../../CM7/Core/Src/Screens/screen3.c **** 		case	MKI_KEY_10:
+  54:../../CM7/Core/Src/Screens/screen3.c **** 			if (key == MKI_KEY_10) strcat_s(screen3_safety_pin_code, sizeof(screen3_safety_pin_code), "0");
+ 177              		.loc 1 54 4 view .LVU12
+ 178              		.loc 1 54 7 is_stmt 0 view .LVU13
+ 179 0030 0A28     		cmp	r0, #10
+ 180 0032 09D0     		beq	.L20
+  55:../../CM7/Core/Src/Screens/screen3.c **** 			else strcat_s(screen3_safety_pin_code, sizeof(screen3_safety_pin_code), int2str(key));
+ 181              		.loc 1 55 9 is_stmt 1 view .LVU14
+ 182              		.loc 1 55 76 is_stmt 0 view .LVU15
+ 183 0034 FFF7FEFF 		bl	int2str
+ 184              	.LVL5:
+ 185              		.loc 1 55 76 view .LVU16
+ 186 0038 0246     		mov	r2, r0
+ 187              		.loc 1 55 9 discriminator 1 view .LVU17
+ 188 003a 0921     		movs	r1, #9
+ 189 003c 2348     		ldr	r0, .L21
+ 190 003e FFF7FEFF 		bl	strcat_s
+ 191              	.LVL6:
+ 192              	.L16:
+  56:../../CM7/Core/Src/Screens/screen3.c **** 			screen3_paint();
+ 193              		.loc 1 56 4 is_stmt 1 view .LVU18
+ 194 0042 FFF7FEFF 		bl	screen3_paint
+ 195              	.LVL7:
+  57:../../CM7/Core/Src/Screens/screen3.c **** 		break;
+ 196              		.loc 1 57 3 view .LVU19
+ 197              	.L8:
+  58:../../CM7/Core/Src/Screens/screen3.c **** 		case MKI_KEY_DELETE:
+  59:../../CM7/Core/Src/Screens/screen3.c **** 			if (strlen(screen3_safety_pin_code)) {
+  60:../../CM7/Core/Src/Screens/screen3.c **** 			 	safety_pin_code[strlen(screen3_safety_pin_code) - 1] = '\0';
+  61:../../CM7/Core/Src/Screens/screen3.c **** 			 	screen3_paint();
+  62:../../CM7/Core/Src/Screens/screen3.c **** 			}
+  63:../../CM7/Core/Src/Screens/screen3.c **** 		break;
+  64:../../CM7/Core/Src/Screens/screen3.c **** 		case MKI_KEY_RESET:
+  65:../../CM7/Core/Src/Screens/screen3.c **** 		case MKI_KEY_MENU:
+  66:../../CM7/Core/Src/Screens/screen3.c **** 			//screen3_init();
+  67:../../CM7/Core/Src/Screens/screen3.c **** 			//screen3_pin_code_enter_tick = HAL_GetTickNoZero();
+  68:../../CM7/Core/Src/Screens/screen3.c **** 			screens_goto(0);
+  69:../../CM7/Core/Src/Screens/screen3.c **** 		break;
+  70:../../CM7/Core/Src/Screens/screen3.c **** 		case MKI_KEY_ENTER:
+  71:../../CM7/Core/Src/Screens/screen3.c **** 			strcpy_s(safety_pin_code, sizeof(safety_pin_code), screen3_safety_pin_code);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 6
+
+
+  72:../../CM7/Core/Src/Screens/screen3.c **** 			screen3_pin_code_enter_tick = HAL_GetTickNoZero();
+  73:../../CM7/Core/Src/Screens/screen3.c **** 			cm7core_send_to_CM4_cmd(CORE_CMD_CHANGE_SAFETY_PINCODE, (uint8_t *)safety_pin_code, strlen(safet
+  74:../../CM7/Core/Src/Screens/screen3.c **** 			screens_goto(0);
+  75:../../CM7/Core/Src/Screens/screen3.c **** 			if (safety_get_name_from_pin_code()) filelog_fmt("Пользователь '%s' открыл с�
+  76:../../CM7/Core/Src/Screens/screen3.c **** 			//else filelog_fmt("Пользователь вышел из сессии");
+  77:../../CM7/Core/Src/Screens/screen3.c **** 			ulog_fmt(CONM"safety_get_level_from_pin_code=%d name=%s"CRLF, safety_get_level_from_pin_code(), 
+  78:../../CM7/Core/Src/Screens/screen3.c **** 
+  79:../../CM7/Core/Src/Screens/screen3.c **** 		break;
+  80:../../CM7/Core/Src/Screens/screen3.c **** 	}
+  81:../../CM7/Core/Src/Screens/screen3.c **** }
+ 198              		.loc 1 81 1 is_stmt 0 view .LVU20
+ 199 0046 10BD     		pop	{r4, pc}
+ 200              	.LVL8:
+ 201              	.L20:
+  54:../../CM7/Core/Src/Screens/screen3.c **** 			else strcat_s(screen3_safety_pin_code, sizeof(screen3_safety_pin_code), int2str(key));
+ 202              		.loc 1 54 27 is_stmt 1 discriminator 1 view .LVU21
+ 203 0048 214A     		ldr	r2, .L21+4
+ 204 004a 0921     		movs	r1, #9
+ 205 004c 1F48     		ldr	r0, .L21
+ 206              	.LVL9:
+  54:../../CM7/Core/Src/Screens/screen3.c **** 			else strcat_s(screen3_safety_pin_code, sizeof(screen3_safety_pin_code), int2str(key));
+ 207              		.loc 1 54 27 is_stmt 0 discriminator 1 view .LVU22
+ 208 004e FFF7FEFF 		bl	strcat_s
+ 209              	.LVL10:
+ 210 0052 F6E7     		b	.L16
+ 211              	.LVL11:
+ 212              	.L12:
+  59:../../CM7/Core/Src/Screens/screen3.c **** 			 	safety_pin_code[strlen(screen3_safety_pin_code) - 1] = '\0';
+ 213              		.loc 1 59 4 is_stmt 1 view .LVU23
+  59:../../CM7/Core/Src/Screens/screen3.c **** 			 	safety_pin_code[strlen(screen3_safety_pin_code) - 1] = '\0';
+ 214              		.loc 1 59 8 is_stmt 0 view .LVU24
+ 215 0054 1D4B     		ldr	r3, .L21
+ 216 0056 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  59:../../CM7/Core/Src/Screens/screen3.c **** 			 	safety_pin_code[strlen(screen3_safety_pin_code) - 1] = '\0';
+ 217              		.loc 1 59 7 view .LVU25
+ 218 0058 002B     		cmp	r3, #0
+ 219 005a F4D0     		beq	.L8
+  60:../../CM7/Core/Src/Screens/screen3.c **** 			 	screen3_paint();
+ 220              		.loc 1 60 6 is_stmt 1 view .LVU26
+  60:../../CM7/Core/Src/Screens/screen3.c **** 			 	screen3_paint();
+ 221              		.loc 1 60 22 is_stmt 0 view .LVU27
+ 222 005c 1B48     		ldr	r0, .L21
+ 223              	.LVL12:
+  60:../../CM7/Core/Src/Screens/screen3.c **** 			 	screen3_paint();
+ 224              		.loc 1 60 22 view .LVU28
+ 225 005e FFF7FEFF 		bl	strlen
+ 226              	.LVL13:
+  60:../../CM7/Core/Src/Screens/screen3.c **** 			 	screen3_paint();
+ 227              		.loc 1 60 54 discriminator 1 view .LVU29
+ 228 0062 0138     		subs	r0, r0, #1
+  60:../../CM7/Core/Src/Screens/screen3.c **** 			 	screen3_paint();
+ 229              		.loc 1 60 59 discriminator 1 view .LVU30
+ 230 0064 1B4B     		ldr	r3, .L21+8
+ 231 0066 0022     		movs	r2, #0
+ 232 0068 1A54     		strb	r2, [r3, r0]
+  61:../../CM7/Core/Src/Screens/screen3.c **** 			}
+ 233              		.loc 1 61 6 is_stmt 1 view .LVU31
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 7
+
+
+ 234 006a FFF7FEFF 		bl	screen3_paint
+ 235              	.LVL14:
+ 236 006e EAE7     		b	.L8
+ 237              	.LVL15:
+ 238              	.L13:
+  68:../../CM7/Core/Src/Screens/screen3.c **** 		break;
+ 239              		.loc 1 68 4 view .LVU32
+ 240 0070 0020     		movs	r0, #0
+ 241              	.LVL16:
+  68:../../CM7/Core/Src/Screens/screen3.c **** 		break;
+ 242              		.loc 1 68 4 is_stmt 0 view .LVU33
+ 243 0072 FFF7FEFF 		bl	screens_goto
+ 244              	.LVL17:
+  69:../../CM7/Core/Src/Screens/screen3.c **** 		case MKI_KEY_ENTER:
+ 245              		.loc 1 69 3 is_stmt 1 view .LVU34
+ 246 0076 E6E7     		b	.L8
+ 247              	.LVL18:
+ 248              	.L10:
+  71:../../CM7/Core/Src/Screens/screen3.c **** 			screen3_pin_code_enter_tick = HAL_GetTickNoZero();
+ 249              		.loc 1 71 4 view .LVU35
+ 250 0078 164C     		ldr	r4, .L21+8
+ 251 007a 144A     		ldr	r2, .L21
+ 252 007c 0921     		movs	r1, #9
+ 253 007e 2046     		mov	r0, r4
+ 254              	.LVL19:
+  71:../../CM7/Core/Src/Screens/screen3.c **** 			screen3_pin_code_enter_tick = HAL_GetTickNoZero();
+ 255              		.loc 1 71 4 is_stmt 0 view .LVU36
+ 256 0080 FFF7FEFF 		bl	strcpy_s
+ 257              	.LVL20:
+  72:../../CM7/Core/Src/Screens/screen3.c **** 			cm7core_send_to_CM4_cmd(CORE_CMD_CHANGE_SAFETY_PINCODE, (uint8_t *)safety_pin_code, strlen(safet
+ 258              		.loc 1 72 4 is_stmt 1 view .LVU37
+  72:../../CM7/Core/Src/Screens/screen3.c **** 			cm7core_send_to_CM4_cmd(CORE_CMD_CHANGE_SAFETY_PINCODE, (uint8_t *)safety_pin_code, strlen(safet
+ 259              		.loc 1 72 34 is_stmt 0 view .LVU38
+ 260 0084 FFF7FEFF 		bl	HAL_GetTickNoZero
+ 261              	.LVL21:
+  72:../../CM7/Core/Src/Screens/screen3.c **** 			cm7core_send_to_CM4_cmd(CORE_CMD_CHANGE_SAFETY_PINCODE, (uint8_t *)safety_pin_code, strlen(safet
+ 262              		.loc 1 72 32 discriminator 1 view .LVU39
+ 263 0088 134B     		ldr	r3, .L21+12
+ 264 008a 1860     		str	r0, [r3]
+  73:../../CM7/Core/Src/Screens/screen3.c **** 			screens_goto(0);
+ 265              		.loc 1 73 4 is_stmt 1 view .LVU40
+  73:../../CM7/Core/Src/Screens/screen3.c **** 			screens_goto(0);
+ 266              		.loc 1 73 88 is_stmt 0 view .LVU41
+ 267 008c 2046     		mov	r0, r4
+ 268 008e FFF7FEFF 		bl	strlen
+ 269              	.LVL22:
+  73:../../CM7/Core/Src/Screens/screen3.c **** 			screens_goto(0);
+ 270              		.loc 1 73 4 discriminator 1 view .LVU42
+ 271 0092 82B2     		uxth	r2, r0
+ 272 0094 2146     		mov	r1, r4
+ 273 0096 4220     		movs	r0, #66
+ 274 0098 FFF7FEFF 		bl	cm7core_send_to_CM4_cmd
+ 275              	.LVL23:
+  74:../../CM7/Core/Src/Screens/screen3.c **** 			if (safety_get_name_from_pin_code()) filelog_fmt("Пользователь '%s' открыл с�
+ 276              		.loc 1 74 4 is_stmt 1 view .LVU43
+ 277 009c 0020     		movs	r0, #0
+ 278 009e FFF7FEFF 		bl	screens_goto
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 8
+
+
+ 279              	.LVL24:
+  75:../../CM7/Core/Src/Screens/screen3.c **** 			//else filelog_fmt("Пользователь вышел из сессии");
+ 280              		.loc 1 75 4 view .LVU44
+  75:../../CM7/Core/Src/Screens/screen3.c **** 			//else filelog_fmt("Пользователь вышел из сессии");
+ 281              		.loc 1 75 8 is_stmt 0 view .LVU45
+ 282 00a2 FFF7FEFF 		bl	safety_get_name_from_pin_code
+ 283              	.LVL25:
+  75:../../CM7/Core/Src/Screens/screen3.c **** 			//else filelog_fmt("Пользователь вышел из сессии");
+ 284              		.loc 1 75 7 discriminator 1 view .LVU46
+ 285 00a6 28B1     		cbz	r0, .L17
+  75:../../CM7/Core/Src/Screens/screen3.c **** 			//else filelog_fmt("Пользователь вышел из сессии");
+ 286              		.loc 1 75 41 is_stmt 1 discriminator 1 view .LVU47
+ 287 00a8 FFF7FEFF 		bl	safety_get_name_from_pin_code
+ 288              	.LVL26:
+ 289 00ac 0146     		mov	r1, r0
+ 290 00ae 0B48     		ldr	r0, .L21+16
+ 291 00b0 FFF7FEFF 		bl	filelog_fmt
+ 292              	.LVL27:
+ 293              	.L17:
+  77:../../CM7/Core/Src/Screens/screen3.c **** 
+ 294              		.loc 1 77 4 view .LVU48
+  77:../../CM7/Core/Src/Screens/screen3.c **** 
+ 295              		.loc 1 77 66 is_stmt 0 view .LVU49
+ 296 00b4 FFF7FEFF 		bl	safety_get_level_from_pin_code
+ 297              	.LVL28:
+ 298 00b8 0446     		mov	r4, r0
+  77:../../CM7/Core/Src/Screens/screen3.c **** 
+ 299              		.loc 1 77 4 discriminator 1 view .LVU50
+ 300 00ba FFF7FEFF 		bl	safety_get_name_from_pin_code
+ 301              	.LVL29:
+ 302 00be 0246     		mov	r2, r0
+  77:../../CM7/Core/Src/Screens/screen3.c **** 
+ 303              		.loc 1 77 4 discriminator 2 view .LVU51
+ 304 00c0 2146     		mov	r1, r4
+ 305 00c2 0748     		ldr	r0, .L21+20
+ 306 00c4 FFF7FEFF 		bl	ulog_fmt
+ 307              	.LVL30:
+  79:../../CM7/Core/Src/Screens/screen3.c **** 	}
+ 308              		.loc 1 79 3 is_stmt 1 view .LVU52
+ 309              		.loc 1 81 1 is_stmt 0 view .LVU53
+ 310 00c8 BDE7     		b	.L8
+ 311              	.L22:
+ 312 00ca 00BF     		.align	2
+ 313              	.L21:
+ 314 00cc 00000000 		.word	screen3_safety_pin_code
+ 315 00d0 00000000 		.word	.LC1
+ 316 00d4 00000000 		.word	safety_pin_code
+ 317 00d8 00000000 		.word	screen3_pin_code_enter_tick
+ 318 00dc 04000000 		.word	.LC2
+ 319 00e0 3C000000 		.word	.LC3
+ 320              		.cfi_endproc
+ 321              	.LFE337:
+ 323              		.section	.text.screen3_button_unpress,"ax",%progbits
+ 324              		.align	1
+ 325              		.global	screen3_button_unpress
+ 326              		.syntax unified
+ 327              		.thumb
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 9
+
+
+ 328              		.thumb_func
+ 330              	screen3_button_unpress:
+ 331              	.LVL31:
+ 332              	.LFB338:
+  82:../../CM7/Core/Src/Screens/screen3.c **** 
+  83:../../CM7/Core/Src/Screens/screen3.c **** void screen3_button_unpress(uint8_t key)
+  84:../../CM7/Core/Src/Screens/screen3.c **** {
+ 333              		.loc 1 84 1 is_stmt 1 view -0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 0
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337              		@ link register save eliminated.
+  85:../../CM7/Core/Src/Screens/screen3.c **** 
+  86:../../CM7/Core/Src/Screens/screen3.c **** }
+ 338              		.loc 1 86 1 view .LVU55
+ 339 0000 7047     		bx	lr
+ 340              		.cfi_endproc
+ 341              	.LFE338:
+ 343              		.section	.bss.screen3_safety_pin_code,"aw",%nobits
+ 344              		.align	2
+ 347              	screen3_safety_pin_code:
+ 348 0000 00000000 		.space	9
+ 348      00000000 
+ 348      00
+ 349              		.global	screen3_pin_code_enter_tick
+ 350              		.section	.bss.screen3_pin_code_enter_tick,"aw",%nobits
+ 351              		.align	2
+ 354              	screen3_pin_code_enter_tick:
+ 355 0000 00000000 		.space	4
+ 356              		.text
+ 357              	.Letext0:
+ 358              		.file 2 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 359              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 360              		.file 4 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 361              		.file 5 "../../CM7/Core/Inc/Screens/screen3.h"
+ 362              		.file 6 "../../common/common.h"
+ 363              		.file 7 "../../util/stm_util.h"
+ 364              		.file 8 "../../util/str_util.h"
+ 365              		.file 9 "../../CM7/Core/Inc/Screens/screens.h"
+ 366              		.file 10 "../../CM7/Core/Inc/cm7core.h"
+ 367              		.file 11 "C:/msys64/ucrt64/arm-none-eabi/include/string.h"
+ 368              		.file 12 "../../CM7/Core/Inc/display.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 screen3.c
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:20     .rodata.screen3_paint.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:25     .text.screen3_paint:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:31     .text.screen3_paint:00000000 screen3_paint
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:65     .text.screen3_paint:00000020 $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:347    .bss.screen3_safety_pin_code:00000000 screen3_safety_pin_code
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:71     .text.screen3_init:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:77     .text.screen3_init:00000000 screen3_init
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:95     .text.screen3_init:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:100    .rodata.screen3_button_press.str1.4:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:114    .text.screen3_button_press:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:120    .text.screen3_button_press:00000000 screen3_button_press
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:139    .text.screen3_button_press:0000000c $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:175    .text.screen3_button_press:00000030 $t
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:314    .text.screen3_button_press:000000cc $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:354    .bss.screen3_pin_code_enter_tick:00000000 screen3_pin_code_enter_tick
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:324    .text.screen3_button_unpress:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:330    .text.screen3_button_unpress:00000000 screen3_button_unpress
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:344    .bss.screen3_safety_pin_code:00000000 $d
+C:\Users\oleg\AppData\Local\Temp\ccKEjo1R.s:351    .bss.screen3_pin_code_enter_tick:00000000 $d
+
+UNDEFINED SYMBOLS
+clear_display
+set_display
+send_display
+int2str
+strcat_s
+strlen
+screens_goto
+strcpy_s
+HAL_GetTickNoZero
+cm7core_send_to_CM4_cmd
+safety_get_name_from_pin_code
+filelog_fmt
+safety_get_level_from_pin_code
+ulog_fmt
+safety_pin_code

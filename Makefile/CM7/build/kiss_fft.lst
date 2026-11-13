@@ -1,0 +1,3006 @@
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"kiss_fft.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../opus/celt/kiss_fft.c"
+  19              		.section	.text.kf_bfly2,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	kf_bfly2:
+  26              	.LVL0:
+  27              	.LFB22:
+   1:../../opus/celt/kiss_fft.c **** /*Copyright (c) 2003-2004, Mark Borgerding
+   2:../../opus/celt/kiss_fft.c ****   Lots of modifications by Jean-Marc Valin
+   3:../../opus/celt/kiss_fft.c ****   Copyright (c) 2005-2007, Xiph.Org Foundation
+   4:../../opus/celt/kiss_fft.c ****   Copyright (c) 2008,      Xiph.Org Foundation, CSIRO
+   5:../../opus/celt/kiss_fft.c **** 
+   6:../../opus/celt/kiss_fft.c ****   All rights reserved.
+   7:../../opus/celt/kiss_fft.c **** 
+   8:../../opus/celt/kiss_fft.c ****   Redistribution and use in source and binary forms, with or without
+   9:../../opus/celt/kiss_fft.c ****    modification, are permitted provided that the following conditions are met:
+  10:../../opus/celt/kiss_fft.c **** 
+  11:../../opus/celt/kiss_fft.c ****     * Redistributions of source code must retain the above copyright notice,
+  12:../../opus/celt/kiss_fft.c ****        this list of conditions and the following disclaimer.
+  13:../../opus/celt/kiss_fft.c ****     * Redistributions in binary form must reproduce the above copyright notice,
+  14:../../opus/celt/kiss_fft.c ****        this list of conditions and the following disclaimer in the
+  15:../../opus/celt/kiss_fft.c ****        documentation and/or other materials provided with the distribution.
+  16:../../opus/celt/kiss_fft.c **** 
+  17:../../opus/celt/kiss_fft.c ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  18:../../opus/celt/kiss_fft.c ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  19:../../opus/celt/kiss_fft.c ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  20:../../opus/celt/kiss_fft.c ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  21:../../opus/celt/kiss_fft.c ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  22:../../opus/celt/kiss_fft.c ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  23:../../opus/celt/kiss_fft.c ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  24:../../opus/celt/kiss_fft.c ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  25:../../opus/celt/kiss_fft.c ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  26:../../opus/celt/kiss_fft.c ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  27:../../opus/celt/kiss_fft.c ****   POSSIBILITY OF SUCH DAMAGE.*/
+  28:../../opus/celt/kiss_fft.c **** 
+  29:../../opus/celt/kiss_fft.c **** /* This code is originally from Mark Borgerding's KISS-FFT but has been
+  30:../../opus/celt/kiss_fft.c ****    heavily modified to better suit Opus */
+  31:../../opus/celt/kiss_fft.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 2
+
+
+  32:../../opus/celt/kiss_fft.c **** #ifndef SKIP_CONFIG_H
+  33:../../opus/celt/kiss_fft.c **** #include "opus_config.h"
+  34:../../opus/celt/kiss_fft.c **** #endif
+  35:../../opus/celt/kiss_fft.c **** 
+  36:../../opus/celt/kiss_fft.c **** #include "_kiss_fft_guts.h"
+  37:../../opus/celt/kiss_fft.c **** #include "arch.h"
+  38:../../opus/celt/kiss_fft.c **** #include "os_support.h"
+  39:../../opus/celt/kiss_fft.c **** #include "mathops.h"
+  40:../../opus/celt/kiss_fft.c **** #include "stack_alloc.h"
+  41:../../opus/celt/kiss_fft.c **** 
+  42:../../opus/celt/kiss_fft.c **** /* The guts header contains all the multiplication and addition macros that are defined for
+  43:../../opus/celt/kiss_fft.c ****    complex numbers.  It also delares the kf_ internal functions.
+  44:../../opus/celt/kiss_fft.c **** */
+  45:../../opus/celt/kiss_fft.c **** 
+  46:../../opus/celt/kiss_fft.c **** static void kf_bfly2(
+  47:../../opus/celt/kiss_fft.c ****                      kiss_fft_cpx * Fout,
+  48:../../opus/celt/kiss_fft.c ****                      int m,
+  49:../../opus/celt/kiss_fft.c ****                      int N
+  50:../../opus/celt/kiss_fft.c ****                     )
+  51:../../opus/celt/kiss_fft.c **** {
+  28              		.loc 1 51 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 51 1 is_stmt 0 view .LVU1
+  33 0000 0346     		mov	r3, r0
+  52:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx * Fout2;
+  34              		.loc 1 52 4 is_stmt 1 view .LVU2
+  53:../../opus/celt/kiss_fft.c ****    int i;
+  35              		.loc 1 53 4 view .LVU3
+  54:../../opus/celt/kiss_fft.c ****    (void)m;
+  36              		.loc 1 54 4 view .LVU4
+  37              	.LBB2:
+  55:../../opus/celt/kiss_fft.c **** #ifdef CUSTOM_MODES
+  56:../../opus/celt/kiss_fft.c ****    if (m==1)
+  57:../../opus/celt/kiss_fft.c ****    {
+  58:../../opus/celt/kiss_fft.c ****       celt_assert(m==1);
+  59:../../opus/celt/kiss_fft.c ****       for (i=0;i<N;i++)
+  60:../../opus/celt/kiss_fft.c ****       {
+  61:../../opus/celt/kiss_fft.c ****          kiss_fft_cpx t;
+  62:../../opus/celt/kiss_fft.c ****          Fout2 = Fout + 1;
+  63:../../opus/celt/kiss_fft.c ****          t = *Fout2;
+  64:../../opus/celt/kiss_fft.c ****          C_SUB( *Fout2 ,  *Fout , t );
+  65:../../opus/celt/kiss_fft.c ****          C_ADDTO( *Fout ,  t );
+  66:../../opus/celt/kiss_fft.c ****          Fout += 2;
+  67:../../opus/celt/kiss_fft.c ****       }
+  68:../../opus/celt/kiss_fft.c ****    } else
+  69:../../opus/celt/kiss_fft.c **** #endif
+  70:../../opus/celt/kiss_fft.c ****    {
+  71:../../opus/celt/kiss_fft.c ****       opus_val16 tw;
+  38              		.loc 1 71 7 view .LVU5
+  72:../../opus/celt/kiss_fft.c ****       tw = QCONST16(0.7071067812f, 15);
+  39              		.loc 1 72 7 view .LVU6
+  40              	.LVL1:
+  73:../../opus/celt/kiss_fft.c ****       /* We know that m==4 here because the radix-2 is just after a radix-4 */
+  74:../../opus/celt/kiss_fft.c ****       celt_assert(m==4);
+  41              		.loc 1 74 24 view .LVU7
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 3
+
+
+  75:../../opus/celt/kiss_fft.c ****       for (i=0;i<N;i++)
+  42              		.loc 1 75 7 view .LVU8
+  43              		.loc 1 75 13 is_stmt 0 view .LVU9
+  44 0002 4FF0000C 		mov	ip, #0
+  45              	.LVL2:
+  46              		.loc 1 75 17 is_stmt 1 discriminator 1 view .LVU10
+  47 0006 9445     		cmp	ip, r2
+  48 0008 7FDA     		bge	.L7
+  49              	.LBE2:
+  51:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx * Fout2;
+  50              		.loc 1 51 1 is_stmt 0 view .LVU11
+  51 000a F0B5     		push	{r4, r5, r6, r7, lr}
+  52              	.LCFI0:
+  53              		.cfi_def_cfa_offset 20
+  54              		.cfi_offset 4, -20
+  55              		.cfi_offset 5, -16
+  56              		.cfi_offset 6, -12
+  57              		.cfi_offset 7, -8
+  58              		.cfi_offset 14, -4
+  59 000c 83B0     		sub	sp, sp, #12
+  60              	.LCFI1:
+  61              		.cfi_def_cfa_offset 32
+  62              	.LVL3:
+  63              	.L3:
+  64              	.LBB4:
+  65              	.LBB3:
+  76:../../opus/celt/kiss_fft.c ****       {
+  77:../../opus/celt/kiss_fft.c ****          kiss_fft_cpx t;
+  66              		.loc 1 77 10 is_stmt 1 view .LVU12
+  78:../../opus/celt/kiss_fft.c ****          Fout2 = Fout + 4;
+  67              		.loc 1 78 10 view .LVU13
+  79:../../opus/celt/kiss_fft.c ****          t = Fout2[0];
+  68              		.loc 1 79 10 view .LVU14
+  69              		.loc 1 79 12 is_stmt 0 view .LVU15
+  70 000e 03F12001 		add	r1, r3, #32
+  71              	.LVL4:
+  72              		.loc 1 79 12 view .LVU16
+  73 0012 03C9     		ldm	r1, {r0, r1}
+  74              	.LVL5:
+  75              		.loc 1 79 12 view .LVU17
+  76 0014 02AC     		add	r4, sp, #8
+  77 0016 04E90300 		stmdb	r4, {r0, r1}
+  80:../../opus/celt/kiss_fft.c ****          C_SUB( Fout2[0] ,  Fout[0] , t );
+  78              		.loc 1 80 10 is_stmt 1 view .LVU18
+  79              		.loc 1 80 10 view .LVU19
+  80 001a 1868     		ldr	r0, [r3]
+  81 001c 009D     		ldr	r5, [sp]
+  82 001e 411B     		subs	r1, r0, r5
+  83 0020 1962     		str	r1, [r3, #32]
+  84              		.loc 1 80 10 view .LVU20
+  85 0022 5968     		ldr	r1, [r3, #4]
+  86 0024 019C     		ldr	r4, [sp, #4]
+  87 0026 0E1B     		subs	r6, r1, r4
+  88 0028 5E62     		str	r6, [r3, #36]
+  89              		.loc 1 80 10 view .LVU21
+  81:../../opus/celt/kiss_fft.c ****          C_ADDTO( Fout[0] ,  t );
+  90              		.loc 1 81 10 view .LVU22
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 4
+
+
+  91              		.loc 1 81 10 view .LVU23
+  92 002a 2844     		add	r0, r0, r5
+  93 002c 1860     		str	r0, [r3]
+  94              		.loc 1 81 10 view .LVU24
+  95 002e 2144     		add	r1, r1, r4
+  96 0030 5960     		str	r1, [r3, #4]
+  97              		.loc 1 81 10 view .LVU25
+  82:../../opus/celt/kiss_fft.c **** 
+  83:../../opus/celt/kiss_fft.c ****          t.r = S_MUL(ADD32_ovflw(Fout2[1].r, Fout2[1].i), tw);
+  98              		.loc 1 83 10 view .LVU26
+  99              		.loc 1 83 16 is_stmt 0 view .LVU27
+ 100 0032 9F6A     		ldr	r7, [r3, #40]
+ 101 0034 DD6A     		ldr	r5, [r3, #44]
+ 102 0036 7E19     		adds	r6, r7, r5
+ 103 0038 3614     		asrs	r6, r6, #16
+ 104 003a 45F68220 		movw	r0, #23170
+ 105 003e 00FB06F6 		mul	r6, r0, r6
+ 106 0042 1FFA87FE 		uxth	lr, r7
+ 107 0046 A9B2     		uxth	r1, r5
+ 108 0048 0EEB0104 		add	r4, lr, r1
+ 109 004c A4B2     		uxth	r4, r4
+ 110 004e 00FB04F4 		mul	r4, r0, r4
+ 111 0052 E413     		asrs	r4, r4, #15
+ 112 0054 04EB4604 		add	r4, r4, r6, lsl #1
+ 113              		.loc 1 83 14 view .LVU28
+ 114 0058 0094     		str	r4, [sp]
+  84:../../opus/celt/kiss_fft.c ****          t.i = S_MUL(SUB32_ovflw(Fout2[1].i, Fout2[1].r), tw);
+ 115              		.loc 1 84 10 is_stmt 1 view .LVU29
+ 116              		.loc 1 84 16 is_stmt 0 view .LVU30
+ 117 005a ED1B     		subs	r5, r5, r7
+ 118 005c 2D14     		asrs	r5, r5, #16
+ 119 005e 00FB05F5 		mul	r5, r0, r5
+ 120 0062 A1EB0E01 		sub	r1, r1, lr
+ 121 0066 89B2     		uxth	r1, r1
+ 122 0068 00FB01F1 		mul	r1, r0, r1
+ 123 006c C913     		asrs	r1, r1, #15
+ 124 006e 01EB4501 		add	r1, r1, r5, lsl #1
+ 125              		.loc 1 84 14 view .LVU31
+ 126 0072 0191     		str	r1, [sp, #4]
+  85:../../opus/celt/kiss_fft.c ****          C_SUB( Fout2[1] ,  Fout[1] , t );
+ 127              		.loc 1 85 10 is_stmt 1 view .LVU32
+ 128              		.loc 1 85 10 view .LVU33
+ 129 0074 9E68     		ldr	r6, [r3, #8]
+ 130 0076 351B     		subs	r5, r6, r4
+ 131 0078 9D62     		str	r5, [r3, #40]
+ 132              		.loc 1 85 10 view .LVU34
+ 133 007a DD68     		ldr	r5, [r3, #12]
+ 134 007c 6F1A     		subs	r7, r5, r1
+ 135 007e DF62     		str	r7, [r3, #44]
+ 136              		.loc 1 85 10 view .LVU35
+  86:../../opus/celt/kiss_fft.c ****          C_ADDTO( Fout[1] ,  t );
+ 137              		.loc 1 86 10 view .LVU36
+ 138              		.loc 1 86 10 view .LVU37
+ 139 0080 2644     		add	r6, r6, r4
+ 140 0082 9E60     		str	r6, [r3, #8]
+ 141              		.loc 1 86 10 view .LVU38
+ 142 0084 0D44     		add	r5, r5, r1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 5
+
+
+ 143 0086 DD60     		str	r5, [r3, #12]
+ 144              		.loc 1 86 10 view .LVU39
+  87:../../opus/celt/kiss_fft.c **** 
+  88:../../opus/celt/kiss_fft.c ****          t.r = Fout2[2].i;
+ 145              		.loc 1 88 10 view .LVU40
+ 146              		.loc 1 88 24 is_stmt 0 view .LVU41
+ 147 0088 5E6B     		ldr	r6, [r3, #52]
+ 148              		.loc 1 88 14 view .LVU42
+ 149 008a 0096     		str	r6, [sp]
+  89:../../opus/celt/kiss_fft.c ****          t.i = -Fout2[2].r;
+ 150              		.loc 1 89 10 is_stmt 1 view .LVU43
+ 151              		.loc 1 89 25 is_stmt 0 view .LVU44
+ 152 008c 1F6B     		ldr	r7, [r3, #48]
+ 153              		.loc 1 89 16 view .LVU45
+ 154 008e 7D42     		rsbs	r5, r7, #0
+ 155              		.loc 1 89 14 view .LVU46
+ 156 0090 0195     		str	r5, [sp, #4]
+  90:../../opus/celt/kiss_fft.c ****          C_SUB( Fout2[2] ,  Fout[2] , t );
+ 157              		.loc 1 90 10 is_stmt 1 view .LVU47
+ 158              		.loc 1 90 10 view .LVU48
+ 159 0092 1C69     		ldr	r4, [r3, #16]
+ 160 0094 A11B     		subs	r1, r4, r6
+ 161 0096 1963     		str	r1, [r3, #48]
+ 162              		.loc 1 90 10 view .LVU49
+ 163 0098 5969     		ldr	r1, [r3, #20]
+ 164 009a 4D1B     		subs	r5, r1, r5
+ 165 009c 5D63     		str	r5, [r3, #52]
+ 166              		.loc 1 90 10 view .LVU50
+  91:../../opus/celt/kiss_fft.c ****          C_ADDTO( Fout[2] ,  t );
+ 167              		.loc 1 91 10 view .LVU51
+ 168              		.loc 1 91 10 view .LVU52
+ 169 009e 3444     		add	r4, r4, r6
+ 170 00a0 1C61     		str	r4, [r3, #16]
+ 171              		.loc 1 91 10 view .LVU53
+ 172 00a2 C91B     		subs	r1, r1, r7
+ 173 00a4 5961     		str	r1, [r3, #20]
+ 174              		.loc 1 91 10 view .LVU54
+  92:../../opus/celt/kiss_fft.c **** 
+  93:../../opus/celt/kiss_fft.c ****          t.r = S_MUL(SUB32_ovflw(Fout2[3].i, Fout2[3].r), tw);
+ 175              		.loc 1 93 10 view .LVU55
+ 176              		.loc 1 93 16 is_stmt 0 view .LVU56
+ 177 00a6 DD6B     		ldr	r5, [r3, #60]
+ 178 00a8 9F6B     		ldr	r7, [r3, #56]
+ 179 00aa EE1B     		subs	r6, r5, r7
+ 180 00ac 3614     		asrs	r6, r6, #16
+ 181 00ae 00FB06F6 		mul	r6, r0, r6
+ 182 00b2 A9B2     		uxth	r1, r5
+ 183 00b4 1FFA87FE 		uxth	lr, r7
+ 184 00b8 A1EB0E04 		sub	r4, r1, lr
+ 185 00bc A4B2     		uxth	r4, r4
+ 186 00be 00FB04F4 		mul	r4, r0, r4
+ 187 00c2 E413     		asrs	r4, r4, #15
+ 188 00c4 04EB4604 		add	r4, r4, r6, lsl #1
+ 189              		.loc 1 93 14 view .LVU57
+ 190 00c8 0094     		str	r4, [sp]
+  94:../../opus/celt/kiss_fft.c ****          t.i = S_MUL(NEG32_ovflw(ADD32_ovflw(Fout2[3].i, Fout2[3].r)), tw);
+ 191              		.loc 1 94 10 is_stmt 1 view .LVU58
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 6
+
+
+ 192              		.loc 1 94 16 is_stmt 0 view .LVU59
+ 193 00ca 3D44     		add	r5, r5, r7
+ 194 00cc 6D42     		rsbs	r5, r5, #0
+ 195 00ce 2D14     		asrs	r5, r5, #16
+ 196 00d0 00FB05F5 		mul	r5, r0, r5
+ 197 00d4 7144     		add	r1, r1, lr
+ 198 00d6 89B2     		uxth	r1, r1
+ 199 00d8 4942     		rsbs	r1, r1, #0
+ 200 00da 89B2     		uxth	r1, r1
+ 201 00dc 00FB01F1 		mul	r1, r0, r1
+ 202 00e0 C913     		asrs	r1, r1, #15
+ 203 00e2 01EB4501 		add	r1, r1, r5, lsl #1
+ 204              		.loc 1 94 14 view .LVU60
+ 205 00e6 0191     		str	r1, [sp, #4]
+  95:../../opus/celt/kiss_fft.c ****          C_SUB( Fout2[3] ,  Fout[3] , t );
+ 206              		.loc 1 95 10 is_stmt 1 view .LVU61
+ 207              		.loc 1 95 10 view .LVU62
+ 208 00e8 9D69     		ldr	r5, [r3, #24]
+ 209 00ea 281B     		subs	r0, r5, r4
+ 210 00ec 9863     		str	r0, [r3, #56]
+ 211              		.loc 1 95 10 view .LVU63
+ 212 00ee D869     		ldr	r0, [r3, #28]
+ 213 00f0 461A     		subs	r6, r0, r1
+ 214 00f2 DE63     		str	r6, [r3, #60]
+ 215              		.loc 1 95 10 view .LVU64
+  96:../../opus/celt/kiss_fft.c ****          C_ADDTO( Fout[3] ,  t );
+ 216              		.loc 1 96 10 view .LVU65
+ 217              		.loc 1 96 10 view .LVU66
+ 218 00f4 2544     		add	r5, r5, r4
+ 219 00f6 9D61     		str	r5, [r3, #24]
+ 220              		.loc 1 96 10 view .LVU67
+ 221 00f8 0844     		add	r0, r0, r1
+ 222 00fa D861     		str	r0, [r3, #28]
+ 223              		.loc 1 96 10 view .LVU68
+  97:../../opus/celt/kiss_fft.c ****          Fout += 8;
+ 224              		.loc 1 97 10 view .LVU69
+ 225              		.loc 1 97 15 is_stmt 0 view .LVU70
+ 226 00fc 4033     		adds	r3, r3, #64
+ 227              	.LVL6:
+ 228              		.loc 1 97 15 view .LVU71
+ 229              	.LBE3:
+  75:../../opus/celt/kiss_fft.c ****       {
+ 230              		.loc 1 75 21 is_stmt 1 discriminator 3 view .LVU72
+ 231 00fe 0CF1010C 		add	ip, ip, #1
+ 232              	.LVL7:
+  75:../../opus/celt/kiss_fft.c ****       {
+ 233              		.loc 1 75 17 discriminator 1 view .LVU73
+ 234 0102 9445     		cmp	ip, r2
+ 235 0104 83DB     		blt	.L3
+ 236              	.LBE4:
+  98:../../opus/celt/kiss_fft.c ****       }
+  99:../../opus/celt/kiss_fft.c ****    }
+ 100:../../opus/celt/kiss_fft.c **** }
+ 237              		.loc 1 100 1 is_stmt 0 view .LVU74
+ 238 0106 03B0     		add	sp, sp, #12
+ 239              	.LCFI2:
+ 240              		.cfi_def_cfa_offset 20
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 7
+
+
+ 241              		@ sp needed
+ 242 0108 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 243              	.LVL8:
+ 244              	.L7:
+ 245              	.LCFI3:
+ 246              		.cfi_def_cfa_offset 0
+ 247              		.cfi_restore 4
+ 248              		.cfi_restore 5
+ 249              		.cfi_restore 6
+ 250              		.cfi_restore 7
+ 251              		.cfi_restore 14
+ 252              		.loc 1 100 1 view .LVU75
+ 253 010a 7047     		bx	lr
+ 254              		.cfi_endproc
+ 255              	.LFE22:
+ 257              		.section	.text.kf_bfly4,"ax",%progbits
+ 258              		.align	1
+ 259              		.syntax unified
+ 260              		.thumb
+ 261              		.thumb_func
+ 263              	kf_bfly4:
+ 264              	.LVL9:
+ 265              	.LFB23:
+ 101:../../opus/celt/kiss_fft.c **** 
+ 102:../../opus/celt/kiss_fft.c **** static void kf_bfly4(
+ 103:../../opus/celt/kiss_fft.c ****                      kiss_fft_cpx * Fout,
+ 104:../../opus/celt/kiss_fft.c ****                      const size_t fstride,
+ 105:../../opus/celt/kiss_fft.c ****                      const kiss_fft_state *st,
+ 106:../../opus/celt/kiss_fft.c ****                      int m,
+ 107:../../opus/celt/kiss_fft.c ****                      int N,
+ 108:../../opus/celt/kiss_fft.c ****                      int mm
+ 109:../../opus/celt/kiss_fft.c ****                     )
+ 110:../../opus/celt/kiss_fft.c **** {
+ 266              		.loc 1 110 1 is_stmt 1 view -0
+ 267              		.cfi_startproc
+ 268              		@ args = 8, pretend = 0, frame = 120
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              		.loc 1 110 1 is_stmt 0 view .LVU77
+ 271 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 272              	.LCFI4:
+ 273              		.cfi_def_cfa_offset 36
+ 274              		.cfi_offset 4, -36
+ 275              		.cfi_offset 5, -32
+ 276              		.cfi_offset 6, -28
+ 277              		.cfi_offset 7, -24
+ 278              		.cfi_offset 8, -20
+ 279              		.cfi_offset 9, -16
+ 280              		.cfi_offset 10, -12
+ 281              		.cfi_offset 11, -8
+ 282              		.cfi_offset 14, -4
+ 283 0004 9FB0     		sub	sp, sp, #124
+ 284              	.LCFI5:
+ 285              		.cfi_def_cfa_offset 160
+ 286 0006 0C91     		str	r1, [sp, #48]
+ 287 0008 289D     		ldr	r5, [sp, #160]
+ 288 000a 299F     		ldr	r7, [sp, #164]
+ 111:../../opus/celt/kiss_fft.c ****    int i;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 8
+
+
+ 289              		.loc 1 111 4 is_stmt 1 view .LVU78
+ 112:../../opus/celt/kiss_fft.c **** 
+ 113:../../opus/celt/kiss_fft.c ****    if (m==1)
+ 290              		.loc 1 113 4 view .LVU79
+ 291              		.loc 1 113 7 is_stmt 0 view .LVU80
+ 292 000c 012B     		cmp	r3, #1
+ 293 000e 4DD0     		beq	.L20
+ 294 0010 9E46     		mov	lr, r3
+ 295              	.LBB5:
+ 114:../../opus/celt/kiss_fft.c ****    {
+ 115:../../opus/celt/kiss_fft.c ****       /* Degenerate case where all the twiddles are 1. */
+ 116:../../opus/celt/kiss_fft.c ****       for (i=0;i<N;i++)
+ 117:../../opus/celt/kiss_fft.c ****       {
+ 118:../../opus/celt/kiss_fft.c ****          kiss_fft_cpx scratch0, scratch1;
+ 119:../../opus/celt/kiss_fft.c **** 
+ 120:../../opus/celt/kiss_fft.c ****          C_SUB( scratch0 , *Fout, Fout[2] );
+ 121:../../opus/celt/kiss_fft.c ****          C_ADDTO(*Fout, Fout[2]);
+ 122:../../opus/celt/kiss_fft.c ****          C_ADD( scratch1 , Fout[1] , Fout[3] );
+ 123:../../opus/celt/kiss_fft.c ****          C_SUB( Fout[2], *Fout, scratch1 );
+ 124:../../opus/celt/kiss_fft.c ****          C_ADDTO( *Fout , scratch1 );
+ 125:../../opus/celt/kiss_fft.c ****          C_SUB( scratch1 , Fout[1] , Fout[3] );
+ 126:../../opus/celt/kiss_fft.c **** 
+ 127:../../opus/celt/kiss_fft.c ****          Fout[1].r = ADD32_ovflw(scratch0.r, scratch1.i);
+ 128:../../opus/celt/kiss_fft.c ****          Fout[1].i = SUB32_ovflw(scratch0.i, scratch1.r);
+ 129:../../opus/celt/kiss_fft.c ****          Fout[3].r = SUB32_ovflw(scratch0.r, scratch1.i);
+ 130:../../opus/celt/kiss_fft.c ****          Fout[3].i = ADD32_ovflw(scratch0.i, scratch1.r);
+ 131:../../opus/celt/kiss_fft.c ****          Fout+=4;
+ 132:../../opus/celt/kiss_fft.c ****       }
+ 133:../../opus/celt/kiss_fft.c ****    } else {
+ 134:../../opus/celt/kiss_fft.c ****       int j;
+ 296              		.loc 1 134 7 is_stmt 1 view .LVU81
+ 135:../../opus/celt/kiss_fft.c ****       kiss_fft_cpx scratch[6];
+ 297              		.loc 1 135 7 view .LVU82
+ 136:../../opus/celt/kiss_fft.c ****       const kiss_twiddle_cpx *tw1,*tw2,*tw3;
+ 298              		.loc 1 136 7 view .LVU83
+ 137:../../opus/celt/kiss_fft.c ****       const int m2=2*m;
+ 299              		.loc 1 137 7 view .LVU84
+ 300              		.loc 1 137 17 is_stmt 0 view .LVU85
+ 301 0012 5B00     		lsls	r3, r3, #1
+ 302              	.LVL10:
+ 303              		.loc 1 137 17 view .LVU86
+ 304 0014 0493     		str	r3, [sp, #16]
+ 305              	.LVL11:
+ 138:../../opus/celt/kiss_fft.c ****       const int m3=3*m;
+ 306              		.loc 1 138 7 is_stmt 1 view .LVU87
+ 307              		.loc 1 138 17 is_stmt 0 view .LVU88
+ 308 0016 0EEB4E0C 		add	ip, lr, lr, lsl #1
+ 309              	.LVL12:
+ 139:../../opus/celt/kiss_fft.c ****       kiss_fft_cpx * Fout_beg = Fout;
+ 310              		.loc 1 139 7 is_stmt 1 view .LVU89
+ 140:../../opus/celt/kiss_fft.c ****       for (i=0;i<N;i++)
+ 311              		.loc 1 140 7 view .LVU90
+ 312              		.loc 1 140 13 is_stmt 0 view .LVU91
+ 313 001a 0021     		movs	r1, #0
+ 314              	.LVL13:
+ 315              		.loc 1 140 13 view .LVU92
+ 316 001c CDF814C0 		str	ip, [sp, #20]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 9
+
+
+ 317 0020 0E90     		str	r0, [sp, #56]
+ 318 0022 0F92     		str	r2, [sp, #60]
+ 319 0024 2895     		str	r5, [sp, #160]
+ 320              	.LVL14:
+ 321              		.loc 1 140 13 view .LVU93
+ 322 0026 2997     		str	r7, [sp, #164]
+ 323              	.LVL15:
+ 324              		.loc 1 140 7 view .LVU94
+ 325 0028 3FE1     		b	.L13
+ 326              	.LVL16:
+ 327              	.L11:
+ 328              		.loc 1 140 7 view .LVU95
+ 329              	.LBE5:
+ 330              	.LBB6:
+ 118:../../opus/celt/kiss_fft.c **** 
+ 331              		.loc 1 118 10 is_stmt 1 view .LVU96
+ 120:../../opus/celt/kiss_fft.c ****          C_ADDTO(*Fout, Fout[2]);
+ 332              		.loc 1 120 10 view .LVU97
+ 120:../../opus/celt/kiss_fft.c ****          C_ADDTO(*Fout, Fout[2]);
+ 333              		.loc 1 120 10 view .LVU98
+ 334 002a 0168     		ldr	r1, [r0]
+ 335 002c 0469     		ldr	r4, [r0, #16]
+ 336 002e A1EB040C 		sub	ip, r1, r4
+ 337 0032 CDF840C0 		str	ip, [sp, #64]
+ 120:../../opus/celt/kiss_fft.c ****          C_ADDTO(*Fout, Fout[2]);
+ 338              		.loc 1 120 10 view .LVU99
+ 339 0036 4368     		ldr	r3, [r0, #4]
+ 340 0038 4269     		ldr	r2, [r0, #20]
+ 341 003a 9F1A     		subs	r7, r3, r2
+ 342 003c 1197     		str	r7, [sp, #68]
+ 120:../../opus/celt/kiss_fft.c ****          C_ADDTO(*Fout, Fout[2]);
+ 343              		.loc 1 120 10 view .LVU100
+ 121:../../opus/celt/kiss_fft.c ****          C_ADD( scratch1 , Fout[1] , Fout[3] );
+ 344              		.loc 1 121 10 view .LVU101
+ 121:../../opus/celt/kiss_fft.c ****          C_ADD( scratch1 , Fout[1] , Fout[3] );
+ 345              		.loc 1 121 10 view .LVU102
+ 346 003e 2144     		add	r1, r1, r4
+ 347 0040 0160     		str	r1, [r0]
+ 121:../../opus/celt/kiss_fft.c ****          C_ADD( scratch1 , Fout[1] , Fout[3] );
+ 348              		.loc 1 121 10 view .LVU103
+ 349 0042 1344     		add	r3, r3, r2
+ 350 0044 4360     		str	r3, [r0, #4]
+ 121:../../opus/celt/kiss_fft.c ****          C_ADD( scratch1 , Fout[1] , Fout[3] );
+ 351              		.loc 1 121 10 view .LVU104
+ 122:../../opus/celt/kiss_fft.c ****          C_SUB( Fout[2], *Fout, scratch1 );
+ 352              		.loc 1 122 10 view .LVU105
+ 122:../../opus/celt/kiss_fft.c ****          C_SUB( Fout[2], *Fout, scratch1 );
+ 353              		.loc 1 122 10 view .LVU106
+ 354 0046 D0F80880 		ldr	r8, [r0, #8]
+ 355 004a 8269     		ldr	r2, [r0, #24]
+ 356 004c 08EB020A 		add	r10, r8, r2
+ 357 0050 CDF848A0 		str	r10, [sp, #72]
+ 122:../../opus/celt/kiss_fft.c ****          C_SUB( Fout[2], *Fout, scratch1 );
+ 358              		.loc 1 122 10 view .LVU107
+ 359 0054 D0F80CE0 		ldr	lr, [r0, #12]
+ 360 0058 C469     		ldr	r4, [r0, #28]
+ 361 005a 0EEB0409 		add	r9, lr, r4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 10
+
+
+ 362 005e CDF84C90 		str	r9, [sp, #76]
+ 122:../../opus/celt/kiss_fft.c ****          C_SUB( Fout[2], *Fout, scratch1 );
+ 363              		.loc 1 122 10 view .LVU108
+ 123:../../opus/celt/kiss_fft.c ****          C_ADDTO( *Fout , scratch1 );
+ 364              		.loc 1 123 10 view .LVU109
+ 123:../../opus/celt/kiss_fft.c ****          C_ADDTO( *Fout , scratch1 );
+ 365              		.loc 1 123 10 view .LVU110
+ 366 0062 A1EB0A0B 		sub	fp, r1, r10
+ 367 0066 C0F810B0 		str	fp, [r0, #16]
+ 123:../../opus/celt/kiss_fft.c ****          C_ADDTO( *Fout , scratch1 );
+ 368              		.loc 1 123 10 view .LVU111
+ 369 006a A3EB090B 		sub	fp, r3, r9
+ 370 006e C0F814B0 		str	fp, [r0, #20]
+ 123:../../opus/celt/kiss_fft.c ****          C_ADDTO( *Fout , scratch1 );
+ 371              		.loc 1 123 10 view .LVU112
+ 124:../../opus/celt/kiss_fft.c ****          C_SUB( scratch1 , Fout[1] , Fout[3] );
+ 372              		.loc 1 124 10 view .LVU113
+ 124:../../opus/celt/kiss_fft.c ****          C_SUB( scratch1 , Fout[1] , Fout[3] );
+ 373              		.loc 1 124 10 view .LVU114
+ 374 0072 5144     		add	r1, r1, r10
+ 375 0074 0160     		str	r1, [r0]
+ 124:../../opus/celt/kiss_fft.c ****          C_SUB( scratch1 , Fout[1] , Fout[3] );
+ 376              		.loc 1 124 10 view .LVU115
+ 377 0076 4B44     		add	r3, r3, r9
+ 378 0078 4360     		str	r3, [r0, #4]
+ 124:../../opus/celt/kiss_fft.c ****          C_SUB( scratch1 , Fout[1] , Fout[3] );
+ 379              		.loc 1 124 10 view .LVU116
+ 125:../../opus/celt/kiss_fft.c **** 
+ 380              		.loc 1 125 10 view .LVU117
+ 125:../../opus/celt/kiss_fft.c **** 
+ 381              		.loc 1 125 10 view .LVU118
+ 382 007a A8EB0201 		sub	r1, r8, r2
+ 383 007e 1291     		str	r1, [sp, #72]
+ 125:../../opus/celt/kiss_fft.c **** 
+ 384              		.loc 1 125 10 view .LVU119
+ 385 0080 AEEB0403 		sub	r3, lr, r4
+ 386 0084 1393     		str	r3, [sp, #76]
+ 125:../../opus/celt/kiss_fft.c **** 
+ 387              		.loc 1 125 10 view .LVU120
+ 127:../../opus/celt/kiss_fft.c ****          Fout[1].i = SUB32_ovflw(scratch0.i, scratch1.r);
+ 388              		.loc 1 127 10 view .LVU121
+ 127:../../opus/celt/kiss_fft.c ****          Fout[1].i = SUB32_ovflw(scratch0.i, scratch1.r);
+ 389              		.loc 1 127 22 is_stmt 0 view .LVU122
+ 390 0086 6344     		add	r3, r3, ip
+ 127:../../opus/celt/kiss_fft.c ****          Fout[1].i = SUB32_ovflw(scratch0.i, scratch1.r);
+ 391              		.loc 1 127 20 view .LVU123
+ 392 0088 8360     		str	r3, [r0, #8]
+ 128:../../opus/celt/kiss_fft.c ****          Fout[3].r = SUB32_ovflw(scratch0.r, scratch1.i);
+ 393              		.loc 1 128 10 is_stmt 1 view .LVU124
+ 128:../../opus/celt/kiss_fft.c ****          Fout[3].r = SUB32_ovflw(scratch0.r, scratch1.i);
+ 394              		.loc 1 128 22 is_stmt 0 view .LVU125
+ 395 008a A2EB0802 		sub	r2, r2, r8
+ 396 008e 3A44     		add	r2, r2, r7
+ 128:../../opus/celt/kiss_fft.c ****          Fout[3].r = SUB32_ovflw(scratch0.r, scratch1.i);
+ 397              		.loc 1 128 20 view .LVU126
+ 398 0090 C260     		str	r2, [r0, #12]
+ 129:../../opus/celt/kiss_fft.c ****          Fout[3].i = ADD32_ovflw(scratch0.i, scratch1.r);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 11
+
+
+ 399              		.loc 1 129 10 is_stmt 1 view .LVU127
+ 129:../../opus/celt/kiss_fft.c ****          Fout[3].i = ADD32_ovflw(scratch0.i, scratch1.r);
+ 400              		.loc 1 129 22 is_stmt 0 view .LVU128
+ 401 0092 A4EB0E03 		sub	r3, r4, lr
+ 402 0096 6344     		add	r3, r3, ip
+ 129:../../opus/celt/kiss_fft.c ****          Fout[3].i = ADD32_ovflw(scratch0.i, scratch1.r);
+ 403              		.loc 1 129 20 view .LVU129
+ 404 0098 8361     		str	r3, [r0, #24]
+ 130:../../opus/celt/kiss_fft.c ****          Fout+=4;
+ 405              		.loc 1 130 10 is_stmt 1 view .LVU130
+ 130:../../opus/celt/kiss_fft.c ****          Fout+=4;
+ 406              		.loc 1 130 22 is_stmt 0 view .LVU131
+ 407 009a 3944     		add	r1, r1, r7
+ 130:../../opus/celt/kiss_fft.c ****          Fout+=4;
+ 408              		.loc 1 130 20 view .LVU132
+ 409 009c C161     		str	r1, [r0, #28]
+ 131:../../opus/celt/kiss_fft.c ****       }
+ 410              		.loc 1 131 10 is_stmt 1 view .LVU133
+ 131:../../opus/celt/kiss_fft.c ****       }
+ 411              		.loc 1 131 14 is_stmt 0 view .LVU134
+ 412 009e 2030     		adds	r0, r0, #32
+ 413              	.LVL17:
+ 131:../../opus/celt/kiss_fft.c ****       }
+ 414              		.loc 1 131 14 view .LVU135
+ 415              	.LBE6:
+ 116:../../opus/celt/kiss_fft.c ****       {
+ 416              		.loc 1 116 21 is_stmt 1 discriminator 3 view .LVU136
+ 417 00a0 0136     		adds	r6, r6, #1
+ 418              	.LVL18:
+ 419              	.L9:
+ 116:../../opus/celt/kiss_fft.c ****       {
+ 420              		.loc 1 116 17 discriminator 1 view .LVU137
+ 421 00a2 AE42     		cmp	r6, r5
+ 422 00a4 C1DB     		blt	.L11
+ 423              	.LVL19:
+ 424              	.L8:
+ 141:../../opus/celt/kiss_fft.c ****       {
+ 142:../../opus/celt/kiss_fft.c ****          Fout = Fout_beg + i*mm;
+ 143:../../opus/celt/kiss_fft.c ****          tw3 = tw2 = tw1 = st->twiddles;
+ 144:../../opus/celt/kiss_fft.c ****          /* m is guaranteed to be a multiple of 4. */
+ 145:../../opus/celt/kiss_fft.c ****          for (j=0;j<m;j++)
+ 146:../../opus/celt/kiss_fft.c ****          {
+ 147:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[0],Fout[m] , *tw1 );
+ 148:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[1],Fout[m2] , *tw2 );
+ 149:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[2],Fout[m3] , *tw3 );
+ 150:../../opus/celt/kiss_fft.c **** 
+ 151:../../opus/celt/kiss_fft.c ****             C_SUB( scratch[5] , *Fout, scratch[1] );
+ 152:../../opus/celt/kiss_fft.c ****             C_ADDTO(*Fout, scratch[1]);
+ 153:../../opus/celt/kiss_fft.c ****             C_ADD( scratch[3] , scratch[0] , scratch[2] );
+ 154:../../opus/celt/kiss_fft.c ****             C_SUB( scratch[4] , scratch[0] , scratch[2] );
+ 155:../../opus/celt/kiss_fft.c ****             C_SUB( Fout[m2], *Fout, scratch[3] );
+ 156:../../opus/celt/kiss_fft.c ****             tw1 += fstride;
+ 157:../../opus/celt/kiss_fft.c ****             tw2 += fstride*2;
+ 158:../../opus/celt/kiss_fft.c ****             tw3 += fstride*3;
+ 159:../../opus/celt/kiss_fft.c ****             C_ADDTO( *Fout , scratch[3] );
+ 160:../../opus/celt/kiss_fft.c **** 
+ 161:../../opus/celt/kiss_fft.c ****             Fout[m].r = ADD32_ovflw(scratch[5].r, scratch[4].i);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 12
+
+
+ 162:../../opus/celt/kiss_fft.c ****             Fout[m].i = SUB32_ovflw(scratch[5].i, scratch[4].r);
+ 163:../../opus/celt/kiss_fft.c ****             Fout[m3].r = SUB32_ovflw(scratch[5].r, scratch[4].i);
+ 164:../../opus/celt/kiss_fft.c ****             Fout[m3].i = ADD32_ovflw(scratch[5].i, scratch[4].r);
+ 165:../../opus/celt/kiss_fft.c ****             ++Fout;
+ 166:../../opus/celt/kiss_fft.c ****          }
+ 167:../../opus/celt/kiss_fft.c ****       }
+ 168:../../opus/celt/kiss_fft.c ****    }
+ 169:../../opus/celt/kiss_fft.c **** }
+ 425              		.loc 1 169 1 is_stmt 0 view .LVU138
+ 426 00a6 1FB0     		add	sp, sp, #124
+ 427              	.LCFI6:
+ 428              		.cfi_remember_state
+ 429              		.cfi_def_cfa_offset 36
+ 430              		@ sp needed
+ 431 00a8 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 432              	.LVL20:
+ 433              	.L20:
+ 434              	.LCFI7:
+ 435              		.cfi_restore_state
+ 116:../../opus/celt/kiss_fft.c ****       {
+ 436              		.loc 1 116 13 view .LVU139
+ 437 00ac 0026     		movs	r6, #0
+ 438 00ae F8E7     		b	.L9
+ 439              	.LVL21:
+ 440              	.L15:
+ 441              	.LBB7:
+ 147:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[1],Fout[m2] , *tw2 );
+ 442              		.loc 1 147 13 is_stmt 1 view .LVU140
+ 147:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[1],Fout[m2] , *tw2 );
+ 443              		.loc 1 147 13 view .LVU141
+ 444 00b0 0299     		ldr	r1, [sp, #8]
+ 445 00b2 B1F90030 		ldrsh	r3, [r1]
+ 446              	.LVL22:
+ 147:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[1],Fout[m2] , *tw2 );
+ 447              		.loc 1 147 13 is_stmt 0 view .LVU142
+ 448 00b6 0BEBCA05 		add	r5, fp, r10, lsl #3
+ 449 00ba 5BF83A00 		ldr	r0, [fp, r10, lsl #3]
+ 450 00be 0614     		asrs	r6, r0, #16
+ 451 00c0 06FB03F2 		mul	r2, r6, r3
+ 452 00c4 80B2     		uxth	r0, r0
+ 453 00c6 00FB03F4 		mul	r4, r0, r3
+ 454 00ca E413     		asrs	r4, r4, #15
+ 455 00cc 04EB4204 		add	r4, r4, r2, lsl #1
+ 456 00d0 B1F90220 		ldrsh	r2, [r1, #2]
+ 457 00d4 0895     		str	r5, [sp, #32]
+ 458 00d6 6968     		ldr	r1, [r5, #4]
+ 459 00d8 0D14     		asrs	r5, r1, #16
+ 460 00da 05FB02F7 		mul	r7, r5, r2
+ 461 00de 89B2     		uxth	r1, r1
+ 462 00e0 01FB02FC 		mul	ip, r1, r2
+ 463 00e4 4FEAEC3C 		asr	ip, ip, #15
+ 464 00e8 0CEB470C 		add	ip, ip, r7, lsl #1
+ 465 00ec A4EB0C04 		sub	r4, r4, ip
+ 466 00f0 0994     		str	r4, [sp, #36]
+ 467 00f2 1294     		str	r4, [sp, #72]
+ 147:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[1],Fout[m2] , *tw2 );
+ 468              		.loc 1 147 13 is_stmt 1 view .LVU143
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 13
+
+
+ 469 00f4 02FB06F6 		mul	r6, r2, r6
+ 470 00f8 00FB02F2 		mul	r2, r0, r2
+ 471 00fc D213     		asrs	r2, r2, #15
+ 472 00fe 02EB4602 		add	r2, r2, r6, lsl #1
+ 473 0102 03FB05F5 		mul	r5, r3, r5
+ 474 0106 01FB03F3 		mul	r3, r1, r3
+ 475 010a DB13     		asrs	r3, r3, #15
+ 476 010c 03EB4503 		add	r3, r3, r5, lsl #1
+ 477 0110 02EB0309 		add	r9, r2, r3
+ 478 0114 CDF84C90 		str	r9, [sp, #76]
+ 147:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[1],Fout[m2] , *tw2 );
+ 479              		.loc 1 147 13 view .LVU144
+ 148:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[2],Fout[m3] , *tw3 );
+ 480              		.loc 1 148 13 view .LVU145
+ 148:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[2],Fout[m3] , *tw3 );
+ 481              		.loc 1 148 13 view .LVU146
+ 482 0118 0098     		ldr	r0, [sp]
+ 483 011a B0F90030 		ldrsh	r3, [r0]
+ 484 011e 049D     		ldr	r5, [sp, #16]
+ 485 0120 0BEBC506 		add	r6, fp, r5, lsl #3
+ 486 0124 5BF83540 		ldr	r4, [fp, r5, lsl #3]
+ 487 0128 4FEA244E 		asr	lr, r4, #16
+ 488 012c 0EFB03F2 		mul	r2, lr, r3
+ 489 0130 A4B2     		uxth	r4, r4
+ 490 0132 04FB03F7 		mul	r7, r4, r3
+ 491 0136 FF13     		asrs	r7, r7, #15
+ 492 0138 07EB4207 		add	r7, r7, r2, lsl #1
+ 493 013c B0F90220 		ldrsh	r2, [r0, #2]
+ 494 0140 0A96     		str	r6, [sp, #40]
+ 495 0142 7168     		ldr	r1, [r6, #4]
+ 496 0144 0D14     		asrs	r5, r1, #16
+ 497 0146 05FB02FC 		mul	ip, r5, r2
+ 498 014a 89B2     		uxth	r1, r1
+ 499 014c 01FB02F0 		mul	r0, r1, r2
+ 500 0150 C013     		asrs	r0, r0, #15
+ 501 0152 00EB4C00 		add	r0, r0, ip, lsl #1
+ 502 0156 3E1A     		subs	r6, r7, r0
+ 503 0158 0B96     		str	r6, [sp, #44]
+ 504 015a 1496     		str	r6, [sp, #80]
+ 148:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[2],Fout[m3] , *tw3 );
+ 505              		.loc 1 148 13 view .LVU147
+ 506 015c 02FB0EF6 		mul	r6, r2, lr
+ 507 0160 04FB02F2 		mul	r2, r4, r2
+ 508 0164 D213     		asrs	r2, r2, #15
+ 509 0166 02EB4602 		add	r2, r2, r6, lsl #1
+ 510 016a 03FB05F5 		mul	r5, r3, r5
+ 511 016e 01FB03F3 		mul	r3, r1, r3
+ 512 0172 DB13     		asrs	r3, r3, #15
+ 513 0174 03EB4503 		add	r3, r3, r5, lsl #1
+ 514 0178 1A44     		add	r2, r2, r3
+ 515 017a 1592     		str	r2, [sp, #84]
+ 148:../../opus/celt/kiss_fft.c ****             C_MUL(scratch[2],Fout[m3] , *tw3 );
+ 516              		.loc 1 148 13 view .LVU148
+ 149:../../opus/celt/kiss_fft.c **** 
+ 517              		.loc 1 149 13 view .LVU149
+ 149:../../opus/celt/kiss_fft.c **** 
+ 518              		.loc 1 149 13 view .LVU150
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 14
+
+
+ 519 017c 019D     		ldr	r5, [sp, #4]
+ 520 017e B5F90040 		ldrsh	r4, [r5]
+ 521 0182 059B     		ldr	r3, [sp, #20]
+ 522 0184 0BEBC30C 		add	ip, fp, r3, lsl #3
+ 523 0188 CDF818C0 		str	ip, [sp, #24]
+ 524 018c 5BF83330 		ldr	r3, [fp, r3, lsl #3]
+ 525 0190 4FEA2348 		asr	r8, r3, #16
+ 526 0194 08FB04F1 		mul	r1, r8, r4
+ 527 0198 1FFA83FC 		uxth	ip, r3
+ 528 019c 0CFB04F6 		mul	r6, ip, r4
+ 529 01a0 F613     		asrs	r6, r6, #15
+ 530 01a2 06EB4106 		add	r6, r6, r1, lsl #1
+ 531 01a6 0796     		str	r6, [sp, #28]
+ 532 01a8 B5F90230 		ldrsh	r3, [r5, #2]
+ 533 01ac 069E     		ldr	r6, [sp, #24]
+ 534 01ae 7168     		ldr	r1, [r6, #4]
+ 535 01b0 4FEA214E 		asr	lr, r1, #16
+ 536 01b4 0EFB03F5 		mul	r5, lr, r3
+ 537 01b8 89B2     		uxth	r1, r1
+ 538 01ba 0E46     		mov	r6, r1
+ 539 01bc 01FB03F1 		mul	r1, r1, r3
+ 540 01c0 C913     		asrs	r1, r1, #15
+ 541 01c2 01EB4501 		add	r1, r1, r5, lsl #1
+ 542 01c6 079D     		ldr	r5, [sp, #28]
+ 543 01c8 6D1A     		subs	r5, r5, r1
+ 544 01ca 1695     		str	r5, [sp, #88]
+ 149:../../opus/celt/kiss_fft.c **** 
+ 545              		.loc 1 149 13 view .LVU151
+ 546 01cc 03FB08F8 		mul	r8, r3, r8
+ 547 01d0 0CFB03F3 		mul	r3, ip, r3
+ 548 01d4 DB13     		asrs	r3, r3, #15
+ 549 01d6 03EB4803 		add	r3, r3, r8, lsl #1
+ 550 01da 0EFB04FE 		mul	lr, lr, r4
+ 551 01de 06FB04F4 		mul	r4, r6, r4
+ 552 01e2 E413     		asrs	r4, r4, #15
+ 553 01e4 04EB4E04 		add	r4, r4, lr, lsl #1
+ 554 01e8 2344     		add	r3, r3, r4
+ 555 01ea 1793     		str	r3, [sp, #92]
+ 149:../../opus/celt/kiss_fft.c **** 
+ 556              		.loc 1 149 13 view .LVU152
+ 151:../../opus/celt/kiss_fft.c ****             C_ADDTO(*Fout, scratch[1]);
+ 557              		.loc 1 151 13 view .LVU153
+ 151:../../opus/celt/kiss_fft.c ****             C_ADDTO(*Fout, scratch[1]);
+ 558              		.loc 1 151 13 view .LVU154
+ 559 01ec DBF80040 		ldr	r4, [fp]
+ 560 01f0 C01B     		subs	r0, r0, r7
+ 561 01f2 2044     		add	r0, r0, r4
+ 562 01f4 1C90     		str	r0, [sp, #112]
+ 151:../../opus/celt/kiss_fft.c ****             C_ADDTO(*Fout, scratch[1]);
+ 563              		.loc 1 151 13 view .LVU155
+ 564 01f6 DBF804C0 		ldr	ip, [fp, #4]
+ 565 01fa ACEB0207 		sub	r7, ip, r2
+ 566 01fe 1D97     		str	r7, [sp, #116]
+ 151:../../opus/celt/kiss_fft.c ****             C_ADDTO(*Fout, scratch[1]);
+ 567              		.loc 1 151 13 view .LVU156
+ 152:../../opus/celt/kiss_fft.c ****             C_ADD( scratch[3] , scratch[0] , scratch[2] );
+ 568              		.loc 1 152 13 view .LVU157
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 15
+
+
+ 152:../../opus/celt/kiss_fft.c ****             C_ADD( scratch[3] , scratch[0] , scratch[2] );
+ 569              		.loc 1 152 13 view .LVU158
+ 570 0200 0B9E     		ldr	r6, [sp, #44]
+ 571 0202 3444     		add	r4, r4, r6
+ 572 0204 CBF80040 		str	r4, [fp]
+ 152:../../opus/celt/kiss_fft.c ****             C_ADD( scratch[3] , scratch[0] , scratch[2] );
+ 573              		.loc 1 152 13 view .LVU159
+ 574 0208 6244     		add	r2, r2, ip
+ 575 020a CBF80420 		str	r2, [fp, #4]
+ 152:../../opus/celt/kiss_fft.c ****             C_ADD( scratch[3] , scratch[0] , scratch[2] );
+ 576              		.loc 1 152 13 view .LVU160
+ 153:../../opus/celt/kiss_fft.c ****             C_SUB( scratch[4] , scratch[0] , scratch[2] );
+ 577              		.loc 1 153 13 view .LVU161
+ 153:../../opus/celt/kiss_fft.c ****             C_SUB( scratch[4] , scratch[0] , scratch[2] );
+ 578              		.loc 1 153 13 view .LVU162
+ 579 020e 099A     		ldr	r2, [sp, #36]
+ 580 0210 02EB050C 		add	ip, r2, r5
+ 581 0214 CDF860C0 		str	ip, [sp, #96]
+ 153:../../opus/celt/kiss_fft.c ****             C_SUB( scratch[4] , scratch[0] , scratch[2] );
+ 582              		.loc 1 153 13 view .LVU163
+ 583 0218 09EB0305 		add	r5, r9, r3
+ 584 021c 1995     		str	r5, [sp, #100]
+ 153:../../opus/celt/kiss_fft.c ****             C_SUB( scratch[4] , scratch[0] , scratch[2] );
+ 585              		.loc 1 153 13 view .LVU164
+ 154:../../opus/celt/kiss_fft.c ****             C_SUB( Fout[m2], *Fout, scratch[3] );
+ 586              		.loc 1 154 13 view .LVU165
+ 154:../../opus/celt/kiss_fft.c ****             C_SUB( Fout[m2], *Fout, scratch[3] );
+ 587              		.loc 1 154 13 view .LVU166
+ 588 021e 079E     		ldr	r6, [sp, #28]
+ 589 0220 891B     		subs	r1, r1, r6
+ 590 0222 1144     		add	r1, r1, r2
+ 591 0224 1A91     		str	r1, [sp, #104]
+ 154:../../opus/celt/kiss_fft.c ****             C_SUB( Fout[m2], *Fout, scratch[3] );
+ 592              		.loc 1 154 13 view .LVU167
+ 593 0226 A9EB0306 		sub	r6, r9, r3
+ 594 022a 1B96     		str	r6, [sp, #108]
+ 154:../../opus/celt/kiss_fft.c ****             C_SUB( Fout[m2], *Fout, scratch[3] );
+ 595              		.loc 1 154 13 view .LVU168
+ 155:../../opus/celt/kiss_fft.c ****             tw1 += fstride;
+ 596              		.loc 1 155 13 view .LVU169
+ 155:../../opus/celt/kiss_fft.c ****             tw1 += fstride;
+ 597              		.loc 1 155 13 view .LVU170
+ 598 022c A4EB0C04 		sub	r4, r4, ip
+ 599 0230 049A     		ldr	r2, [sp, #16]
+ 600 0232 4BF83240 		str	r4, [fp, r2, lsl #3]
+ 155:../../opus/celt/kiss_fft.c ****             tw1 += fstride;
+ 601              		.loc 1 155 13 view .LVU171
+ 602 0236 DBF80420 		ldr	r2, [fp, #4]
+ 603 023a 521B     		subs	r2, r2, r5
+ 604 023c 0A9C     		ldr	r4, [sp, #40]
+ 605 023e 6260     		str	r2, [r4, #4]
+ 155:../../opus/celt/kiss_fft.c ****             tw1 += fstride;
+ 606              		.loc 1 155 13 view .LVU172
+ 156:../../opus/celt/kiss_fft.c ****             tw2 += fstride*2;
+ 607              		.loc 1 156 13 view .LVU173
+ 156:../../opus/celt/kiss_fft.c ****             tw2 += fstride*2;
+ 608              		.loc 1 156 17 is_stmt 0 view .LVU174
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 16
+
+
+ 609 0240 029A     		ldr	r2, [sp, #8]
+ 610 0242 0C9C     		ldr	r4, [sp, #48]
+ 611 0244 02EB840E 		add	lr, r2, r4, lsl #2
+ 612 0248 CDF808E0 		str	lr, [sp, #8]
+ 613              	.LVL23:
+ 157:../../opus/celt/kiss_fft.c ****             tw3 += fstride*3;
+ 614              		.loc 1 157 13 is_stmt 1 view .LVU175
+ 157:../../opus/celt/kiss_fft.c ****             tw3 += fstride*3;
+ 615              		.loc 1 157 17 is_stmt 0 view .LVU176
+ 616 024c 009A     		ldr	r2, [sp]
+ 617 024e 02EBC402 		add	r2, r2, r4, lsl #3
+ 618 0252 0092     		str	r2, [sp]
+ 619              	.LVL24:
+ 158:../../opus/celt/kiss_fft.c ****             C_ADDTO( *Fout , scratch[3] );
+ 620              		.loc 1 158 13 is_stmt 1 view .LVU177
+ 158:../../opus/celt/kiss_fft.c ****             C_ADDTO( *Fout , scratch[3] );
+ 621              		.loc 1 158 17 is_stmt 0 view .LVU178
+ 622 0254 04EB4402 		add	r2, r4, r4, lsl #1
+ 623              	.LVL25:
+ 158:../../opus/celt/kiss_fft.c ****             C_ADDTO( *Fout , scratch[3] );
+ 624              		.loc 1 158 17 view .LVU179
+ 625 0258 019C     		ldr	r4, [sp, #4]
+ 626 025a 04EB8204 		add	r4, r4, r2, lsl #2
+ 627 025e 0194     		str	r4, [sp, #4]
+ 628              	.LVL26:
+ 159:../../opus/celt/kiss_fft.c **** 
+ 629              		.loc 1 159 13 is_stmt 1 view .LVU180
+ 159:../../opus/celt/kiss_fft.c **** 
+ 630              		.loc 1 159 13 view .LVU181
+ 631 0260 DBF80020 		ldr	r2, [fp]
+ 632 0264 6244     		add	r2, r2, ip
+ 633 0266 CBF80020 		str	r2, [fp]
+ 159:../../opus/celt/kiss_fft.c **** 
+ 634              		.loc 1 159 13 view .LVU182
+ 635 026a DBF80420 		ldr	r2, [fp, #4]
+ 636 026e 1544     		add	r5, r5, r2
+ 637 0270 CBF80450 		str	r5, [fp, #4]
+ 159:../../opus/celt/kiss_fft.c **** 
+ 638              		.loc 1 159 13 view .LVU183
+ 161:../../opus/celt/kiss_fft.c ****             Fout[m].i = SUB32_ovflw(scratch[5].i, scratch[4].r);
+ 639              		.loc 1 161 13 view .LVU184
+ 161:../../opus/celt/kiss_fft.c ****             Fout[m].i = SUB32_ovflw(scratch[5].i, scratch[4].r);
+ 640              		.loc 1 161 25 is_stmt 0 view .LVU185
+ 641 0274 0644     		add	r6, r6, r0
+ 161:../../opus/celt/kiss_fft.c ****             Fout[m].i = SUB32_ovflw(scratch[5].i, scratch[4].r);
+ 642              		.loc 1 161 23 view .LVU186
+ 643 0276 4BF83A60 		str	r6, [fp, r10, lsl #3]
+ 162:../../opus/celt/kiss_fft.c ****             Fout[m3].r = SUB32_ovflw(scratch[5].r, scratch[4].i);
+ 644              		.loc 1 162 13 is_stmt 1 view .LVU187
+ 162:../../opus/celt/kiss_fft.c ****             Fout[m3].r = SUB32_ovflw(scratch[5].r, scratch[4].i);
+ 645              		.loc 1 162 25 is_stmt 0 view .LVU188
+ 646 027a 7A1A     		subs	r2, r7, r1
+ 162:../../opus/celt/kiss_fft.c ****             Fout[m3].r = SUB32_ovflw(scratch[5].r, scratch[4].i);
+ 647              		.loc 1 162 23 view .LVU189
+ 648 027c 089D     		ldr	r5, [sp, #32]
+ 649 027e 6A60     		str	r2, [r5, #4]
+ 163:../../opus/celt/kiss_fft.c ****             Fout[m3].i = ADD32_ovflw(scratch[5].i, scratch[4].r);
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 17
+
+
+ 650              		.loc 1 163 13 is_stmt 1 view .LVU190
+ 163:../../opus/celt/kiss_fft.c ****             Fout[m3].i = ADD32_ovflw(scratch[5].i, scratch[4].r);
+ 651              		.loc 1 163 26 is_stmt 0 view .LVU191
+ 652 0280 A3EB0903 		sub	r3, r3, r9
+ 653 0284 0344     		add	r3, r3, r0
+ 163:../../opus/celt/kiss_fft.c ****             Fout[m3].i = ADD32_ovflw(scratch[5].i, scratch[4].r);
+ 654              		.loc 1 163 24 view .LVU192
+ 655 0286 059A     		ldr	r2, [sp, #20]
+ 656 0288 4BF83230 		str	r3, [fp, r2, lsl #3]
+ 164:../../opus/celt/kiss_fft.c ****             ++Fout;
+ 657              		.loc 1 164 13 is_stmt 1 view .LVU193
+ 164:../../opus/celt/kiss_fft.c ****             ++Fout;
+ 658              		.loc 1 164 26 is_stmt 0 view .LVU194
+ 659 028c 0F44     		add	r7, r7, r1
+ 164:../../opus/celt/kiss_fft.c ****             ++Fout;
+ 660              		.loc 1 164 24 view .LVU195
+ 661 028e 069E     		ldr	r6, [sp, #24]
+ 662 0290 7760     		str	r7, [r6, #4]
+ 165:../../opus/celt/kiss_fft.c ****          }
+ 663              		.loc 1 165 13 is_stmt 1 view .LVU196
+ 664 0292 0BF1080B 		add	fp, fp, #8
+ 665              	.LVL27:
+ 145:../../opus/celt/kiss_fft.c ****          {
+ 666              		.loc 1 145 24 discriminator 3 view .LVU197
+ 667 0296 039B     		ldr	r3, [sp, #12]
+ 668 0298 0133     		adds	r3, r3, #1
+ 669 029a 0393     		str	r3, [sp, #12]
+ 670              	.LVL28:
+ 671              	.L14:
+ 145:../../opus/celt/kiss_fft.c ****          {
+ 672              		.loc 1 145 20 discriminator 1 view .LVU198
+ 673 029c 039B     		ldr	r3, [sp, #12]
+ 674 029e 5345     		cmp	r3, r10
+ 675 02a0 FFF606AF 		blt	.L15
+ 140:../../opus/celt/kiss_fft.c ****       {
+ 676              		.loc 1 140 21 is_stmt 0 discriminator 2 view .LVU199
+ 677 02a4 0D99     		ldr	r1, [sp, #52]
+ 678 02a6 D646     		mov	lr, r10
+ 140:../../opus/celt/kiss_fft.c ****       {
+ 679              		.loc 1 140 21 is_stmt 1 discriminator 2 view .LVU200
+ 680 02a8 0131     		adds	r1, r1, #1
+ 681              	.LVL29:
+ 682              	.L13:
+ 140:../../opus/celt/kiss_fft.c ****       {
+ 683              		.loc 1 140 17 discriminator 1 view .LVU201
+ 684 02aa 289B     		ldr	r3, [sp, #160]
+ 685 02ac 9942     		cmp	r1, r3
+ 686 02ae BFF6FAAE 		bge	.L8
+ 142:../../opus/celt/kiss_fft.c ****          tw3 = tw2 = tw1 = st->twiddles;
+ 687              		.loc 1 142 10 view .LVU202
+ 142:../../opus/celt/kiss_fft.c ****          tw3 = tw2 = tw1 = st->twiddles;
+ 688              		.loc 1 142 29 is_stmt 0 view .LVU203
+ 689 02b2 299B     		ldr	r3, [sp, #164]
+ 690 02b4 03FB01F2 		mul	r2, r3, r1
+ 142:../../opus/celt/kiss_fft.c ****          tw3 = tw2 = tw1 = st->twiddles;
+ 691              		.loc 1 142 15 view .LVU204
+ 692 02b8 0E9B     		ldr	r3, [sp, #56]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 18
+
+
+ 693 02ba 03EBC20B 		add	fp, r3, r2, lsl #3
+ 694              	.LVL30:
+ 143:../../opus/celt/kiss_fft.c ****          /* m is guaranteed to be a multiple of 4. */
+ 695              		.loc 1 143 10 is_stmt 1 view .LVU205
+ 143:../../opus/celt/kiss_fft.c ****          /* m is guaranteed to be a multiple of 4. */
+ 696              		.loc 1 143 26 is_stmt 0 view .LVU206
+ 697 02be 0F9B     		ldr	r3, [sp, #60]
+ 698 02c0 D3F83480 		ldr	r8, [r3, #52]
+ 699              	.LVL31:
+ 145:../../opus/celt/kiss_fft.c ****          {
+ 700              		.loc 1 145 10 is_stmt 1 view .LVU207
+ 143:../../opus/celt/kiss_fft.c ****          /* m is guaranteed to be a multiple of 4. */
+ 701              		.loc 1 143 14 is_stmt 0 view .LVU208
+ 702 02c4 CDF80480 		str	r8, [sp, #4]
+ 143:../../opus/celt/kiss_fft.c ****          /* m is guaranteed to be a multiple of 4. */
+ 703              		.loc 1 143 20 view .LVU209
+ 704 02c8 CDF80080 		str	r8, [sp]
+ 145:../../opus/celt/kiss_fft.c ****          {
+ 705              		.loc 1 145 16 view .LVU210
+ 706 02cc 0023     		movs	r3, #0
+ 707 02ce 0393     		str	r3, [sp, #12]
+ 708 02d0 0D91     		str	r1, [sp, #52]
+ 709 02d2 CDF80880 		str	r8, [sp, #8]
+ 710 02d6 F246     		mov	r10, lr
+ 145:../../opus/celt/kiss_fft.c ****          {
+ 711              		.loc 1 145 10 view .LVU211
+ 712 02d8 E0E7     		b	.L14
+ 713              	.LBE7:
+ 714              		.cfi_endproc
+ 715              	.LFE23:
+ 717              		.section	.text.kf_bfly3,"ax",%progbits
+ 718              		.align	1
+ 719              		.syntax unified
+ 720              		.thumb
+ 721              		.thumb_func
+ 723              	kf_bfly3:
+ 724              	.LVL32:
+ 725              	.LFB24:
+ 170:../../opus/celt/kiss_fft.c **** 
+ 171:../../opus/celt/kiss_fft.c **** 
+ 172:../../opus/celt/kiss_fft.c **** #ifndef RADIX_TWO_ONLY
+ 173:../../opus/celt/kiss_fft.c **** 
+ 174:../../opus/celt/kiss_fft.c **** static void kf_bfly3(
+ 175:../../opus/celt/kiss_fft.c ****                      kiss_fft_cpx * Fout,
+ 176:../../opus/celt/kiss_fft.c ****                      const size_t fstride,
+ 177:../../opus/celt/kiss_fft.c ****                      const kiss_fft_state *st,
+ 178:../../opus/celt/kiss_fft.c ****                      int m,
+ 179:../../opus/celt/kiss_fft.c ****                      int N,
+ 180:../../opus/celt/kiss_fft.c ****                      int mm
+ 181:../../opus/celt/kiss_fft.c ****                     )
+ 182:../../opus/celt/kiss_fft.c **** {
+ 726              		.loc 1 182 1 is_stmt 1 view -0
+ 727              		.cfi_startproc
+ 728              		@ args = 8, pretend = 0, frame = 80
+ 729              		@ frame_needed = 0, uses_anonymous_args = 0
+ 730              		.loc 1 182 1 is_stmt 0 view .LVU213
+ 731 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 19
+
+
+ 732              	.LCFI8:
+ 733              		.cfi_def_cfa_offset 36
+ 734              		.cfi_offset 4, -36
+ 735              		.cfi_offset 5, -32
+ 736              		.cfi_offset 6, -28
+ 737              		.cfi_offset 7, -24
+ 738              		.cfi_offset 8, -20
+ 739              		.cfi_offset 9, -16
+ 740              		.cfi_offset 10, -12
+ 741              		.cfi_offset 11, -8
+ 742              		.cfi_offset 14, -4
+ 743 0004 95B0     		sub	sp, sp, #84
+ 744              	.LCFI9:
+ 745              		.cfi_def_cfa_offset 120
+ 746 0006 0691     		str	r1, [sp, #24]
+ 183:../../opus/celt/kiss_fft.c ****    int i;
+ 747              		.loc 1 183 4 is_stmt 1 view .LVU214
+ 184:../../opus/celt/kiss_fft.c ****    size_t k;
+ 748              		.loc 1 184 4 view .LVU215
+ 185:../../opus/celt/kiss_fft.c ****    const size_t m2 = 2*m;
+ 749              		.loc 1 185 4 view .LVU216
+ 750              		.loc 1 185 23 is_stmt 0 view .LVU217
+ 751 0008 4FEA430B 		lsl	fp, r3, #1
+ 752              	.LVL33:
+ 186:../../opus/celt/kiss_fft.c ****    const kiss_twiddle_cpx *tw1,*tw2;
+ 753              		.loc 1 186 4 is_stmt 1 view .LVU218
+ 187:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx scratch[5];
+ 754              		.loc 1 187 4 view .LVU219
+ 188:../../opus/celt/kiss_fft.c ****    kiss_twiddle_cpx epi3;
+ 755              		.loc 1 188 4 view .LVU220
+ 189:../../opus/celt/kiss_fft.c **** 
+ 190:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx * Fout_beg = Fout;
+ 756              		.loc 1 190 4 view .LVU221
+ 191:../../opus/celt/kiss_fft.c **** #ifdef FIXED_POINT
+ 192:../../opus/celt/kiss_fft.c ****    /*epi3.r = -16384;*/ /* Unused */
+ 193:../../opus/celt/kiss_fft.c ****    epi3.i = -28378;
+ 757              		.loc 1 193 4 view .LVU222
+ 194:../../opus/celt/kiss_fft.c **** #else
+ 195:../../opus/celt/kiss_fft.c ****    epi3 = st->twiddles[fstride*m];
+ 196:../../opus/celt/kiss_fft.c **** #endif
+ 197:../../opus/celt/kiss_fft.c ****    for (i=0;i<N;i++)
+ 758              		.loc 1 197 4 view .LVU223
+ 759              		.loc 1 197 10 is_stmt 0 view .LVU224
+ 760 000c 4FF00008 		mov	r8, #0
+ 761 0010 CDF804B0 		str	fp, [sp, #4]
+ 762 0014 0890     		str	r0, [sp, #32]
+ 763 0016 0992     		str	r2, [sp, #36]
+ 764 0018 9A46     		mov	r10, r3
+ 765              		.loc 1 197 4 view .LVU225
+ 766 001a CAE0     		b	.L22
+ 767              	.LVL34:
+ 768              	.L24:
+ 198:../../opus/celt/kiss_fft.c ****    {
+ 199:../../opus/celt/kiss_fft.c ****       Fout = Fout_beg + i*mm;
+ 769              		.loc 1 199 7 is_stmt 1 view .LVU226
+ 770              		.loc 1 199 26 is_stmt 0 view .LVU227
+ 771 001c 1F9B     		ldr	r3, [sp, #124]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 20
+
+
+ 772 001e 03FB08F1 		mul	r1, r3, r8
+ 773              		.loc 1 199 12 view .LVU228
+ 774 0022 089B     		ldr	r3, [sp, #32]
+ 775 0024 03EBC101 		add	r1, r3, r1, lsl #3
+ 776              	.LVL35:
+ 200:../../opus/celt/kiss_fft.c ****       tw1=tw2=st->twiddles;
+ 777              		.loc 1 200 7 is_stmt 1 view .LVU229
+ 778              		.loc 1 200 14 is_stmt 0 view .LVU230
+ 779 0028 099B     		ldr	r3, [sp, #36]
+ 780 002a D3F834B0 		ldr	fp, [r3, #52]
+ 781              	.LVL36:
+ 201:../../opus/celt/kiss_fft.c ****       /* For non-custom modes, m is guaranteed to be a multiple of 4. */
+ 202:../../opus/celt/kiss_fft.c ****       k=m;
+ 782              		.loc 1 202 7 is_stmt 1 view .LVU231
+ 200:../../opus/celt/kiss_fft.c ****       tw1=tw2=st->twiddles;
+ 783              		.loc 1 200 14 is_stmt 0 view .LVU232
+ 784 002e CDF800B0 		str	fp, [sp]
+ 785              		.loc 1 202 8 view .LVU233
+ 786 0032 CDF808A0 		str	r10, [sp, #8]
+ 787 0036 CDF81C80 		str	r8, [sp, #28]
+ 788              	.LVL37:
+ 789              	.L23:
+ 203:../../opus/celt/kiss_fft.c ****       do {
+ 790              		.loc 1 203 7 is_stmt 1 view .LVU234
+ 204:../../opus/celt/kiss_fft.c **** 
+ 205:../../opus/celt/kiss_fft.c ****          C_MUL(scratch[1],Fout[m] , *tw1);
+ 791              		.loc 1 205 10 view .LVU235
+ 792              		.loc 1 205 10 view .LVU236
+ 793 003a BBF90020 		ldrsh	r2, [fp]
+ 794 003e 01EBCA0C 		add	ip, r1, r10, lsl #3
+ 795 0042 51F83A40 		ldr	r4, [r1, r10, lsl #3]
+ 796 0046 2714     		asrs	r7, r4, #16
+ 797 0048 07FB02F3 		mul	r3, r7, r2
+ 798 004c A4B2     		uxth	r4, r4
+ 799 004e 04FB02F5 		mul	r5, r4, r2
+ 800 0052 ED13     		asrs	r5, r5, #15
+ 801 0054 05EB4305 		add	r5, r5, r3, lsl #1
+ 802 0058 BBF90230 		ldrsh	r3, [fp, #2]
+ 803 005c DCF80400 		ldr	r0, [ip, #4]
+ 804 0060 0614     		asrs	r6, r0, #16
+ 805 0062 06FB03FE 		mul	lr, r6, r3
+ 806 0066 80B2     		uxth	r0, r0
+ 807 0068 00FB03F8 		mul	r8, r0, r3
+ 808 006c 4FEAE838 		asr	r8, r8, #15
+ 809 0070 08EB4E08 		add	r8, r8, lr, lsl #1
+ 810 0074 A5EB0805 		sub	r5, r5, r8
+ 811 0078 0C95     		str	r5, [sp, #48]
+ 812              		.loc 1 205 10 view .LVU237
+ 813 007a 03FB07F7 		mul	r7, r3, r7
+ 814 007e 04FB03F3 		mul	r3, r4, r3
+ 815 0082 DB13     		asrs	r3, r3, #15
+ 816 0084 03EB4703 		add	r3, r3, r7, lsl #1
+ 817 0088 02FB06F6 		mul	r6, r2, r6
+ 818 008c 00FB02F2 		mul	r2, r0, r2
+ 819 0090 D213     		asrs	r2, r2, #15
+ 820 0092 02EB4602 		add	r2, r2, r6, lsl #1
+ 821 0096 1344     		add	r3, r3, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 21
+
+
+ 822 0098 0393     		str	r3, [sp, #12]
+ 823 009a 0D93     		str	r3, [sp, #52]
+ 824              		.loc 1 205 10 view .LVU238
+ 206:../../opus/celt/kiss_fft.c ****          C_MUL(scratch[2],Fout[m2] , *tw2);
+ 825              		.loc 1 206 10 view .LVU239
+ 826              		.loc 1 206 10 view .LVU240
+ 827 009c 009E     		ldr	r6, [sp]
+ 828 009e B6F90000 		ldrsh	r0, [r6]
+ 829 00a2 019A     		ldr	r2, [sp, #4]
+ 830 00a4 01EBC20E 		add	lr, r1, r2, lsl #3
+ 831 00a8 51F83220 		ldr	r2, [r1, r2, lsl #3]
+ 832 00ac 4FEA2249 		asr	r9, r2, #16
+ 833 00b0 09FB00F4 		mul	r4, r9, r0
+ 834 00b4 97B2     		uxth	r7, r2
+ 835 00b6 0497     		str	r7, [sp, #16]
+ 836 00b8 07FB00F7 		mul	r7, r7, r0
+ 837 00bc FF13     		asrs	r7, r7, #15
+ 838 00be 07EB4407 		add	r7, r7, r4, lsl #1
+ 839 00c2 B6F90240 		ldrsh	r4, [r6, #2]
+ 840 00c6 DEF80420 		ldr	r2, [lr, #4]
+ 841 00ca 4FEA2248 		asr	r8, r2, #16
+ 842 00ce 08FB04F6 		mul	r6, r8, r4
+ 843 00d2 93B2     		uxth	r3, r2
+ 844 00d4 0593     		str	r3, [sp, #20]
+ 845 00d6 03FB04F2 		mul	r2, r3, r4
+ 846 00da D213     		asrs	r2, r2, #15
+ 847 00dc 02EB4602 		add	r2, r2, r6, lsl #1
+ 848 00e0 BE1A     		subs	r6, r7, r2
+ 849 00e2 0E96     		str	r6, [sp, #56]
+ 850              		.loc 1 206 10 view .LVU241
+ 851 00e4 04FB09F9 		mul	r9, r4, r9
+ 852 00e8 049B     		ldr	r3, [sp, #16]
+ 853 00ea 03FB04F4 		mul	r4, r3, r4
+ 854 00ee E413     		asrs	r4, r4, #15
+ 855 00f0 04EB4904 		add	r4, r4, r9, lsl #1
+ 856 00f4 08FB00F8 		mul	r8, r8, r0
+ 857 00f8 059B     		ldr	r3, [sp, #20]
+ 858 00fa 03FB00F0 		mul	r0, r3, r0
+ 859 00fe C013     		asrs	r0, r0, #15
+ 860 0100 00EB4800 		add	r0, r0, r8, lsl #1
+ 861 0104 0444     		add	r4, r4, r0
+ 862 0106 0F94     		str	r4, [sp, #60]
+ 863              		.loc 1 206 10 view .LVU242
+ 207:../../opus/celt/kiss_fft.c **** 
+ 208:../../opus/celt/kiss_fft.c ****          C_ADD(scratch[3],scratch[1],scratch[2]);
+ 864              		.loc 1 208 10 view .LVU243
+ 865              		.loc 1 208 10 view .LVU244
+ 866 0108 2E44     		add	r6, r6, r5
+ 867 010a 1096     		str	r6, [sp, #64]
+ 868              		.loc 1 208 10 view .LVU245
+ 869 010c 039B     		ldr	r3, [sp, #12]
+ 870 010e 1819     		adds	r0, r3, r4
+ 871 0110 1190     		str	r0, [sp, #68]
+ 872              		.loc 1 208 10 view .LVU246
+ 209:../../opus/celt/kiss_fft.c ****          C_SUB(scratch[0],scratch[1],scratch[2]);
+ 873              		.loc 1 209 10 view .LVU247
+ 874              		.loc 1 209 10 view .LVU248
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 22
+
+
+ 875 0112 D21B     		subs	r2, r2, r7
+ 876 0114 2A44     		add	r2, r2, r5
+ 877 0116 0A92     		str	r2, [sp, #40]
+ 878              		.loc 1 209 10 view .LVU249
+ 879 0118 1B1B     		subs	r3, r3, r4
+ 880 011a 0B93     		str	r3, [sp, #44]
+ 881              		.loc 1 209 10 view .LVU250
+ 210:../../opus/celt/kiss_fft.c ****          tw1 += fstride;
+ 882              		.loc 1 210 10 view .LVU251
+ 883              		.loc 1 210 14 is_stmt 0 view .LVU252
+ 884 011c 069D     		ldr	r5, [sp, #24]
+ 885 011e 0BEB850B 		add	fp, fp, r5, lsl #2
+ 886              	.LVL38:
+ 211:../../opus/celt/kiss_fft.c ****          tw2 += fstride*2;
+ 887              		.loc 1 211 10 is_stmt 1 view .LVU253
+ 888              		.loc 1 211 14 is_stmt 0 view .LVU254
+ 889 0122 009C     		ldr	r4, [sp]
+ 890 0124 04EBC504 		add	r4, r4, r5, lsl #3
+ 891 0128 0094     		str	r4, [sp]
+ 892              	.LVL39:
+ 212:../../opus/celt/kiss_fft.c **** 
+ 213:../../opus/celt/kiss_fft.c ****          Fout[m].r = SUB32_ovflw(Fout->r, HALF_OF(scratch[3].r));
+ 893              		.loc 1 213 10 is_stmt 1 view .LVU255
+ 894              		.loc 1 213 22 is_stmt 0 view .LVU256
+ 895 012a 0C68     		ldr	r4, [r1]
+ 896              	.LVL40:
+ 897              		.loc 1 213 22 view .LVU257
+ 898 012c A4EB6604 		sub	r4, r4, r6, asr #1
+ 899              		.loc 1 213 20 view .LVU258
+ 900 0130 41F83A40 		str	r4, [r1, r10, lsl #3]
+ 214:../../opus/celt/kiss_fft.c ****          Fout[m].i = SUB32_ovflw(Fout->i, HALF_OF(scratch[3].i));
+ 901              		.loc 1 214 10 is_stmt 1 view .LVU259
+ 902              		.loc 1 214 22 is_stmt 0 view .LVU260
+ 903 0134 4C68     		ldr	r4, [r1, #4]
+ 904 0136 A4EB6004 		sub	r4, r4, r0, asr #1
+ 905              		.loc 1 214 20 view .LVU261
+ 906 013a CCF80440 		str	r4, [ip, #4]
+ 215:../../opus/celt/kiss_fft.c **** 
+ 216:../../opus/celt/kiss_fft.c ****          C_MULBYSCALAR( scratch[0] , epi3.i );
+ 907              		.loc 1 216 10 is_stmt 1 view .LVU262
+ 908              		.loc 1 216 10 view .LVU263
+ 909 013e 1414     		asrs	r4, r2, #16
+ 910 0140 1F4D     		ldr	r5, .L26
+ 911 0142 05FB04F4 		mul	r4, r5, r4
+ 912 0146 92B2     		uxth	r2, r2
+ 913 0148 05FB02F2 		mul	r2, r5, r2
+ 914 014c D213     		asrs	r2, r2, #15
+ 915 014e 02EB4402 		add	r2, r2, r4, lsl #1
+ 916 0152 0A92     		str	r2, [sp, #40]
+ 917              		.loc 1 216 10 view .LVU264
+ 918 0154 1F14     		asrs	r7, r3, #16
+ 919 0156 05FB07F7 		mul	r7, r5, r7
+ 920 015a 9BB2     		uxth	r3, r3
+ 921 015c 05FB03F3 		mul	r3, r5, r3
+ 922 0160 DC13     		asrs	r4, r3, #15
+ 923 0162 04EB4704 		add	r4, r4, r7, lsl #1
+ 924 0166 0B94     		str	r4, [sp, #44]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 23
+
+
+ 925              		.loc 1 216 10 view .LVU265
+ 217:../../opus/celt/kiss_fft.c **** 
+ 218:../../opus/celt/kiss_fft.c ****          C_ADDTO(*Fout,scratch[3]);
+ 926              		.loc 1 218 10 view .LVU266
+ 927              		.loc 1 218 10 view .LVU267
+ 928 0168 0B68     		ldr	r3, [r1]
+ 929 016a 1E44     		add	r6, r6, r3
+ 930 016c 0E60     		str	r6, [r1]
+ 931              		.loc 1 218 10 view .LVU268
+ 932 016e 4B68     		ldr	r3, [r1, #4]
+ 933 0170 1844     		add	r0, r0, r3
+ 934 0172 4860     		str	r0, [r1, #4]
+ 935              		.loc 1 218 10 view .LVU269
+ 219:../../opus/celt/kiss_fft.c **** 
+ 220:../../opus/celt/kiss_fft.c ****          Fout[m2].r = ADD32_ovflw(Fout[m].r, scratch[0].i);
+ 936              		.loc 1 220 10 view .LVU270
+ 937              		.loc 1 220 23 is_stmt 0 view .LVU271
+ 938 0174 51F83A30 		ldr	r3, [r1, r10, lsl #3]
+ 939 0178 2344     		add	r3, r3, r4
+ 940              		.loc 1 220 21 view .LVU272
+ 941 017a 0198     		ldr	r0, [sp, #4]
+ 942 017c 41F83030 		str	r3, [r1, r0, lsl #3]
+ 221:../../opus/celt/kiss_fft.c ****          Fout[m2].i = SUB32_ovflw(Fout[m].i, scratch[0].r);
+ 943              		.loc 1 221 10 is_stmt 1 view .LVU273
+ 944              		.loc 1 221 23 is_stmt 0 view .LVU274
+ 945 0180 DCF80430 		ldr	r3, [ip, #4]
+ 946 0184 9B1A     		subs	r3, r3, r2
+ 947              		.loc 1 221 21 view .LVU275
+ 948 0186 CEF80430 		str	r3, [lr, #4]
+ 222:../../opus/celt/kiss_fft.c **** 
+ 223:../../opus/celt/kiss_fft.c ****          Fout[m].r = SUB32_ovflw(Fout[m].r, scratch[0].i);
+ 949              		.loc 1 223 10 is_stmt 1 view .LVU276
+ 950              		.loc 1 223 22 is_stmt 0 view .LVU277
+ 951 018a 51F83A30 		ldr	r3, [r1, r10, lsl #3]
+ 952 018e 1B1B     		subs	r3, r3, r4
+ 953              		.loc 1 223 20 view .LVU278
+ 954 0190 41F83A30 		str	r3, [r1, r10, lsl #3]
+ 224:../../opus/celt/kiss_fft.c ****          Fout[m].i = ADD32_ovflw(Fout[m].i, scratch[0].r);
+ 955              		.loc 1 224 10 is_stmt 1 view .LVU279
+ 956              		.loc 1 224 22 is_stmt 0 view .LVU280
+ 957 0194 DCF80430 		ldr	r3, [ip, #4]
+ 958 0198 1A44     		add	r2, r2, r3
+ 959              		.loc 1 224 20 view .LVU281
+ 960 019a CCF80420 		str	r2, [ip, #4]
+ 225:../../opus/celt/kiss_fft.c **** 
+ 226:../../opus/celt/kiss_fft.c ****          ++Fout;
+ 961              		.loc 1 226 10 is_stmt 1 view .LVU282
+ 962 019e 0831     		adds	r1, r1, #8
+ 963              	.LVL41:
+ 227:../../opus/celt/kiss_fft.c ****       } while(--k);
+ 964              		.loc 1 227 15 discriminator 1 view .LVU283
+ 965              		.loc 1 227 15 is_stmt 0 discriminator 1 view .LVU284
+ 966 01a0 029B     		ldr	r3, [sp, #8]
+ 967 01a2 013B     		subs	r3, r3, #1
+ 968              	.LVL42:
+ 969              		.loc 1 227 15 discriminator 1 view .LVU285
+ 970 01a4 0293     		str	r3, [sp, #8]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 24
+
+
+ 971 01a6 7FF448AF 		bne	.L23
+ 197:../../opus/celt/kiss_fft.c ****    {
+ 972              		.loc 1 197 18 discriminator 2 view .LVU286
+ 973 01aa DDF81C80 		ldr	r8, [sp, #28]
+ 197:../../opus/celt/kiss_fft.c ****    {
+ 974              		.loc 1 197 18 is_stmt 1 discriminator 2 view .LVU287
+ 975 01ae 08F10108 		add	r8, r8, #1
+ 976              	.LVL43:
+ 977              	.L22:
+ 197:../../opus/celt/kiss_fft.c ****    {
+ 978              		.loc 1 197 14 discriminator 1 view .LVU288
+ 979 01b2 1E9B     		ldr	r3, [sp, #120]
+ 980 01b4 9845     		cmp	r8, r3
+ 981 01b6 FFF631AF 		blt	.L24
+ 228:../../opus/celt/kiss_fft.c ****    }
+ 229:../../opus/celt/kiss_fft.c **** }
+ 982              		.loc 1 229 1 is_stmt 0 view .LVU289
+ 983 01ba 15B0     		add	sp, sp, #84
+ 984              	.LCFI10:
+ 985              		.cfi_def_cfa_offset 36
+ 986              		@ sp needed
+ 987 01bc BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 988              	.LVL44:
+ 989              	.L27:
+ 990              		.loc 1 229 1 view .LVU290
+ 991              		.align	2
+ 992              	.L26:
+ 993 01c0 2691FFFF 		.word	-28378
+ 994              		.cfi_endproc
+ 995              	.LFE24:
+ 997              		.section	.text.kf_bfly5,"ax",%progbits
+ 998              		.align	1
+ 999              		.syntax unified
+ 1000              		.thumb
+ 1001              		.thumb_func
+ 1003              	kf_bfly5:
+ 1004              	.LVL45:
+ 1005              	.LFB25:
+ 230:../../opus/celt/kiss_fft.c **** 
+ 231:../../opus/celt/kiss_fft.c **** 
+ 232:../../opus/celt/kiss_fft.c **** #ifndef OVERRIDE_kf_bfly5
+ 233:../../opus/celt/kiss_fft.c **** static void kf_bfly5(
+ 234:../../opus/celt/kiss_fft.c ****                      kiss_fft_cpx * Fout,
+ 235:../../opus/celt/kiss_fft.c ****                      const size_t fstride,
+ 236:../../opus/celt/kiss_fft.c ****                      const kiss_fft_state *st,
+ 237:../../opus/celt/kiss_fft.c ****                      int m,
+ 238:../../opus/celt/kiss_fft.c ****                      int N,
+ 239:../../opus/celt/kiss_fft.c ****                      int mm
+ 240:../../opus/celt/kiss_fft.c ****                     )
+ 241:../../opus/celt/kiss_fft.c **** {
+ 1006              		.loc 1 241 1 is_stmt 1 view -0
+ 1007              		.cfi_startproc
+ 1008              		@ args = 8, pretend = 0, frame = 208
+ 1009              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1010              		.loc 1 241 1 is_stmt 0 view .LVU292
+ 1011 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1012              	.LCFI11:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 25
+
+
+ 1013              		.cfi_def_cfa_offset 36
+ 1014              		.cfi_offset 4, -36
+ 1015              		.cfi_offset 5, -32
+ 1016              		.cfi_offset 6, -28
+ 1017              		.cfi_offset 7, -24
+ 1018              		.cfi_offset 8, -20
+ 1019              		.cfi_offset 9, -16
+ 1020              		.cfi_offset 10, -12
+ 1021              		.cfi_offset 11, -8
+ 1022              		.cfi_offset 14, -4
+ 1023 0004 B5B0     		sub	sp, sp, #212
+ 1024              	.LCFI12:
+ 1025              		.cfi_def_cfa_offset 248
+ 1026 0006 1791     		str	r1, [sp, #92]
+ 1027 0008 1693     		str	r3, [sp, #88]
+ 242:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx *Fout0,*Fout1,*Fout2,*Fout3,*Fout4;
+ 1028              		.loc 1 242 4 is_stmt 1 view .LVU293
+ 243:../../opus/celt/kiss_fft.c ****    int i, u;
+ 1029              		.loc 1 243 4 view .LVU294
+ 244:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx scratch[13];
+ 1030              		.loc 1 244 4 view .LVU295
+ 245:../../opus/celt/kiss_fft.c ****    const kiss_twiddle_cpx *tw;
+ 1031              		.loc 1 245 4 view .LVU296
+ 246:../../opus/celt/kiss_fft.c ****    kiss_twiddle_cpx ya,yb;
+ 1032              		.loc 1 246 4 view .LVU297
+ 247:../../opus/celt/kiss_fft.c ****    kiss_fft_cpx * Fout_beg = Fout;
+ 1033              		.loc 1 247 4 view .LVU298
+ 1034              	.LVL46:
+ 248:../../opus/celt/kiss_fft.c **** 
+ 249:../../opus/celt/kiss_fft.c **** #ifdef FIXED_POINT
+ 250:../../opus/celt/kiss_fft.c ****    ya.r = 10126;
+ 1035              		.loc 1 250 4 view .LVU299
+ 251:../../opus/celt/kiss_fft.c ****    ya.i = -31164;
+ 1036              		.loc 1 251 4 view .LVU300
+ 252:../../opus/celt/kiss_fft.c ****    yb.r = -26510;
+ 1037              		.loc 1 252 4 view .LVU301
+ 253:../../opus/celt/kiss_fft.c ****    yb.i = -19261;
+ 1038              		.loc 1 253 4 view .LVU302
+ 254:../../opus/celt/kiss_fft.c **** #else
+ 255:../../opus/celt/kiss_fft.c ****    ya = st->twiddles[fstride*m];
+ 256:../../opus/celt/kiss_fft.c ****    yb = st->twiddles[fstride*2*m];
+ 257:../../opus/celt/kiss_fft.c **** #endif
+ 258:../../opus/celt/kiss_fft.c ****    tw=st->twiddles;
+ 1039              		.loc 1 258 4 view .LVU303
+ 1040              		.loc 1 258 6 is_stmt 0 view .LVU304
+ 1041 000a 566B     		ldr	r6, [r2, #52]
+ 1042              	.LVL47:
+ 259:../../opus/celt/kiss_fft.c **** 
+ 260:../../opus/celt/kiss_fft.c ****    for (i=0;i<N;i++)
+ 1043              		.loc 1 260 4 is_stmt 1 view .LVU305
+ 1044              		.loc 1 260 10 is_stmt 0 view .LVU306
+ 1045 000c 0023     		movs	r3, #0
+ 1046              	.LVL48:
+ 1047              		.loc 1 260 10 view .LVU307
+ 1048 000e 1A46     		mov	r2, r3
+ 1049              	.LVL49:
+ 1050              		.loc 1 260 10 view .LVU308
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 26
+
+
+ 1051 0010 0096     		str	r6, [sp]
+ 1052 0012 1990     		str	r0, [sp, #100]
+ 1053              		.loc 1 260 4 view .LVU309
+ 1054 0014 15E2     		b	.L29
+ 1055              	.LVL50:
+ 1056              	.L31:
+ 261:../../opus/celt/kiss_fft.c ****    {
+ 262:../../opus/celt/kiss_fft.c ****       Fout = Fout_beg + i*mm;
+ 263:../../opus/celt/kiss_fft.c ****       Fout0=Fout;
+ 264:../../opus/celt/kiss_fft.c ****       Fout1=Fout0+m;
+ 265:../../opus/celt/kiss_fft.c ****       Fout2=Fout0+2*m;
+ 266:../../opus/celt/kiss_fft.c ****       Fout3=Fout0+3*m;
+ 267:../../opus/celt/kiss_fft.c ****       Fout4=Fout0+4*m;
+ 268:../../opus/celt/kiss_fft.c **** 
+ 269:../../opus/celt/kiss_fft.c ****       /* For non-custom modes, m is guaranteed to be a multiple of 4. */
+ 270:../../opus/celt/kiss_fft.c ****       for ( u=0; u<m; ++u ) {
+ 271:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1057              		.loc 1 271 10 is_stmt 1 view .LVU310
+ 1058              		.loc 1 271 21 is_stmt 0 view .LVU311
+ 1059 0016 1AAB     		add	r3, sp, #104
+ 1060              	.LVL51:
+ 1061              		.loc 1 271 21 view .LVU312
+ 1062 0018 029D     		ldr	r5, [sp, #8]
+ 1063 001a 95E80300 		ldm	r5, {r0, r1}
+ 1064 001e 83E80300 		stm	r3, {r0, r1}
+ 272:../../opus/celt/kiss_fft.c **** 
+ 273:../../opus/celt/kiss_fft.c ****          C_MUL(scratch[1] ,*Fout1, tw[u*fstride]);
+ 1065              		.loc 1 273 10 is_stmt 1 view .LVU313
+ 1066              		.loc 1 273 10 view .LVU314
+ 1067 0022 039B     		ldr	r3, [sp, #12]
+ 1068 0024 179A     		ldr	r2, [sp, #92]
+ 1069 0026 02FB03F2 		mul	r2, r2, r3
+ 1070 002a 009B     		ldr	r3, [sp]
+ 1071 002c 03EB8204 		add	r4, r3, r2, lsl #2
+ 1072 0030 33F92230 		ldrsh	r3, [r3, r2, lsl #2]
+ 1073 0034 DBF80060 		ldr	r6, [fp]
+ 1074 0038 4FEA264E 		asr	lr, r6, #16
+ 1075 003c 0EFB03F5 		mul	r5, lr, r3
+ 1076 0040 B6B2     		uxth	r6, r6
+ 1077 0042 06FB03F7 		mul	r7, r6, r3
+ 1078 0046 FF13     		asrs	r7, r7, #15
+ 1079 0048 07EB4507 		add	r7, r7, r5, lsl #1
+ 1080 004c B4F90240 		ldrsh	r4, [r4, #2]
+ 1081 0050 DBF80450 		ldr	r5, [fp, #4]
+ 1082 0054 4FEA254C 		asr	ip, r5, #16
+ 1083 0058 0CFB04F8 		mul	r8, ip, r4
+ 1084 005c ADB2     		uxth	r5, r5
+ 1085 005e 05FB04F9 		mul	r9, r5, r4
+ 1086 0062 4FEAE939 		asr	r9, r9, #15
+ 1087 0066 09EB4809 		add	r9, r9, r8, lsl #1
+ 1088 006a A7EB0907 		sub	r7, r7, r9
+ 1089 006e 0697     		str	r7, [sp, #24]
+ 1090 0070 1C97     		str	r7, [sp, #112]
+ 1091              		.loc 1 273 10 view .LVU315
+ 1092 0072 04FB0EFE 		mul	lr, r4, lr
+ 1093 0076 06FB04F4 		mul	r4, r6, r4
+ 1094 007a E413     		asrs	r4, r4, #15
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 27
+
+
+ 1095 007c 04EB4E04 		add	r4, r4, lr, lsl #1
+ 1096 0080 0CFB03FC 		mul	ip, ip, r3
+ 1097 0084 05FB03F3 		mul	r3, r5, r3
+ 1098 0088 DB13     		asrs	r3, r3, #15
+ 1099 008a 03EB4C03 		add	r3, r3, ip, lsl #1
+ 1100 008e E618     		adds	r6, r4, r3
+ 1101 0090 0796     		str	r6, [sp, #28]
+ 1102 0092 1D96     		str	r6, [sp, #116]
+ 1103              		.loc 1 273 10 view .LVU316
+ 274:../../opus/celt/kiss_fft.c ****          C_MUL(scratch[2] ,*Fout2, tw[2*u*fstride]);
+ 1104              		.loc 1 274 10 view .LVU317
+ 1105              		.loc 1 274 10 view .LVU318
+ 1106 0094 009B     		ldr	r3, [sp]
+ 1107 0096 03EBC204 		add	r4, r3, r2, lsl #3
+ 1108 009a 33F93230 		ldrsh	r3, [r3, r2, lsl #3]
+ 1109 009e 049D     		ldr	r5, [sp, #16]
+ 1110 00a0 2E68     		ldr	r6, [r5]
+ 1111 00a2 4FEA264E 		asr	lr, r6, #16
+ 1112 00a6 0EFB03F5 		mul	r5, lr, r3
+ 1113 00aa B6B2     		uxth	r6, r6
+ 1114 00ac 06FB03F7 		mul	r7, r6, r3
+ 1115 00b0 FF13     		asrs	r7, r7, #15
+ 1116 00b2 07EB4507 		add	r7, r7, r5, lsl #1
+ 1117 00b6 B4F90240 		ldrsh	r4, [r4, #2]
+ 1118 00ba 049D     		ldr	r5, [sp, #16]
+ 1119 00bc 6D68     		ldr	r5, [r5, #4]
+ 1120 00be 4FEA254C 		asr	ip, r5, #16
+ 1121 00c2 0CFB04F8 		mul	r8, ip, r4
+ 1122 00c6 ADB2     		uxth	r5, r5
+ 1123 00c8 05FB04F9 		mul	r9, r5, r4
+ 1124 00cc 4FEAE939 		asr	r9, r9, #15
+ 1125 00d0 09EB4809 		add	r9, r9, r8, lsl #1
+ 1126 00d4 A7EB0908 		sub	r8, r7, r9
+ 1127 00d8 CDF82C80 		str	r8, [sp, #44]
+ 1128 00dc CDF87880 		str	r8, [sp, #120]
+ 1129              		.loc 1 274 10 view .LVU319
+ 1130 00e0 04FB0EFE 		mul	lr, r4, lr
+ 1131 00e4 06FB04F4 		mul	r4, r6, r4
+ 1132 00e8 E413     		asrs	r4, r4, #15
+ 1133 00ea 04EB4E04 		add	r4, r4, lr, lsl #1
+ 1134 00ee 0CFB03FC 		mul	ip, ip, r3
+ 1135 00f2 05FB03F3 		mul	r3, r5, r3
+ 1136 00f6 DB13     		asrs	r3, r3, #15
+ 1137 00f8 03EB4C03 		add	r3, r3, ip, lsl #1
+ 1138 00fc E318     		adds	r3, r4, r3
+ 1139 00fe 0893     		str	r3, [sp, #32]
+ 1140 0100 1F93     		str	r3, [sp, #124]
+ 1141              		.loc 1 274 10 view .LVU320
+ 275:../../opus/celt/kiss_fft.c ****          C_MUL(scratch[3] ,*Fout3, tw[3*u*fstride]);
+ 1142              		.loc 1 275 10 view .LVU321
+ 1143              		.loc 1 275 10 view .LVU322
+ 1144 0102 02EB4203 		add	r3, r2, r2, lsl #1
+ 1145 0106 009C     		ldr	r4, [sp]
+ 1146 0108 04EB8306 		add	r6, r4, r3, lsl #2
+ 1147 010c 34F92340 		ldrsh	r4, [r4, r3, lsl #2]
+ 1148 0110 059F     		ldr	r7, [sp, #20]
+ 1149 0112 3D68     		ldr	r5, [r7]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 28
+
+
+ 1150 0114 2B14     		asrs	r3, r5, #16
+ 1151 0116 03FB04F7 		mul	r7, r3, r4
+ 1152 011a 1FFA85FC 		uxth	ip, r5
+ 1153 011e 0CFB04F5 		mul	r5, ip, r4
+ 1154 0122 ED13     		asrs	r5, r5, #15
+ 1155 0124 05EB470E 		add	lr, r5, r7, lsl #1
+ 1156 0128 CDF824E0 		str	lr, [sp, #36]
+ 1157 012c B6F90260 		ldrsh	r6, [r6, #2]
+ 1158 0130 059F     		ldr	r7, [sp, #20]
+ 1159 0132 7D68     		ldr	r5, [r7, #4]
+ 1160 0134 4FEA254E 		asr	lr, r5, #16
+ 1161 0138 0EFB06F7 		mul	r7, lr, r6
+ 1162 013c 1FFA85F8 		uxth	r8, r5
+ 1163 0140 08FB06F5 		mul	r5, r8, r6
+ 1164 0144 ED13     		asrs	r5, r5, #15
+ 1165 0146 05EB4705 		add	r5, r5, r7, lsl #1
+ 1166 014a 099F     		ldr	r7, [sp, #36]
+ 1167 014c 7F1B     		subs	r7, r7, r5
+ 1168 014e 2097     		str	r7, [sp, #128]
+ 1169              		.loc 1 275 10 view .LVU323
+ 1170 0150 06FB03F3 		mul	r3, r6, r3
+ 1171 0154 0CFB06F6 		mul	r6, ip, r6
+ 1172 0158 F613     		asrs	r6, r6, #15
+ 1173 015a 06EB4303 		add	r3, r6, r3, lsl #1
+ 1174 015e 0EFB04FE 		mul	lr, lr, r4
+ 1175 0162 08FB04F4 		mul	r4, r8, r4
+ 1176 0166 E413     		asrs	r4, r4, #15
+ 1177 0168 04EB4E04 		add	r4, r4, lr, lsl #1
+ 1178 016c 2344     		add	r3, r3, r4
+ 1179 016e 2193     		str	r3, [sp, #132]
+ 1180              		.loc 1 275 10 view .LVU324
+ 276:../../opus/celt/kiss_fft.c ****          C_MUL(scratch[4] ,*Fout4, tw[4*u*fstride]);
+ 1181              		.loc 1 276 10 view .LVU325
+ 1182              		.loc 1 276 10 view .LVU326
+ 1183 0170 1401     		lsls	r4, r2, #4
+ 1184 0172 009E     		ldr	r6, [sp]
+ 1185 0174 06EB0216 		add	r6, r6, r2, lsl #4
+ 1186 0178 009A     		ldr	r2, [sp]
+ 1187 017a 125F     		ldrsh	r2, [r2, r4]
+ 1188 017c 019C     		ldr	r4, [sp, #4]
+ 1189 017e 2468     		ldr	r4, [r4]
+ 1190 0180 4FEA244A 		asr	r10, r4, #16
+ 1191 0184 0AFB02FC 		mul	ip, r10, r2
+ 1192 0188 1FFA84F8 		uxth	r8, r4
+ 1193 018c 08FB02FE 		mul	lr, r8, r2
+ 1194 0190 4FEAEE3E 		asr	lr, lr, #15
+ 1195 0194 0EEB4C0E 		add	lr, lr, ip, lsl #1
+ 1196 0198 B6F90240 		ldrsh	r4, [r6, #2]
+ 1197 019c 019E     		ldr	r6, [sp, #4]
+ 1198 019e 7668     		ldr	r6, [r6, #4]
+ 1199 01a0 4FEA2649 		asr	r9, r6, #16
+ 1200 01a4 09FB04FC 		mul	ip, r9, r4
+ 1201 01a8 B6B2     		uxth	r6, r6
+ 1202 01aa 0A96     		str	r6, [sp, #40]
+ 1203 01ac 06FB04F6 		mul	r6, r6, r4
+ 1204 01b0 F613     		asrs	r6, r6, #15
+ 1205 01b2 06EB4C06 		add	r6, r6, ip, lsl #1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 29
+
+
+ 1206 01b6 AEEB060C 		sub	ip, lr, r6
+ 1207 01ba CDF888C0 		str	ip, [sp, #136]
+ 1208              		.loc 1 276 10 view .LVU327
+ 1209 01be 04FB0AFA 		mul	r10, r4, r10
+ 1210 01c2 08FB04F4 		mul	r4, r8, r4
+ 1211 01c6 E413     		asrs	r4, r4, #15
+ 1212 01c8 04EB4A08 		add	r8, r4, r10, lsl #1
+ 1213 01cc 09FB02F9 		mul	r9, r9, r2
+ 1214 01d0 0A9C     		ldr	r4, [sp, #40]
+ 1215 01d2 04FB02F2 		mul	r2, r4, r2
+ 1216 01d6 D213     		asrs	r2, r2, #15
+ 1217 01d8 02EB4902 		add	r2, r2, r9, lsl #1
+ 1218 01dc 4244     		add	r2, r2, r8
+ 1219 01de 2392     		str	r2, [sp, #140]
+ 1220              		.loc 1 276 10 view .LVU328
+ 277:../../opus/celt/kiss_fft.c **** 
+ 278:../../opus/celt/kiss_fft.c ****          C_ADD( scratch[7],scratch[1],scratch[4]);
+ 1221              		.loc 1 278 10 view .LVU329
+ 1222              		.loc 1 278 10 view .LVU330
+ 1223 01e0 069C     		ldr	r4, [sp, #24]
+ 1224 01e2 04EB0C08 		add	r8, r4, ip
+ 1225 01e6 CDF8A080 		str	r8, [sp, #160]
+ 1226              		.loc 1 278 10 view .LVU331
+ 1227 01ea 079C     		ldr	r4, [sp, #28]
+ 1228 01ec 1444     		add	r4, r4, r2
+ 1229 01ee 0A94     		str	r4, [sp, #40]
+ 1230 01f0 2994     		str	r4, [sp, #164]
+ 1231              		.loc 1 278 10 view .LVU332
+ 279:../../opus/celt/kiss_fft.c ****          C_SUB( scratch[10],scratch[1],scratch[4]);
+ 1232              		.loc 1 279 10 view .LVU333
+ 1233              		.loc 1 279 10 view .LVU334
+ 1234 01f2 A6EB0E06 		sub	r6, r6, lr
+ 1235 01f6 069C     		ldr	r4, [sp, #24]
+ 1236 01f8 06EB0409 		add	r9, r6, r4
+ 1237 01fc CDF8B890 		str	r9, [sp, #184]
+ 1238              		.loc 1 279 10 view .LVU335
+ 1239 0200 079C     		ldr	r4, [sp, #28]
+ 1240 0202 A61A     		subs	r6, r4, r2
+ 1241 0204 0696     		str	r6, [sp, #24]
+ 1242 0206 2F96     		str	r6, [sp, #188]
+ 1243              		.loc 1 279 10 view .LVU336
+ 280:../../opus/celt/kiss_fft.c ****          C_ADD( scratch[8],scratch[2],scratch[3]);
+ 1244              		.loc 1 280 10 view .LVU337
+ 1245              		.loc 1 280 10 view .LVU338
+ 1246 0208 0B9C     		ldr	r4, [sp, #44]
+ 1247 020a 2744     		add	r7, r7, r4
+ 1248 020c 2A97     		str	r7, [sp, #168]
+ 1249              		.loc 1 280 10 view .LVU339
+ 1250 020e 089E     		ldr	r6, [sp, #32]
+ 1251 0210 1E44     		add	r6, r6, r3
+ 1252 0212 2B96     		str	r6, [sp, #172]
+ 1253              		.loc 1 280 10 view .LVU340
+ 281:../../opus/celt/kiss_fft.c ****          C_SUB( scratch[9],scratch[2],scratch[3]);
+ 1254              		.loc 1 281 10 view .LVU341
+ 1255              		.loc 1 281 10 view .LVU342
+ 1256 0214 099A     		ldr	r2, [sp, #36]
+ 1257 0216 AD1A     		subs	r5, r5, r2
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 30
+
+
+ 1258 0218 2C19     		adds	r4, r5, r4
+ 1259 021a 0794     		str	r4, [sp, #28]
+ 1260 021c 2C94     		str	r4, [sp, #176]
+ 1261              		.loc 1 281 10 view .LVU343
+ 1262 021e 089C     		ldr	r4, [sp, #32]
+ 1263 0220 E31A     		subs	r3, r4, r3
+ 1264 0222 2D93     		str	r3, [sp, #180]
+ 1265              		.loc 1 281 10 view .LVU344
+ 282:../../opus/celt/kiss_fft.c **** 
+ 283:../../opus/celt/kiss_fft.c ****          Fout0->r = ADD32_ovflw(Fout0->r, ADD32_ovflw(scratch[7].r, scratch[8].r));
+ 1266              		.loc 1 283 10 view .LVU345
+ 1267              		.loc 1 283 21 is_stmt 0 view .LVU346
+ 1268 0224 0446     		mov	r4, r0
+ 1269 0226 08EB0700 		add	r0, r8, r7
+ 1270 022a 2044     		add	r0, r0, r4
+ 1271              		.loc 1 283 19 view .LVU347
+ 1272 022c 029D     		ldr	r5, [sp, #8]
+ 1273 022e 2860     		str	r0, [r5]
+ 284:../../opus/celt/kiss_fft.c ****          Fout0->i = ADD32_ovflw(Fout0->i, ADD32_ovflw(scratch[7].i, scratch[8].i));
+ 1274              		.loc 1 284 10 is_stmt 1 view .LVU348
+ 1275              		.loc 1 284 21 is_stmt 0 view .LVU349
+ 1276 0230 8A46     		mov	r10, r1
+ 1277 0232 0A9A     		ldr	r2, [sp, #40]
+ 1278 0234 9119     		adds	r1, r2, r6
+ 1279 0236 5144     		add	r1, r1, r10
+ 1280              		.loc 1 284 19 view .LVU350
+ 1281 0238 6960     		str	r1, [r5, #4]
+ 285:../../opus/celt/kiss_fft.c **** 
+ 286:../../opus/celt/kiss_fft.c ****          scratch[5].r = ADD32_ovflw(scratch[0].r, ADD32_ovflw(S_MUL(scratch[7].r,ya.r), S_MUL(scrat
+ 1282              		.loc 1 286 10 is_stmt 1 view .LVU351
+ 1283              		.loc 1 286 25 is_stmt 0 view .LVU352
+ 1284 023a 4FEA2841 		asr	r1, r8, #16
+ 1285 023e 42F28E7C 		movw	ip, #10126
+ 1286 0242 0991     		str	r1, [sp, #36]
+ 1287 0244 0CFB01F1 		mul	r1, ip, r1
+ 1288 0248 1FFA88F2 		uxth	r2, r8
+ 1289 024c 0F92     		str	r2, [sp, #60]
+ 1290 024e 0CFB02F0 		mul	r0, ip, r2
+ 1291 0252 C013     		asrs	r0, r0, #15
+ 1292 0254 00EB4100 		add	r0, r0, r1, lsl #1
+ 1293 0258 3A14     		asrs	r2, r7, #16
+ 1294 025a DFF830E2 		ldr	lr, .L35+8
+ 1295 025e 0B92     		str	r2, [sp, #44]
+ 1296 0260 0EFB02F1 		mul	r1, lr, r2
+ 1297 0264 1FFA87F8 		uxth	r8, r7
+ 1298 0268 CDF84080 		str	r8, [sp, #64]
+ 1299 026c 0EFB08F5 		mul	r5, lr, r8
+ 1300 0270 ED13     		asrs	r5, r5, #15
+ 1301 0272 05EB4105 		add	r5, r5, r1, lsl #1
+ 1302 0276 2844     		add	r0, r0, r5
+ 1303 0278 0894     		str	r4, [sp, #32]
+ 1304 027a 2044     		add	r0, r0, r4
+ 1305              		.loc 1 286 23 view .LVU353
+ 1306 027c 2490     		str	r0, [sp, #144]
+ 287:../../opus/celt/kiss_fft.c ****          scratch[5].i = ADD32_ovflw(scratch[0].i, ADD32_ovflw(S_MUL(scratch[7].i,ya.r), S_MUL(scrat
+ 1307              		.loc 1 287 10 is_stmt 1 view .LVU354
+ 1308              		.loc 1 287 25 is_stmt 0 view .LVU355
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 31
+
+
+ 1309 027e 0A9A     		ldr	r2, [sp, #40]
+ 1310 0280 1514     		asrs	r5, r2, #16
+ 1311 0282 0A95     		str	r5, [sp, #40]
+ 1312 0284 0CFB05F5 		mul	r5, ip, r5
+ 1313 0288 1FFA82F8 		uxth	r8, r2
+ 1314 028c CDF84480 		str	r8, [sp, #68]
+ 1315 0290 0CFB08F1 		mul	r1, ip, r8
+ 1316 0294 C913     		asrs	r1, r1, #15
+ 1317 0296 01EB4501 		add	r1, r1, r5, lsl #1
+ 1318 029a 3214     		asrs	r2, r6, #16
+ 1319 029c 0C92     		str	r2, [sp, #48]
+ 1320 029e 0EFB02F4 		mul	r4, lr, r2
+ 1321 02a2 B6B2     		uxth	r6, r6
+ 1322 02a4 1296     		str	r6, [sp, #72]
+ 1323 02a6 0EFB06F5 		mul	r5, lr, r6
+ 1324 02aa ED13     		asrs	r5, r5, #15
+ 1325 02ac 05EB4405 		add	r5, r5, r4, lsl #1
+ 1326 02b0 2944     		add	r1, r1, r5
+ 1327 02b2 5144     		add	r1, r1, r10
+ 1328              		.loc 1 287 23 view .LVU356
+ 1329 02b4 2591     		str	r1, [sp, #148]
+ 288:../../opus/celt/kiss_fft.c **** 
+ 289:../../opus/celt/kiss_fft.c ****          scratch[6].r =  ADD32_ovflw(S_MUL(scratch[10].i,ya.i), S_MUL(scratch[9].i,yb.i));
+ 1330              		.loc 1 289 10 is_stmt 1 view .LVU357
+ 1331              		.loc 1 289 26 is_stmt 0 view .LVU358
+ 1332 02b6 069A     		ldr	r2, [sp, #24]
+ 1333 02b8 1614     		asrs	r6, r2, #16
+ 1334 02ba 3746     		mov	r7, r6
+ 1335 02bc 714E     		ldr	r6, .L35
+ 1336 02be 0697     		str	r7, [sp, #24]
+ 1337 02c0 06FB07F4 		mul	r4, r6, r7
+ 1338 02c4 1FFA82F8 		uxth	r8, r2
+ 1339 02c8 4546     		mov	r5, r8
+ 1340 02ca CDF84C80 		str	r8, [sp, #76]
+ 1341 02ce 06FB05F5 		mul	r5, r6, r5
+ 1342 02d2 ED13     		asrs	r5, r5, #15
+ 1343 02d4 05EB4405 		add	r5, r5, r4, lsl #1
+ 1344 02d8 1C14     		asrs	r4, r3, #16
+ 1345 02da 6B4F     		ldr	r7, .L35+4
+ 1346 02dc 0D94     		str	r4, [sp, #52]
+ 1347 02de 07FB04F2 		mul	r2, r7, r4
+ 1348 02e2 9BB2     		uxth	r3, r3
+ 1349 02e4 1493     		str	r3, [sp, #80]
+ 1350 02e6 07FB03F4 		mul	r4, r7, r3
+ 1351 02ea E413     		asrs	r4, r4, #15
+ 1352 02ec 04EB4204 		add	r4, r4, r2, lsl #1
+ 1353 02f0 2544     		add	r5, r5, r4
+ 1354              		.loc 1 289 23 view .LVU359
+ 1355 02f2 2695     		str	r5, [sp, #152]
+ 290:../../opus/celt/kiss_fft.c ****          scratch[6].i = NEG32_ovflw(ADD32_ovflw(S_MUL(scratch[10].r,ya.i), S_MUL(scratch[9].r,yb.i)
+ 1356              		.loc 1 290 10 is_stmt 1 view .LVU360
+ 1357              		.loc 1 290 25 is_stmt 0 view .LVU361
+ 1358 02f4 4FEA2948 		asr	r8, r9, #16
+ 1359 02f8 4246     		mov	r2, r8
+ 1360 02fa CDF83880 		str	r8, [sp, #56]
+ 1361 02fe 06FB02F2 		mul	r2, r6, r2
+ 1362 0302 1FFA89F8 		uxth	r8, r9
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 32
+
+
+ 1363 0306 CDF85480 		str	r8, [sp, #84]
+ 1364 030a 06FB08F8 		mul	r8, r6, r8
+ 1365 030e 4FEAE838 		asr	r8, r8, #15
+ 1366 0312 08EB4208 		add	r8, r8, r2, lsl #1
+ 1367 0316 079A     		ldr	r2, [sp, #28]
+ 1368 0318 4FEA2249 		asr	r9, r2, #16
+ 1369 031c 07FB09F3 		mul	r3, r7, r9
+ 1370 0320 92B2     		uxth	r2, r2
+ 1371 0322 07FB02F4 		mul	r4, r7, r2
+ 1372 0326 E413     		asrs	r4, r4, #15
+ 1373 0328 04EB4304 		add	r4, r4, r3, lsl #1
+ 1374 032c 4444     		add	r4, r4, r8
+ 1375 032e C4F10008 		rsb	r8, r4, #0
+ 1376              		.loc 1 290 23 view .LVU362
+ 1377 0332 CDF89C80 		str	r8, [sp, #156]
+ 291:../../opus/celt/kiss_fft.c **** 
+ 292:../../opus/celt/kiss_fft.c ****          C_SUB(*Fout1,scratch[5],scratch[6]);
+ 1378              		.loc 1 292 10 is_stmt 1 view .LVU363
+ 1379              		.loc 1 292 10 view .LVU364
+ 1380 0336 A0EB0508 		sub	r8, r0, r5
+ 1381 033a CBF80080 		str	r8, [fp]
+ 1382              		.loc 1 292 10 view .LVU365
+ 1383 033e 01EB0408 		add	r8, r1, r4
+ 1384 0342 CBF80480 		str	r8, [fp, #4]
+ 1385              		.loc 1 292 10 view .LVU366
+ 293:../../opus/celt/kiss_fft.c ****          C_ADD(*Fout4,scratch[5],scratch[6]);
+ 1386              		.loc 1 293 10 view .LVU367
+ 1387              		.loc 1 293 10 view .LVU368
+ 1388 0346 2844     		add	r0, r0, r5
+ 1389 0348 019D     		ldr	r5, [sp, #4]
+ 1390 034a 2860     		str	r0, [r5]
+ 1391              		.loc 1 293 10 view .LVU369
+ 1392 034c 091B     		subs	r1, r1, r4
+ 1393 034e 6960     		str	r1, [r5, #4]
+ 1394              		.loc 1 293 10 view .LVU370
+ 294:../../opus/celt/kiss_fft.c **** 
+ 295:../../opus/celt/kiss_fft.c ****          scratch[11].r = ADD32_ovflw(scratch[0].r, ADD32_ovflw(S_MUL(scratch[7].r,yb.r), S_MUL(scra
+ 1395              		.loc 1 295 10 view .LVU371
+ 1396              		.loc 1 295 26 is_stmt 0 view .LVU372
+ 1397 0350 0999     		ldr	r1, [sp, #36]
+ 1398 0352 0EFB01F0 		mul	r0, lr, r1
+ 1399 0356 0F99     		ldr	r1, [sp, #60]
+ 1400 0358 0EFB01F1 		mul	r1, lr, r1
+ 1401 035c C913     		asrs	r1, r1, #15
+ 1402 035e 01EB4001 		add	r1, r1, r0, lsl #1
+ 1403 0362 0B9C     		ldr	r4, [sp, #44]
+ 1404 0364 0CFB04F4 		mul	r4, ip, r4
+ 1405 0368 1098     		ldr	r0, [sp, #64]
+ 1406 036a 0CFB00F0 		mul	r0, ip, r0
+ 1407 036e C013     		asrs	r0, r0, #15
+ 1408 0370 00EB4400 		add	r0, r0, r4, lsl #1
+ 1409 0374 0144     		add	r1, r1, r0
+ 1410 0376 089C     		ldr	r4, [sp, #32]
+ 1411 0378 2144     		add	r1, r1, r4
+ 1412              		.loc 1 295 24 view .LVU373
+ 1413 037a 3091     		str	r1, [sp, #192]
+ 296:../../opus/celt/kiss_fft.c ****          scratch[11].i = ADD32_ovflw(scratch[0].i, ADD32_ovflw(S_MUL(scratch[7].i,yb.r), S_MUL(scra
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 33
+
+
+ 1414              		.loc 1 296 10 is_stmt 1 view .LVU374
+ 1415              		.loc 1 296 26 is_stmt 0 view .LVU375
+ 1416 037c 0A9C     		ldr	r4, [sp, #40]
+ 1417 037e 0EFB04F0 		mul	r0, lr, r4
+ 1418 0382 119C     		ldr	r4, [sp, #68]
+ 1419 0384 0EFB04F4 		mul	r4, lr, r4
+ 1420 0388 E413     		asrs	r4, r4, #15
+ 1421 038a 04EB4004 		add	r4, r4, r0, lsl #1
+ 1422 038e 0C98     		ldr	r0, [sp, #48]
+ 1423 0390 0CFB00F0 		mul	r0, ip, r0
+ 1424 0394 129D     		ldr	r5, [sp, #72]
+ 1425 0396 0CFB05F5 		mul	r5, ip, r5
+ 1426 039a ED13     		asrs	r5, r5, #15
+ 1427 039c 05EB4005 		add	r5, r5, r0, lsl #1
+ 1428 03a0 2C44     		add	r4, r4, r5
+ 1429 03a2 5444     		add	r4, r4, r10
+ 1430              		.loc 1 296 24 view .LVU376
+ 1431 03a4 3194     		str	r4, [sp, #196]
+ 297:../../opus/celt/kiss_fft.c ****          scratch[12].r = SUB32_ovflw(S_MUL(scratch[9].i,ya.i), S_MUL(scratch[10].i,yb.i));
+ 1432              		.loc 1 297 10 is_stmt 1 view .LVU377
+ 1433              		.loc 1 297 26 is_stmt 0 view .LVU378
+ 1434 03a6 0D98     		ldr	r0, [sp, #52]
+ 1435 03a8 06FB00FA 		mul	r10, r6, r0
+ 1436 03ac 149B     		ldr	r3, [sp, #80]
+ 1437 03ae 06FB03F3 		mul	r3, r6, r3
+ 1438 03b2 DB13     		asrs	r3, r3, #15
+ 1439 03b4 03EB4A0E 		add	lr, r3, r10, lsl #1
+ 1440 03b8 0698     		ldr	r0, [sp, #24]
+ 1441 03ba 07FB00F5 		mul	r5, r7, r0
+ 1442 03be 1398     		ldr	r0, [sp, #76]
+ 1443 03c0 07FB00F0 		mul	r0, r7, r0
+ 1444 03c4 C013     		asrs	r0, r0, #15
+ 1445 03c6 00EB4500 		add	r0, r0, r5, lsl #1
+ 1446 03ca AEEB0005 		sub	r5, lr, r0
+ 1447              		.loc 1 297 24 view .LVU379
+ 1448 03ce 3295     		str	r5, [sp, #200]
+ 298:../../opus/celt/kiss_fft.c ****          scratch[12].i = SUB32_ovflw(S_MUL(scratch[10].r,yb.i), S_MUL(scratch[9].r,ya.i));
+ 1449              		.loc 1 298 10 is_stmt 1 view .LVU380
+ 1450              		.loc 1 298 26 is_stmt 0 view .LVU381
+ 1451 03d0 0E9B     		ldr	r3, [sp, #56]
+ 1452 03d2 07FB03FC 		mul	ip, r7, r3
+ 1453 03d6 159B     		ldr	r3, [sp, #84]
+ 1454 03d8 03FB07F7 		mul	r7, r3, r7
+ 1455 03dc FF13     		asrs	r7, r7, #15
+ 1456 03de 07EB4C07 		add	r7, r7, ip, lsl #1
+ 1457 03e2 06FB09F9 		mul	r9, r6, r9
+ 1458 03e6 06FB02F2 		mul	r2, r6, r2
+ 1459 03ea D213     		asrs	r2, r2, #15
+ 1460 03ec 02EB4902 		add	r2, r2, r9, lsl #1
+ 1461 03f0 BE1A     		subs	r6, r7, r2
+ 1462              		.loc 1 298 24 view .LVU382
+ 1463 03f2 3396     		str	r6, [sp, #204]
+ 299:../../opus/celt/kiss_fft.c **** 
+ 300:../../opus/celt/kiss_fft.c ****          C_ADD(*Fout2,scratch[11],scratch[12]);
+ 1464              		.loc 1 300 10 is_stmt 1 view .LVU383
+ 1465              		.loc 1 300 10 view .LVU384
+ 1466 03f4 0D44     		add	r5, r5, r1
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 34
+
+
+ 1467 03f6 049B     		ldr	r3, [sp, #16]
+ 1468 03f8 1D60     		str	r5, [r3]
+ 1469              		.loc 1 300 10 view .LVU385
+ 1470 03fa 2644     		add	r6, r6, r4
+ 1471 03fc 1D46     		mov	r5, r3
+ 1472 03fe 5E60     		str	r6, [r3, #4]
+ 1473              		.loc 1 300 10 view .LVU386
+ 301:../../opus/celt/kiss_fft.c ****          C_SUB(*Fout3,scratch[11],scratch[12]);
+ 1474              		.loc 1 301 10 view .LVU387
+ 1475              		.loc 1 301 10 view .LVU388
+ 1476 0400 A0EB0E00 		sub	r0, r0, lr
+ 1477 0404 0844     		add	r0, r0, r1
+ 1478 0406 059B     		ldr	r3, [sp, #20]
+ 1479 0408 1860     		str	r0, [r3]
+ 1480              		.loc 1 301 10 view .LVU389
+ 1481 040a D21B     		subs	r2, r2, r7
+ 1482 040c 2244     		add	r2, r2, r4
+ 1483 040e 5A60     		str	r2, [r3, #4]
+ 1484              		.loc 1 301 10 view .LVU390
+ 302:../../opus/celt/kiss_fft.c **** 
+ 303:../../opus/celt/kiss_fft.c ****          ++Fout0;++Fout1;++Fout2;++Fout3;++Fout4;
+ 1485              		.loc 1 303 10 view .LVU391
+ 1486 0410 029A     		ldr	r2, [sp, #8]
+ 1487 0412 0832     		adds	r2, r2, #8
+ 1488 0414 0292     		str	r2, [sp, #8]
+ 1489              	.LVL52:
+ 1490              		.loc 1 303 18 view .LVU392
+ 1491 0416 0BF1080B 		add	fp, fp, #8
+ 1492              	.LVL53:
+ 1493              		.loc 1 303 26 view .LVU393
+ 1494 041a 05F10802 		add	r2, r5, #8
+ 1495              	.LVL54:
+ 1496              		.loc 1 303 26 is_stmt 0 view .LVU394
+ 1497 041e 0492     		str	r2, [sp, #16]
+ 1498              	.LVL55:
+ 1499              		.loc 1 303 34 is_stmt 1 view .LVU395
+ 1500 0420 03F10802 		add	r2, r3, #8
+ 1501              	.LVL56:
+ 1502              		.loc 1 303 34 is_stmt 0 view .LVU396
+ 1503 0424 0592     		str	r2, [sp, #20]
+ 1504              	.LVL57:
+ 1505              		.loc 1 303 42 is_stmt 1 view .LVU397
+ 1506 0426 0198     		ldr	r0, [sp, #4]
+ 1507 0428 00F10802 		add	r2, r0, #8
+ 1508              	.LVL58:
+ 1509              		.loc 1 303 42 is_stmt 0 view .LVU398
+ 1510 042c 0192     		str	r2, [sp, #4]
+ 1511              	.LVL59:
+ 270:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1512              		.loc 1 270 23 is_stmt 1 discriminator 3 view .LVU399
+ 1513 042e 039B     		ldr	r3, [sp, #12]
+ 1514 0430 0133     		adds	r3, r3, #1
+ 1515 0432 0393     		str	r3, [sp, #12]
+ 1516              	.LVL60:
+ 1517              	.L30:
+ 270:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1518              		.loc 1 270 19 discriminator 1 view .LVU400
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 35
+
+
+ 1519 0434 039B     		ldr	r3, [sp, #12]
+ 1520 0436 169A     		ldr	r2, [sp, #88]
+ 1521 0438 9342     		cmp	r3, r2
+ 1522 043a FFF6ECAD 		blt	.L31
+ 260:../../opus/celt/kiss_fft.c ****    {
+ 1523              		.loc 1 260 18 is_stmt 0 discriminator 2 view .LVU401
+ 1524 043e 189A     		ldr	r2, [sp, #96]
+ 260:../../opus/celt/kiss_fft.c ****    {
+ 1525              		.loc 1 260 18 is_stmt 1 discriminator 2 view .LVU402
+ 1526 0440 0132     		adds	r2, r2, #1
+ 1527              	.LVL61:
+ 1528              	.L29:
+ 260:../../opus/celt/kiss_fft.c ****    {
+ 1529              		.loc 1 260 14 discriminator 1 view .LVU403
+ 1530 0442 3E9B     		ldr	r3, [sp, #248]
+ 1531 0444 9A42     		cmp	r2, r3
+ 1532 0446 19DA     		bge	.L34
+ 262:../../opus/celt/kiss_fft.c ****       Fout0=Fout;
+ 1533              		.loc 1 262 7 view .LVU404
+ 262:../../opus/celt/kiss_fft.c ****       Fout0=Fout;
+ 1534              		.loc 1 262 26 is_stmt 0 view .LVU405
+ 1535 0448 3F9B     		ldr	r3, [sp, #252]
+ 1536 044a 03FB02F1 		mul	r1, r3, r2
+ 262:../../opus/celt/kiss_fft.c ****       Fout0=Fout;
+ 1537              		.loc 1 262 12 view .LVU406
+ 1538 044e 199B     		ldr	r3, [sp, #100]
+ 1539 0450 03EBC103 		add	r3, r3, r1, lsl #3
+ 1540 0454 0293     		str	r3, [sp, #8]
+ 1541              	.LVL62:
+ 263:../../opus/celt/kiss_fft.c ****       Fout1=Fout0+m;
+ 1542              		.loc 1 263 7 is_stmt 1 view .LVU407
+ 264:../../opus/celt/kiss_fft.c ****       Fout2=Fout0+2*m;
+ 1543              		.loc 1 264 7 view .LVU408
+ 264:../../opus/celt/kiss_fft.c ****       Fout2=Fout0+2*m;
+ 1544              		.loc 1 264 12 is_stmt 0 view .LVU409
+ 1545 0456 1698     		ldr	r0, [sp, #88]
+ 1546 0458 03EBC004 		add	r4, r3, r0, lsl #3
+ 1547              	.LVL63:
+ 265:../../opus/celt/kiss_fft.c ****       Fout3=Fout0+3*m;
+ 1548              		.loc 1 265 7 is_stmt 1 view .LVU410
+ 265:../../opus/celt/kiss_fft.c ****       Fout3=Fout0+3*m;
+ 1549              		.loc 1 265 12 is_stmt 0 view .LVU411
+ 1550 045c 03EB0011 		add	r1, r3, r0, lsl #4
+ 1551 0460 0491     		str	r1, [sp, #16]
+ 1552              	.LVL64:
+ 266:../../opus/celt/kiss_fft.c ****       Fout4=Fout0+4*m;
+ 1553              		.loc 1 266 7 is_stmt 1 view .LVU412
+ 266:../../opus/celt/kiss_fft.c ****       Fout4=Fout0+4*m;
+ 1554              		.loc 1 266 18 is_stmt 0 view .LVU413
+ 1555 0462 00EB4001 		add	r1, r0, r0, lsl #1
+ 1556              	.LVL65:
+ 266:../../opus/celt/kiss_fft.c ****       Fout4=Fout0+4*m;
+ 1557              		.loc 1 266 12 view .LVU414
+ 1558 0466 03EBC101 		add	r1, r3, r1, lsl #3
+ 1559 046a 0591     		str	r1, [sp, #20]
+ 1560              	.LVL66:
+ 267:../../opus/celt/kiss_fft.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 36
+
+
+ 1561              		.loc 1 267 7 is_stmt 1 view .LVU415
+ 267:../../opus/celt/kiss_fft.c **** 
+ 1562              		.loc 1 267 12 is_stmt 0 view .LVU416
+ 1563 046c 03EB4013 		add	r3, r3, r0, lsl #5
+ 1564              	.LVL67:
+ 267:../../opus/celt/kiss_fft.c **** 
+ 1565              		.loc 1 267 12 view .LVU417
+ 1566 0470 0193     		str	r3, [sp, #4]
+ 1567              	.LVL68:
+ 270:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1568              		.loc 1 270 7 is_stmt 1 view .LVU418
+ 270:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1569              		.loc 1 270 14 is_stmt 0 view .LVU419
+ 1570 0472 0023     		movs	r3, #0
+ 1571              	.LVL69:
+ 270:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1572              		.loc 1 270 14 view .LVU420
+ 1573 0474 0393     		str	r3, [sp, #12]
+ 1574 0476 A346     		mov	fp, r4
+ 1575 0478 1892     		str	r2, [sp, #96]
+ 270:../../opus/celt/kiss_fft.c ****          scratch[0] = *Fout0;
+ 1576              		.loc 1 270 7 view .LVU421
+ 1577 047a DBE7     		b	.L30
+ 1578              	.LVL70:
+ 1579              	.L34:
+ 304:../../opus/celt/kiss_fft.c ****       }
+ 305:../../opus/celt/kiss_fft.c ****    }
+ 306:../../opus/celt/kiss_fft.c **** }
+ 1580              		.loc 1 306 1 view .LVU422
+ 1581 047c 35B0     		add	sp, sp, #212
+ 1582              	.LCFI13:
+ 1583              		.cfi_def_cfa_offset 36
+ 1584              	.LVL71:
+ 1585              		.loc 1 306 1 view .LVU423
+ 1586              		@ sp needed
+ 1587 047e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1588              	.LVL72:
+ 1589              	.L36:
+ 1590              		.loc 1 306 1 view .LVU424
+ 1591 0482 00BF     		.align	2
+ 1592              	.L35:
+ 1593 0484 4486FFFF 		.word	-31164
+ 1594 0488 C3B4FFFF 		.word	-19261
+ 1595 048c 7298FFFF 		.word	-26510
+ 1596              		.cfi_endproc
+ 1597              	.LFE25:
+ 1599              		.section	.text.opus_fft_impl,"ax",%progbits
+ 1600              		.align	1
+ 1601              		.global	opus_fft_impl
+ 1602              		.syntax unified
+ 1603              		.thumb
+ 1604              		.thumb_func
+ 1606              	opus_fft_impl:
+ 1607              	.LVL73:
+ 1608              	.LFB26:
+ 307:../../opus/celt/kiss_fft.c **** #endif /* OVERRIDE_kf_bfly5 */
+ 308:../../opus/celt/kiss_fft.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 37
+
+
+ 309:../../opus/celt/kiss_fft.c **** 
+ 310:../../opus/celt/kiss_fft.c **** #endif
+ 311:../../opus/celt/kiss_fft.c **** 
+ 312:../../opus/celt/kiss_fft.c **** 
+ 313:../../opus/celt/kiss_fft.c **** #ifdef CUSTOM_MODES
+ 314:../../opus/celt/kiss_fft.c **** 
+ 315:../../opus/celt/kiss_fft.c **** static
+ 316:../../opus/celt/kiss_fft.c **** void compute_bitrev_table(
+ 317:../../opus/celt/kiss_fft.c ****          int Fout,
+ 318:../../opus/celt/kiss_fft.c ****          opus_int16 *f,
+ 319:../../opus/celt/kiss_fft.c ****          const size_t fstride,
+ 320:../../opus/celt/kiss_fft.c ****          int in_stride,
+ 321:../../opus/celt/kiss_fft.c ****          opus_int16 * factors,
+ 322:../../opus/celt/kiss_fft.c ****          const kiss_fft_state *st
+ 323:../../opus/celt/kiss_fft.c ****             )
+ 324:../../opus/celt/kiss_fft.c **** {
+ 325:../../opus/celt/kiss_fft.c ****    const int p=*factors++; /* the radix  */
+ 326:../../opus/celt/kiss_fft.c ****    const int m=*factors++; /* stage's fft length/p */
+ 327:../../opus/celt/kiss_fft.c **** 
+ 328:../../opus/celt/kiss_fft.c ****     /*printf ("fft %d %d %d %d %d %d\n", p*m, m, p, s2, fstride*in_stride, N);*/
+ 329:../../opus/celt/kiss_fft.c ****    if (m==1)
+ 330:../../opus/celt/kiss_fft.c ****    {
+ 331:../../opus/celt/kiss_fft.c ****       int j;
+ 332:../../opus/celt/kiss_fft.c ****       for (j=0;j<p;j++)
+ 333:../../opus/celt/kiss_fft.c ****       {
+ 334:../../opus/celt/kiss_fft.c ****          *f = Fout+j;
+ 335:../../opus/celt/kiss_fft.c ****          f += fstride*in_stride;
+ 336:../../opus/celt/kiss_fft.c ****       }
+ 337:../../opus/celt/kiss_fft.c ****    } else {
+ 338:../../opus/celt/kiss_fft.c ****       int j;
+ 339:../../opus/celt/kiss_fft.c ****       for (j=0;j<p;j++)
+ 340:../../opus/celt/kiss_fft.c ****       {
+ 341:../../opus/celt/kiss_fft.c ****          compute_bitrev_table( Fout , f, fstride*p, in_stride, factors,st);
+ 342:../../opus/celt/kiss_fft.c ****          f += fstride*in_stride;
+ 343:../../opus/celt/kiss_fft.c ****          Fout += m;
+ 344:../../opus/celt/kiss_fft.c ****       }
+ 345:../../opus/celt/kiss_fft.c ****    }
+ 346:../../opus/celt/kiss_fft.c **** }
+ 347:../../opus/celt/kiss_fft.c **** 
+ 348:../../opus/celt/kiss_fft.c **** /*  facbuf is populated by p1,m1,p2,m2, ...
+ 349:../../opus/celt/kiss_fft.c ****     where
+ 350:../../opus/celt/kiss_fft.c ****     p[i] * m[i] = m[i-1]
+ 351:../../opus/celt/kiss_fft.c ****     m0 = n                  */
+ 352:../../opus/celt/kiss_fft.c **** static
+ 353:../../opus/celt/kiss_fft.c **** int kf_factor(int n,opus_int16 * facbuf)
+ 354:../../opus/celt/kiss_fft.c **** {
+ 355:../../opus/celt/kiss_fft.c ****     int p=4;
+ 356:../../opus/celt/kiss_fft.c ****     int i;
+ 357:../../opus/celt/kiss_fft.c ****     int stages=0;
+ 358:../../opus/celt/kiss_fft.c ****     int nbak = n;
+ 359:../../opus/celt/kiss_fft.c **** 
+ 360:../../opus/celt/kiss_fft.c ****     /*factor out powers of 4, powers of 2, then any remaining primes */
+ 361:../../opus/celt/kiss_fft.c ****     do {
+ 362:../../opus/celt/kiss_fft.c ****         while (n % p) {
+ 363:../../opus/celt/kiss_fft.c ****             switch (p) {
+ 364:../../opus/celt/kiss_fft.c ****                 case 4: p = 2; break;
+ 365:../../opus/celt/kiss_fft.c ****                 case 2: p = 3; break;
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 38
+
+
+ 366:../../opus/celt/kiss_fft.c ****                 default: p += 2; break;
+ 367:../../opus/celt/kiss_fft.c ****             }
+ 368:../../opus/celt/kiss_fft.c ****             if (p>32000 || (opus_int32)p*(opus_int32)p > n)
+ 369:../../opus/celt/kiss_fft.c ****                 p = n;          /* no more factors, skip to end */
+ 370:../../opus/celt/kiss_fft.c ****         }
+ 371:../../opus/celt/kiss_fft.c ****         n /= p;
+ 372:../../opus/celt/kiss_fft.c **** #ifdef RADIX_TWO_ONLY
+ 373:../../opus/celt/kiss_fft.c ****         if (p!=2 && p != 4)
+ 374:../../opus/celt/kiss_fft.c **** #else
+ 375:../../opus/celt/kiss_fft.c ****         if (p>5)
+ 376:../../opus/celt/kiss_fft.c **** #endif
+ 377:../../opus/celt/kiss_fft.c ****         {
+ 378:../../opus/celt/kiss_fft.c ****            return 0;
+ 379:../../opus/celt/kiss_fft.c ****         }
+ 380:../../opus/celt/kiss_fft.c ****         facbuf[2*stages] = p;
+ 381:../../opus/celt/kiss_fft.c ****         if (p==2 && stages > 1)
+ 382:../../opus/celt/kiss_fft.c ****         {
+ 383:../../opus/celt/kiss_fft.c ****            facbuf[2*stages] = 4;
+ 384:../../opus/celt/kiss_fft.c ****            facbuf[2] = 2;
+ 385:../../opus/celt/kiss_fft.c ****         }
+ 386:../../opus/celt/kiss_fft.c ****         stages++;
+ 387:../../opus/celt/kiss_fft.c ****     } while (n > 1);
+ 388:../../opus/celt/kiss_fft.c ****     n = nbak;
+ 389:../../opus/celt/kiss_fft.c ****     /* Reverse the order to get the radix 4 at the end, so we can use the
+ 390:../../opus/celt/kiss_fft.c ****        fast degenerate case. It turns out that reversing the order also
+ 391:../../opus/celt/kiss_fft.c ****        improves the noise behaviour. */
+ 392:../../opus/celt/kiss_fft.c ****     for (i=0;i<stages/2;i++)
+ 393:../../opus/celt/kiss_fft.c ****     {
+ 394:../../opus/celt/kiss_fft.c ****        int tmp;
+ 395:../../opus/celt/kiss_fft.c ****        tmp = facbuf[2*i];
+ 396:../../opus/celt/kiss_fft.c ****        facbuf[2*i] = facbuf[2*(stages-i-1)];
+ 397:../../opus/celt/kiss_fft.c ****        facbuf[2*(stages-i-1)] = tmp;
+ 398:../../opus/celt/kiss_fft.c ****     }
+ 399:../../opus/celt/kiss_fft.c ****     for (i=0;i<stages;i++)
+ 400:../../opus/celt/kiss_fft.c ****     {
+ 401:../../opus/celt/kiss_fft.c ****         n /= facbuf[2*i];
+ 402:../../opus/celt/kiss_fft.c ****         facbuf[2*i+1] = n;
+ 403:../../opus/celt/kiss_fft.c ****     }
+ 404:../../opus/celt/kiss_fft.c ****     return 1;
+ 405:../../opus/celt/kiss_fft.c **** }
+ 406:../../opus/celt/kiss_fft.c **** 
+ 407:../../opus/celt/kiss_fft.c **** static void compute_twiddles(kiss_twiddle_cpx *twiddles, int nfft)
+ 408:../../opus/celt/kiss_fft.c **** {
+ 409:../../opus/celt/kiss_fft.c ****    int i;
+ 410:../../opus/celt/kiss_fft.c **** #ifdef FIXED_POINT
+ 411:../../opus/celt/kiss_fft.c ****    for (i=0;i<nfft;++i) {
+ 412:../../opus/celt/kiss_fft.c ****       opus_val32 phase = -i;
+ 413:../../opus/celt/kiss_fft.c ****       kf_cexp2(twiddles+i, DIV32(SHL32(phase,17),nfft));
+ 414:../../opus/celt/kiss_fft.c ****    }
+ 415:../../opus/celt/kiss_fft.c **** #else
+ 416:../../opus/celt/kiss_fft.c ****    for (i=0;i<nfft;++i) {
+ 417:../../opus/celt/kiss_fft.c ****       const double pi=3.14159265358979323846264338327;
+ 418:../../opus/celt/kiss_fft.c ****       double phase = ( -2*pi /nfft ) * i;
+ 419:../../opus/celt/kiss_fft.c ****       kf_cexp(twiddles+i, phase );
+ 420:../../opus/celt/kiss_fft.c ****    }
+ 421:../../opus/celt/kiss_fft.c **** #endif
+ 422:../../opus/celt/kiss_fft.c **** }
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 39
+
+
+ 423:../../opus/celt/kiss_fft.c **** 
+ 424:../../opus/celt/kiss_fft.c **** int opus_fft_alloc_arch_c(kiss_fft_state *st) {
+ 425:../../opus/celt/kiss_fft.c ****    (void)st;
+ 426:../../opus/celt/kiss_fft.c ****    return 0;
+ 427:../../opus/celt/kiss_fft.c **** }
+ 428:../../opus/celt/kiss_fft.c **** 
+ 429:../../opus/celt/kiss_fft.c **** /*
+ 430:../../opus/celt/kiss_fft.c ****  *
+ 431:../../opus/celt/kiss_fft.c ****  * Allocates all necessary storage space for the fft and ifft.
+ 432:../../opus/celt/kiss_fft.c ****  * The return value is a contiguous block of memory.  As such,
+ 433:../../opus/celt/kiss_fft.c ****  * It can be freed with free().
+ 434:../../opus/celt/kiss_fft.c ****  * */
+ 435:../../opus/celt/kiss_fft.c **** kiss_fft_state *opus_fft_alloc_twiddles(int nfft,void * mem,size_t * lenmem,
+ 436:../../opus/celt/kiss_fft.c ****                                         const kiss_fft_state *base, int arch)
+ 437:../../opus/celt/kiss_fft.c **** {
+ 438:../../opus/celt/kiss_fft.c ****     kiss_fft_state *st=NULL;
+ 439:../../opus/celt/kiss_fft.c ****     size_t memneeded = sizeof(struct kiss_fft_state); /* twiddle factors*/
+ 440:../../opus/celt/kiss_fft.c **** 
+ 441:../../opus/celt/kiss_fft.c ****     if ( lenmem==NULL ) {
+ 442:../../opus/celt/kiss_fft.c ****         st = ( kiss_fft_state*)KISS_FFT_MALLOC( memneeded );
+ 443:../../opus/celt/kiss_fft.c ****     }else{
+ 444:../../opus/celt/kiss_fft.c ****         if (mem != NULL && *lenmem >= memneeded)
+ 445:../../opus/celt/kiss_fft.c ****             st = (kiss_fft_state*)mem;
+ 446:../../opus/celt/kiss_fft.c ****         *lenmem = memneeded;
+ 447:../../opus/celt/kiss_fft.c ****     }
+ 448:../../opus/celt/kiss_fft.c ****     if (st) {
+ 449:../../opus/celt/kiss_fft.c ****         opus_int16 *bitrev;
+ 450:../../opus/celt/kiss_fft.c ****         kiss_twiddle_cpx *twiddles;
+ 451:../../opus/celt/kiss_fft.c **** 
+ 452:../../opus/celt/kiss_fft.c ****         st->nfft=nfft;
+ 453:../../opus/celt/kiss_fft.c **** #ifdef FIXED_POINT
+ 454:../../opus/celt/kiss_fft.c ****         st->scale_shift = celt_ilog2(st->nfft);
+ 455:../../opus/celt/kiss_fft.c ****         if (st->nfft == 1<<st->scale_shift)
+ 456:../../opus/celt/kiss_fft.c ****            st->scale = Q15ONE;
+ 457:../../opus/celt/kiss_fft.c ****         else
+ 458:../../opus/celt/kiss_fft.c ****            st->scale = (1073741824+st->nfft/2)/st->nfft>>(15-st->scale_shift);
+ 459:../../opus/celt/kiss_fft.c **** #else
+ 460:../../opus/celt/kiss_fft.c ****         st->scale = 1.f/nfft;
+ 461:../../opus/celt/kiss_fft.c **** #endif
+ 462:../../opus/celt/kiss_fft.c ****         if (base != NULL)
+ 463:../../opus/celt/kiss_fft.c ****         {
+ 464:../../opus/celt/kiss_fft.c ****            st->twiddles = base->twiddles;
+ 465:../../opus/celt/kiss_fft.c ****            st->shift = 0;
+ 466:../../opus/celt/kiss_fft.c ****            while (st->shift < 32 && nfft<<st->shift != base->nfft)
+ 467:../../opus/celt/kiss_fft.c ****               st->shift++;
+ 468:../../opus/celt/kiss_fft.c ****            if (st->shift>=32)
+ 469:../../opus/celt/kiss_fft.c ****               goto fail;
+ 470:../../opus/celt/kiss_fft.c ****         } else {
+ 471:../../opus/celt/kiss_fft.c ****            st->twiddles = twiddles = (kiss_twiddle_cpx*)KISS_FFT_MALLOC(sizeof(kiss_twiddle_cpx)*nf
+ 472:../../opus/celt/kiss_fft.c ****            compute_twiddles(twiddles, nfft);
+ 473:../../opus/celt/kiss_fft.c ****            st->shift = -1;
+ 474:../../opus/celt/kiss_fft.c ****         }
+ 475:../../opus/celt/kiss_fft.c ****         if (!kf_factor(nfft,st->factors))
+ 476:../../opus/celt/kiss_fft.c ****         {
+ 477:../../opus/celt/kiss_fft.c ****            goto fail;
+ 478:../../opus/celt/kiss_fft.c ****         }
+ 479:../../opus/celt/kiss_fft.c **** 
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 40
+
+
+ 480:../../opus/celt/kiss_fft.c ****         /* bitrev */
+ 481:../../opus/celt/kiss_fft.c ****         st->bitrev = bitrev = (opus_int16*)KISS_FFT_MALLOC(sizeof(opus_int16)*nfft);
+ 482:../../opus/celt/kiss_fft.c ****         if (st->bitrev==NULL)
+ 483:../../opus/celt/kiss_fft.c ****             goto fail;
+ 484:../../opus/celt/kiss_fft.c ****         compute_bitrev_table(0, bitrev, 1,1, st->factors,st);
+ 485:../../opus/celt/kiss_fft.c **** 
+ 486:../../opus/celt/kiss_fft.c ****         /* Initialize architecture specific fft parameters */
+ 487:../../opus/celt/kiss_fft.c ****         if (opus_fft_alloc_arch(st, arch))
+ 488:../../opus/celt/kiss_fft.c ****             goto fail;
+ 489:../../opus/celt/kiss_fft.c ****     }
+ 490:../../opus/celt/kiss_fft.c ****     return st;
+ 491:../../opus/celt/kiss_fft.c **** fail:
+ 492:../../opus/celt/kiss_fft.c ****     opus_fft_free(st, arch);
+ 493:../../opus/celt/kiss_fft.c ****     return NULL;
+ 494:../../opus/celt/kiss_fft.c **** }
+ 495:../../opus/celt/kiss_fft.c **** 
+ 496:../../opus/celt/kiss_fft.c **** kiss_fft_state *opus_fft_alloc(int nfft,void * mem,size_t * lenmem, int arch)
+ 497:../../opus/celt/kiss_fft.c **** {
+ 498:../../opus/celt/kiss_fft.c ****    return opus_fft_alloc_twiddles(nfft, mem, lenmem, NULL, arch);
+ 499:../../opus/celt/kiss_fft.c **** }
+ 500:../../opus/celt/kiss_fft.c **** 
+ 501:../../opus/celt/kiss_fft.c **** void opus_fft_free_arch_c(kiss_fft_state *st) {
+ 502:../../opus/celt/kiss_fft.c ****    (void)st;
+ 503:../../opus/celt/kiss_fft.c **** }
+ 504:../../opus/celt/kiss_fft.c **** 
+ 505:../../opus/celt/kiss_fft.c **** void opus_fft_free(const kiss_fft_state *cfg, int arch)
+ 506:../../opus/celt/kiss_fft.c **** {
+ 507:../../opus/celt/kiss_fft.c ****    if (cfg)
+ 508:../../opus/celt/kiss_fft.c ****    {
+ 509:../../opus/celt/kiss_fft.c ****       opus_fft_free_arch((kiss_fft_state *)cfg, arch);
+ 510:../../opus/celt/kiss_fft.c ****       opus_free((opus_int16*)cfg->bitrev);
+ 511:../../opus/celt/kiss_fft.c ****       if (cfg->shift < 0)
+ 512:../../opus/celt/kiss_fft.c ****          opus_free((kiss_twiddle_cpx*)cfg->twiddles);
+ 513:../../opus/celt/kiss_fft.c ****       opus_free((kiss_fft_state*)cfg);
+ 514:../../opus/celt/kiss_fft.c ****    }
+ 515:../../opus/celt/kiss_fft.c **** }
+ 516:../../opus/celt/kiss_fft.c **** 
+ 517:../../opus/celt/kiss_fft.c **** #endif /* CUSTOM_MODES */
+ 518:../../opus/celt/kiss_fft.c **** 
+ 519:../../opus/celt/kiss_fft.c **** void opus_fft_impl(const kiss_fft_state *st,kiss_fft_cpx *fout)
+ 520:../../opus/celt/kiss_fft.c **** {
+ 1609              		.loc 1 520 1 is_stmt 1 view -0
+ 1610              		.cfi_startproc
+ 1611              		@ args = 0, pretend = 0, frame = 32
+ 1612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1613              		.loc 1 520 1 is_stmt 0 view .LVU426
+ 1614 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1615              	.LCFI14:
+ 1616              		.cfi_def_cfa_offset 24
+ 1617              		.cfi_offset 4, -24
+ 1618              		.cfi_offset 5, -20
+ 1619              		.cfi_offset 6, -16
+ 1620              		.cfi_offset 7, -12
+ 1621              		.cfi_offset 8, -8
+ 1622              		.cfi_offset 14, -4
+ 1623 0004 8AB0     		sub	sp, sp, #40
+ 1624              	.LCFI15:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 41
+
+
+ 1625              		.cfi_def_cfa_offset 64
+ 1626 0006 0546     		mov	r5, r0
+ 1627 0008 0E46     		mov	r6, r1
+ 521:../../opus/celt/kiss_fft.c ****     int m2, m;
+ 1628              		.loc 1 521 5 is_stmt 1 view .LVU427
+ 522:../../opus/celt/kiss_fft.c ****     int p;
+ 1629              		.loc 1 522 5 view .LVU428
+ 523:../../opus/celt/kiss_fft.c ****     int L;
+ 1630              		.loc 1 523 5 view .LVU429
+ 524:../../opus/celt/kiss_fft.c ****     int fstride[MAXFACTORS];
+ 1631              		.loc 1 524 5 view .LVU430
+ 525:../../opus/celt/kiss_fft.c ****     int i;
+ 1632              		.loc 1 525 5 view .LVU431
+ 526:../../opus/celt/kiss_fft.c ****     int shift;
+ 1633              		.loc 1 526 5 view .LVU432
+ 527:../../opus/celt/kiss_fft.c **** 
+ 528:../../opus/celt/kiss_fft.c ****     /* st->shift can be -1 */
+ 529:../../opus/celt/kiss_fft.c ****     shift = st->shift>0 ? st->shift : 0;
+ 1634              		.loc 1 529 5 view .LVU433
+ 1635              		.loc 1 529 15 is_stmt 0 view .LVU434
+ 1636 000a C768     		ldr	r7, [r0, #12]
+ 1637              		.loc 1 529 11 view .LVU435
+ 1638 000c 27EAE777 		bic	r7, r7, r7, asr #31
+ 1639              	.LVL74:
+ 530:../../opus/celt/kiss_fft.c **** 
+ 531:../../opus/celt/kiss_fft.c ****     fstride[0] = 1;
+ 1640              		.loc 1 531 5 is_stmt 1 view .LVU436
+ 1641              		.loc 1 531 16 is_stmt 0 view .LVU437
+ 1642 0010 0123     		movs	r3, #1
+ 1643 0012 0293     		str	r3, [sp, #8]
+ 532:../../opus/celt/kiss_fft.c ****     L=0;
+ 1644              		.loc 1 532 5 is_stmt 1 view .LVU438
+ 1645              	.LVL75:
+ 1646              		.loc 1 532 6 is_stmt 0 view .LVU439
+ 1647 0014 0023     		movs	r3, #0
+ 1648              	.LVL76:
+ 1649              	.L38:
+ 533:../../opus/celt/kiss_fft.c ****     do {
+ 1650              		.loc 1 533 5 is_stmt 1 view .LVU440
+ 534:../../opus/celt/kiss_fft.c ****        p = st->factors[2*L];
+ 1651              		.loc 1 534 8 view .LVU441
+ 1652              		.loc 1 534 25 is_stmt 0 view .LVU442
+ 1653 0016 5A00     		lsls	r2, r3, #1
+ 1654              		.loc 1 534 23 view .LVU443
+ 1655 0018 02F10801 		add	r1, r2, #8
+ 1656 001c 35F91100 		ldrsh	r0, [r5, r1, lsl #1]
+ 1657              	.LVL77:
+ 535:../../opus/celt/kiss_fft.c ****        m = st->factors[2*L+1];
+ 1658              		.loc 1 535 8 is_stmt 1 view .LVU444
+ 1659              		.loc 1 535 23 is_stmt 0 view .LVU445
+ 1660 0020 0932     		adds	r2, r2, #9
+ 1661 0022 35F91210 		ldrsh	r1, [r5, r2, lsl #1]
+ 1662              	.LVL78:
+ 536:../../opus/celt/kiss_fft.c ****        fstride[L+1] = fstride[L]*p;
+ 1663              		.loc 1 536 8 is_stmt 1 view .LVU446
+ 1664              		.loc 1 536 30 is_stmt 0 view .LVU447
+ 1665 0026 0AAA     		add	r2, sp, #40
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 42
+
+
+ 1666              	.LVL79:
+ 1667              		.loc 1 536 30 view .LVU448
+ 1668 0028 02EB8302 		add	r2, r2, r3, lsl #2
+ 1669 002c 52F8202C 		ldr	r2, [r2, #-32]
+ 1670 0030 1C46     		mov	r4, r3
+ 1671              		.loc 1 536 17 view .LVU449
+ 1672 0032 0133     		adds	r3, r3, #1
+ 1673              	.LVL80:
+ 1674              		.loc 1 536 33 view .LVU450
+ 1675 0034 00FB02F2 		mul	r2, r0, r2
+ 1676              		.loc 1 536 21 view .LVU451
+ 1677 0038 0AA8     		add	r0, sp, #40
+ 1678              	.LVL81:
+ 1679              		.loc 1 536 21 view .LVU452
+ 1680 003a 00EB8300 		add	r0, r0, r3, lsl #2
+ 1681 003e 40F8202C 		str	r2, [r0, #-32]
+ 537:../../opus/celt/kiss_fft.c ****        L++;
+ 1682              		.loc 1 537 8 is_stmt 1 view .LVU453
+ 1683              	.LVL82:
+ 538:../../opus/celt/kiss_fft.c ****     } while(m!=1);
+ 1684              		.loc 1 538 14 discriminator 1 view .LVU454
+ 1685 0042 0129     		cmp	r1, #1
+ 1686 0044 E7D1     		bne	.L38
+ 539:../../opus/celt/kiss_fft.c ****     m = st->factors[2*L-1];
+ 1687              		.loc 1 539 5 view .LVU455
+ 1688              		.loc 1 539 22 is_stmt 0 view .LVU456
+ 1689 0046 5B00     		lsls	r3, r3, #1
+ 1690              	.LVL83:
+ 1691              		.loc 1 539 20 view .LVU457
+ 1692 0048 0733     		adds	r3, r3, #7
+ 1693 004a 35F91330 		ldrsh	r3, [r5, r3, lsl #1]
+ 1694              	.LVL84:
+ 540:../../opus/celt/kiss_fft.c ****     for (i=L-1;i>=0;i--)
+ 1695              		.loc 1 540 5 is_stmt 1 view .LVU458
+ 1696              		.loc 1 540 5 is_stmt 0 view .LVU459
+ 1697 004e 0DE0     		b	.L39
+ 1698              	.LVL85:
+ 1699              	.L48:
+ 541:../../opus/celt/kiss_fft.c ****     {
+ 542:../../opus/celt/kiss_fft.c ****        if (i!=0)
+ 543:../../opus/celt/kiss_fft.c ****           m2 = st->factors[2*i-1];
+ 544:../../opus/celt/kiss_fft.c ****        else
+ 545:../../opus/celt/kiss_fft.c ****           m2 = 1;
+ 1700              		.loc 1 545 14 view .LVU460
+ 1701 0050 4FF00108 		mov	r8, #1
+ 1702 0054 12E0     		b	.L40
+ 1703              	.LVL86:
+ 1704              	.L46:
+ 546:../../opus/celt/kiss_fft.c ****        switch (st->factors[2*i])
+ 547:../../opus/celt/kiss_fft.c ****        {
+ 548:../../opus/celt/kiss_fft.c ****        case 2:
+ 549:../../opus/celt/kiss_fft.c ****           kf_bfly2(fout, m, fstride[i]);
+ 1705              		.loc 1 549 11 is_stmt 1 view .LVU461
+ 1706 0056 0AAA     		add	r2, sp, #40
+ 1707 0058 02EB8402 		add	r2, r2, r4, lsl #2
+ 1708 005c 52F8202C 		ldr	r2, [r2, #-32]
+ 1709 0060 1946     		mov	r1, r3
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 43
+
+
+ 1710 0062 3046     		mov	r0, r6
+ 1711 0064 FFF7FEFF 		bl	kf_bfly2
+ 1712              	.LVL87:
+ 550:../../opus/celt/kiss_fft.c ****           break;
+ 1713              		.loc 1 550 11 view .LVU462
+ 1714              	.L41:
+ 551:../../opus/celt/kiss_fft.c ****        case 4:
+ 552:../../opus/celt/kiss_fft.c ****           kf_bfly4(fout,fstride[i]<<shift,st,m, fstride[i], m2);
+ 553:../../opus/celt/kiss_fft.c ****           break;
+ 554:../../opus/celt/kiss_fft.c ****  #ifndef RADIX_TWO_ONLY
+ 555:../../opus/celt/kiss_fft.c ****        case 3:
+ 556:../../opus/celt/kiss_fft.c ****           kf_bfly3(fout,fstride[i]<<shift,st,m, fstride[i], m2);
+ 557:../../opus/celt/kiss_fft.c ****           break;
+ 558:../../opus/celt/kiss_fft.c ****        case 5:
+ 559:../../opus/celt/kiss_fft.c ****           kf_bfly5(fout,fstride[i]<<shift,st,m, fstride[i], m2);
+ 560:../../opus/celt/kiss_fft.c ****           break;
+ 561:../../opus/celt/kiss_fft.c ****  #endif
+ 562:../../opus/celt/kiss_fft.c ****        }
+ 563:../../opus/celt/kiss_fft.c ****        m = m2;
+ 1715              		.loc 1 563 8 view .LVU463
+ 540:../../opus/celt/kiss_fft.c ****     {
+ 1716              		.loc 1 540 22 discriminator 2 view .LVU464
+ 1717 0068 013C     		subs	r4, r4, #1
+ 1718              	.LVL88:
+ 1719              		.loc 1 563 10 is_stmt 0 view .LVU465
+ 1720 006a 4346     		mov	r3, r8
+ 1721              	.LVL89:
+ 1722              	.L39:
+ 540:../../opus/celt/kiss_fft.c ****     {
+ 1723              		.loc 1 540 17 is_stmt 1 discriminator 1 view .LVU466
+ 1724 006c 002C     		cmp	r4, #0
+ 1725 006e 43DB     		blt	.L51
+ 542:../../opus/celt/kiss_fft.c ****           m2 = st->factors[2*i-1];
+ 1726              		.loc 1 542 8 view .LVU467
+ 542:../../opus/celt/kiss_fft.c ****           m2 = st->factors[2*i-1];
+ 1727              		.loc 1 542 11 is_stmt 0 view .LVU468
+ 1728 0070 002C     		cmp	r4, #0
+ 1729 0072 EDD0     		beq	.L48
+ 543:../../opus/celt/kiss_fft.c ****        else
+ 1730              		.loc 1 543 11 is_stmt 1 view .LVU469
+ 543:../../opus/celt/kiss_fft.c ****        else
+ 1731              		.loc 1 543 29 is_stmt 0 view .LVU470
+ 1732 0074 6200     		lsls	r2, r4, #1
+ 543:../../opus/celt/kiss_fft.c ****        else
+ 1733              		.loc 1 543 27 view .LVU471
+ 1734 0076 0732     		adds	r2, r2, #7
+ 1735 0078 35F91280 		ldrsh	r8, [r5, r2, lsl #1]
+ 1736              	.LVL90:
+ 1737              	.L40:
+ 546:../../opus/celt/kiss_fft.c ****        {
+ 1738              		.loc 1 546 8 is_stmt 1 view .LVU472
+ 546:../../opus/celt/kiss_fft.c ****        {
+ 1739              		.loc 1 546 29 is_stmt 0 view .LVU473
+ 1740 007c 6200     		lsls	r2, r4, #1
+ 546:../../opus/celt/kiss_fft.c ****        {
+ 1741              		.loc 1 546 27 view .LVU474
+ 1742 007e 0832     		adds	r2, r2, #8
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 44
+
+
+ 1743 0080 35F912C0 		ldrsh	ip, [r5, r2, lsl #1]
+ 546:../../opus/celt/kiss_fft.c ****        {
+ 1744              		.loc 1 546 8 view .LVU475
+ 1745 0084 ACF1020C 		sub	ip, ip, #2
+ 1746 0088 BCF1030F 		cmp	ip, #3
+ 1747 008c ECD8     		bhi	.L41
+ 1748 008e 01A2     		adr	r2, .L43
+ 1749 0090 52F82CF0 		ldr	pc, [r2, ip, lsl #2]
+ 1750              		.p2align 2
+ 1751              	.L43:
+ 1752 0094 57000000 		.word	.L46+1
+ 1753 0098 C1000000 		.word	.L45+1
+ 1754 009c A5000000 		.word	.L44+1
+ 1755 00a0 DD000000 		.word	.L42+1
+ 1756              		.p2align 1
+ 1757              	.L44:
+ 552:../../opus/celt/kiss_fft.c ****           break;
+ 1758              		.loc 1 552 11 is_stmt 1 view .LVU476
+ 552:../../opus/celt/kiss_fft.c ****           break;
+ 1759              		.loc 1 552 32 is_stmt 0 view .LVU477
+ 1760 00a4 0AAA     		add	r2, sp, #40
+ 1761 00a6 02EB8402 		add	r2, r2, r4, lsl #2
+ 1762 00aa 52F8201C 		ldr	r1, [r2, #-32]
+ 552:../../opus/celt/kiss_fft.c ****           break;
+ 1763              		.loc 1 552 11 view .LVU478
+ 1764 00ae CDF80480 		str	r8, [sp, #4]
+ 1765 00b2 0091     		str	r1, [sp]
+ 1766 00b4 2A46     		mov	r2, r5
+ 1767 00b6 B940     		lsls	r1, r1, r7
+ 1768 00b8 3046     		mov	r0, r6
+ 1769 00ba FFF7FEFF 		bl	kf_bfly4
+ 1770              	.LVL91:
+ 553:../../opus/celt/kiss_fft.c ****  #ifndef RADIX_TWO_ONLY
+ 1771              		.loc 1 553 11 is_stmt 1 view .LVU479
+ 1772 00be D3E7     		b	.L41
+ 1773              	.LVL92:
+ 1774              	.L45:
+ 556:../../opus/celt/kiss_fft.c ****           break;
+ 1775              		.loc 1 556 11 view .LVU480
+ 556:../../opus/celt/kiss_fft.c ****           break;
+ 1776              		.loc 1 556 32 is_stmt 0 view .LVU481
+ 1777 00c0 0AAA     		add	r2, sp, #40
+ 1778 00c2 02EB8402 		add	r2, r2, r4, lsl #2
+ 1779 00c6 52F8201C 		ldr	r1, [r2, #-32]
+ 556:../../opus/celt/kiss_fft.c ****           break;
+ 1780              		.loc 1 556 11 view .LVU482
+ 1781 00ca CDF80480 		str	r8, [sp, #4]
+ 1782 00ce 0091     		str	r1, [sp]
+ 1783 00d0 2A46     		mov	r2, r5
+ 1784 00d2 B940     		lsls	r1, r1, r7
+ 1785 00d4 3046     		mov	r0, r6
+ 1786 00d6 FFF7FEFF 		bl	kf_bfly3
+ 1787              	.LVL93:
+ 557:../../opus/celt/kiss_fft.c ****        case 5:
+ 1788              		.loc 1 557 11 is_stmt 1 view .LVU483
+ 1789 00da C5E7     		b	.L41
+ 1790              	.LVL94:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 45
+
+
+ 1791              	.L42:
+ 559:../../opus/celt/kiss_fft.c ****           break;
+ 1792              		.loc 1 559 11 view .LVU484
+ 559:../../opus/celt/kiss_fft.c ****           break;
+ 1793              		.loc 1 559 32 is_stmt 0 view .LVU485
+ 1794 00dc 0AAA     		add	r2, sp, #40
+ 1795 00de 02EB8402 		add	r2, r2, r4, lsl #2
+ 1796 00e2 52F8201C 		ldr	r1, [r2, #-32]
+ 559:../../opus/celt/kiss_fft.c ****           break;
+ 1797              		.loc 1 559 11 view .LVU486
+ 1798 00e6 CDF80480 		str	r8, [sp, #4]
+ 1799 00ea 0091     		str	r1, [sp]
+ 1800 00ec 2A46     		mov	r2, r5
+ 1801 00ee B940     		lsls	r1, r1, r7
+ 1802 00f0 3046     		mov	r0, r6
+ 1803 00f2 FFF7FEFF 		bl	kf_bfly5
+ 1804              	.LVL95:
+ 560:../../opus/celt/kiss_fft.c ****  #endif
+ 1805              		.loc 1 560 11 is_stmt 1 view .LVU487
+ 1806 00f6 B7E7     		b	.L41
+ 1807              	.LVL96:
+ 1808              	.L51:
+ 564:../../opus/celt/kiss_fft.c ****     }
+ 565:../../opus/celt/kiss_fft.c **** }
+ 1809              		.loc 1 565 1 is_stmt 0 view .LVU488
+ 1810 00f8 0AB0     		add	sp, sp, #40
+ 1811              	.LCFI16:
+ 1812              		.cfi_def_cfa_offset 24
+ 1813              		@ sp needed
+ 1814 00fa BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1815              		.loc 1 565 1 view .LVU489
+ 1816              		.cfi_endproc
+ 1817              	.LFE26:
+ 1819 00fe 00BF     		.section	.text.opus_fft_c,"ax",%progbits
+ 1820              		.align	1
+ 1821              		.global	opus_fft_c
+ 1822              		.syntax unified
+ 1823              		.thumb
+ 1824              		.thumb_func
+ 1826              	opus_fft_c:
+ 1827              	.LVL97:
+ 1828              	.LFB27:
+ 566:../../opus/celt/kiss_fft.c **** 
+ 567:../../opus/celt/kiss_fft.c **** void opus_fft_c(const kiss_fft_state *st,const kiss_fft_cpx *fin,kiss_fft_cpx *fout)
+ 568:../../opus/celt/kiss_fft.c **** {
+ 1829              		.loc 1 568 1 is_stmt 1 view -0
+ 1830              		.cfi_startproc
+ 1831              		@ args = 0, pretend = 0, frame = 8
+ 1832              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1833              		.loc 1 568 1 is_stmt 0 view .LVU491
+ 1834 0000 70B5     		push	{r4, r5, r6, lr}
+ 1835              	.LCFI17:
+ 1836              		.cfi_def_cfa_offset 16
+ 1837              		.cfi_offset 4, -16
+ 1838              		.cfi_offset 5, -12
+ 1839              		.cfi_offset 6, -8
+ 1840              		.cfi_offset 14, -4
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 46
+
+
+ 1841 0002 82B0     		sub	sp, sp, #8
+ 1842              	.LCFI18:
+ 1843              		.cfi_def_cfa_offset 24
+ 1844 0004 0446     		mov	r4, r0
+ 1845 0006 0D46     		mov	r5, r1
+ 569:../../opus/celt/kiss_fft.c ****    int i;
+ 1846              		.loc 1 569 4 is_stmt 1 view .LVU492
+ 570:../../opus/celt/kiss_fft.c ****    opus_val16 scale;
+ 1847              		.loc 1 570 4 view .LVU493
+ 571:../../opus/celt/kiss_fft.c **** #ifdef FIXED_POINT
+ 572:../../opus/celt/kiss_fft.c ****    /* Allows us to scale with MULT16_32_Q16(), which is faster than
+ 573:../../opus/celt/kiss_fft.c ****       MULT16_32_Q15() on ARM. */
+ 574:../../opus/celt/kiss_fft.c ****    int scale_shift = st->scale_shift-1;
+ 1848              		.loc 1 574 4 view .LVU494
+ 1849              		.loc 1 574 24 is_stmt 0 view .LVU495
+ 1850 0008 8668     		ldr	r6, [r0, #8]
+ 1851              		.loc 1 574 8 view .LVU496
+ 1852 000a 013E     		subs	r6, r6, #1
+ 1853              	.LVL98:
+ 575:../../opus/celt/kiss_fft.c **** #endif
+ 576:../../opus/celt/kiss_fft.c ****    scale = st->scale;
+ 1854              		.loc 1 576 4 is_stmt 1 view .LVU497
+ 1855              		.loc 1 576 10 is_stmt 0 view .LVU498
+ 1856 000c B0F904E0 		ldrsh	lr, [r0, #4]
+ 1857              	.LVL99:
+ 577:../../opus/celt/kiss_fft.c **** 
+ 578:../../opus/celt/kiss_fft.c ****    celt_assert2 (fin != fout, "In-place FFT not supported");
+ 1858              		.loc 1 578 60 is_stmt 1 view .LVU499
+ 579:../../opus/celt/kiss_fft.c ****    /* Bit-reverse the input */
+ 580:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 1859              		.loc 1 580 4 view .LVU500
+ 1860              		.loc 1 580 10 is_stmt 0 view .LVU501
+ 1861 0010 4FF0000C 		mov	ip, #0
+ 1862              		.loc 1 580 4 view .LVU502
+ 1863 0014 24E0     		b	.L53
+ 1864              	.LVL100:
+ 1865              	.L54:
+ 1866              	.LBB8:
+ 581:../../opus/celt/kiss_fft.c ****    {
+ 582:../../opus/celt/kiss_fft.c ****       kiss_fft_cpx x = fin[i];
+ 1867              		.loc 1 582 7 is_stmt 1 view .LVU503
+ 1868              		.loc 1 582 27 is_stmt 0 view .LVU504
+ 1869 0016 05EBCC03 		add	r3, r5, ip, lsl #3
+ 1870              		.loc 1 582 20 view .LVU505
+ 1871 001a 93E80300 		ldm	r3, {r0, r1}
+ 1872 001e 02AB     		add	r3, sp, #8
+ 1873 0020 03E90300 		stmdb	r3, {r0, r1}
+ 583:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]].r = SHR32(MULT16_32_Q16(scale, x.r), scale_shift);
+ 1874              		.loc 1 583 7 is_stmt 1 view .LVU506
+ 1875              		.loc 1 583 31 is_stmt 0 view .LVU507
+ 1876 0024 0114     		asrs	r1, r0, #16
+ 1877 0026 83B2     		uxth	r3, r0
+ 1878 0028 0EFB03F3 		mul	r3, lr, r3
+ 1879 002c 1B14     		asrs	r3, r3, #16
+ 1880 002e 01FB0E33 		mla	r3, r1, lr, r3
+ 1881              		.loc 1 583 14 view .LVU508
+ 1882 0032 216B     		ldr	r1, [r4, #48]
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 47
+
+
+ 1883              		.loc 1 583 22 view .LVU509
+ 1884 0034 31F91C10 		ldrsh	r1, [r1, ip, lsl #1]
+ 1885              		.loc 1 583 31 view .LVU510
+ 1886 0038 3341     		asrs	r3, r3, r6
+ 1887              		.loc 1 583 29 view .LVU511
+ 1888 003a 42F83130 		str	r3, [r2, r1, lsl #3]
+ 584:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]].i = SHR32(MULT16_32_Q16(scale, x.i), scale_shift);
+ 1889              		.loc 1 584 7 is_stmt 1 view .LVU512
+ 1890              		.loc 1 584 31 is_stmt 0 view .LVU513
+ 1891 003e 019B     		ldr	r3, [sp, #4]
+ 1892 0040 1914     		asrs	r1, r3, #16
+ 1893 0042 9BB2     		uxth	r3, r3
+ 1894 0044 0EFB03F3 		mul	r3, lr, r3
+ 1895 0048 1B14     		asrs	r3, r3, #16
+ 1896 004a 01FB0E33 		mla	r3, r1, lr, r3
+ 1897              		.loc 1 584 14 view .LVU514
+ 1898 004e 216B     		ldr	r1, [r4, #48]
+ 1899              		.loc 1 584 22 view .LVU515
+ 1900 0050 31F91C10 		ldrsh	r1, [r1, ip, lsl #1]
+ 1901              		.loc 1 584 11 view .LVU516
+ 1902 0054 02EBC101 		add	r1, r2, r1, lsl #3
+ 1903              		.loc 1 584 31 view .LVU517
+ 1904 0058 3341     		asrs	r3, r3, r6
+ 1905              		.loc 1 584 29 view .LVU518
+ 1906 005a 4B60     		str	r3, [r1, #4]
+ 1907              	.LBE8:
+ 580:../../opus/celt/kiss_fft.c ****    {
+ 1908              		.loc 1 580 25 is_stmt 1 discriminator 3 view .LVU519
+ 1909 005c 0CF1010C 		add	ip, ip, #1
+ 1910              	.LVL101:
+ 1911              	.L53:
+ 580:../../opus/celt/kiss_fft.c ****    {
+ 1912              		.loc 1 580 14 discriminator 1 view .LVU520
+ 580:../../opus/celt/kiss_fft.c ****    {
+ 1913              		.loc 1 580 17 is_stmt 0 discriminator 1 view .LVU521
+ 1914 0060 2368     		ldr	r3, [r4]
+ 580:../../opus/celt/kiss_fft.c ****    {
+ 1915              		.loc 1 580 14 discriminator 1 view .LVU522
+ 1916 0062 6345     		cmp	r3, ip
+ 1917 0064 D7DC     		bgt	.L54
+ 585:../../opus/celt/kiss_fft.c ****    }
+ 586:../../opus/celt/kiss_fft.c ****    opus_fft_impl(st, fout);
+ 1918              		.loc 1 586 4 is_stmt 1 view .LVU523
+ 1919 0066 1146     		mov	r1, r2
+ 1920 0068 2046     		mov	r0, r4
+ 1921 006a FFF7FEFF 		bl	opus_fft_impl
+ 1922              	.LVL102:
+ 587:../../opus/celt/kiss_fft.c **** }
+ 1923              		.loc 1 587 1 is_stmt 0 view .LVU524
+ 1924 006e 02B0     		add	sp, sp, #8
+ 1925              	.LCFI19:
+ 1926              		.cfi_def_cfa_offset 16
+ 1927              		@ sp needed
+ 1928 0070 70BD     		pop	{r4, r5, r6, pc}
+ 1929              		.loc 1 587 1 view .LVU525
+ 1930              		.cfi_endproc
+ 1931              	.LFE27:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 48
+
+
+ 1933              		.section	.text.opus_ifft_c,"ax",%progbits
+ 1934              		.align	1
+ 1935              		.global	opus_ifft_c
+ 1936              		.syntax unified
+ 1937              		.thumb
+ 1938              		.thumb_func
+ 1940              	opus_ifft_c:
+ 1941              	.LVL103:
+ 1942              	.LFB28:
+ 588:../../opus/celt/kiss_fft.c **** 
+ 589:../../opus/celt/kiss_fft.c **** 
+ 590:../../opus/celt/kiss_fft.c **** void opus_ifft_c(const kiss_fft_state *st,const kiss_fft_cpx *fin,kiss_fft_cpx *fout)
+ 591:../../opus/celt/kiss_fft.c **** {
+ 1943              		.loc 1 591 1 is_stmt 1 view -0
+ 1944              		.cfi_startproc
+ 1945              		@ args = 0, pretend = 0, frame = 0
+ 1946              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1947              		.loc 1 591 1 is_stmt 0 view .LVU527
+ 1948 0000 38B5     		push	{r3, r4, r5, lr}
+ 1949              	.LCFI20:
+ 1950              		.cfi_def_cfa_offset 16
+ 1951              		.cfi_offset 3, -16
+ 1952              		.cfi_offset 4, -12
+ 1953              		.cfi_offset 5, -8
+ 1954              		.cfi_offset 14, -4
+ 1955 0002 0446     		mov	r4, r0
+ 1956 0004 8E46     		mov	lr, r1
+ 1957 0006 1546     		mov	r5, r2
+ 592:../../opus/celt/kiss_fft.c ****    int i;
+ 1958              		.loc 1 592 4 is_stmt 1 view .LVU528
+ 593:../../opus/celt/kiss_fft.c ****    celt_assert2 (fin != fout, "In-place FFT not supported");
+ 1959              		.loc 1 593 60 view .LVU529
+ 594:../../opus/celt/kiss_fft.c ****    /* Bit-reverse the input */
+ 595:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 1960              		.loc 1 595 4 view .LVU530
+ 1961              	.LVL104:
+ 1962              		.loc 1 595 10 is_stmt 0 view .LVU531
+ 1963 0008 0023     		movs	r3, #0
+ 1964              		.loc 1 595 4 view .LVU532
+ 1965 000a 0BE0     		b	.L57
+ 1966              	.LVL105:
+ 1967              	.L58:
+ 596:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]] = fin[i];
+ 1968              		.loc 1 596 7 is_stmt 1 view .LVU533
+ 1969              		.loc 1 596 32 is_stmt 0 view .LVU534
+ 1970 000c 0EEBC302 		add	r2, lr, r3, lsl #3
+ 1971              		.loc 1 596 14 view .LVU535
+ 1972 0010 206B     		ldr	r0, [r4, #48]
+ 1973              		.loc 1 596 22 view .LVU536
+ 1974 0012 30F913C0 		ldrsh	ip, [r0, r3, lsl #1]
+ 1975              		.loc 1 596 11 view .LVU537
+ 1976 0016 05EBCC0C 		add	ip, r5, ip, lsl #3
+ 1977              		.loc 1 596 27 view .LVU538
+ 1978 001a 92E80300 		ldm	r2, {r0, r1}
+ 1979 001e 8CE80300 		stm	ip, {r0, r1}
+ 595:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]] = fin[i];
+ 1980              		.loc 1 595 25 is_stmt 1 discriminator 3 view .LVU539
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 49
+
+
+ 1981 0022 0133     		adds	r3, r3, #1
+ 1982              	.LVL106:
+ 1983              	.L57:
+ 595:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]] = fin[i];
+ 1984              		.loc 1 595 14 discriminator 1 view .LVU540
+ 595:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]] = fin[i];
+ 1985              		.loc 1 595 17 is_stmt 0 discriminator 1 view .LVU541
+ 1986 0024 2268     		ldr	r2, [r4]
+ 595:../../opus/celt/kiss_fft.c ****       fout[st->bitrev[i]] = fin[i];
+ 1987              		.loc 1 595 14 discriminator 1 view .LVU542
+ 1988 0026 9A42     		cmp	r2, r3
+ 1989 0028 F0DC     		bgt	.L58
+ 597:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 1990              		.loc 1 597 10 view .LVU543
+ 1991 002a 0023     		movs	r3, #0
+ 1992              	.LVL107:
+ 1993              		.loc 1 597 10 view .LVU544
+ 1994 002c 05E0     		b	.L59
+ 1995              	.LVL108:
+ 1996              	.L60:
+ 598:../../opus/celt/kiss_fft.c ****       fout[i].i = -fout[i].i;
+ 1997              		.loc 1 598 7 is_stmt 1 view .LVU545
+ 1998              		.loc 1 598 24 is_stmt 0 view .LVU546
+ 1999 002e 05EBC301 		add	r1, r5, r3, lsl #3
+ 2000              		.loc 1 598 27 view .LVU547
+ 2001 0032 4A68     		ldr	r2, [r1, #4]
+ 2002              		.loc 1 598 19 view .LVU548
+ 2003 0034 5242     		rsbs	r2, r2, #0
+ 2004              		.loc 1 598 17 view .LVU549
+ 2005 0036 4A60     		str	r2, [r1, #4]
+ 597:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2006              		.loc 1 597 25 is_stmt 1 discriminator 3 view .LVU550
+ 2007 0038 0133     		adds	r3, r3, #1
+ 2008              	.LVL109:
+ 2009              	.L59:
+ 597:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2010              		.loc 1 597 14 discriminator 1 view .LVU551
+ 597:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2011              		.loc 1 597 17 is_stmt 0 discriminator 1 view .LVU552
+ 2012 003a 2268     		ldr	r2, [r4]
+ 597:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2013              		.loc 1 597 14 discriminator 1 view .LVU553
+ 2014 003c 9A42     		cmp	r2, r3
+ 2015 003e F6DC     		bgt	.L60
+ 599:../../opus/celt/kiss_fft.c ****    opus_fft_impl(st, fout);
+ 2016              		.loc 1 599 4 is_stmt 1 view .LVU554
+ 2017 0040 2946     		mov	r1, r5
+ 2018 0042 2046     		mov	r0, r4
+ 2019 0044 FFF7FEFF 		bl	opus_fft_impl
+ 2020              	.LVL110:
+ 600:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2021              		.loc 1 600 4 view .LVU555
+ 2022              		.loc 1 600 10 is_stmt 0 view .LVU556
+ 2023 0048 0023     		movs	r3, #0
+ 2024              		.loc 1 600 4 view .LVU557
+ 2025 004a 05E0     		b	.L61
+ 2026              	.LVL111:
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 50
+
+
+ 2027              	.L62:
+ 601:../../opus/celt/kiss_fft.c ****       fout[i].i = -fout[i].i;
+ 2028              		.loc 1 601 7 is_stmt 1 view .LVU558
+ 2029              		.loc 1 601 24 is_stmt 0 view .LVU559
+ 2030 004c 05EBC302 		add	r2, r5, r3, lsl #3
+ 2031              		.loc 1 601 27 view .LVU560
+ 2032 0050 5168     		ldr	r1, [r2, #4]
+ 2033              		.loc 1 601 19 view .LVU561
+ 2034 0052 4942     		rsbs	r1, r1, #0
+ 2035              		.loc 1 601 17 view .LVU562
+ 2036 0054 5160     		str	r1, [r2, #4]
+ 600:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2037              		.loc 1 600 25 is_stmt 1 discriminator 3 view .LVU563
+ 2038 0056 0133     		adds	r3, r3, #1
+ 2039              	.LVL112:
+ 2040              	.L61:
+ 600:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2041              		.loc 1 600 14 discriminator 1 view .LVU564
+ 600:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2042              		.loc 1 600 17 is_stmt 0 discriminator 1 view .LVU565
+ 2043 0058 2268     		ldr	r2, [r4]
+ 600:../../opus/celt/kiss_fft.c ****    for (i=0;i<st->nfft;i++)
+ 2044              		.loc 1 600 14 discriminator 1 view .LVU566
+ 2045 005a 9A42     		cmp	r2, r3
+ 2046 005c F6DC     		bgt	.L62
+ 602:../../opus/celt/kiss_fft.c **** }
+ 2047              		.loc 1 602 1 view .LVU567
+ 2048 005e 38BD     		pop	{r3, r4, r5, pc}
+ 2049              		.loc 1 602 1 view .LVU568
+ 2050              		.cfi_endproc
+ 2051              	.LFE28:
+ 2053              		.text
+ 2054              	.Letext0:
+ 2055              		.file 2 "C:/msys64/ucrt64/lib/gcc/arm-none-eabi/13.3.0/include/stddef.h"
+ 2056              		.file 3 "C:/msys64/ucrt64/arm-none-eabi/include/machine/_default_types.h"
+ 2057              		.file 4 "C:/msys64/ucrt64/arm-none-eabi/include/sys/_stdint.h"
+ 2058              		.file 5 "../../opus/include/opus_types.h"
+ 2059              		.file 6 "../../opus/celt/kiss_fft.h"
+ARM GAS  C:\Users\oleg\AppData\Local\Temp\cciMhymU.s 			page 51
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 kiss_fft.c
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:20     .text.kf_bfly2:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:25     .text.kf_bfly2:00000000 kf_bfly2
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:258    .text.kf_bfly4:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:263    .text.kf_bfly4:00000000 kf_bfly4
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:718    .text.kf_bfly3:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:723    .text.kf_bfly3:00000000 kf_bfly3
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:993    .text.kf_bfly3:000001c0 $d
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:998    .text.kf_bfly5:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1003   .text.kf_bfly5:00000000 kf_bfly5
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1593   .text.kf_bfly5:00000484 $d
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1600   .text.opus_fft_impl:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1606   .text.opus_fft_impl:00000000 opus_fft_impl
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1752   .text.opus_fft_impl:00000094 $d
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1756   .text.opus_fft_impl:000000a4 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1820   .text.opus_fft_c:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1826   .text.opus_fft_c:00000000 opus_fft_c
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1934   .text.opus_ifft_c:00000000 $t
+C:\Users\oleg\AppData\Local\Temp\cciMhymU.s:1940   .text.opus_ifft_c:00000000 opus_ifft_c
+
+NO UNDEFINED SYMBOLS
