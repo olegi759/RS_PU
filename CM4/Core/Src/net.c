@@ -314,11 +314,17 @@ void net_init(void)
 	if (wizchip_init(rx_tx_buff_sizes, rx_tx_buff_sizes) < 0) {
 		ulog(CONM"net: Calling wizchip_init() error"CRLF);
 	}
-
+	uint8_t version = getVERSIONR(); // или прямой доступ через ioLibrary
+    if (version != 0x04) {
+        ulog_fmt("W5500 not detected! Version: 0x%02X\r\n", version);
+        return;
+    } else {
+		ulog(CONM"net: Wizchip, running..."CRLF);
+	}
 	//reg_wizchip_cris_cbfunc(W5500_Critical_Enter, W5500_Critical_Exit);
 
 
-	wizchip_setinterruptmask(IK_SOCK_ALL);
+	wizchip_setinterruptmask(IK_SOCK_ALL); 
 
 	if (setting.dhcp) {
 
