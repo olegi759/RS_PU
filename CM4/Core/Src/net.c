@@ -221,9 +221,9 @@ void net_init_continue(void)
 	display_reg_webContent_list();
 #else
 	http_server_init();
-	ws_server_init(4, 8080, 0); // протокольный WS (ctx 0)
-    ws_server_init(5, 8081, 1); // heartbeat WS (ctx 1)
-	init_socket_keepalive(socknumlist, MAX_HTTPSOCK, 1);
+	//ws_server_init(4, 8080, 0); // протокольный WS (ctx 0)
+    //ws_server_init(5, 8081, 1); // heartbeat WS (ctx 1)
+	//init_socket_keepalive(socknumlist, MAX_HTTPSOCK, 1);
 #endif
 
 
@@ -316,10 +316,28 @@ void net_init(void)
 	}
 	uint8_t version = getVERSIONR(); // или прямой доступ через ioLibrary
     if (version != 0x04) {
-        ulog_fmt("W5500 not detected! Version: 0x%02X\r\n", version);
+        ulog_fmt(CONM"W5500 not detected! Version: 0x%02X\r\n", version);
         return;
     } else {
 		ulog(CONM"net: Wizchip, running..."CRLF);
+	}
+
+	HAL_Delay(2000);
+	uint8_t phycfgr = getPHYCFGR();
+	if(phycfgr & 0x01){
+		ulog(CONM"net: PHY Link - ok"CRLF);
+	} else {
+		ulog(CONM"net: PHY Link - error"CRLF);
+	}
+	if((phycfgr >> 1) & 0x01){
+		ulog(CONM"net: PHY 100 Mb/s "CRLF);
+	} else {
+		ulog(CONM"net: PHY 10 Mb/s"CRLF);
+	}
+	if((phycfgr >> 2) & 0x01){
+		ulog(CONM"net: PHY full-duplex"CRLF);
+	} else {
+		ulog(CONM"net: PHY half-duplex"CRLF);
 	}
 	//reg_wizchip_cris_cbfunc(W5500_Critical_Enter, W5500_Critical_Exit);
 
